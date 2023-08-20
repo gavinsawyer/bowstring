@@ -1,0 +1,11 @@
+<a
+  (click)="action.emit();"
+  *ngIf="url"
+  [href]="url">
+  {{ label }}
+</a>
+<button
+  (click)="action.emit();"
+  *ngIf="!url">
+  {{ label }}
+</button>

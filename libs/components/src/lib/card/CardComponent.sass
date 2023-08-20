@@ -1,0 +1,72 @@
+$light-foreground: hsl(0, 0%, 15%)
+$light-background: hsl(0, 0%, 95%)
+$dark-foreground: hsl(0, 0%, 85%)
+$dark-background: hsl(0, 0%, 15%)
+$image-foreground: hsl(0, 0%, 92%)
+$image-background: hsl(0, 0%, 18%)
+
+$base-scale: var(--base-scale)
+$border-radius: var(--border-radius)
+
+\:host
+  border-radius: calc(1rem * $border-radius * $base-scale)
+  box-shadow: black 0 calc(0.0625rem + 0.1875rem * $base-scale) calc(0.25rem + 0.5rem * $base-scale) calc(-0.125rem - 0.375rem * $base-scale)
+  display: flex
+  flex-direction: column-reverse
+  padding: calc(0.5rem + 0.75rem * $base-scale) calc(1rem * $base-scale) calc(0.125rem + 0.75rem * $base-scale)
+
+  &::ng-deep
+    & > hgroup:has(+ img)
+      max-width: 32rem
+      position: relative
+
+      & > h1
+        background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) calc(7.5rem * $base-scale))
+        color: $image-foreground
+        margin: 0 calc(-1rem * $base-scale) !important
+        padding: calc(4rem + 0.75rem * $base-scale) calc(1rem * $base-scale) calc(0.6rem + 0.15rem * $base-scale)
+        position: absolute
+        transform: translateY(-100%)
+        width: 100%
+
+        & > a
+          text-decoration-color: $image-foreground
+          text-shadow: none
+          transition: color 200ms ease, text-decoration-color 200ms ease
+
+          &::before
+            display: none
+
+          &:active,
+          &.no-op
+            text-decoration-color: currentColor
+
+          &:hover,
+          &.no-op
+            text-decoration: underline
+
+    & > img
+      background: $image-background
+      border-top-left-radius: calc(1rem * $border-radius * $base-scale)
+      border-top-right-radius: calc(1rem * $border-radius * $base-scale)
+      color: $image-foreground
+      margin: calc(-0.5rem - 0.75rem * $base-scale) calc(-1rem * $base-scale) 0
+      max-width: calc(100% + 2rem * $base-scale)
+
+  @mixin colors($foreground, $background)
+    background: $background
+    color: $foreground
+
+    &::ng-deep > hgroup
+      & > h1,
+      & > p
+        & > a
+          text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
+
+          &::before
+            background: $foreground
+
+  @include colors($light-foreground, $light-background)
+
+  @media (prefers-color-scheme: dark)
+    @include colors($dark-foreground, $dark-background)

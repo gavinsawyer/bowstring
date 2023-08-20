@@ -1,0 +1,16 @@
+{
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "name":        "brand",
+  "projectType": "library",
+  "sourceRoot":  "libs/brand/src",
+  "targets":     {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options":  {
+        "lintFilePatterns": [
+          "libs/brand/src/**/*.ts"
+        ]
+      }
+    }
+  }
+}

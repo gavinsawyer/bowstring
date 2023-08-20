@@ -1,0 +1,34 @@
+$light-foreground: hsl(0, 0%, 15%)
+$light-background: hsl(0, 0%, 95%)
+$dark-foreground: hsl(0, 0%, 85%)
+$dark-background: hsl(0, 0%, 15%)
+
+$base-scale: var(--base-scale)
+
+\:host
+  align-self: stretch
+  display: flex
+  flex-direction: row
+  justify-content: center
+
+  & > footer
+    display: flex
+    flex-basis: 48rem
+    flex-direction: row
+    justify-content: flex-end
+    padding: calc(0.625rem + 0.25rem * $base-scale) calc(1rem * $base-scale)
+
+  @mixin colors($foreground, $background)
+    background: $background
+    color: $foreground
+
+    & > footer > span > a
+      text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
+
+      &::before
+        background: $foreground
+
+  @include colors($light-foreground, $light-background)
+
+  @media (prefers-color-scheme: dark)
+    @include colors($dark-foreground, $dark-background)

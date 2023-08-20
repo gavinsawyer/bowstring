@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "standard-3eac7"
+  },
+  "targets": {
+    "standard-3eac7": {
+      "hosting": {
+        "website": [
+          "standard-3eac7"
+        ]
+      }
+    }
+  }
+}

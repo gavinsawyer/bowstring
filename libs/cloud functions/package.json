@@ -1,0 +1,23 @@
+{
+  "name":         "@standard/cloud-functions",
+  "license":      "MIT",
+  "author":       {
+    "name":  "Gavin Sawyer",
+    "email": "g@vinsawyer.dev",
+    "url":   "https://gavinsawyer.dev"
+  },
+  "repository":   {
+    "type":      "git",
+    "url":       "git+https://github.com/gavinsawyer/standard-angular.git",
+    "directory": "libs/cloud functions"
+  },
+  "private":      true,
+  "engines":      {
+    "node": "18"
+  },
+  "main":         "./main.js",
+  "type":         "module",
+  "dependencies": {
+    "firebase-functions": "^4.4.1"
+  }
+}

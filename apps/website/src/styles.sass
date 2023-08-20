@@ -1,0 +1,165 @@
+@import 'normalize.css'
+
+
+$primary: hsl(129, 16%, 55%)
+$primary-contrast: hsl(129, 8%, 96%)
+
+$light-foreground: hsl(0, 0%, 20%)
+$light-foreground-gray: hsl(0, 0%, 60%)
+$light-background: hsl(0, 0%, 100%)
+$dark-foreground: hsl(0, 0%, 88%)
+$dark-foreground-gray: hsl(0, 0%, 58%)
+$dark-background: hsl(0, 0%, 18%)
+
+$base-scale: 1.3333333333
+$base-font-size: 8px + 6px * $base-scale
+
+$border-radius: 1
+
+html,
+body
+  font-size: $base-font-size
+
+body
+  --primary: #{ $primary }
+  --primary-contrast: #{ $primary-contrast }
+
+  --base-scale: #{ $base-scale }
+  --border-radius: #{ $border-radius }
+
+
+  display: flex
+  flex-direction: row
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif
+  justify-content: center
+
+  a
+    position: relative
+    color: var(--primary)
+    text-decoration: none
+    transition: color 200ms ease
+    z-index: 0
+
+    &::before
+      bottom: 0.03em
+      content: ""
+      display: block
+      height: 0.06em
+      right: 0
+      position: absolute
+      transition: background 200ms ease, width 200ms ease
+      width: 0
+      z-index: -1
+
+    &:hover::before
+      left: 0
+      width: 100%
+
+    &.no-op
+      cursor: default
+
+      &::before
+        left: 0
+        width: 100%
+
+  article,
+  section
+    display: flex
+    flex-direction: column
+    gap: 1rem * $base-scale
+
+  hgroup
+    max-width: 30rem
+
+    & > h1,
+    & > h2
+      margin-top: 0
+
+      &:has(+ p > span.caption:first-child)
+        margin-bottom: 0.6rem + 0.15rem * $base-scale
+
+    & > p
+      font-size: 1.125rem
+      margin: 0.6rem + 0.15rem * $base-scale 0 0
+
+      & > span.caption
+        align-items: first baseline
+        display: inline-flex
+        flex-direction: row
+        flex-wrap: wrap
+        font-size: 1rem
+        font-variant: all-small-caps
+        gap: 0.6rem + 0.15rem * $base-scale
+        margin-bottom: 0.6rem + 0.15rem * $base-scale
+
+        & > span.caption--screen-reader-text
+          height: 1px
+          opacity: 1
+          overflow: hidden
+          position: absolute
+          width: 1px
+
+      & > span.content
+        display: inline-block
+
+        &::first-letter
+          float: left
+          font-size: 2.75rem
+          font-weight: 200
+          line-height: 0.9em
+          margin-right: .05em
+          vertical-align: top
+
+  & > standard-website--root
+    & > div
+      display: flex
+      flex-direction: column
+      gap: 1rem + 0.25rem * $base-scale
+      justify-content: center
+      padding: 2rem + 0.75rem * $base-scale 1rem * $base-scale 0.5rem + 0.75rem * $base-scale
+
+      & > div
+        display: flex
+        flex-direction: row
+        gap: 1rem * $base-scale
+        max-width: 48rem
+
+        & > main
+          display: flex
+          flex-basis: 32rem
+          flex-direction: column
+          flex-shrink: 0
+
+          & > router-outlet
+            display: none
+
+        @media (max-width: (48 + 2 * $base-scale) * $base-font-size)
+          flex-direction: column
+          gap: 0.5rem + 0.75rem * $base-scale
+          max-width: 32rem
+
+    & > standard--footer > footer
+      @media (max-width: (48 + 2 * $base-scale) * $base-font-size)
+        flex-basis: 32rem !important
+
+  @mixin colors($foreground, $foreground-gray, $background)
+    background: $background
+    color: $foreground
+
+    a
+      text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
+
+      &::before
+        background: $foreground
+
+      &:active,
+      &.no-op
+        color: $foreground-gray
+
+        &::before
+          background: $foreground-gray
+
+  @include colors($light-foreground, $light-foreground-gray, $light-background)
+
+  @media (prefers-color-scheme: dark)
+    @include colors($dark-foreground, $dark-foreground-gray, $dark-background)

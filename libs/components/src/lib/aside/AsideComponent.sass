@@ -1,0 +1,16 @@
+$base-scale: var(--base-scale)
+
+\:host > aside
+  display: flex
+  flex-direction: column
+  gap: calc(0.6rem + 0.15rem * $base-scale)
+  position: sticky
+  top: calc(0.5rem + 0.75rem * $base-scale)
+
+  & > p
+    margin: 0
+
+  & > div
+    display: flex
+    flex-direction: row
+    gap: calc(1rem * $base-scale)

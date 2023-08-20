@@ -1,0 +1,16 @@
+{
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "name":        "services",
+  "projectType": "library",
+  "sourceRoot":  "libs/services/src",
+  "targets":     {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options":  {
+        "lintFilePatterns": [
+          "libs/services/src/**/*.ts"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "name":        "components",
+  "projectType": "library",
+  "sourceRoot":  "libs/components/src",
+  "targets":     {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options":  {
+        "lintFilePatterns": [
+          "libs/components/src/**/*.html",
+          "libs/components/src/**/*.ts"
+        ]
+      }
+    }
+  }
+}
