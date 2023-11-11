@@ -7,8 +7,7 @@ import { Firestore, getFirestore, provideFirestore }                            
 import { Functions, getFunctions, provideFunctions }                                                   from "@angular/fire/functions";
 import { BrowserModule, provideClientHydration }                                                       from "@angular/platform-browser";
 import { BrowserAnimationsModule }                                                                     from "@angular/platform-browser/animations";
-import { RouterModule, RouterOutlet }                                                                  from "@angular/router";
-import { TransferHttpCacheModule }                                                                     from "@nguniversal/common";
+import { provideRouter, RouterOutlet }                                                                 from "@angular/router";
 import { AsideComponent, ButtonComponent, FooterComponent, HeaderComponent, routes as standardRoutes } from "@standard/components";
 import { ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                      from "@standard/injection-tokens";
 import { AppCheckOptionsService }                                                                      from "@standard/services";
@@ -52,23 +51,17 @@ import { RootComponent, routes as websiteRoutes }                               
     provideFunctions(
       (): Functions => getFunctions(),
     ),
-    RouterModule.forRoot(
-      [
-        ...websiteRoutes,
-        ...standardRoutes,
-      ],
-      {
-        bindToComponentInputs:     true,
-        initialNavigation:         "enabledBlocking",
-        scrollPositionRestoration: "enabled",
-      },
-    ),
     RouterOutlet,
-    TransferHttpCacheModule,
     ButtonComponent,
   ],
   providers:    [
     provideClientHydration(),
+    provideRouter(
+      [
+        ...websiteRoutes,
+        ...standardRoutes,
+      ],
+    ),
     ScreenTrackingService,
     UserTrackingService,
     {

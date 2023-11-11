@@ -1,6 +1,6 @@
 import { isPlatformBrowser }                      from "@angular/common";
 import { Component, inject, OnInit, PLATFORM_ID } from "@angular/core";
-import { RESPONSE }                               from "@nguniversal/express-engine/tokens";
+import { RESPONSE }                               from "@standard/injection-tokens";
 import { PathService }                            from "@standard/services";
 import { Response }                               from "express";
 import { CardComponent }                          from "../../../card/CardComponent";

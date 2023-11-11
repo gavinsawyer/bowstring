@@ -1,6 +1,6 @@
 {
   "name":         "@standard/cloud-functions",
-  "license":      "MIT",
+  "license":      "Copyright © 2023",
   "author":       {
     "name":  "Gavin Sawyer",
     "email": "g@vinsawyer.dev",
@@ -18,6 +18,6 @@
   "main":         "./main.js",
   "type":         "module",
   "dependencies": {
-    "firebase-functions": "^4.4.1"
+    "firebase-functions": "^4.5.0"
   }
 }
