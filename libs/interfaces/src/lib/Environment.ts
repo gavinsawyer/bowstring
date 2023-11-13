@@ -1,5 +1,4 @@
 export interface Environment {
-  "project": "console" | "website",
   "firebase": {
     "apiKey": string,
     "appId": string,
@@ -10,5 +9,6 @@ export interface Environment {
     "storageBucket": string
   },
   "production": boolean,
+  "project": "console" | "website",
   "recaptchaKeyID": string,
 }

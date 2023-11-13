@@ -1,9 +1,8 @@
 $light-foreground: hsl(0, 0%, 15%)
 $light-background: hsl(0, 0%, 95%)
-$dark-foreground: hsl(0, 0%, 85%)
-$dark-background: hsl(0, 0%, 15%)
 
-$base-scale: var(--base-scale)
+$dark-foreground:  hsl(0, 0%, 85%)
+$dark-background:  hsl(0, 0%, 15%)
 
 \:host
   align-self: stretch
@@ -16,7 +15,7 @@ $base-scale: var(--base-scale)
     flex-basis: 48rem
     flex-direction: row
     justify-content: flex-end
-    padding: calc(0.625rem + 0.25rem * $base-scale) calc(1rem * $base-scale)
+    padding: 1.125rem 1rem
 
   @mixin colors($foreground, $background)
     background: $background

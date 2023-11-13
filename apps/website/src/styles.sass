@@ -1,32 +1,36 @@
 @import 'normalize.css'
 
 
-$primary: hsl(129, 16%, 55%)
+$primary:          hsl(129, 16%, 55%)
 $primary-contrast: hsl(129, 8%, 96%)
 
-$light-foreground: hsl(0, 0%, 20%)
+$light-foreground:      hsl(0, 0%, 20%)
 $light-foreground-gray: hsl(0, 0%, 60%)
-$light-background: hsl(0, 0%, 100%)
-$dark-foreground: hsl(0, 0%, 88%)
+$light-background:      hsl(0, 0%, 100%)
+
+$dark-foreground:      hsl(0, 0%, 88%)
 $dark-foreground-gray: hsl(0, 0%, 58%)
-$dark-background: hsl(0, 0%, 18%)
+$dark-background:      hsl(0, 0%, 18%)
 
-$base-scale: 1.3333333333
-$base-font-size: 8px + 6px * $base-scale
+$border-radius: 1rem
 
-$border-radius: 1
+$depth-offset: calc( 4/16 * 1rem)
+$depth-blur:   calc(10/16 * 1rem)
+$depth-spread: calc(-5/16 * 1rem)
 
 html,
 body
-  font-size: $base-font-size
+  font-size: 16px
 
 body
-  --primary: #{ $primary }
+  --primary:          #{ $primary }
   --primary-contrast: #{ $primary-contrast }
 
-  --base-scale: #{ $base-scale }
-  --border-radius: #{ $border-radius }
+  --border-radius:  #{ $border-radius }
 
+  --depth-offset: #{ $depth-offset }
+  --depth-blur:   #{ $depth-blur }
+  --depth-spread: #{ $depth-spread }
 
   display: flex
   flex-direction: row
@@ -51,9 +55,13 @@ body
       width: 0
       z-index: -1
 
-    &:hover::before
-      left: 0
-      width: 100%
+    &:hover,
+    &:focus-visible
+      outline: none
+
+      &::before
+        left: 0
+        width: 100%
 
     &.no-op
       cursor: default
@@ -66,21 +74,21 @@ body
   section
     display: flex
     flex-direction: column
-    gap: 1rem * $base-scale
+    gap: 1rem
 
   hgroup
     max-width: 30rem
 
     & > h1,
     & > h2
-      margin-top: 0
+      margin: 0 0 0.875rem
 
       &:has(+ p > span.caption:first-child)
-        margin-bottom: 0.6rem + 0.15rem * $base-scale
+        margin-bottom: 1.125rem
 
     & > p
       font-size: 1.125rem
-      margin: 0.6rem + 0.15rem * $base-scale 0 0
+      margin: 0.875rem 0 0
 
       & > span.caption
         align-items: first baseline
@@ -89,8 +97,8 @@ body
         flex-wrap: wrap
         font-size: 1rem
         font-variant: all-small-caps
-        gap: 0.6rem + 0.15rem * $base-scale
-        margin-bottom: 0.6rem + 0.15rem * $base-scale
+        gap: 0.875rem
+        margin-bottom: 0.875rem
 
         & > span.caption--screen-reader-text
           height: 1px
@@ -114,14 +122,14 @@ body
     & > div
       display: flex
       flex-direction: column
-      gap: 1rem + 0.25rem * $base-scale
+      gap: 1rem
       justify-content: center
-      padding: 2rem + 0.75rem * $base-scale 1rem * $base-scale 0.5rem + 0.75rem * $base-scale
+      padding: 4rem 1rem 1.125rem
 
       & > div
         display: flex
         flex-direction: row
-        gap: 1rem * $base-scale
+        gap: 1rem
         max-width: 48rem
 
         & > main
@@ -133,13 +141,16 @@ body
           & > router-outlet
             display: none
 
-        @media (max-width: (48 + 2 * $base-scale) * $base-font-size)
+          @media (max-width: 50rem)
+            flex-basis: 0
+
+        @media (max-width: 50rem)
           flex-direction: column
-          gap: 0.5rem + 0.75rem * $base-scale
+          gap: 1.125rem
           max-width: 32rem
 
     & > standard--footer > footer
-      @media (max-width: (48 + 2 * $base-scale) * $base-font-size)
+      @media (max-width: 50rem)
         flex-basis: 32rem !important
 
   @mixin colors($foreground, $foreground-gray, $background)

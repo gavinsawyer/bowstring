@@ -28,10 +28,13 @@ export const app: () => express.Express = (): express.Express => ((distFolder: s
   ),
 ).get(
   "*",
-  (req, res, next: express.NextFunction): Promise<void> => new CommonEngine().render(
+  (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => new CommonEngine().render(
     {
       bootstrap:        WebsiteServerModule,
-      documentFilePath: join(distFolder, indexHtml),
+      documentFilePath: join(
+        distFolder,
+        indexHtml,
+      ),
       url:              `${req.protocol}://${req.headers.host}${req.originalUrl}`,
       publicPath:       distFolder,
       providers:        [

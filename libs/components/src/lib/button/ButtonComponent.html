@@ -1,11 +1,13 @@
 <a
   (click)="action.emit();"
+  [href]="url"
   *ngIf="url"
-  [href]="url">
+  tabindex="0">
   {{ label }}
 </a>
 <button
   (click)="action.emit();"
-  *ngIf="!url">
+  *ngIf="!url"
+  tabindex="0">
   {{ label }}
 </button>

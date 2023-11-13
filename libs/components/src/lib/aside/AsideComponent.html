@@ -1,13 +1,17 @@
 <aside>
-  <standard--button label="Button" url="https://google.com" />
+  <standard--button label="Button" (action)="alert();" />
   <p>
     <a
       routerLink="/privacy"
+      #privacyRouterLinkActive="routerLinkActive"
       routerLinkActive="no-op"
-      [routerLinkActiveOptions]="{'exact': true}">Privacy</a> &bull; <a
+      [routerLinkActiveOptions]="{'exact': true}"
+      [tabindex]="privacyRouterLinkActive.isActive ? -1 : 0">Privacy</a> &bull; <a
       routerLink="/terms"
+      #termsRouterLinkActive="routerLinkActive"
       routerLinkActive="no-op"
-      [routerLinkActiveOptions]="{'exact': true}">Terms</a>
+      [routerLinkActiveOptions]="{'exact': true}"
+      [tabindex]="termsRouterLinkActive.isActive ? -1 : 0">Terms</a>
   </p>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi fugit ipsa obcaecati.

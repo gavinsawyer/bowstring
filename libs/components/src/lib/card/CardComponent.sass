@@ -1,19 +1,24 @@
 $light-foreground: hsl(0, 0%, 15%)
 $light-background: hsl(0, 0%, 95%)
-$dark-foreground: hsl(0, 0%, 85%)
-$dark-background: hsl(0, 0%, 15%)
+
+$dark-foreground:  hsl(0, 0%, 85%)
+$dark-background:  hsl(0, 0%, 15%)
+
 $image-foreground: hsl(0, 0%, 92%)
 $image-background: hsl(0, 0%, 18%)
 
-$base-scale: var(--base-scale)
 $border-radius: var(--border-radius)
 
+$depth-offset: var(--depth-offset)
+$depth-blur:   var(--depth-blur)
+$depth-spread: var(--depth-spread)
+
 \:host
-  border-radius: calc(1rem * $border-radius * $base-scale)
-  box-shadow: black 0 calc(0.0625rem + 0.1875rem * $base-scale) calc(0.25rem + 0.5rem * $base-scale) calc(-0.125rem - 0.375rem * $base-scale)
+  border-radius: $border-radius
+  box-shadow: black 0 $depth-offset $depth-blur $depth-spread
   display: flex
   flex-direction: column-reverse
-  padding: calc(0.5rem + 0.75rem * $base-scale) calc(1rem * $base-scale) calc(0.125rem + 0.75rem * $base-scale)
+  padding: 1.125rem 1rem 0.875rem
 
   &::ng-deep
     & > hgroup:has(+ img)
@@ -21,10 +26,10 @@ $border-radius: var(--border-radius)
       position: relative
 
       & > h1
-        background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) calc(7.5rem * $base-scale))
+        background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
         color: $image-foreground
-        margin: 0 calc(-1rem * $base-scale) !important
-        padding: calc(4rem + 0.75rem * $base-scale) calc(1rem * $base-scale) calc(0.6rem + 0.15rem * $base-scale)
+        margin: 0 -1rem !important
+        padding: 4rem 1rem 0.875rem
         position: absolute
         transform: translateY(-100%)
         width: 100%
@@ -47,11 +52,11 @@ $border-radius: var(--border-radius)
 
     & > img
       background: $image-background
-      border-top-left-radius: calc(1rem * $border-radius * $base-scale)
-      border-top-right-radius: calc(1rem * $border-radius * $base-scale)
+      border-top-left-radius: $border-radius
+      border-top-right-radius: $border-radius
       color: $image-foreground
-      margin: calc(-0.5rem - 0.75rem * $base-scale) calc(-1rem * $base-scale) 0
-      max-width: calc(100% + 2rem * $base-scale)
+      margin: -1.125rem -1rem 0
+      max-width: calc(100% + 2rem)
 
   @mixin colors($foreground, $background)
     background: $background

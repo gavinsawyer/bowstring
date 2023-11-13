@@ -1,8 +1,11 @@
-$primary: var(--primary)
+$primary:          var(--primary)
 $primary-contrast: var(--primary-contrast)
 
-$base-scale: var(--base-scale)
 $border-radius: var(--border-radius)
+
+$depth-offset: var(--depth-offset)
+$depth-blur:   var(--depth-blur)
+$depth-spread: var(--depth-spread)
 
 \:host
   display: flex
@@ -21,16 +24,18 @@ $border-radius: var(--border-radius)
   & > button
     background-color: $primary
     border: none
-    border-radius: calc(1rem * $border-radius * $base-scale)
-    box-shadow: black 0 calc(0.0625rem + 0.1875rem * $base-scale) calc(0.25rem + 0.5rem * $base-scale) calc(-0.125rem - 0.375rem * $base-scale)
+    border-radius: $border-radius
+    box-shadow: black 0 $depth-offset $depth-blur $depth-spread
     color: $primary-contrast
     cursor: pointer
     display: flex
     flex-basis: 100%
     font-size: 1.125rem
     justify-content: center
-    padding: calc(0.6rem + 0.15rem * $base-scale) calc(1rem * $base-scale)
+    padding: 0.875rem 2rem
     transition: box-shadow 100ms ease-out
 
-    &:hover
-      box-shadow: black 0 calc(0.078125rem + 0.234375rem * $base-scale) calc(0.375rem + 0.75rem * $base-scale) calc(-0.125rem - 0.375rem * $base-scale)
+    &:hover,
+    &:focus-visible
+      box-shadow: black 0 calc(2 * $depth-offset) calc(2 * $depth-blur) calc(2 * $depth-spread)
+      outline: none

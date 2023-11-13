@@ -1,4 +1,4 @@
-import { Route } from "@angular/router";
+import { Route }              from "@angular/router";
 import { description, title } from "@standard/brand";
 
 
