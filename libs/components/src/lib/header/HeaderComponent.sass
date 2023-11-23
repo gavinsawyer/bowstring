@@ -1,7 +1,7 @@
 \:host
   backdrop-filter: saturate(1.8) blur(1.25rem)
-  margin: 0.5rem -0.5rem calc(0.5rem - 0.5px)
-  padding: 0 0 0.5px
+  margin: 0.5rem -0.5rem calc(0.5rem - 1px)
+  padding: 0 0 1px
   position: sticky
   top: 0
   transition: background-color 200ms ease, border-radius 200ms ease, box-shadow 200ms ease, margin 200ms ease
@@ -36,8 +36,8 @@
         opacity: 80%
 
   &.raisedNarrow
-    box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
-    margin: -0.5px -1rem
+    box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
+    margin: 0 -1rem -1px
 
     & > header
       padding: 1rem
@@ -45,17 +45,17 @@
   &.raised
     @media (min-width: 34rem)
       border-radius: calc(var(--border-radius) + 0.5px)
-      box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
-      margin: -0.5px calc(-1rem - 0.5px)
+      box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
+      margin: -1px calc(-1rem - 1px)
 
       & > header
         padding: 1rem
         border-radius: var(--border-radius)
 
   @media (min-width: 34rem)
-    border-radius: calc((var(--border-radius) / 2) + 0.5px)
-    margin: calc(0.5rem - 0.5px) calc(-0.5rem - 0.5px)
-    padding: 0.5px
+    border-radius: calc((var(--border-radius) / 2) + 1px)
+    margin: calc(0.5rem - 1px) calc(-0.5rem - 1px)
+    padding: 1px
     top: 1rem
 
     & > header

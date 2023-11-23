@@ -52,11 +52,11 @@ $card-dark-background:      darken($card-light-background, $dark-theme-factor)
 $card-dark-foreground-grey: darken($card-dark-foreground, $grey-factor)
 $card-dark-background-grey: darken($card-dark-background, $grey-factor)
 
-$glass-light:          transparentize($body-light-background, math.div(1, 3))
-$glass-light-backdrop: transparentize(darken($body-light-background, 80%), math.div(4, 5))
+$glass-light:          transparentize($body-light-background, math.div(1, 4))
+$glass-light-backdrop: transparentize(darken($body-light-background, 20%), math.div(4, 5))
 
-$glass-dark:          transparentize($body-dark-background, math.div(1, 3))
-$glass-dark-backdrop: transparentize(lighten($body-dark-background, 80%), math.div(4, 5))
+$glass-dark:          transparentize($body-dark-background, math.div(1, 4))
+$glass-dark-backdrop: transparentize(lighten($body-dark-background, 20%), math.div(4, 5))
 
 $depth-offset: $depth-blur * 0.5
 $depth-spread: $depth-offset * -1.03125
