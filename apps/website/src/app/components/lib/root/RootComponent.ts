@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, inject }   from "@angular/core";
+import { ResponsivityService } from "@standard/services";
 
 
 @Component({
@@ -9,4 +10,7 @@ import { Component } from "@angular/core";
   templateUrl: "./RootComponent.html",
 })
 export class RootComponent {
+
+  public readonly responsivityService: ResponsivityService = inject<ResponsivityService>(ResponsivityService);
+
 }

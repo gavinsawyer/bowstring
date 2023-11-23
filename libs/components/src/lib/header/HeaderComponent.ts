@@ -1,6 +1,6 @@
 import { Component }                    from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { title }                        from "@standard/brand";
+import { subtitle, title }              from "@standard/brand";
 
 
 @Component({
@@ -17,6 +17,7 @@ import { title }                        from "@standard/brand";
 })
 export class HeaderComponent {
 
-  public readonly title: string = title;
+  public readonly subtitle: string = subtitle;
+  public readonly title:    string = title;
 
 }

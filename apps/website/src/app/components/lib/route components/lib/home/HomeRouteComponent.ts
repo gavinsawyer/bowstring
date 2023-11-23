@@ -6,9 +6,9 @@ import { CapsuleComponent, CardComponent, RouteComponent } from "@standard/compo
 
 @Component({
   imports:     [
+    CapsuleComponent,
     CardComponent,
     NgOptimizedImage,
-    CapsuleComponent,
     RouterLink,
     RouterLinkActive,
   ],

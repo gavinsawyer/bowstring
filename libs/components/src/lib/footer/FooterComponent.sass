@@ -1,9 +1,3 @@
-$light-foreground: hsl(0, 0%, 15%)
-$light-background: hsl(0, 0%, 95%)
-
-$dark-foreground:  hsl(0, 0%, 85%)
-$dark-background:  hsl(0, 0%, 15%)
-
 \:host
   align-self: stretch
   display: flex
@@ -11,11 +5,15 @@ $dark-background:  hsl(0, 0%, 15%)
   justify-content: center
 
   & > footer
+    cursor: default
     display: flex
     flex-basis: 48rem
     flex-direction: row
     justify-content: flex-end
     padding: 1.125rem 1rem
+
+    @media (max-width: 50rem)
+      flex-basis: 32rem
 
   @mixin colors($foreground, $background)
     background: $background
@@ -27,7 +25,7 @@ $dark-background:  hsl(0, 0%, 15%)
       &::before
         background: $foreground
 
-  @include colors($light-foreground, $light-background)
+  @include colors(var(--footer-light-foreground), var(--footer-light-background))
 
   @media (prefers-color-scheme: dark)
-    @include colors($dark-foreground, $dark-background)
+    @include colors(var(--footer-dark-foreground), var(--footer-dark-background))

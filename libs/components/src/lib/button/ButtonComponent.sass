@@ -1,41 +1,42 @@
-$primary:          var(--primary)
-$primary-contrast: var(--primary-contrast)
-
-$border-radius: var(--border-radius)
-
-$depth-offset: var(--depth-offset)
-$depth-blur:   var(--depth-blur)
-$depth-spread: var(--depth-spread)
-
 \:host
-  display: flex
-  flex-direction: row
-  flex-grow: 1
-
-  & > a
-    position: static
-    text-shadow: none
-    z-index: unset
-
-    &::before
-      display: none
-
-  & > a,
-  & > button
-    background-color: $primary
-    border: none
-    border-radius: $border-radius
-    box-shadow: black 0 $depth-offset $depth-blur $depth-spread
-    color: $primary-contrast
-    cursor: pointer
+  &,
+  & > div
     display: flex
-    flex-basis: 100%
-    font-size: 1.125rem
-    justify-content: center
-    padding: 0.875rem 2rem
-    transition: box-shadow 100ms ease-out
+    flex-direction: row
+    flex-grow: 1
 
-    &:hover,
-    &:focus-visible
-      box-shadow: black 0 calc(2 * $depth-offset) calc(2 * $depth-blur) calc(2 * $depth-spread)
-      outline: none
+  & > div
+    & > a
+      position: static
+      text-shadow: none
+      z-index: unset
+
+      &::before
+        display: none
+
+    & > a,
+    & > button
+      background-color: var(--primary)
+      border: none
+      border-radius: var(--border-radius)
+      box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
+      color: var(--primary-contrast)
+      cursor: pointer
+      display: flex
+      flex-basis: 100%
+      font-size: 1.125rem
+      justify-content: center
+      padding: 0.875rem 2rem
+      transition: box-shadow 200ms ease, scale 200ms ease
+      translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+
+      &:hover,
+      &:focus-visible
+        box-shadow: black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
+        outline: none
+        scale: 1.03125 1.03125 1.03125
+
+    &.transitionTranslate
+      & > a,
+      & > button
+        transition: box-shadow 200ms ease, scale 200ms ease, translate 200ms ease

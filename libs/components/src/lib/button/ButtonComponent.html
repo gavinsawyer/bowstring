@@ -1,13 +1,23 @@
-<a
-  (click)="action.emit();"
-  [href]="url"
-  *ngIf="url"
-  tabindex="0">
-  {{ label }}
-</a>
-<button
-  (click)="action.emit();"
-  *ngIf="!url"
-  tabindex="0">
-  {{ label }}
-</button>
+<div
+  (mouseenter)="mouseenter();"
+  (mouseleave)="mouseleave();"
+  (mousemove)="mousemove($event);"
+  [ngClass]="{ 'transitionTranslate': transitionTranslate$() }">
+  <a
+    (click)="action.emit();"
+    [href]="url"
+    *ngIf="url"
+    [style.--translation-x]="translation$().x"
+    [style.--translation-y]="translation$().y"
+    tabindex="0">
+    {{ label }}
+  </a>
+  <button
+    (click)="action.emit();"
+    *ngIf="!url"
+    [style.--translation-x]="translation$().x"
+    [style.--translation-y]="translation$().y"
+    tabindex="0">
+    {{ label }}
+  </button>
+</div>

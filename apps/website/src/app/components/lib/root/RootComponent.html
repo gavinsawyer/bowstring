@@ -1,5 +1,5 @@
 <div>
-  <standard--header />
+  <standard--header [ngClass]="{ 'raised': (responsivityService.scrollPosition$() || 0) > 48, 'raisedNarrow': (responsivityService.scrollPosition$() || 0) > 64 }" />
   <div>
     <standard--aside />
     <main>

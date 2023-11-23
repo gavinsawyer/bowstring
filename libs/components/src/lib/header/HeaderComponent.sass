@@ -1,10 +1,81 @@
-\:host > header
-  display: flex
+\:host
+  backdrop-filter: saturate(1.8) blur(1.25rem)
+  margin: 0.5rem -0.5rem calc(0.5rem - 0.5px)
+  padding: 0 0 0.5px
+  position: sticky
+  top: 0
+  transition: background-color 200ms ease, border-radius 200ms ease, box-shadow 200ms ease, margin 200ms ease
+  z-index: 999
 
-  & > a
-    color: inherit
-    font-size: 1.5rem
-    font-weight: bold
+  & > header
+    display: flex
+    justify-content: center
+    padding: 0.5rem
+    transition: background-color 200ms ease, border-radius 200ms ease, padding 200ms ease
 
-    &.no-op::before
-      display: none
+    & > div
+      align-items: center
+      display: flex
+      flex-direction: column
+
+      & > a
+        color: inherit
+        font-size: 1.5rem
+        font-weight: bold
+        text-shadow: none
+
+        &:not(.no-op):focus-visible
+          text-decoration: solid currentColor underline
+
+        &::before
+          display: none
+
+      & > span
+        cursor: default
+        font-weight: 700
+        opacity: 80%
+
+  &.raisedNarrow
+    box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
+    margin: -0.5px -1rem
+
+    & > header
+      padding: 1rem
+
+  &.raised
+    @media (min-width: 34rem)
+      border-radius: calc(var(--border-radius) + 0.5px)
+      box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
+      margin: -0.5px calc(-1rem - 0.5px)
+
+      & > header
+        padding: 1rem
+        border-radius: var(--border-radius)
+
+  @media (min-width: 34rem)
+    border-radius: calc((var(--border-radius) / 2) + 0.5px)
+    margin: calc(0.5rem - 0.5px) calc(-0.5rem - 0.5px)
+    padding: 0.5px
+    top: 1rem
+
+    & > header
+      border-radius: calc(var(--border-radius) / 2)
+
+  @mixin colors($glass-light, $glass-light-backdrop)
+    &.raisedNarrow
+      background-color: $glass-light-backdrop
+
+      & > header
+        background-color: $glass-light
+
+    &.raised
+      @media (min-width: 34rem)
+        background-color: $glass-light-backdrop
+
+        & > header
+          background-color: $glass-light
+
+  @include colors(var(--glass-light), var(--glass-light-backdrop))
+
+  @media (prefers-color-scheme: dark)
+    @include colors(var(--glass-dark), var(--glass-dark-backdrop))

@@ -1,21 +1,6 @@
-$light-foreground: hsl(0, 0%, 15%)
-$light-background: hsl(0, 0%, 95%)
-
-$dark-foreground:  hsl(0, 0%, 85%)
-$dark-background:  hsl(0, 0%, 15%)
-
-$image-foreground: hsl(0, 0%, 92%)
-$image-background: hsl(0, 0%, 18%)
-
-$border-radius: var(--border-radius)
-
-$depth-offset: var(--depth-offset)
-$depth-blur:   var(--depth-blur)
-$depth-spread: var(--depth-spread)
-
 \:host
-  border-radius: $border-radius
-  box-shadow: black 0 $depth-offset $depth-blur $depth-spread
+  border-radius: var(--border-radius)
+  box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
   display: flex
   flex-direction: column-reverse
   padding: 1.125rem 1rem 0.875rem
@@ -27,7 +12,7 @@ $depth-spread: var(--depth-spread)
 
       & > h1
         background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
-        color: $image-foreground
+        color: var(--card-dark-foreground)
         margin: 0 -1rem !important
         padding: 4rem 1rem 0.875rem
         position: absolute
@@ -35,7 +20,7 @@ $depth-spread: var(--depth-spread)
         width: 100%
 
         & > a
-          text-decoration-color: $image-foreground
+          text-decoration-color: var(--card-dark-foreground)
           text-shadow: none
           transition: color 200ms ease, text-decoration-color 200ms ease
 
@@ -51,27 +36,27 @@ $depth-spread: var(--depth-spread)
             text-decoration: underline
 
     & > img
-      background: $image-background
-      border-top-left-radius: $border-radius
-      border-top-right-radius: $border-radius
-      color: $image-foreground
+      border-top-left-radius: var(--border-radius)
+      border-top-right-radius: var(--border-radius)
+      color: var(--card-dark-foreground)
       margin: -1.125rem -1rem 0
       max-width: calc(100% + 2rem)
 
-  @mixin colors($foreground, $background)
+  @mixin colors($foreground, $foreground-grey, $background, $background-grey)
     background: $background
     color: $foreground
 
-    &::ng-deep > hgroup
-      & > h1,
-      & > p
-        & > a
-          text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
+    &::ng-deep
+      & > hgroup
+        & > h1,
+        & > p
+          & > a
+            text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
 
-          &::before
-            background: $foreground
+            &::before
+              background: $foreground
 
-  @include colors($light-foreground, $light-background)
+  @include colors(var(--card-light-foreground), var(--card-light-foreground-grey), var(--card-light-background), var(--card-light-background-grey))
 
   @media (prefers-color-scheme: dark)
-    @include colors($dark-foreground, $dark-background)
+    @include colors(var(--card-dark-foreground), var(--card-dark-foreground-grey), var(--card-dark-background), var(--card-dark-background-grey))

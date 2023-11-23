@@ -1,3 +1,4 @@
+import { NgClass }                                                                                     from "@angular/common";
 import { Injector, NgModule }                                                                          from "@angular/core";
 import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }       from "@angular/fire/analytics";
 import { FirebaseApp, initializeApp, provideFirebaseApp }                                              from "@angular/fire/app";
@@ -30,6 +31,7 @@ import { RootComponent, routes as websiteRoutes }                               
     BrowserModule,
     FooterComponent,
     HeaderComponent,
+    NgClass,
     provideAnalytics(
       (): Analytics => getAnalytics(),
     ),
