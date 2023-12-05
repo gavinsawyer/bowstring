@@ -9,11 +9,19 @@
     display: flex
     flex-basis: 28rem
     flex-direction: row
-    justify-content: flex-end
+    flex-wrap: wrap
+    gap: 0.875rem 1rem
+    justify-content: space-between
     padding: 1.125rem 1rem
+
+    & > span
+      white-space: nowrap
 
     @media (min-width: 46rem)
       flex-basis: 49rem
+
+    @media (min-width: 23.5rem)
+      padding: 1.125rem 2rem
 
   @mixin colors($foreground, $background)
     background: $background

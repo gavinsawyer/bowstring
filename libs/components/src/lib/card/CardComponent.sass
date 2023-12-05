@@ -8,14 +8,18 @@
   &::ng-deep
     & > hgroup
       & > h1,
-      & > h2
+      & > h2,
+      & > h3,
+      & > h4
         cursor: default
 
       &:has(+ img)
         position: relative
 
         & > h1,
-        & > h2
+        & > h2,
+        & > h3,
+        & > h4
           background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
           color: var(--card-dark-foreground)
           margin: 0 -1rem !important
@@ -58,6 +62,9 @@
     &::ng-deep
       & > hgroup
         & > h1,
+        & > h2,
+        & > h3,
+        & > h4,
         & > p
           & > a
             text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0

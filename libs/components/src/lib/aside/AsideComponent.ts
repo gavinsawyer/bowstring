@@ -1,19 +1,19 @@
 import { DOCUMENT, isPlatformBrowser, NgOptimizedImage } from "@angular/common";
 import { Component, inject, PLATFORM_ID }                from "@angular/core";
-import { RouterLink, RouterLinkActive }   from "@angular/router";
-import { ButtonComponent }                from "../button/ButtonComponent";
-import { CapsuleComponent }               from "../capsule/CapsuleComponent";
-import { CardComponent }                  from "../card/CardComponent";
+import { RouterLink, RouterLinkActive }                  from "@angular/router";
+import { ButtonComponent }                               from "../button/ButtonComponent";
+import { CapsuleComponent }                              from "../capsule/CapsuleComponent";
+import { CardComponent }                                 from "../card/CardComponent";
 
 
 @Component({
-  imports: [
+  imports:     [
     ButtonComponent,
+    CapsuleComponent,
     CardComponent,
+    NgOptimizedImage,
     RouterLink,
     RouterLinkActive,
-    CapsuleComponent,
-    NgOptimizedImage,
   ],
   selector:    "standard--aside",
   standalone:  true,

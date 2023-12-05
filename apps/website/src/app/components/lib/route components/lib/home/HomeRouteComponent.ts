@@ -1,4 +1,3 @@
-import { NgOptimizedImage }                                from "@angular/common";
 import { Component }                                       from "@angular/core";
 import { RouterLink, RouterLinkActive }                    from "@angular/router";
 import { CapsuleComponent, CardComponent, RouteComponent } from "@standard/components";
@@ -8,7 +7,6 @@ import { CapsuleComponent, CardComponent, RouteComponent } from "@standard/compo
   imports:     [
     CapsuleComponent,
     CardComponent,
-    NgOptimizedImage,
     RouterLink,
     RouterLinkActive,
   ],
