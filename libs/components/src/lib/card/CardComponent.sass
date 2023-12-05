@@ -6,34 +6,39 @@
   padding: 1.125rem 1rem 0.875rem
 
   &::ng-deep
-    & > hgroup:has(+ img)
-      max-width: 32rem
-      position: relative
+    & > hgroup
+      & > h1,
+      & > h2
+        cursor: default
 
-      & > h1
-        background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
-        color: var(--card-dark-foreground)
-        margin: 0 -1rem !important
-        padding: 4rem 1rem 0.875rem
-        position: absolute
-        transform: translateY(-100%)
-        width: 100%
+      &:has(+ img)
+        position: relative
 
-        & > a
-          text-decoration-color: var(--card-dark-foreground)
-          text-shadow: none
-          transition: color 200ms ease, text-decoration-color 200ms ease
+        & > h1,
+        & > h2
+          background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
+          color: var(--card-dark-foreground)
+          margin: 0 -1rem !important
+          padding: 4rem 1rem 0.875rem
+          position: absolute
+          transform: translateY(-100%)
+          width: 100%
 
-          &::before
-            display: none
+          & > a
+            text-decoration-color: var(--card-dark-foreground)
+            text-shadow: none
+            transition: color 200ms ease, text-decoration-color 200ms ease
 
-          &:active,
-          &.no-op
-            text-decoration-color: currentColor
+            &::before
+              display: none
 
-          &:hover,
-          &.no-op
-            text-decoration: underline
+            &:active,
+            &.no-op
+              text-decoration-color: currentColor
+
+            &:hover,
+            &.no-op
+              text-decoration: underline
 
     & > img
       border-top-left-radius: var(--border-radius)
@@ -41,6 +46,10 @@
       color: var(--card-dark-foreground)
       margin: -1.125rem -1rem 0
       max-width: calc(100% + 2rem)
+
+      &:first-child
+        border-radius: var(--border-radius)
+        margin: -1.125rem -1rem -0.875rem
 
   @mixin colors($foreground, $foreground-grey, $background, $background-grey)
     background: $background

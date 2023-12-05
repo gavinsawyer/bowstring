@@ -5,14 +5,9 @@
 $primary:          hsl(129, 16%, 55%)
 $primary-contrast: hsl(129, 8%, 96%)
 
-$body-foreground-shade: 20%
-$body-background-shade: 100%
-
-$footer-foreground-shade: 18%
-$footer-background-shade: 90%
-
-$card-foreground-shade: 15%
-$card-background-shade: 95%
+$body-shade: 15%
+$footer-shade: 25%
+$card-shade: 20%
 
 $border-radius: 1rem
 
@@ -21,8 +16,11 @@ $dark-theme-factor: 80%
 
 $depth-blur:   0.5rem
 
+$body-background-shade:   100% - ($body-shade - 15)
+$footer-background-shade: 100% - ($footer-shade - 15)
+$card-background-shade:   100% - ($card-shade - 15)
 
-$body-light-foreground:      hsl(0, 0%, $body-foreground-shade)
+$body-light-foreground:      hsl(0, 0%, $body-shade)
 $body-light-background:      hsl(0, 0%, $body-background-shade)
 $body-light-foreground-grey: lighten($body-light-foreground, $grey-factor)
 $body-light-background-grey: lighten($body-light-background, $grey-factor)
@@ -32,7 +30,7 @@ $body-dark-background:      darken($body-light-background, $dark-theme-factor)
 $body-dark-foreground-grey: darken($body-dark-foreground, $grey-factor)
 $body-dark-background-grey: darken($body-dark-background, $grey-factor)
 
-$footer-light-foreground:      hsl(0, 0%, $footer-foreground-shade)
+$footer-light-foreground:      hsl(0, 0%, $footer-shade)
 $footer-light-background:      hsl(0, 0%, $footer-background-shade)
 $footer-light-foreground-grey: lighten($footer-light-foreground, $grey-factor)
 $footer-light-background-grey: lighten($footer-light-background, $grey-factor)
@@ -42,7 +40,7 @@ $footer-dark-background:      darken($footer-light-background, $dark-theme-facto
 $footer-dark-foreground-grey: darken($footer-dark-foreground, $grey-factor)
 $footer-dark-background-grey: darken($footer-dark-background, $grey-factor)
 
-$card-light-foreground:      hsl(0, 0%, $card-foreground-shade)
+$card-light-foreground:      hsl(0, 0%, $card-shade)
 $card-light-background:      hsl(0, 0%, $card-background-shade)
 $card-light-foreground-grey: lighten($card-light-foreground, $grey-factor)
 $card-light-background-grey: lighten($card-light-background, $grey-factor)
@@ -52,11 +50,11 @@ $card-dark-background:      darken($card-light-background, $dark-theme-factor)
 $card-dark-foreground-grey: darken($card-dark-foreground, $grey-factor)
 $card-dark-background-grey: darken($card-dark-background, $grey-factor)
 
-$glass-light:          transparentize($body-light-background, math.div(1, 4))
-$glass-light-backdrop: transparentize(darken($body-light-background, 20%), math.div(4, 5))
+$glass-light:          transparentize($body-light-background, math.div(1, 5))
+$glass-light-backdrop: transparentize(darken($body-light-background, 35%), math.div(3, 4))
 
-$glass-dark:          transparentize($body-dark-background, math.div(1, 4))
-$glass-dark-backdrop: transparentize(lighten($body-dark-background, 20%), math.div(4, 5))
+$glass-dark:          transparentize($body-dark-background, math.div(1, 5))
+$glass-dark-backdrop: transparentize(lighten($body-dark-background, 20%), math.div(3, 4))
 
 $depth-offset: $depth-blur * 0.5
 $depth-spread: $depth-offset * -1.03125
@@ -72,7 +70,6 @@ body
   --depth-blur:   #{ $depth-blur }
 
   --border-radius: #{ $border-radius }
-
 
   --body-light-foreground:      #{ $body-light-foreground }
   --body-light-background:      #{ $body-light-background }
@@ -180,13 +177,6 @@ body
         font-variant: all-small-caps
         gap: 0.875rem
         margin-bottom: 0.875rem
-
-        & > span.caption--screen-reader-text
-          height: 1px
-          opacity: 1
-          overflow: hidden
-          position: absolute
-          width: 1px
 
       & > span.content
         display: inline-block

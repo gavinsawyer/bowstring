@@ -14,23 +14,26 @@
 
     & > div
       display: flex
-      flex-direction: row
-      gap: 1rem
-      max-width: 48rem
+      flex-direction: column
+      gap: 1.125rem
+      max-width: 28rem
 
       & > main
         display: flex
-        flex-basis: 32rem
+        flex-basis: 0
         flex-direction: column
         flex-shrink: 0
 
         & > router-outlet
           display: none
 
-        @media (max-width: 50rem)
-          flex-basis: 0
+        @media (min-width: 46rem)
+          flex-basis: 28rem
 
-      @media (max-width: 50rem)
-        flex-direction: column
-        gap: 1.125rem
-        max-width: 32rem
+      @media (min-width: 46rem)
+        flex-direction: row
+        gap: 1rem
+        max-width: 49rem
+
+    @media (min-width: 23.5rem)
+      padding: 4rem 2rem 1.125rem

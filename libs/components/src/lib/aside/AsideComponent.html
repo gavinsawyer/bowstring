@@ -1,5 +1,14 @@
 <aside>
-  <standard--button label="Button" (action)="alert();" />
+  <standard--button class="primary" label="Button" (action)="alert();" />
+  <standard--card>
+    <img
+      alt="Boston's South End"
+      height="auto"
+      [ngSrc]="'/assets/southend.webp'"
+      priority=""
+      style="aspect-ratio: 3/4;"
+      width="1536" />
+  </standard--card>
   <p>
     <a
       routerLink="/privacy"
