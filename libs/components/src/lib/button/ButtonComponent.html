@@ -5,19 +5,25 @@
   [ngClass]="{ 'transitionTranslate': transitionTranslate$() }">
   <a
     (click)="action.emit();"
+    *ngIf="url && (url.includes('http://') || url.includes('https://'))"
     [href]="url"
-    *ngIf="url"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    tabindex="0">
-    {{ label }}
-  </a>
+    tabindex="0">{{ label }}</a>
+  <a
+    #routerLinkActive="routerLinkActive"
+    (click)="action.emit();"
+    *ngIf="url && !url.includes('http://') && !url.includes('https://')"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [routerLink]="url"
+    [style.--translation-x]="translation$().x"
+    [style.--translation-y]="translation$().y"
+    [tabindex]="routerLinkActive.isActive ? -1 : 0"
+    routerLinkActive="no-op">{{ label }}</a>
   <button
     (click)="action.emit();"
     *ngIf="!url"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    tabindex="0">
-    {{ label }}
-  </button>
+    tabindex="0">{{ label }}</button>
 </div>

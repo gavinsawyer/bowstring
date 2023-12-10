@@ -1,13 +1,14 @@
-\:host > aside
+\:host::ng-deep > aside
   display: flex
   flex-direction: column
   gap: 0.875rem
 
-  & > p
+  & > p,
+  & > span
     margin: 0
 
-    &:first-of-type
-      cursor: default
+  & > span
+    cursor: default
 
   & > div
     display: flex

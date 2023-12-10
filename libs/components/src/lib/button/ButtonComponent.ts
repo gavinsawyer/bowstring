@@ -1,5 +1,6 @@
 import { NgClass, NgIf, NgTemplateOutlet }                                from "@angular/common";
 import { Component, EventEmitter, Input, Output, signal, WritableSignal } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                   from "@angular/router";
 
 
 @Component({
@@ -7,6 +8,8 @@ import { Component, EventEmitter, Input, Output, signal, WritableSignal } from "
     NgClass,
     NgTemplateOutlet,
     NgIf,
+    RouterLink,
+    RouterLinkActive,
   ],
   selector:    "standard--button",
   standalone:  true,
@@ -21,14 +24,14 @@ export class ButtonComponent {
 
   @Input({
     required: true,
-  })       public label!: string;
-  @Input() public url?:   string;
+  }) public label!: string;
+  @Input() public url?: string;
 
-  public readonly mouseenter:           () => void                               = (): void => setTimeout(
+  public readonly mouseenter: () => void = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     100,
   ) && void (0);
-  public readonly mouseleave:           () => void                               = (): void => {
+  public readonly mouseleave: () => void = (): void => {
     this
       .transitionTranslate$
       .set(true);
@@ -42,7 +45,7 @@ export class ButtonComponent {
         },
       );
   };
-  public readonly mousemove:            (mouseEvent: MouseEvent) => void         = (mouseEvent: MouseEvent): void => this
+  public readonly mousemove: (mouseEvent: MouseEvent) => void = (mouseEvent: MouseEvent): void => this
     .translation$
     .set(
       {
@@ -51,7 +54,10 @@ export class ButtonComponent {
       },
     );
   public readonly transitionTranslate$: WritableSignal<boolean> = signal<boolean>(true);
-  public readonly translation$:         WritableSignal<{ x: number, y: number }> = signal<{
+  public readonly translation$: WritableSignal<{
+    x: number,
+    y: number
+  }> = signal<{
     x: number,
     y: number,
   }>(

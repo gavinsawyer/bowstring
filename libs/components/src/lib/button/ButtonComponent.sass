@@ -16,37 +16,40 @@
 
     & > a,
     & > button
-      background-color: var(--card-light-background)
+      background-color: var(--button-light-background)
       border: none
       border-radius: var(--border-radius)
       box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
-      color: var(--card-light-foreground)
+      color: var(--button-light-foreground)
       cursor: pointer
       display: flex
       flex-basis: 100%
       font-size: 1.125rem
       justify-content: center
       padding: 0.875rem 2rem
-      transition: box-shadow 200ms ease, scale 200ms ease
-      translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+      transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
 
-      &:hover,
-      &:focus-visible
+      &:not(.no-op)
+        translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+
+      &:not(.no-op):hover,
+      &:not(.no-op):focus-visible
         box-shadow: black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
         outline: none
         scale: 1.03125 1.03125 1.03125
 
       @media (prefers-color-scheme: dark)
-        background-color: var(--card-dark-background)
-        color: var(--card-dark-foreground)
+        background-color: var(--button-dark-background)
+        color: var(--button-dark-foreground)
 
     &.transitionTranslate
       & > a,
       & > button
-        transition: box-shadow 200ms ease, scale 200ms ease, translate 200ms ease
+        transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease, translate 200ms ease
 
   &.primary > div
     & > a,
     & > button
-      background-color: var(--primary)
-      color: var(--primary-contrast)
+      &:not(.no-op)
+        background-color: var(--primary)
+        color: var(--primary-contrast)

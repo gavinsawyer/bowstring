@@ -1,20 +1,7 @@
-import { DOCUMENT, isPlatformBrowser, NgOptimizedImage } from "@angular/common";
-import { Component, inject, PLATFORM_ID }                from "@angular/core";
-import { RouterLink, RouterLinkActive }                  from "@angular/router";
-import { ButtonComponent }                               from "../button/ButtonComponent";
-import { CapsuleComponent }                              from "../capsule/CapsuleComponent";
-import { CardComponent }                                 from "../card/CardComponent";
+import { Component } from "@angular/core";
 
 
 @Component({
-  imports:     [
-    ButtonComponent,
-    CapsuleComponent,
-    CardComponent,
-    NgOptimizedImage,
-    RouterLink,
-    RouterLinkActive,
-  ],
   selector:    "standard--aside",
   standalone:  true,
   styleUrls:   [
@@ -23,10 +10,4 @@ import { CardComponent }                                 from "../card/CardCompo
   templateUrl: "AsideComponent.html",
 })
 export class AsideComponent {
-
-  private readonly document:   Document = inject<Document>(DOCUMENT);
-  private readonly platformId: object   = inject<object>(PLATFORM_ID);
-
-  public readonly alert: () => void = (): void => isPlatformBrowser(this.platformId) ? this.document.defaultView?.alert("Button click") : void (0);
-
 }

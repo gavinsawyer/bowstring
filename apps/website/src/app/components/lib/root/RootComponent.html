@@ -1,7 +1,31 @@
 <div>
   <standard--header [ngClass]="{ 'raised': (responsivityService.scrollPosition$() || 0) > 48, 'raisedNarrow': (responsivityService.scrollPosition$() || 0) > 64 }" />
   <div>
-    <standard--aside />
+    <standard--aside>
+      <standard--button
+        class="primary"
+        label="Privacy"
+        url="/privacy" />
+      <standard--card>
+        <img
+          [ngSrc]="'/assets/southend.webp'"
+          alt="Boston's South End"
+          height="auto"
+          priority=""
+          style="aspect-ratio: 3/4;"
+          width="1536" />
+      </standard--card>
+      <span>
+        <standard--link
+          label="Privacy"
+          url="/privacy" /> &bull; <standard--link
+          label="Terms"
+          url="/terms" />
+      </span>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi fugit ipsa obcaecati.
+      </p>
+    </standard--aside>
     <main>
       <router-outlet />
     </main>

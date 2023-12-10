@@ -1,9 +1,13 @@
 import { Component, inject }         from "@angular/core";
 import { GIT_INFO, PACKAGE_VERSION } from "@standard/injection-tokens";
 import { GitInfo }                   from "git-describe";
+import { LinkComponent }             from "../link/LinkComponent";
 
 
 @Component({
+  imports:     [
+    LinkComponent,
+  ],
   selector:    "standard--footer",
   standalone:  true,
   styleUrls:   [

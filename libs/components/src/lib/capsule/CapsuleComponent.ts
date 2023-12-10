@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 
 @Component({
@@ -10,4 +10,9 @@ import { Component } from "@angular/core";
   templateUrl: "CapsuleComponent.html",
 })
 export class CapsuleComponent {
+
+  @Input({
+    required: true,
+  }) public label!: string;
+
 }

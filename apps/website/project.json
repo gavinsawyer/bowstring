@@ -36,13 +36,13 @@
         "production":  {
           "budgets":          [
             {
-              "maximumError":   "1mb",
-              "maximumWarning": "500kb",
+              "maximumError":   "1.5mb",
+              "maximumWarning": "750kb",
               "type":           "initial"
             },
             {
-              "maximumError":   "4kb",
-              "maximumWarning": "2kb",
+              "maximumError":   "10kb",
+              "maximumWarning": "5kb",
               "type":           "anyComponentStyle"
             }
           ],
@@ -182,7 +182,7 @@
         "firebaseHostingSite":  "standard-3eac7",
         "firebaseProject":      "standard-3eac7",
         "functionName":         "ssr-website",
-        "functionsNodeVersion": "18.17",
+        "functionsNodeVersion": "18.19",
         "outputPath":           "dist/apps/website/run",
         "prerender":            true,
         "prerenderTarget":      "website:build:production",

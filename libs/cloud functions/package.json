@@ -1,6 +1,6 @@
 {
   "name":         "@standard/cloud-functions",
-  "license":      "Copyright © 2023",
+  "license":      "MIT",
   "author":       {
     "name":  "Gavin Sawyer",
     "email": "g@vinsawyer.dev",

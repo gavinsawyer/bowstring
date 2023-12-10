@@ -1,17 +1,27 @@
 \:host
-  backdrop-filter: saturate(1.8) blur(1.25rem)
-  margin: 0 -1rem calc(0.5rem - 0.5px)
-  padding: 0 0 0.5px
+  backdrop-filter: blur(1.25rem) saturate(2)
+  margin: 0 -1rem calc(0.5rem - 1px)
+  padding: 0 0 1px
   position: sticky
   top: 0
   transition: background-color 200ms ease, border-radius 200ms ease, box-shadow 200ms ease, margin 200ms ease
   z-index: 999
+
+  @media (min-width: 23.5rem)
+    border-radius: calc(var(--border-radius) / 2)
+    margin: calc(0.5rem - 1px) calc(-0.5rem - 1px)
+    padding: 1px
+    top: 1rem
 
   & > header
     display: flex
     justify-content: center
     padding: 1rem 1rem 0.5rem
     transition: background-color 200ms ease, border-radius 200ms ease, padding 200ms ease
+
+    @media (min-width: 23.5rem)
+      border-radius: calc((var(--border-radius) / 2) - 0.5px)
+      padding: 0.5rem
 
     & > div
       align-items: center
@@ -36,29 +46,24 @@
         opacity: 80%
 
   &.raisedNarrow
-    box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
+    backdrop-filter: blur(1.25rem) brightness(1.5) saturate(2)
+    box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread)), black 0 0 3px -1px
     margin: 0 -1rem -1px
 
     & > header
       padding: 1rem
 
-  @media (min-width: 23.5rem)
-    border-radius: calc((var(--border-radius) / 2) + 0.5px)
-    margin: calc(0.5rem - 0.5px) calc(-0.5rem - 0.5px)
-    padding: 0.5px
-    top: 1rem
+  &.raised
+    @media (min-width: 23.5rem)
+      backdrop-filter: blur(1.25rem) brightness(1.5) saturate(2)
+      border-radius: calc(var(--border-radius))
+      box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread)), black 0 0 3px -1px
+      margin: -1px calc(-1rem - 1px)
 
     & > header
-      border-radius: calc(var(--border-radius) / 2)
-
-    &.raised
-      border-radius: calc(var(--border-radius) + 0.5px)
-      box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
-      margin: -0.5px calc(-1rem - 0.5px)
-
-      & > header
+      @media (min-width: 23.5rem)
+        border-radius: calc(var(--border-radius) - 1px)
         padding: 1rem
-        border-radius: var(--border-radius)
 
   @mixin colors($glass-light, $glass-light-backdrop)
     &.raisedNarrow
@@ -68,13 +73,21 @@
         background-color: $glass-light
 
     &.raised
-      @media (min-width: 34rem)
+      @media (min-width: 23.5rem)
         background-color: $glass-light-backdrop
 
-        & > header
+      & > header
+        @media (min-width: 23.5rem)
           background-color: $glass-light
 
   @include colors(var(--glass-light), var(--glass-light-backdrop))
 
   @media (prefers-color-scheme: dark)
     @include colors(var(--glass-dark), var(--glass-dark-backdrop))
+
+    &.raisedNarrow
+      box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread)), black 0 0 0 0.5px
+
+    &.raised
+      @media (min-width: 23.5rem)
+        box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread)), black 0 0 0 0.5px

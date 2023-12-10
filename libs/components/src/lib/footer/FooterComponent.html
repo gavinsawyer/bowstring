@@ -3,6 +3,8 @@
     &copy; 2023 Gavin Sawyer
   </span>
   <span>
-    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<a [href]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash">{{ gitInfo.hash }}</a>
+    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
+      [label]="gitInfo.hash || ''"
+      [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
   </span>
 </footer>
