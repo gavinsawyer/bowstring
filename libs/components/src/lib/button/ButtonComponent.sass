@@ -16,11 +16,11 @@
 
     & > a,
     & > button
-      background-color: var(--button-light-background)
+      background-color: var(--button-light-background-grey)
       border: none
       border-radius: var(--border-radius)
       box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
-      color: var(--button-light-foreground)
+      color: var(--button-light-foreground-grey)
       cursor: pointer
       display: flex
       flex-basis: 100%
@@ -30,6 +30,8 @@
       transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
 
       &:not(.no-op)
+        background-color: var(--button-light-background)
+        color: var(--button-light-foreground)
         translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
 
       &:not(.no-op):hover,
@@ -39,8 +41,12 @@
         scale: 1.03125 1.03125 1.03125
 
       @media (prefers-color-scheme: dark)
-        background-color: var(--button-dark-background)
-        color: var(--button-dark-foreground)
+        background-color: var(--button-dark-background-grey)
+        color: var(--button-dark-foreground-grey)
+
+        &:not(.no-op)
+          background-color: var(--button-dark-background)
+          color: var(--button-dark-foreground)
 
     &.transitionTranslate
       & > a,
@@ -50,6 +56,9 @@
   &.primary > div
     & > a,
     & > button
+      background-color: var(--primary-grey)
+      color: var(--primary-contrast-grey)
+
       &:not(.no-op)
         background-color: var(--primary)
         color: var(--primary-contrast)

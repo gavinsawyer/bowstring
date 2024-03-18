@@ -8,11 +8,11 @@ import { RouteComponent }                         from "../../../route/RouteComp
 
 
 @Component({
-  standalone:  true,
-  templateUrl: "./OtherwiseRouteComponent.html",
   imports:     [
     CardComponent,
   ],
+  standalone:  true,
+  templateUrl: "./OtherwiseRouteComponent.html",
 })
 export class OtherwiseRouteComponent extends RouteComponent implements OnInit {
 

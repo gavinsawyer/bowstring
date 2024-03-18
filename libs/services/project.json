@@ -4,7 +4,7 @@
   "projectType": "library",
   "sourceRoot":  "libs/services/src",
   "targets":     {
-    "lint": {
+    "eslint": {
       "executor": "@nx/linter:eslint",
       "options":  {
         "lintFilePatterns": [

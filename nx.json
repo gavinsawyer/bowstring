@@ -14,7 +14,7 @@
   },
   "npmScope":           "standard",
   "targetDefaults":     {
-    "build": {
+    "build":  {
       "dependsOn": [
         "^build"
       ],
@@ -23,7 +23,16 @@
         "^production"
       ]
     },
-    "lint":  {
+    "deploy": {
+      "dependsOn": [
+        "^deploy"
+      ],
+      "inputs":    [
+        "production",
+        "^production"
+      ]
+    },
+    "eslint": {
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintrc.json",
@@ -36,10 +45,12 @@
       "options": {
         "accessToken":         "${NX_CLOUD_ACCESS_TOKEN}",
         "cacheableOperations": [
-          "lint",
-          "browser",
-          "server",
-          "build"
+          "angular-browser",
+          "angular-prerender",
+          "angular-server",
+          "esbuild",
+          "eslint",
+          "tsc"
         ]
       },
       "runner":  "nx-cloud"

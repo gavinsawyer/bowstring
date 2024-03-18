@@ -2,11 +2,14 @@
 @import 'normalize.css'
 
 
-$primary:          hsl(129, 16%, 55%)
-$primary-contrast: hsl(129, 8%, 96%)
+$primary-shade: 55%
+$primary-contrast-shade: 96%
+
+$primary:          hsl(129, 16%, $primary-shade)
+$primary-contrast: hsl(129, 8%, $primary-contrast-shade)
 
 $body-shade: 15%
-$button-shade: 35%
+$button-shade: 30%
 $footer-shade: 25%
 $card-shade: 20%
 
@@ -15,8 +18,6 @@ $border-radius: 1rem
 $grey-factor:       40%
 $dark-theme-factor: 80%
 
-$depth-blur:   0.5rem
-
 $body-background-shade:   100% - ($body-shade - 15)
 $button-background-shade: 100% - ($button-shade - 15)
 $footer-background-shade: 100% - ($footer-shade - 15)
@@ -24,49 +25,54 @@ $card-background-shade:   100% - ($card-shade - 15)
 
 $body-light-foreground:      hsl(0, 0%, $body-shade)
 $body-light-background:      hsl(0, 0%, $body-background-shade)
-$body-light-foreground-grey: lighten($body-light-foreground, $grey-factor)
-$body-light-background-grey: lighten($body-light-background, $grey-factor)
+$body-light-foreground-grey: lighten($body-light-foreground, $grey-factor + $body-shade)
+$body-light-background-grey: lighten($body-light-background, $grey-factor - $body-shade)
 
 $body-dark-foreground:      lighten($body-light-foreground, $dark-theme-factor)
 $body-dark-background:      darken($body-light-background, $dark-theme-factor)
-$body-dark-foreground-grey: darken($body-dark-foreground, $grey-factor)
-$body-dark-background-grey: darken($body-dark-background, $grey-factor)
+$body-dark-foreground-grey: darken($body-dark-foreground, $grey-factor + $body-shade)
+$body-dark-background-grey: darken($body-dark-background, $grey-factor - $body-shade)
 
 $button-light-foreground:      hsl(0, 0%, $button-shade)
 $button-light-background:      hsl(0, 0%, $button-background-shade)
-$button-light-foreground-grey: lighten($button-light-foreground, $grey-factor)
-$button-light-background-grey: lighten($button-light-background, $grey-factor)
+$button-light-foreground-grey: lighten($button-light-foreground, math.abs($grey-factor + $button-shade) / 2)
+$button-light-background-grey: lighten($button-light-background, math.abs($grey-factor - $button-shade))
 
 $button-dark-foreground:      lighten($button-light-foreground, $dark-theme-factor)
 $button-dark-background:      darken($button-light-background, $dark-theme-factor)
-$button-dark-foreground-grey: darken($button-dark-foreground, $grey-factor)
-$button-dark-background-grey: darken($button-dark-background, $grey-factor)
+$button-dark-foreground-grey: darken($button-dark-foreground, math.abs($grey-factor + $button-shade) / 2)
+$button-dark-background-grey: darken($button-dark-background, math.abs($grey-factor - $button-shade))
 
 $footer-light-foreground:      hsl(0, 0%, $footer-shade)
 $footer-light-background:      hsl(0, 0%, $footer-background-shade)
-$footer-light-foreground-grey: lighten($footer-light-foreground, $grey-factor)
-$footer-light-background-grey: lighten($footer-light-background, $grey-factor)
+$footer-light-foreground-grey: lighten($footer-light-foreground, math.abs($grey-factor + $footer-shade) / 2)
+$footer-light-background-grey: lighten($footer-light-background, math.abs($grey-factor - $footer-shade))
 
 $footer-dark-foreground:      lighten($footer-light-foreground, $dark-theme-factor)
 $footer-dark-background:      darken($footer-light-background, $dark-theme-factor)
-$footer-dark-foreground-grey: darken($footer-dark-foreground, $grey-factor)
-$footer-dark-background-grey: darken($footer-dark-background, $grey-factor)
+$footer-dark-foreground-grey: darken($footer-dark-foreground, math.abs($grey-factor + $footer-shade) / 2)
+$footer-dark-background-grey: darken($footer-dark-background, math.abs($grey-factor - $footer-shade))
 
 $card-light-foreground:      hsl(0, 0%, $card-shade)
 $card-light-background:      hsl(0, 0%, $card-background-shade)
-$card-light-foreground-grey: lighten($card-light-foreground, $grey-factor)
-$card-light-background-grey: lighten($card-light-background, $grey-factor)
+$card-light-foreground-grey: lighten($card-light-foreground, math.abs($grey-factor + $card-shade) / 2)
+$card-light-background-grey: lighten($card-light-background, math.abs($grey-factor - $card-shade))
 
 $card-dark-foreground:      lighten($card-light-foreground, $dark-theme-factor)
 $card-dark-background:      darken($card-light-background, $dark-theme-factor)
-$card-dark-foreground-grey: darken($card-dark-foreground, $grey-factor)
-$card-dark-background-grey: darken($card-dark-background, $grey-factor)
+$card-dark-foreground-grey: darken($card-dark-foreground, math.abs($grey-factor + $card-shade) / 2)
+$card-dark-background-grey: darken($card-dark-background, math.abs($grey-factor - $card-shade))
+
+$primary-grey:          darken($primary, math.abs($grey-factor - $primary-shade))
+$primary-contrast-grey: darken($primary-contrast, math.abs($grey-factor - $primary-contrast-shade) / 2)
 
 $glass-light:          transparentize(darken($body-light-background, 10%), math.div(2, 5))
 $glass-light-backdrop: transparentize(lighten($body-light-background, 5%), math.div(3, 10))
 
 $glass-dark:          transparentize(darken($body-dark-background, 5%), math.div(2, 5))
 $glass-dark-backdrop: transparentize(lighten($body-dark-background, 10%), math.div(3, 10))
+
+$depth-blur:   0.5rem
 
 $depth-offset: $depth-blur * 0.5
 $depth-spread: $depth-offset * -1.03125
@@ -78,10 +84,6 @@ body
 body
   --primary:          #{ $primary }
   --primary-contrast: #{ $primary-contrast }
-
-  --depth-blur:   #{ $depth-blur }
-
-  --border-radius: #{ $border-radius }
 
   --body-light-foreground:      #{ $body-light-foreground }
   --body-light-background:      #{ $body-light-background }
@@ -123,11 +125,18 @@ body
   --card-dark-foreground-grey: #{ $card-dark-foreground-grey }
   --card-dark-background-grey: #{ $card-dark-background-grey }
 
+  --primary-grey:          #{ $primary-grey }
+  --primary-contrast-grey: #{ $primary-contrast-grey }
+
   --glass-light:          #{ $glass-light }
   --glass-light-backdrop: #{ $glass-light-backdrop }
 
   --glass-dark:          #{ $glass-dark }
   --glass-dark-backdrop: #{ $glass-dark-backdrop }
+
+  --depth-blur:   #{ $depth-blur }
+
+  --border-radius: #{ $border-radius }
 
   --depth-offset: #{ $depth-offset }
   --depth-spread: #{ $depth-spread }
@@ -222,7 +231,7 @@ body
       &:last-child
         margin: 0.875rem 0 0
 
-  @mixin colors($body-foreground, $body-foreground-gray, $body-background)
+  @mixin colors($body-foreground, $body-foreground-grey, $body-background)
     background: $body-background
     color: $body-foreground
 
@@ -234,10 +243,10 @@ body
 
       &:active,
       &.no-op
-        color: $body-foreground-gray
+        color: $body-foreground-grey
 
         &::before
-          background: $body-foreground-gray
+          background: $body-foreground-grey
 
   @include colors(var(--body-light-foreground), var(--body-light-foreground-grey), var(--body-light-background))
 

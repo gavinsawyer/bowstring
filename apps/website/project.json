@@ -5,13 +5,13 @@
   "projectType": "application",
   "sourceRoot":  "apps/website/src",
   "targets":     {
-    "prebuild": {
+    "prebuild":                {
       "executor": "nx:run-commands",
       "options":  {
         "command": "node -p \"'export const packageVersion = ' + JSON.stringify(require('./package.json').version) + ';'\" > apps/website/src/.package-version.ts && node -p \"'import { GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts"
       }
     },
-    "lint":     {
+    "eslint":                  {
       "dependsOn": [
         "prebuild"
       ],
@@ -23,7 +23,7 @@
         ]
       }
     },
-    "browser":  {
+    "angular-browser":         {
       "configurations":       {
         "development": {
           "buildOptimizer":  false,
@@ -57,8 +57,7 @@
       },
       "defaultConfiguration": "production",
       "dependsOn":            [
-        "prebuild",
-        "lint"
+        "eslint"
       ],
       "executor":             "@angular-devkit/build-angular:browser",
       "options":              {
@@ -85,7 +84,7 @@
         "{options.outputPath}"
       ]
     },
-    "server":   {
+    "angular-server":          {
       "configurations":       {
         "development": {
           "extractLicenses": false,
@@ -104,8 +103,7 @@
       },
       "defaultConfiguration": "production",
       "dependsOn":            [
-        "prebuild",
-        "lint"
+        "eslint"
       ],
       "development":          {
         "extractLicenses": false,
@@ -129,21 +127,20 @@
         "outputHashing":    "media"
       }
     },
-    "build":    {
+    "angular-prerender":       {
       "configurations":       {
         "development": {
-          "browserTarget": "website:browser:development",
-          "serverTarget":  "website:server:development"
+          "browserTarget": "website:angular-browser:development",
+          "serverTarget":  "website:angular-server:development"
         },
         "production":  {
-          "browserTarget": "website:browser:production",
-          "serverTarget":  "website:server:production"
+          "browserTarget": "website:angular-browser:production",
+          "serverTarget":  "website:angular-server:production"
         }
       },
       "defaultConfiguration": "production",
       "dependsOn":            [
-        "prebuild",
-        "lint"
+        "eslint"
       ],
       "executor":             "@angular-devkit/build-angular:prerender",
       "options":              {
@@ -152,44 +149,66 @@
         ]
       }
     },
-    "serve":    {
+    "angular-extract-i18n":    {
+      "dependsOn": [
+        "eslint"
+      ],
+      "executor":  "@nx/angular:extract-i18n",
+      "options":   {
+        "buildTarget": "website:angular-prerender",
+        "format":      "json",
+        "outFile":     "messages.json",
+        "outputPath":  "apps/website/src/locales",
+        "progress":    true
+      }
+    },
+    "angular-ssr-dev-server":  {
       "configurations":       {
         "development": {
-          "browserTarget": "website:browser:development",
-          "serverTarget":  "website:server:development"
+          "browserTarget": "website:angular-browser:development",
+          "serverTarget":  "website:angular-server:development"
         },
         "production":  {
-          "browserTarget": "website:browser:production",
-          "serverTarget":  "website:server:production"
+          "browserTarget": "website:angular-browser:production",
+          "serverTarget":  "website:angular-server:production"
         }
       },
       "defaultConfiguration": "production",
       "dependsOn":            [
-        "prebuild",
-        "lint"
+        "eslint"
       ],
       "executor":             "@angular-devkit/build-angular:ssr-dev-server"
     },
-    "deploy":   {
+    "angular-firebase-deploy": {
       "dependsOn": [
-        "prebuild",
-        "lint",
-        "build"
+        "eslint"
       ],
       "executor":  "@angular/fire:deploy",
       "options":   {
-        "browserTarget":        "website:browser:production",
+        "browserTarget":        "website:angular-browser:production",
         "firebaseHostingSite":  "standard-3eac7",
         "firebaseProject":      "standard-3eac7",
         "functionName":         "ssr-website",
-        "functionsNodeVersion": "18.19",
+        "functionsNodeVersion": "20.11",
         "outputPath":           "dist/apps/website/run",
         "prerender":            true,
-        "prerenderTarget":      "website:build:production",
+        "prerenderTarget":      "website:angular-prerender:production",
         "region":               "us-central1",
-        "serverTarget":         "website:server:production",
+        "serverTarget":         "website:angular-server:production",
         "ssr":                  "cloud-run"
       }
+    },
+    "build":                   {
+      "dependsOn": [
+        "angular-prerender"
+      ],
+      "executor":  "nx:noop"
+    },
+    "deploy":                  {
+      "dependsOn": [
+        "angular-firebase-deploy"
+      ],
+      "executor":  "nx:noop"
     }
   }
 }
