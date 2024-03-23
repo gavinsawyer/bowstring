@@ -3,6 +3,9 @@
     &copy; 2023 Gavin Sawyer
   </span>
   <span>
+    <standard--symbol name="globe" />&nbsp;{{ localeId }}
+  </span>
+  <span>
     v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
       [label]="gitInfo.hash || ''"
       [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />

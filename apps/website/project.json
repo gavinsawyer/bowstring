@@ -1,6 +1,15 @@
 {
-  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "name":        "website",
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "i18n":        {
+    "locales":      {
+      "fr": {
+        "baseHref":    "/fr/",
+        "translation": "apps/website/src/locales/messages.fr.json"
+      }
+    },
+    "sourceLocale": "en-US"
+  },
   "prefix":      "standard-website",
   "projectType": "application",
   "sourceRoot":  "apps/website/src",
@@ -8,7 +17,11 @@
     "prebuild":                {
       "executor": "nx:run-commands",
       "options":  {
-        "command": "node -p \"'export const packageVersion = ' + JSON.stringify(require('./package.json').version) + ';'\" > apps/website/src/.package-version.ts && node -p \"'import { GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts"
+        "commands": [
+          "rm -rf dist/apps/website",
+          "node -p \"'import { GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts",
+          "node -p \"'export const packageVersion = ' + JSON.stringify(require('./package.json').version) + ';'\" > apps/website/src/.package-version.ts"
+        ]
       }
     },
     "eslint":                  {
@@ -23,11 +36,27 @@
         ]
       }
     },
+    "angular-extract-i18n":    {
+      "dependsOn": [
+        "eslint"
+      ],
+      "executor":  "@nx/angular:extract-i18n",
+      "options":   {
+        "buildTarget": "website:angular-browser:production",
+        "format":      "json",
+        "outFile":     "messages.json",
+        "outputPath":  "apps/website/src/locales",
+        "progress":    true
+      }
+    },
     "angular-browser":         {
       "configurations":       {
         "development": {
           "buildOptimizer":  false,
           "extractLicenses": false,
+          "localize":        [
+            "en-US"
+          ],
           "namedChunks":     true,
           "optimization":    true,
           "sourceMap":       true,
@@ -52,6 +81,7 @@
               "with":    "apps/website/src/environment.prod.ts"
             }
           ],
+          "localize":         true,
           "outputHashing":    "all"
         }
       },
@@ -70,6 +100,7 @@
           "apps/website/src/robots.txt",
           "apps/website/src/sitemap.xml"
         ],
+        "deleteOutputPath":            false,
         "index":                       "apps/website/src/index.html",
         "inlineStyleLanguage":         "sass",
         "main":                        "apps/website/src/app/main.browser.ts",
@@ -81,13 +112,16 @@
         "tsConfig":                    "apps/website/tsconfig.app.json"
       },
       "outputs":              [
-        "{options.outputPath}"
+        "{workspaceRoot}/{options.outputPath}"
       ]
     },
     "angular-server":          {
       "configurations":       {
         "development": {
           "extractLicenses": false,
+          "localize":        [
+            "en-US"
+          ],
           "optimization":    false,
           "sourceMap":       true
         },
@@ -98,6 +132,7 @@
               "with":    "apps/website/src/environment.prod.ts"
             }
           ],
+          "localize":         true,
           "outputHashing":    "media"
         }
       },
@@ -105,27 +140,34 @@
       "dependsOn":            [
         "eslint"
       ],
-      "development":          {
-        "extractLicenses": false,
-        "optimization":    false,
-        "sourceMap":       true
-      },
       "executor":             "@angular-devkit/build-angular:server",
       "options":              {
+        "deleteOutputPath":    false,
         "inlineStyleLanguage": "sass",
         "main":                "apps/website/src/app/main.server.ts",
         "outputPath":          "dist/apps/website/server",
         "tsConfig":            "apps/website/tsconfig.app.json"
       },
-      "production":           {
-        "fileReplacements": [
-          {
-            "replace": "apps/website/src/environment.ts",
-            "with":    "apps/website/src/environment.prod.ts"
-          }
-        ],
-        "outputHashing":    "media"
-      }
+      "outputs":              [
+        "{workspaceRoot}/{options.outputPath}"
+      ]
+    },
+    "angular-ssr-dev-server":  {
+      "configurations":       {
+        "development": {
+          "browserTarget": "website:angular-browser:development",
+          "serverTarget":  "website:angular-server:development"
+        },
+        "production":  {
+          "browserTarget": "website:angular-browser:production",
+          "serverTarget":  "website:angular-server:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "dependsOn":            [
+        "eslint"
+      ],
+      "executor":             "@angular-devkit/build-angular:ssr-dev-server"
     },
     "angular-prerender":       {
       "configurations":       {
@@ -140,48 +182,55 @@
       },
       "defaultConfiguration": "production",
       "dependsOn":            [
-        "eslint"
+        "angular-server"
       ],
       "executor":             "@angular-devkit/build-angular:prerender",
       "options":              {
         "routes": [
-          "/"
+          "/",
+          "/privacy",
+          "/terms"
+        ]
+      },
+      "outputs":              [
+        "{workspaceRoot}/dist/apps/website/browser"
+      ]
+    },
+    "esbuild-intl-server":     {
+      "dependsOn": [
+        "angular-prerender"
+      ],
+      "executor":  "@nx/esbuild:esbuild",
+      "options":   {
+        "bundle":           true,
+        "deleteOutputPath": false,
+        "format":           [
+          "cjs"
+        ],
+        "main":             "apps/website/src/app/main.server.intl.ts",
+        "minify":           true,
+        "outputPath":       "dist/apps/website/server",
+        "thirdParty":       true,
+        "tsConfig":         "apps/website/tsconfig.app.json"
+      },
+      "outputs":   [
+        "{workspaceRoot}/{options.outputPath}"
+      ]
+    },
+    "build":                   {
+      "dependsOn": [
+        "esbuild-intl-server"
+      ],
+      "executor":  "nx:run-commands",
+      "options":   {
+        "commands": [
+          "mv dist/apps/website/server/main.server.intl.cjs dist/apps/website/server/main.js"
         ]
       }
     },
-    "angular-extract-i18n":    {
-      "dependsOn": [
-        "eslint"
-      ],
-      "executor":  "@nx/angular:extract-i18n",
-      "options":   {
-        "buildTarget": "website:angular-prerender",
-        "format":      "json",
-        "outFile":     "messages.json",
-        "outputPath":  "apps/website/src/locales",
-        "progress":    true
-      }
-    },
-    "angular-ssr-dev-server":  {
-      "configurations":       {
-        "development": {
-          "browserTarget": "website:angular-browser:development",
-          "serverTarget":  "website:angular-server:development"
-        },
-        "production":  {
-          "browserTarget": "website:angular-browser:production",
-          "serverTarget":  "website:angular-server:production"
-        }
-      },
-      "defaultConfiguration": "production",
-      "dependsOn":            [
-        "eslint"
-      ],
-      "executor":             "@angular-devkit/build-angular:ssr-dev-server"
-    },
     "angular-firebase-deploy": {
       "dependsOn": [
-        "eslint"
+        "build"
       ],
       "executor":  "@angular/fire:deploy",
       "options":   {
@@ -197,12 +246,6 @@
         "serverTarget":         "website:angular-server:production",
         "ssr":                  "cloud-run"
       }
-    },
-    "build":                   {
-      "dependsOn": [
-        "angular-prerender"
-      ],
-      "executor":  "nx:noop"
     },
     "deploy":                  {
       "dependsOn": [

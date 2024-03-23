@@ -1,24 +1,43 @@
 {
-  "affected":           {
-    "defaultBase": "main"
-  },
-  "namedInputs":        {
-    "default":       [
+  "namedInputs": {
+    "default": [
       "{projectRoot}/**/*",
       "sharedGlobals"
     ],
-    "production":    [
+    "production": [
       "default"
     ],
     "sharedGlobals": []
   },
-  "npmScope":           "standard",
-  "targetDefaults":     {
-    "build":  {
+  "targetDefaults": {
+    "eslint": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore"
+      ],
+      "cache": true
+    },
+    "angular-browser": {
+      "cache": true
+    },
+    "angular-server": {
+      "cache": true
+    },
+    "angular-prerender": {
+      "cache": true
+    },
+    "esbuild": {
+      "cache": true
+    },
+    "tsc": {
+      "cache": true
+    },
+    "build": {
       "dependsOn": [
         "^build"
       ],
-      "inputs":    [
+      "inputs": [
         "production",
         "^production"
       ]
@@ -27,33 +46,12 @@
       "dependsOn": [
         "^deploy"
       ],
-      "inputs":    [
+      "inputs": [
         "production",
         "^production"
       ]
-    },
-    "eslint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore"
-      ]
     }
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "options": {
-        "accessToken":         "${NX_CLOUD_ACCESS_TOKEN}",
-        "cacheableOperations": [
-          "angular-browser",
-          "angular-prerender",
-          "angular-server",
-          "esbuild",
-          "eslint",
-          "tsc"
-        ]
-      },
-      "runner":  "nx-cloud"
-    }
-  }
+  "nxCloudAccessToken": "${NX_CLOUD_ACCESS_TOKEN}",
+  "defaultBase": "main"
 }

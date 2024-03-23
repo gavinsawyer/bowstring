@@ -1,1 +1,3 @@
-export const subtitle: string = "Website" as const;
+/// <reference types="@angular/localize" />
+
+export const subtitle: string = $localize`:@@Brand--Subtitle:Website`;

@@ -7,6 +7,7 @@
   },
   "compileOnSave":          false,
   "compilerOptions":        {
+    "allowSyntheticDefaultImports":       true,
     "baseUrl":                            ".",
     "declaration":                        true,
     "emitDecoratorMetadata":              true,
@@ -25,7 +26,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "outDir":                             "dist/out-tsc",
     "paths":                              {
-      "@standard/brand":  [
+      "@standard/brand":            [
         "libs/brand/src/index.ts"
       ],
       "@standard/cloud-functions":  [
@@ -47,6 +48,7 @@
         "libs/types/src/index.ts"
       ]
     },
+    "resolveJsonModule":                  true,
     "rootDir":                            ".",
     "skipDefaultLibCheck":                true,
     "skipLibCheck":                       true,

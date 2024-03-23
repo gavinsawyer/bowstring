@@ -1,15 +1,19 @@
 <section>
   <standard--card>
     <hgroup>
-      <h1>
+      <h1 i18n="@@PrivacyRoute--CardTitle">
         Standard Privacy Policy
       </h1>
       <p>
         <span class="caption">
-          <standard--capsule label="LEGAL" />Monday, 16 October 2023
+          <standard--capsule
+            i18n-label
+            label="legal" />Monday, 16 October 2023
         </span>
         <br />
-        <span class="content">
+        <span
+          class="content"
+          i18n="@@PrivacyRoute--CardContent_1">
           This site stores information in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.
         </span>
       </p>
@@ -18,17 +22,20 @@
       </h3>
       <h4>
         <standard--link
+          i18n-label
           label="privacy policy"
           url="https://www.google.com/intl/en/policies/privacy/" /> • <standard--link
+          i18n-label
           label="terms"
           url="https://www.google.com/intl/en/policies/terms/" />
       </h4>
-      <p>
+      <p i18n="@@PrivacyRoute--CardContent_2">
         This site is protected by <standard--link
         label="reCAPTCHA"
         url="https://www.google.com/recaptcha/" /> and uses <standard--link
         label="Google Analytics"
         url="https://www.google.com/analytics/" />. If you are signed into Google with this browser and have turned on <standard--link
+        i18n-label
         label="personalized ads"
         url="https://myadcenter.google.com/" />, your engagement with this site may be tracked across devices.
       </p>

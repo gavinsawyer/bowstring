@@ -1,6 +1,7 @@
-import { DOCUMENT, isPlatformBrowser }    from "@angular/common";
-import { Component, inject, PLATFORM_ID } from "@angular/core";
-import { ResponsivityService }            from "@standard/services";
+/// <reference types="@angular/localize" />
+
+import { Component, inject, LOCALE_ID } from "@angular/core";
+import { ResponsivityService }          from "@standard/services";
 
 
 @Component({
@@ -12,13 +13,7 @@ import { ResponsivityService }            from "@standard/services";
 })
 export class RootComponent {
 
-  private readonly document:   Document = inject<Document>(DOCUMENT);
-  private readonly platformId: object   = inject<object>(PLATFORM_ID);
-
-  public readonly alert:               () => void          = (): void => isPlatformBrowser(this.platformId) ? this
-    .document
-    .defaultView
-    ?.alert("Button click") : void (0);
+  public readonly locale:              string              = inject<string>(LOCALE_ID);
   public readonly responsivityService: ResponsivityService = inject<ResponsivityService>(ResponsivityService);
 
 }

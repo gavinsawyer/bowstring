@@ -10,11 +10,12 @@ import { BrowserModule, provideClientHydration }                                
 import { BrowserAnimationsModule }                                                                                                   from "@angular/platform-browser/animations";
 import { RouterModule }                                                                                                              from "@angular/router";
 import { AsideComponent, ButtonComponent, CardComponent, FooterComponent, HeaderComponent, LinkComponent, routes as standardRoutes } from "@standard/components";
-import { ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                    from "@standard/injection-tokens";
+import { ENVIRONMENT, GIT_INFO, PACKAGE_VERSION, SYMBOLS }                                                                           from "@standard/injection-tokens";
 import { AppCheckOptionsService }                                                                                                    from "@standard/services";
 import { gitInfo }                                                                                                                   from "../../../.git-info";
 import { packageVersion }                                                                                                            from "../../../.package-version";
 import { environment }                                                                                                               from "../../../environment";
+import { symbols }                                                                                                                   from "../../../symbols";
 import { RootComponent, routes as websiteRoutes }                                                                                    from "../../components";
 
 
@@ -81,6 +82,10 @@ import { RootComponent, routes as websiteRoutes }                               
     {
       provide:  PACKAGE_VERSION,
       useValue: packageVersion,
+    },
+    {
+      provide:  SYMBOLS,
+      useValue: symbols,
     },
     provideClientHydration(),
     ScreenTrackingService,

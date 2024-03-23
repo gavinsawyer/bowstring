@@ -1,0 +1,25 @@
+{
+  "locale":       "fr",
+  "translations": {
+    "2287289086067887307":         "conditions",
+    "4008499810642586945":         "annonces personnalisées",
+    "5971320496086359379":         "légal",
+    "6175300314360976778":         "technologie",
+    "7880342747895814760":         "engagement de confidentialité",
+    "Brand--Description":          "Un site web Standard.",
+    "Brand--Subtitle":             "Site web",
+    "Brand--Title":                "Standard",
+    "OtherwiseRoute--CardContent": " Assurez-vous que l'URL (\"{$INTERPOLATION}\") est correcte. ",
+    "OtherwiseRoute--CardTitle":   " Page non trouvée. ",
+    "OtherwiseRoute--Description": "Cette page n'a pas été trouvée.",
+    "OtherwiseRoute--Title":       "Page non trouvée",
+    "PrivacyRoute--CardContent_1": " Ce site stocke des informations dans votre navigateur pour améliorer votre expérience. L'activité est partagée avec des tiers listés ci-dessous et peut être stockée en dehors de votre pays de résidence. ",
+    "PrivacyRoute--CardContent_2": " Ce site est protégé par {$START_TAG_STANDARD__LINK}{$CLOSE_TAG_STANDARD__LINK} et utilise {$START_TAG_STANDARD__LINK_1}{$CLOSE_TAG_STANDARD__LINK}. Si vous êtes connecté à Google avec ce navigateur et avez activé {$START_TAG_STANDARD__LINK_2}{$CLOSE_TAG_STANDARD__LINK}, votre interaction avec ce site peut être suivie sur différents appareils. ",
+    "PrivacyRoute--CardTitle":     "Engagement de confidentialité d’Standard",
+    "PrivacyRoute--Description":   "L’Engagement de confidentialité d’Standard décrit la façon dont Standard collecte, utilise et protège vos données personnelles.",
+    "PrivacyRoute--Title":         "Confidentialité",
+    "TermsRoute--CardTitle":       " Conditions ",
+    "TermsRoute--Description":     "Conditions, etc.",
+    "TermsRoute--Title":           "Conditions"
+  }
+}

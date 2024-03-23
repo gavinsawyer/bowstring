@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { CapsuleComponent }  from "@standard/components";
+import { CapsuleComponent }  from "../../../capsule/CapsuleComponent";
 import { CardComponent }     from "../../../card/CardComponent";
 import { LinkComponent }     from "../../../link/LinkComponent";
 import { RouteComponent }    from "../../../route/RouteComponent";
 
 
 @Component({
-  imports: [
+  imports:     [
     CardComponent,
     LinkComponent,
     CapsuleComponent,

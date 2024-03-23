@@ -1,12 +1,14 @@
-import { Component, inject }         from "@angular/core";
-import { GIT_INFO, PACKAGE_VERSION } from "@standard/injection-tokens";
-import { GitInfo }                   from "git-describe";
-import { LinkComponent }             from "../link/LinkComponent";
+import { Component, inject, LOCALE_ID } from "@angular/core";
+import { GIT_INFO, PACKAGE_VERSION }    from "@standard/injection-tokens";
+import { GitInfo }                      from "git-describe";
+import { SymbolComponent }              from "../symbol/SymbolComponent";
+import { LinkComponent }                from "../link/LinkComponent";
 
 
 @Component({
-  imports:     [
+  imports: [
     LinkComponent,
+    SymbolComponent,
   ],
   selector:    "standard--footer",
   standalone:  true,
@@ -18,6 +20,7 @@ import { LinkComponent }             from "../link/LinkComponent";
 export class FooterComponent {
 
   public readonly gitInfo:        Partial<GitInfo> = inject<Partial<GitInfo>>(GIT_INFO);
+  public readonly localeId:       string           = inject<string>(LOCALE_ID);
   public readonly packageVersion: string           = inject<string>(PACKAGE_VERSION);
 
 }

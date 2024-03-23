@@ -3,18 +3,16 @@
   <div>
     <standard--aside>
       <standard--button
+        i18n-label="@@PrivacyRoute--Title"
         label="Privacy"
         url="/privacy" />
       <standard--button
+        i18n-label="@@TermsRoute--Title"
         label="Terms"
         url="/terms" />
-      <standard--button
-        class="primary"
-        label="Nowhere"
-        url="/nowhere" />
       <standard--card>
         <img
-          [ngSrc]="'/assets/southend.webp'"
+          [ngSrc]="'/' + locale + '/assets/southend.webp'"
           alt="Boston's South End"
           height="auto"
           priority=""
@@ -23,8 +21,10 @@
       </standard--card>
       <span>
         <standard--link
+          i18n-label="@@PrivacyRoute--Title"
           label="Privacy"
           url="/privacy" /> &bull; <standard--link
+          i18n-label="@@TermsRoute--Title"
           label="Terms"
           url="/terms" />
       </span>

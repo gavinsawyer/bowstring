@@ -1,1 +1,3 @@
-export const description: string = "A standard website." as const;
+/// <reference types="@angular/localize" />
+
+export const description: string = $localize`:@@Brand--Description:A standard website.`;

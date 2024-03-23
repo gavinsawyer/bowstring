@@ -21,7 +21,7 @@
       border-radius: var(--border-radius)
       box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
       color: var(--button-light-foreground-grey)
-      cursor: pointer
+      cursor: default
       display: flex
       flex-basis: 100%
       font-size: 1.125rem
@@ -31,6 +31,7 @@
 
       &:not(.no-op)
         background-color: var(--button-light-background)
+        cursor: pointer
         color: var(--button-light-foreground)
         translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
 
