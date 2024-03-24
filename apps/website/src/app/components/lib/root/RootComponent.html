@@ -2,17 +2,9 @@
   <standard--header [ngClass]="{ 'raised': (responsivityService.scrollPosition$() || 0) > 48, 'raisedNarrow': (responsivityService.scrollPosition$() || 0) > 64 }" />
   <div>
     <standard--aside>
-      <standard--button
-        i18n-label="@@PrivacyRoute--Title"
-        label="Privacy"
-        url="/privacy" />
-      <standard--button
-        i18n-label="@@TermsRoute--Title"
-        label="Terms"
-        url="/terms" />
       <standard--card>
         <img
-          [ngSrc]="'/' + locale + '/assets/southend.webp'"
+          [ngSrc]="'/' + localeId + '/assets/southend.webp'"
           alt="Boston's South End"
           height="auto"
           priority=""
@@ -37,4 +29,21 @@
     </main>
   </div>
 </div>
-<standard--footer />
+<standard--footer>
+  <div>
+    <span>
+      &copy; 2024 Gavin Sawyer
+    </span>
+  </div>
+  <div>
+    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
+      [label]="gitInfo.hash || ''"
+      [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
+  </div>
+  <div>
+    <standard--symbol name="globe" />&nbsp;{{ localeId }}&emsp;<standard--link
+      i18n-label
+      label="Choose your preferred language"
+      url="/languages/"/>
+  </div>
+</standard--footer>

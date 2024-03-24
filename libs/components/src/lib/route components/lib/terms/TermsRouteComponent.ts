@@ -1,5 +1,6 @@
+import { DatePipe }          from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { CapsuleComponent }  from "@standard/components";
+import { CapsuleComponent }  from "../../../capsule/CapsuleComponent";
 import { CardComponent }     from "../../../card/CardComponent";
 import { RouteComponent }    from "../../../route/RouteComponent";
 
@@ -8,9 +9,13 @@ import { RouteComponent }    from "../../../route/RouteComponent";
   imports: [
     CardComponent,
     CapsuleComponent,
+    DatePipe,
   ],
   standalone:  true,
   templateUrl: "./TermsRouteComponent.html",
 })
 export class TermsRouteComponent extends RouteComponent implements OnInit {
+
+  public readonly now: Date = new Date();
+
 }

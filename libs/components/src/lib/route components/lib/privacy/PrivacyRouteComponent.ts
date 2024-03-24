@@ -1,3 +1,4 @@
+import { DatePipe }          from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { CapsuleComponent }  from "../../../capsule/CapsuleComponent";
 import { CardComponent }     from "../../../card/CardComponent";
@@ -8,6 +9,7 @@ import { RouteComponent }    from "../../../route/RouteComponent";
 @Component({
   imports:     [
     CardComponent,
+    DatePipe,
     LinkComponent,
     CapsuleComponent,
   ],
@@ -15,4 +17,7 @@ import { RouteComponent }    from "../../../route/RouteComponent";
   templateUrl: "./PrivacyRouteComponent.html",
 })
 export class PrivacyRouteComponent extends RouteComponent implements OnInit {
+
+  public readonly now: Date = new Date();
+
 }

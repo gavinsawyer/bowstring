@@ -1,7 +1,7 @@
-/// <reference types="@angular/localize" />
-
 import { Component, inject, LOCALE_ID } from "@angular/core";
+import { GIT_INFO, PACKAGE_VERSION }    from "@standard/injection-tokens";
 import { ResponsivityService }          from "@standard/services";
+import { GitInfo }                      from "git-describe";
 
 
 @Component({
@@ -13,7 +13,9 @@ import { ResponsivityService }          from "@standard/services";
 })
 export class RootComponent {
 
-  public readonly locale:              string              = inject<string>(LOCALE_ID);
+  public readonly gitInfo:             Partial<GitInfo>    = inject<Partial<GitInfo>>(GIT_INFO);
+  public readonly localeId:            string              = inject<string>(LOCALE_ID);
+  public readonly packageVersion:      string              = inject<string>(PACKAGE_VERSION);
   public readonly responsivityService: ResponsivityService = inject<ResponsivityService>(ResponsivityService);
 
 }
