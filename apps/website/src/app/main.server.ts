@@ -1,24 +1,20 @@
-import { APP_BASE_HREF }             from "@angular/common";
-import { enableProdMode, LOCALE_ID } from "@angular/core";
-import { CommonEngine }              from "@angular/ssr";
-import * as express                  from "express";
-import { join }                      from "path";
-import                                    "zone.js/node";
-import project                       from "../../project.json";
-import { environment }               from "../environment";
-import { WebsiteServerModule }       from "./modules";
+import { APP_BASE_HREF }       from "@angular/common";
+import { LOCALE_ID }           from "@angular/core";
+import { CommonEngine }        from "@angular/ssr";
+import * as express            from "express";
+import { join }                from "path";
+import                              "zone.js/node";
+import project                 from "../../project.json";
+import { WebsiteServerModule } from "./modules";
 
-
-environment
-  .production && enableProdMode();
 
 declare const __non_webpack_require__: NodeRequire;
 
-const mainModule:     NodeJS.Module | undefined = __non_webpack_require__
+const mainModule:     NodeJS.Module | undefined                                                                  = __non_webpack_require__
   .main;
-const moduleFilename: string                    = mainModule && mainModule
+const moduleFilename: string                                                                                     = mainModule && mainModule
   .filename || "";
-const requestHandler: express.RequestHandler    = (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((locale: string): Promise<void> => new CommonEngine().render(
+const requestHandler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void> = (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((locale: keyof typeof project.i18n.locales | "en-US"): Promise<void> => new CommonEngine().render(
   {
     bootstrap:        WebsiteServerModule,
     documentFilePath: join(
@@ -49,17 +45,17 @@ const requestHandler: express.RequestHandler    = (req: express.Request, res: ex
 ).catch<void>(
   (err): void => next(err),
 ))(
-  [
+  ([
     "en-US",
     ...Object.keys(project.i18n.locales),
-  ].filter(
-    (locale: string): boolean => locale === req.path.split("/")[1],
+  ] as (keyof typeof project.i18n.locales | "en-US")[]).filter(
+    (locale: keyof typeof project.i18n.locales | "en-US"): boolean => locale === req.path.split("/")[1],
   )[0] || req.acceptsLanguages(
     [
       "en-US",
       ...Object.keys(project.i18n.locales),
     ],
-  ) || "en-US",
+  ) as keyof typeof project.i18n.locales | "en-US" | false || "en-US",
 );
 
 (moduleFilename === __filename || moduleFilename.includes("iisnode")) && express()

@@ -207,7 +207,7 @@
         "format":           [
           "cjs"
         ],
-        "main":             "apps/website/src/app/main.server.intl.ts",
+        "main":             "apps/website/src/app/main.intl-server.ts",
         "minify":           true,
         "outputPath":       "dist/apps/website/server",
         "thirdParty":       true,
@@ -224,9 +224,12 @@
       "executor":  "nx:run-commands",
       "options":   {
         "commands": [
-          "mv dist/apps/website/server/main.server.intl.cjs dist/apps/website/server/main.js"
+          "mv dist/apps/website/server/main.intl-server.cjs dist/apps/website/server/main.js"
         ]
-      }
+      },
+      "outputs":              [
+        "{workspaceRoot}/dist/apps/website"
+      ]
     },
     "angular-firebase-deploy": {
       "dependsOn": [
