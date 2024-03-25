@@ -25,6 +25,8 @@ export class LinkComponent {
   })
   public label!: string;
   @Input()
+  public tabindex?: number;
+  @Input()
   public url?: string;
 
 }

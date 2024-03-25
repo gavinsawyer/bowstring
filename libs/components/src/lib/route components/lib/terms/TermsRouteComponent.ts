@@ -1,5 +1,5 @@
 import { DatePipe }          from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component }         from "@angular/core";
 import { CapsuleComponent }  from "../../../capsule/CapsuleComponent";
 import { CardComponent }     from "../../../card/CardComponent";
 import { RouteComponent }    from "../../../route/RouteComponent";
@@ -14,4 +14,4 @@ import { RouteComponent }    from "../../../route/RouteComponent";
   standalone:  true,
   templateUrl: "./TermsRouteComponent.html",
 })
-export class TermsRouteComponent extends RouteComponent implements OnInit {}
+export class TermsRouteComponent extends RouteComponent { }

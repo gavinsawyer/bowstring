@@ -6,7 +6,7 @@ import { description, title }   from "@standard/brand";
 export const routes: Route[] = [
   {
     data:          {
-      description: $localize`:@@LocalesRoute--Description:Standard is available in a number of locales.`,
+      description: $localize`:@@LocalesRoute--Description:Choose your locale.`,
     },
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./locales/LocalesRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
       (module: typeof import("./locales/LocalesRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.LocalesRouteComponent,

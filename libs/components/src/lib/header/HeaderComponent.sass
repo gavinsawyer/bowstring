@@ -34,38 +34,17 @@
         font-weight: bold
         position: relative
         text-decoration: none
-        text-shadow: none
-
-        &::before
-          background: currentColor
-          bottom: 0.03em
-          content: ""
-          display: block
-          height: 0.06em
-          right: 0
-          position: absolute
-          transition: background 200ms ease, width 200ms ease
-          width: 0
-          z-index: -1
 
         &:hover,
         &:focus-visible
           outline: none
-
-          &::before
-            left: 0
-            width: 100%
+          text-decoration: underline
 
         &.no-op
           cursor: default
-
-          &::before
-            left: unset
-            right: 0
-            width: 0
+          text-decoration: none
 
       > span
-        cursor: default
         font-weight: 700
         opacity: 80%
 

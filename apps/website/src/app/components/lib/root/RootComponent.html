@@ -15,9 +15,11 @@
         <standard--link
           i18n-label="@@PrivacyRoute--Title"
           label="Privacy"
+          [tabindex]="1"
           url="/privacy" /> &bull; <standard--link
           i18n-label="@@TermsRoute--Title"
           label="Terms"
+          [tabindex]="1"
           url="/terms" />
       </span>
       <p>
@@ -43,7 +45,8 @@
   <div>
     <standard--symbol name="globe" />&nbsp;{{ localeId }}&emsp;<standard--link
       i18n-label
-      label="Choose your preferred locale"
+      label="Choose your locale"
+      [tabindex]="footerExpanded$() ? 1 : 0"
       url="/locales/"/>
   </div>
 </standard--footer>

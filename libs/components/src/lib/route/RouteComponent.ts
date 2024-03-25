@@ -10,7 +10,8 @@ export class RouteComponent implements OnInit {
 
   @Input({
     required: true,
-  }) private readonly description!: string;
+  })
+  private readonly description!: string;
 
   private readonly meta: Meta = inject<Meta>(Meta);
 

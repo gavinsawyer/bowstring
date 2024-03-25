@@ -1,19 +1,20 @@
 <div
+  #host
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event);"
-  [ngClass]="{ 'transitionTranslate': transitionTranslate$() }">
+  (mousemove)="mousemove($event, host);"
+  [class.transitionTranslate]="transitionTranslate$()">
   <a
-    [class.no-op]="this.disabled"
+    [class.no-op]="disabled"
     [href]="url"
     *ngIf="url && (url.includes('http://') || url.includes('https://'))"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    tabindex="0">
-    @if(this.symbol) {<standard--symbol [name]="this.symbol" />&nbsp;}{{ label }}
+    [tabindex]="disabled ? -1 : 0">
+    @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
   </a>
   <a
-    [class.no-op]="this.disabled"
+    [class.no-op]="disabled"
     *ngIf="url && !url.includes('http://') && !url.includes('https://')"
     [routerLink]="url"
     #routerLinkActive="routerLinkActive"
@@ -21,15 +22,15 @@
     [routerLinkActiveOptions]="{ exact: true }"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    [tabindex]="routerLinkActive.isActive ? -1 : 0" >
-    @if(this.symbol) {<standard--symbol [name]="this.symbol" />&nbsp;}{{ label }}
+    [tabindex]="disabled || routerLinkActive.isActive ? -1 : 0" >
+    @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
   </a>
   <button
-    [class.no-op]="this.disabled"
+    [class.no-op]="disabled"
     *ngIf="!url"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    tabindex="0">
-    @if(this.symbol) {<standard--symbol [name]="this.symbol" />&nbsp;}{{ label }}
+    [tabindex]="disabled ? -1 : 0">
+    @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
   </button>
 </div>
