@@ -1,5 +1,4 @@
 {
-  "name":        "website",
   "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "i18n":        {
     "locales":      {
@@ -10,45 +9,11 @@
     },
     "sourceLocale": "en-US"
   },
+  "name":        "website",
   "prefix":      "standard-website",
   "projectType": "application",
   "sourceRoot":  "apps/website/src",
   "targets":     {
-    "prebuild":                {
-      "executor": "nx:run-commands",
-      "options":  {
-        "commands": [
-          "rm -rf dist/apps/website",
-          "node -p \"'import { GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts",
-          "node -p \"'export const packageVersion = ' + JSON.stringify(require('./package.json').version) + ';'\" > apps/website/src/.package-version.ts"
-        ]
-      }
-    },
-    "eslint":                  {
-      "dependsOn": [
-        "prebuild"
-      ],
-      "executor":  "@nx/linter:eslint",
-      "options":   {
-        "lintFilePatterns": [
-          "apps/website/src/**/*.ts",
-          "apps/website/src/**/*.html"
-        ]
-      }
-    },
-    "angular-extract-i18n":    {
-      "dependsOn": [
-        "eslint"
-      ],
-      "executor":  "@nx/angular:extract-i18n",
-      "options":   {
-        "buildTarget": "website:angular-browser:production",
-        "format":      "json",
-        "outFile":     "messages.json",
-        "outputPath":  "apps/website/src/locales",
-        "progress":    true
-      }
-    },
     "angular-browser":         {
       "configurations":       {
         "development": {
@@ -115,13 +80,70 @@
         "{workspaceRoot}/{options.outputPath}"
       ]
     },
+    "angular-extract-i18n":    {
+      "dependsOn": [
+        "eslint"
+      ],
+      "executor":  "@nx/angular:extract-i18n",
+      "options":   {
+        "buildTarget": "website:angular-browser:production",
+        "format":      "json",
+        "outFile":     "messages.en-US.json",
+        "outputPath":  "apps/website/src/locales",
+        "progress":    true
+      }
+    },
+    "angular-firebase-deploy": {
+      "dependsOn": [
+        "build"
+      ],
+      "executor":  "@angular/fire:deploy",
+      "options":   {
+        "browserTarget":        "website:angular-browser:production",
+        "firebaseHostingSite":  "standard-3eac7",
+        "firebaseProject":      "standard-3eac7",
+        "functionName":         "ssr-website",
+        "functionsNodeVersion": "20.11",
+        "outputPath":           "dist/apps/website/run",
+        "prerender":            true,
+        "prerenderTarget":      "website:angular-prerender:production",
+        "region":               "us-central1",
+        "serverTarget":         "website:angular-server:production",
+        "ssr":                  "cloud-run"
+      }
+    },
+    "angular-prerender":       {
+      "configurations":       {
+        "development": {
+          "browserTarget": "website:angular-browser:development",
+          "serverTarget":  "website:angular-server:development"
+        },
+        "production":  {
+          "browserTarget": "website:angular-browser:production",
+          "serverTarget":  "website:angular-server:production"
+        }
+      },
+      "defaultConfiguration": "production",
+      "dependsOn":            [
+        "angular-server"
+      ],
+      "executor":             "@angular-devkit/build-angular:prerender",
+      "options":              {
+        "routes": [
+          "/",
+          "/privacy",
+          "/terms"
+        ]
+      },
+      "outputs":              [
+        "{workspaceRoot}/dist/apps/website/browser"
+      ]
+    },
     "angular-server":          {
       "configurations":       {
         "development": {
           "extractLicenses": false,
-          "localize":        [
-            "en-US"
-          ],
+          "localize":        false,
           "optimization":    false,
           "sourceMap":       true
         },
@@ -169,32 +191,25 @@
       ],
       "executor":             "@angular-devkit/build-angular:ssr-dev-server"
     },
-    "angular-prerender":       {
-      "configurations":       {
-        "development": {
-          "browserTarget": "website:angular-browser:development",
-          "serverTarget":  "website:angular-server:development"
-        },
-        "production":  {
-          "browserTarget": "website:angular-browser:production",
-          "serverTarget":  "website:angular-server:production"
-        }
-      },
-      "defaultConfiguration": "production",
-      "dependsOn":            [
-        "angular-server"
+    "build":                   {
+      "dependsOn": [
+        "esbuild-intl-server"
       ],
-      "executor":             "@angular-devkit/build-angular:prerender",
-      "options":              {
-        "routes": [
-          "/",
-          "/privacy",
-          "/terms"
+      "executor":  "nx:run-commands",
+      "options":   {
+        "commands": [
+          "mv dist/apps/website/server/main.intl-server.cjs dist/apps/website/server/main.js"
         ]
       },
-      "outputs":              [
-        "{workspaceRoot}/dist/apps/website/browser"
+      "outputs":   [
+        "{workspaceRoot}/dist/apps/website"
       ]
+    },
+    "deploy":                  {
+      "dependsOn": [
+        "angular-firebase-deploy"
+      ],
+      "executor":  "nx:noop"
     },
     "esbuild-intl-server":     {
       "dependsOn": [
@@ -217,44 +232,27 @@
         "{workspaceRoot}/{options.outputPath}"
       ]
     },
-    "build":                   {
+    "eslint":                  {
       "dependsOn": [
-        "esbuild-intl-server"
+        "prebuild"
       ],
-      "executor":  "nx:run-commands",
+      "executor":  "@nx/linter:eslint",
       "options":   {
-        "commands": [
-          "mv dist/apps/website/server/main.intl-server.cjs dist/apps/website/server/main.js"
+        "lintFilePatterns": [
+          "apps/website/src/**/*.ts",
+          "apps/website/src/**/*.html"
         ]
-      },
-      "outputs":              [
-        "{workspaceRoot}/dist/apps/website"
-      ]
-    },
-    "angular-firebase-deploy": {
-      "dependsOn": [
-        "build"
-      ],
-      "executor":  "@angular/fire:deploy",
-      "options":   {
-        "browserTarget":        "website:angular-browser:production",
-        "firebaseHostingSite":  "standard-3eac7",
-        "firebaseProject":      "standard-3eac7",
-        "functionName":         "ssr-website",
-        "functionsNodeVersion": "20.11",
-        "outputPath":           "dist/apps/website/run",
-        "prerender":            true,
-        "prerenderTarget":      "website:angular-prerender:production",
-        "region":               "us-central1",
-        "serverTarget":         "website:angular-server:production",
-        "ssr":                  "cloud-run"
       }
     },
-    "deploy":                  {
-      "dependsOn": [
-        "angular-firebase-deploy"
-      ],
-      "executor":  "nx:noop"
+    "prebuild":                {
+      "executor": "nx:run-commands",
+      "options":  {
+        "commands": [
+          "rm -rf dist/apps/website",
+          "node -p \"'import { GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts",
+          "node -p \"'export const packageVersion = ' + JSON.stringify(require('./package.json').version) + ';'\" > apps/website/src/.package-version.ts"
+        ]
+      }
     }
   }
 }

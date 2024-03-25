@@ -9,5 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FooterComponent.html",
 })
-export class FooterComponent {
-}
+export class FooterComponent { }

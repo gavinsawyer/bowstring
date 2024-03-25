@@ -18,11 +18,13 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 })
 export class LinkComponent {
 
+  @Input()
+  public disabled?: boolean;
   @Input({
     required: true,
-  }) public label!: string;
-  @Input({
-    required: true,
-  }) public url!: string;
+  })
+  public label!: string;
+  @Input()
+  public url?: string;
 
 }

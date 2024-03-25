@@ -13,6 +13,7 @@ export class CapsuleComponent {
 
   @Input({
     required: true,
-  }) public label!: string;
+  })
+  public label!: string;
 
 }

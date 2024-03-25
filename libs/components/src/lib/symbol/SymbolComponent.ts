@@ -21,7 +21,8 @@ export class SymbolComponent {
 
   @Input({
     required: true,
-  }) public name!: string;
+  })
+  public name!: string;
 
   public readonly height:   string = this.symbols[this.name]?.height;
   public readonly localeId: string = inject<string>(LOCALE_ID);

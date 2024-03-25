@@ -12,11 +12,13 @@ import { RouterModule }                                                         
 import { AsideComponent, ButtonComponent, CardComponent, FooterComponent, HeaderComponent, LinkComponent, routes as standardRoutes, SymbolComponent } from "@standard/components";
 import { ENVIRONMENT, GIT_INFO, PACKAGE_VERSION, SYMBOLS }                                                                                            from "@standard/injection-tokens";
 import { AppCheckOptionsService }                                                                                                                     from "@standard/services";
+import project                                                                                                                                        from "../../../../project.json";
 import { gitInfo }                                                                                                                                    from "../../../.git-info";
 import { packageVersion }                                                                                                                             from "../../../.package-version";
 import { environment }                                                                                                                                from "../../../environment";
 import { symbols }                                                                                                                                    from "../../../symbols";
 import { RootComponent, routes as websiteRoutes }                                                                                                     from "../../components";
+import { LOCALES }                                                                                                                                    from "../../injection tokens";
 
 
 @NgModule({
@@ -79,6 +81,13 @@ import { RootComponent, routes as websiteRoutes }                               
     {
       provide:  GIT_INFO,
       useValue: gitInfo,
+    },
+    {
+      provide:  LOCALES,
+      useValue: ([
+        "en-US",
+        ...Object.keys(project.i18n.locales),
+      ] as (keyof typeof project.i18n.locales | "en-US")[]),
     },
     {
       provide:  PACKAGE_VERSION,

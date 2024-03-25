@@ -6,20 +6,20 @@
   padding: 1.125rem 1rem 0.875rem
 
   &::ng-deep
-    & > hgroup
-      & > h1,
-      & > h2,
-      & > h3,
-      & > h4
+    > hgroup
+      > h1,
+      > h2,
+      > h3,
+      > h4
         cursor: default
 
       &:has(+ img)
         position: relative
 
-        & > h1,
-        & > h2,
-        & > h3,
-        & > h4
+        > h1,
+        > h2,
+        > h3,
+        > h4
           background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
           color: var(--card-dark-foreground)
           margin: 0 -1rem !important
@@ -28,23 +28,25 @@
           transform: translateY(-100%)
           width: 100%
 
-          & > standard--link::ng-deep > a
-            text-decoration-color: var(--card-dark-foreground)
-            text-shadow: none
-            transition: color 200ms ease, text-decoration-color 200ms ease
+          > standard--link::ng-deep
+            > a,
+            > buton
+              text-decoration-color: var(--card-dark-foreground)
+              text-shadow: none
+              transition: color 200ms ease, text-decoration-color 200ms ease
 
-            &::before
-              display: none
+              &::before
+                display: none
 
-            &:active,
-            &.no-op
-              text-decoration-color: currentColor
+              &:active,
+              &.no-op
+                text-decoration-color: currentColor
 
-            &:hover,
-            &.no-op
-              text-decoration: underline
+              &:hover,
+              &.no-op
+                text-decoration: underline
 
-    & > img
+    > img
       border-top-left-radius: var(--border-radius)
       border-top-right-radius: var(--border-radius)
       color: var(--card-dark-foreground)
@@ -60,17 +62,19 @@
     color: $foreground
 
     &::ng-deep
-      & > hgroup
-        & > h1,
-        & > h2,
-        & > h3,
-        & > h4,
-        & > p
-          & > standard--link::ng-deep > a
-            text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
+      > hgroup
+        > h1,
+        > h2,
+        > h3,
+        > h4,
+        > p
+          > standard--link::ng-deep
+            > a,
+            > button
+              text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0 !important
 
-            &::before
-              background: $foreground
+              &::before
+                background: $foreground !important
 
   @include colors(var(--card-light-foreground), var(--card-light-foreground-grey), var(--card-light-background), var(--card-light-background-grey))
 

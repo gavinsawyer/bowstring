@@ -13,7 +13,7 @@
     padding: 1px
     top: 1rem
 
-  & > header
+  > header
     display: flex
     justify-content: center
     padding: 1rem 1rem 0.5rem
@@ -23,24 +23,48 @@
       border-radius: calc((var(--border-radius) / 2) - 0.5px)
       padding: 0.5rem
 
-    & > div
+    > div
       align-items: center
       display: flex
       flex-direction: column
 
-      & > a
+      > a
         color: inherit
         font-size: 1.5rem
         font-weight: bold
+        position: relative
+        text-decoration: none
         text-shadow: none
 
-        &:not(.no-op):focus-visible
-          text-decoration: solid currentColor underline
-
         &::before
-          display: none
+          background: currentColor
+          bottom: 0.03em
+          content: ""
+          display: block
+          height: 0.06em
+          right: 0
+          position: absolute
+          transition: background 200ms ease, width 200ms ease
+          width: 0
+          z-index: -1
 
-      & > span
+        &:hover,
+        &:focus-visible
+          outline: none
+
+          &::before
+            left: 0
+            width: 100%
+
+        &.no-op
+          cursor: default
+
+          &::before
+            left: unset
+            right: 0
+            width: 0
+
+      > span
         cursor: default
         font-weight: 700
         opacity: 80%
@@ -50,7 +74,7 @@
     box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread)), black 0 0 3px -1px
     margin: 0 -1rem -1px
 
-    & > header
+    > header
       padding: 1rem
 
   &.raised
@@ -60,7 +84,7 @@
       box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread)), black 0 0 3px -1px
       margin: -1px calc(-1rem - 1px)
 
-    & > header
+    > header
       @media (min-width: 23.5rem)
         border-radius: calc(var(--border-radius) - 1px)
         padding: 1rem
@@ -69,14 +93,14 @@
     &.raisedNarrow
       background-color: $glass-light-backdrop
 
-      & > header
+      > header
         background-color: $glass-light
 
     &.raised
       @media (min-width: 23.5rem)
         background-color: $glass-light-backdrop
 
-      & > header
+      > header
         @media (min-width: 23.5rem)
           background-color: $glass-light
 

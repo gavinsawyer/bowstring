@@ -9,5 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CardComponent.html",
 })
-export class CardComponent {
-}
+export class CardComponent { }

@@ -2,17 +2,19 @@ import { APP_BASE_HREF }       from "@angular/common";
 import { LOCALE_ID }           from "@angular/core";
 import { CommonEngine }        from "@angular/ssr";
 import * as express            from "express";
+import { existsSync }          from "fs";
 import { join }                from "path";
-import                              "zone.js/node";
+import "zone.js/node";
 import project                 from "../../project.json";
+import { LOCALES }             from "./injection tokens";
 import { WebsiteServerModule } from "./modules";
 
 
 declare const __non_webpack_require__: NodeRequire;
 
-const mainModule:     NodeJS.Module | undefined                                                                  = __non_webpack_require__
+const mainModule: NodeJS.Module | undefined = __non_webpack_require__
   .main;
-const moduleFilename: string                                                                                     = mainModule && mainModule
+const moduleFilename: string = mainModule && mainModule
   .filename || "";
 const requestHandler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void> = (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((locale: keyof typeof project.i18n.locales | "en-US"): Promise<void> => new CommonEngine().render(
   {
@@ -21,7 +23,14 @@ const requestHandler: (req: express.Request, res: express.Response, next: expres
       process.cwd(),
       "dist/apps/website/browser",
       locale,
-      "index.original.html",
+      existsSync(
+        join(
+          process.cwd(),
+          "dist/apps/website/browser",
+          locale,
+          "index.original.html",
+        ),
+      ) ? "index.original.html" : "index.html",
     ),
     url:              `${req.protocol}://${req.headers.host}${req.originalUrl}`,
     publicPath:       join(
@@ -94,5 +103,5 @@ const requestHandler: (req: express.Request, res: express.Response, next: expres
 // noinspection JSUnusedGlobalSymbols
 export {
   requestHandler,
-  WebsiteServerModule as AppServerModule
+  WebsiteServerModule as AppServerModule,
 };

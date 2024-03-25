@@ -1,0 +1,59 @@
+\:host
+  > button
+    all: unset
+
+  > a,
+  > button
+    position: relative
+    color: var(--primary)
+    cursor: pointer
+    text-decoration: none
+    transition: color 200ms ease
+    white-space: nowrap
+    z-index: 0
+
+    &::before
+      bottom: 0.03em
+      content: ""
+      display: block
+      height: 0.06em
+      right: 0
+      position: absolute
+      transition: background 200ms ease, width 200ms ease
+      width: 0
+      z-index: -1
+
+    &:hover,
+    &:focus-visible
+      outline: none
+
+      &::before
+        left: 0
+        width: 100%
+
+    &.no-op
+      cursor: default
+
+      &::before
+        left: 0
+        width: 100%
+
+  @mixin colors($body-foreground, $body-foreground-grey, $body-background)
+    > a,
+    > button
+      text-shadow: $body-background 0.07em 0.07em, $body-background 0 0.07em, $body-background -0.07em 0.07em, $body-background -0.07em 0, $body-background -0.07em -0.07em, $body-background 0 -0.07em, $body-background 0.07em -0.07em, $body-background 0.07em 0
+
+      &::before
+        background: $body-foreground
+
+      &:active,
+      &.no-op
+        color: $body-foreground-grey
+
+        &::before
+          background: $body-foreground-grey
+
+  @include colors(var(--body-light-foreground), var(--body-light-foreground-grey), var(--body-light-background))
+
+  @media (prefers-color-scheme: dark)
+    @include colors(var(--body-dark-foreground), var(--body-dark-foreground-grey), var(--body-dark-background))

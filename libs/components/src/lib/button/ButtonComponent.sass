@@ -1,12 +1,12 @@
 \:host
   &,
-  & > div
+  > div
     display: flex
     flex-direction: row
     flex-grow: 1
 
-  & > div
-    & > a
+  > div
+    > a
       position: static
       text-shadow: none
       z-index: unset
@@ -14,8 +14,8 @@
       &::before
         display: none
 
-    & > a,
-    & > button
+    > a,
+    > button
       background-color: var(--button-light-background-grey)
       border: none
       border-radius: var(--border-radius)
@@ -29,11 +29,20 @@
       padding: 0.875rem 2rem
       transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
 
+      > standard--symbol::ng-deep
+        height: 1em
+
+        > img
+          filter: invert(73%) sepia(0%) saturate(0%) hue-rotate(196deg) brightness(90%) contrast(94%)
+
       &:not(.no-op)
         background-color: var(--button-light-background)
         color: var(--button-light-foreground)
         cursor: pointer
         translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+
+        > standard--symbol::ng-deep > img
+          filter: invert(100%) sepia(9%) saturate(7481%) hue-rotate(181deg) brightness(101%) contrast(110%)
 
       &:not(.no-op):hover,
       &:not(.no-op):focus-visible
@@ -50,13 +59,13 @@
           color: var(--button-dark-foreground)
 
     &.transitionTranslate
-      & > a,
-      & > button
+      > a,
+      > button
         transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease, translate 200ms ease
 
   &.primary > div
-    & > a,
-    & > button
+    > a,
+    > button
       background-color: var(--primary-grey)
       color: var(--primary-contrast-grey)
 

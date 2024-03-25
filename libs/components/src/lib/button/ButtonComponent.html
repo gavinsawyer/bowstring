@@ -4,26 +4,32 @@
   (mousemove)="mousemove($event);"
   [ngClass]="{ 'transitionTranslate': transitionTranslate$() }">
   <a
-    (click)="action.emit();"
-    *ngIf="url && (url.includes('http://') || url.includes('https://'))"
+    [class.no-op]="this.disabled"
     [href]="url"
+    *ngIf="url && (url.includes('http://') || url.includes('https://'))"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    tabindex="0">{{ label }}</a>
+    tabindex="0">
+    @if(this.symbol) {<standard--symbol [name]="this.symbol" />&nbsp;}{{ label }}
+  </a>
   <a
-    #routerLinkActive="routerLinkActive"
-    (click)="action.emit();"
+    [class.no-op]="this.disabled"
     *ngIf="url && !url.includes('http://') && !url.includes('https://')"
-    [routerLinkActiveOptions]="{ exact: true }"
     [routerLink]="url"
+    #routerLinkActive="routerLinkActive"
+    routerLinkActive="no-op"
+    [routerLinkActiveOptions]="{ exact: true }"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    [tabindex]="routerLinkActive.isActive ? -1 : 0"
-    routerLinkActive="no-op">{{ label }}</a>
+    [tabindex]="routerLinkActive.isActive ? -1 : 0" >
+    @if(this.symbol) {<standard--symbol [name]="this.symbol" />&nbsp;}{{ label }}
+  </a>
   <button
-    (click)="action.emit();"
+    [class.no-op]="this.disabled"
     *ngIf="!url"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
-    tabindex="0">{{ label }}</button>
+    tabindex="0">
+    @if(this.symbol) {<standard--symbol [name]="this.symbol" />&nbsp;}{{ label }}
+  </button>
 </div>

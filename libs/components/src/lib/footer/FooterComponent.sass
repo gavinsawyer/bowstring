@@ -4,7 +4,7 @@
   flex-direction: row
   justify-content: center
 
-  & > footer
+  > footer
     cursor: default
     display: flex
     flex-basis: 28rem
@@ -14,7 +14,7 @@
     justify-content: space-between
     padding: 1.125rem 1rem
 
-    & > div
+    > div
       flex-grow: 1
       text-align: center
       order: 2
@@ -26,7 +26,7 @@
     @media (min-width: 46rem)
       flex-basis: 49rem
 
-      & > div
+      > div
         flex-grow: 0
 
         &:last-child
@@ -39,11 +39,13 @@
     background: $background
     color: $foreground
 
-    & > footer > div > standard--link::ng-deep > a
-      text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0
+    > footer > div > standard--link::ng-deep
+      > a,
+      > button
+        text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0 !important
 
-      &::before
-        background: $foreground
+        &::before
+          background: $foreground !important
 
   @include colors(var(--footer-light-foreground), var(--footer-light-background))
 

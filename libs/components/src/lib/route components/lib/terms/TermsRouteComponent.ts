@@ -14,8 +14,4 @@ import { RouteComponent }    from "../../../route/RouteComponent";
   standalone:  true,
   templateUrl: "./TermsRouteComponent.html",
 })
-export class TermsRouteComponent extends RouteComponent implements OnInit {
-
-  public readonly now: Date = new Date();
-
-}
+export class TermsRouteComponent extends RouteComponent implements OnInit {}

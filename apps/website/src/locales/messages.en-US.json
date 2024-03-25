@@ -1,0 +1,26 @@
+{
+  "locale": "en-US",
+  "translations": {
+    "PrivacyRoute--Title": "Privacy",
+    "TermsRoute--Title": "Terms",
+    "7368478427411764680": "Choose your preferred language",
+    "6175300314360976778": "technology",
+    "Brand--Description": "A standard website.",
+    "Brand--Subtitle": "Website",
+    "Brand--Title": "Standard",
+    "OtherwiseRoute--CardTitle": " Page not found. ",
+    "OtherwiseRoute--CardContent": " Make sure the URL (\"{$INTERPOLATION}\") is correct. ",
+    "PrivacyRoute--CardTitle": " Standard Privacy Policy ",
+    "5971320496086359379": "legal",
+    "PrivacyRoute--CardContent_1": " This site stores information in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence. ",
+    "7880342747895814760": "privacy policy",
+    "2287289086067887307": "terms",
+    "PrivacyRoute--CardContent_2": " This site is protected by {$START_TAG_STANDARD__LINK}{$CLOSE_TAG_STANDARD__LINK} and uses {$START_TAG_STANDARD__LINK_1}{$CLOSE_TAG_STANDARD__LINK}. If you are signed into Google with this browser and have turned on {$START_TAG_STANDARD__LINK_2}{$CLOSE_TAG_STANDARD__LINK}, your engagement with this site may be tracked across devices. ",
+    "4008499810642586945": "personalized ads",
+    "PrivacyRoute--Description": "Standard’s Privacy Policy describes how Standard collects, uses, and shares your personal data.",
+    "TermsRoute--Description": "Terms, etc.",
+    "OtherwiseRoute--Description": "This page was not found.",
+    "OtherwiseRoute--Title": "Page not found",
+    "TermsRoute--CardTitle": " Terms "
+  }
+}

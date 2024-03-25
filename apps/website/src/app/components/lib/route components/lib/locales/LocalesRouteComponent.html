@@ -1,0 +1,17 @@
+<section>
+  <standard--card>
+    <hgroup>
+      <h1 i18n="@@LocalesRoute--CardTitle">
+        Locales
+      </h1>
+      <div>
+        <standard--button
+          (click)="changeLocale(locale)"
+          [disabled]="locale === localeId"
+          [label]="locale"
+          *ngFor="let locale of locales"
+          symbol="globe" />
+      </div>
+    </hgroup>
+  </standard--card>
+</section>
