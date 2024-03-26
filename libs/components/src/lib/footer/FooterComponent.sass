@@ -15,10 +15,16 @@
     padding: 1.125rem 1rem
 
     > div
+      display: inline-flex
+      flex-direction: row
       flex-grow: 1
-      text-align: center
+      gap: 1rem
+      justify-content: center
       order: 2
-      white-space: nowrap
+
+      > span
+        text-align: center
+        white-space: nowrap
 
       &:first-child
         order: 0
@@ -39,7 +45,7 @@
     background: $background
     color: $foreground
 
-    > footer > div > standard--link::ng-deep
+    > footer > div > span > standard--link::ng-deep
       > a,
       > button
         text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0 !important

@@ -1,0 +1,71 @@
+\:host
+  z-index: 999
+
+  > dialog
+    align-items: flex-start
+    border: none
+    flex-direction: row
+    height: calc(100% - 5.125rem)
+    justify-content: center
+    left: 0
+    max-height: calc(100% - 5.125rem)
+    max-width: calc(100% - 2rem)
+    padding: 4rem 1rem 1.125rem
+    position: fixed
+    top: 0
+    width: calc(100% - 2rem)
+
+    > standard--card::ng-deep > hgroup > div
+      display: flex
+      flex-direction: row
+      gap: 1rem
+
+      > standard--button::ng-deep
+        flex: 1
+
+    &[open]
+      animation: open 200ms ease-in forwards
+      display: flex
+
+      &.closing
+        animation: close 200ms ease-in forwards
+
+    &::backdrop
+      backdrop-filter: blur(1.25rem) brightness(1.5) saturate(2)
+
+    @keyframes close
+      0%
+        height: calc(100% - 5.125rem)
+        max-height: calc(100% - 5.125rem)
+        opacity: 1
+        padding-top: 4rem
+
+      100%
+        height: calc(100% - 2.25rem)
+        max-height: calc(100% - 2.25rem)
+        opacity: 0
+        padding-top: 2.25rem
+
+    @keyframes open
+      0%
+        height: calc(100% - 2.25rem)
+        max-height: calc(100% - 2.25rem)
+        opacity: 0
+        padding-top: 2.25rem
+
+      100%
+        height: calc(100% - 5.125rem)
+        max-height: calc(100% - 5.125rem)
+        opacity: 1
+        padding-top: 4rem
+
+    @mixin colors($glass-light, $glass-light-backdrop)
+      background-color: $glass-light
+
+      &::backdrop
+        background-color: $glass-light-backdrop
+
+    @include colors(var(--glass-light), var(--glass-light-backdrop))
+
+    @media (prefers-color-scheme: dark)
+      @include colors(var(--glass-dark), var(--glass-dark-backdrop))

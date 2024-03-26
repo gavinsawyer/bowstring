@@ -1,17 +1,21 @@
 @use 'sass:math'
 @import 'normalize.css'
 
+$primary-hue:        129
+$primary-saturation: 16%
 
-$primary-shade: 55%
+$primary-shade:          55%
 $primary-contrast-shade: 96%
+$primary-shadow-shade:   18%
 
-$primary:          hsl(129, 16%, $primary-shade)
-$primary-contrast: hsl(129, 8%, $primary-contrast-shade)
+$primary:          hsl($primary-hue, $primary-saturation, $primary-shade)
+$primary-contrast: hsl($primary-hue, $primary-saturation * math.div($primary-shade, $primary-contrast-shade), $primary-contrast-shade)
+$primary-shadow:   hsl($primary-hue, $primary-saturation * math.div($primary-shade, $primary-shadow-shade), $primary-shadow-shade)
 
-$body-shade: 15%
+$body-shade:   15%
 $button-shade: 30%
 $footer-shade: 25%
-$card-shade: 20%
+$card-shade:   20%
 
 $border-radius: 1rem
 
@@ -84,6 +88,7 @@ body
 body
   --primary:          #{ $primary }
   --primary-contrast: #{ $primary-contrast }
+  --primary-shadow:   #{ $primary-shadow }
 
   --body-light-foreground:      #{ $body-light-foreground }
   --body-light-background:      #{ $body-light-background }

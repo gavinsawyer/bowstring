@@ -5,17 +5,6 @@ import { description, title }   from "@standard/brand";
 
 export const routes: Route[] = [
   {
-    data:          {
-      description: $localize`:@@LocalesRoute--Description:Choose your locale.`,
-    },
-    loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./locales/LocalesRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      (module: typeof import("./locales/LocalesRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.LocalesRouteComponent,
-    ),
-    path:          "locales",
-    pathMatch:     "full",
-    title:         title + " | " + $localize`:@@LocalesRoute--Title:Locales`,
-  },
-  {
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./home/HomeRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
       (module: typeof import("./home/HomeRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.HomeRouteComponent,
     ),

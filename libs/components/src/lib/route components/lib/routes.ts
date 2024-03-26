@@ -15,7 +15,7 @@ export const routes: Route[] = [
     ),
     path:          "privacy",
     pathMatch:     "full",
-    title:         title + " | " + $localize`:@@PrivacyRoute--Title:Privacy`,
+    title:         $localize`:@@PrivacyRoute--Title:Privacy` + " - " + title,
   },
   {
     data:          {
@@ -26,7 +26,7 @@ export const routes: Route[] = [
     ),
     path:          "terms",
     pathMatch:     "full",
-    title:         title + " | " + $localize`:@@TermsRoute--Title:Terms`,
+    title:          $localize`:@@TermsRoute--Title:Terms` + " - " + title,
   },
   {
     data:          {
@@ -36,6 +36,6 @@ export const routes: Route[] = [
       (module: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.OtherwiseRouteComponent,
     ),
     path:          "**",
-    title:         title + " | " + $localize`:@@OtherwiseRoute--Title:Page not found`,
+    title:         $localize`:@@OtherwiseRoute--Title:Page not found` + " - " + title,
   },
 ];

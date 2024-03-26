@@ -1,0 +1,23 @@
+<dialog
+  [class.closing]="closing$()"
+  (click)="close();"
+  #dialog
+  (keyup)="close();"
+  tabindex="0">
+  <standard--card (click)="$event.stopPropagation();">
+    <hgroup>
+      <h1 i18n="@@LocaleDialog--Title">
+        Choose your locale
+      </h1>
+      <div>
+        <standard--button
+          class="primary"
+          (click)="locale === localeId || changeLocale(locale);"
+          [disabled]="locale === localeId"
+          [label]="locale"
+          *ngFor="let locale of locales"
+          symbol="globe" />
+      </div>
+    </hgroup>
+  </standard--card>
+</dialog>

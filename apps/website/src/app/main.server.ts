@@ -6,7 +6,6 @@ import { existsSync }          from "fs";
 import { join }                from "path";
 import "zone.js/node";
 import project                 from "../../project.json";
-import { LOCALES }             from "./injection tokens";
 import { WebsiteServerModule } from "./modules";
 
 

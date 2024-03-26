@@ -17,7 +17,7 @@ import { gitInfo }                                                              
 import { packageVersion }                                                                                                                             from "../../../.package-version";
 import { environment }                                                                                                                                from "../../../environment";
 import { symbols }                                                                                                                                    from "../../../symbols";
-import { RootComponent, routes as websiteRoutes }                                                                                                     from "../../components";
+import { LocaleDialogComponent, RootComponent, routes as websiteRoutes }                                                                              from "../../components";
 import { LOCALES }                                                                                                                                    from "../../injection tokens";
 
 
@@ -26,9 +26,10 @@ import { LOCALES }                                                              
     RootComponent,
   ],
   declarations: [
+    LocaleDialogComponent,
     RootComponent,
   ],
-  imports:      [
+  imports: [
     AsideComponent,
     BrowserAnimationsModule,
     BrowserModule,

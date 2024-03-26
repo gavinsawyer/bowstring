@@ -38,15 +38,23 @@
     </span>
   </div>
   <div>
-    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
-      [label]="gitInfo.hash || ''"
-      [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
+    <span>
+      v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
+        [label]="gitInfo.hash || ''"
+        [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
+    </span>
   </div>
   <div>
-    <standard--symbol name="globe" />&nbsp;{{ localeId }}&emsp;<standard--link
-      i18n-label
-      label="Choose your locale"
-      [tabindex]="footerExpanded$() ? 1 : 0"
-      url="/locales/"/>
+    <span>
+      <standard--symbol name="globe" />&nbsp;{{ localeId }}
+    </span>
+    <span>
+      <standard--link
+        (click)="localeDialogOpen$.set(!localeDialogOpen$());"
+        i18n-label
+        label="Choose your locale"
+        [tabindex]="footerExpanded$() ? 1 : 0"  />
+    </span>
   </div>
 </standard--footer>
+<standard-website--locale-dialog [open$]="localeDialogOpen$" />
