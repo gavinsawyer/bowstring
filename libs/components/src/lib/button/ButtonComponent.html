@@ -1,21 +1,18 @@
 <div
-  #host
+  [class.transitionTranslate]="transitionTranslate$()"
+  #container
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event, host);"
-  [class.transitionTranslate]="transitionTranslate$()">
-  <a
+  (mousemove)="mousemove($event, container);">
+  @if(url){@if(url.includes("://")){<a
     [class.no-op]="disabled"
     [href]="url"
-    *ngIf="url && (url.includes('http://') || url.includes('https://'))"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
     [tabindex]="disabled ? -1 : 0">
     @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
-  </a>
-  <a
+  </a>}@else{<a
     [class.no-op]="disabled"
-    *ngIf="url && !url.includes('http://') && !url.includes('https://')"
     [routerLink]="url"
     #routerLinkActive="routerLinkActive"
     routerLinkActive="no-op"
@@ -24,13 +21,11 @@
     [style.--translation-y]="translation$().y"
     [tabindex]="disabled || routerLinkActive.isActive ? -1 : 0" >
     @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
-  </a>
-  <button
+  </a>}}@else{<button
     [class.no-op]="disabled"
-    *ngIf="!url"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y"
     [tabindex]="disabled ? -1 : 0">
     @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
-  </button>
+  </button>}
 </div>

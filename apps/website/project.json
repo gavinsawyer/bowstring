@@ -2,9 +2,9 @@
   "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "i18n":        {
     "locales":      {
-      "fr": {
-        "baseHref":    "/fr/",
-        "translation": "apps/website/src/locales/messages.fr.json"
+      "fr-FR": {
+        "baseHref":    "/fr-FR/",
+        "translation": "apps/website/src/locales/messages.fr-FR.json"
       }
     },
     "sourceLocale": "en-US"

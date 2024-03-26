@@ -1,11 +1,9 @@
-import { NgIf }                         from "@angular/common";
 import { Component, Input }             from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
 
 
 @Component({
   imports:     [
-    NgIf,
     RouterLink,
     RouterLinkActive,
   ],
@@ -18,15 +16,13 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 })
 export class LinkComponent {
 
-  @Input()
-  public disabled?: boolean;
   @Input({
     required: true,
   })
   public label!: string;
-  @Input()
-  public tabindex?: number;
-  @Input()
-  public url?: string;
+
+  @Input() public disabled?: boolean;
+  @Input() public tabindex?: number;
+  @Input() public url?:      string;
 
 }

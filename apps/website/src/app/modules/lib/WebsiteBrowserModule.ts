@@ -1,4 +1,4 @@
-import { NgClass, NgOptimizedImage }                                                                                                                  from "@angular/common";
+import { NgOptimizedImage }                                                                                                                  from "@angular/common";
 import { Injector, NgModule }                                                                                                                         from "@angular/core";
 import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                      from "@angular/fire/analytics";
 import { FirebaseApp, initializeApp, provideFirebaseApp }                                                                                             from "@angular/fire/app";
@@ -38,8 +38,6 @@ import { LOCALES }                                                              
     FooterComponent,
     HeaderComponent,
     LinkComponent,
-    SymbolComponent,
-    NgClass,
     NgOptimizedImage,
     provideAnalytics(
       (): Analytics => getAnalytics(),
@@ -73,6 +71,7 @@ import { LOCALES }                                                              
         scrollPositionRestoration: "enabled",
       },
     ),
+    SymbolComponent,
   ],
   providers:    [
     {

@@ -1,18 +1,11 @@
-<a
-  *ngIf="url && (url.includes('http://') || url.includes('https://'))"
+@if (url) {@if (url.includes("://")) {<a
   [attr.href]="url"
   [tabindex]="tabindex"
-  target="_blank">{{ label }}</a>
-<a
+  target="_blank">{{ label }}</a>} @else {<a
   #routerLinkActive="routerLinkActive"
-  *ngIf="url && (!url.includes('http://') && !url.includes('https://'))"
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLink]="url"
   [tabindex]="routerLinkActive.isActive ? -1 : tabindex || 0"
-  routerLinkActive="no-op">{{ label }}</a>
-<button
+  routerLinkActive="no-op">{{ label }}</a>}} @else {<button
   [class.no-op]="disabled"
-  *ngIf="!url"
-  [tabindex]="tabindex">
-  {{ label }}
-</button>
+  [tabindex]="tabindex">{{ label }}</button>}
