@@ -19,7 +19,7 @@ export class LinkComponent {
   @Input({
     required: true,
   })
-  public label!: string;
+  public text!: string;
 
   @Input() public disabled?: boolean;
   @Input() public tabindex?: number;

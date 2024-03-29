@@ -44,6 +44,9 @@
       "@standard/services":         [
         "libs/services/src/index.ts"
       ],
+      "@standard/symbol-aspect-ratios":         [
+        "libs/symbol aspect ratios/src/index.ts"
+      ],
       "@standard/types":            [
         "libs/types/src/index.ts"
       ]

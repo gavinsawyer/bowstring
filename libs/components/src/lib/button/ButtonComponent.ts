@@ -1,5 +1,6 @@
 import { Component, Input, signal, WritableSignal } from "@angular/core";
 import { RouterLink, RouterLinkActive }             from "@angular/router";
+import * as symbolAspectRatios                      from "@standard/symbol-aspect-ratios";
 import { SymbolComponent }                          from "../symbol/SymbolComponent";
 
 
@@ -21,15 +22,16 @@ export class ButtonComponent {
   @Input({
     required: true,
   })
-  public label!: string;
+  public text!: string;
 
   @Input() public disabled?: boolean;
-  @Input() public symbol?:   string;
+  @Input() public symbol?:   keyof typeof symbolAspectRatios;
+  @Input() public tabindex?: number;
   @Input() public url?:      string;
 
   public readonly mouseenter:           () => void                                             = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
-    100,
+    200,
   ) && void (0);
   public readonly mouseleave:           () => void                                             = (): void => {
     this
@@ -58,4 +60,5 @@ export class ButtonComponent {
       y: 0,
     },
   );
+
 }

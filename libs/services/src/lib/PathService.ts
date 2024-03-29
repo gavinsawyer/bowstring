@@ -10,17 +10,21 @@ import { filter, map, startWith }                                               
 })
 export class PathService {
 
-  private readonly LOCALE_ID: string = inject<string>(LOCALE_ID);
+  private readonly localeId: string   = inject<string>(LOCALE_ID);
+  private readonly location: Location = inject<Location>(Location)
+  private readonly router:   Router   = inject<Router>(Router);
 
   public readonly path$: Signal<string> = toSignal<string>(
-    inject<Router>(Router).events.pipe<NavigationEnd, string, string>(
+    this.router.events.pipe<NavigationEnd, string, string>(
       filter<RouterEvent | NavigationStart | NavigationEnd | NavigationCancel | NavigationError | RoutesRecognized | GuardsCheckStart | GuardsCheckEnd | RouteConfigLoadStart | RouteConfigLoadEnd | ChildActivationStart | ChildActivationEnd | ActivationStart | ActivationEnd | Scroll | ResolveStart | ResolveEnd, NavigationEnd>(
         (routerEvent: RouterEvent | NavigationStart | NavigationEnd | NavigationCancel | NavigationError | RoutesRecognized | GuardsCheckStart | GuardsCheckEnd | RouteConfigLoadStart | RouteConfigLoadEnd | ChildActivationStart | ChildActivationEnd | ActivationStart | ActivationEnd | Scroll | ResolveStart | ResolveEnd): routerEvent is NavigationEnd => routerEvent instanceof NavigationEnd,
       ),
       map<NavigationEnd, string>(
-        (navigationEnd: NavigationEnd): string => "/" + this.LOCALE_ID + navigationEnd.url.split("?")[0],
+        (navigationEnd: NavigationEnd): string => "/" + this.localeId + navigationEnd.url.split("?")[0],
       ),
-      startWith<string, [ string ]>("/" + this.LOCALE_ID + inject<Location>(Location).path()),
+      startWith<string, [ string ]>(
+        "/" + this.localeId + this.location.path(),
+      ),
     ),
     {
       requireSync: true,

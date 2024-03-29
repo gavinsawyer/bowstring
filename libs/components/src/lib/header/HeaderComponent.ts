@@ -1,12 +1,15 @@
-import { Component }                    from "@angular/core";
+import { Component, inject }            from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { subtitle, title }              from "@standard/brand";
+import * as brand                       from "@standard/brand";
+import { BRAND }                        from "@standard/injection-tokens";
+import { LinkComponent }                from "../link/LinkComponent";
 
 
 @Component({
-  imports:     [
+  imports: [
     RouterLink,
     RouterLinkActive,
+    LinkComponent,
   ],
   selector:    "standard--header",
   standalone:  true,
@@ -17,7 +20,6 @@ import { subtitle, title }              from "@standard/brand";
 })
 export class HeaderComponent {
 
-  public readonly subtitle: string = subtitle;
-  public readonly title:    string = title;
+  public readonly brand: typeof brand = inject<typeof brand>(BRAND);
 
 }

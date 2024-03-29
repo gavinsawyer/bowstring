@@ -1,31 +1,31 @@
 <div
   [class.transitionTranslate]="transitionTranslate$()"
-  #container
+  #containerElement=""
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event, container);">
-  @if(url){@if(url.includes("://")){<a
+  (mousemove)="mousemove($event, containerElement);">
+  @if (url; as url) {@if (url.includes("://")) {<a
+    [attr.href]="url"
+    [attr.tabindex]="disabled ? -1 : tabindex"
     [class.no-op]="disabled"
-    [href]="url"
     [style.--translation-x]="translation$().x"
-    [style.--translation-y]="translation$().y"
-    [tabindex]="disabled ? -1 : 0">
-    @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
-  </a>}@else{<a
+    [style.--translation-y]="translation$().y">
+    @if (symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ text }}
+  </a>} @else {<a
+    [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex"
     [class.no-op]="disabled"
     [routerLink]="url"
     #routerLinkActive="routerLinkActive"
     routerLinkActive="no-op"
     [routerLinkActiveOptions]="{ exact: true }"
     [style.--translation-x]="translation$().x"
-    [style.--translation-y]="translation$().y"
-    [tabindex]="disabled || routerLinkActive.isActive ? -1 : 0" >
-    @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
-  </a>}}@else{<button
+    [style.--translation-y]="translation$().y">
+    @if (symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ text }}
+  </a>}} @else {<button
+    [attr.tabindex]="disabled ? -1 : tabindex"
     [class.no-op]="disabled"
     [style.--translation-x]="translation$().x"
-    [style.--translation-y]="translation$().y"
-    [tabindex]="disabled ? -1 : 0">
-    @if(symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ label }}
+    [style.--translation-y]="translation$().y">
+    @if (symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ text }}
   </button>}
 </div>

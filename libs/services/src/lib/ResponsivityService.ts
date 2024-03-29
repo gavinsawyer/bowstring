@@ -1,7 +1,8 @@
-import { DOCUMENT, isPlatformBrowser }                     from "@angular/common";
+import { BreakpointObserver, BreakpointState }             from "@angular/cdk/layout";
+import { isPlatformBrowser }                               from "@angular/common";
 import { inject, Injectable, PLATFORM_ID, signal, Signal } from "@angular/core";
 import { toSignal }                                        from "@angular/core/rxjs-interop";
-import { fromEvent, map, startWith }                       from "rxjs";
+import { map, startWith }                                  from "rxjs";
 
 
 @Injectable({
@@ -9,21 +10,23 @@ import { fromEvent, map, startWith }                       from "rxjs";
 })
 export class ResponsivityService {
 
-  private readonly document: Document = inject<Document>(DOCUMENT);
+  private readonly breakpointObserver: BreakpointObserver   = inject<BreakpointObserver>(BreakpointObserver);
+  private readonly platformId:         NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  public readonly scrollPosition$: Signal<number> = isPlatformBrowser(inject<object>(PLATFORM_ID)) ? toSignal<number>(
-    fromEvent<Event>(
-      this.document,
-      "scroll",
-    ).pipe<number, number>(
-      map<Event, number>(
-        (): number => this.document.defaultView?.scrollY || 0,
+  public readonly getBreakpointSignal: (minWidth: string) => Signal<boolean> = (minWidth: string): Signal<boolean> => isPlatformBrowser(
+    this.platformId,
+  ) ? toSignal<boolean>(
+    this.breakpointObserver.observe(`(min-width: ${ minWidth })`).pipe<boolean, boolean>(
+      map<BreakpointState, boolean>(
+        (breakpointState: BreakpointState): boolean => breakpointState.matches,
       ),
-      startWith<number, [ number ]>(this.document.defaultView?.scrollY || 0),
+      startWith<boolean>(
+        this.breakpointObserver.isMatched(`(min-width: ${ minWidth })`),
+      ),
     ),
     {
       requireSync: true,
     },
-  ) : signal<number>(0);
+  ) : signal<boolean>(true);
 
 }

@@ -1,0 +1,9 @@
+<dialog
+  [class.closing]="closing$()"
+  #htmlDialogElement="">
+  <div>
+    <standard--card (click)="$event.stopPropagation();">
+      <ng-content />
+    </standard--card>
+  </div>
+</dialog>

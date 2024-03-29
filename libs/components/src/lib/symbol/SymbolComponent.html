@@ -1,5 +1,5 @@
-<img
-  alt="{{ name }} symbol"
-  [height]="height"
+@if (aspectRatio$(); as aspectRatio) {<img
+  [attr.alt]="name + ' symbol'"
+  [height]="16 * aspectRatio"
   [ngSrc]="'/' + localeId + '/assets/symbols/' + name + '.svg'"
-  [width]="width">
+  width="16">}

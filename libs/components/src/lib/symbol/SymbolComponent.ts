@@ -1,7 +1,7 @@
-import { NgOptimizedImage }                    from "@angular/common";
-import { Component, inject, Input, LOCALE_ID } from "@angular/core";
-import { SYMBOLS }                             from "@standard/injection-tokens";
-import { Symbols }                             from "@standard/interfaces";
+import { NgOptimizedImage }                                                    from "@angular/common";
+import { Component, inject, Input, LOCALE_ID, OnInit, signal, WritableSignal } from "@angular/core";
+import { SYMBOL_ASPECT_RATIOS }                                                from "@standard/injection-tokens";
+import * as symbolAspectRatios                                                 from "@standard/symbol-aspect-ratios";
 
 
 @Component({
@@ -15,18 +15,22 @@ import { Symbols }                             from "@standard/interfaces";
   ],
   templateUrl: "SymbolComponent.html",
 })
-export class SymbolComponent {
-
-  private readonly symbols: Symbols = inject<Symbols>(SYMBOLS);
+export class SymbolComponent implements OnInit {
 
   @Input({
     required: true,
   })
-  public name!: string;
+  public name!: keyof typeof symbolAspectRatios;
 
-  public readonly height:   string = this.symbols[this.name]?.height;
-  public readonly localeId: string = inject<string>(LOCALE_ID);
-  public readonly width:    string = this.symbols[this.name]?.width;
+  private readonly symbolAspectRatios: typeof symbolAspectRatios = inject<typeof symbolAspectRatios>(SYMBOL_ASPECT_RATIOS);
 
+  public readonly aspectRatio$: WritableSignal<number | undefined> = signal<number | undefined>(this.symbolAspectRatios[this.name]);
+  public readonly localeId:     string                             = inject<string>(LOCALE_ID);
+
+  ngOnInit(): void {
+    this
+      .aspectRatio$
+      .set(this.symbolAspectRatios[this.name])
+  }
 
 }

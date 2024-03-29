@@ -41,17 +41,17 @@
     @media (min-width: 23.5rem)
       padding: 1.125rem 2rem
 
-  @mixin colors($foreground, $background)
-    background: $background
-    color: $foreground
+  @mixin colors($footer-foreground, $footer-background)
+    background: $footer-background
+    color: $footer-foreground
 
     > footer > div > span > standard--link::ng-deep
       > a,
       > button
-        text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0 !important
+        text-shadow: $footer-background 0.07em 0.07em, $footer-background 0 0.07em, $footer-background -0.07em 0.07em, $footer-background -0.07em 0, $footer-background -0.07em -0.07em, $footer-background 0 -0.07em, $footer-background 0.07em -0.07em, $footer-background 0.07em 0 !important
 
         &::before
-          background: $foreground !important
+          background: $footer-foreground !important
 
   @include colors(var(--footer-light-foreground), var(--footer-light-background))
 

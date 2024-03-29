@@ -57,9 +57,9 @@
         border-radius: var(--border-radius)
         margin: -1.125rem -1rem -0.875rem
 
-  @mixin colors($foreground, $foreground-grey, $background, $background-grey)
-    background: $background
-    color: $foreground
+  @mixin colors($card-foreground, $card-background)
+    background: $card-background
+    color: $card-foreground
 
     &::ng-deep
       > hgroup
@@ -71,12 +71,12 @@
           > standard--link::ng-deep
             > a,
             > button
-              text-shadow: $background 0.07em 0.07em, $background 0 0.07em, $background -0.07em 0.07em, $background -0.07em 0, $background -0.07em -0.07em, $background 0 -0.07em, $background 0.07em -0.07em, $background 0.07em 0 !important
+              text-shadow: $card-background 0.07em 0.07em, $card-background 0 0.07em, $card-background -0.07em 0.07em, $card-background -0.07em 0, $card-background -0.07em -0.07em, $card-background 0 -0.07em, $card-background 0.07em -0.07em, $card-background 0.07em 0 !important
 
               &::before
-                background: $foreground !important
+                background: $card-foreground !important
 
-  @include colors(var(--card-light-foreground), var(--card-light-foreground-grey), var(--card-light-background), var(--card-light-background-grey))
+  @include colors(var(--card-light-foreground), var(--card-light-background))
 
   @media (prefers-color-scheme: dark)
-    @include colors(var(--card-dark-foreground), var(--card-dark-foreground-grey), var(--card-dark-background), var(--card-dark-background-grey))
+    @include colors(var(--card-dark-foreground), var(--card-dark-background))

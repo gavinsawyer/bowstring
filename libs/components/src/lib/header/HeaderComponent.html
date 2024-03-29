@@ -1,11 +1,9 @@
 <header>
   <div>
-    <a
-      #routerLinkActive="routerLinkActive"
-      [routerLinkActiveOptions]="{'exact': true}"
-      [tabindex]="routerLinkActive.isActive ? -1 : 1"
-      routerLink="/"
-      routerLinkActive="no-op">{{ title }}</a>
-    <span>{{ subtitle }}</span>
+    <standard--link
+      [tabindex]="1"
+      [text]="brand.title"
+      url="/" />
+    <span>{{ brand.subtitle }}</span>
   </div>
 </header>

@@ -52,7 +52,7 @@
       display: flex
       flex-direction: row
       justify-content: center
-      padding: 4rem 2rem 1.125rem
+      padding: 1.125rem 2rem
 
       > standard--card::ng-deep
         transform-origin: top
@@ -64,15 +64,6 @@
           transform: unset
 
         @include open--card
-
-        > hgroup > div
-          display: flex
-          flex-direction: row
-          flex-wrap: wrap
-          gap: 1rem
-
-          > standard--button::ng-deep
-            flex-grow: 1
 
         @keyframes close--card
           0%

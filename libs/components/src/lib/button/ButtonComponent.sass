@@ -28,11 +28,8 @@
       padding: 0.875rem 2rem
       transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
 
-      > standard--symbol::ng-deep
-        height: 1em
-
-        > img
-          filter: invert(29%) sepia(0%) saturate(0%) hue-rotate(4deg) brightness(100%) contrast(93%)
+      > standard--symbol::ng-deep > img
+        filter: invert(29%) sepia(0%) saturate(0%) hue-rotate(4deg) brightness(100%) contrast(93%)
 
       &.no-op
         cursor: default
@@ -75,19 +72,19 @@
         &:focus-visible
           box-shadow: var(--primary-shadow) 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
 
-  @mixin colors($foreground, $foreground-grey, $background, $background-grey)
+  @mixin colors($button-foreground, $button-foreground-grey, $button-background, $button-background-grey)
     > div
       > a,
       > button
-        background-color: $background
-        color: $foreground
+        background-color: $button-background
+        color: $button-foreground
 
         > standard--symbol::ng-deep > img
           filter: invert(100%) sepia(9%) saturate(7481%) hue-rotate(181deg) brightness(101%) contrast(110%)
 
         &.no-op
-          background-color: $background-grey
-          color: $foreground-grey
+          background-color: $button-background-grey
+          color: $button-foreground-grey
 
           > standard--symbol::ng-deep > img
             filter: invert(73%) sepia(0%) saturate(0%) hue-rotate(196deg) brightness(90%) contrast(94%)

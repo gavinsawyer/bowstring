@@ -1,0 +1,15 @@
+<div
+  [class.transitionTranslate]="transitionTranslate$()"
+  #containerElement=""
+  (mousedown)="mousedown();"
+  (mouseenter)="mouseenter();"
+  (mouseleave)="mouseleave();"
+  (mousemove)="mousemove($event, containerElement);">
+  <input
+    [attr.tabindex]="htmlInputElement.disabled ? -1 : tabindex"
+    [attr.placeholder]="placeholder || ''"
+    [attr.type]="type"
+    #htmlInputElement=""
+    [style.--translation-x]="translation$().x"
+    [style.--translation-y]="translation$().y" />
+</div>

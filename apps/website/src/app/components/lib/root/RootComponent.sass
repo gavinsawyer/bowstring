@@ -27,12 +27,21 @@
         > router-outlet
           display: none
 
-        @media (min-width: 46rem)
-          flex-basis: 28rem
-
       @media (min-width: 46rem)
         flex-direction: row
         max-width: 49rem
 
+        > main
+          flex-basis: 28rem
+
     @media (min-width: 23.5rem)
       padding: 4rem 2rem 1.125rem
+
+  > standard--dialog::ng-deep > dialog > div > standard--card::ng-deep > hgroup > div
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    gap: 1rem
+
+    > standard--button::ng-deep
+      flex-grow: 1

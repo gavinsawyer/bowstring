@@ -1,11 +1,11 @@
 @if (url) {@if (url.includes("://")) {<a
   [attr.href]="url"
-  [tabindex]="tabindex"
-  target="_blank">{{ label }}</a>} @else {<a
+  [attr.tabindex]="tabindex"
+  target="_blank">{{ text }}</a>} @else {<a
+  [attr.tabindex]="routerLinkActive.isActive ? -1 : tabindex || 0"
   #routerLinkActive="routerLinkActive"
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLink]="url"
-  [tabindex]="routerLinkActive.isActive ? -1 : tabindex || 0"
-  routerLinkActive="no-op">{{ label }}</a>}} @else {<button
-  [class.no-op]="disabled"
-  [tabindex]="tabindex">{{ label }}</button>}
+  routerLinkActive="no-op">{{ text }}</a>}} @else {<button
+  [attr.tabindex]="tabindex"
+  [class.no-op]="disabled">{{ text }}</button>}

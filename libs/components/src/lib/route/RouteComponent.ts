@@ -20,8 +20,8 @@ export class RouteComponent implements OnInit {
       .meta
       .updateTag(
         {
-          "name":    "description",
-          "content": this.description,
+          name:    "description",
+          content: this.description,
         },
       );
   }

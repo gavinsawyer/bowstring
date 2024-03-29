@@ -1,0 +1,47 @@
+\:host
+  &,
+  > div
+    display: flex
+    flex-direction: row
+    flex-grow: 1
+
+  > div
+    > input
+      border-radius: calc(var(--border-radius) / 2)
+      flex-grow: 1
+      opacity: 0.5
+      outline: none
+      padding: 0.875rem 1rem
+      transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease
+
+      &:not([disabled])
+        opacity: 1
+
+        &:hover
+          box-shadow: black 0 calc(0.75 * var(--depth-offset)) calc(0.75 * var(--depth-blur)) calc(0.75 * var(--depth-spread))
+          scale: 1.0078125 1.0078125 1.0078125
+          translate: calc(var(--translation-x) * 0.5625rem) calc(var(--translation-y) * 0.5625rem)
+
+        &:focus-visible
+          box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
+          scale: 1.015625 1.015625 1.015625
+          translate: calc(var(--translation-x) * 0.75rem) calc(var(--translation-y) * 0.75rem)
+
+      @mixin colors($body-foreground, $body-foreground-grey, $body-background, $body-background-grey)
+        background: $body-background
+        border: 1px solid $body-foreground-grey
+
+        &,
+        &::placeholder
+          color: $body-foreground-grey
+
+        &:not([disabled])
+          color: $body-foreground
+
+      @include colors(var(--body-light-foreground), var(--body-light-foreground-grey), var(--body-light-background), var(--body-light-background-grey))
+
+      @media (prefers-color-scheme: dark)
+        @include colors(var(--body-dark-foreground), var(--body-dark-foreground-grey), var(--body-dark-background), var(--body-light-background-grey))
+
+    &.transitionTranslate > input
+      transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease, translate 200ms ease

@@ -1,60 +1,60 @@
 {
-  "namedInputs": {
-    "default": [
+  "defaultBase":        "main",
+  "namedInputs":        {
+    "default":       [
       "{projectRoot}/**/*",
       "sharedGlobals"
     ],
-    "production": [
+    "production":    [
       "default"
     ],
     "sharedGlobals": []
   },
-  "targetDefaults": {
-    "eslint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore"
+  "nxCloudAccessToken": "${NX_CLOUD_ACCESS_TOKEN}",
+  "targetDefaults":     {
+    "angular-browser":     {
+      "cache": true
+    },
+    "angular-prerender":   {
+      "cache": true
+    },
+    "angular-server":      {
+      "cache": true
+    },
+    "build":               {
+      "dependsOn": [
+        "^build"
       ],
-      "cache": true
+      "inputs":    [
+        "production",
+        "^production"
+      ]
     },
-    "angular-browser": {
-      "cache": true
+    "deploy":              {
+      "dependsOn": [
+        "^deploy"
+      ],
+      "inputs":    [
+        "production",
+        "^production"
+      ]
     },
-    "angular-server": {
-      "cache": true
-    },
-    "angular-prerender": {
+    "esbuild":             {
       "cache": true
     },
     "esbuild-intl-server": {
       "cache": true
     },
-    "esbuild": {
-      "cache": true
-    },
-    "tsc": {
-      "cache": true
-    },
-    "build": {
-      "dependsOn": [
-        "^build"
-      ],
+    "eslint":              {
+      "cache":  true,
       "inputs": [
-        "production",
-        "^production"
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore"
       ]
     },
-    "deploy": {
-      "dependsOn": [
-        "^deploy"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+    "tsc":                 {
+      "cache": true
     }
-  },
-  "nxCloudAccessToken": "${NX_CLOUD_ACCESS_TOKEN}",
-  "defaultBase": "main"
+  }
 }

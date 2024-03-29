@@ -1,27 +1,45 @@
 <div>
-  <standard--header
-    [class.raised]="(responsivityService.scrollPosition$() || 0) > 48"
-    [class.raisedNarrow]="(responsivityService.scrollPosition$() || 0) > 64" />
+  <standard--header />
   <div>
     <standard--aside>
       <standard--card>
-        <img
-          [ngSrc]="'/' + localeId + '/assets/southend.webp'"
-          alt="Boston's South End"
-          height="auto"
-          priority=""
-          style="aspect-ratio: 3/4;"
-          width="1536" />
+        <form [formGroup]="connectFormGroup">
+          <standard--input
+            formControlName="name"
+            placeholder="Name"
+            [tabindex]="1"
+            type="text" />
+          <standard--input
+            formControlName="message"
+            placeholder="Message"
+            [tabindex]="1"
+            type="text" />
+          <standard--input
+            formControlName="phone"
+            placeholder="Phone number"
+            [tabindex]="1"
+            type="tel" />
+          <standard--input
+            formControlName="email"
+            placeholder="Email"
+            [tabindex]="1"
+            type="email" />
+        </form>
+        <hgroup>
+          <h3>
+            Want to connect?
+          </h3>
+        </hgroup>
       </standard--card>
       <span>
         <standard--link
-          i18n-label="@@PrivacyRoute--Title"
-          label="Privacy"
           [tabindex]="1"
-          url="/privacy" /> &bull; <standard--link
-          i18n-label="@@TermsRoute--Title"
-          label="Terms"
+          i18n-text="@@PrivacyRoute--Title"
+          text="Privacy"
+          url="/privacy" />&nbsp;&bull;&nbsp;<standard--link
           [tabindex]="1"
+          i18n-text="@@TermsRoute--Title"
+          text="Terms"
           url="/terms" />
       </span>
       <p>
@@ -42,7 +60,7 @@
   <div>
     <span>
       v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
-        [label]="gitInfo.hash || ''"
+        [text]="gitInfo.hash || ''"
         [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
     </span>
   </div>
@@ -53,10 +71,22 @@
     <span>
       <standard--link
         (click)="localeDialogOpen$.set(!localeDialogOpen$());"
-        i18n-label
-        label="Choose your locale"
-        [tabindex]="footerExpanded$() ? 1 : 0"  />
+        i18n-text=""
+        [tabindex]="largeBreakpoint$() ? 1 : 0"
+        text="Choose your locale"  />
     </span>
   </div>
 </standard--footer>
-<standard-website--locale-dialog [open$]="localeDialogOpen$" />
+<standard--dialog [open$]="localeDialogOpen$">
+  <hgroup>
+    <h1 i18n="@@LocaleDialog--Title">Choose your locale</h1>
+    <div>
+      @for (locale of locales; track locale) {<standard--button
+        class="primary"
+        (click)="locale === localeId || changeLocale(locale);"
+        [disabled]="locale === localeId"
+        symbol="globe"
+        [text]="locale" />}
+    </div>
+  </hgroup>
+</standard--dialog>
