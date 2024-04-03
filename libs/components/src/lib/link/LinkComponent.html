@@ -1,11 +1,11 @@
 @if (url) {@if (url.includes("://")) {<a
   [attr.href]="url"
-  [attr.tabindex]="tabindex"
-  target="_blank">{{ text }}</a>} @else {<a
-  [attr.tabindex]="routerLinkActive.isActive ? -1 : tabindex || 0"
+  [attr.tabindex]="tabindex ?? 1"
+  target="_blank">@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</a>} @else {<a
+  [attr.tabindex]="routerLinkActive.isActive ? -1 : tabindex ?? 1"
   #routerLinkActive="routerLinkActive"
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLink]="url"
-  routerLinkActive="no-op">{{ text }}</a>}} @else {<button
-  [attr.tabindex]="tabindex"
-  [class.no-op]="disabled">{{ text }}</button>}
+  routerLinkActive="no-op">@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</a>}} @else {<button
+  [attr.tabindex]="tabindex ?? 1"
+  [class.no-op]="disabled">@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</button>}

@@ -8,11 +8,14 @@
     color: var(--primary)
     cursor: pointer
     text-decoration: none
+    text-shadow: var(--body-background) 0.07em 0.07em, var(--body-background) 0 0.07em, var(--body-background) -0.07em 0.07em, var(--body-background) -0.07em 0, var(--body-background) -0.07em -0.07em, var(--body-background) 0 -0.07em, var(--body-background) 0.07em -0.07em, var(--body-background) 0.07em 0
     transition: color 200ms ease
+    user-select: none
     white-space: nowrap
     z-index: 0
 
     &::before
+      background: currentColor
       bottom: 0.03em
       content: ""
       display: block
@@ -38,22 +41,29 @@
         left: 0
         width: 100%
 
-  @mixin colors($body-foreground, $body-foreground-grey, $body-background)
+    &:active,
+    &.no-op
+      color: var(--body-foreground-grey)
+
+  \:host-context(standard--card)
     > a,
     > button
-      text-shadow: $body-background 0.07em 0.07em, $body-background 0 0.07em, $body-background -0.07em 0.07em, $body-background -0.07em 0, $body-background -0.07em -0.07em, $body-background 0 -0.07em, $body-background 0.07em -0.07em, $body-background 0.07em 0
-
-      &::before
-        background: $body-foreground
+      text-shadow: var(--card-background) 0.07em 0.07em, var(--card-background) 0 0.07em, var(--card-background) -0.07em 0.07em, var(--card-background) -0.07em 0, var(--card-background) -0.07em -0.07em, var(--card-background) 0 -0.07em, var(--card-background) 0.07em -0.07em, var(--card-background) 0.07em 0
 
       &:active,
       &.no-op
-        color: $body-foreground-grey
+        color: var(--card-foreground-grey)
 
-        &::before
-          background: $body-foreground-grey
+  \:host-context(standard--header)
+    > a,
+    > button
+      text-shadow: none
 
-  @include colors(var(--body-light-foreground), var(--body-light-foreground-grey), var(--body-light-background))
+  \:host-context(standard--footer)
+    > a,
+    > button
+      text-shadow: var(--footer-background) 0.07em 0.07em, var(--footer-background) 0 0.07em, var(--footer-background) -0.07em 0.07em, var(--footer-background) -0.07em 0, var(--footer-background) -0.07em -0.07em, var(--footer-background) 0 -0.07em, var(--footer-background) 0.07em -0.07em, var(--footer-background) 0.07em 0
 
-  @media (prefers-color-scheme: dark)
-    @include colors(var(--body-dark-foreground), var(--body-dark-foreground-grey), var(--body-dark-background))
+      &:active,
+      &.no-op
+        color: var(--footer-background-grey)

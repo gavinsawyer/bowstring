@@ -1,39 +1,77 @@
-\:host > header
-  display: flex
-  flex-direction: row
-  justify-content: center
-  padding: 1rem 1rem 0.5rem
+\:host
+  position: sticky
+  top: 0.5625rem
+  z-index: 999
 
-  > div
-    align-items: center
+  > header
     display: flex
-    flex-direction: column
+    flex-direction: row
+    justify-content: center
 
-    > standard--link::ng-deep
-      font-size: 1.5em
-      font-weight: bold
+    > div
+      align-items: center
+      display: flex
+      flex-direction: column
 
-      > a,
-      > button
-        color: inherit
+      > standard--link::ng-deep
+        font-size: 1.5em
+        font-weight: bold
 
-        &::before
-          height: 0.08em
+        > a,
+        > button
+          color: inherit
+          user-select: none
 
-          @mixin colors($body-foreground)
-            background-color: $body-foreground
+          &::before
+            height: 0.08em
 
-          @include colors(var(--body-light-foreground))
+          &.no-op::before
+            left: unset
+            width: 0
 
-          @media (prefers-color-scheme: dark)
-            @include colors(var(--body-dark-foreground))
+      > span
+        cursor: default
+        font-weight: 700
+        opacity: 80%
+        user-select: none
 
-        &.no-op::before
-          left: unset
-          width: 0
+    @mixin lower-header
+      backdrop-filter: blur(0) saturate(1)
+      background: unset
+      border-radius: calc(var(--border-radius) / 4)
+      box-shadow: none
+      margin: 0.4375rem 0
+      padding: 0.4375rem 0.375rem
 
+    @mixin raise-header
+      background: var(--glass)
+      backdrop-filter: blur(2rem) saturate(2)
+      border-radius: calc(var(--border-radius) / 2)
+      box-shadow: black 0 calc(var(--depth-offset) * 1.25) calc(var(--depth-blur) * 1.25) calc(var(--depth-spread) * 1.25)
+      margin: 0 -0.4375rem
+      padding: 0.875rem 0.75rem
 
-    > span
-      cursor: default
-      font-weight: 700
-      opacity: 80%
+    @include lower-header
+
+    @keyframes lower-header
+      0%
+        @include raise-header
+
+      100%
+        @include lower-header
+
+    @keyframes raise-header
+      0%
+        @include lower-header
+
+      100%
+        @include raise-header
+
+    &.raised
+      animation: raise-header 200ms ease-out forwards
+
+      &.lowering
+        animation: lower-header 200ms ease-in forwards
+
+  @media (min-width: 23.5rem)
+    top: 1.125rem

@@ -2,7 +2,6 @@
   "locale":       "fr-FR",
   "translations": {
     "2287289086067887307":         "conditions",
-    "2399359328611468210":         "Sélectionnez votre région",
     "4008499810642586945":         "annonces personnalisées",
     "5971320496086359379":         "légal",
     "6175300314360976778":         "technologie",
@@ -10,6 +9,7 @@
     "Brand--Description":          "Un site web Standard.",
     "Brand--Subtitle":             "Site web",
     "Brand--Title":                "Standard",
+    "CurrencyDialog--Title":       "Sélectionnez votre devise",
     "LocaleDialog--Title":         "Sélectionnez votre région",
     "OtherwiseRoute--CardContent": "Assurez-vous que l'URL (\"{$INTERPOLATION}\") est correcte.",
     "OtherwiseRoute--CardTitle":   "Page non trouvée",

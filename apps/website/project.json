@@ -2,6 +2,10 @@
   "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "i18n":        {
     "locales":      {
+      "es-ES": {
+        "baseHref":    "/es-ES/",
+        "translation": "apps/website/src/locales/messages.es-ES.json"
+      },
       "fr-FR": {
         "baseHref":    "/fr-FR/",
         "translation": "apps/website/src/locales/messages.fr-FR.json"
@@ -146,7 +150,7 @@
             }
           ],
           "localize":         true,
-          "outputHashing":    "all"
+          "outputHashing":    "media"
         }
       },
       "defaultConfiguration": "production",

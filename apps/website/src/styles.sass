@@ -1,10 +1,10 @@
 @use 'sass:math'
 @import 'normalize.css'
 
-$primary-hue:        129
-$primary-saturation: 16%
+$primary-hue:        40
+$primary-saturation: 15%
 
-$primary-shade:          55%
+$primary-shade:          50%
 $primary-contrast-shade: 96%
 $primary-shadow-shade:   18%
 
@@ -12,15 +12,23 @@ $primary:          hsl($primary-hue, $primary-saturation, $primary-shade)
 $primary-contrast: hsl($primary-hue, $primary-saturation * math.div($primary-shade, $primary-contrast-shade), $primary-contrast-shade)
 $primary-shadow:   hsl($primary-hue, $primary-saturation * math.div($primary-shade, $primary-shadow-shade), $primary-shadow-shade)
 
-$body-shade:   15%
-$button-shade: 30%
-$footer-shade: 25%
-$card-shade:   20%
-
 $border-radius: 1rem
+
+$depth-blur:   0.5rem
+
+$depth-offset: $depth-blur * 0.5
+$depth-spread: $depth-offset * -1.03125
+
+$body-shade:          15%
+$button-shade:        30%
+$footer-shade:        25%
+$card-shade:          20%
 
 $grey-factor:       60%
 $dark-theme-factor: 80%
+
+$primary-grey:          darken($primary, math.div(math.abs($grey-factor - $primary-shade), 2))
+$primary-contrast-grey: darken($primary-contrast, math.div(math.abs($grey-factor - $primary-contrast-shade), 2))
 
 $body-background-shade:   100% - ($body-shade - 15)
 $button-background-shade: 100% - ($button-shade - 15)
@@ -67,19 +75,8 @@ $card-dark-background:      darken($card-light-background, $dark-theme-factor)
 $card-dark-foreground-grey: darken($card-dark-foreground, math.div(math.abs($grey-factor + $card-shade), 2))
 $card-dark-background-grey: lighten($card-dark-background, math.div(math.abs($grey-factor - $card-shade), 2))
 
-$primary-grey:          darken($primary, math.div(math.abs($grey-factor - $primary-shade), 2))
-$primary-contrast-grey: darken($primary-contrast, math.div(math.abs($grey-factor - $primary-contrast-shade), 2))
-
-$glass-light:          transparentize(darken($body-light-background, 10%), math.div(2, 5))
-$glass-light-backdrop: transparentize(lighten($body-light-background, 5%), math.div(3, 10))
-
-$glass-dark:          transparentize(darken($body-dark-background, 5%), math.div(2, 5))
-$glass-dark-backdrop: transparentize(lighten($body-dark-background, 10%), math.div(3, 10))
-
-$depth-blur:   0.5rem
-
-$depth-offset: $depth-blur * 0.5
-$depth-spread: $depth-offset * -1.03125
+$glass-light: transparentize(darken($body-light-background, 10%), math.div(3, 5))
+$glass-dark:  transparentize(lighten($body-dark-background, 10%), math.div(3, 5))
 
 html,
 body
@@ -90,62 +87,63 @@ body
   --primary-contrast: #{ $primary-contrast }
   --primary-shadow:   #{ $primary-shadow }
 
-  --body-light-foreground:      #{ $body-light-foreground }
-  --body-light-background:      #{ $body-light-background }
-  --body-light-foreground-grey: #{ $body-light-foreground-grey }
-  --body-light-background-grey: #{ $body-light-background-grey }
-
-  --body-dark-foreground:      #{ $body-dark-foreground }
-  --body-dark-background:      #{ $body-dark-background }
-  --body-dark-foreground-grey: #{ $body-dark-foreground-grey }
-  --body-dark-background-grey: #{ $body-dark-background-grey }
-
-  --button-light-foreground:      #{ $button-light-foreground }
-  --button-light-background:      #{ $button-light-background }
-  --button-light-foreground-grey: #{ $button-light-foreground-grey }
-  --button-light-background-grey: #{ $button-light-background-grey }
-
-  --button-dark-foreground:      #{ $button-dark-foreground }
-  --button-dark-background:      #{ $button-dark-background }
-  --button-dark-foreground-grey: #{ $button-dark-foreground-grey }
-  --button-dark-background-grey: #{ $button-dark-background-grey }
-
-  --footer-light-foreground:      #{ $footer-light-foreground }
-  --footer-light-background:      #{ $footer-light-background }
-  --footer-light-foreground-grey: #{ $footer-light-foreground-grey }
-  --footer-light-background-grey: #{ $footer-light-background-grey }
-
-  --footer-dark-foreground:      #{ $footer-dark-foreground }
-  --footer-dark-background:      #{ $footer-dark-background }
-  --footer-dark-foreground-grey: #{ $footer-dark-foreground-grey }
-  --footer-dark-background-grey: #{ $footer-dark-background-grey }
-
-  --card-light-foreground:      #{ $card-light-foreground }
-  --card-light-background:      #{ $card-light-background }
-  --card-light-foreground-grey: #{ $card-light-foreground-grey }
-  --card-light-background-grey: #{ $card-light-background-grey }
-
-  --card-dark-foreground:      #{ $card-dark-foreground }
-  --card-dark-background:      #{ $card-dark-background }
-  --card-dark-foreground-grey: #{ $card-dark-foreground-grey }
-  --card-dark-background-grey: #{ $card-dark-background-grey }
-
   --primary-grey:          #{ $primary-grey }
   --primary-contrast-grey: #{ $primary-contrast-grey }
 
-  --glass-light:          #{ $glass-light }
-  --glass-light-backdrop: #{ $glass-light-backdrop }
-
-  --glass-dark:          #{ $glass-dark }
-  --glass-dark-backdrop: #{ $glass-dark-backdrop }
-
-  --depth-blur:   #{ $depth-blur }
+  --depth-blur: #{ $depth-blur }
 
   --border-radius: #{ $border-radius }
 
   --depth-offset: #{ $depth-offset }
   --depth-spread: #{ $depth-spread }
 
+  --body-foreground:      #{ $body-light-foreground }
+  --body-background:      #{ $body-light-background }
+  --body-foreground-grey: #{ $body-light-foreground-grey }
+  --body-background-grey: #{ $body-light-background-grey }
+
+  --button-foreground:      #{ $button-light-foreground }
+  --button-background:      #{ $button-light-background }
+  --button-foreground-grey: #{ $button-light-foreground-grey }
+  --button-background-grey: #{ $button-light-background-grey }
+
+  --card-foreground:      #{ $card-light-foreground }
+  --card-background:      #{ $card-light-background }
+  --card-foreground-grey: #{ $card-light-foreground-grey }
+  --card-background-grey: #{ $card-light-background-grey }
+
+  --footer-foreground:      #{ $footer-light-foreground }
+  --footer-background:      #{ $footer-light-background }
+  --footer-foreground-grey: #{ $footer-light-foreground-grey }
+  --footer-background-grey: #{ $footer-light-background-grey }
+
+  --glass: #{ $glass-light }
+
+  @media (prefers-color-scheme: dark)
+    --body-foreground:      #{ $body-dark-foreground }
+    --body-background:      #{ $body-dark-background }
+    --body-foreground-grey: #{ $body-dark-foreground-grey }
+    --body-background-grey: #{ $body-dark-background-grey }
+
+    --button-foreground:      #{ $button-dark-foreground }
+    --button-background:      #{ $button-dark-background }
+    --button-foreground-grey: #{ $button-dark-foreground-grey }
+    --button-background-grey: #{ $button-dark-background-grey }
+
+    --card-foreground:      #{ $card-dark-foreground }
+    --card-background:      #{ $card-dark-background }
+    --card-foreground-grey: #{ $card-dark-foreground-grey }
+    --card-background-grey: #{ $card-dark-background-grey }
+
+    --footer-foreground:      #{ $footer-dark-foreground }
+    --footer-background:      #{ $footer-dark-background }
+    --footer-foreground-grey: #{ $footer-dark-foreground-grey }
+    --footer-background-grey: #{ $footer-dark-background-grey }
+
+    --glass:  #{ $glass-dark }
+
+  background: var(--body-background)
+  color: var(--body-foreground)
   display: flex
   flex-direction: row
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif
@@ -163,8 +161,6 @@ body
     gap: 0.875rem
 
   hgroup
-    max-width: 30rem
-
     & > h1,
     & > h2,
     & > h3,
@@ -206,12 +202,3 @@ body
 
       &:last-child
         margin: 0.875rem 0 0
-
-  @mixin colors($body-foreground, $body-background)
-    background: $body-background
-    color: $body-foreground
-
-  @include colors(var(--body-light-foreground), var(--body-light-background))
-
-  @media (prefers-color-scheme: dark)
-    @include colors(var(--body-dark-foreground), var(--body-dark-background))

@@ -1,59 +1,37 @@
-\:host::ng-deep
+\:host
   align-self: stretch
   display: flex
   flex-direction: row
   justify-content: center
+  padding: 0.28125rem 0.5rem 0.5625rem
 
   > footer
+    background: var(--footer-background)
+    border-radius: 0.5rem
+    color: var(--footer-foreground)
     cursor: default
     display: flex
     flex-basis: 28rem
     flex-direction: row
     flex-wrap: wrap
-    gap: 0.875rem 1rem
-    justify-content: space-between
-    padding: 1.125rem 1rem
+    gap: 0.875rem 0.75rem
+    justify-content: center
+    padding: 0.875rem 0.75rem
 
-    > div
-      display: inline-flex
-      flex-direction: row
-      flex-grow: 1
-      gap: 1rem
-      justify-content: center
+    &::ng-deep > span
       order: 2
-
-      > span
-        text-align: center
-        white-space: nowrap
+      text-align: center
+      white-space: nowrap
 
       &:first-child
         order: 0
 
     @media (min-width: 46rem)
       flex-basis: 49rem
+      justify-content: space-between
 
-      > div
-        flex-grow: 0
+      &::ng-deep > span:last-child
+        order: 1
 
-        &:last-child
-          order: 1
-
-    @media (min-width: 23.5rem)
-      padding: 1.125rem 2rem
-
-  @mixin colors($footer-foreground, $footer-background)
-    background: $footer-background
-    color: $footer-foreground
-
-    > footer > div > span > standard--link::ng-deep
-      > a,
-      > button
-        text-shadow: $footer-background 0.07em 0.07em, $footer-background 0 0.07em, $footer-background -0.07em 0.07em, $footer-background -0.07em 0, $footer-background -0.07em -0.07em, $footer-background 0 -0.07em, $footer-background 0.07em -0.07em, $footer-background 0.07em 0 !important
-
-        &::before
-          background: $footer-foreground !important
-
-  @include colors(var(--footer-light-foreground), var(--footer-light-background))
-
-  @media (prefers-color-scheme: dark)
-    @include colors(var(--footer-dark-foreground), var(--footer-dark-background))
+  @media (min-width: 23.5rem)
+    padding: 0.5625rem 1rem 1.125rem

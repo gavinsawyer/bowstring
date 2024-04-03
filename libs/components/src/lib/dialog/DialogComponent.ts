@@ -28,8 +28,8 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   })
   private htmlDialogElementRef!: ElementRef<HTMLDialogElement>;
 
-  private readonly abortController: AbortController = new AbortController();
-  private readonly close:           () => void      = (): void => setTimeout(
+  private readonly abortController: AbortController      = new AbortController();
+  private readonly close:           () => void           = (): void => setTimeout(
     (): void => {
       this
         .closing$
@@ -41,7 +41,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     },
     200,
   ) && this.closing$.set(true);
-  private readonly openEffect:      EffectRef       = effect(
+  private readonly openEffect:      EffectRef            = effect(
     (onCleanup: EffectCleanupRegisterFn): void => {
       isPlatformBrowser(
         this.platformId,
@@ -76,7 +76,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
       manualCleanup: true,
     },
   );
-  private readonly platformId:      string          = inject<string>(PLATFORM_ID);
+  private readonly platformId:      NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   public readonly closing$: WritableSignal<boolean> = signal<boolean>(false);
 

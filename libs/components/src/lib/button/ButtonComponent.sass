@@ -7,7 +7,6 @@
 
   > div
     > a
-      position: static
       text-shadow: none
       z-index: unset
 
@@ -16,26 +15,30 @@
 
     > a,
     > button
+      align-items: center
+      background-color: var(--button-backgorund)
       border: none
       border-radius: var(--border-radius)
       box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
+      color: var(--button-foreground)
       cursor: pointer
       display: flex
       flex-basis: 100%
+      flex-direction: row
       font-size: 1.125rem
       justify-content: center
       outline: none
       padding: 0.875rem 2rem
       transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
+      user-select: none
 
-      > standard--symbol::ng-deep > img
-        filter: invert(29%) sepia(0%) saturate(0%) hue-rotate(4deg) brightness(100%) contrast(93%)
+      > span
+        display: flex
 
       &.no-op
+        background-color: var(--button-background-grey)
+        color: var(--button-foreground-grey)
         cursor: default
-
-        > standard--symbol::ng-deep > img
-          filter: invert(75%) sepia(0%) saturate(0%) hue-rotate(88deg) brightness(90%) contrast(87%)
 
       &:not(.no-op)
         translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
@@ -57,39 +60,11 @@
       box-shadow: var(--primary-shadow) 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
       color: var(--primary-contrast)
 
-      > standard--symbol::ng-deep > img
-        filter: invert(98%) sepia(0%) saturate(6938%) hue-rotate(136deg) brightness(121%) contrast(91%)
-
       &.no-op
         background-color: var(--primary-grey)
         color: var(--primary-contrast-grey)
-
-        > standard--symbol::ng-deep > img
-          filter: invert(75%) sepia(10%) saturate(259%) hue-rotate(78deg) brightness(94%) contrast(87%)
 
       &:not(.no-op)
         &:hover,
         &:focus-visible
           box-shadow: var(--primary-shadow) 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
-
-  @mixin colors($button-foreground, $button-foreground-grey, $button-background, $button-background-grey)
-    > div
-      > a,
-      > button
-        background-color: $button-background
-        color: $button-foreground
-
-        > standard--symbol::ng-deep > img
-          filter: invert(100%) sepia(9%) saturate(7481%) hue-rotate(181deg) brightness(101%) contrast(110%)
-
-        &.no-op
-          background-color: $button-background-grey
-          color: $button-foreground-grey
-
-          > standard--symbol::ng-deep > img
-            filter: invert(73%) sepia(0%) saturate(0%) hue-rotate(196deg) brightness(90%) contrast(94%)
-
-  @include colors(var(--button-light-foreground), var(--button-light-foreground-grey), var(--button-light-background), var(--button-light-background-grey))
-
-  @media (prefers-color-scheme: dark)
-    @include colors(var(--button-dark-foreground), var(--button-dark-foreground-grey), var(--button-dark-background), var(--button-dark-background-grey))

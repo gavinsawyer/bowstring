@@ -1,9 +1,12 @@
-import { Component, Input }             from "@angular/core";
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { NgComponentOutlet }                                from "@angular/common";
+import { Component, Input, OnInit, signal, WritableSignal } from "@angular/core";
+import { RouterLink, RouterLinkActive }                     from "@angular/router";
+import * as symbolComponents                                from "../symbols";
 
 
 @Component({
-  imports:     [
+  imports: [
+    NgComponentOutlet,
     RouterLink,
     RouterLinkActive,
   ],
@@ -14,7 +17,7 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   ],
   templateUrl: "LinkComponent.html",
 })
-export class LinkComponent {
+export class LinkComponent implements OnInit {
 
   @Input({
     required: true,
@@ -22,7 +25,20 @@ export class LinkComponent {
   public text!: string;
 
   @Input() public disabled?: boolean;
+  @Input() public symbol?:   (keyof typeof symbolComponents) extends `${ infer name }SymbolComponent` ? name : never;
   @Input() public tabindex?: number;
   @Input() public url?:      string;
+
+  public readonly symbolComponent$: WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
+    this.symbol && symbolComponents[`${ this.symbol }SymbolComponent`],
+  );
+
+  ngOnInit(): void {
+    this
+      .symbolComponent$
+      .set(
+        this.symbol && symbolComponents[`${ this.symbol }SymbolComponent`],
+      );
+  }
 
 }

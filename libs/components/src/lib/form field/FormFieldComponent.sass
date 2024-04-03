@@ -1,0 +1,47 @@
+\:host
+  &,
+  > div
+    display: flex
+    flex-direction: row
+    flex-grow: 1
+
+  > div
+    transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease
+    user-select: none
+
+    &::ng-deep
+      > input,
+      > textarea
+        background: var(--body-background)
+        border: 1px solid var(--body-foreground-grey)
+        border-radius: calc(var(--border-radius) / 2)
+        display: flex
+        flex-grow: 1
+        opacity: 0.5
+        outline: none
+        padding: 0.875rem 1rem
+        width: 0
+
+        &,
+        &::placeholder
+          color: var(--body-foreground-grey)
+
+        &:not([disabled])
+          color: var(--body-foreground)
+          opacity: 1
+
+      > textarea
+        resize: none
+
+    &:hover
+      box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
+      scale: 1.015625 1.015625 1.015625
+      translate: calc(var(--translation-x) * 0.5rem) calc(var(--translation-y) * 0.5rem)
+
+    &:focus-within
+      box-shadow: black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
+      scale: 1.03125 1.03125 1.03125
+      translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+
+    &.transitionTranslate
+      transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease, translate 200ms ease

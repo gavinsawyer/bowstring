@@ -4,15 +4,16 @@
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
   (mousemove)="mousemove($event, containerElement);">
-  @if (url; as url) {@if (url.includes("://")) {<a
+  @if (url; as url) {@if (url.includes("://")) {<!--suppress CssUnknownProperty --><a
     [attr.href]="url"
-    [attr.tabindex]="disabled ? -1 : tabindex"
+    [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
     [class.no-op]="disabled"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y">
-    @if (symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ text }}
-  </a>} @else {<a
-    [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex"
+    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" />&nbsp;</span>}
+    <span>{{ text }}</span>
+  </a>} @else {<!--suppress CssUnknownProperty --><a
+    [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex ?? 1"
     [class.no-op]="disabled"
     [routerLink]="url"
     #routerLinkActive="routerLinkActive"
@@ -20,12 +21,14 @@
     [routerLinkActiveOptions]="{ exact: true }"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y">
-    @if (symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ text }}
-  </a>}} @else {<button
-    [attr.tabindex]="disabled ? -1 : tabindex"
+    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" />&nbsp;</span>}
+    <span>{{ text }}</span>
+  </a>}} @else {<!--suppress CssUnknownProperty --><button
+    [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
     [class.no-op]="disabled"
     [style.--translation-x]="translation$().x"
     [style.--translation-y]="translation$().y">
-    @if (symbol) {<standard--symbol [name]="symbol" />&nbsp;}{{ text }}
+    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" />&nbsp;</span>}
+    <span>{{ text }}</span>
   </button>}
 </div>

@@ -2,7 +2,6 @@
   "locale":       "en-US",
   "translations": {
     "2287289086067887307":         "terms",
-    "2399359328611468210":         "Choose your locale",
     "4008499810642586945":         "personalized ads",
     "5971320496086359379":         "legal",
     "6175300314360976778":         "technology",
@@ -10,6 +9,7 @@
     "Brand--Description":          "A standard website.",
     "Brand--Subtitle":             "Website",
     "Brand--Title":                "Standard",
+    "CurrencyDialog--Title":       "Choose your currency",
     "LocaleDialog--Title":         "Choose your locale",
     "OtherwiseRoute--CardContent": "Make sure the URL (\"{$INTERPOLATION}\") is correct.",
     "OtherwiseRoute--CardTitle":   "Page not found",

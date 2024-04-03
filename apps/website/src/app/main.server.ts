@@ -15,36 +15,36 @@ const mainModule: NodeJS.Module | undefined = __non_webpack_require__
   .main;
 const moduleFilename: string = mainModule && mainModule
   .filename || "";
-const requestHandler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void> = (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((locale: keyof typeof project.i18n.locales | "en-US"): Promise<void> => new CommonEngine().render(
+const requestHandler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void> = (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((localeId: keyof typeof project.i18n.locales | "en-US"): Promise<void> => new CommonEngine().render(
   {
     bootstrap:        WebsiteServerModule,
     documentFilePath: join(
       process.cwd(),
       "dist/apps/website/browser",
-      locale,
+      localeId,
       existsSync(
         join(
           process.cwd(),
           "dist/apps/website/browser",
-          locale,
+          localeId,
           "index.original.html",
         ),
       ) ? "index.original.html" : "index.html",
     ),
-    url:              `${req.protocol}://${req.headers.host}${req.originalUrl}`,
+    url:              `${ req.protocol }://${ req.headers.host }${ req.originalUrl }`,
     publicPath:       join(
       process.cwd(),
       "dist/apps/website/browser",
-      locale,
+      localeId,
     ),
     providers:        [
       {
         provide:  APP_BASE_HREF,
-        useValue: "/" + locale,
+        useValue: `/${ localeId }`,
       },
       {
         provide:  LOCALE_ID,
-        useValue: locale,
+        useValue: localeId,
       },
     ],
   },
@@ -55,13 +55,17 @@ const requestHandler: (req: express.Request, res: express.Response, next: expres
 ))(
   ([
     "en-US",
-    ...Object.keys(project.i18n.locales),
+    ...Object.keys(
+      project.i18n.locales,
+    ),
   ] as (keyof typeof project.i18n.locales | "en-US")[]).filter(
-    (locale: keyof typeof project.i18n.locales | "en-US"): boolean => locale === req.path.split("/")[1],
+    (localeId: keyof typeof project.i18n.locales | "en-US"): boolean => localeId === req.path.split("/")[1],
   )[0] || req.acceptsLanguages(
     [
       "en-US",
-      ...Object.keys(project.i18n.locales),
+      ...Object.keys(
+        project.i18n.locales,
+      ),
     ],
   ) as keyof typeof project.i18n.locales | "en-US" | false || "en-US",
 );
@@ -96,7 +100,7 @@ const requestHandler: (req: express.Request, res: express.Response, next: expres
   )
   .listen(
     process.env["PORT"] || 4000,
-    (): void => console.log(`Node Express server listening on http://localhost:${process.env["PORT"] || 4000}`),
+    (): void => console.log(`Node Express server listening on http://localhost:${ process.env["PORT"] || 4000 }`),
   );
 
 // noinspection JSUnusedGlobalSymbols

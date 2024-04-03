@@ -16,7 +16,8 @@
     "importHelpers":                      true,
     "lib":                                [
       "ES2020",
-      "DOM"
+      "DOM",
+      "DOM.Iterable"
     ],
     "module":                             "ESNext",
     "moduleResolution":                   "Node",
@@ -35,6 +36,12 @@
       "@standard/components":       [
         "libs/components/src/index.ts"
       ],
+      "@standard/components/routes":       [
+        "libs/components/src/lib/routes/index.ts"
+      ],
+      "@standard/components/symbols":       [
+        "libs/components/src/lib/symbols/index.ts"
+      ],
       "@standard/injection-tokens": [
         "libs/injection tokens/src/index.ts"
       ],
@@ -43,9 +50,6 @@
       ],
       "@standard/services":         [
         "libs/services/src/index.ts"
-      ],
-      "@standard/symbol-aspect-ratios":         [
-        "libs/symbol aspect ratios/src/index.ts"
       ],
       "@standard/types":            [
         "libs/types/src/index.ts"

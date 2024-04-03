@@ -9,12 +9,12 @@ express()
   )
   .set(
     "views",
-    process.cwd() + "/dist/apps/website/browser",
+    `${ process.cwd() }/`,
   )
   .get(
     "*.*",
     express.static(
-      process.cwd() + "/dist/apps/website/browser",
+      `${ process.cwd() }/dist/apps/website/browser`,
       {
         maxAge: "1y",
       },
@@ -23,25 +23,31 @@ express()
   .get(
     "*",
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((locale: keyof typeof i18n.locales | "en-US"): Promise<void> => require(process.cwd() + "/dist/apps/website/server/" + locale + "/main.js")["requestHandler"](
+    (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((localeId: keyof typeof i18n.locales | "en-US"): Promise<void> => require(
+      `${process.cwd()}/dist/apps/website/server/${ localeId }/main.js`,
+    )["requestHandler"](
       req,
       res,
       next,
     ))(
       ([
         "en-US",
-        ...Object.keys(i18n.locales),
+        ...Object.keys(
+          i18n.locales,
+        ),
       ] as (keyof typeof i18n.locales | "en-US")[]).filter(
-        (locale: keyof typeof i18n.locales | "en-US"): boolean => locale === req.path.split("/")[1],
+        (localeId: keyof typeof i18n.locales | "en-US"): boolean => localeId === req.path.split("/")[1],
       )[0] || req.acceptsLanguages(
         [
           "en-US",
-          ...Object.keys(i18n.locales) as (keyof typeof i18n.locales)[],
+          ...Object.keys(
+            i18n.locales,
+          ) as (keyof typeof i18n.locales)[],
         ],
       ) || "en-US",
     ),
   )
   .listen(
     process.env["PORT"] || 4000,
-    (): void => console.log(`Node Express server listening on http://localhost:${process.env["PORT"] || 4000}`),
+    (): void => console.log(`Node Express server listening on http://localhost:${ process.env["PORT"] || 4000 }`),
   );

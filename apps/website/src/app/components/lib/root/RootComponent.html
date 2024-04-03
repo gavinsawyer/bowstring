@@ -4,26 +4,37 @@
     <standard--aside>
       <standard--card>
         <form [formGroup]="connectFormGroup">
-          <standard--input
-            formControlName="name"
-            placeholder="Name"
-            [tabindex]="1"
-            type="text" />
-          <standard--input
-            formControlName="message"
-            placeholder="Message"
-            [tabindex]="1"
-            type="text" />
-          <standard--input
-            formControlName="phone"
-            placeholder="Phone number"
-            [tabindex]="1"
-            type="tel" />
-          <standard--input
-            formControlName="email"
-            placeholder="Email"
-            [tabindex]="1"
-            type="email" />
+          <standard--form-field formControlName="name">
+            <input
+              [attr.tabindex]="htmlInputElement.disabled ? -1 : 1"
+              #htmlInputElement=""
+              placeholder="Name"
+              type="text" />
+          </standard--form-field>
+          <standard--form-field formControlName="message">
+            <textarea
+              [attr.tabindex]="htmlTextAreaElement.disabled ? -1 : 1"
+              #htmlTextAreaElement=""
+              placeholder="Message"
+              rows="2"
+              type="text"></textarea>
+          </standard--form-field>
+          <standard--form-field formControlName="phone">
+            <input
+              [attr.tabindex]="htmlInputElement.disabled ? -1 : 1"
+              #htmlInputElement=""
+              mask="(000) 000-0000"
+              placeholder="Phone"
+              prefix="+1 "
+              type="text" />
+          </standard--form-field>
+          <standard--form-field formControlName="email">
+            <input
+              [attr.tabindex]="htmlInputElement.disabled ? -1 : 1"
+              #htmlInputElement=""
+              placeholder="Email"
+              type="email" />
+          </standard--form-field>
         </form>
         <hgroup>
           <h3>
@@ -33,11 +44,9 @@
       </standard--card>
       <span>
         <standard--link
-          [tabindex]="1"
           i18n-text="@@PrivacyRoute--Title"
           text="Privacy"
           url="/privacy" />&nbsp;&bull;&nbsp;<standard--link
-          [tabindex]="1"
           i18n-text="@@TermsRoute--Title"
           text="Terms"
           url="/terms" />
@@ -52,41 +61,35 @@
   </div>
 </div>
 <standard--footer>
-  <div>
-    <span>
-      &copy; 2024 Gavin Sawyer
-    </span>
-  </div>
-  <div>
-    <span>
-      v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}+<standard--link
-        [text]="gitInfo.hash || ''"
-        [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
-    </span>
-  </div>
-  <div>
-    <span>
-      <standard--symbol name="globe" />&nbsp;{{ localeId }}
-    </span>
-    <span>
-      <standard--link
-        (click)="localeDialogOpen$.set(!localeDialogOpen$());"
-        i18n-text=""
-        [tabindex]="largeBreakpoint$() ? 1 : 0"
-        text="Choose your locale"  />
-    </span>
-  </div>
+  <span>
+    &copy;&nbsp;2024&nbsp;<standard--link
+      text="Gavin Sawyer"
+      url="https://gavinsawyer.dev/" />
+  </span>
+  <span>
+    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}&plus;<standard--link
+      [tabindex]="0"
+      [text]="gitInfo.hash || ''"
+      [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
+  </span>
+  <span>
+    <standard--link
+      (click)="localeDialogOpen$.set(true);"
+      symbol="Globe"
+      [tabindex]="past46remBreakpoint$() ? 1 : 0"
+      [text]="localeDisplayNames.of(localeId) || localeId" />
+  </span>
 </standard--footer>
 <standard--dialog [open$]="localeDialogOpen$">
+  <div>
+    @for (locale of locales; track locale) {<standard--button
+      class="primary"
+      (click)="locale === localeId || changeLocale(locale);"
+      [disabled]="locale === localeId"
+      symbol="Globe"
+      [text]="localeDisplayNames.of(locale) || locale" />}
+  </div>
   <hgroup>
     <h1 i18n="@@LocaleDialog--Title">Choose your locale</h1>
-    <div>
-      @for (locale of locales; track locale) {<standard--button
-        class="primary"
-        (click)="locale === localeId || changeLocale(locale);"
-        [disabled]="locale === localeId"
-        symbol="globe"
-        [text]="locale" />}
-    </div>
   </hgroup>
 </standard--dialog>

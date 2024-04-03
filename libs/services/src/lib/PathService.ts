@@ -11,7 +11,7 @@ import { filter, map, startWith }                                               
 export class PathService {
 
   private readonly localeId: string   = inject<string>(LOCALE_ID);
-  private readonly location: Location = inject<Location>(Location)
+  private readonly location: Location = inject<Location>(Location);
   private readonly router:   Router   = inject<Router>(Router);
 
   public readonly path$: Signal<string> = toSignal<string>(
@@ -20,10 +20,10 @@ export class PathService {
         (routerEvent: RouterEvent | NavigationStart | NavigationEnd | NavigationCancel | NavigationError | RoutesRecognized | GuardsCheckStart | GuardsCheckEnd | RouteConfigLoadStart | RouteConfigLoadEnd | ChildActivationStart | ChildActivationEnd | ActivationStart | ActivationEnd | Scroll | ResolveStart | ResolveEnd): routerEvent is NavigationEnd => routerEvent instanceof NavigationEnd,
       ),
       map<NavigationEnd, string>(
-        (navigationEnd: NavigationEnd): string => "/" + this.localeId + navigationEnd.url.split("?")[0],
+        (navigationEnd: NavigationEnd): string => `/${ this.localeId + navigationEnd.url.split("?")[0] }`,
       ),
       startWith<string, [ string ]>(
-        "/" + this.localeId + this.location.path(),
+        `/${ this.localeId + this.location.path() }`,
       ),
     ),
     {

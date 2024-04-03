@@ -1,125 +1,113 @@
-\:host
-  z-index: 999
+\:host > dialog
+  background: unset
+  border: none
+  flex-direction: column
+  height: 100%
+  justify-content: center
+  left: 0
+  margin: 0
+  max-height: 100%
+  max-width: 100%
+  padding: 0
+  position: fixed
+  top: 0
+  width: 100%
 
-  > dialog
-    border: none
-    flex-direction: column
-    height: 100%
-    justify-content: center
-    left: 0
-    margin: 0
-    max-height: 100%
-    max-width: 100%
-    padding: 0
-    position: fixed
-    top: 0
-    width: 100%
+  @mixin close--dialog
+    opacity: 0
 
-    @mixin close--dialog
+  @mixin open--dialog
+    opacity: 1
+
+  @include close--dialog
+
+  &::backdrop
+    background: var(--glass)
+
+    @mixin close--backdrop
+      backdrop-filter: blur(0) saturate(1)
       opacity: 0
 
-    @mixin open--dialog
+    @mixin open--backdrop
+      backdrop-filter: blur(2rem) saturate(2)
       opacity: 1
 
-    @include open--dialog
+    @include close--backdrop
+
+    @keyframes close--backdrop
+      0%
+        @include open--backdrop
+
+      100%
+        @include close--backdrop
+
+    @keyframes open--backdrop
+      0%
+        @include close--backdrop
+
+      100%
+        @include open--backdrop
+
+  > div
+    display: flex
+    flex-direction: row
+    justify-content: center
+    padding: 1.125rem 2rem
+
+    > standard--card::ng-deep
+      transform-origin: top
+
+      @mixin close--card
+        transform: perspective(100vw) rotateX(-30deg) scale(0.9)
+
+      @mixin open--card
+        transform: unset
+
+      @include open--card
+
+      @keyframes close--card
+        0%
+          @include open--card
+
+        100%
+          @include close--card
+
+      @keyframes open--card
+        0%
+          @include close--card
+
+        100%
+          @include open--card
+
+  &[open]
+    animation: open--dialog 200ms ease-in forwards
+    display: flex
 
     &::backdrop
-      backdrop-filter: blur(1.25rem) brightness(1.5) saturate(2)
+      animation: open--backdrop 200ms ease-in forwards
 
-      @mixin close--backdrop
-        opacity: 0
+    > div > standard--card::ng-deep
+      animation: open--card 200ms ease-in forwards
 
-      @mixin open--backdrop
-        opacity: 1
-
-      @include open--backdrop
-
-      @keyframes close--backdrop
-        0%
-          @include open--backdrop
-
-        100%
-          @include close--backdrop
-
-      @keyframes open--backdrop
-        0%
-          @include close--backdrop
-
-        100%
-          @include open--backdrop
-
-    > div
-      display: flex
-      flex-direction: row
-      justify-content: center
-      padding: 1.125rem 2rem
-
-      > standard--card::ng-deep
-        transform-origin: top
-
-        @mixin close--card
-          transform: perspective(100vw) rotateX(-30deg) scale(0.9)
-
-        @mixin open--card
-          transform: unset
-
-        @include open--card
-
-        @keyframes close--card
-          0%
-            @include open--card
-
-          100%
-            @include close--card
-
-        @keyframes open--card
-          0%
-            @include close--card
-
-          100%
-            @include open--card
-
-    &[open]
-      animation: open--dialog 200ms ease-in forwards
-      display: flex
+    &.closing
+      animation: close--dialog 200ms ease-in forwards
 
       &::backdrop
-        animation: open--backdrop 200ms ease-in forwards
+        animation: close--backdrop 200ms ease-in forwards
 
       > div > standard--card::ng-deep
-        animation: open--card 200ms ease-in forwards
+        animation: close--card 200ms ease-in forwards
 
-      &.closing
-        animation: close--dialog 200ms ease-in forwards
+  @keyframes close--dialog
+    0%
+      @include open--dialog
 
-        &::backdrop
-          animation: close--backdrop 200ms ease-in forwards
+    100%
+      @include close--dialog
 
-        > div > standard--card::ng-deep
-          animation: close--card 200ms ease-in forwards
+  @keyframes open--dialog
+    0%
+      @include close--dialog
 
-    @keyframes close--dialog
-      0%
-        @include open--dialog
-
-      100%
-        @include close--dialog
-
-    @keyframes open--dialog
-      0%
-        @include close--dialog
-
-      100%
-        @include open--dialog
-
-  @mixin colors($glass-light, $glass-light-backdrop)
-    dialog
-      background-color: $glass-light
-
-      &::backdrop
-        background-color: $glass-light-backdrop
-
-  @include colors(var(--glass-light), var(--glass-light-backdrop))
-
-  @media (prefers-color-scheme: dark)
-    @include colors(var(--glass-dark), var(--glass-dark-backdrop))
+    100%
+      @include open--dialog

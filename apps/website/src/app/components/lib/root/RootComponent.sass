@@ -3,19 +3,20 @@
   display: flex
   flex-direction: column
   justify-content: space-between
+  min-height: 100dvh
   width: 100vw
 
   > div
     display: flex
     flex-direction: column
+    flex-grow: 1
     gap: 1rem
-    min-height: calc(100dvh - 5.125rem)
-    padding: 4rem 1rem 1.125rem
+    padding: 4rem 1rem 0.5625rem
 
     > div
       display: flex
       flex-direction: column
-      gap: 1.125rem 1rem
+      gap: 0.875rem 1rem
       max-width: 28rem
 
       > main
@@ -37,11 +38,11 @@
     @media (min-width: 23.5rem)
       padding: 4rem 2rem 1.125rem
 
-  > standard--dialog::ng-deep > dialog > div > standard--card::ng-deep > hgroup > div
+  > standard--dialog::ng-deep > dialog > div > standard--card::ng-deep > div
     display: flex
     flex-direction: row
     flex-wrap: wrap
-    gap: 1rem
+    gap: 0.875rem 1rem
 
     > standard--button::ng-deep
       flex-grow: 1

@@ -1,7 +1,8 @@
-<header>
+<header
+  [class.lowering]="raisedOrLowering$() && !raised$()"
+  [class.raised]="raisedOrLowering$()">
   <div>
     <standard--link
-      [tabindex]="1"
       [text]="brand.title"
       url="/" />
     <span>{{ brand.subtitle }}</span>

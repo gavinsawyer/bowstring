@@ -1,17 +1,25 @@
 \:host
+  background: var(--card-background)
   border-radius: var(--border-radius)
   box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
+  color: var(--card-foreground)
   display: flex
   flex-direction: column-reverse
+  max-width: 30rem
   padding: 1.125rem 1rem 0.875rem
 
   &::ng-deep
+    user-select: none
+
     > hgroup
       > h1,
       > h2,
       > h3,
       > h4
         cursor: default
+
+      > p
+        user-select: text
 
       &:has(+ img)
         position: relative
@@ -21,7 +29,7 @@
         > h3,
         > h4
           background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
-          color: var(--card-dark-foreground)
+          color: hsl(0, 0, 96%)
           margin: 0 -1rem !important
           padding: 4rem 1rem 0.875rem
           position: absolute
@@ -30,7 +38,7 @@
 
           > standard--link::ng-deep
             > a,
-            > buton
+            > button
               text-decoration-color: var(--card-dark-foreground)
               text-shadow: none
               transition: color 200ms ease, text-decoration-color 200ms ease
@@ -56,27 +64,3 @@
       &:first-child
         border-radius: var(--border-radius)
         margin: -1.125rem -1rem -0.875rem
-
-  @mixin colors($card-foreground, $card-background)
-    background: $card-background
-    color: $card-foreground
-
-    &::ng-deep
-      > hgroup
-        > h1,
-        > h2,
-        > h3,
-        > h4,
-        > p
-          > standard--link::ng-deep
-            > a,
-            > button
-              text-shadow: $card-background 0.07em 0.07em, $card-background 0 0.07em, $card-background -0.07em 0.07em, $card-background -0.07em 0, $card-background -0.07em -0.07em, $card-background 0 -0.07em, $card-background 0.07em -0.07em, $card-background 0.07em 0 !important
-
-              &::before
-                background: $card-foreground !important
-
-  @include colors(var(--card-light-foreground), var(--card-light-background))
-
-  @media (prefers-color-scheme: dark)
-    @include colors(var(--card-dark-foreground), var(--card-dark-background))
