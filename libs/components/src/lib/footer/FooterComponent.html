@@ -1,3 +1,7 @@
-<footer>
-  <ng-content />
-</footer>
+<div
+  [class.stuck]="stuckOrUnsticking$()"
+  [class.unsticking]="stuckOrUnsticking$() && !stuck$()">
+  <footer>
+    <ng-content />
+  </footer>
+</div>

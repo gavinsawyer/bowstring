@@ -24,9 +24,9 @@ export class OtherwiseRouteComponent extends RouteComponent implements OnInit {
     },
   );
 
-  public readonly pathService: PathService = inject<PathService>(PathService);
+  protected readonly pathService: PathService = inject<PathService>(PathService);
 
-  override ngOnInit(): void {
+  public override ngOnInit(): void {
     super
       .ngOnInit();
 

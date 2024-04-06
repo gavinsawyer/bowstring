@@ -15,7 +15,7 @@ export class RouteComponent implements OnInit {
 
   private readonly meta: Meta = inject<Meta>(Meta);
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this
       .meta
       .updateTag(

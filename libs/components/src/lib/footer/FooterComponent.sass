@@ -1,37 +1,156 @@
 \:host
   align-self: stretch
-  display: flex
-  flex-direction: row
-  justify-content: center
   padding: 0.28125rem 0.5rem 0.5625rem
 
-  > footer
-    background: var(--footer-background)
-    border-radius: 0.5rem
-    color: var(--footer-foreground)
-    cursor: default
+  &,
+  > div
     display: flex
-    flex-basis: 28rem
     flex-direction: row
-    flex-wrap: wrap
-    gap: 0.875rem 0.75rem
+
+  > div
+    flex-grow: 1
     justify-content: center
-    padding: 0.875rem 0.75rem
 
-    &::ng-deep > span
-      order: 2
-      text-align: center
-      white-space: nowrap
+    @mixin stick--container
+      translate: unset
 
-      &:first-child
-        order: 0
+    @mixin unstick--container
+      translate: 0 calc(100% + 1.6875rem)
 
-    @media (min-width: 46rem)
-      flex-basis: 49rem
-      justify-content: space-between
+    @include unstick--container
 
-      &::ng-deep > span:last-child
+    > footer
+      background: var(--footer--canvas--background)
+      border-radius: 0.5rem
+      color: var(--footer--canvas--foreground)
+      cursor: default
+      display: flex
+      flex-basis: 28rem
+      flex-direction: row
+      flex-wrap: wrap
+      gap: 0.875rem 0.75rem
+      justify-content: center
+      padding: 0.875rem 0.75rem
+      position: relative
+
+      @mixin stick--footer
+        box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
+
+      @mixin unstick--footer
+        box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
+
+      @include unstick--footer
+
+      &::ng-deep > span
         order: 1
+        text-align: center
+        white-space: nowrap
+
+        &:first-child
+          flex-basis: 100%
+          order: 0
+
+        &:last-child
+          order: 2
+
+      &::before
+        background: var(--glass--background)
+        content: ""
+        height: calc(100% + 1.6875rem)
+        left: 50%
+        mask-image: linear-gradient(to bottom, transparent 0%, black 50%)
+        position: absolute
+        top: -0.5625rem
+        width: 100vw
+        z-index: -1
+
+        @mixin stick--pseudoelement
+          backdrop-filter: blur(2rem) saturate(2)
+          opacity: 1
+          translate: -50% 0
+
+        @mixin unstick--pseudoelement
+          backdrop-filter: blur(0) saturate(1)
+          opacity: 0
+          translate: -50% -100%
+
+        @include unstick--pseudoelement
+
+        @keyframes stick--pseudoelement
+          0%
+            @include unstick--pseudoelement
+
+          100%
+            @include stick--pseudoelement
+
+        @keyframes unstick--pseudoelement
+          0%
+            @include stick--pseudoelement
+
+          100%
+            @include unstick--pseudoelement
+
+      @media (min-width: 46rem)
+        flex-basis: 49rem
+        justify-content: space-between
+
+        &::ng-deep > span:first-child
+          flex-basis: unset
+          order: 2
+
+      @keyframes stick--footer
+        0%
+          @include unstick--footer
+
+        100%
+          @include stick--footer
+
+      @keyframes unstick--footer
+        0%
+          @include stick--footer
+
+        100%
+          @include unstick--footer
+
+    &.stuck
+      animation: stick--container 200ms ease-in-out forwards
+
+      > footer
+        animation: stick--footer 200ms ease-in-out forwards
+
+        &::before
+          animation: stick--pseudoelement 200ms ease-in-out forwards
+
+      &.unsticking
+        animation: unstick--container 200ms ease-in-out forwards
+
+        > footer
+          animation: unstick--footer 200ms ease-in-out forwards
+
+          &::before
+            animation: unstick--pseudoelement 200ms ease-in-out forwards
+
+    &:not(.stuck)
+      translate: unset
+
+    @keyframes stick--container
+      0%
+        @include unstick--container
+
+      100%
+        @include stick--container
+
+    @keyframes unstick--container
+      0%
+        @include stick--container
+
+      100%
+        @include unstick--container
+
+  &:has(div.stuck)
+    bottom: 0
+    position: sticky
+    z-index: 1
 
   @media (min-width: 23.5rem)
     padding: 0.5625rem 1rem 1.125rem

@@ -1,34 +1,40 @@
-<div
+<!--suppress CssUnknownProperty --><div
   [class.transitionTranslate]="transitionTranslate$()"
   #containerElement=""
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event, containerElement);">
-  @if (url; as url) {@if (url.includes("://")) {<!--suppress CssUnknownProperty --><a
+  (mousemove)="mousemove($event, containerElement);"
+  [style.--translation-x]="translation$().x"
+  [style.--translation-y]="translation$().y">
+  @if (url; as url) {@if (url.includes("://")) {<a
     [attr.href]="url"
     [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
+    [class.flat]="form === 'flat'"
     [class.no-op]="disabled"
-    [style.--translation-x]="translation$().x"
-    [style.--translation-y]="translation$().y">
-    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" />&nbsp;</span>}
-    <span>{{ text }}</span>
-  </a>} @else {<!--suppress CssUnknownProperty --><a
+    [class.primary]="color === 'primary'"
+    [class.raised]="form === 'raised'">
+    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" /></span>}
+    @if (text) {<span>{{ text }}</span>}
+  </a>} @else {<a
     [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex ?? 1"
+    [class.flat]="form === 'flat'"
     [class.no-op]="disabled"
+    [class.primary]="color === 'primary'"
+    [class.raised]="form === 'raised'"
     [routerLink]="url"
     #routerLinkActive="routerLinkActive"
     routerLinkActive="no-op"
-    [routerLinkActiveOptions]="{ exact: true }"
-    [style.--translation-x]="translation$().x"
-    [style.--translation-y]="translation$().y">
-    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" />&nbsp;</span>}
-    <span>{{ text }}</span>
-  </a>}} @else {<!--suppress CssUnknownProperty --><button
+    [routerLinkActiveOptions]="{ exact: true }">
+    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" /></span>}
+    @if (text) {<span>{{ text }}</span>}
+  </a>}} @else {<button
+    [attr.disabled]="disabled || undefined"
     [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
-    [class.no-op]="disabled"
-    [style.--translation-x]="translation$().x"
-    [style.--translation-y]="translation$().y">
-    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" />&nbsp;</span>}
-    <span>{{ text }}</span>
+    [attr.type]="type || 'button'"
+    [class.flat]="form === 'flat'"
+    [class.primary]="color === 'primary'"
+    [class.raised]="form === 'raised'">
+    @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" /></span>}
+    @if (text) {<span>{{ text }}</span>}
   </button>}
 </div>

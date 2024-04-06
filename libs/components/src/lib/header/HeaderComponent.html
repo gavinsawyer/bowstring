@@ -1,10 +1,12 @@
 <header
   [class.lowering]="raisedOrLowering$() && !raised$()"
   [class.raised]="raisedOrLowering$()">
+  <div></div>
   <div>
     <standard--link
       [text]="brand.title"
       url="/" />
     <span>{{ brand.subtitle }}</span>
   </div>
+  <div></div>
 </header>

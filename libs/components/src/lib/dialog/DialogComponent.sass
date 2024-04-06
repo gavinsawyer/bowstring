@@ -21,33 +21,6 @@
 
   @include close--dialog
 
-  &::backdrop
-    background: var(--glass)
-
-    @mixin close--backdrop
-      backdrop-filter: blur(0) saturate(1)
-      opacity: 0
-
-    @mixin open--backdrop
-      backdrop-filter: blur(2rem) saturate(2)
-      opacity: 1
-
-    @include close--backdrop
-
-    @keyframes close--backdrop
-      0%
-        @include open--backdrop
-
-      100%
-        @include close--backdrop
-
-    @keyframes open--backdrop
-      0%
-        @include close--backdrop
-
-      100%
-        @include open--backdrop
-
   > div
     display: flex
     flex-direction: row
@@ -78,6 +51,33 @@
 
         100%
           @include open--card
+
+  &::backdrop
+    background: var(--glass--background)
+
+    @mixin close--backdrop
+      backdrop-filter: blur(0) saturate(1)
+      opacity: 0
+
+    @mixin open--backdrop
+      backdrop-filter: blur(2rem) saturate(2)
+      opacity: 1
+
+    @include close--backdrop
+
+    @keyframes close--backdrop
+      0%
+        @include open--backdrop
+
+      100%
+        @include close--backdrop
+
+    @keyframes open--backdrop
+      0%
+        @include close--backdrop
+
+      100%
+        @include open--backdrop
 
   &[open]
     animation: open--dialog 200ms ease-in forwards

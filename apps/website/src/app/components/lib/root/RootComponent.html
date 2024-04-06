@@ -3,11 +3,14 @@
   <div>
     <standard--aside>
       <standard--card>
-        <form [formGroup]="connectFormGroup">
+        <form
+          [formGroup]="connectFormGroup"
+          (ngSubmit)="connectFormSubmit();">
           <standard--form-field formControlName="name">
             <input
               [attr.tabindex]="htmlInputElement.disabled ? -1 : 1"
               #htmlInputElement=""
+              i18n-placeholder="@@ConnectForm--Name--Placeholder"
               placeholder="Name"
               type="text" />
           </standard--form-field>
@@ -15,6 +18,7 @@
             <textarea
               [attr.tabindex]="htmlTextAreaElement.disabled ? -1 : 1"
               #htmlTextAreaElement=""
+              i18n-placeholder="@@ConnectForm--Message--Placeholder"
               placeholder="Message"
               rows="2"
               type="text"></textarea>
@@ -23,6 +27,9 @@
             <input
               [attr.tabindex]="htmlInputElement.disabled ? -1 : 1"
               #htmlInputElement=""
+              i18n-mask="@@ConnectForm--Phone--Mask"
+              i18n-prefix="@@ConnectForm--Phone--Prefix"
+              i18n-placeholder="@@ConnectForm--Phone--Placeholder"
               mask="(000) 000-0000"
               placeholder="Phone"
               prefix="+1 "
@@ -32,14 +39,25 @@
             <input
               [attr.tabindex]="htmlInputElement.disabled ? -1 : 1"
               #htmlInputElement=""
+              i18n-placeholder="@@ConnectForm--Email--Placeholder"
               placeholder="Email"
               type="email" />
           </standard--form-field>
+          <div>
+            <standard--button
+              [disabled]="connectFormGroup.pristine"
+              symbol="GoBackward"
+              type="reset" />
+            <standard--button
+              color="primary"
+              form="raised"
+              i18n-text="@@ConnectForm--Submit"
+              text="Send"
+              type="submit" />
+          </div>
         </form>
         <hgroup>
-          <h3>
-            Want to connect?
-          </h3>
+          <h3 i18n="@@ConnectForm--Title">Want to connect?</h3>
         </hgroup>
       </standard--card>
       <span>
@@ -60,9 +78,21 @@
     </main>
   </div>
 </div>
-<standard--footer>
+<standard--footer #footerComponent="">
   <span>
-    &copy;&nbsp;2024&nbsp;<standard--link
+    <standard--link
+      (click)="cookieDialogComponent.open$.set(true);"
+      i18n-text=""
+      symbol="SliderHorizontal3"
+      [tabindex]="past46remBreakpoint$() ? 1 : 0"
+      text="Cookies" />&nbsp;&ensp;&nbsp;<standard--link
+    (click)="localeDialogComponent.open$.set(true);"
+    symbol="Globe"
+    [tabindex]="past46remBreakpoint$() ? 1 : 0"
+    [text]="localeDisplayNames.of(localeId) || localeId" />
+  </span>
+  <span>
+    &copy;&nbsp;<standard--link
       text="Gavin Sawyer"
       url="https://gavinsawyer.dev/" />
   </span>
@@ -72,20 +102,24 @@
       [text]="gitInfo.hash || ''"
       [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
   </span>
-  <span>
-    <standard--link
-      (click)="localeDialogOpen$.set(true);"
-      symbol="Globe"
-      [tabindex]="past46remBreakpoint$() ? 1 : 0"
-      [text]="localeDisplayNames.of(localeId) || localeId" />
-  </span>
 </standard--footer>
-<standard--dialog [open$]="localeDialogOpen$">
+<standard--dialog #cookieDialogComponent="">
+  <div>
+    <span>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. A commodi deleniti doloribus earum fugit impedit nemo nostrum tempore ullam vero?
+    </span>
+  </div>
+  <hgroup>
+    <h1 i18n="@@CookieDialog--Title">Adjust cookie settings</h1>
+  </hgroup>
+</standard--dialog>
+<standard--dialog #localeDialogComponent="">
   <div>
     @for (locale of locales; track locale) {<standard--button
-      class="primary"
       (click)="locale === localeId || changeLocale(locale);"
+      color="primary"
       [disabled]="locale === localeId"
+      form="raised"
       symbol="Globe"
       [text]="localeDisplayNames.of(locale) || locale" />}
   </div>

@@ -25,19 +25,19 @@ export class LinkComponent implements OnInit {
   public text!: string;
 
   @Input() public disabled?: boolean;
-  @Input() public symbol?:   (keyof typeof symbolComponents) extends `${ infer name }SymbolComponent` ? name : never;
+  @Input() public symbol?:   (keyof typeof symbolComponents) extends `${infer name}SymbolComponent` ? name : never;
   @Input() public tabindex?: number;
   @Input() public url?:      string;
 
-  public readonly symbolComponent$: WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
-    this.symbol && symbolComponents[`${ this.symbol }SymbolComponent`],
+  protected readonly symbolComponent$: WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
+    this.symbol && symbolComponents[`${this.symbol}SymbolComponent`],
   );
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this
       .symbolComponent$
       .set(
-        this.symbol && symbolComponents[`${ this.symbol }SymbolComponent`],
+        this.symbol && symbolComponents[`${this.symbol}SymbolComponent`],
       );
   }
 

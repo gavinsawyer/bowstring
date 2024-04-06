@@ -1,5 +1,5 @@
-import { DatePipe, NgOptimizedImage }   from "@angular/common";
-import { Component, inject, LOCALE_ID } from "@angular/core";
+import { DatePipe, NgOptimizedImage }                      from "@angular/common";
+import { Component, inject, LOCALE_ID }                    from "@angular/core";
 import { CapsuleComponent, CardComponent, RouteComponent } from "@standard/components";
 import { i18n }                                            from "../../../../../../../project.json";
 
@@ -12,11 +12,11 @@ import { i18n }                                            from "../../../../../
     NgOptimizedImage,
   ],
   standalone:  true,
-  templateUrl: "./HomeRouteComponent.html",
+  templateUrl: "HomeRouteComponent.html",
 })
 export class HomeRouteComponent extends RouteComponent {
 
-  public readonly localeId: keyof typeof i18n.locales | "en-US" = inject<keyof typeof i18n.locales | "en-US">(LOCALE_ID);
-  public readonly now:      Date                                = new Date();
+  protected readonly localeId: keyof typeof i18n.locales | "en-US" = inject<keyof typeof i18n.locales | "en-US">(LOCALE_ID);
+  protected readonly now:      Date                                = new Date();
 
 }

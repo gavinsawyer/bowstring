@@ -6,14 +6,15 @@
     flex-grow: 1
 
   > div
+    border-radius: calc(var(--border-radius) / 2)
     transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease
     user-select: none
 
     &::ng-deep
       > input,
       > textarea
-        background: var(--body-background)
-        border: 1px solid var(--body-foreground-grey)
+        background: var(--body--canvas--background)
+        border: 1px solid var(--body--grey--foreground)
         border-radius: calc(var(--border-radius) / 2)
         display: flex
         flex-grow: 1
@@ -24,24 +25,28 @@
 
         &,
         &::placeholder
-          color: var(--body-foreground-grey)
+          color: var(--body--grey--foreground)
 
         &:not([disabled])
-          color: var(--body-foreground)
+          color: var(--body--canvas--foreground)
           opacity: 1
+
+          &:hover
+            box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
+            scale: 1.015625 1.015625 1.015625
+            translate: calc(var(--translation-x) * 0.5rem) calc(var(--translation-y) * 0.5rem)
+            z-index: 1
+
+          &:focus-within
+            box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
+            scale: 1.03125 1.03125 1.03125
+            translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+            z-index: 2
 
       > textarea
         resize: none
 
-    &:hover
-      box-shadow: black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
-      scale: 1.015625 1.015625 1.015625
-      translate: calc(var(--translation-x) * 0.5rem) calc(var(--translation-y) * 0.5rem)
-
-    &:focus-within
-      box-shadow: black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
-      scale: 1.03125 1.03125 1.03125
-      translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
-
-    &.transitionTranslate
-      transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease, translate 200ms ease
+    &.transitionTranslate::ng-deep
+      > input,
+      > textarea
+        transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease, translate 200ms ease

@@ -1,8 +1,8 @@
 \:host
-  background: var(--card-background)
+  background: var(--card--canvas--background)
   border-radius: var(--border-radius)
   box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
-  color: var(--card-foreground)
+  color: var(--card--canvas--foreground)
   display: flex
   flex-direction: column-reverse
   max-width: 30rem
@@ -29,35 +29,16 @@
         > h3,
         > h4
           background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
-          color: hsl(0, 0, 96%)
+          color: hsl(0, 0%, 96%)
           margin: 0 -1rem !important
           padding: 4rem 1rem 0.875rem
           position: absolute
           transform: translateY(-100%)
           width: 100%
 
-          > standard--link::ng-deep
-            > a,
-            > button
-              text-decoration-color: var(--card-dark-foreground)
-              text-shadow: none
-              transition: color 200ms ease, text-decoration-color 200ms ease
-
-              &::before
-                display: none
-
-              &:active,
-              &.no-op
-                text-decoration-color: currentColor
-
-              &:hover,
-              &.no-op
-                text-decoration: underline
-
     > img
       border-top-left-radius: var(--border-radius)
       border-top-right-radius: var(--border-radius)
-      color: var(--card-dark-foreground)
       margin: -1.125rem -1rem 0
       max-width: calc(100% + 2rem)
 

@@ -1,33 +1,18 @@
 \:host
   position: sticky
   top: 0.5625rem
-  z-index: 999
+  z-index: 3
 
   > header
+    align-items: center
     display: flex
     flex-direction: row
-    justify-content: center
+    justify-content: space-between
 
     > div
       align-items: center
       display: flex
       flex-direction: column
-
-      > standard--link::ng-deep
-        font-size: 1.5em
-        font-weight: bold
-
-        > a,
-        > button
-          color: inherit
-          user-select: none
-
-          &::before
-            height: 0.08em
-
-          &.no-op::before
-            left: unset
-            width: 0
 
       > span
         cursor: default
@@ -44,10 +29,10 @@
       padding: 0.4375rem 0.375rem
 
     @mixin raise-header
-      background: var(--glass)
+      background: var(--glass--background)
       backdrop-filter: blur(2rem) saturate(2)
       border-radius: calc(var(--border-radius) / 2)
-      box-shadow: black 0 calc(var(--depth-offset) * 1.25) calc(var(--depth-blur) * 1.25) calc(var(--depth-spread) * 1.25)
+      box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
       margin: 0 -0.4375rem
       padding: 0.875rem 0.75rem
 

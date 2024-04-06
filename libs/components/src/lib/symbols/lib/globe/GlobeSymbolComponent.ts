@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 
 @Component({
-  selector:    "standard--globe-symbols",
+  selector:    "standard--globe-symbol",
   standalone:  true,
   styleUrls:   [
     "../SymbolComponent.sass",

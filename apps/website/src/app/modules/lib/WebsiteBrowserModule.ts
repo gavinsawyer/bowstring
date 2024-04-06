@@ -15,9 +15,9 @@ import * as brand                                                               
 import { AsideComponent, ButtonComponent, CardComponent, DialogComponent, FooterComponent, FormFieldComponent, HeaderComponent, LinkComponent } from "@standard/components";
 import { routes as standardRoutes }                                                                                                             from "@standard/components/routes";
 import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                        from "@standard/injection-tokens";
-import { AppCheckOptionsService }                                      from "@standard/services";
-import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask } from "ngx-mask";
-import project                                                         from "../../../../project.json";
+import { AppCheckOptionsService }                                                                                                               from "@standard/services";
+import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                          from "ngx-mask";
+import project                                                                                                                                  from "../../../../project.json";
 import { gitInfo }                                                                                                                              from "../../../.git-info";
 import { packageVersion }                                                                                                                       from "../../../.package-version";
 import { environment }                                                                                                                          from "../../../environment";
@@ -33,7 +33,7 @@ import { LOCALES }                                                              
   declarations: [
     RootComponent,
   ],
-  imports: [
+  imports:      [
     AngularFirestoreModule.enablePersistence(),
     AsideComponent,
     BrowserAnimationsModule,

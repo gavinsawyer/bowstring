@@ -5,10 +5,10 @@
   > a,
   > button
     position: relative
-    color: var(--primary)
+    color: var(--primary--canvas--background)
     cursor: pointer
     text-decoration: none
-    text-shadow: var(--body-background) 0.07em 0.07em, var(--body-background) 0 0.07em, var(--body-background) -0.07em 0.07em, var(--body-background) -0.07em 0, var(--body-background) -0.07em -0.07em, var(--body-background) 0 -0.07em, var(--body-background) 0.07em -0.07em, var(--body-background) 0.07em 0
+    text-shadow: var(--body--canvas--background) 0.07em 0.07em, var(--body--canvas--background) 0 0.07em, var(--body--canvas--background) -0.07em 0.07em, var(--body--canvas--background) -0.07em 0, var(--body--canvas--background) -0.07em -0.07em, var(--body--canvas--background) 0 -0.07em, var(--body--canvas--background) 0.07em -0.07em, var(--body--canvas--background) 0.07em 0
     transition: color 200ms ease
     user-select: none
     white-space: nowrap
@@ -43,27 +43,40 @@
 
     &:active,
     &.no-op
-      color: var(--body-foreground-grey)
+      color: var(--body--grey--foreground)
 
   \:host-context(standard--card)
     > a,
     > button
-      text-shadow: var(--card-background) 0.07em 0.07em, var(--card-background) 0 0.07em, var(--card-background) -0.07em 0.07em, var(--card-background) -0.07em 0, var(--card-background) -0.07em -0.07em, var(--card-background) 0 -0.07em, var(--card-background) 0.07em -0.07em, var(--card-background) 0.07em 0
+      text-shadow: var(--card--canvas--background) 0.07em 0.07em, var(--card--canvas--background) 0 0.07em, var(--card--canvas--background) -0.07em 0.07em, var(--card--canvas--background) -0.07em 0, var(--card--canvas--background) -0.07em -0.07em, var(--card--canvas--background) 0 -0.07em, var(--card--canvas--background) 0.07em -0.07em, var(--card--canvas--background) 0.07em 0
 
       &:active,
       &.no-op
-        color: var(--card-foreground-grey)
-
-  \:host-context(standard--header)
-    > a,
-    > button
-      text-shadow: none
+        color: var(--card--grey--foreground)
 
   \:host-context(standard--footer)
     > a,
     > button
-      text-shadow: var(--footer-background) 0.07em 0.07em, var(--footer-background) 0 0.07em, var(--footer-background) -0.07em 0.07em, var(--footer-background) -0.07em 0, var(--footer-background) -0.07em -0.07em, var(--footer-background) 0 -0.07em, var(--footer-background) 0.07em -0.07em, var(--footer-background) 0.07em 0
+      text-shadow: var(--footer--canvas--background) 0.07em 0.07em, var(--footer--canvas--background) 0 0.07em, var(--footer--canvas--background) -0.07em 0.07em, var(--footer--canvas--background) -0.07em 0, var(--footer--canvas--background) -0.07em -0.07em, var(--footer--canvas--background) 0 -0.07em, var(--footer--canvas--background) 0.07em -0.07em, var(--footer--canvas--background) 0.07em 0
 
       &:active,
       &.no-op
-        color: var(--footer-background-grey)
+        color: var(--footer--grey--foreground)
+
+  \:host-context(standard--header)
+    > a,
+    > button
+      color: currentColor
+      font-size: 1.5em
+      font-weight: bold
+      text-shadow: none
+
+      &::before
+        height: 0.08em
+
+      &.no-op
+        color: currentColor
+
+        &::before
+          left: unset
+          width: 0

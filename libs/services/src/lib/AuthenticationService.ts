@@ -58,7 +58,7 @@ export class AuthenticationService {
   public readonly linkBackupPasskey:     () => Promise<void>             = (): Promise<void> => (async (profileDocument: ProfileDocument | null): Promise<void> => profileDocument ? linkWithPasskey(
     this.auth,
     this.functions,
-    `${ profileDocument.name } (Backup)`,
+    `${profileDocument.name} (Backup)`,
     "second",
   ).then<void, never>(
     (): void => console.log("Success"),

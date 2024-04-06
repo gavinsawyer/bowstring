@@ -39,15 +39,15 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
 
   private readonly abortController: AbortController = new AbortController();
 
-  public readonly mousedown:            () => void                                             = (): void => setTimeout(
+  protected readonly mousedown:            () => void                                             = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     200,
   ) && this.transitionTranslate$.set(true);
-  public readonly mouseenter:           () => void                                             = (): void => setTimeout(
+  protected readonly mouseenter:           () => void                                             = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     200,
   ) && void (0);
-  public readonly mouseleave:           () => void                                             = (): void => {
+  protected readonly mouseleave:           () => void                                             = (): void => {
     this
       .transitionTranslate$
       .set(true);
@@ -61,7 +61,7 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
         },
       );
   };
-  public readonly mousemove:            (mouseEvent: MouseEvent, host: HTMLDivElement) => void = (mouseEvent: MouseEvent, container: HTMLDivElement): void => ((hostBindingClientRect: DOMRect): void => this.translation$.set(
+  protected readonly mousemove:            (mouseEvent: MouseEvent, host: HTMLDivElement) => void = (mouseEvent: MouseEvent, container: HTMLDivElement): void => ((hostBindingClientRect: DOMRect): void => this.translation$.set(
     {
       x: ((2 * ((mouseEvent.clientX - hostBindingClientRect.left) / container.offsetWidth)) - 1) / 8,
       y: ((2 * ((mouseEvent.clientY - hostBindingClientRect.top) / container.offsetHeight)) - 1) / 8,
@@ -69,20 +69,20 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
   ))(
     container.getBoundingClientRect(),
   );
-  public readonly transitionTranslate$: WritableSignal<boolean>                                = signal<boolean>(true);
-  public readonly translation$:         WritableSignal<{ x: number, y: number }>               = signal<{ x: number, y: number }>(
+  protected readonly transitionTranslate$: WritableSignal<boolean>                                = signal<boolean>(true);
+  protected readonly translation$:         WritableSignal<{ x: number, y: number }>               = signal<{ x: number, y: number }>(
     {
       x: 0,
       y: 0,
     },
   );
 
-  ngOnDestroy(): void {
+  public ngOnDestroy():                                      void {
     this
       .abortController
       .abort();
   }
-  registerOnChange(handler: (value: string) => void): void {
+  public registerOnChange(handler: (value: string) => void): void {
     (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .addEventListener(
@@ -95,7 +95,7 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
         },
       );
   }
-  registerOnTouched(handler: () => void): void {
+  public registerOnTouched(handler: () => void):             void {
     (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .addEventListener(
@@ -106,12 +106,12 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
         },
       );
   }
-  setDisabledState?(isDisabled: boolean): void {
+  public setDisabledState?(isDisabled: boolean):             void {
     (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .disabled = isDisabled;
   }
-  writeValue(value: string): void {
+  public writeValue(value: string):                          void {
     (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .value = value;
