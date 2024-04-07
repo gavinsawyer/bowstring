@@ -1,11 +1,11 @@
 <!--suppress CssUnknownProperty -->
 <div
   [class.transitionTranslate]="transitionTranslate$()"
-  #containerElement=""
+  #htmlDivElement=""
   (mousedown)="mousedown();"
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event, containerElement);"
+  (mousemove)="mousemove($event, htmlDivElement);"
   [style.--translation-x]="translation$().x"
   [style.--translation-y]="translation$().y" >
   <ng-content />

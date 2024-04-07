@@ -1,6 +1,8 @@
+<!--suppress CssUnknownProperty -->
 <div
   [class.stuck]="stuckOrUnsticking$()"
-  [class.unsticking]="stuckOrUnsticking$() && !stuck$()">
+  [class.unsticking]="stuckOrUnsticking$() && !stuck$()"
+  [style.--unsticking-translation-y]="unstickingTranslationY$() + 'px'">
   <footer>
     <ng-content />
   </footer>

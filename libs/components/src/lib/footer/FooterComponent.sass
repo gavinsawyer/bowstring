@@ -1,5 +1,6 @@
 \:host
   align-self: stretch
+  overflow: hidden
   padding: 0.28125rem 0.5rem 0.5625rem
 
   &,
@@ -15,7 +16,7 @@
       translate: unset
 
     @mixin unstick--container
-      translate: 0 calc(100% + 1.6875rem)
+      translate: 0 var(--unsticking-translation-y)
 
     @include unstick--container
 
@@ -61,18 +62,17 @@
         mask-image: linear-gradient(to bottom, transparent 0%, black 50%)
         position: absolute
         top: -0.5625rem
+        translate: -50%
         width: 100vw
         z-index: -1
 
         @mixin stick--pseudoelement
           backdrop-filter: blur(2rem) saturate(2)
           opacity: 1
-          translate: -50% 0
 
         @mixin unstick--pseudoelement
           backdrop-filter: blur(0) saturate(1)
           opacity: 0
-          translate: -50% -100%
 
         @include unstick--pseudoelement
 
