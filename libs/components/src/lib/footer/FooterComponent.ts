@@ -70,15 +70,35 @@ export class FooterComponent {
           this.stuckOrUnsticking$,
         ),
       },
-    ).pipe<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: true }, number, number, number>(
-      filter<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }, { bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: true }>(
-        (latest: { bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }): latest is { bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: true } => latest.stuckOrUnsticking,
+    ).pipe<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }, number, number, number>(
+      filter<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }>(
+        (): boolean => this.footerHtmlElementRef?.nativeElement.parentElement ? getComputedStyle(
+          this.footerHtmlElementRef.nativeElement.parentElement,
+        ).getPropertyValue("position") === "static" : false,
       ),
-      map<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: true }, number>(
-        (): number => this.document.body.offsetHeight - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetHeight || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetTop || 0),
+      map<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }, number>(
+        (): number => this.document.body.offsetHeight - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetHeight || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetTop || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
+          bottomPropertyValue.replace(
+            "px",
+            "",
+          ),
+        ) : 0)(
+          getComputedStyle(
+            this.footerHtmlElementRef?.nativeElement.parentElement,
+          ).getPropertyValue("bottom"),
+        ) : 0),
       ),
       startWith<number, [ number ]>(
-        this.document.body.offsetHeight - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetHeight || 0) - (this.footerHtmlElementRef?.nativeElement.offsetTop || 0),
+        this.document.body.offsetHeight - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetHeight || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetTop || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
+          bottomPropertyValue.replace(
+            "px",
+            "",
+          ),
+        ) : 0)(
+          getComputedStyle(
+            this.footerHtmlElementRef?.nativeElement.parentElement,
+          ).getPropertyValue("bottom"),
+        ) : 0),
       ),
       distinctUntilChanged<number>(),
     ),
@@ -89,8 +109,11 @@ export class FooterComponent {
   protected readonly unstickingTranslation$:  Signal<number> = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
-    combineLatest<{ scrollY: Observable<number>, stuck: Observable<boolean>, stuckOrUnsticking: Observable<boolean> }>(
+    combineLatest<{ containerOffsetBottom: Observable<number>, scrollY: Observable<number>, stuck: Observable<boolean>, stuckOrUnsticking: Observable<boolean> }>(
       {
+        containerOffsetBottom:  toObservable<number>(
+          this.containerOffsetBottom$,
+        ),
         scrollY:           this.document.defaultView ? fromEvent<Event>(
           this.document,
           "scroll",
@@ -110,12 +133,15 @@ export class FooterComponent {
           this.stuckOrUnsticking$,
         ),
       },
-    ).pipe<{ scrollY: number, stuck: boolean, stuckOrUnsticking: true }, number, number, number>(
-      filter<{ scrollY: number, stuck: boolean, stuckOrUnsticking: boolean }, { scrollY: number, stuck: boolean, stuckOrUnsticking: true }>(
-        (latest: { scrollY: number, stuck: boolean, stuckOrUnsticking: boolean }): latest is { scrollY: number, stuck: boolean, stuckOrUnsticking: true } => latest.stuckOrUnsticking,
+    ).pipe<{ containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }, number, number, number>(
+      filter<{ containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: boolean }, { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }>(
+        (latest: { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: boolean }): latest is { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true } => latest.stuckOrUnsticking,
       ),
-      map<{ scrollY: number, stuck: boolean, stuckOrUnsticking: true }, number>(
-        (): number => this.document.body.offsetHeight - (this.document.defaultView?.scrollY || 0) - (this.document.defaultView?.innerHeight || 0),
+      map<{ containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }, number>(
+        (latest: { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }): number => Math.max(
+          this.document.body.offsetHeight - (this.document.defaultView?.scrollY || 0) - (this.document.defaultView?.innerHeight || 0) - latest.containerOffsetBottom,
+          0,
+        ),
       ),
       startWith<number, [ number ]>(
         this.document.body.offsetHeight - (this.document.defaultView?.scrollY || 0) - (this.document.defaultView?.innerHeight || 0),

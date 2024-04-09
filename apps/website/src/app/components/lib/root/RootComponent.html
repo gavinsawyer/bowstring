@@ -6,11 +6,11 @@
         <standard--card>
           <div>
             <standard--button
-              (click)="footerComponent.stuck$.set(!footerComponent.stuck$())"
+              (click)="footerComponent.stuck$.set(!footerComponent.stuck$()); footerComponent.stuck$() && testSecondFooterComponent.stuck$.set(false);"
               form="raised"
               [text]="(footerComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
             <standard--button
-              (click)="testSecondFooterComponent.stuck$.set(!testSecondFooterComponent.stuck$())"
+              (click)="testSecondFooterComponent.stuck$.set(!testSecondFooterComponent.stuck$()); testSecondFooterComponent.stuck$() && footerComponent.stuck$.set(false);"
               form="raised"
               [text]="(testSecondFooterComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
           </div>
