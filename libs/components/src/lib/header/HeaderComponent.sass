@@ -1,6 +1,7 @@
 \:host
+  margin-top: 0.75rem
   position: sticky
-  top: 0.5625rem
+  top: 0.75rem
   z-index: 3
 
   > header
@@ -8,6 +9,24 @@
     display: flex
     flex-direction: row
     justify-content: space-between
+
+    @mixin lower-header
+      backdrop-filter: blur(0) saturate(1)
+      background: unset
+      border-radius: var(--border-radius)
+      box-shadow: none
+      margin: 0.5rem 0
+      padding: 0.375rem 0
+
+    @mixin raise-header
+      background: var(--glass--background)
+      backdrop-filter: blur(2rem) saturate(2)
+      border-radius: calc(var(--border-radius) / 2)
+      box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
+      margin: 0 -0.5rem
+      padding: 0.875rem 0.75rem
+
+    @include lower-header
 
     > div
       align-items: center
@@ -20,23 +39,11 @@
         opacity: 80%
         user-select: none
 
-    @mixin lower-header
-      backdrop-filter: blur(0) saturate(1)
-      background: unset
-      border-radius: calc(var(--border-radius) / 4)
-      box-shadow: none
-      margin: 0.4375rem 0
-      padding: 0.4375rem 0.375rem
+    &.raised
+      animation: raise-header 200ms ease-out forwards
 
-    @mixin raise-header
-      background: var(--glass--background)
-      backdrop-filter: blur(2rem) saturate(2)
-      border-radius: calc(var(--border-radius) / 2)
-      box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
-      margin: 0 -0.4375rem
-      padding: 0.875rem 0.75rem
-
-    @include lower-header
+      &.lowering
+        animation: lower-header 200ms ease-in forwards
 
     @keyframes lower-header
       0%
@@ -52,11 +59,6 @@
       100%
         @include raise-header
 
-    &.raised
-      animation: raise-header 200ms ease-out forwards
-
-      &.lowering
-        animation: lower-header 200ms ease-in forwards
-
   @media (min-width: 23.5rem)
-    top: 1.125rem
+    margin-top: 1.5rem
+    top: 1.5rem

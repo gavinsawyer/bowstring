@@ -1,16 +1,21 @@
 <div>
   <standard--header />
   <div>
-    <standard--aside>
-      <standard--card>
-        <hgroup>
-          <h3 i18n="@@ConnectForm--Title">Want to connect?</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor ea est fugiat itaque mollitia optio quam qui unde ut voluptatibus.
-          </p>
-        </hgroup>
-      </standard--card>
-      <span>
+    <div>
+      <standard--aside>
+        <standard--card>
+          <standard--button
+            (click)="footerComponent.stuck$.set(!footerComponent.stuck$())"
+            form="raised"
+            [text]="(footerComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
+          <hgroup>
+            <h3 i18n="@@ConnectForm--Title">Want to connect?</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor ea est fugiat itaque mollitia optio quam qui unde ut voluptatibus.
+            </p>
+          </hgroup>
+        </standard--card>
+        <span>
         <standard--link
           i18n-text="@@PrivacyRoute--Title"
           text="Privacy"
@@ -19,35 +24,36 @@
           text="Terms"
           url="/terms" />
       </span>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi fugit ipsa obcaecati.
-      </p>
-    </standard--aside>
-    <main>
-      <router-outlet />
-    </main>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi fugit ipsa obcaecati.
+        </p>
+      </standard--aside>
+      <main>
+        <router-outlet />
+      </main>
+    </div>
   </div>
+  <standard--footer #footerComponent="">
+    <span>
+      <standard--link
+        (click)="localeDialogComponent.open$.set(true);"
+        symbol="Globe"
+        [tabindex]="past46remBreakpoint$() ? 0 : 1"
+        [text]="localeDisplayNames.of(localeId) || localeId" />
+    </span>
+      <span>
+      &copy;&nbsp;<standard--link
+        text="Gavin Sawyer"
+        url="https://gavinsawyer.dev/" />
+    </span>
+      <span>
+      v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}&plus;<standard--link
+        [tabindex]="0"
+        [text]="gitInfo.hash || ''"
+        [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
+    </span>
+  </standard--footer>
 </div>
-<standard--footer #footerComponent="">
-  <span>
-    <standard--link
-      (click)="localeDialogComponent.open$.set(true);"
-      symbol="Globe"
-      [tabindex]="past46remBreakpoint$() ? 1 : 0"
-      [text]="localeDisplayNames.of(localeId) || localeId" />
-  </span>
-  <span>
-    &copy;&nbsp;<standard--link
-      text="Gavin Sawyer"
-      url="https://gavinsawyer.dev/" />
-  </span>
-  <span>
-    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}&plus;<standard--link
-      [tabindex]="0"
-      [text]="gitInfo.hash || ''"
-      [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
-  </span>
-</standard--footer>
 <standard--dialog #localeDialogComponent="">
   <div>
     @for (locale of locales; track locale) {<standard--button

@@ -36,31 +36,40 @@ export class FooterComponent {
   protected readonly unstickingTranslationY$: Signal<number> = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
-    combineLatest<{ stuck: Observable<boolean>, scroll: Observable<Event> }>(
+    combineLatest<{ stuck: Observable<boolean>, stuckOrUnsticking: Observable<boolean>, scrollY: Observable<number> }>(
       {
-        stuck: toObservable<boolean>(
+        stuck:             toObservable<boolean>(
           this.stuck$,
         ),
-        scroll: fromEvent<Event>(
+        stuckOrUnsticking: toObservable<boolean>(
+          this.stuckOrUnsticking$,
+        ),
+        scrollY:           fromEvent<Event>(
           this.document,
           "scroll",
+        ).pipe<number, number, number>(
+          map<Event, number>(
+            (): number => this.document.defaultView?.scrollY || 0,
+          ),
+          startWith<number, [ number ]>(0),
+          distinctUntilChanged<number>(),
         ),
       },
-    ).pipe<{ stuck: boolean, scroll: Event }, number, number, number>(
-      filter<{ stuck: boolean, scroll: Event }>(
-        (latest: { stuck: boolean, scroll: Event }): boolean => latest.stuck,
+    ).pipe<{ stuck: boolean, stuckOrUnsticking: true, scrollY: number }, number, number, number>(
+      filter<{ stuck: boolean, stuckOrUnsticking: boolean, scrollY: number }, { stuck: boolean, stuckOrUnsticking: true, scrollY: number }>(
+        (latest: { stuck: boolean, stuckOrUnsticking: boolean, scrollY: number }): latest is { stuck: boolean, stuckOrUnsticking: true, scrollY: number } => latest.stuckOrUnsticking,
       ),
-      map<{ stuck: boolean, scroll: Event }, number>(
-        (): number => this.document.defaultView ? this.document.body.offsetHeight - (this.document.defaultView.scrollY + this.document.defaultView.innerHeight) : 0,
+      map<{ stuck: boolean, stuckOrUnsticking: true, scrollY: number }, number>(
+        (latest: { stuck: boolean, stuckOrUnsticking: true, scrollY: number }): number => this.document.defaultView ? this.document.body.offsetHeight - (latest.scrollY + this.document.defaultView.innerHeight) : 0,
       ),
       startWith<number, [ number ]>(
-        this.document.defaultView ? this.document.body.offsetHeight - (this.document.defaultView.scrollY + this.document.defaultView.innerHeight) : 0,
+        this.document.defaultView ? this.document.body.offsetHeight - this.document.defaultView.innerHeight : 0,
       ),
       distinctUntilChanged<number>(),
     ),
     {
       requireSync: true,
     },
-  ) : signal<number>(0)
+  ) : signal<number>(0);
 
 }

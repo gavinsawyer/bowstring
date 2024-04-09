@@ -5,12 +5,12 @@
   color: var(--card--canvas--foreground)
   display: flex
   flex-direction: column-reverse
+  gap: 0.75rem
   max-width: 30rem
-  padding: 1.125rem 1rem 0.875rem
+  padding: 0.875rem 1rem 0.75rem
+  user-select: none
 
   &::ng-deep
-    user-select: none
-
     > hgroup
       > h1,
       > h2,
@@ -31,7 +31,7 @@
           background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
           color: hsl(0, 0%, 96%)
           margin: 0 -1rem !important
-          padding: 4rem 1rem 0.875rem
+          padding: 4rem 1rem 0.75rem
           position: absolute
           transform: translateY(-100%)
           width: 100%
@@ -39,9 +39,8 @@
     > img
       border-top-left-radius: var(--border-radius)
       border-top-right-radius: var(--border-radius)
-      margin: -1.125rem -1rem 0
+      margin: -0.875rem -1rem -0.75rem
       max-width: calc(100% + 2rem)
 
       &:first-child
         border-radius: var(--border-radius)
-        margin: -1.125rem -1rem -0.875rem
