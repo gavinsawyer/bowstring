@@ -45,15 +45,15 @@ export class RootComponent {
   );
   protected readonly locales:              (keyof typeof project.i18n.locales | "en-US")[]               = inject<(keyof typeof project.i18n.locales | "en-US")[]>(LOCALES);
   protected readonly packageVersion:       string                                                        = inject<string>(PACKAGE_VERSION);
-  protected readonly past46remBreakpoint$: Signal<boolean>                                               = isPlatformBrowser(
+  protected readonly past52remBreakpoint$: Signal<boolean> = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<boolean>(
-    this.breakpointObserver.observe(`(min-width: 46rem)`).pipe<boolean, boolean, boolean>(
+    this.breakpointObserver.observe(`(min-width: 52rem)`).pipe<boolean, boolean, boolean>(
       map<BreakpointState, boolean>(
         (breakpointState: BreakpointState): boolean => breakpointState.matches,
       ),
       startWith<boolean>(
-        this.breakpointObserver.isMatched(`(min-width: 46rem)`),
+        this.breakpointObserver.isMatched(`(min-width: 52rem)`),
       ),
       distinctUntilChanged<boolean>(),
     ),

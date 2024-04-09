@@ -1,14 +1,15 @@
 \:host
   display: flex
   flex-direction: row
+  z-index: 3
 
   &::before
     background: var(--glass--background)
-    height: calc(100% + 1.5rem)
+    height: calc(100% + var(--container-offset-bottom))
     left: 50%
-    mask-image: linear-gradient(to bottom, transparent 10%, black 90%)
+    mask-image: linear-gradient(to bottom, transparent, black calc(100% - var(--container-offset-bottom) + 0px) 100%)
     position: absolute
-    top: -0.75rem
+    top: 0
     translate: -50%
     width: 100vw
     z-index: -1
@@ -60,7 +61,7 @@
       border-radius: var(--border-radius)
       box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
       margin: unset
-      translate: 0 var(--unsticking-translation-y)
+      translate: 0 var(--unsticking-translation)
 
     @include unstick--footer
 
@@ -76,16 +77,7 @@
       &:last-child
         order: 2
 
-    &:not(.stuck)
-      translate: none
-
-    &.stuck
-      animation: stick--footer 200ms ease-in-out forwards
-
-      &.unsticking
-        animation: unstick--footer 200ms ease-in-out forwards
-
-    @media (min-width: 46rem)
+    @media (min-width: 52rem)
       justify-content: space-between
 
       &::ng-deep > span:first-child
@@ -106,23 +98,26 @@
       100%
         @include unstick--footer
 
-  &:has(footer.stuck)
+  &:not(.stuck) > footer
+    translate: none
+
+  &.stuck
     bottom: 0.75rem
     position: sticky
-    z-index: 2
 
     &::before
       animation: stick--pseudoelement 200ms ease-in-out forwards
       content: ""
 
-  &:has(footer.stuck.unsticking)
-    &::before
-      animation: unstick--pseudoelement 200ms ease-in-out forwards
+    > footer
+      animation: stick--footer 200ms ease-in-out forwards
 
-  @media (min-width: 23.5rem)
-    &::before
-      height: calc(100% + 3rem)
-      top: -1.5rem
+    &.unsticking
+      &::before
+        animation: unstick--pseudoelement 200ms ease-in-out forwards
 
-    &:has(footer.stuck)
+      > footer
+        animation: unstick--footer 200ms ease-in-out forwards
+
+    @media (min-width: 26rem)
       bottom: 1.5rem

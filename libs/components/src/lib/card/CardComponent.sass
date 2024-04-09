@@ -11,6 +11,11 @@
   user-select: none
 
   &::ng-deep
+    > div
+      display: flex
+      flex-direction: row
+      gap: 0.875rem
+
     > hgroup
       > h1,
       > h2,
@@ -28,13 +33,15 @@
         > h2,
         > h3,
         > h4
-          background: linear-gradient(to bottom, transparent, hsla(0, 0%, 0%, 0.5) 4rem)
+          background: hsla(0, 0%, 0%, 0.25)
+          backdrop-filter: blur(2rem) saturate(2)
           color: hsl(0, 0%, 96%)
-          margin: 0 -1rem !important
+          margin: 0 calc(-1rem - 0.25px) !important
+          mask-image: linear-gradient(to bottom, transparent, black 4rem)
           padding: 4rem 1rem 0.75rem
           position: absolute
-          transform: translateY(-100%)
-          width: 100%
+          translate: 0 calc(-100% + 0.25px)
+          width: calc(100% + 0.25px)
 
     > img
       border-top-left-radius: var(--border-radius)
