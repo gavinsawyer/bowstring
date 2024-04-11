@@ -1,13 +1,15 @@
-import { DOCUMENT, isPlatformBrowser }                                                                          from "@angular/common";
-import { Component, ElementRef, inject, PLATFORM_ID, Signal, signal, ViewChild, WritableSignal }                from "@angular/core";
-import { toObservable, toSignal }                                                                                      from "@angular/core/rxjs-interop";
-import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, filter, fromEvent, map, Observable, startWith, timer } from "rxjs";
+import { DOCUMENT, isPlatformBrowser }                                                                     from "@angular/common";
+import { Component, computed, ElementRef, inject, PLATFORM_ID, Signal, signal, ViewChild, WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                             from "@angular/core/rxjs-interop";
+import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, filter, fromEvent, map, merge, Observable, startWith, timer } from "rxjs";
 
 
 @Component({
   exportAs:    "standardFooter",
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host:        {
+    "[class.lowering]":                  "(stuckOrUnsticking$() && !stuck$()) || (raisedOrLowering$() && !raised$())",
+    "[class.raised]":                    "stuckOrUnsticking$() && raisedOrLowering$()",
     "[class.stuck]":                     "stuckOrUnsticking$()",
     "[class.unsticking]":                "stuckOrUnsticking$() && !stuck$()",
     "[style.--container-offset-bottom]": "containerOffsetBottom$() + 'px'",
@@ -33,7 +35,34 @@ export class FooterComponent {
 
   public readonly stuck$: WritableSignal<boolean> = signal<boolean>(false);
 
-  protected readonly stuckOrUnsticking$:      Signal<boolean> = toSignal<boolean>(
+  protected readonly bodyOffsetHeight$:      Signal<number>  = toSignal<number>(
+    merge<[ number, number ]>(
+      this.document.defaultView ? fromEvent<Event>(
+        this.document.defaultView,
+        "resize",
+      ).pipe<number>(
+        map<Event, number>(
+          (): number => this.document.body.offsetHeight,
+        ),
+      ) : EMPTY,
+      toObservable<boolean>(
+        this.stuck$
+      ).pipe<number>(
+        map<boolean, number>(
+          (): number => this.document.body.offsetHeight,
+        ),
+      ),
+    ).pipe<number, number>(
+      startWith<number, [ number ]>(
+        this.document.body.offsetHeight,
+      ),
+      distinctUntilChanged<number>(),
+    ),
+    {
+      requireSync: true,
+    },
+  );
+  protected readonly stuckOrUnsticking$:     Signal<boolean> = toSignal<boolean>(
     toObservable<boolean>(
       this.stuck$,
     ).pipe<boolean, boolean>(
@@ -46,38 +75,19 @@ export class FooterComponent {
       requireSync: true,
     },
   );
-  protected readonly containerOffsetBottom$:  Signal<number>  = isPlatformBrowser(
+  protected readonly containerOffsetBottom$: Signal<number>  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
-    combineLatest<{ bodyOffsetHeight: Observable<number>, stuck: Observable<boolean>, stuckOrUnsticking: Observable<boolean> }>(
-      {
-        bodyOffsetHeight:  this.document.defaultView ? fromEvent<Event>(
-          this.document.defaultView,
-          "resize",
-        ).pipe<number, number, number>(
-          map<Event, number>(
-            (): number => this.document.body.offsetHeight,
-          ),
-          startWith<number, [ number ]>(
-            this.document.body.offsetHeight,
-          ),
-          distinctUntilChanged<number>(),
-        ) : EMPTY,
-        stuck:             toObservable<boolean>(
-          this.stuck$,
-        ),
-        stuckOrUnsticking: toObservable<boolean>(
-          this.stuckOrUnsticking$,
-        ),
-      },
-    ).pipe<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }, number, number, number>(
-      filter<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }>(
+    toObservable<number>(
+      this.bodyOffsetHeight$,
+    ).pipe<number, number, number, number>(
+      filter<number>(
         (): boolean => this.footerHtmlElementRef?.nativeElement.parentElement ? getComputedStyle(
           this.footerHtmlElementRef.nativeElement.parentElement,
         ).getPropertyValue("position") === "static" : false,
       ),
-      map<{ bodyOffsetHeight: number, stuck: boolean, stuckOrUnsticking: boolean }, number>(
-        (): number => this.document.body.offsetHeight - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetHeight || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetTop || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
+      map<number, number>(
+        (bodyOffsetHeight: number): number => bodyOffsetHeight - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetHeight || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement?.offsetTop || 0) - (this.footerHtmlElementRef?.nativeElement.parentElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
           bottomPropertyValue.replace(
             "px",
             "",
@@ -106,15 +116,18 @@ export class FooterComponent {
       requireSync: true,
     },
   ) : signal<number>(0);
-  protected readonly unstickingTranslation$:  Signal<number> = isPlatformBrowser(
+  protected readonly unstickingTranslation$: Signal<number>  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
-    combineLatest<{ containerOffsetBottom: Observable<number>, scrollY: Observable<number>, stuck: Observable<boolean>, stuckOrUnsticking: Observable<boolean> }>(
+    combineLatest<{ bodyOffsetHeight: Observable<number>, containerOffsetBottom: Observable<number>, scrollY: Observable<number>, stuckOrUnsticking: Observable<boolean> }>(
       {
-        containerOffsetBottom:  toObservable<number>(
+        bodyOffsetHeight:      toObservable<number>(
+          this.bodyOffsetHeight$,
+        ),
+        containerOffsetBottom: toObservable<number>(
           this.containerOffsetBottom$,
         ),
-        scrollY:           this.document.defaultView ? fromEvent<Event>(
+        scrollY:               fromEvent<Event>(
           this.document,
           "scroll",
         ).pipe<number, number, number>(
@@ -122,24 +135,21 @@ export class FooterComponent {
             (): number => this.document.defaultView?.scrollY || 0,
           ),
           startWith<number, [ number ]>(
-            this.document.defaultView.scrollY,
+            this.document.defaultView?.scrollY || 0,
           ),
           distinctUntilChanged<number>(),
-        ) : EMPTY,
-        stuck:             toObservable<boolean>(
-          this.stuck$,
         ),
-        stuckOrUnsticking: toObservable<boolean>(
+        stuckOrUnsticking:     toObservable<boolean>(
           this.stuckOrUnsticking$,
         ),
       },
-    ).pipe<{ containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }, number, number, number>(
-      filter<{ containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: boolean }, { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }>(
-        (latest: { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: boolean }): latest is { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true } => latest.stuckOrUnsticking,
+    ).pipe<{ bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: true }, number, number, number>(
+      filter<{ bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: boolean }, { bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: true }>(
+        (latest: { bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: boolean }): latest is { bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: true } => latest.stuckOrUnsticking,
       ),
-      map<{ containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }, number>(
-        (latest: { containerOffsetBottom: number, scrollY: number, stuck: boolean, stuckOrUnsticking: true }): number => Math.max(
-          this.document.body.offsetHeight - (this.document.defaultView?.scrollY || 0) - (this.document.defaultView?.innerHeight || 0) - latest.containerOffsetBottom,
+      map<{ bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: true }, number>(
+        (latest: { bodyOffsetHeight: number, containerOffsetBottom: number, scrollY: number, stuckOrUnsticking: true }): number => Math.max(
+          latest.bodyOffsetHeight - latest.scrollY - (this.document.defaultView?.innerHeight || 0) - latest.containerOffsetBottom,
           0,
         ),
       ),
@@ -152,5 +162,32 @@ export class FooterComponent {
       requireSync: true,
     },
   ) : signal<number>(0);
+  protected readonly raised$:                Signal<boolean> = toSignal<boolean>(
+    toObservable<number>(
+      this.unstickingTranslation$,
+    ).pipe<boolean, boolean, boolean>(
+      map<number, boolean>(
+        (unstickingTranslation: number): boolean => unstickingTranslation !== 0,
+      ),
+      startWith<boolean, [ boolean ]>(false),
+      distinctUntilChanged<boolean>(),
+    ),
+    {
+      requireSync: true,
+    },
+  );
+  protected readonly raisedOrLowering$:      Signal<boolean> = toSignal<boolean>(
+    toObservable<boolean>(
+      this.raised$,
+    ).pipe<boolean, boolean>(
+      delayWhen<boolean>(
+        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
+      ),
+      startWith<boolean>(false),
+    ),
+    {
+      requireSync: true,
+    },
+  );
 
 }
