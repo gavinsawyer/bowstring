@@ -1,55 +1,66 @@
 \:host
-  bottom: 0.75rem
-  display: flex
-  flex-direction: row
-  z-index: 3
+  display: contents
 
-  &::before
-    background: var(--glass--background)
-    height: calc(100% + var(--container-offset-bottom) + 0.75rem)
-    left: 50%
-    mask-image: linear-gradient(to bottom, transparent, black calc(100% - var(--container-offset-bottom) - 0.75rem) 100%)
-    position: absolute
-    top: 0
-    translate: -50%
-    width: 100vw
-    z-index: -1
+  > div
+    display: flex
+    margin-bottom: -0.75rem
 
-    @mixin raise--pseudoelement
-      backdrop-filter: blur(2rem) saturate(2)
-      opacity: 1
+    > div
+      background: var(--glass--background)
+      bottom: 0
+      display: none
+      height: var(--backdrop-height)
+      left: 0
+      mask-image: linear-gradient(to bottom, transparent, black calc(var(--backdrop-height) - var(--footer-offset-bottom) - 0.75rem) calc(var(--backdrop-height) - var(--footer-offset-bottom) + 0px))
+      position: fixed
+      translate: 0 calc(100% - var(--footer-height) - 0.75rem)
+      width: 100vw
+      z-index: 3
 
-    @mixin unraise--pseudoelement
-      backdrop-filter: blur(0) saturate(1)
-      opacity: 0
+      @mixin show--backdrop
+        backdrop-filter: blur(2rem) saturate(2)
+        opacity: 1
 
-    @include unraise--pseudoelement
+      @mixin hide--backdrop
+        backdrop-filter: blur(0) saturate(1)
+        opacity: 0
 
-    @keyframes raise--pseudoelement
-      0%
-        @include unraise--pseudoelement
+      @include hide--backdrop
 
-      100%
-        @include raise--pseudoelement
+      @keyframes show--backdrop
+        0%
+          @include hide--backdrop
 
-    @keyframes unraise--pseudoelement
-      0%
-        @include raise--pseudoelement
+        100%
+          @include show--backdrop
 
-      100%
-        @include unraise--pseudoelement
+      @keyframes hide--backdrop
+        0%
+          @include show--backdrop
+
+        100%
+          @include hide--backdrop
+
+    &.shown
+      > div
+        animation: show--backdrop 200ms ease-in-out forwards
+        display: flex
+
+      &.hiding > div
+        animation: hide--backdrop 200ms ease-in-out forwards
 
   > footer
     background: var(--footer--canvas--background)
+    bottom: 0.75rem
     color: var(--footer--canvas--foreground)
     cursor: default
     display: flex
     flex-direction: row
-    flex-grow: 1
     flex-wrap: wrap
     gap: 0.625rem 0.75rem
     justify-content: center
     padding: 0.75rem 1rem
+    z-index: 3
 
     @mixin raise--footer
       border-radius: calc(var(--border-radius) / 2)
@@ -57,13 +68,13 @@
       margin: 0 -0.5rem
       translate: none
 
-    @mixin unraise--footer
+    @mixin lower--footer
       border-radius: var(--border-radius)
       box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
       margin: unset
       translate: 0 var(--unsticking-translation)
 
-    @include unraise--footer
+    @include lower--footer
 
     &::ng-deep > span
       order: 1
@@ -77,6 +88,16 @@
       &:last-child
         order: 2
 
+    &.raised
+      position: sticky
+      animation: raise--footer 200ms ease-in-out forwards
+
+      &.lowering
+        animation: lower--footer 200ms ease-in-out forwards
+
+    &:not(.stuck)
+      translate: none
+
     @media (min-width: 52rem)
       justify-content: space-between
 
@@ -86,42 +107,25 @@
 
     @keyframes raise--footer
       0%
-        @include unraise--footer
+        @include lower--footer
 
       100%
         @include raise--footer
 
-    @keyframes unraise--footer
+    @keyframes lower--footer
       0%
         @include raise--footer
 
       100%
-        @include unraise--footer
-
-  &.raised
-    > footer
-      animation: raise--footer 200ms ease-in-out forwards
-
-    &::before
-      animation: raise--pseudoelement 200ms ease-in-out forwards
-      content: ""
-
-    &.lowering
-      > footer
-        animation: unraise--footer 200ms ease-in-out forwards
-
-      &::before
-        animation: unraise--pseudoelement 200ms ease-in-out forwards
-
-  &:not(.stuck) > footer
-    translate: none
-
-  &.stuck
-    position: sticky
+        @include lower--footer
 
   @media (min-width: 26rem)
-    bottom: 1.5rem
+    > div
+      margin-bottom: -1.5rem
 
-    &::before
-      height: calc(100% + var(--container-offset-bottom) + 1.5rem)
-      mask-image: linear-gradient(to bottom, transparent, black calc(100% - var(--container-offset-bottom) - 1.5rem) 100%)
+      > div
+        mask-image: linear-gradient(to bottom, transparent, black calc(var(--backdrop-height) - var(--footer-offset-bottom) - 1.5rem)  calc(var(--backdrop-height) - var(--footer-offset-bottom) + 0px))
+        translate: 0 calc(100% - var(--footer-height) - 1.5rem)
+
+    > footer
+      bottom: 1.5rem

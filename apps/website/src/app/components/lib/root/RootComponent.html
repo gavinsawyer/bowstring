@@ -6,13 +6,13 @@
         <standard--card>
           <div>
             <standard--button
-              (click)="footerComponent.stuck$.set(!footerComponent.stuck$()); footerComponent.stuck$() && testSecondFooterComponent.stuck$.set(false);"
+              (click)="footerComponent.stuck$.set(!footerComponent.stuck$()); footerComponent.stuck$() && testFooterComponent.stuck$.set(false);"
               form="raised"
               [text]="(footerComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
             <standard--button
-              (click)="testSecondFooterComponent.stuck$.set(!testSecondFooterComponent.stuck$()); testSecondFooterComponent.stuck$() && footerComponent.stuck$.set(false);"
+              (click)="testFooterComponent.stuck$.set(!testFooterComponent.stuck$()); testFooterComponent.stuck$() && footerComponent.stuck$.set(false);"
               form="raised"
-              [text]="(testSecondFooterComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
+              [text]="(testFooterComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
           </div>
           <hgroup>
             <h3 i18n="@@ConnectForm--Title">Want to connect?</h3>
@@ -38,7 +38,7 @@
         <router-outlet />
       </main>
     </div>
-    <standard--footer #testSecondFooterComponent="">
+    <standard--footer #testFooterComponent="">
       <span>
         test footer
       </span>
@@ -54,12 +54,12 @@
         [tabindex]="past52remBreakpoint$() ? 0 : 1"
         [text]="localeDisplayNames.of(localeId) || localeId" />
     </span>
-      <span>
+    <span>
       &copy;&nbsp;<standard--link
         text="Gavin Sawyer"
         url="https://gavinsawyer.dev/" />
     </span>
-      <span>
+    <span>
       v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}&plus;<standard--link
         [tabindex]="0"
         [text]="gitInfo.hash || ''"
