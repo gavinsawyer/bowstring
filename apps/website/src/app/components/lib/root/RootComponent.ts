@@ -1,12 +1,12 @@
-import { BreakpointObserver, BreakpointState }                       from "@angular/cdk/layout";
-import { DOCUMENT, isPlatformBrowser, Location }                     from "@angular/common";
-import { Component, inject, LOCALE_ID, PLATFORM_ID, signal, Signal } from "@angular/core";
-import { toSignal }                                                  from "@angular/core/rxjs-interop";
-import { GIT_INFO, PACKAGE_VERSION }                                 from "@standard/injection-tokens";
-import { GitInfo }                                                   from "git-describe";
-import { distinctUntilChanged, map, startWith }                      from "rxjs";
-import project                                                       from "../../../../../project.json";
-import { LOCALES }                                                   from "../../../injection tokens";
+import { BreakpointObserver, BreakpointState }                                       from "@angular/cdk/layout";
+import { DOCUMENT, isPlatformBrowser, Location }                                     from "@angular/common";
+import { Component, inject, LOCALE_ID, PLATFORM_ID, signal, Signal, WritableSignal } from "@angular/core";
+import { toSignal }                                                                  from "@angular/core/rxjs-interop";
+import { GIT_INFO, PACKAGE_VERSION }                                                 from "@standard/injection-tokens";
+import { GitInfo }                                                                   from "git-describe";
+import { distinctUntilChanged, map, startWith }                                      from "rxjs";
+import project                                                                       from "../../../../../project.json";
+import { LOCALES }                                                                   from "../../../injection tokens";
 
 
 @Component({
@@ -61,5 +61,6 @@ export class RootComponent {
       requireSync: true,
     },
   ) : signal<boolean>(true);
+  protected readonly playing$:             WritableSignal<boolean>                                       = signal<boolean>(false);
 
 }

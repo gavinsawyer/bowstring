@@ -34,8 +34,41 @@
         <router-outlet />
       </main>
     </div>
+    <standard--footer #footerComponent="">
+      <div>
+        <img
+          alt=""
+          height="24"
+          ngSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/af/7b/9f/af7b9f4b-59a8-4c37-017c-dd69dcf91273/33804.jpg/48x48bb.webp"
+          width="24">
+        <div>
+          <span>
+            Coca1ne (Ed1t)
+          </span>
+          <span>
+            DJ これからの緊急災害
+          </span>
+        </div>
+      </div>
+      <div>
+        <progress></progress>
+        <div>
+          <span>
+            0:00
+          </span>
+            <span>
+            4:47
+          </span>
+        </div>
+      </div>
+      <div>
+        <standard--backward-symbol />
+        @if (playing$()) {<standard--pause-symbol (click)="playing$.set(false);" />} @else {<standard--play-symbol (click)="playing$.set(true);" />}
+        <standard--forward-symbol />
+      </div>
+    </standard--footer>
   </div>
-  <standard--footer #footerComponent="">
+  <standard--footer>
     <span>
       <standard--link
         (click)="localeDialogComponent.open$.set(true);"
