@@ -19,15 +19,15 @@ import * as symbolComponents                                from "../symbols";
 })
 export class LinkComponent implements OnInit {
 
-  @Input({
-    required: true,
-  })
-  public text!: string;
-
   @Input() public disabled?: boolean;
   @Input() public symbol?:   (keyof typeof symbolComponents) extends `${infer name}SymbolComponent` ? name : never;
   @Input() public tabindex?: number;
   @Input() public url?:      string;
+
+  @Input({
+    required: true,
+  })
+  public text!: string;
 
   protected readonly symbolComponent$: WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
     this.symbol && symbolComponents[`${this.symbol}SymbolComponent`],

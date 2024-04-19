@@ -15,17 +15,17 @@ import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, fromEvent, map, 
 })
 export class FooterComponent implements AfterViewInit {
 
-  @ViewChild("divHtmlElement", {
+  @ViewChild("htmlDivElement", {
     read:   ElementRef<HTMLDivElement>,
     static: true,
   })
-  private readonly divHtmlElementRef?:    ElementRef<HTMLDivElement>;
+  private readonly htmlDivElementRef?:    ElementRef<HTMLDivElement>;
 
-  @ViewChild("footerHtmlElement", {
+  @ViewChild("htmlFooterElement", {
     read:   ElementRef<HTMLElement>,
     static: true,
   })
-  private readonly footerHtmlElementRef?: ElementRef<HTMLElement>;
+  private readonly htmlFooterElementRef?: ElementRef<HTMLElement>;
 
   private readonly afterViewInit$: WritableSignal<boolean> = signal<boolean>(false);
   private readonly document:       Document                = inject<Document>(DOCUMENT);
@@ -91,26 +91,26 @@ export class FooterComponent implements AfterViewInit {
       ),
     ).pipe<number, number, number>(
       map<boolean | Event, number>(
-        (): number => this.footerHtmlElementRef?.nativeElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
+        (): number => this.htmlFooterElementRef?.nativeElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
           bottomPropertyValue.replace(
             "px",
             "",
           ),
         ) : 0)(
           getComputedStyle(
-            this.footerHtmlElementRef.nativeElement,
+            this.htmlFooterElementRef.nativeElement,
           ).getPropertyValue("bottom"),
         ) : 0,
       ),
       startWith<number, [ number ]>(
-        this.footerHtmlElementRef?.nativeElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
+        this.htmlFooterElementRef?.nativeElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
           bottomPropertyValue.replace(
             "px",
             "",
           ),
         ) : 0)(
           getComputedStyle(
-            this.footerHtmlElementRef.nativeElement,
+            this.htmlFooterElementRef.nativeElement,
           ).getPropertyValue("bottom"),
         ) : 0,
       ),
@@ -130,9 +130,9 @@ export class FooterComponent implements AfterViewInit {
         (): Observable<number> => new Observable<number>(
           (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
             this
-              .footerHtmlElementRef && resizeObserver
+              .htmlFooterElementRef && resizeObserver
               .observe(
-                this.footerHtmlElementRef.nativeElement,
+                this.htmlFooterElementRef.nativeElement,
               );
 
             return resizeObserver.disconnect;
@@ -148,7 +148,7 @@ export class FooterComponent implements AfterViewInit {
         ),
       ),
       startWith<number, [ number ]>(
-        this.footerHtmlElementRef?.nativeElement.clientHeight || 0,
+        this.htmlFooterElementRef?.nativeElement.clientHeight || 0,
       ),
       distinctUntilChanged<number>(),
     ),
@@ -173,10 +173,10 @@ export class FooterComponent implements AfterViewInit {
       },
     ).pipe<number, number, number>(
       map<{ bodyHeight: number, footerBottomProperty: number, footerHeight: number }, number>(
-        (latest: { bodyHeight: number, footerBottomProperty: number, footerHeight: number }): number => latest.bodyHeight - (this.divHtmlElementRef?.nativeElement.offsetTop || 0) - latest.footerBottomProperty - latest.footerHeight,
+        (latest: { bodyHeight: number, footerBottomProperty: number, footerHeight: number }): number => latest.bodyHeight - (this.htmlDivElementRef?.nativeElement.offsetTop || 0) - latest.footerBottomProperty - latest.footerHeight,
       ),
       startWith<number, [ number ]>(
-        this.bodyHeight$() - (this.divHtmlElementRef?.nativeElement.offsetTop || 0) - this.footerBottomProperty$() - this.footerHeight$(),
+        this.bodyHeight$() - (this.htmlDivElementRef?.nativeElement.offsetTop || 0) - this.footerBottomProperty$() - this.footerHeight$(),
       ),
       distinctUntilChanged<number>(),
     ),

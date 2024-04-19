@@ -1,5 +1,5 @@
-import { Component, ContentChild, ElementRef, forwardRef, OnDestroy, signal, WritableSignal } from "@angular/core";
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }          from "@angular/forms";
+import { Component, ContentChild, ElementRef, forwardRef, HostBinding, HostListener, inject, OnDestroy, signal, WritableSignal } from "@angular/core";
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                                             from "@angular/forms";
 
 
 @Component({
@@ -37,17 +37,19 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
   })
   private htmlTextAreaElement?: ElementRef<HTMLTextAreaElement>;
 
-  private readonly abortController: AbortController = new AbortController();
+  @HostBinding("class.transitionTranslate") protected get classTransitionTranslate(): boolean { return this.transitionTranslate$(); }
+  @HostBinding("style.--translation-x")     protected get styleXTranslation():        number  { return this.translation$().x; }
+  @HostBinding("style.--translation-y")     protected get styleYTranslation():        number  { return this.translation$().y; }
 
-  protected readonly mousedown:            () => void                                                       = (): void => setTimeout(
+  @HostListener("mousedown")  protected readonly mousedown:  () => void = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     200,
   ) && this.transitionTranslate$.set(true);
-  protected readonly mouseenter:           () => void                                                       = (): void => setTimeout(
+  @HostListener("mouseenter") protected readonly mouseenter: () => void = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     200,
   ) && void (0);
-  protected readonly mouseleave:           () => void                                                       = (): void => {
+  @HostListener("mouseleave") protected readonly mouseleave: () => void = (): void => {
     this
       .transitionTranslate$
       .set(true);
@@ -61,16 +63,24 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
         },
       );
   };
-  protected readonly mousemove:            (mouseEvent: MouseEvent, htmlDivElement: HTMLDivElement) => void = (mouseEvent: MouseEvent, htmlDivElement: HTMLDivElement): void => ((domRect: DOMRect): void => this.translation$.set(
+
+  @HostListener("mousemove", [
+    "$event",
+  ])
+  protected readonly mousemove: (mouseEvent: MouseEvent) => void = (mouseEvent: MouseEvent): void => this.elementRef.nativeElement && ((domRect: DOMRect): void => this.translation$.set(
     {
-      x: ((2 * ((mouseEvent.clientX - domRect.left) / htmlDivElement.offsetWidth)) - 1) / 8,
-      y: ((2 * ((mouseEvent.clientY - domRect.top) / htmlDivElement.offsetHeight)) - 1) / 8,
+      x: ((2 * ((mouseEvent.clientX - domRect.left) / domRect.width)) - 1) / 8,
+      y: ((2 * ((mouseEvent.clientY - domRect.top) / domRect.height)) - 1) / 8,
     },
   ))(
-    htmlDivElement.getBoundingClientRect(),
+    this.elementRef.nativeElement.getBoundingClientRect(),
   );
-  protected readonly transitionTranslate$: WritableSignal<boolean>                                          = signal<boolean>(true);
-  protected readonly translation$:         WritableSignal<{ x: number, y: number }>                         = signal<{ x: number, y: number }>(
+
+  private readonly abortController: AbortController = new AbortController();
+  private readonly elementRef:      ElementRef      = inject<ElementRef>(ElementRef);
+
+  protected readonly transitionTranslate$: WritableSignal<boolean>                  = signal<boolean>(true);
+  protected readonly translation$:         WritableSignal<{ x: number, y: number }> = signal<{ x: number, y: number }>(
     {
       x: 0,
       y: 0,

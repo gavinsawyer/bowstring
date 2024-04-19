@@ -22,7 +22,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     read:   ElementRef<HTMLDialogElement>,
     static: true,
   })
-  private htmlDialogElementRef!: ElementRef<HTMLDialogElement>;
+  private htmlDialogElementRef?: ElementRef<HTMLDialogElement>;
 
   private readonly abortController: AbortController      = new AbortController();
   private readonly close:           () => void           = (): void => setTimeout(
@@ -41,14 +41,14 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     (onCleanup: EffectCleanupRegisterFn): void => {
       isPlatformBrowser(
         this.platformId,
-      ) ? this
+      ) && this.htmlDialogElementRef ? this
         .open$() ? ((): void => {
           this
             .htmlDialogElementRef
             .nativeElement
             .showModal();
 
-          disableBodyScroll(
+           disableBodyScroll(
             this.htmlDialogElementRef.nativeElement,
           );
         })() : ((): void => {
@@ -79,7 +79,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   public ngAfterViewInit(): void {
     this
       .htmlDialogElementRef
-      .nativeElement
+      ?.nativeElement
       .addEventListener(
         "click",
         this.close,
@@ -90,7 +90,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
 
     this
       .htmlDialogElementRef
-      .nativeElement
+      ?.nativeElement
       .addEventListener(
         "keydown",
         (keyboardEvent: KeyboardEvent): void => keyboardEvent.key === "Escape" ? ((): void => {

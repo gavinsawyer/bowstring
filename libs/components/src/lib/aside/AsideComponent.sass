@@ -1,17 +1,21 @@
-\:host::ng-deep > aside
-  display: flex
-  flex-direction: column
-  gap: 0.875rem
+\:host
+  display: contents
 
-  > p,
-  > span
-    margin: 0
-
-  > span
-    cursor: default
-    user-select: none
-
-  > div
+  > aside
     display: flex
-    flex-direction: row
-    gap: 0.625rem 0.875rem
+    flex-direction: column
+    gap: 0.875rem
+
+    &::ng-deep
+      > p,
+      > span
+        margin: 0
+
+      > span
+        cursor: default
+        user-select: none
+
+      > div
+        display: flex
+        flex-direction: row
+        gap: 0.625rem 0.875rem

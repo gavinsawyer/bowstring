@@ -1,113 +1,116 @@
-\:host > dialog
-  background: unset
-  border: none
-  flex-direction: column
-  height: 100%
-  justify-content: center
-  left: 0
-  margin: 0
-  max-height: 100%
-  max-width: 100%
-  padding: 0
-  position: fixed
-  top: 0
-  width: 100%
+\:host
+  display: contents
 
-  @mixin close--dialog
-    opacity: 0
-
-  @mixin open--dialog
-    opacity: 1
-
-  @include close--dialog
-
-  > div
-    display: flex
-    flex-direction: row
+  > dialog
+    background: unset
+    border: none
+    flex-direction: column
+    height: 100%
     justify-content: center
-    padding: 1.125rem 2rem
+    left: 0
+    margin: 0
+    max-height: 100%
+    max-width: 100%
+    padding: 0
+    position: fixed
+    top: 0
+    width: 100%
 
-    > standard--card::ng-deep
-      transform-origin: top
-
-      @mixin close--card
-        transform: perspective(100vw) rotateX(-30deg) scale(0.9)
-
-      @mixin open--card
-        transform: unset
-
-      @include open--card
-
-      @keyframes close--card
-        0%
-          @include open--card
-
-        100%
-          @include close--card
-
-      @keyframes open--card
-        0%
-          @include close--card
-
-        100%
-          @include open--card
-
-  &::backdrop
-    background: var(--glass--background)
-
-    @mixin close--backdrop
-      backdrop-filter: blur(0) saturate(1)
+    @mixin close--dialog
       opacity: 0
 
-    @mixin open--backdrop
-      backdrop-filter: blur(2rem) saturate(2)
+    @mixin open--dialog
       opacity: 1
 
-    @include close--backdrop
+    @include close--dialog
 
-    @keyframes close--backdrop
-      0%
-        @include open--backdrop
+    > div
+      display: flex
+      flex-direction: row
+      justify-content: center
+      padding: 1.125rem 2rem
 
-      100%
-        @include close--backdrop
+      > standard--card::ng-deep
+        transform-origin: top
 
-    @keyframes open--backdrop
-      0%
-        @include close--backdrop
+        @mixin close--card
+          transform: perspective(100vw) rotateX(-30deg) scale(0.9)
 
-      100%
-        @include open--backdrop
+        @mixin open--card
+          transform: unset
 
-  &[open]
-    animation: open--dialog 200ms ease-in forwards
-    display: flex
+        @include open--card
+
+        @keyframes close--card
+          0%
+            @include open--card
+
+          100%
+            @include close--card
+
+        @keyframes open--card
+          0%
+            @include close--card
+
+          100%
+            @include open--card
 
     &::backdrop
-      animation: open--backdrop 200ms ease-in forwards
+      background: var(--glass--background)
 
-    > div > standard--card::ng-deep
-      animation: open--card 200ms ease-in forwards
+      @mixin close--backdrop
+        backdrop-filter: blur(0) saturate(1)
+        opacity: 0
 
-    &.closing
-      animation: close--dialog 200ms ease-in forwards
+      @mixin open--backdrop
+        backdrop-filter: blur(2rem) saturate(2)
+        opacity: 1
+
+      @include close--backdrop
+
+      @keyframes close--backdrop
+        0%
+          @include open--backdrop
+
+        100%
+          @include close--backdrop
+
+      @keyframes open--backdrop
+        0%
+          @include close--backdrop
+
+        100%
+          @include open--backdrop
+
+    &[open]
+      animation: open--dialog 200ms ease-in forwards
+      display: flex
 
       &::backdrop
-        animation: close--backdrop 200ms ease-in forwards
+        animation: open--backdrop 200ms ease-in forwards
 
       > div > standard--card::ng-deep
-        animation: close--card 200ms ease-in forwards
+        animation: open--card 200ms ease-in forwards
 
-  @keyframes close--dialog
-    0%
-      @include open--dialog
+      &.closing
+        animation: close--dialog 200ms ease-in forwards
 
-    100%
-      @include close--dialog
+        &::backdrop
+          animation: close--backdrop 200ms ease-in forwards
 
-  @keyframes open--dialog
-    0%
-      @include close--dialog
+        > div > standard--card::ng-deep
+          animation: close--card 200ms ease-in forwards
 
-    100%
-      @include open--dialog
+    @keyframes close--dialog
+      0%
+        @include open--dialog
+
+      100%
+        @include close--dialog
+
+    @keyframes open--dialog
+      0%
+        @include close--dialog
+
+      100%
+        @include open--dialog

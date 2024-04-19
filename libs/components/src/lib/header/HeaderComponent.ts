@@ -23,8 +23,8 @@ import { LinkComponent }                                                        
 })
 export class HeaderComponent {
 
-  private readonly document:            Document             = inject<Document>(DOCUMENT);
-  private readonly platformId:          NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly document:   Document             = inject<Document>(DOCUMENT);
+  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   protected readonly brand:             typeof brand    = inject<typeof brand>(BRAND);
   protected readonly raised$:           Signal<boolean> = isPlatformBrowser(
