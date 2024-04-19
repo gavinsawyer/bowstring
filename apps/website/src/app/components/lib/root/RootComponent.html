@@ -6,13 +6,9 @@
         <standard--card>
           <div>
             <standard--button
-              (click)="footerComponent.stuck$.set(!footerComponent.stuck$()); footerComponent.stuck$() && testFooterComponent.stuck$.set(false);"
+              (click)="footerComponent.stuck$.set(!footerComponent.stuck$())"
               form="raised"
               [text]="(footerComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
-            <standard--button
-              (click)="testFooterComponent.stuck$.set(!testFooterComponent.stuck$()); testFooterComponent.stuck$() && footerComponent.stuck$.set(false);"
-              form="raised"
-              [text]="(testFooterComponent.stuck$() ? 'Unstick' : 'Stick') + ' footer'" />
           </div>
           <hgroup>
             <h3 i18n="@@ConnectForm--Title">Want to connect?</h3>
@@ -38,13 +34,6 @@
         <router-outlet />
       </main>
     </div>
-    <standard--footer #testFooterComponent="">
-      <span>
-        test footer
-      </span>
-      <span></span>
-      <span></span>
-    </standard--footer>
   </div>
   <standard--footer #footerComponent="">
     <span>

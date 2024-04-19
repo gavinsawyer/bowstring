@@ -1,7 +1,7 @@
 <!--suppress CssUnknownProperty -->
 <div
-  [class.hiding]="(stuckOrUnsticking$() && !stuck$()) || (raisedOrLowering$() && !raised$())"
-  [class.shown]="stuckOrUnsticking$() && raisedOrLowering$()"
+  [class.hiding]="(raisedOrLowering$() && !raised$()) || (stuckOrUnsticking$() && !stuck$())"
+  [class.shown]="raisedOrLowering$() && stuckOrUnsticking$()"
   #htmlDivElement
   [style.--backdrop-height]="backdropHeight$() + 'px'"
   [style.--footer-height]="footerHeight$() + 'px'"
@@ -10,8 +10,8 @@
 </div>
 <!--suppress CssUnknownProperty -->
 <footer
-  [class.lowering]="(stuckOrUnsticking$() && !stuck$()) || (raisedOrLowering$() && !raised$())"
-  [class.raised]="stuckOrUnsticking$() && raisedOrLowering$()"
+  [class.lowering]="raisedOrLowering$() && !raised$()"
+  [class.raised]="raisedOrLowering$()"
   [class.stuck]="stuckOrUnsticking$()"
   [class.unsticking]="stuckOrUnsticking$() && !stuck$()"
   #htmlFooterElement

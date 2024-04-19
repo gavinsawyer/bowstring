@@ -34,50 +34,6 @@ export class FooterComponent implements AfterViewInit {
 
   public readonly stuck$: WritableSignal<boolean> = signal<boolean>(false);
 
-  protected readonly bodyHeight$:            Signal<number>  = toSignal<number>(
-    new Observable<number>(
-      (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-        resizeObserver
-          .observe(
-            this.document.body,
-          );
-
-        return resizeObserver.disconnect;
-      })(
-        new ResizeObserver(
-          (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
-            (): void => resizeEventObserver.next(
-              resizeObserverEntries[0].target.clientHeight,
-            ),
-          ),
-        ),
-      ),
-    ).pipe<number, number>(
-      startWith<number, [ number ]>(
-        this.document.body.clientHeight,
-      ),
-      distinctUntilChanged<number>(),
-    ),
-    {
-      requireSync: true,
-    },
-  );
-  protected readonly stuckOrUnsticking$:     Signal<boolean> = toSignal<boolean>(
-    toObservable<boolean>(
-      this.stuck$,
-    ).pipe<boolean, boolean, boolean>(
-      delayWhen<boolean>(
-        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
-      ),
-      startWith<boolean>(
-        this.stuck$(),
-      ),
-      distinctUntilChanged<boolean>(),
-    ),
-    {
-      requireSync: true,
-    },
-  );
   protected readonly footerBottomProperty$:  Signal<number>  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
@@ -135,7 +91,7 @@ export class FooterComponent implements AfterViewInit {
                 this.htmlFooterElementRef.nativeElement,
               );
 
-            return resizeObserver.disconnect;
+            return (): void => resizeObserver.disconnect();
           })(
             new ResizeObserver(
               (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
@@ -156,6 +112,34 @@ export class FooterComponent implements AfterViewInit {
       requireSync: true,
     },
   ) : signal<number>(0);
+  protected readonly bodyHeight$:            Signal<number>  = toSignal<number>(
+    new Observable<number>(
+      (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
+        resizeObserver
+          .observe(
+            this.document.body,
+          );
+
+        return (): void => resizeObserver.disconnect();
+      })(
+        new ResizeObserver(
+          (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
+            (): void => resizeEventObserver.next(
+              resizeObserverEntries[0].target.clientHeight,
+            ),
+          ),
+        ),
+      ),
+    ).pipe<number, number>(
+      startWith<number, [ number ]>(
+        this.document.body.clientHeight,
+      ),
+      distinctUntilChanged<number>(),
+    ),
+    {
+      requireSync: true,
+    },
+  );
   protected readonly footerOffsetBottom$: Signal<number>  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
@@ -277,11 +261,18 @@ export class FooterComponent implements AfterViewInit {
     },
   ) : signal<number>(0);
   protected readonly raised$:                Signal<boolean> = toSignal<boolean>(
-    toObservable<number>(
-      this.unstickingTranslation$,
+    combineLatest<{ stuck: Observable<boolean>, unstickingTranslation: Observable<number> }>(
+      {
+        stuck:                 toObservable<boolean>(
+          this.stuck$
+        ),
+        unstickingTranslation: toObservable<number>(
+          this.unstickingTranslation$,
+        ),
+      }
     ).pipe<boolean, boolean, boolean>(
-      map<number, boolean>(
-        (unstickingTranslation: number): boolean => unstickingTranslation !== 0,
+      map<{ stuck: boolean, unstickingTranslation: number }, boolean>(
+        (latest: { stuck: boolean, unstickingTranslation: number }): boolean => latest.stuck && latest.unstickingTranslation !== 0,
       ),
       startWith<boolean, [ boolean ]>(false),
       distinctUntilChanged<boolean>(),
@@ -298,6 +289,22 @@ export class FooterComponent implements AfterViewInit {
         (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
       ),
       startWith<boolean>(false),
+      distinctUntilChanged<boolean>(),
+    ),
+    {
+      requireSync: true,
+    },
+  );
+  protected readonly stuckOrUnsticking$:     Signal<boolean> = toSignal<boolean>(
+    toObservable<boolean>(
+      this.stuck$,
+    ).pipe<boolean, boolean, boolean>(
+      delayWhen<boolean>(
+        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
+      ),
+      startWith<boolean>(
+        this.stuck$(),
+      ),
       distinctUntilChanged<boolean>(),
     ),
     {

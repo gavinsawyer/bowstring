@@ -76,19 +76,6 @@
 
     @include lower--footer
 
-    &::ng-deep > span
-      order: 1
-      text-align: center
-      user-select: none
-      white-space: nowrap
-
-      &:first-child
-        flex-basis: 100%
-        order: 0
-
-      &:last-child
-        order: 2
-
     &.raised
       position: sticky
       animation: raise--footer 200ms ease-in-out forwards
@@ -101,10 +88,6 @@
 
     @media (min-width: 52rem)
       justify-content: space-between
-
-      &::ng-deep > span:first-child
-        flex-basis: unset
-        order: 2
 
     @keyframes raise--footer
       0%

@@ -28,12 +28,33 @@
         > router-outlet
           display: none
 
-      @media (min-width: 52rem)
+    > standard--footer::ng-deep > footer > span
+      order: 1
+      text-align: center
+      user-select: none
+      white-space: nowrap
+
+      &:first-child
+        flex-basis: 100%
+        order: 0
+
+      &:last-child
+        order: 2
+
+    @media (min-width: 52rem)
+      > div > div
         flex-direction: row
         max-width: 48rem
 
         > main
           flex-basis: 30rem
+
+      > standard--footer::ng-deep > footer
+        justify-content: space-between
+
+        > span:first-child
+          flex-basis: unset
+          order: 2
 
   @media (min-width: 26rem)
     min-height: calc(100dvh - 4.5rem)
