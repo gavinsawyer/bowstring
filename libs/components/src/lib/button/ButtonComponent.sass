@@ -1,7 +1,6 @@
 \:host
   display: flex
   flex-direction: row
-  flex-grow: 1
 
   > a
     text-shadow: none
@@ -22,7 +21,6 @@
     gap: 0.285625rem
     justify-content: center
     outline: none
-    padding: 0.875rem 1rem
     transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
     user-select: none
     -webkit-tap-highlight-color: transparent
@@ -30,22 +28,23 @@
     > span
       display: flex
 
-  > a.no-op,
-  > button[disabled]
-    background: var(--button--grey--background)
-    color: var(--button--grey--foreground)
-    cursor: default
+    &.flat,
+    &.raised
+      padding: 0.875rem 1rem
 
-    &.primary
-      background: var(--primary--grey--background)
-      color: var(--primary--grey--foreground)
+    &.symbol
+      background: transparent
+      font-size: 1.375rem
 
   > a:not(.no-op),
   > button:not([disabled])
-    background: var(--button--canvas--background)
     color: var(--button--canvas--foreground)
     cursor: pointer
     translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+
+    &.flat,
+    &.raised
+      background: var(--button--canvas--background)
 
     &.raised
       box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
@@ -59,8 +58,11 @@
           z-index: 2
 
     &.primary
-      background: var(--primary--canvas--background)
       color: var(--primary--canvas--foreground)
+
+      &.flat,
+      &.raised
+        background: var(--primary--canvas--background)
 
       &.raised
         box-shadow: var(--primary--canvas--shadow) 0 calc(var(--depth-offset) / 2) calc(var(--depth-blur) / 2) calc(var(--depth-spread) / 2)
@@ -75,6 +77,22 @@
       &:focus-visible
         scale: 1.03125 1.03125 1.03125
 
+  > a.no-op,
+  > button[disabled]
+    color: var(--button--grey--foreground)
+    cursor: default
+
+    &.flat,
+    &.raised
+      background: var(--button--grey--background)
+
+    &.primary
+      color: var(--primary--grey--foreground)
+
+      &.flat,
+      &.raised
+        background: var(--primary--grey--background)
+
   &.transitionTranslate
     > a,
     > button
@@ -83,15 +101,19 @@
 \:host-context(standard--header)
   > a.no-op,
   > button[disabled]
-    background: var(--glass--border)
+    &.flat,
+    &.raised
+      background: var(--glass--border)
 
-    &.primary
-      background: var(--glass--primary--border)
+      &.primary
+        background: var(--glass--primary--border)
 
   > a:not(.no-op),
   > button:not([disabled])
-    background: var(--glass--background)
-    box-shadow: inset var(--glass--border) 0 0 0.125rem
+    &.flat,
+    &.raised
+      background: var(--glass--background)
+      box-shadow: inset var(--glass--border) 0 0 0.125rem
 
     &.raised
       box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(var(--depth-offset) / 2) calc(var(--depth-blur) / 2) calc(var(--depth-spread) / 2)
@@ -102,8 +124,10 @@
           box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
 
     &.primary
-      background: var(--glass--primary--background)
-      box-shadow: inset var(--glass--primary--border) 0 0 0.125rem
+      &.flat,
+      &.raised
+        background: var(--glass--primary--background)
+        box-shadow: inset var(--glass--primary--border) 0 0 0.125rem
 
       &.raised
         box-shadow: inset var(--glass--primary--border) 0 0 0.125rem, var(--primary--canvas--shadow) 0 calc(var(--depth-offset) / 2) calc(var(--depth-blur) / 2) calc(var(--depth-spread) / 2)

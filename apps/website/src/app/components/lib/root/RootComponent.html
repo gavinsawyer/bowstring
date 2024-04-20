@@ -40,7 +40,7 @@
           alt=""
           height="24"
           ngSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/af/7b/9f/af7b9f4b-59a8-4c37-017c-dd69dcf91273/33804.jpg/48x48bb.webp"
-          width="24">
+          width="24" />
         <div>
           <span>
             Coca1ne (Ed1t)
@@ -49,6 +49,11 @@
             DJ これからの緊急災害
           </span>
         </div>
+        <div></div>
+        @if (footerComponent.raised$() && !past52remBreakpoint$()) {<standard--button
+          (click)="footerComponent.stuck$.set(!footerComponent.stuck$());"
+          form="symbol"
+          [symbol]="footerComponent.stuck$() ? 'ChevronDown' : 'ChevronUp'" />}
       </div>
       <div>
         <progress></progress>
@@ -62,9 +67,16 @@
         </div>
       </div>
       <div>
-        <standard--backward-symbol />
-        @if (playing$()) {<standard--pause-symbol (click)="playing$.set(false);" />} @else {<standard--play-symbol (click)="playing$.set(true);" />}
-        <standard--forward-symbol />
+        <standard--button
+          form="symbol"
+          symbol="Backward" />
+        <standard--button
+          (click)="playing$.set(!playing$());"
+          form="symbol"
+          [symbol]="playing$() ? 'Pause' : 'Play'"/>
+        <standard--button
+          form="symbol"
+          symbol="Forward" />
       </div>
     </standard--footer>
   </div>

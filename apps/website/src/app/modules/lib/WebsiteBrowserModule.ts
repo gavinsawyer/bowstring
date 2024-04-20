@@ -1,30 +1,29 @@
-import { NgOptimizedImage }                                                                                                                              from "@angular/common";
-import { Injector, NgModule }                                                                                                                            from "@angular/core";
-import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                         from "@angular/fire/analytics";
-import { FirebaseApp, initializeApp, provideFirebaseApp }                                                                                                from "@angular/fire/app";
-import { AppCheck, initializeAppCheck, provideAppCheck }                                                                                                 from "@angular/fire/app-check";
-import { Auth, getAuth, provideAuth }                                                                                                                    from "@angular/fire/auth";
-import { AngularFirestoreModule }                                                                                                                        from "@angular/fire/compat/firestore";
-import { Firestore, getFirestore, provideFirestore }                                                                                                     from "@angular/fire/firestore";
-import { Functions, getFunctions, provideFunctions }                                                                                                     from "@angular/fire/functions";
-import { ReactiveFormsModule }                                                                                                                           from "@angular/forms";
-import { BrowserModule, provideClientHydration }                                                                                                         from "@angular/platform-browser";
-import { BrowserAnimationsModule }                                                                                                                       from "@angular/platform-browser/animations";
-import { RouterModule }                                                                                                                                  from "@angular/router";
-import * as brand                                                                                                                                        from "@standard/brand";
-import { AsideComponent, ButtonComponent, CardComponent, DialogComponent, FooterComponent, FormFieldComponent, HeaderComponent, LinkComponent }          from "@standard/components";
-import { routes as standardRoutes }                                                                                                                      from "@standard/components/routes";
-import { AirplayAudioSymbolComponent, BackwardSymbolComponent, ForwardSymbolComponent, PauseSymbolComponent, PlaySymbolComponent, ShareSymbolComponent } from "@standard/components/symbols";
-import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                                 from "@standard/injection-tokens";
-import { AppCheckOptionsService }                                                                                                                        from "@standard/services";
-import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                                   from "ngx-mask";
-import project                                                                                                                                           from "../../../../project.json";
-import { gitInfo }                                                                                                                                       from "../../../.git-info";
-import { packageVersion }                                                                                                                                from "../../../.package-version";
-import { environment }                                                                                                                                   from "../../../environment";
-import { RootComponent }                                                                                                                                 from "../../components";
-import { routes as websiteRoutes }                                                                                                                       from "../../components/lib/routes";
-import { LOCALES }                                                                                                                                       from "../../injection tokens";
+import { NgOptimizedImage }                                                                                                                     from "@angular/common";
+import { Injector, NgModule }                                                                                                                   from "@angular/core";
+import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                from "@angular/fire/analytics";
+import { FirebaseApp, initializeApp, provideFirebaseApp }                                                                                       from "@angular/fire/app";
+import { AppCheck, initializeAppCheck, provideAppCheck }                                                                                        from "@angular/fire/app-check";
+import { Auth, getAuth, provideAuth }                                                                                                           from "@angular/fire/auth";
+import { AngularFirestoreModule }                                                                                                               from "@angular/fire/compat/firestore";
+import { Firestore, getFirestore, provideFirestore }                                                                                            from "@angular/fire/firestore";
+import { Functions, getFunctions, provideFunctions }                                                                                            from "@angular/fire/functions";
+import { ReactiveFormsModule }                                                                                                                  from "@angular/forms";
+import { BrowserModule, provideClientHydration }                                                                                                from "@angular/platform-browser";
+import { BrowserAnimationsModule }                                                                                                              from "@angular/platform-browser/animations";
+import { RouterModule }                                                                                                                         from "@angular/router";
+import * as brand                                                                                                                               from "@standard/brand";
+import { AsideComponent, ButtonComponent, CardComponent, DialogComponent, FooterComponent, FormFieldComponent, HeaderComponent, LinkComponent } from "@standard/components";
+import { routes as standardRoutes }                                                                                                             from "@standard/components/routes";
+import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                        from "@standard/injection-tokens";
+import { AppCheckOptionsService }                                                                                                               from "@standard/services";
+import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                          from "ngx-mask";
+import project                                                                                                                                  from "../../../../project.json";
+import { gitInfo }                                                                                                                              from "../../../.git-info";
+import { packageVersion }                                                                                                                       from "../../../.package-version";
+import { environment }                                                                                                                          from "../../../environment";
+import { RootComponent }                                                                                                                        from "../../components";
+import { routes as websiteRoutes }                                                                                                              from "../../components/lib/routes";
+import { LOCALES }                                                                                                                              from "../../injection tokens";
 
 
 @NgModule({
@@ -35,10 +34,8 @@ import { LOCALES }                                                              
     RootComponent,
   ],
   imports: [
-    AirplayAudioSymbolComponent,
     AngularFirestoreModule.enablePersistence(),
     AsideComponent,
-    BackwardSymbolComponent,
     BrowserAnimationsModule,
     BrowserModule,
     ButtonComponent,
@@ -46,13 +43,10 @@ import { LOCALES }                                                              
     DialogComponent,
     FooterComponent,
     FormFieldComponent,
-    ForwardSymbolComponent,
     HeaderComponent,
     LinkComponent,
     NgOptimizedImage,
     NgxMaskDirective,
-    PauseSymbolComponent,
-    PlaySymbolComponent,
     provideAnalytics(
       (): Analytics => getAnalytics(),
     ),
@@ -85,7 +79,6 @@ import { LOCALES }                                                              
         initialNavigation:     "enabledBlocking",
       },
     ),
-    ShareSymbolComponent,
   ],
   providers:    [
     {

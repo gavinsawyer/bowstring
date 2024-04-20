@@ -3,7 +3,6 @@
   [class.hiding]="(raisedOrLowering$() && !raised$()) || (stuckOrUnsticking$() && !stuck$())"
   [class.shown]="raisedOrLowering$() && stuckOrUnsticking$()"
   #htmlDivElement
-  [style.--backdrop-height]="backdropHeight$() + 'px'"
   [style.--footer-height]="footerHeight$() + 'px'"
   [style.--footer-offset-bottom]="footerOffsetBottom$() + 'px'">
   <div></div>

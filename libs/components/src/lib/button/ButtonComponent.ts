@@ -1,7 +1,7 @@
-import { NgComponentOutlet }                                                                               from "@angular/common";
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, OnInit, signal, WritableSignal } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                    from "@angular/router";
-import * as symbolComponents                                                                               from "../symbols";
+import { NgComponentOutlet }                                                                                                         from "@angular/common";
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, OnChanges, OnInit, signal, SimpleChanges, WritableSignal } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                              from "@angular/router";
+import * as symbolComponents                                                                                                         from "../symbols";
 
 
 @Component({
@@ -17,7 +17,7 @@ import * as symbolComponents                                                    
   ],
   templateUrl: "ButtonComponent.html",
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnChanges {
 
   @HostBinding("class.transitionTranslate") protected get classTransitionTranslate(): boolean { return this.transitionTranslate$(); }
   @HostBinding("style.--translation-x")     protected get styleXTranslation():        number  { return this.translation$().x; }
@@ -56,7 +56,7 @@ export class ButtonComponent implements OnInit {
 
   @Input() public color?:    "primary" | "none";
   @Input() public disabled?: boolean;
-  @Input() public form?:     "flat" | "icon" | "raised";
+  @Input() public form?:     "flat" | "raised" | "symbol";
   @Input() public symbol?:   keyof typeof symbolComponents extends `${infer name}SymbolComponent` ? name : never;
   @Input() public tabindex?: number;
   @Input() public text?:     string;
@@ -76,7 +76,14 @@ export class ButtonComponent implements OnInit {
     },
   );
 
-  public ngOnInit(): void {
+  public ngOnChanges(changes: SimpleChanges): void {
+    Object.hasOwnProperty.call(changes, "symbol") && this
+      .symbolComponent$
+      .set(
+        symbolComponents[`${changes["symbol"].currentValue as keyof typeof symbolComponents extends `${infer name}SymbolComponent` ? name : never}SymbolComponent`]
+      );
+  }
+  public ngOnInit():                          void {
     this
       .symbolComponent$
       .set(

@@ -9,11 +9,10 @@
       background: var(--glass--background)
       bottom: 0
       display: none
-      height: var(--backdrop-height)
+      height: 2.25rem
       left: 0
-      mask-image: linear-gradient(to bottom, transparent, black calc(var(--backdrop-height) - var(--footer-offset-bottom) - 0.75rem) calc(var(--backdrop-height) - var(--footer-offset-bottom) + 0px))
+      mask-image: linear-gradient(to bottom, transparent, black 1.5rem 2.25rem)
       position: fixed
-      translate: 0 calc(100% - var(--footer-height) - 0.75rem)
       width: 100vw
       z-index: 3
 
@@ -73,15 +72,16 @@
 
     @include lower--footer
 
-    &.raised
+    &:not(.stuck)
+      translate: none
+
+    &.stuck.raised
       position: sticky
       animation: raise--footer 200ms ease-in-out forwards
 
-      &.lowering
+      &.lowering,
+      &.unsticking
         animation: lower--footer 200ms ease-in-out forwards
-
-    &:not(.stuck)
-      translate: none
 
     @keyframes raise--footer
       0%
@@ -102,8 +102,8 @@
       margin-bottom: -1.5rem
 
       > div
-        mask-image: linear-gradient(to bottom, transparent, black calc(var(--backdrop-height) - var(--footer-offset-bottom) - 1.5rem)  calc(var(--backdrop-height) - var(--footer-offset-bottom) + 0px))
-        translate: 0 calc(100% - var(--footer-height) - 1.5rem)
+        height: 4.5rem
+        mask-image: linear-gradient(to bottom, transparent, black 3rem 4.5rem)
 
     > footer
       bottom: 1.5rem

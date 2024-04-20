@@ -168,34 +168,6 @@ export class FooterComponent implements AfterViewInit {
       requireSync: true,
     },
   ) : signal<number>(0);
-  protected readonly backdropHeight$:        Signal<number>  = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<number>(
-    combineLatest<{ footerHeight: Observable<number>, footerBottomProperty: Observable<number>, footerOffsetBottom: Observable<number> }>(
-      {
-        footerHeight:         toObservable<number>(
-          this.footerHeight$,
-        ),
-        footerBottomProperty: toObservable<number>(
-          this.footerBottomProperty$,
-        ),
-        footerOffsetBottom:   toObservable<number>(
-          this.footerOffsetBottom$,
-        ),
-      },
-    ).pipe<number, number, number>(
-      map<{ footerHeight: number, footerBottomProperty: number, footerOffsetBottom: number }, number>(
-        (latest: { footerHeight: number, footerBottomProperty: number, footerOffsetBottom: number }): number => latest.footerHeight + latest.footerOffsetBottom + latest.footerBottomProperty,
-      ),
-      startWith<number>(
-        this.footerHeight$() + this.footerOffsetBottom$() + this.footerBottomProperty$(),
-      ),
-      distinctUntilChanged<number>(),
-    ),
-    {
-      requireSync: true,
-    },
-  ) : signal<number>(0);
   protected readonly unstickingTranslation$: Signal<number>  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
@@ -260,41 +232,6 @@ export class FooterComponent implements AfterViewInit {
       requireSync: true,
     },
   ) : signal<number>(0);
-  protected readonly raised$:                Signal<boolean> = toSignal<boolean>(
-    combineLatest<{ stuck: Observable<boolean>, unstickingTranslation: Observable<number> }>(
-      {
-        stuck:                 toObservable<boolean>(
-          this.stuck$
-        ),
-        unstickingTranslation: toObservable<number>(
-          this.unstickingTranslation$,
-        ),
-      }
-    ).pipe<boolean, boolean, boolean>(
-      map<{ stuck: boolean, unstickingTranslation: number }, boolean>(
-        (latest: { stuck: boolean, unstickingTranslation: number }): boolean => latest.stuck && latest.unstickingTranslation !== 0,
-      ),
-      startWith<boolean, [ boolean ]>(false),
-      distinctUntilChanged<boolean>(),
-    ),
-    {
-      requireSync: true,
-    },
-  );
-  protected readonly raisedOrLowering$:      Signal<boolean> = toSignal<boolean>(
-    toObservable<boolean>(
-      this.raised$,
-    ).pipe<boolean, boolean, boolean>(
-      delayWhen<boolean>(
-        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
-      ),
-      startWith<boolean>(false),
-      distinctUntilChanged<boolean>(),
-    ),
-    {
-      requireSync: true,
-    },
-  );
   protected readonly stuckOrUnsticking$:     Signal<boolean> = toSignal<boolean>(
     toObservable<boolean>(
       this.stuck$,
@@ -305,6 +242,36 @@ export class FooterComponent implements AfterViewInit {
       startWith<boolean>(
         this.stuck$(),
       ),
+      distinctUntilChanged<boolean>(),
+    ),
+    {
+      requireSync: true,
+    },
+  );
+
+  public readonly raised$: Signal<boolean> = toSignal<boolean>(
+    toObservable<number>(
+      this.unstickingTranslation$,
+    ).pipe<boolean, boolean, boolean>(
+      map<number, boolean>(
+        (unstickingTranslation: number): boolean => unstickingTranslation !== 0,
+      ),
+      startWith<boolean, [ boolean ]>(false),
+      distinctUntilChanged<boolean>(),
+    ),
+    {
+      requireSync: true,
+    },
+  );
+
+  protected readonly raisedOrLowering$: Signal<boolean> = toSignal<boolean>(
+    toObservable<boolean>(
+      this.raised$,
+    ).pipe<boolean, boolean, boolean>(
+      delayWhen<boolean>(
+        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
+      ),
+      startWith<boolean>(false),
       distinctUntilChanged<boolean>(),
     ),
     {
