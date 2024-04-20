@@ -1,11 +1,12 @@
-import { DatePipe, NgOptimizedImage }                      from "@angular/common";
-import { Component, inject, LOCALE_ID }                    from "@angular/core";
-import { CapsuleComponent, CardComponent, RouteComponent } from "@standard/components";
-import { i18n }                                            from "../../../../../../../project.json";
+import { DatePipe, NgOptimizedImage }                                       from "@angular/common";
+import { Component, inject, LOCALE_ID }                                     from "@angular/core";
+import { ButtonComponent, CapsuleComponent, CardComponent, RouteComponent } from "@standard/components";
+import { i18n }                                                             from "../../../../../../../project.json";
 
 
 @Component({
   imports: [
+    ButtonComponent,
     CapsuleComponent,
     CardComponent,
     DatePipe,

@@ -1,4 +1,5 @@
 export * from "./lib/airplay audio/AirplayAudioSymbolComponent";
+export * from "./lib/apple logo/AppleLogoSymbolComponent";
 export * from "./lib/backward/BackwardSymbolComponent";
 export * from "./lib/chevron down/ChevronDownSymbolComponent";
 export * from "./lib/chevron up/ChevronUpSymbolComponent";
@@ -14,3 +15,4 @@ export * from "./lib/pause/PauseSymbolComponent";
 export * from "./lib/play/PlaySymbolComponent";
 export * from "./lib/share/ShareSymbolComponent";
 export * from "./lib/slider horizontal 3/SliderHorizontal3SymbolComponent";
+export * from "./lib/spotify logo/SpotifyLogoSymbolComponent";
