@@ -3,15 +3,15 @@
 
   > div
     display: flex
-    margin-bottom: -0.75rem
+    margin-bottom: calc(-1rem * pow(var(--phi), 1))
 
     > div
       background: var(--glass--background)
       bottom: 0
       display: none
-      height: 2.25rem
+      height: calc(2rem * pow(var(--phi), 1))
       left: 0
-      mask-image: linear-gradient(to bottom, transparent, black 1.5rem 2.25rem)
+      mask-image: linear-gradient(to bottom, transparent, black calc(1rem * pow(var(--phi), 1)) calc(2rem * pow(var(--phi), 1)))
       position: fixed
       width: 100vw
       z-index: 3
@@ -49,23 +49,26 @@
         animation: hide--backdrop 200ms ease-in-out forwards
 
   > footer
+    align-content: flex-start
+    align-items: flex-start
     background: var(--footer--canvas--background)
-    bottom: 0.75rem
+    bottom: calc(1rem * pow(var(--phi), 0))
     color: var(--footer--canvas--foreground)
     cursor: default
     display: flex
-    gap: 0.625rem 0.75rem
-    padding: 0.75rem 1rem
+    gap: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
+    justify-content: flex-start
+    padding: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
     z-index: 3
 
     @mixin raise--footer
-      border-radius: calc(var(--border-radius) / 2)
+      border-radius: calc(0.5rem * pow(var(--phi), 0))
       box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
       margin: 0 -0.5rem
       translate: none
 
     @mixin lower--footer
-      border-radius: var(--border-radius)
+      border-radius: calc(1rem * pow(var(--phi), 0))
       box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
       margin: unset
       translate: 0 var(--unsticking-translation)
@@ -96,14 +99,3 @@
 
       100%
         @include lower--footer
-
-  @media (min-width: 26rem)
-    > div
-      margin-bottom: -1.5rem
-
-      > div
-        height: 4.5rem
-        mask-image: linear-gradient(to bottom, transparent, black 3rem 4.5rem)
-
-    > footer
-      bottom: 1.5rem

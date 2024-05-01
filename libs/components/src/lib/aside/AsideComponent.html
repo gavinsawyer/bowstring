@@ -1,3 +1,11 @@
-<aside>
+<aside
+  [style.align-content]="alignContent"
+  [style.align-items]="alignItems"
+  [style.justify-content]="justifyContent"
+  [style.flex-basis]="basis"
+  [style.flex-direction]="direction + (reverse ? ' reverse' : '')"
+  [style.flex-grow]="grow"
+  [style.flex-shrink]="shrink"
+  [style.flex-wrap]="wrap">
   <ng-content />
 </aside>

@@ -3,13 +3,17 @@ import { Component, inject, OnInit, PLATFORM_ID } from "@angular/core";
 import { RESPONSE }                               from "@standard/injection-tokens";
 import { PathService }                            from "@standard/services";
 import { Response }                               from "express";
-import { CardComponent }                          from "../../../card/CardComponent";
+import { ArticleComponent }                       from "../../../article/ArticleComponent";
+import { HeaderComponent }                        from "../../../header/HeaderComponent";
+import { HeadingGroupComponent }                  from "../../../heading group/HeadingGroupComponent";
 import { RouteComponent }                         from "../../../route/RouteComponent";
 
 
 @Component({
-  imports:     [
-    CardComponent,
+  imports: [
+    ArticleComponent,
+    HeaderComponent,
+    HeadingGroupComponent,
   ],
   standalone:  true,
   templateUrl: "OtherwiseRouteComponent.html",

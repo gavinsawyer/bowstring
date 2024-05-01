@@ -1,0 +1,6 @@
+<ng-template #templateRef><ng-content /></ng-template>
+@switch (type) {
+  @case ("inline") {<span><ng-container *ngTemplateOutlet="templateRef" /></span>}
+  @case ("ordered") {<ol><ng-container *ngTemplateOutlet="templateRef" /></ol>}
+  @case ("unordered") {<ul><ng-container *ngTemplateOutlet="templateRef" /></ul>}
+}

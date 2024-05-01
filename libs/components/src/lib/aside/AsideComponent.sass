@@ -2,20 +2,8 @@
   display: contents
 
   > aside
+    align-content: flex-start
+    align-items: flex-start
     display: flex
-    flex-direction: column
-    gap: 0.875rem
-
-    &::ng-deep
-      > p,
-      > span
-        margin: 0
-
-      > span
-        cursor: default
-        user-select: none
-
-      > div
-        display: flex
-        flex-direction: row
-        gap: 0.625rem 0.875rem
+    gap: calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 2))
+    justify-content: flex-start

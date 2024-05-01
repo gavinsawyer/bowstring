@@ -1,1 +1,1 @@
-export * from "./lib/LOCALES";
+export * from "./lib/LOCALE_IDS";

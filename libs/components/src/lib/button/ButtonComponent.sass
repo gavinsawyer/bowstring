@@ -1,6 +1,5 @@
 \:host
-  display: flex
-  flex-direction: row
+  display: contents
 
   > a
     text-shadow: none
@@ -13,28 +12,28 @@
   > button
     align-items: baseline
     border: none
-    border-radius: var(--border-radius)
+    border-radius: calc(1rem * pow(var(--phi), 0))
     display: flex
-    flex-basis: 100%
     flex-direction: row
     font-size: 1.125rem
-    gap: 0.285625rem
+    gap: calc(1rem * pow(var(--phi), -3))
     justify-content: center
     outline: none
     transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
     user-select: none
     -webkit-tap-highlight-color: transparent
 
-    > span
-      display: flex
-
     &.flat,
     &.raised
-      padding: 0.875rem 1rem
+      padding: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
 
     &.symbol
       background: transparent
       font-size: 1.375rem
+      padding: calc(0.5rem * pow(var(--phi), -1)) calc(0.5rem * pow(var(--phi), 0))
+
+    &.transitionTranslate
+      transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease, translate 200ms ease
 
   > a:not(.no-op),
   > button:not([disabled])
@@ -92,48 +91,3 @@
       &.flat,
       &.raised
         background: var(--primary--grey--background)
-
-  &.transitionTranslate
-    > a,
-    > button
-      transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease, translate 200ms ease
-
-\:host-context(standard--header)
-  > a.no-op,
-  > button[disabled]
-    &.flat,
-    &.raised
-      background: var(--glass--border)
-
-      &.primary
-        background: var(--glass--primary--border)
-
-  > a:not(.no-op),
-  > button:not([disabled])
-    &.flat,
-    &.raised
-      background: var(--glass--background)
-      box-shadow: inset var(--glass--border) 0 0 0.125rem
-
-    &.raised
-      box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(var(--depth-offset) / 2) calc(var(--depth-blur) / 2) calc(var(--depth-spread) / 2)
-
-      @media (hover: hover)
-        &:hover,
-        &:focus-visible
-          box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
-
-    &.primary
-      &.flat,
-      &.raised
-        background: var(--glass--primary--background)
-        box-shadow: inset var(--glass--primary--border) 0 0 0.125rem
-
-      &.raised
-        box-shadow: inset var(--glass--primary--border) 0 0 0.125rem, var(--primary--canvas--shadow) 0 calc(var(--depth-offset) / 2) calc(var(--depth-blur) / 2) calc(var(--depth-spread) / 2)
-
-        @media (hover: hover)
-          &:hover,
-          &:focus-visible
-            box-shadow: inset var(--glass--primary--border) 0 0 0.125rem, var(--primary--canvas--shadow) 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
-

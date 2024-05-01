@@ -1,99 +1,21 @@
-<div>
-  <standard--header />
-  <div>
-    <div>
-      <standard--aside>
-        <standard--card>
-          <hgroup>
-            <h3 i18n="@@ConnectForm--Title">Want to connect?</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor ea est fugiat itaque mollitia optio quam qui unde ut voluptatibus.</p>
-          </hgroup>
-        </standard--card>
-        <span>
-          <standard--link
-            i18n-text="@@PrivacyRoute--Title"
-            text="Privacy"
-            url="/privacy" />&nbsp;&bull;&nbsp;<standard--link
-            i18n-text="@@TermsRoute--Title"
-            text="Terms"
-            url="/terms" />
-        </span>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi fugit ipsa obcaecati.</p>
-      </standard--aside>
-      <main>
-        <router-outlet />
-      </main>
-    </div>
-    <standard--footer #footerComponent="">
-      <div>
-        <img
-          alt=""
-          height="24"
-          ngSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/af/7b/9f/af7b9f4b-59a8-4c37-017c-dd69dcf91273/33804.jpg/48x48bb.webp"
-          width="24" />
-        <div>
-          <span>Coca1ne (Ed1t)</span>
-          <span>DJ これからの緊急災害</span>
-        </div>
-        <div></div>
-        @if (footerComponent.raised$() && !past52remBreakpoint$()) {<standard--button
-          (click)="footerComponent.stuck$.set(!footerComponent.stuck$());"
-          form="symbol"
-          [symbol]="footerComponent.stuck$() ? 'ChevronDown' : 'ChevronUp'" />}
-      </div>
-      <div>
-        <progress></progress>
-        <div>
-          <span>0:00</span>
-          <span>4:47</span>
-        </div>
-      </div>
-      <div>
-        <standard--button
-          form="symbol"
-          symbol="Backward" />
-        <standard--button
-          (click)="playing$.set(!playing$());"
-          form="symbol"
-          [symbol]="playing$() ? 'Pause' : 'Play'" />
-        <standard--button
-          form="symbol"
-          symbol="Forward" />
-      </div>
-    </standard--footer>
-  </div>
-  <standard--footer>
-    <span>
-      <standard--link
-        (click)="localeDialogComponent.open$.set(true);"
-        symbol="Globe"
-        [tabindex]="past52remBreakpoint$() ? 0 : 1"
-        [text]="localeDisplayNames.of(localeId) || localeId" />
-    </span>
-    <span>
-      &copy;&nbsp;<standard--link
-        text="Gavin Sawyer"
-        url="https://gavinsawyer.dev/" />
-    </span>
-    <span>
-      v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}&plus;<standard--link
-        [tabindex]="0"
-        [text]="gitInfo.hash || ''"
-        [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
-    </span>
-  </standard--footer>
-</div>
-<standard--dialog #localeDialogComponent="">
-  <div>
-    @for (locale of locales; track locale) {<standard--button
-      (click)="locale === localeId || changeLocale(locale);"
-      color="primary"
-      [disabled]="locale === localeId"
-      form="raised"
-      symbol="Globe"
-      [text]="localeDisplayNames.of(locale) || locale" />}
-  </div>
-  <hgroup>
-    <h1 i18n="@@LocaleDialog--Title">Choose your locale</h1>
-  </hgroup>
-</standard--dialog>
+<standard--flexbox
+  alignItems="stretch"
+  direction="column"
+  grow="1">
+  <standard-website--header />
+  <standard--flexbox
+    alignItems="stretch"
+    direction="column"
+    grow="1">
+    <standard--flexbox
+      alignItems="stretch"
+      direction="column"
+      grow="1">
+      <standard-website--aside />
+      <standard-website--main />
+    </standard--flexbox>
+    <standard-website--audio-footer />
+  </standard--flexbox>
+  <standard-website--footer [localeDialogComponent]="localeDialogComponent" />
+</standard--flexbox>
+<standard-website--locale-dialog #localeDialogComponent />

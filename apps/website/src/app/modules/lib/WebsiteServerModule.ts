@@ -16,5 +16,4 @@ import { WebsiteBrowserModule }                 from "../../modules";
     provideServerRendering(),
   ],
 })
-export class WebsiteServerModule {
-}
+export class WebsiteServerModule { }

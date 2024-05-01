@@ -1,0 +1,15 @@
+\:host
+  display: contents
+
+  > section
+    border-top: 1px solid var(--body--grey--foreground)
+    border-bottom: 1px solid var(--body--grey--foreground)
+    padding: calc(1rem * pow(var(--phi), 0)) 0 calc(1rem * pow(var(--phi), -1))
+
+    &:last-of-type
+      border-bottom: none
+      padding-bottom: 0
+
+\:host-context(standard--card)
+  > section
+    border-color: var(--card--grey--foreground)

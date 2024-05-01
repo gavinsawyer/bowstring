@@ -30,7 +30,7 @@
       justify-content: center
       padding: 1.125rem 2rem
 
-      > standard--card::ng-deep
+      > standard--card::ng-deep > div
         transform-origin: top
 
         @mixin close--card
@@ -89,7 +89,7 @@
       &::backdrop
         animation: open--backdrop 200ms ease-in forwards
 
-      > div > standard--card::ng-deep
+      > div > standard--card::ng-deep > div
         animation: open--card 200ms ease-in forwards
 
       &.closing
@@ -98,7 +98,7 @@
         &::backdrop
           animation: close--backdrop 200ms ease-in forwards
 
-        > div > standard--card::ng-deep
+        > div > standard--card::ng-deep > div
           animation: close--card 200ms ease-in forwards
 
     @keyframes close--dialog

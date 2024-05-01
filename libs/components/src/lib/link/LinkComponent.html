@@ -1,11 +1,18 @@
+<ng-template #templateRef>@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</ng-template>
 @if (url) {@if (url.includes("://")) {<a
   [attr.href]="url"
   [attr.tabindex]="tabindex ?? 1"
-  target="_blank">@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</a>} @else {<a
+  target="_blank">
+  <ng-container *ngTemplateOutlet="templateRef"/>
+</a>} @else {<a
   [attr.tabindex]="routerLinkActive.isActive ? -1 : tabindex ?? 1"
   #routerLinkActive="routerLinkActive"
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLink]="url"
-  routerLinkActive="no-op">@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</a>}} @else {<button
+  routerLinkActive="no-op">
+  <ng-container *ngTemplateOutlet="templateRef"/>
+</a>}} @else {<button
   [attr.tabindex]="tabindex ?? 1"
-  [class.no-op]="disabled">@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</button>}
+  [class.no-op]="disabled">
+  <ng-container *ngTemplateOutlet="templateRef"/>
+</button>}

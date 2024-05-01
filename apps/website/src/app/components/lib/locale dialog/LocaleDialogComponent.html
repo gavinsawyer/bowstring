@@ -1,0 +1,19 @@
+<standard--dialog #dialogComponent="">
+  <standard--heading-group>
+    <standard--header>
+      <h3 i18n="@@LocaleDialog--Title">Choose your locale</h3>
+    </standard--header>
+  </standard--heading-group>
+  <standard--flexbox
+    direction="row"
+    wrap="wrap">
+    @for (locale of localeIds; track locale) {<standard--button
+      (click)="locale === localeId || changeLocale(locale);"
+      color="primary"
+      [disabled]="locale === localeId"
+      form="raised"
+      grow="1"
+      symbol="Globe"
+      [text]="localeDisplayNames.of(locale) || locale" />}
+  </standard--flexbox>
+</standard--dialog>

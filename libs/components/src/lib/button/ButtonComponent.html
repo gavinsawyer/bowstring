@@ -1,34 +1,59 @@
-@if (url; as url) {@if (url.includes("://")) {<a
+<ng-template #templateRef>
+  @if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />}
+  @if (form !== 'symbol' && text) {{{ text }}}
+</ng-template>
+@if (url; as url) {@if (url.includes("://")) {<!--suppress CssUnknownProperty --><a
   [attr.href]="url"
   [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
   [class.flat]="form === 'flat'"
   [class.no-op]="disabled"
   [class.primary]="color === 'primary'"
   [class.raised]="form === 'raised'"
-  [class.symbol]="form === 'symbol'">
-  @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" /></span>}
-  @if (text) {<span>{{ text }}</span>}
-</a>} @else {<a
+  [class.symbol]="form === 'symbol'"
+  [class.transitionTranslate]="transitionTranslate$()"
+  (mouseenter)="mouseenter();"
+  (mouseleave)="mouseleave();"
+  (mousemove)="mousemove($event);"
+  [style.--translation-x]="translation$().x"
+  [style.--translation-y]="translation$().y"
+  [style.flex-grow]="grow"
+  [style.flex-shrink]="shrink">
+  <ng-container *ngTemplateOutlet="templateRef"></ng-container>
+</a>} @else {<!--suppress CssUnknownProperty --><a
   [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex ?? 1"
   [class.flat]="form === 'flat'"
   [class.no-op]="disabled"
   [class.primary]="color === 'primary'"
   [class.raised]="form === 'raised'"
   [class.symbol]="form === 'symbol'"
+  [class.transitionTranslate]="transitionTranslate$()"
+  (mouseenter)="mouseenter();"
+  (mouseleave)="mouseleave();"
+  (mousemove)="mousemove($event);"
   [routerLink]="url"
   #routerLinkActive="routerLinkActive"
   routerLinkActive="no-op"
-  [routerLinkActiveOptions]="{ exact: true }">
-  @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" /></span>}
-  @if (text) {<span>{{ text }}</span>}
-</a>}} @else {<button
+  [routerLinkActiveOptions]="{ exact: true }"
+  [style.--translation-x]="translation$().x"
+  [style.--translation-y]="translation$().y"
+  [style.flex-grow]="grow"
+  [style.flex-shrink]="shrink">
+  <ng-container *ngTemplateOutlet="templateRef"></ng-container>
+</a>}} @else {<!--suppress CssUnknownProperty --><button
   [attr.disabled]="disabled || undefined"
   [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
   [attr.type]="type || 'button'"
   [class.flat]="form === 'flat'"
   [class.primary]="color === 'primary'"
   [class.raised]="form === 'raised'"
-  [class.symbol]="form === 'symbol'">
-  @if (symbolComponent$(); as symbolComponent) {<span><ng-container *ngComponentOutlet="symbolComponent" /></span>}
-  @if (text) {<span>{{ text }}</span>}
+  [class.symbol]="form === 'symbol'"
+  [class.transitionTranslate]="transitionTranslate$()"
+  (mouseenter)="mouseenter();"
+  (mouseleave)="mouseleave();"
+  (mousemove)="mousemove($event);"
+  [style.--translation-x]="translation$().x"
+  [style.--translation-y]="translation$().y"
+  [style.flex-grow]="grow"
+  [style.flex-shrink]="shrink">
+  <ng-container *ngTemplateOutlet="templateRef"></ng-container>
 </button>}

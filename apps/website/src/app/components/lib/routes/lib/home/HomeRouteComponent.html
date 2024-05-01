@@ -1,38 +1,29 @@
-<article>
-  <standard--card>
-    <div>
-      <standard--button
-        form="raised"
-        symbol="AppleLogo"
-        text="Apple Music" />
-      <standard--button
-        form="raised"
-        symbol="SpotifyLogo"
-        text="Spotify" />
-    </div>
-    <hgroup>
-      <h1>
-        Aperiam consequatur cupiditate fuga iure omnis tenetur vel?
-      </h1>
-      <p>
-        <span class="caption">
-          <standard--capsule
-            i18n-text=""
-            text="technology" />
-          {{ now | date:"fullDate" }}
-        </span>
-        <br />
-        <span class="content">
-          Architecto ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aliquid atque autem beatae, blanditiis cupiditate dolor dolore dolores enim illo laudantium minus natus omnis perspiciatis repudiandae, soluta sunt! Amet consequuntur cupiditate, earum expedita in incidunt nostrum pariatur sit? Ab aliquam commodi consectetur, dolorum eius enim exercitationem expedita facere inventore ipsam itaque labore maiores mollitia nemo neque odit officia optio, placeat possimus quae quo quos reiciendis rem tempora totam vitae voluptate? Animi, atque aut autem, dignissimos dolore dolores dolorum earum excepturi facilis hic nesciunt pariatur praesentium quia repellendus ullam veritatis, vero vitae.
-        </span>
-      </p>
-    </hgroup>
-    <img
+<standard--article>
+  <standard--card
+    alignItems="stretch"
+    direction="column">
+    <standard--image
       alt="Southend"
-      height="auto"
-      [ngSrc]="'/' + localeId + '/assets/southend.webp'"
-      priority=""
-      style="aspect-ratio: 1536/2048;"
+      height="2048"
+      [src]="'/' + localeId + '/assets/southend.webp'"
       width="1536" />
+    <standard--heading-group>
+      <standard--header>
+        <h4>
+          <standard--flexbox
+            direction="row"
+            wrap="wrap">
+            <standard--capsule
+              i18n-text=""
+              text="technology" />
+            <span>{{ now | date:"fullDate" }}</span>
+          </standard--flexbox>
+        </h4>
+        <h3>Aperiam consequatur cupiditate fuga iure omnis tenetur vel?</h3>
+      </standard--header>
+      <p>
+        <span style="font-variant: small-caps;">Architecto ipsum dolor</span> sit amet, consectetur adipisicing elit. A accusamus aliquid atque autem beatae, blanditiis cupiditate dolor dolore dolores enim illo laudantium minus natus omnis perspiciatis repudiandae, soluta sunt! Amet consequuntur cupiditate, earum expedita in incidunt nostrum pariatur sit? Ab aliquam commodi consectetur, dolorum eius enim exercitationem expedita facere inventore ipsam itaque labore maiores mollitia nemo neque odit officia optio, placeat possimus quae quo quos reiciendis rem tempora totam vitae voluptate? Animi, atque aut autem, dignissimos dolore dolores dolorum earum excepturi facilis hic nesciunt pariatur praesentium quia repellendus ullam veritatis, vero vitae.
+      </p>
+    </standard--heading-group>
   </standard--card>
-</article>
+</standard--article>

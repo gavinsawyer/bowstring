@@ -1,0 +1,22 @@
+\:host
+  display: contents
+
+  > img
+    width: 100%
+
+\:host-context(standard--card)
+  > img
+    margin: 0 calc(-1rem * pow(var(--phi), 0))
+    width: calc(100% + 2rem * pow(var(--phi), 0))
+
+  &:first-child
+    > img
+      border-top-left-radius: calc(1rem * pow(var(--phi), 0))
+      border-top-right-radius: calc(1rem * pow(var(--phi), 0))
+      margin-top: calc(-1rem * pow(var(--phi), -1))
+
+  &:last-child
+    > img
+      border-bottom-left-radius: calc(1rem * pow(var(--phi), 0))
+      border-bottom-right-radius: calc(1rem * pow(var(--phi), 0))
+      margin-bottom: calc(-1rem * pow(var(--phi), -2))

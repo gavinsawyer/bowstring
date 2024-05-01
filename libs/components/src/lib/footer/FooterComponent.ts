@@ -2,10 +2,10 @@ import { DOCUMENT, isPlatformBrowser }                                          
 import { AfterViewInit, Component, ElementRef, inject, NgZone, PLATFORM_ID, Signal, signal, ViewChild, WritableSignal }                                   from "@angular/core";
 import { toObservable, toSignal }                                                                                                                         from "@angular/core/rxjs-interop";
 import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, fromEvent, map, merge, Observable, Observer, startWith, switchMap, TeardownLogic, timer } from "rxjs";
+import { FlexboxComponent }                                                                                                                               from "../flexbox/FlexboxComponent";
 
 
 @Component({
-  exportAs:    "standardFooter",
   selector:    "standard--footer",
   standalone:  true,
   styleUrls:   [
@@ -13,7 +13,7 @@ import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, fromEvent, map, 
   ],
   templateUrl: "FooterComponent.html",
 })
-export class FooterComponent implements AfterViewInit {
+export class FooterComponent extends FlexboxComponent implements AfterViewInit {
 
   @ViewChild("htmlDivElement", {
     read:   ElementRef<HTMLDivElement>,

@@ -2,7 +2,9 @@
   [class.closing]="closing$()"
   #htmlDialogElement="">
   <div>
-    <standard--card (click)="$event.stopPropagation();">
+    <standard--card
+      (click)="$event.stopPropagation();"
+      direction="column">
       <ng-content />
     </standard--card>
   </div>

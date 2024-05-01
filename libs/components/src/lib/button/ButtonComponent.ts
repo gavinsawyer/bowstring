@@ -1,14 +1,15 @@
-import { NgComponentOutlet }                                                                                                         from "@angular/common";
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, OnChanges, OnInit, signal, SimpleChanges, WritableSignal } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                              from "@angular/router";
-import * as symbolComponents                                                                                                         from "../symbols";
+import { NgComponentOutlet, NgTemplateOutlet }                                                         from "@angular/common";
+import { Component, Input, numberAttribute, OnChanges, OnInit, signal, SimpleChanges, WritableSignal } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                from "@angular/router";
+import * as symbolComponents                                                                           from "../symbols";
 
 
 @Component({
   imports: [
+    NgComponentOutlet,
+    NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
-    NgComponentOutlet,
   ],
   selector:    "standard--button",
   standalone:  true,
@@ -19,15 +20,30 @@ import * as symbolComponents                                                    
 })
 export class ButtonComponent implements OnInit, OnChanges {
 
-  @HostBinding("class.transitionTranslate") protected get classTransitionTranslate(): boolean { return this.transitionTranslate$(); }
-  @HostBinding("style.--translation-x")     protected get styleXTranslation():        number  { return this.translation$().x; }
-  @HostBinding("style.--translation-y")     protected get styleYTranslation():        number  { return this.translation$().y; }
+  @Input() public color?:    "primary" | "none";
+  @Input() public disabled?: boolean;
+  @Input() public form?:     "flat" | "raised" | "symbol";
+  @Input() public symbol?:   keyof typeof symbolComponents extends `${infer name}SymbolComponent` ? name : never;
+  @Input() public tabindex?: number;
+  @Input() public text?:     string;
+  @Input() public type?:     "button" | "reset" | "submit";
+  @Input() public url?:      string;
 
-  @HostListener("mouseenter") protected readonly mouseenter: () => void = (): void => setTimeout(
+  @Input({
+    transform: numberAttribute,
+  })
+  public grow?: number;
+
+  @Input({
+    transform: numberAttribute,
+  })
+  public shrink?: number;
+
+  protected readonly mouseenter:           () => void                                                                         = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     200,
   ) && void (0);
-  @HostListener("mouseleave") protected readonly mouseleave: () => void = (): void => {
+  protected readonly mouseleave:           () => void                                                                         = (): void => {
     this
       .transitionTranslate$
       .set(true);
@@ -41,30 +57,18 @@ export class ButtonComponent implements OnInit, OnChanges {
         },
       );
   };
+  protected readonly mousemove:            (mouseEvent: MouseEvent) => void                                                   = (mouseEvent: MouseEvent): void => {
+    console.log(mouseEvent.target);
 
-  @HostListener("mousemove", [
-    "$event",
-  ])
-  protected readonly mousemove: (mouseEvent: MouseEvent) => void = (mouseEvent: MouseEvent): void => this.elementRef.nativeElement && ((domRect: DOMRect): void => this.translation$.set(
-    {
-      x: ((2 * ((mouseEvent.clientX - domRect.left) / domRect.width)) - 1) / 8,
-      y: ((2 * ((mouseEvent.clientY - domRect.top) / domRect.height)) - 1) / 8,
-    },
-  ))(
-    this.elementRef.nativeElement.getBoundingClientRect(),
-  );
-
-  @Input() public color?:    "primary" | "none";
-  @Input() public disabled?: boolean;
-  @Input() public form?:     "flat" | "raised" | "symbol";
-  @Input() public symbol?:   keyof typeof symbolComponents extends `${infer name}SymbolComponent` ? name : never;
-  @Input() public tabindex?: number;
-  @Input() public text?:     string;
-  @Input() public type?:     "button" | "reset" | "submit";
-  @Input() public url?:      string;
-
-  private readonly elementRef: ElementRef = inject<ElementRef>(ElementRef);
-
+    mouseEvent.target instanceof HTMLElement ? ((domRect: DOMRect): void => this.translation$.set(
+      {
+        x: ((2 * ((mouseEvent.clientX - domRect.left) / domRect.width)) - 1) / 8,
+        y: ((2 * ((mouseEvent.clientY - domRect.top) / domRect.height)) - 1) / 8,
+      },
+    ))(
+      mouseEvent.target.getBoundingClientRect(),
+    ) : void (0);
+  };
   protected readonly symbolComponent$:     WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
     this.symbol && symbolComponents[`${this.symbol}SymbolComponent`]
   );

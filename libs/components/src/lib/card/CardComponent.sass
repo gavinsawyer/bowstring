@@ -1,53 +1,14 @@
 \:host
-  background: var(--card--canvas--background)
-  border-radius: var(--border-radius)
-  box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
-  color: var(--card--canvas--foreground)
-  display: flex
-  flex-direction: column-reverse
-  gap: 0.75rem
-  max-width: 30rem
-  padding: 0.875rem 1rem 0.75rem
-  user-select: none
+  display: contents
 
-  &::ng-deep
-    > div
-      display: flex
-      flex-direction: row
-      gap: 0.875rem
-
-    > hgroup
-      > h1,
-      > h2,
-      > h3,
-      > h4
-        cursor: default
-
-      > p
-        user-select: text
-
-      &:has(+ img)
-        position: relative
-
-        > h1,
-        > h2,
-        > h3,
-        > h4
-          background: hsla(0, 0%, 0%, 0.25)
-          backdrop-filter: blur(0.25rem) saturate(1.125)
-          color: whitesmoke
-          margin: 0 calc(-1rem - 0.25px) !important
-          mask-image: linear-gradient(to bottom, transparent, black 4rem)
-          padding: 4rem 1rem 0.75rem
-          position: absolute
-          translate: 0 calc(-100% + 0.25px)
-          width: calc(100% + 0.25px)
-
-    > img
-      border-top-left-radius: var(--border-radius)
-      border-top-right-radius: var(--border-radius)
-      margin: -0.875rem -1rem -0.75rem
-      max-width: calc(100% + 2rem)
-
-      &:first-child
-        border-radius: var(--border-radius)
+  > div
+    align-content: flex-start
+    background: var(--card--canvas--background)
+    border-radius: calc(1rem * pow(var(--phi), 0))
+    box-shadow: black 0 var(--depth-offset) var(--depth-blur) var(--depth-spread)
+    color: var(--card--canvas--foreground)
+    display: flex
+    gap: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
+    justify-content: flex-start
+    padding: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
+    user-select: none

@@ -2,9 +2,7 @@
 <div
   [class.hiding]="(raisedOrLowering$() && !raised$()) || (stuckOrUnsticking$() && !stuck$())"
   [class.shown]="raisedOrLowering$() && stuckOrUnsticking$()"
-  #htmlDivElement
-  [style.--footer-height]="footerHeight$() + 'px'"
-  [style.--footer-offset-bottom]="footerOffsetBottom$() + 'px'">
+  #htmlDivElement>
   <div></div>
 </div>
 <!--suppress CssUnknownProperty -->
@@ -14,7 +12,14 @@
   [class.stuck]="stuckOrUnsticking$()"
   [class.unsticking]="stuckOrUnsticking$() && !stuck$()"
   #htmlFooterElement
-  [style.--footer-offset-bottom]="footerOffsetBottom$() + 'px'"
-  [style.--unsticking-translation]="unstickingTranslation$() + 'px'">
+  [style.--unsticking-translation]="unstickingTranslation$() + 'px'"
+  [style.align-content]="alignContent"
+  [style.align-items]="alignItems"
+  [style.justify-content]="justifyContent"
+  [style.flex-basis]="basis"
+  [style.flex-direction]="direction + (reverse ? ' reverse' : '')"
+  [style.flex-grow]="grow"
+  [style.flex-shrink]="shrink"
+  [style.flex-wrap]="wrap">
   <ng-content />
 </footer>

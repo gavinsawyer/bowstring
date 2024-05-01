@@ -1,0 +1,11 @@
+\:host
+  display: contents
+
+  &.inline:not(:first-child)
+    > span
+      display: inline-flex
+      flex-direction: row
+      gap: calc(1rem * pow(var(--phi), -3))
+
+      &::before
+        content: "•"

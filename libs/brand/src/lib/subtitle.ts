@@ -1,3 +1,1 @@
-/// <reference types="@angular/localize" />
-
-export const subtitle: string = $localize`:@@Brand--Subtitle:Website`;
+export const subtitle: string = "Boston U.S.A" as const;

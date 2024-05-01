@@ -1,23 +1,27 @@
-import { DatePipe, NgOptimizedImage }                                       from "@angular/common";
-import { Component, inject, LOCALE_ID }                                     from "@angular/core";
-import { ButtonComponent, CapsuleComponent, CardComponent, RouteComponent } from "@standard/components";
-import { i18n }                                                             from "../../../../../../../project.json";
+import { DatePipe }                                                                                                                                                     from "@angular/common";
+import { Component, inject, LOCALE_ID }                                                                                                                                 from "@angular/core";
+import { ArticleComponent, ButtonComponent, CapsuleComponent, CardComponent, FlexboxComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent } from "@standard/components";
+import { LocaleId }                                                                                                                                                     from "../../../../../types";
 
 
 @Component({
   imports: [
+    ArticleComponent,
     ButtonComponent,
     CapsuleComponent,
     CardComponent,
     DatePipe,
-    NgOptimizedImage,
+    FlexboxComponent,
+    HeaderComponent,
+    HeadingGroupComponent,
+    ImageComponent,
   ],
   standalone:  true,
   templateUrl: "HomeRouteComponent.html",
 })
 export class HomeRouteComponent extends RouteComponent {
 
-  protected readonly localeId: keyof typeof i18n.locales | "en-US" = inject<keyof typeof i18n.locales | "en-US">(LOCALE_ID);
-  protected readonly now:      Date                                = new Date();
+  protected readonly localeId: LocaleId = inject<LocaleId>(LOCALE_ID);
+  protected readonly now:      Date     = new Date();
 
 }

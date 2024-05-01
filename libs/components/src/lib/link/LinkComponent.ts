@@ -1,4 +1,4 @@
-import { NgComponentOutlet }                                from "@angular/common";
+import { NgComponentOutlet, NgTemplateOutlet }              from "@angular/common";
 import { Component, Input, OnInit, signal, WritableSignal } from "@angular/core";
 import { RouterLink, RouterLinkActive }                     from "@angular/router";
 import * as symbolComponents                                from "../symbols";
@@ -7,6 +7,7 @@ import * as symbolComponents                                from "../symbols";
 @Component({
   imports: [
     NgComponentOutlet,
+    NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
   ],
@@ -20,7 +21,7 @@ import * as symbolComponents                                from "../symbols";
 export class LinkComponent implements OnInit {
 
   @Input() public disabled?: boolean;
-  @Input() public symbol?:   (keyof typeof symbolComponents) extends `${infer name}SymbolComponent` ? name : never;
+  @Input() public symbol?:   (keyof typeof symbolComponents) extends `${infer name}SymbolComponent` ? name extends `_${infer unprefixedName}` ? unprefixedName : name : never;
   @Input() public tabindex?: number;
   @Input() public url?:      string;
 
@@ -30,14 +31,14 @@ export class LinkComponent implements OnInit {
   public text!: string;
 
   protected readonly symbolComponent$: WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
-    this.symbol && symbolComponents[`${this.symbol}SymbolComponent`],
+    this.symbol && symbolComponents[(Object.prototype.hasOwnProperty.call(symbolComponents, `${this.symbol}SymbolComponent`) ? `${this.symbol}SymbolComponent` : `_${this.symbol}SymbolComponent`) as keyof typeof symbolComponents],
   );
 
   public ngOnInit(): void {
     this
       .symbolComponent$
       .set(
-        this.symbol && symbolComponents[`${this.symbol}SymbolComponent`],
+        this.symbol && symbolComponents[(Object.prototype.hasOwnProperty.call(symbolComponents, `${this.symbol}SymbolComponent`) ? `${this.symbol}SymbolComponent` : `_${this.symbol}SymbolComponent`) as keyof typeof symbolComponents],
       );
   }
 

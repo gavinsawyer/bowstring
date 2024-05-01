@@ -1,0 +1,12 @@
+import { Component } from "@angular/core";
+
+
+@Component({
+  selector:    "standard--0-square-symbol",
+  standalone:  true,
+  styleUrls:   [
+    "../SymbolComponent.sass",
+  ],
+  templateUrl: "0SquareSymbolComponent.html",
+})
+export class _0SquareSymbolComponent { }

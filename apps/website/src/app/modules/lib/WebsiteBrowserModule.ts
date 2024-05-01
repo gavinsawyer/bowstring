@@ -1,29 +1,28 @@
-import { NgOptimizedImage }                                                                                                                     from "@angular/common";
-import { Injector, NgModule }                                                                                                                   from "@angular/core";
-import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                from "@angular/fire/analytics";
-import { FirebaseApp, initializeApp, provideFirebaseApp }                                                                                       from "@angular/fire/app";
-import { AppCheck, initializeAppCheck, provideAppCheck }                                                                                        from "@angular/fire/app-check";
-import { Auth, getAuth, provideAuth }                                                                                                           from "@angular/fire/auth";
-import { AngularFirestoreModule }                                                                                                               from "@angular/fire/compat/firestore";
-import { Firestore, getFirestore, provideFirestore }                                                                                            from "@angular/fire/firestore";
-import { Functions, getFunctions, provideFunctions }                                                                                            from "@angular/fire/functions";
-import { ReactiveFormsModule }                                                                                                                  from "@angular/forms";
-import { BrowserModule, provideClientHydration }                                                                                                from "@angular/platform-browser";
-import { BrowserAnimationsModule }                                                                                                              from "@angular/platform-browser/animations";
-import { RouterModule }                                                                                                                         from "@angular/router";
-import * as brand                                                                                                                               from "@standard/brand";
-import { AsideComponent, ButtonComponent, CardComponent, DialogComponent, FooterComponent, FormFieldComponent, HeaderComponent, LinkComponent } from "@standard/components";
-import { routes as standardRoutes }                                                                                                             from "@standard/components/routes";
-import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                        from "@standard/injection-tokens";
-import { AppCheckOptionsService }                                                                                                               from "@standard/services";
-import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                          from "ngx-mask";
-import project                                                                                                                                  from "../../../../project.json";
-import { gitInfo }                                                                                                                              from "../../../.git-info";
-import { packageVersion }                                                                                                                       from "../../../.package-version";
-import { environment }                                                                                                                          from "../../../environment";
-import { RootComponent }                                                                                                                        from "../../components";
-import { routes as websiteRoutes }                                                                                                              from "../../components/lib/routes";
-import { LOCALES }                                                                                                                              from "../../injection tokens";
+import { Injector, NgModule }                                                                                                          from "@angular/core";
+import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                       from "@angular/fire/analytics";
+import { FirebaseApp, initializeApp, provideFirebaseApp }                                                                              from "@angular/fire/app";
+import { AppCheck, initializeAppCheck, provideAppCheck }                                                                               from "@angular/fire/app-check";
+import { Auth, getAuth, provideAuth }                                                                                                  from "@angular/fire/auth";
+import { AngularFirestoreModule }                                                                                                      from "@angular/fire/compat/firestore";
+import { Firestore, getFirestore, provideFirestore }                                                                                   from "@angular/fire/firestore";
+import { Functions, getFunctions, provideFunctions }                                                                                   from "@angular/fire/functions";
+import { ReactiveFormsModule }                                                                                                         from "@angular/forms";
+import { BrowserModule, provideClientHydration }                                                                                       from "@angular/platform-browser";
+import { BrowserAnimationsModule }                                                                                                     from "@angular/platform-browser/animations";
+import { RouterModule }                                                                                                                from "@angular/router";
+import * as brand                   from "@standard/brand";
+import { FlexboxComponent }         from "@standard/components";
+import { routes as standardRoutes } from "@standard/components/routes";
+import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                               from "@standard/injection-tokens";
+import { AppCheckOptionsService }                                                                                                      from "@standard/services";
+import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                 from "ngx-mask";
+import project                                                                                                                         from "../../../../project.json";
+import { gitInfo }                                                                                                                     from "../../../.git-info";
+import { packageVersion }                                                                                                              from "../../../.package-version";
+import { environment }                                                                                                                 from "../../../environment";
+import { AsideComponent, AudioFooterComponent, FooterComponent, HeaderComponent, LocaleDialogComponent, MainComponent, RootComponent } from "../../components";
+import { routes as websiteRoutes }                                                                                                     from "../../components/lib/routes";
+import { LOCALE_IDS }                                                                                                                  from "../../injection tokens";
 
 
 @NgModule({
@@ -36,16 +35,14 @@ import { LOCALES }                                                              
   imports: [
     AngularFirestoreModule.enablePersistence(),
     AsideComponent,
+    AudioFooterComponent,
     BrowserAnimationsModule,
     BrowserModule,
-    ButtonComponent,
-    CardComponent,
-    DialogComponent,
+    FlexboxComponent,
     FooterComponent,
-    FormFieldComponent,
     HeaderComponent,
-    LinkComponent,
-    NgOptimizedImage,
+    LocaleDialogComponent,
+    MainComponent,
     NgxMaskDirective,
     provideAnalytics(
       (): Analytics => getAnalytics(),
@@ -94,13 +91,13 @@ import { LOCALES }                                                              
       useValue: gitInfo,
     },
     {
-      provide:  LOCALES,
+      provide:  LOCALE_IDS,
       useValue: ([
         "en-US",
         ...Object.keys(
           project.i18n.locales,
         ),
-      ] as (keyof typeof project.i18n.locales | "en-US")[]),
+      ]),
     },
     {
       provide:  PACKAGE_VERSION,
@@ -113,5 +110,4 @@ import { LOCALES }                                                              
     UserTrackingService,
   ],
 })
-export class WebsiteBrowserModule {
-}
+export class WebsiteBrowserModule { }

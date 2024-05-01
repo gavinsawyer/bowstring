@@ -1,41 +1,51 @@
-<section>
-  <standard--card>
-    <hgroup>
-      <h1 i18n="@@PrivacyRoute--CardTitle">Standard Privacy Policy</h1>
-      <p>
-        <span class="caption">
+<standard--article>
+  <standard--heading-group>
+    <standard--header>
+      <h4>
+        <standard--flexbox
+          direction="row"
+          wrap="wrap">
           <standard--capsule
             i18n-text=""
             text="legal" />
-          Lorem ipsum dolor sit.
-        </span>
-        <br />
-        <span
-          class="content"
-          i18n="@@PrivacyRoute--CardContent_1">This site stores information in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.</span>
-      </p>
-      <h3>
-        Google
-      </h3>
-      <h4>
-        <standard--link
-          i18n-text=""
-          text="privacy policy"
-          url="https://www.google.com/intl/en/policies/privacy/" /> • <standard--link
-          i18n-text=""
-          text="terms"
-          url="https://www.google.com/intl/en/policies/terms/" />
+          <span>{{ now | date:"fullDate" }}</span>
+        </standard--flexbox>
       </h4>
-      <p>
-        <span i18n="@@PrivacyRoute--CardContent_2">This site is protected by <standard--link
-          text="reCAPTCHA"
-          url="https://www.google.com/recaptcha/" /> and uses <standard--link
-          text="Google Analytics"
-          url="https://www.google.com/analytics/" />. If you are signed into Google with this browser and have turned on <standard--link
-          i18n-text
-          text="personalized ads"
-          url="https://myadcenter.google.com/" />, your engagement with this site may be tracked across devices.</span>
+      <h3 i18n="@@PrivacyRoute--CardTitle">Standard Privacy Policy</h3>
+    </standard--header>
+    <p i18n="@@PrivacyRoute--CardContent_1">
+      <span style="font-variant: small-caps;">This site stores information</span> in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.
+    </p>
+    <standard--section>
+      <standard--header>
+        <h4>Google</h4>
+        <h5>
+          <standard--list type="inline">
+            <standard--list-item type="inline">
+              <standard--link
+                i18n-text=""
+                text="privacy policy"
+                url="https://www.google.com/intl/en/policies/privacy/" />
+            </standard--list-item>
+            <standard--list-item type="inline">
+              <standard--link
+                i18n-text=""
+                text="terms"
+                url="https://www.google.com/intl/en/policies/terms/" />
+            </standard--list-item>
+          </standard--list>
+        </h5>
+      </standard--header>
+      <p i18n="@@PrivacyRoute--CardContent_2">
+        This site is protected by <standard--link
+        text="reCAPTCHA"
+        url="https://www.google.com/recaptcha/" /> and uses <standard--link
+        text="Google Analytics"
+        url="https://www.google.com/analytics/" />. If you are signed into Google with this browser and have turned on <standard--link
+        i18n-text
+        text="personalized ads"
+        url="https://myadcenter.google.com/" />, your engagement with this site may be tracked across devices.
       </p>
-    </hgroup>
-  </standard--card>
-</section>
+    </standard--section>
+  </standard--heading-group>
+</standard--article>

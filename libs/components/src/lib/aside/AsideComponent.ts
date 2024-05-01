@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component }        from "@angular/core";
+import { FlexboxComponent } from "../flexbox/FlexboxComponent";
 
 
 @Component({
@@ -9,4 +10,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AsideComponent.html",
 })
-export class AsideComponent { }
+export class AsideComponent extends FlexboxComponent { }

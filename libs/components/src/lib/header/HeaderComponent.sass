@@ -1,64 +1,61 @@
 \:host
-  margin-top: 0.75rem
-  position: sticky
-  top: 0.75rem
-  z-index: 3
+  display: contents
 
-  > header
-    align-items: center
-    display: flex
-    flex-direction: row
-    justify-content: space-between
+  > header::ng-deep
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5
+      cursor: default
+      margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -1))
 
-    @mixin lower-header
-      backdrop-filter: blur(0) saturate(1)
-      background: unset
-      border-radius: var(--border-radius)
-      box-shadow: none
-      margin: 0.5rem 0
-      padding: 0.375rem 0
+    > h1
+      font-size: calc(1em * pow(var(--phi), 4))
 
-    @mixin raise-header
-      background: var(--glass--background)
-      backdrop-filter: blur(2rem) saturate(2)
-      border-radius: calc(var(--border-radius) / 2)
-      box-shadow: inset var(--glass--border) 0 0 0.125rem, black 0 calc(3 * var(--depth-offset)) calc(3 * var(--depth-blur)) calc(3 * var(--depth-spread))
-      margin: 0 -0.5rem
-      padding: 0.875rem 0.75rem
+      &:has(+ h2)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
 
-    @include lower-header
+    > h2
+      font-size: calc(1em * pow(var(--phi), 3))
 
-    > div
-      align-items: center
-      display: flex
-      flex-direction: column
+      &:has(+ h3)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
 
-      > span
-        cursor: default
-        font-weight: 700
-        opacity: 80%
-        user-select: none
+      &:has(+ h1)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
 
-    &.raised
-      animation: raise-header 200ms ease-out forwards
+    > h3
+      font-size: calc(1em * pow(var(--phi), 2))
 
-      &.lowering
-        animation: lower-header 200ms ease-in forwards
+      &:has(+ h4)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
 
-    @keyframes lower-header
-      0%
-        @include raise-header
+      &:has(+ h2)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
 
-      100%
-        @include lower-header
+    > h4
+      font-size: calc(1em * pow(var(--phi), 1))
 
-    @keyframes raise-header
-      0%
-        @include lower-header
+      &:has(+ h5)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
 
-      100%
-        @include raise-header
+      &:has(+ h3)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
 
-  @media (min-width: 26rem)
-    margin-top: 1.5rem
-    top: 1.5rem
+    > h5
+      font-size: calc(1em * pow(var(--phi), 0))
+
+      &:has(+ h4)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
+
+\:host-context(standard--card) > header
+  font-size: calc(1rem * pow(var(--phi), 0))
+
+\:host-context(standard-website--header) > header
+  font-size: calc(1rem * pow(var(--phi), -2))
+
+  &::ng-deep
+    > h1,
+    > h2
+      margin: 0

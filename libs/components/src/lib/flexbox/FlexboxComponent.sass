@@ -1,0 +1,18 @@
+\:host
+  display: contents
+
+  > div
+    align-content: flex-start
+    align-items: flex-start
+    display: flex
+    gap: calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 2))
+    justify-content: flex-start
+
+\:host-context(standard--dialog) > div
+  gap: calc(1rem * pow(var(--phi), 0)) calc(1rem * pow(var(--phi), 1))
+
+\:host-context(standard--card) > div
+  gap: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
+
+\:host-context(standard--header) > div
+  gap: calc(1em * pow(var(--phi), -3)) calc(1em * pow(var(--phi), -2))

@@ -1,0 +1,22 @@
+<standard--footer
+  alignItems="center"
+  direction="row"
+  justifyContent="center"
+  wrap="wrap">
+  <standard--link
+    (click)="localeDialogComponent?.dialogComponent?.open$?.set(true);"
+    symbol="Globe"
+    [tabindex]="responsivityService.pastMediumBreakpoint$() ? 0 : 1"
+    [text]="localeDisplayNames.of(localeId) || localeId" />
+  <span>
+    &copy;&nbsp;<standard--link
+      text="Gavin Sawyer"
+      url="https://gavinsawyer.dev/" />
+  </span>
+  <span>
+    v{{ packageVersion + (gitInfo.dirty ? "-next" : "") }}&plus;<standard--link
+      [tabindex]="0"
+      [text]="gitInfo.hash || ''"
+      [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />
+  </span>
+</standard--footer>

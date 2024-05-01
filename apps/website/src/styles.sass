@@ -1,7 +1,6 @@
-@use 'sass:math'
 @import 'normalize.css'
 
-$border-radius: 1rem
+$phi: 1.6180339887
 
 $depth-blur:   0.5rem
 $depth-offset: $depth-blur * 0.5
@@ -10,9 +9,9 @@ $depth-spread: $depth-offset * -1.03125
 $grey-factor:       0.5
 $dark-theme-factor: 0.8
 
-$primary--canvas--background: hsl(40, 16%, 48%)
-$primary--canvas--foreground: hsl(40, 32%, 96%)
-$primary--canvas--shadow:     hsl(40, 8%, 24%)
+$primary--canvas--background: hsl(34, 29%, 54%)
+$primary--canvas--foreground: hsl(34, 58%, 86.5%)
+$primary--canvas--shadow:     hsl(34, 14.5%, 27%)
 $primary--grey--background:   darken(desaturate($primary--canvas--background, $grey-factor * 12.5%), $grey-factor * 6.25%)
 $primary--grey--foreground:   lighten(desaturate($primary--canvas--foreground, $grey-factor * 50%), $grey-factor * 50%)
 
@@ -71,7 +70,7 @@ body
   font-size: 16px
 
 body
-  --border-radius: #{ $border-radius }
+  --phi: #{ $phi }
 
   --depth-blur:   #{ $depth-blur }
   --depth-offset: #{ $depth-offset }
@@ -141,54 +140,7 @@ body
   flex-direction: row
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif
   justify-content: center
-
-  article,
-  section
-    display: flex
-    flex-direction: column
-    gap: 0.75rem 1rem
-
-  form
-    display: flex
-    flex-direction: column
-    gap: 0.75rem 1rem
-
-  hgroup
-    & > h1,
-    & > h2,
-    & > h3,
-    & > h4
-      margin: 0 0 0.625rem
-
-      &:has(+ h2),
-      &:has(+ h3),
-      &:has(+ h4)
-        margin: 0
-
-    & > p
-      font-size: 1.125rem
-      margin: 0.625rem 0
-
-      & > span.caption
-        align-items: first baseline
-        display: inline-flex
-        flex-direction: row
-        flex-wrap: wrap
-        font-size: 1rem
-        font-variant: all-small-caps
-        gap: 0.25rem 0.75rem
-        margin-bottom: 0.625rem
-
-      & > span.content
-        display: inline-block
-
-        &::first-letter
-          float: left
-          font-size: 2.75rem
-          font-weight: 200
-          line-height: 0.9em
-          margin-right: .05em
-          vertical-align: top
-
-      &:last-child
-        margin: 0.625rem 0 0
+  letter-spacing: -0.03444185375em
+  line-height: 1.1458980338
+  min-height: 100dvh
+  touch-action: pan-x pan-y
