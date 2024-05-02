@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirpodsChargingcaseFillSymbolComponent.html",
 })
-export class AirpodsChargingcaseFillSymbolComponent { }
+export class _AirpodsChargingcaseFillSymbolComponent { }

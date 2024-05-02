@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CameraViewfinderSymbolComponent.html",
 })
-export class CameraViewfinderSymbolComponent { }
+export class _CameraViewfinderSymbolComponent { }

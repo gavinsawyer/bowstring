@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "IphoneRadiowavesLeftAndRightCircleSymbolComponent.html",
 })
-export class IphoneRadiowavesLeftAndRightCircleSymbolComponent { }
+export class _IphoneRadiowavesLeftAndRightCircleSymbolComponent { }

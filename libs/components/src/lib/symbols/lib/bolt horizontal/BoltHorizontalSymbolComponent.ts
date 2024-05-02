@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BoltHorizontalSymbolComponent.html",
 })
-export class BoltHorizontalSymbolComponent { }
+export class _BoltHorizontalSymbolComponent { }

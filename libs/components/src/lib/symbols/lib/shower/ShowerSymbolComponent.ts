@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShowerSymbolComponent.html",
 })
-export class ShowerSymbolComponent { }
+export class _ShowerSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DecreaseIndentSymbolComponent.html",
 })
-export class DecreaseIndentSymbolComponent { }
+export class _DecreaseIndentSymbolComponent { }

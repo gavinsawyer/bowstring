@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LevelFillSymbolComponent.html",
 })
-export class LevelFillSymbolComponent { }
+export class _LevelFillSymbolComponent { }

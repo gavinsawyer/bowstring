@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MoonphaseWaxingCrescentInverseSymbolComponent.html",
 })
-export class MoonphaseWaxingCrescentInverseSymbolComponent { }
+export class _MoonphaseWaxingCrescentInverseSymbolComponent { }

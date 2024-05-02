@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SensorTagRadiowavesForwardSymbolComponent.html",
 })
-export class SensorTagRadiowavesForwardSymbolComponent { }
+export class _SensorTagRadiowavesForwardSymbolComponent { }

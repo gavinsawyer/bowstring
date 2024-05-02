@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "UmbrellaSymbolComponent.html",
 })
-export class UmbrellaSymbolComponent { }
+export class _UmbrellaSymbolComponent { }

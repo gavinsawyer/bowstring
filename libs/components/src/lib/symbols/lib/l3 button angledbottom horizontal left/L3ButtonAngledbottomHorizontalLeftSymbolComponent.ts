@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "L3ButtonAngledbottomHorizontalLeftSymbolComponent.html",
 })
-export class L3ButtonAngledbottomHorizontalLeftSymbolComponent { }
+export class _L3ButtonAngledbottomHorizontalLeftSymbolComponent { }

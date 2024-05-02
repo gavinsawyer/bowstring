@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HourglassBottomhalfFilledSymbolComponent.html",
 })
-export class HourglassBottomhalfFilledSymbolComponent { }
+export class _HourglassBottomhalfFilledSymbolComponent { }

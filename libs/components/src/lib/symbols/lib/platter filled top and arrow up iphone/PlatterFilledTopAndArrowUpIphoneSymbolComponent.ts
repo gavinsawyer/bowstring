@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PlatterFilledTopAndArrowUpIphoneSymbolComponent.html",
 })
-export class PlatterFilledTopAndArrowUpIphoneSymbolComponent { }
+export class _PlatterFilledTopAndArrowUpIphoneSymbolComponent { }

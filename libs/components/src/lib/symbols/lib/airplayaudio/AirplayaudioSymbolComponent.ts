@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirplayaudioSymbolComponent.html",
 })
-export class AirplayaudioSymbolComponent { }
+export class _AirplayaudioSymbolComponent { }

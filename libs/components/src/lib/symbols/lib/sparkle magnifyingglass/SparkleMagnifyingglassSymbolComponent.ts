@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SparkleMagnifyingglassSymbolComponent.html",
 })
-export class SparkleMagnifyingglassSymbolComponent { }
+export class _SparkleMagnifyingglassSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextformatSubscriptSymbolComponent.html",
 })
-export class TextformatSubscriptSymbolComponent { }
+export class _TextformatSubscriptSymbolComponent { }

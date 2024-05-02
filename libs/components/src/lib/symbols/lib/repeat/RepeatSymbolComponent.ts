@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RepeatSymbolComponent.html",
 })
-export class RepeatSymbolComponent { }
+export class _RepeatSymbolComponent { }

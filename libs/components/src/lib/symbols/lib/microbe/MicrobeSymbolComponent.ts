@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MicrobeSymbolComponent.html",
 })
-export class MicrobeSymbolComponent { }
+export class _MicrobeSymbolComponent { }

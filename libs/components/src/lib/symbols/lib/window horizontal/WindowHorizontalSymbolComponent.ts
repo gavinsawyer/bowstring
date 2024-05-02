@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WindowHorizontalSymbolComponent.html",
 })
-export class WindowHorizontalSymbolComponent { }
+export class _WindowHorizontalSymbolComponent { }

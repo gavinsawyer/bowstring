@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MinusForwardslashPlusSymbolComponent.html",
 })
-export class MinusForwardslashPlusSymbolComponent { }
+export class _MinusForwardslashPlusSymbolComponent { }

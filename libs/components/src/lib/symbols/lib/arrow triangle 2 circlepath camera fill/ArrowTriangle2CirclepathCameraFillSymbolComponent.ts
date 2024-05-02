@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowTriangle2CirclepathCameraFillSymbolComponent.html",
 })
-export class ArrowTriangle2CirclepathCameraFillSymbolComponent { }
+export class _ArrowTriangle2CirclepathCameraFillSymbolComponent { }

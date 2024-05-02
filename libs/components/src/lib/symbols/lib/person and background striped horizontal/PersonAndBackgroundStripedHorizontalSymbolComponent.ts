@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PersonAndBackgroundStripedHorizontalSymbolComponent.html",
 })
-export class PersonAndBackgroundStripedHorizontalSymbolComponent { }
+export class _PersonAndBackgroundStripedHorizontalSymbolComponent { }

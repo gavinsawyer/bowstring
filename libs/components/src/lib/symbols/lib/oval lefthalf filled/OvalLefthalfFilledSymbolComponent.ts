@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "OvalLefthalfFilledSymbolComponent.html",
 })
-export class OvalLefthalfFilledSymbolComponent { }
+export class _OvalLefthalfFilledSymbolComponent { }

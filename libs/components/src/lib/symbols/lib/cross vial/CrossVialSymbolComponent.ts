@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CrossVialSymbolComponent.html",
 })
-export class CrossVialSymbolComponent { }
+export class _CrossVialSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WaveformCircleSymbolComponent.html",
 })
-export class WaveformCircleSymbolComponent { }
+export class _WaveformCircleSymbolComponent { }

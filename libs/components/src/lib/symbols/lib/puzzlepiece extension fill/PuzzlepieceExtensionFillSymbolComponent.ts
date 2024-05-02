@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PuzzlepieceExtensionFillSymbolComponent.html",
 })
-export class PuzzlepieceExtensionFillSymbolComponent { }
+export class _PuzzlepieceExtensionFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CursorarrowClickBadgeClockSymbolComponent.html",
 })
-export class CursorarrowClickBadgeClockSymbolComponent { }
+export class _CursorarrowClickBadgeClockSymbolComponent { }

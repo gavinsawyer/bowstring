@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextformatSuperscriptSymbolComponent.html",
 })
-export class TextformatSuperscriptSymbolComponent { }
+export class _TextformatSuperscriptSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ScribbleVariableSymbolComponent.html",
 })
-export class ScribbleVariableSymbolComponent { }
+export class _ScribbleVariableSymbolComponent { }

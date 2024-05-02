@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CharacterPhoneticSymbolComponent.html",
 })
-export class CharacterPhoneticSymbolComponent { }
+export class _CharacterPhoneticSymbolComponent { }

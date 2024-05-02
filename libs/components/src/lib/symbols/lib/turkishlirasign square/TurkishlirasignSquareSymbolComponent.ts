@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TurkishlirasignSquareSymbolComponent.html",
 })
-export class TurkishlirasignSquareSymbolComponent { }
+export class _TurkishlirasignSquareSymbolComponent { }

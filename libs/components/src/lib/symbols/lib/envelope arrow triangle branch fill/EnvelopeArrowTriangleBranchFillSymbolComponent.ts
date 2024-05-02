@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EnvelopeArrowTriangleBranchFillSymbolComponent.html",
 })
-export class EnvelopeArrowTriangleBranchFillSymbolComponent { }
+export class _EnvelopeArrowTriangleBranchFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FCursiveSymbolComponent.html",
 })
-export class FCursiveSymbolComponent { }
+export class _FCursiveSymbolComponent { }

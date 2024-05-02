@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ProjectiveSymbolComponent.html",
 })
-export class ProjectiveSymbolComponent { }
+export class _ProjectiveSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "NumberSymbolComponent.html",
 })
-export class NumberSymbolComponent { }
+export class _NumberSymbolComponent { }

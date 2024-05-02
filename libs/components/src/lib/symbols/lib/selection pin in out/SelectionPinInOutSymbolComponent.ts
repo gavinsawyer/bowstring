@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SelectionPinInOutSymbolComponent.html",
 })
-export class SelectionPinInOutSymbolComponent { }
+export class _SelectionPinInOutSymbolComponent { }

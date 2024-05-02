@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SliderHorizontalBelowRectangleSymbolComponent.html",
 })
-export class SliderHorizontalBelowRectangleSymbolComponent { }
+export class _SliderHorizontalBelowRectangleSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RJoystickTiltDownSymbolComponent.html",
 })
-export class RJoystickTiltDownSymbolComponent { }
+export class _RJoystickTiltDownSymbolComponent { }

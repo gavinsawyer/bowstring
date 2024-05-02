@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PhoneDownCircleSymbolComponent.html",
 })
-export class PhoneDownCircleSymbolComponent { }
+export class _PhoneDownCircleSymbolComponent { }

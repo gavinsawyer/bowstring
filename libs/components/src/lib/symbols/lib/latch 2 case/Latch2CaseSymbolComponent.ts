@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Latch2CaseSymbolComponent.html",
 })
-export class Latch2CaseSymbolComponent { }
+export class _Latch2CaseSymbolComponent { }

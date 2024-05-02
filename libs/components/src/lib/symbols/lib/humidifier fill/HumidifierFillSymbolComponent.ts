@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HumidifierFillSymbolComponent.html",
 })
-export class HumidifierFillSymbolComponent { }
+export class _HumidifierFillSymbolComponent { }

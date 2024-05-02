@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Rotate3dFillSymbolComponent.html",
 })
-export class Rotate3dFillSymbolComponent { }
+export class _Rotate3dFillSymbolComponent { }

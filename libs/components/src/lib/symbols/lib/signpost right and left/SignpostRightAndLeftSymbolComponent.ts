@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SignpostRightAndLeftSymbolComponent.html",
 })
-export class SignpostRightAndLeftSymbolComponent { }
+export class _SignpostRightAndLeftSymbolComponent { }

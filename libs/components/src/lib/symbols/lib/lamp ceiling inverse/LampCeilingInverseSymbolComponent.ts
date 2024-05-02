@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LampCeilingInverseSymbolComponent.html",
 })
-export class LampCeilingInverseSymbolComponent { }
+export class _LampCeilingInverseSymbolComponent { }

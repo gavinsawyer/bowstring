@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirtagRadiowavesForwardFillSymbolComponent.html",
 })
-export class AirtagRadiowavesForwardFillSymbolComponent { }
+export class _AirtagRadiowavesForwardFillSymbolComponent { }

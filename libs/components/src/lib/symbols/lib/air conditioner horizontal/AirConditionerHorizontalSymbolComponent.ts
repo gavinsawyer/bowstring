@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirConditionerHorizontalSymbolComponent.html",
 })
-export class AirConditionerHorizontalSymbolComponent { }
+export class _AirConditionerHorizontalSymbolComponent { }

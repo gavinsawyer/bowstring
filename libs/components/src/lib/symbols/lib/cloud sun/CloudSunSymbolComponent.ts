@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CloudSunSymbolComponent.html",
 })
-export class CloudSunSymbolComponent { }
+export class _CloudSunSymbolComponent { }

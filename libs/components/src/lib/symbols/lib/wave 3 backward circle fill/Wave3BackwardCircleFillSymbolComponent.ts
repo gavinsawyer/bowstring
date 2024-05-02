@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Wave3BackwardCircleFillSymbolComponent.html",
 })
-export class Wave3BackwardCircleFillSymbolComponent { }
+export class _Wave3BackwardCircleFillSymbolComponent { }

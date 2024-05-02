@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CalendarDayTimelineLeadingSymbolComponent.html",
 })
-export class CalendarDayTimelineLeadingSymbolComponent { }
+export class _CalendarDayTimelineLeadingSymbolComponent { }

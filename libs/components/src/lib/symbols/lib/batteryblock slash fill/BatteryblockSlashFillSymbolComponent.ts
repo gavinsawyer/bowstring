@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BatteryblockSlashFillSymbolComponent.html",
 })
-export class BatteryblockSlashFillSymbolComponent { }
+export class _BatteryblockSlashFillSymbolComponent { }

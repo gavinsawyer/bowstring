@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "KashidaArabicSymbolComponent.html",
 })
-export class KashidaArabicSymbolComponent { }
+export class _KashidaArabicSymbolComponent { }

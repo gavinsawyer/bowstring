@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ParagraphsignSymbolComponent.html",
 })
-export class ParagraphsignSymbolComponent { }
+export class _ParagraphsignSymbolComponent { }

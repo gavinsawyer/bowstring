@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TuningforkSymbolComponent.html",
 })
-export class TuningforkSymbolComponent { }
+export class _TuningforkSymbolComponent { }

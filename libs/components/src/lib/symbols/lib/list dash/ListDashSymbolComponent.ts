@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ListDashSymbolComponent.html",
 })
-export class ListDashSymbolComponent { }
+export class _ListDashSymbolComponent { }

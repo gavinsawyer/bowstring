@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EyedropperFullSymbolComponent.html",
 })
-export class EyedropperFullSymbolComponent { }
+export class _EyedropperFullSymbolComponent { }

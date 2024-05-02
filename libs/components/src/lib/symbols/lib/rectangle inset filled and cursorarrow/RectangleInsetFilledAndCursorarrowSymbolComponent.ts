@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleInsetFilledAndCursorarrowSymbolComponent.html",
 })
-export class RectangleInsetFilledAndCursorarrowSymbolComponent { }
+export class _RectangleInsetFilledAndCursorarrowSymbolComponent { }

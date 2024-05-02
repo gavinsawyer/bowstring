@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextInsertSymbolComponent.html",
 })
-export class TextInsertSymbolComponent { }
+export class _TextInsertSymbolComponent { }

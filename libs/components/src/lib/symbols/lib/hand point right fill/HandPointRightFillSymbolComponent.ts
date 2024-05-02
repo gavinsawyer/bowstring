@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HandPointRightFillSymbolComponent.html",
 })
-export class HandPointRightFillSymbolComponent { }
+export class _HandPointRightFillSymbolComponent { }

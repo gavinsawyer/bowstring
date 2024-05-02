@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirplayvideoBadgeExclamationmarkSymbolComponent.html",
 })
-export class AirplayvideoBadgeExclamationmarkSymbolComponent { }
+export class _AirplayvideoBadgeExclamationmarkSymbolComponent { }

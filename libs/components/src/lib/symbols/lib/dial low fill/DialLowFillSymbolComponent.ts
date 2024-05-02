@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DialLowFillSymbolComponent.html",
 })
-export class DialLowFillSymbolComponent { }
+export class _DialLowFillSymbolComponent { }

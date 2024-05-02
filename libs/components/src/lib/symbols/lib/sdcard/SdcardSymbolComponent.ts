@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SdcardSymbolComponent.html",
 })
-export class SdcardSymbolComponent { }
+export class _SdcardSymbolComponent { }

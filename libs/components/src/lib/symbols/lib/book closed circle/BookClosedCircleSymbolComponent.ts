@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BookClosedCircleSymbolComponent.html",
 })
-export class BookClosedCircleSymbolComponent { }
+export class _BookClosedCircleSymbolComponent { }

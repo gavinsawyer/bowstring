@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextWordSpacingSymbolComponent.html",
 })
-export class TextWordSpacingSymbolComponent { }
+export class _TextWordSpacingSymbolComponent { }

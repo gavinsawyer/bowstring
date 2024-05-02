@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TaillightFogFillSymbolComponent.html",
 })
-export class TaillightFogFillSymbolComponent { }
+export class _TaillightFogFillSymbolComponent { }

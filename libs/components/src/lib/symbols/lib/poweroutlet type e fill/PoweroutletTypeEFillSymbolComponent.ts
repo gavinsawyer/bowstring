@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PoweroutletTypeEFillSymbolComponent.html",
 })
-export class PoweroutletTypeEFillSymbolComponent { }
+export class _PoweroutletTypeEFillSymbolComponent { }

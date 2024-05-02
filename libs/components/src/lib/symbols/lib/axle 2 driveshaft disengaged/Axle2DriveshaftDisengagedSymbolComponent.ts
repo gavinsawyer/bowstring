@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Axle2DriveshaftDisengagedSymbolComponent.html",
 })
-export class Axle2DriveshaftDisengagedSymbolComponent { }
+export class _Axle2DriveshaftDisengagedSymbolComponent { }

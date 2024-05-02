@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FlashlightOnFillSymbolComponent.html",
 })
-export class FlashlightOnFillSymbolComponent { }
+export class _FlashlightOnFillSymbolComponent { }

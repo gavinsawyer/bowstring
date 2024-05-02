@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChineseyuanrenminbisignCircleFillSymbolComponent.html",
 })
-export class ChineseyuanrenminbisignCircleFillSymbolComponent { }
+export class _ChineseyuanrenminbisignCircleFillSymbolComponent { }

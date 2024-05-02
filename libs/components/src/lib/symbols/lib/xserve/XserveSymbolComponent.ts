@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "XserveSymbolComponent.html",
 })
-export class XserveSymbolComponent { }
+export class _XserveSymbolComponent { }

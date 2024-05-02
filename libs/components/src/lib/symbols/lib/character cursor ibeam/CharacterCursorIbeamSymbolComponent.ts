@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CharacterCursorIbeamSymbolComponent.html",
 })
-export class CharacterCursorIbeamSymbolComponent { }
+export class _CharacterCursorIbeamSymbolComponent { }

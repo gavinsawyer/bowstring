@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FaceidSymbolComponent.html",
 })
-export class FaceidSymbolComponent { }
+export class _FaceidSymbolComponent { }

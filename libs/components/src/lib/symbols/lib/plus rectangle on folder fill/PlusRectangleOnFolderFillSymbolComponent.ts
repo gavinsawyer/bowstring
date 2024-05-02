@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PlusRectangleOnFolderFillSymbolComponent.html",
 })
-export class PlusRectangleOnFolderFillSymbolComponent { }
+export class _PlusRectangleOnFolderFillSymbolComponent { }

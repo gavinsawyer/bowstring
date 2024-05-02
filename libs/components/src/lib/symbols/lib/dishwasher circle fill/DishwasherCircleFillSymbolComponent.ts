@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DishwasherCircleFillSymbolComponent.html",
 })
-export class DishwasherCircleFillSymbolComponent { }
+export class _DishwasherCircleFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LightOverheadLeftSymbolComponent.html",
 })
-export class LightOverheadLeftSymbolComponent { }
+export class _LightOverheadLeftSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MoonphaseWaningCrescentSymbolComponent.html",
 })
-export class MoonphaseWaningCrescentSymbolComponent { }
+export class _MoonphaseWaningCrescentSymbolComponent { }

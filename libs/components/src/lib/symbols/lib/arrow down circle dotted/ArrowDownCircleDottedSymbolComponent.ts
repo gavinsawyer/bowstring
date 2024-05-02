@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowDownCircleDottedSymbolComponent.html",
 })
-export class ArrowDownCircleDottedSymbolComponent { }
+export class _ArrowDownCircleDottedSymbolComponent { }

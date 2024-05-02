@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleRatio16To9SymbolComponent.html",
 })
-export class RectangleRatio16To9SymbolComponent { }
+export class _RectangleRatio16To9SymbolComponent { }

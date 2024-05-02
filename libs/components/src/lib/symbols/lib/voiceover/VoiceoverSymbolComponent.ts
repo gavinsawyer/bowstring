@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VoiceoverSymbolComponent.html",
 })
-export class VoiceoverSymbolComponent { }
+export class _VoiceoverSymbolComponent { }

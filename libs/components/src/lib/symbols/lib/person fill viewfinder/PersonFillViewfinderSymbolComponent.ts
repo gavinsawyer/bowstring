@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PersonFillViewfinderSymbolComponent.html",
 })
-export class PersonFillViewfinderSymbolComponent { }
+export class _PersonFillViewfinderSymbolComponent { }

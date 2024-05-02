@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextJustifySymbolComponent.html",
 })
-export class TextJustifySymbolComponent { }
+export class _TextJustifySymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AlignVerticalTopSymbolComponent.html",
 })
-export class AlignVerticalTopSymbolComponent { }
+export class _AlignVerticalTopSymbolComponent { }

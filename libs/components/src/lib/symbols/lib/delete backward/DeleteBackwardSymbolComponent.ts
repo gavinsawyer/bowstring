@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DeleteBackwardSymbolComponent.html",
 })
-export class DeleteBackwardSymbolComponent { }
+export class _DeleteBackwardSymbolComponent { }

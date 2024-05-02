@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Rectangle3GroupBubbleFillSymbolComponent.html",
 })
-export class Rectangle3GroupBubbleFillSymbolComponent { }
+export class _Rectangle3GroupBubbleFillSymbolComponent { }

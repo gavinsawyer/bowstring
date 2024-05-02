@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FieldOfViewUltrawideSymbolComponent.html",
 })
-export class FieldOfViewUltrawideSymbolComponent { }
+export class _FieldOfViewUltrawideSymbolComponent { }

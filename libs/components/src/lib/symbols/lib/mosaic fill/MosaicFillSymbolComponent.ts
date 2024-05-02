@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MosaicFillSymbolComponent.html",
 })
-export class MosaicFillSymbolComponent { }
+export class _MosaicFillSymbolComponent { }

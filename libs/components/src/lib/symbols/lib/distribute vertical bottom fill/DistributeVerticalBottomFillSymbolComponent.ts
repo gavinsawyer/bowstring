@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DistributeVerticalBottomFillSymbolComponent.html",
 })
-export class DistributeVerticalBottomFillSymbolComponent { }
+export class _DistributeVerticalBottomFillSymbolComponent { }

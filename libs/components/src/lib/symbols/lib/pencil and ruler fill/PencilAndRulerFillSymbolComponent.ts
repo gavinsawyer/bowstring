@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PencilAndRulerFillSymbolComponent.html",
 })
-export class PencilAndRulerFillSymbolComponent { }
+export class _PencilAndRulerFillSymbolComponent { }

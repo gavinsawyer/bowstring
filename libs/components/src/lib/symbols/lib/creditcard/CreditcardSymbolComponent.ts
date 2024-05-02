@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CreditcardSymbolComponent.html",
 })
-export class CreditcardSymbolComponent { }
+export class _CreditcardSymbolComponent { }

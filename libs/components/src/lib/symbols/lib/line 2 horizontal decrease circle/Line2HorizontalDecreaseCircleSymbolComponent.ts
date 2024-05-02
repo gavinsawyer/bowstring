@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Line2HorizontalDecreaseCircleSymbolComponent.html",
 })
-export class Line2HorizontalDecreaseCircleSymbolComponent { }
+export class _Line2HorizontalDecreaseCircleSymbolComponent { }

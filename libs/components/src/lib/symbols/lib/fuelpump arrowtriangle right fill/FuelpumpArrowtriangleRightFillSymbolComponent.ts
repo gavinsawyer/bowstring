@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FuelpumpArrowtriangleRightFillSymbolComponent.html",
 })
-export class FuelpumpArrowtriangleRightFillSymbolComponent { }
+export class _FuelpumpArrowtriangleRightFillSymbolComponent { }

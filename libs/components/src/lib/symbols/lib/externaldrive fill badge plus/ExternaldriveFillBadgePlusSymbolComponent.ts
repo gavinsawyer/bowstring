@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ExternaldriveFillBadgePlusSymbolComponent.html",
 })
-export class ExternaldriveFillBadgePlusSymbolComponent { }
+export class _ExternaldriveFillBadgePlusSymbolComponent { }

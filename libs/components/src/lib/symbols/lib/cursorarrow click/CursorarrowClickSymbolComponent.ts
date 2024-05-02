@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CursorarrowClickSymbolComponent.html",
 })
-export class CursorarrowClickSymbolComponent { }
+export class _CursorarrowClickSymbolComponent { }

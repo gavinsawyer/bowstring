@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SumSymbolComponent.html",
 })
-export class SumSymbolComponent { }
+export class _SumSymbolComponent { }

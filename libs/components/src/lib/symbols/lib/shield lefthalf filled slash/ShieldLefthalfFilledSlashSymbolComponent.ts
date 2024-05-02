@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShieldLefthalfFilledSlashSymbolComponent.html",
 })
-export class ShieldLefthalfFilledSlashSymbolComponent { }
+export class _ShieldLefthalfFilledSlashSymbolComponent { }

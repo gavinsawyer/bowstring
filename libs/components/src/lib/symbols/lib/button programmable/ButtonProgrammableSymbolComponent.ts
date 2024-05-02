@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ButtonProgrammableSymbolComponent.html",
 })
-export class ButtonProgrammableSymbolComponent { }
+export class _ButtonProgrammableSymbolComponent { }

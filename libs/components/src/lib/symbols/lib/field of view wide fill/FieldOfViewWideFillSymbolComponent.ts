@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FieldOfViewWideFillSymbolComponent.html",
 })
-export class FieldOfViewWideFillSymbolComponent { }
+export class _FieldOfViewWideFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChartLineUptrendXyaxisCircleFillSymbolComponent.html",
 })
-export class ChartLineUptrendXyaxisCircleFillSymbolComponent { }
+export class _ChartLineUptrendXyaxisCircleFillSymbolComponent { }

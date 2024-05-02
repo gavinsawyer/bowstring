@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "R2ButtonAngledtopVerticalRightFillSymbolComponent.html",
 })
-export class R2ButtonAngledtopVerticalRightFillSymbolComponent { }
+export class _R2ButtonAngledtopVerticalRightFillSymbolComponent { }

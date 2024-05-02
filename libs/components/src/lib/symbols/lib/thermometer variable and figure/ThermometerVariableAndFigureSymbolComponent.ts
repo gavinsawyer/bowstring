@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ThermometerVariableAndFigureSymbolComponent.html",
 })
-export class ThermometerVariableAndFigureSymbolComponent { }
+export class _ThermometerVariableAndFigureSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SliderHorizontal2SquareBadgeArrowDownSymbolComponent.html",
 })
-export class SliderHorizontal2SquareBadgeArrowDownSymbolComponent { }
+export class _SliderHorizontal2SquareBadgeArrowDownSymbolComponent { }

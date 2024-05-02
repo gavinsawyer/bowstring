@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChecklistSymbolComponent.html",
 })
-export class ChecklistSymbolComponent { }
+export class _ChecklistSymbolComponent { }

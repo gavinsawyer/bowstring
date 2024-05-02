@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CompassDrawingSymbolComponent.html",
 })
-export class CompassDrawingSymbolComponent { }
+export class _CompassDrawingSymbolComponent { }

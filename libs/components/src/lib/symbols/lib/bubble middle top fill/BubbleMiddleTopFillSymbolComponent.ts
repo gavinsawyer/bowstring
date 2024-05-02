@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BubbleMiddleTopFillSymbolComponent.html",
 })
-export class BubbleMiddleTopFillSymbolComponent { }
+export class _BubbleMiddleTopFillSymbolComponent { }

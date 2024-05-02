@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EvPlugDcChademoSymbolComponent.html",
 })
-export class EvPlugDcChademoSymbolComponent { }
+export class _EvPlugDcChademoSymbolComponent { }

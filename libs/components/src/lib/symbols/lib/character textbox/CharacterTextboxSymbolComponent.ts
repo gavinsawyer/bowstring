@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CharacterTextboxSymbolComponent.html",
 })
-export class CharacterTextboxSymbolComponent { }
+export class _CharacterTextboxSymbolComponent { }

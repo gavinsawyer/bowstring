@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HeadlightHighBeamSymbolComponent.html",
 })
-export class HeadlightHighBeamSymbolComponent { }
+export class _HeadlightHighBeamSymbolComponent { }

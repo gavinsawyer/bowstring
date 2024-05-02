@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChartBarDocHorizontalFillSymbolComponent.html",
 })
-export class ChartBarDocHorizontalFillSymbolComponent { }
+export class _ChartBarDocHorizontalFillSymbolComponent { }

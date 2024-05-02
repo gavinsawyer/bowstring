@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShiftFillSymbolComponent.html",
 })
-export class ShiftFillSymbolComponent { }
+export class _ShiftFillSymbolComponent { }

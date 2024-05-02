@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SwirlCircleRighthalfFilledInverseSymbolComponent.html",
 })
-export class SwirlCircleRighthalfFilledInverseSymbolComponent { }
+export class _SwirlCircleRighthalfFilledInverseSymbolComponent { }

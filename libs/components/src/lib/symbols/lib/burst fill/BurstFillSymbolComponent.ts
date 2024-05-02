@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BurstFillSymbolComponent.html",
 })
-export class BurstFillSymbolComponent { }
+export class _BurstFillSymbolComponent { }

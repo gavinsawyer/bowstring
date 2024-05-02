@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LoupeSymbolComponent.html",
 })
-export class LoupeSymbolComponent { }
+export class _LoupeSymbolComponent { }

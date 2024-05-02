@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Square2Layers3dBottomFilledSymbolComponent.html",
 })
-export class Square2Layers3dBottomFilledSymbolComponent { }
+export class _Square2Layers3dBottomFilledSymbolComponent { }

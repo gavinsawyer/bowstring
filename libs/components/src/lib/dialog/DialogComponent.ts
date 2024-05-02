@@ -6,15 +6,15 @@ import { CardComponent }                                                        
 
 @Component({
   exportAs:    "standardDialog",
+  imports:     [
+    CardComponent,
+  ],
   selector:    "standard--dialog",
   standalone:  true,
   styleUrls:   [
     "DialogComponent.sass",
   ],
   templateUrl: "DialogComponent.html",
-  imports:     [
-    CardComponent,
-  ],
 })
 export class DialogComponent implements AfterViewInit, OnDestroy {
 

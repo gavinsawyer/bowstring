@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MenubarDockRectangleBadgeRecordSymbolComponent.html",
 })
-export class MenubarDockRectangleBadgeRecordSymbolComponent { }
+export class _MenubarDockRectangleBadgeRecordSymbolComponent { }

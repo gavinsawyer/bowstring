@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "QuoteOpeningSymbolComponent.html",
 })
-export class QuoteOpeningSymbolComponent { }
+export class _QuoteOpeningSymbolComponent { }

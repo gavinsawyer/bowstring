@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Line3CrossedSwirlCircleSymbolComponent.html",
 })
-export class Line3CrossedSwirlCircleSymbolComponent { }
+export class _Line3CrossedSwirlCircleSymbolComponent { }

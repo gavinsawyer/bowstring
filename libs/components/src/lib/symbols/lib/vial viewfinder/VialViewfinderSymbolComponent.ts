@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VialViewfinderSymbolComponent.html",
 })
-export class VialViewfinderSymbolComponent { }
+export class _VialViewfinderSymbolComponent { }

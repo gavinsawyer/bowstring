@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MegaphoneSymbolComponent.html",
 })
-export class MegaphoneSymbolComponent { }
+export class _MegaphoneSymbolComponent { }

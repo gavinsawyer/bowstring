@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BarcodeSymbolComponent.html",
 })
-export class BarcodeSymbolComponent { }
+export class _BarcodeSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MinusPlusBatteryblockStackSymbolComponent.html",
 })
-export class MinusPlusBatteryblockStackSymbolComponent { }
+export class _MinusPlusBatteryblockStackSymbolComponent { }

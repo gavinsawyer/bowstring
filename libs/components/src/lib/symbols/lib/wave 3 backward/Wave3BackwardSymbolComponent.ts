@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Wave3BackwardSymbolComponent.html",
 })
-export class Wave3BackwardSymbolComponent { }
+export class _Wave3BackwardSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HearingdeviceEarSymbolComponent.html",
 })
-export class HearingdeviceEarSymbolComponent { }
+export class _HearingdeviceEarSymbolComponent { }

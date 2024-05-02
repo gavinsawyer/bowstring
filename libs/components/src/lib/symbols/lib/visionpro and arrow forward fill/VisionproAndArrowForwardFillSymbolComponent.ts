@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VisionproAndArrowForwardFillSymbolComponent.html",
 })
-export class VisionproAndArrowForwardFillSymbolComponent { }
+export class _VisionproAndArrowForwardFillSymbolComponent { }

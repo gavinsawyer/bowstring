@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SunMaxSymbolComponent.html",
 })
-export class SunMaxSymbolComponent { }
+export class _SunMaxSymbolComponent { }

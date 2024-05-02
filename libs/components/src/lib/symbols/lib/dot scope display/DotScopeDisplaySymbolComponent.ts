@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DotScopeDisplaySymbolComponent.html",
 })
-export class DotScopeDisplaySymbolComponent { }
+export class _DotScopeDisplaySymbolComponent { }

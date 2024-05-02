@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EvChargerArrowtriangleLeftFillSymbolComponent.html",
 })
-export class EvChargerArrowtriangleLeftFillSymbolComponent { }
+export class _EvChargerArrowtriangleLeftFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FirewallFillSymbolComponent.html",
 })
-export class FirewallFillSymbolComponent { }
+export class _FirewallFillSymbolComponent { }

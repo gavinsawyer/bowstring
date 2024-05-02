@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquareDashedInsetFilledSymbolComponent.html",
 })
-export class SquareDashedInsetFilledSymbolComponent { }
+export class _SquareDashedInsetFilledSymbolComponent { }

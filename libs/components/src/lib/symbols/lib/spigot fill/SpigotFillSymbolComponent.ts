@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SpigotFillSymbolComponent.html",
 })
-export class SpigotFillSymbolComponent { }
+export class _SpigotFillSymbolComponent { }

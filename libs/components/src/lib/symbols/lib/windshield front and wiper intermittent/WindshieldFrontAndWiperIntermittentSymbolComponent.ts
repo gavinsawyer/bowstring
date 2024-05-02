@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WindshieldFrontAndWiperIntermittentSymbolComponent.html",
 })
-export class WindshieldFrontAndWiperIntermittentSymbolComponent { }
+export class _WindshieldFrontAndWiperIntermittentSymbolComponent { }

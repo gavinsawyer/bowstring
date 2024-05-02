@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SafariSymbolComponent.html",
 })
-export class SafariSymbolComponent { }
+export class _SafariSymbolComponent { }

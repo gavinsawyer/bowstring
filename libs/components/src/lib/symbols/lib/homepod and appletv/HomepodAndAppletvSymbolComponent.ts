@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HomepodAndAppletvSymbolComponent.html",
 })
-export class HomepodAndAppletvSymbolComponent { }
+export class _HomepodAndAppletvSymbolComponent { }

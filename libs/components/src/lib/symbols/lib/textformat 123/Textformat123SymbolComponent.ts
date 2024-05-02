@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Textformat123SymbolComponent.html",
 })
-export class Textformat123SymbolComponent { }
+export class _Textformat123SymbolComponent { }

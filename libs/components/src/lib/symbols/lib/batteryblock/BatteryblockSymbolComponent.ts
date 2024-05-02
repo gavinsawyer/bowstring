@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BatteryblockSymbolComponent.html",
 })
-export class BatteryblockSymbolComponent { }
+export class _BatteryblockSymbolComponent { }

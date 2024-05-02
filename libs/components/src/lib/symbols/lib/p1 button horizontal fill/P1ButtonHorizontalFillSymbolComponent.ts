@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "P1ButtonHorizontalFillSymbolComponent.html",
 })
-export class P1ButtonHorizontalFillSymbolComponent { }
+export class _P1ButtonHorizontalFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BriefcaseFillSymbolComponent.html",
 })
-export class BriefcaseFillSymbolComponent { }
+export class _BriefcaseFillSymbolComponent { }

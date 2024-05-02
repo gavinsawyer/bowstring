@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LJoystickTiltLeftSymbolComponent.html",
 })
-export class LJoystickTiltLeftSymbolComponent { }
+export class _LJoystickTiltLeftSymbolComponent { }

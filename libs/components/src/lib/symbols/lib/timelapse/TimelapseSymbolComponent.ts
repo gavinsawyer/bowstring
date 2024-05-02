@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TimelapseSymbolComponent.html",
 })
-export class TimelapseSymbolComponent { }
+export class _TimelapseSymbolComponent { }

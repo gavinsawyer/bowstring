@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ExternaldriveConnectedToLineBelowSymbolComponent.html",
 })
-export class ExternaldriveConnectedToLineBelowSymbolComponent { }
+export class _ExternaldriveConnectedToLineBelowSymbolComponent { }

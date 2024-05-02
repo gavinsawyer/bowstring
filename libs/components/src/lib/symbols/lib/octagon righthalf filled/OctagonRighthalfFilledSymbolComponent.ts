@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "OctagonRighthalfFilledSymbolComponent.html",
 })
-export class OctagonRighthalfFilledSymbolComponent { }
+export class _OctagonRighthalfFilledSymbolComponent { }

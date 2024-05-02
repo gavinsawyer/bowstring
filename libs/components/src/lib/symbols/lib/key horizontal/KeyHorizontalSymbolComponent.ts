@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "KeyHorizontalSymbolComponent.html",
 })
-export class KeyHorizontalSymbolComponent { }
+export class _KeyHorizontalSymbolComponent { }

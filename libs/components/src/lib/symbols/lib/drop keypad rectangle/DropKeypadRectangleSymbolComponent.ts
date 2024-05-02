@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DropKeypadRectangleSymbolComponent.html",
 })
-export class DropKeypadRectangleSymbolComponent { }
+export class _DropKeypadRectangleSymbolComponent { }

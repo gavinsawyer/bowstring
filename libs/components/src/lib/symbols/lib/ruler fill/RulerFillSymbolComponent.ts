@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RulerFillSymbolComponent.html",
 })
-export class RulerFillSymbolComponent { }
+export class _RulerFillSymbolComponent { }

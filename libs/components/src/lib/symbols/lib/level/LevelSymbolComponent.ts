@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LevelSymbolComponent.html",
 })
-export class LevelSymbolComponent { }
+export class _LevelSymbolComponent { }

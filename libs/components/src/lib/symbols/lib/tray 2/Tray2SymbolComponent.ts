@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Tray2SymbolComponent.html",
 })
-export class Tray2SymbolComponent { }
+export class _Tray2SymbolComponent { }

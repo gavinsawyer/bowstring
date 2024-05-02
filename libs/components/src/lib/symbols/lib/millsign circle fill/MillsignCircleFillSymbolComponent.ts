@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MillsignCircleFillSymbolComponent.html",
 })
-export class MillsignCircleFillSymbolComponent { }
+export class _MillsignCircleFillSymbolComponent { }

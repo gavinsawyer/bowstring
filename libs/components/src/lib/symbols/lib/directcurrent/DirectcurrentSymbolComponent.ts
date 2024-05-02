@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DirectcurrentSymbolComponent.html",
 })
-export class DirectcurrentSymbolComponent { }
+export class _DirectcurrentSymbolComponent { }

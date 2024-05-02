@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SpotifyLogoSymbolComponent.html",
 })
-export class SpotifyLogoSymbolComponent { }
+export class _SpotifyLogoSymbolComponent { }

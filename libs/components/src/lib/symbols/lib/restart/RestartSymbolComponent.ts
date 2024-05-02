@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RestartSymbolComponent.html",
 })
-export class RestartSymbolComponent { }
+export class _RestartSymbolComponent { }

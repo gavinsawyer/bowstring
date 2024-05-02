@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BackwardEndAltFillSymbolComponent.html",
 })
-export class BackwardEndAltFillSymbolComponent { }
+export class _BackwardEndAltFillSymbolComponent { }

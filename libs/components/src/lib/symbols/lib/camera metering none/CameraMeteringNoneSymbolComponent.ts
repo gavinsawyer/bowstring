@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CameraMeteringNoneSymbolComponent.html",
 })
-export class CameraMeteringNoneSymbolComponent { }
+export class _CameraMeteringNoneSymbolComponent { }

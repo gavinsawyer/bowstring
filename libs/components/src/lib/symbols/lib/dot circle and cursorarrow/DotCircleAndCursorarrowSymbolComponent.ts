@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DotCircleAndCursorarrowSymbolComponent.html",
 })
-export class DotCircleAndCursorarrowSymbolComponent { }
+export class _DotCircleAndCursorarrowSymbolComponent { }

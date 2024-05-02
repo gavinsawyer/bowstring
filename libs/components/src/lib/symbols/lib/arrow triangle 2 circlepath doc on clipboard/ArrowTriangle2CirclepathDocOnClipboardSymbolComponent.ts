@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowTriangle2CirclepathDocOnClipboardSymbolComponent.html",
 })
-export class ArrowTriangle2CirclepathDocOnClipboardSymbolComponent { }
+export class _ArrowTriangle2CirclepathDocOnClipboardSymbolComponent { }

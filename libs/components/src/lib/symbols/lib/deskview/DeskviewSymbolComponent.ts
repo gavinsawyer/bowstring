@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DeskviewSymbolComponent.html",
 })
-export class DeskviewSymbolComponent { }
+export class _DeskviewSymbolComponent { }

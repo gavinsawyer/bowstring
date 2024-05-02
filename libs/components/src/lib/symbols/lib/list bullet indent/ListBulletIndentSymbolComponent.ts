@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ListBulletIndentSymbolComponent.html",
 })
-export class ListBulletIndentSymbolComponent { }
+export class _ListBulletIndentSymbolComponent { }

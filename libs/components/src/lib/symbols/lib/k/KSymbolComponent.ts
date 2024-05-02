@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "KSymbolComponent.html",
 })
-export class KSymbolComponent { }
+export class _KSymbolComponent { }

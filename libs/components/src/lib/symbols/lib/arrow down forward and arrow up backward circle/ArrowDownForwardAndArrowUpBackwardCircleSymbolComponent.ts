@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowDownForwardAndArrowUpBackwardCircleSymbolComponent.html",
 })
-export class ArrowDownForwardAndArrowUpBackwardCircleSymbolComponent { }
+export class _ArrowDownForwardAndArrowUpBackwardCircleSymbolComponent { }

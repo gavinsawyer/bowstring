@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "XserveRaidSymbolComponent.html",
 })
-export class XserveRaidSymbolComponent { }
+export class _XserveRaidSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MagsafeBatterypackSymbolComponent.html",
 })
-export class MagsafeBatterypackSymbolComponent { }
+export class _MagsafeBatterypackSymbolComponent { }

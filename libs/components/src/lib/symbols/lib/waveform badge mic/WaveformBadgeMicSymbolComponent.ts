@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WaveformBadgeMicSymbolComponent.html",
 })
-export class WaveformBadgeMicSymbolComponent { }
+export class _WaveformBadgeMicSymbolComponent { }

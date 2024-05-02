@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EllipsisMessageFillSymbolComponent.html",
 })
-export class EllipsisMessageFillSymbolComponent { }
+export class _EllipsisMessageFillSymbolComponent { }

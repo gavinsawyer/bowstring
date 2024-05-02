@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GaugeOpenWithLinesNeedle67percentAndArrowtriangleSymbolComponent.html",
 })
-export class GaugeOpenWithLinesNeedle67percentAndArrowtriangleSymbolComponent { }
+export class _GaugeOpenWithLinesNeedle67percentAndArrowtriangleSymbolComponent { }

@@ -1,7 +1,7 @@
-import { NgComponentOutlet, NgTemplateOutlet }                                                         from "@angular/common";
-import { Component, Input, numberAttribute, OnChanges, OnInit, signal, SimpleChanges, WritableSignal } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                from "@angular/router";
-import * as symbolComponents                                                                           from "../symbols";
+import { NgComponentOutlet, NgTemplateOutlet }                       from "@angular/common";
+import { Component, Input, numberAttribute, signal, WritableSignal } from "@angular/core";
+import { RouterLink, RouterLinkActive }                              from "@angular/router";
+import { SymbolComponent }                                           from "../symbol/SymbolComponent";
 
 
 @Component({
@@ -18,12 +18,11 @@ import * as symbolComponents                                                    
   ],
   templateUrl: "ButtonComponent.html",
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class ButtonComponent extends SymbolComponent {
 
   @Input() public color?:    "primary" | "none";
   @Input() public disabled?: boolean;
   @Input() public form?:     "flat" | "raised" | "symbol";
-  @Input() public symbol?:   keyof typeof symbolComponents extends `${infer name}SymbolComponent` ? name : never;
   @Input() public tabindex?: number;
   @Input() public text?:     string;
   @Input() public type?:     "button" | "reset" | "submit";
@@ -39,11 +38,11 @@ export class ButtonComponent implements OnInit, OnChanges {
   })
   public shrink?: number;
 
-  protected readonly mouseenter:           () => void                                                                         = (): void => setTimeout(
+  protected readonly mouseenter:           () => void                               = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
     200,
   ) && void (0);
-  protected readonly mouseleave:           () => void                                                                         = (): void => {
+  protected readonly mouseleave:           () => void                               = (): void => {
     this
       .transitionTranslate$
       .set(true);
@@ -57,7 +56,7 @@ export class ButtonComponent implements OnInit, OnChanges {
         },
       );
   };
-  protected readonly mousemove:            (mouseEvent: MouseEvent) => void                                                   = (mouseEvent: MouseEvent): void => {
+  protected readonly mousemove:            (mouseEvent: MouseEvent) => void         = (mouseEvent: MouseEvent): void => {
     console.log(mouseEvent.target);
 
     mouseEvent.target instanceof HTMLElement ? ((domRect: DOMRect): void => this.translation$.set(
@@ -69,30 +68,12 @@ export class ButtonComponent implements OnInit, OnChanges {
       mouseEvent.target.getBoundingClientRect(),
     ) : void (0);
   };
-  protected readonly symbolComponent$:     WritableSignal<typeof symbolComponents[keyof typeof symbolComponents] | undefined> = signal<typeof symbolComponents[keyof typeof symbolComponents] | undefined>(
-    this.symbol && symbolComponents[`${this.symbol}SymbolComponent`]
-  );
-  protected readonly transitionTranslate$: WritableSignal<boolean>                                                            = signal<boolean>(true);
-  protected readonly translation$:         WritableSignal<{ x: number, y: number }>                                           = signal<{ x: number, y: number }>(
+  protected readonly transitionTranslate$: WritableSignal<boolean>                  = signal<boolean>(true);
+  protected readonly translation$:         WritableSignal<{ x: number, y: number }> = signal<{ x: number, y: number }>(
     {
       x: 0,
       y: 0,
     },
   );
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    Object.hasOwnProperty.call(changes, "symbol") && this
-      .symbolComponent$
-      .set(
-        symbolComponents[`${changes["symbol"].currentValue as keyof typeof symbolComponents extends `${infer name}SymbolComponent` ? name : never}SymbolComponent`]
-      );
-  }
-  public ngOnInit():                          void {
-    this
-      .symbolComponent$
-      .set(
-        this.symbol && symbolComponents[`${this.symbol}SymbolComponent`]
-      );
-  }
 
 }

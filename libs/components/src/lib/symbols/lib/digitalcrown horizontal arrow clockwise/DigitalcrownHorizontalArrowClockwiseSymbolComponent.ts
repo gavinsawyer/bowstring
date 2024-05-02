@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DigitalcrownHorizontalArrowClockwiseSymbolComponent.html",
 })
-export class DigitalcrownHorizontalArrowClockwiseSymbolComponent { }
+export class _DigitalcrownHorizontalArrowClockwiseSymbolComponent { }

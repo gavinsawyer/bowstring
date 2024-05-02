@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PointForwardToPointCapsulepathSymbolComponent.html",
 })
-export class PointForwardToPointCapsulepathSymbolComponent { }
+export class _PointForwardToPointCapsulepathSymbolComponent { }

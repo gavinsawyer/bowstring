@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FlowchartSymbolComponent.html",
 })
-export class FlowchartSymbolComponent { }
+export class _FlowchartSymbolComponent { }

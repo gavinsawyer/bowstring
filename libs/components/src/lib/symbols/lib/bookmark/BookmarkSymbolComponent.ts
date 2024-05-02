@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BookmarkSymbolComponent.html",
 })
-export class BookmarkSymbolComponent { }
+export class _BookmarkSymbolComponent { }

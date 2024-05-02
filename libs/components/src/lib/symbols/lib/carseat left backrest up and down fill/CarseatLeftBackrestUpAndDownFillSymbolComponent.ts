@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CarseatLeftBackrestUpAndDownFillSymbolComponent.html",
 })
-export class CarseatLeftBackrestUpAndDownFillSymbolComponent { }
+export class _CarseatLeftBackrestUpAndDownFillSymbolComponent { }

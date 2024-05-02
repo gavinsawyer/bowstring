@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MagicmouseFillSymbolComponent.html",
 })
-export class MagicmouseFillSymbolComponent { }
+export class _MagicmouseFillSymbolComponent { }

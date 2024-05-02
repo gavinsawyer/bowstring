@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AlignHorizontalCenterSymbolComponent.html",
 })
-export class AlignHorizontalCenterSymbolComponent { }
+export class _AlignHorizontalCenterSymbolComponent { }

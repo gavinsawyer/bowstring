@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VideoSlashFillSymbolComponent.html",
 })
-export class VideoSlashFillSymbolComponent { }
+export class _VideoSlashFillSymbolComponent { }

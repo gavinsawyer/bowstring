@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ServerRackSymbolComponent.html",
 })
-export class ServerRackSymbolComponent { }
+export class _ServerRackSymbolComponent { }

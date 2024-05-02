@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SlowmoSymbolComponent.html",
 })
-export class SlowmoSymbolComponent { }
+export class _SlowmoSymbolComponent { }

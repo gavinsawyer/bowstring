@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowUpLeftAndDownRightMagnifyingglassSymbolComponent.html",
 })
-export class ArrowUpLeftAndDownRightMagnifyingglassSymbolComponent { }
+export class _ArrowUpLeftAndDownRightMagnifyingglassSymbolComponent { }

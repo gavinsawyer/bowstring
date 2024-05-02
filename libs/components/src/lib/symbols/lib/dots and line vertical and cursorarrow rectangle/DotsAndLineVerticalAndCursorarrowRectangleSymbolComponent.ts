@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DotsAndLineVerticalAndCursorarrowRectangleSymbolComponent.html",
 })
-export class DotsAndLineVerticalAndCursorarrowRectangleSymbolComponent { }
+export class _DotsAndLineVerticalAndCursorarrowRectangleSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ScrollSymbolComponent.html",
 })
-export class ScrollSymbolComponent { }
+export class _ScrollSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MemorychipSymbolComponent.html",
 })
-export class MemorychipSymbolComponent { }
+export class _MemorychipSymbolComponent { }

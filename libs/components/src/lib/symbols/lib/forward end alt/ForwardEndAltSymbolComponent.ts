@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ForwardEndAltSymbolComponent.html",
 })
-export class ForwardEndAltSymbolComponent { }
+export class _ForwardEndAltSymbolComponent { }

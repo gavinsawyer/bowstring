@@ -19,18 +19,18 @@ export class ImageComponent {
     required:  true,
     transform: numberAttribute,
   })
-  public height!: number;
+  public height?: number;
 
   @Input({
     required: true,
   })
-  public src!: string;
+  public src?: string;
 
   @Input({
     required:  true,
     transform: numberAttribute,
   })
-  public width!: number;
+  public width?: number;
 
   @Input() public alt?: string;
 

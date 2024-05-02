@@ -140,7 +140,7 @@ export class FooterComponent extends FlexboxComponent implements AfterViewInit {
       requireSync: true,
     },
   );
-  protected readonly footerOffsetBottom$: Signal<number>  = isPlatformBrowser(
+  protected readonly footerOffsetBottom$:    Signal<number>  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number>(
     combineLatest<{ bodyHeight: Observable<number>, footerBottomProperty: Observable<number>, footerHeight: Observable<number> }>(

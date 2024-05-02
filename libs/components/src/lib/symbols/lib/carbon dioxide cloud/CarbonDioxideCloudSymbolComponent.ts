@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CarbonDioxideCloudSymbolComponent.html",
 })
-export class CarbonDioxideCloudSymbolComponent { }
+export class _CarbonDioxideCloudSymbolComponent { }

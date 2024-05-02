@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RhombusSymbolComponent.html",
 })
-export class RhombusSymbolComponent { }
+export class _RhombusSymbolComponent { }

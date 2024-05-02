@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FlaskSymbolComponent.html",
 })
-export class FlaskSymbolComponent { }
+export class _FlaskSymbolComponent { }

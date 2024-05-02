@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WineglassSymbolComponent.html",
 })
-export class WineglassSymbolComponent { }
+export class _WineglassSymbolComponent { }

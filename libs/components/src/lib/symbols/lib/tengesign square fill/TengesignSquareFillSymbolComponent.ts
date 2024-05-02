@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TengesignSquareFillSymbolComponent.html",
 })
-export class TengesignSquareFillSymbolComponent { }
+export class _TengesignSquareFillSymbolComponent { }

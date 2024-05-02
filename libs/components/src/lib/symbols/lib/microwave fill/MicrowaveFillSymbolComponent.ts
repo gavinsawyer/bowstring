@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MicrowaveFillSymbolComponent.html",
 })
-export class MicrowaveFillSymbolComponent { }
+export class _MicrowaveFillSymbolComponent { }

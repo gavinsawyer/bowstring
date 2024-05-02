@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PanoBadgePlayFillSymbolComponent.html",
 })
-export class PanoBadgePlayFillSymbolComponent { }
+export class _PanoBadgePlayFillSymbolComponent { }

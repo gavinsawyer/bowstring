@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RoadLanesCurvedLeftSymbolComponent.html",
 })
-export class RoadLanesCurvedLeftSymbolComponent { }
+export class _RoadLanesCurvedLeftSymbolComponent { }

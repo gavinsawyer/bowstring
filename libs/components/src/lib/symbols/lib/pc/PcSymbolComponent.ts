@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PcSymbolComponent.html",
 })
-export class PcSymbolComponent { }
+export class _PcSymbolComponent { }

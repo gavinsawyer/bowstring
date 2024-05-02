@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TouchidSymbolComponent.html",
 })
-export class TouchidSymbolComponent { }
+export class _TouchidSymbolComponent { }

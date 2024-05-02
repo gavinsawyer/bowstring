@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MacwindowAndCursorarrowSymbolComponent.html",
 })
-export class MacwindowAndCursorarrowSymbolComponent { }
+export class _MacwindowAndCursorarrowSymbolComponent { }

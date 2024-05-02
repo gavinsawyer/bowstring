@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShippingboxAndArrowBackwardSymbolComponent.html",
 })
-export class ShippingboxAndArrowBackwardSymbolComponent { }
+export class _ShippingboxAndArrowBackwardSymbolComponent { }

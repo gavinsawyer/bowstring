@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GearshiftLayoutSixspeedSymbolComponent.html",
 })
-export class GearshiftLayoutSixspeedSymbolComponent { }
+export class _GearshiftLayoutSixspeedSymbolComponent { }

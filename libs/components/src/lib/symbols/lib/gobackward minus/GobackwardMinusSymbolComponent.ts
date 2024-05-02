@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GobackwardMinusSymbolComponent.html",
 })
-export class GobackwardMinusSymbolComponent { }
+export class _GobackwardMinusSymbolComponent { }

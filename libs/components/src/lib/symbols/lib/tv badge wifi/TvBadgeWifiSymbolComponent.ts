@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TvBadgeWifiSymbolComponent.html",
 })
-export class TvBadgeWifiSymbolComponent { }
+export class _TvBadgeWifiSymbolComponent { }

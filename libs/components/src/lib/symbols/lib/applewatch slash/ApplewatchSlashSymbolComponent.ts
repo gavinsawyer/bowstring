@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ApplewatchSlashSymbolComponent.html",
 })
-export class ApplewatchSlashSymbolComponent { }
+export class _ApplewatchSlashSymbolComponent { }

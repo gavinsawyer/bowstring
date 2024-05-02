@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "QrcodeViewfinderSymbolComponent.html",
 })
-export class QrcodeViewfinderSymbolComponent { }
+export class _QrcodeViewfinderSymbolComponent { }

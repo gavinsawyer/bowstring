@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AspectratioSymbolComponent.html",
 })
-export class AspectratioSymbolComponent { }
+export class _AspectratioSymbolComponent { }

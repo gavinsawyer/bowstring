@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SuvSideAirFreshSymbolComponent.html",
 })
-export class SuvSideAirFreshSymbolComponent { }
+export class _SuvSideAirFreshSymbolComponent { }

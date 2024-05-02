@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquareStack3dForwardDottedlineFillSymbolComponent.html",
 })
-export class SquareStack3dForwardDottedlineFillSymbolComponent { }
+export class _SquareStack3dForwardDottedlineFillSymbolComponent { }

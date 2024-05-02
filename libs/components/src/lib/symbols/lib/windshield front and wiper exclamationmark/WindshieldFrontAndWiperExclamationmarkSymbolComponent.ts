@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WindshieldFrontAndWiperExclamationmarkSymbolComponent.html",
 })
-export class WindshieldFrontAndWiperExclamationmarkSymbolComponent { }
+export class _WindshieldFrontAndWiperExclamationmarkSymbolComponent { }

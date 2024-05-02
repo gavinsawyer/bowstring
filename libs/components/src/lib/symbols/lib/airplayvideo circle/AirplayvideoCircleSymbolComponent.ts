@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirplayvideoCircleSymbolComponent.html",
 })
-export class AirplayvideoCircleSymbolComponent { }
+export class _AirplayvideoCircleSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HifireceiverFillSymbolComponent.html",
 })
-export class HifireceiverFillSymbolComponent { }
+export class _HifireceiverFillSymbolComponent { }

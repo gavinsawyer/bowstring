@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BackwardFrameFillSymbolComponent.html",
 })
-export class BackwardFrameFillSymbolComponent { }
+export class _BackwardFrameFillSymbolComponent { }

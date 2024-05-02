@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArchiveboxCircleFillSymbolComponent.html",
 })
-export class ArchiveboxCircleFillSymbolComponent { }
+export class _ArchiveboxCircleFillSymbolComponent { }

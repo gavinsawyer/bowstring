@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EsimSymbolComponent.html",
 })
-export class EsimSymbolComponent { }
+export class _EsimSymbolComponent { }

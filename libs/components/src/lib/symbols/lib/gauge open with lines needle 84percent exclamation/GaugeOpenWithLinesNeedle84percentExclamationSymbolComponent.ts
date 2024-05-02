@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GaugeOpenWithLinesNeedle84percentExclamationSymbolComponent.html",
 })
-export class GaugeOpenWithLinesNeedle84percentExclamationSymbolComponent { }
+export class _GaugeOpenWithLinesNeedle84percentExclamationSymbolComponent { }

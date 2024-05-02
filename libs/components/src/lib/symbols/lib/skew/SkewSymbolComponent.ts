@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SkewSymbolComponent.html",
 })
-export class SkewSymbolComponent { }
+export class _SkewSymbolComponent { }

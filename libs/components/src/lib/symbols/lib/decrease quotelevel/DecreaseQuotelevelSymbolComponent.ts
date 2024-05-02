@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DecreaseQuotelevelSymbolComponent.html",
 })
-export class DecreaseQuotelevelSymbolComponent { }
+export class _DecreaseQuotelevelSymbolComponent { }

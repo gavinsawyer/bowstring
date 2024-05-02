@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RadioFillSymbolComponent.html",
 })
-export class RadioFillSymbolComponent { }
+export class _RadioFillSymbolComponent { }

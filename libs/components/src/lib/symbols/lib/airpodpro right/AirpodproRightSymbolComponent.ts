@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirpodproRightSymbolComponent.html",
 })
-export class AirpodproRightSymbolComponent { }
+export class _AirpodproRightSymbolComponent { }

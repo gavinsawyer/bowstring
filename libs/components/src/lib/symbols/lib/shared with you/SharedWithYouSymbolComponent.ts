@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SharedWithYouSymbolComponent.html",
 })
-export class SharedWithYouSymbolComponent { }
+export class _SharedWithYouSymbolComponent { }

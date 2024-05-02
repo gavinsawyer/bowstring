@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleBottomthirdInsetFilledSymbolComponent.html",
 })
-export class RectangleBottomthirdInsetFilledSymbolComponent { }
+export class _RectangleBottomthirdInsetFilledSymbolComponent { }

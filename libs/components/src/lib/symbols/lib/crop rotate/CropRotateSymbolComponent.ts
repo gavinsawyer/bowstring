@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CropRotateSymbolComponent.html",
 })
-export class CropRotateSymbolComponent { }
+export class _CropRotateSymbolComponent { }

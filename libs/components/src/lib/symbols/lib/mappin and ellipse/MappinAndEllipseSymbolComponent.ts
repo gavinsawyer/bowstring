@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MappinAndEllipseSymbolComponent.html",
 })
-export class MappinAndEllipseSymbolComponent { }
+export class _MappinAndEllipseSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CalendarSymbolComponent.html",
 })
-export class CalendarSymbolComponent { }
+export class _CalendarSymbolComponent { }

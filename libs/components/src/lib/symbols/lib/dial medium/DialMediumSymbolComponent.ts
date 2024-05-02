@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DialMediumSymbolComponent.html",
 })
-export class DialMediumSymbolComponent { }
+export class _DialMediumSymbolComponent { }

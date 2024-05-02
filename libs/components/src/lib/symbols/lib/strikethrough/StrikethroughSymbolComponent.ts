@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "StrikethroughSymbolComponent.html",
 })
-export class StrikethroughSymbolComponent { }
+export class _StrikethroughSymbolComponent { }

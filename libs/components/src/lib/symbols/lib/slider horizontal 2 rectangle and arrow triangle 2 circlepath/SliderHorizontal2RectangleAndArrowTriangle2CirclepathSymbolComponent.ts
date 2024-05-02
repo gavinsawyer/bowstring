@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SliderHorizontal2RectangleAndArrowTriangle2CirclepathSymbolComponent.html",
 })
-export class SliderHorizontal2RectangleAndArrowTriangle2CirclepathSymbolComponent { }
+export class _SliderHorizontal2RectangleAndArrowTriangle2CirclepathSymbolComponent { }

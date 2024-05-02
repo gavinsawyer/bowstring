@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AirtagFillSymbolComponent.html",
 })
-export class AirtagFillSymbolComponent { }
+export class _AirtagFillSymbolComponent { }

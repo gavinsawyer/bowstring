@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SidebarRightSymbolComponent.html",
 })
-export class SidebarRightSymbolComponent { }
+export class _SidebarRightSymbolComponent { }

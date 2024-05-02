@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleLeadinghalfInsetFilledArrowLeadingSymbolComponent.html",
 })
-export class RectangleLeadinghalfInsetFilledArrowLeadingSymbolComponent { }
+export class _RectangleLeadinghalfInsetFilledArrowLeadingSymbolComponent { }

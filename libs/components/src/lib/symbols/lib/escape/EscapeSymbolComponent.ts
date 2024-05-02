@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EscapeSymbolComponent.html",
 })
-export class EscapeSymbolComponent { }
+export class _EscapeSymbolComponent { }

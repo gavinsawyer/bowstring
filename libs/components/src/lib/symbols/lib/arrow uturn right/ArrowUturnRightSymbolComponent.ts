@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowUturnRightSymbolComponent.html",
 })
-export class ArrowUturnRightSymbolComponent { }
+export class _ArrowUturnRightSymbolComponent { }

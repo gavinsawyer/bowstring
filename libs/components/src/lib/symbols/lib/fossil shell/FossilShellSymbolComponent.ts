@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FossilShellSymbolComponent.html",
 })
-export class FossilShellSymbolComponent { }
+export class _FossilShellSymbolComponent { }

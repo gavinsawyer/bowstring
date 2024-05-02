@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Point3FilledConnectedTrianglepathDottedSymbolComponent.html",
 })
-export class Point3FilledConnectedTrianglepathDottedSymbolComponent { }
+export class _Point3FilledConnectedTrianglepathDottedSymbolComponent { }

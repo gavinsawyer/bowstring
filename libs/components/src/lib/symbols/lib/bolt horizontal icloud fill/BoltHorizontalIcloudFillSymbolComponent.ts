@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BoltHorizontalIcloudFillSymbolComponent.html",
 })
-export class BoltHorizontalIcloudFillSymbolComponent { }
+export class _BoltHorizontalIcloudFillSymbolComponent { }

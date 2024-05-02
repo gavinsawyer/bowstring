@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArkitBadgeXmarkSymbolComponent.html",
 })
-export class ArkitBadgeXmarkSymbolComponent { }
+export class _ArkitBadgeXmarkSymbolComponent { }

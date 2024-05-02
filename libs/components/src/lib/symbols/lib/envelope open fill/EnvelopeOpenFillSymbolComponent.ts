@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EnvelopeOpenFillSymbolComponent.html",
 })
-export class EnvelopeOpenFillSymbolComponent { }
+export class _EnvelopeOpenFillSymbolComponent { }

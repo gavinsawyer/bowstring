@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TeletypeAnswerSymbolComponent.html",
 })
-export class TeletypeAnswerSymbolComponent { }
+export class _TeletypeAnswerSymbolComponent { }

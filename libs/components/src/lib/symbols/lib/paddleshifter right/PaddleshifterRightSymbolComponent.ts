@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PaddleshifterRightSymbolComponent.html",
 })
-export class PaddleshifterRightSymbolComponent { }
+export class _PaddleshifterRightSymbolComponent { }

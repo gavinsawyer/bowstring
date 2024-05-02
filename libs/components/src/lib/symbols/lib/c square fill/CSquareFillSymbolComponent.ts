@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CSquareFillSymbolComponent.html",
 })
-export class CSquareFillSymbolComponent { }
+export class _CSquareFillSymbolComponent { }

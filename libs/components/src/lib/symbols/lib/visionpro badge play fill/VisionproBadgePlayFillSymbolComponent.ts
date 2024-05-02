@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VisionproBadgePlayFillSymbolComponent.html",
 })
-export class VisionproBadgePlayFillSymbolComponent { }
+export class _VisionproBadgePlayFillSymbolComponent { }

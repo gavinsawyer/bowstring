@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FCursiveCircleSymbolComponent.html",
 })
-export class FCursiveCircleSymbolComponent { }
+export class _FCursiveCircleSymbolComponent { }

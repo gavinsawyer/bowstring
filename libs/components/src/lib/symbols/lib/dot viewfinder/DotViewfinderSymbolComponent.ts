@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DotViewfinderSymbolComponent.html",
 })
-export class DotViewfinderSymbolComponent { }
+export class _DotViewfinderSymbolComponent { }

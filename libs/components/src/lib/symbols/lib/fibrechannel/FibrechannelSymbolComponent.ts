@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FibrechannelSymbolComponent.html",
 })
-export class FibrechannelSymbolComponent { }
+export class _FibrechannelSymbolComponent { }

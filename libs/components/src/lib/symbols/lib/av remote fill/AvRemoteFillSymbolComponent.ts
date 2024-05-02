@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AvRemoteFillSymbolComponent.html",
 })
-export class AvRemoteFillSymbolComponent { }
+export class _AvRemoteFillSymbolComponent { }

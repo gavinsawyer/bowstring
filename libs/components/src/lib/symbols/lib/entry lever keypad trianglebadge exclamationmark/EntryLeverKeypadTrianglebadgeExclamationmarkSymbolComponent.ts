@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EntryLeverKeypadTrianglebadgeExclamationmarkSymbolComponent.html",
 })
-export class EntryLeverKeypadTrianglebadgeExclamationmarkSymbolComponent { }
+export class _EntryLeverKeypadTrianglebadgeExclamationmarkSymbolComponent { }

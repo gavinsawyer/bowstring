@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AppleTerminalOnRectangleSymbolComponent.html",
 })
-export class AppleTerminalOnRectangleSymbolComponent { }
+export class _AppleTerminalOnRectangleSymbolComponent { }

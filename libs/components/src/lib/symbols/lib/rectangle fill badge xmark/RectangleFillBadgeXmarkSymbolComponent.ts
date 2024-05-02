@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleFillBadgeXmarkSymbolComponent.html",
 })
-export class RectangleFillBadgeXmarkSymbolComponent { }
+export class _RectangleFillBadgeXmarkSymbolComponent { }

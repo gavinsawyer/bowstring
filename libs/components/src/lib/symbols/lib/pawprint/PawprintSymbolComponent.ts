@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PawprintSymbolComponent.html",
 })
-export class PawprintSymbolComponent { }
+export class _PawprintSymbolComponent { }

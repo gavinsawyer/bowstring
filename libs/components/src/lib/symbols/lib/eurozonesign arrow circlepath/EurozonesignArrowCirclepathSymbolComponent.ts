@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EurozonesignArrowCirclepathSymbolComponent.html",
 })
-export class EurozonesignArrowCirclepathSymbolComponent { }
+export class _EurozonesignArrowCirclepathSymbolComponent { }

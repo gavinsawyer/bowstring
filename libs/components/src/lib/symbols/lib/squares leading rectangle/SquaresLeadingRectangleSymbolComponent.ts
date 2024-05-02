@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquaresLeadingRectangleSymbolComponent.html",
 })
-export class SquaresLeadingRectangleSymbolComponent { }
+export class _SquaresLeadingRectangleSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FSquareSymbolComponent.html",
 })
-export class FSquareSymbolComponent { }
+export class _FSquareSymbolComponent { }

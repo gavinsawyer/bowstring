@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LineHorizontalStarFillLineHorizontalSymbolComponent.html",
 })
-export class LineHorizontalStarFillLineHorizontalSymbolComponent { }
+export class _LineHorizontalStarFillLineHorizontalSymbolComponent { }

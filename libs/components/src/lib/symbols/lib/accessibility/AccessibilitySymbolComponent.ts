@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AccessibilitySymbolComponent.html",
 })
-export class AccessibilitySymbolComponent { }
+export class _AccessibilitySymbolComponent { }

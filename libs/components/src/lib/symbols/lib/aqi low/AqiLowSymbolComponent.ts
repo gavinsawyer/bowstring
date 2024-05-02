@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AqiLowSymbolComponent.html",
 })
-export class AqiLowSymbolComponent { }
+export class _AqiLowSymbolComponent { }

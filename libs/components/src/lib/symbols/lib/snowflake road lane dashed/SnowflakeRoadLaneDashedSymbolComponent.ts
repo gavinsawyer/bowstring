@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SnowflakeRoadLaneDashedSymbolComponent.html",
 })
-export class SnowflakeRoadLaneDashedSymbolComponent { }
+export class _SnowflakeRoadLaneDashedSymbolComponent { }

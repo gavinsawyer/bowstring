@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BubbleLeftFillSymbolComponent.html",
 })
-export class BubbleLeftFillSymbolComponent { }
+export class _BubbleLeftFillSymbolComponent { }

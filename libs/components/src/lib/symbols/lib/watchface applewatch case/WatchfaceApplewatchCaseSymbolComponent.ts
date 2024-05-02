@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WatchfaceApplewatchCaseSymbolComponent.html",
 })
-export class WatchfaceApplewatchCaseSymbolComponent { }
+export class _WatchfaceApplewatchCaseSymbolComponent { }

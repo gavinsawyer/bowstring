@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DropDegreesignSlashSymbolComponent.html",
 })
-export class DropDegreesignSlashSymbolComponent { }
+export class _DropDegreesignSlashSymbolComponent { }

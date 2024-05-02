@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WifiExclamationmarkSymbolComponent.html",
 })
-export class WifiExclamationmarkSymbolComponent { }
+export class _WifiExclamationmarkSymbolComponent { }

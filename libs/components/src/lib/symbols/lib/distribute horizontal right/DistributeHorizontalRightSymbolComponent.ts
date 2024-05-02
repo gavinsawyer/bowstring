@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DistributeHorizontalRightSymbolComponent.html",
 })
-export class DistributeHorizontalRightSymbolComponent { }
+export class _DistributeHorizontalRightSymbolComponent { }

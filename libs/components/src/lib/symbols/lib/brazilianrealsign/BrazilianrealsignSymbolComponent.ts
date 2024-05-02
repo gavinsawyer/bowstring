@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BrazilianrealsignSymbolComponent.html",
 })
-export class BrazilianrealsignSymbolComponent { }
+export class _BrazilianrealsignSymbolComponent { }

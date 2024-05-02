@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FlagCheckeredSymbolComponent.html",
 })
-export class FlagCheckeredSymbolComponent { }
+export class _FlagCheckeredSymbolComponent { }

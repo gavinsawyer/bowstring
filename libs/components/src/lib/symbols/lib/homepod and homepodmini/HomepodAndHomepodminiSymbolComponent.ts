@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HomepodAndHomepodminiSymbolComponent.html",
 })
-export class HomepodAndHomepodminiSymbolComponent { }
+export class _HomepodAndHomepodminiSymbolComponent { }

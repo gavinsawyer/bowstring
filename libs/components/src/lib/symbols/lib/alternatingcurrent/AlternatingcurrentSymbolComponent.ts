@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AlternatingcurrentSymbolComponent.html",
 })
-export class AlternatingcurrentSymbolComponent { }
+export class _AlternatingcurrentSymbolComponent { }

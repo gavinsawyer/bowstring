@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChartBarXaxisAscendingBadgeClockSymbolComponent.html",
 })
-export class ChartBarXaxisAscendingBadgeClockSymbolComponent { }
+export class _ChartBarXaxisAscendingBadgeClockSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FigureHighintensityIntervaltrainingSymbolComponent.html",
 })
-export class FigureHighintensityIntervaltrainingSymbolComponent { }
+export class _FigureHighintensityIntervaltrainingSymbolComponent { }

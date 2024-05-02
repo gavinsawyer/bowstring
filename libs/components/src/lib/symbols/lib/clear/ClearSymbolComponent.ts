@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ClearSymbolComponent.html",
 })
-export class ClearSymbolComponent { }
+export class _ClearSymbolComponent { }

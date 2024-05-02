@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TrashSlashFillSymbolComponent.html",
 })
-export class TrashSlashFillSymbolComponent { }
+export class _TrashSlashFillSymbolComponent { }

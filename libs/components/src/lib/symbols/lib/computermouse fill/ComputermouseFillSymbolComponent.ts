@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ComputermouseFillSymbolComponent.html",
 })
-export class ComputermouseFillSymbolComponent { }
+export class _ComputermouseFillSymbolComponent { }

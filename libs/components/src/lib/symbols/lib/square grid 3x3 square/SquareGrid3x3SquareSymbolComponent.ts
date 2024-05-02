@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquareGrid3x3SquareSymbolComponent.html",
 })
-export class SquareGrid3x3SquareSymbolComponent { }
+export class _SquareGrid3x3SquareSymbolComponent { }

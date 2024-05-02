@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "UiwindowSplit2x1SymbolComponent.html",
 })
-export class UiwindowSplit2x1SymbolComponent { }
+export class _UiwindowSplit2x1SymbolComponent { }

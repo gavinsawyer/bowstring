@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CatFillSymbolComponent.html",
 })
-export class CatFillSymbolComponent { }
+export class _CatFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DotCircleAndHandPointUpLeftFillSymbolComponent.html",
 })
-export class DotCircleAndHandPointUpLeftFillSymbolComponent { }
+export class _DotCircleAndHandPointUpLeftFillSymbolComponent { }

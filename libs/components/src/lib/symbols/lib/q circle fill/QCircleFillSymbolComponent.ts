@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "QCircleFillSymbolComponent.html",
 })
-export class QCircleFillSymbolComponent { }
+export class _QCircleFillSymbolComponent { }

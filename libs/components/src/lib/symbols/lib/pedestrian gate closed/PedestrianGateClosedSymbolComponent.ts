@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PedestrianGateClosedSymbolComponent.html",
 })
-export class PedestrianGateClosedSymbolComponent { }
+export class _PedestrianGateClosedSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShekelsignSymbolComponent.html",
 })
-export class ShekelsignSymbolComponent { }
+export class _ShekelsignSymbolComponent { }

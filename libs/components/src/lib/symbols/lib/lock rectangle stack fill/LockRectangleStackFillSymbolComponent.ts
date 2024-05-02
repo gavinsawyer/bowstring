@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LockRectangleStackFillSymbolComponent.html",
 })
-export class LockRectangleStackFillSymbolComponent { }
+export class _LockRectangleStackFillSymbolComponent { }

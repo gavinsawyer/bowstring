@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EllipsisViewfinderSymbolComponent.html",
 })
-export class EllipsisViewfinderSymbolComponent { }
+export class _EllipsisViewfinderSymbolComponent { }

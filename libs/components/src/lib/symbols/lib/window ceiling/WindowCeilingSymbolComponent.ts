@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WindowCeilingSymbolComponent.html",
 })
-export class WindowCeilingSymbolComponent { }
+export class _WindowCeilingSymbolComponent { }

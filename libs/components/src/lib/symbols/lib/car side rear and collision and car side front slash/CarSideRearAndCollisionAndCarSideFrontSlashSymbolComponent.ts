@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CarSideRearAndCollisionAndCarSideFrontSlashSymbolComponent.html",
 })
-export class CarSideRearAndCollisionAndCarSideFrontSlashSymbolComponent { }
+export class _CarSideRearAndCollisionAndCarSideFrontSlashSymbolComponent { }

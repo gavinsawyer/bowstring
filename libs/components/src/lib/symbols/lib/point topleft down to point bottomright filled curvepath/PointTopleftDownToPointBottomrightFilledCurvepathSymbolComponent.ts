@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PointTopleftDownToPointBottomrightFilledCurvepathSymbolComponent.html",
 })
-export class PointTopleftDownToPointBottomrightFilledCurvepathSymbolComponent { }
+export class _PointTopleftDownToPointBottomrightFilledCurvepathSymbolComponent { }

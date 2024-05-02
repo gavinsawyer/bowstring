@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowkeysUpFilledSymbolComponent.html",
 })
-export class ArrowkeysUpFilledSymbolComponent { }
+export class _ArrowkeysUpFilledSymbolComponent { }

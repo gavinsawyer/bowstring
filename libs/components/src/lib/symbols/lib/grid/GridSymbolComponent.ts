@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GridSymbolComponent.html",
 })
-export class GridSymbolComponent { }
+export class _GridSymbolComponent { }

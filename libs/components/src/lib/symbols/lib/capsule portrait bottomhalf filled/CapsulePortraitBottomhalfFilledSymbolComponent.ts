@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CapsulePortraitBottomhalfFilledSymbolComponent.html",
 })
-export class CapsulePortraitBottomhalfFilledSymbolComponent { }
+export class _CapsulePortraitBottomhalfFilledSymbolComponent { }

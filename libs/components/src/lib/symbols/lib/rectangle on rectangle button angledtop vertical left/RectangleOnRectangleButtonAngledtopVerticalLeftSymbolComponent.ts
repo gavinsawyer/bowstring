@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleOnRectangleButtonAngledtopVerticalLeftSymbolComponent.html",
 })
-export class RectangleOnRectangleButtonAngledtopVerticalLeftSymbolComponent { }
+export class _RectangleOnRectangleButtonAngledtopVerticalLeftSymbolComponent { }

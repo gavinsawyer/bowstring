@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WifiCircleFillSymbolComponent.html",
 })
-export class WifiCircleFillSymbolComponent { }
+export class _WifiCircleFillSymbolComponent { }

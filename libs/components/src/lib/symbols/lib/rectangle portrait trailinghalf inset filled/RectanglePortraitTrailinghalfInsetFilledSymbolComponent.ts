@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectanglePortraitTrailinghalfInsetFilledSymbolComponent.html",
 })
-export class RectanglePortraitTrailinghalfInsetFilledSymbolComponent { }
+export class _RectanglePortraitTrailinghalfInsetFilledSymbolComponent { }

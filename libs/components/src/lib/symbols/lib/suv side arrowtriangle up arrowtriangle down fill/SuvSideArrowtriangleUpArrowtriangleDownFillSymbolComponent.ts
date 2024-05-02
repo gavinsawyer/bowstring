@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SuvSideArrowtriangleUpArrowtriangleDownFillSymbolComponent.html",
 })
-export class SuvSideArrowtriangleUpArrowtriangleDownFillSymbolComponent { }
+export class _SuvSideArrowtriangleUpArrowtriangleDownFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleRighthalfFilledSymbolComponent.html",
 })
-export class RectangleRighthalfFilledSymbolComponent { }
+export class _RectangleRighthalfFilledSymbolComponent { }

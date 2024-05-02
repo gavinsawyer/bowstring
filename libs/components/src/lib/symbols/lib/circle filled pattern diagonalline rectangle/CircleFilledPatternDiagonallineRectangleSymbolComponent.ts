@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CircleFilledPatternDiagonallineRectangleSymbolComponent.html",
 })
-export class CircleFilledPatternDiagonallineRectangleSymbolComponent { }
+export class _CircleFilledPatternDiagonallineRectangleSymbolComponent { }

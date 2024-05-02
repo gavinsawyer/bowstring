@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowUturnBackwardCircleBadgeEllipsisSymbolComponent.html",
 })
-export class ArrowUturnBackwardCircleBadgeEllipsisSymbolComponent { }
+export class _ArrowUturnBackwardCircleBadgeEllipsisSymbolComponent { }

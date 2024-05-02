@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "StopSymbolComponent.html",
 })
-export class StopSymbolComponent { }
+export class _StopSymbolComponent { }

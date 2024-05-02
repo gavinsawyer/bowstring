@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ZlButtonRoundedtopHorizontalFillSymbolComponent.html",
 })
-export class ZlButtonRoundedtopHorizontalFillSymbolComponent { }
+export class _ZlButtonRoundedtopHorizontalFillSymbolComponent { }

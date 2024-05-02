@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EraserLineDashedFillSymbolComponent.html",
 })
-export class EraserLineDashedFillSymbolComponent { }
+export class _EraserLineDashedFillSymbolComponent { }

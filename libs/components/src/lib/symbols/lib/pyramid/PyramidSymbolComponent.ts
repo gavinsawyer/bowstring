@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PyramidSymbolComponent.html",
 })
-export class PyramidSymbolComponent { }
+export class _PyramidSymbolComponent { }

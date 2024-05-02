@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "InfinityCircleFillSymbolComponent.html",
 })
-export class InfinityCircleFillSymbolComponent { }
+export class _InfinityCircleFillSymbolComponent { }

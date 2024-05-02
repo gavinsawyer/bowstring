@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AppletvremoteGen2SymbolComponent.html",
 })
-export class AppletvremoteGen2SymbolComponent { }
+export class _AppletvremoteGen2SymbolComponent { }

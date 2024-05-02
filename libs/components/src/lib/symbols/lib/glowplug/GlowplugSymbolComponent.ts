@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GlowplugSymbolComponent.html",
 })
-export class GlowplugSymbolComponent { }
+export class _GlowplugSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LockOpenRotationSymbolComponent.html",
 })
-export class LockOpenRotationSymbolComponent { }
+export class _LockOpenRotationSymbolComponent { }

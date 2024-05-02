@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ThermometerSnowflakeCircleSymbolComponent.html",
 })
-export class ThermometerSnowflakeCircleSymbolComponent { }
+export class _ThermometerSnowflakeCircleSymbolComponent { }

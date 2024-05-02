@@ -16,3 +16,4 @@ export * from "./lib/list item/ListItemComponent";
 export * from "./lib/main/MainComponent";
 export * from "./lib/route/RouteComponent";
 export * from "./lib/section/SectionComponent";
+export * from "./lib/symbol/SymbolComponent";

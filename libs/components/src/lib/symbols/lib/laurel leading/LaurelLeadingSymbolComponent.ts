@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LaurelLeadingSymbolComponent.html",
 })
-export class LaurelLeadingSymbolComponent { }
+export class _LaurelLeadingSymbolComponent { }

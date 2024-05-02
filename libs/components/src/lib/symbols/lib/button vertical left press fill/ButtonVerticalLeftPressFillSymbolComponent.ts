@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ButtonVerticalLeftPressFillSymbolComponent.html",
 })
-export class ButtonVerticalLeftPressFillSymbolComponent { }
+export class _ButtonVerticalLeftPressFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BarcodeViewfinderSymbolComponent.html",
 })
-export class BarcodeViewfinderSymbolComponent { }
+export class _BarcodeViewfinderSymbolComponent { }

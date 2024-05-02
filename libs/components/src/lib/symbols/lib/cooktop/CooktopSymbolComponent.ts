@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CooktopSymbolComponent.html",
 })
-export class CooktopSymbolComponent { }
+export class _CooktopSymbolComponent { }

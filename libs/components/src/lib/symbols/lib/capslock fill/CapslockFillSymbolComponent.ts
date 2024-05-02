@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CapslockFillSymbolComponent.html",
 })
-export class CapslockFillSymbolComponent { }
+export class _CapslockFillSymbolComponent { }

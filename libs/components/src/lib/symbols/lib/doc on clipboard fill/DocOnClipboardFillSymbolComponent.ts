@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DocOnClipboardFillSymbolComponent.html",
 })
-export class DocOnClipboardFillSymbolComponent { }
+export class _DocOnClipboardFillSymbolComponent { }

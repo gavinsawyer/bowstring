@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BoldItalicUnderlineSymbolComponent.html",
 })
-export class BoldItalicUnderlineSymbolComponent { }
+export class _BoldItalicUnderlineSymbolComponent { }

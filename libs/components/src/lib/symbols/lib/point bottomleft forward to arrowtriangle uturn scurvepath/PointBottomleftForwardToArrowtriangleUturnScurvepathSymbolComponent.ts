@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PointBottomleftForwardToArrowtriangleUturnScurvepathSymbolComponent.html",
 })
-export class PointBottomleftForwardToArrowtriangleUturnScurvepathSymbolComponent { }
+export class _PointBottomleftForwardToArrowtriangleUturnScurvepathSymbolComponent { }

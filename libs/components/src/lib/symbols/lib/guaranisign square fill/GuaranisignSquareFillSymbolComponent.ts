@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GuaranisignSquareFillSymbolComponent.html",
 })
-export class GuaranisignSquareFillSymbolComponent { }
+export class _GuaranisignSquareFillSymbolComponent { }

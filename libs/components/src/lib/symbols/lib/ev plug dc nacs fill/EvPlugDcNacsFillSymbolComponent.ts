@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EvPlugDcNacsFillSymbolComponent.html",
 })
-export class EvPlugDcNacsFillSymbolComponent { }
+export class _EvPlugDcNacsFillSymbolComponent { }

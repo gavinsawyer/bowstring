@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CarRearAndTireMarksSymbolComponent.html",
 })
-export class CarRearAndTireMarksSymbolComponent { }
+export class _CarRearAndTireMarksSymbolComponent { }

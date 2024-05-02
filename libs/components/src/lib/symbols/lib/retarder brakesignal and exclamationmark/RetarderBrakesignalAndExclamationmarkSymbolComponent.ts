@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RetarderBrakesignalAndExclamationmarkSymbolComponent.html",
 })
-export class RetarderBrakesignalAndExclamationmarkSymbolComponent { }
+export class _RetarderBrakesignalAndExclamationmarkSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TruckPickupSideLockFillSymbolComponent.html",
 })
-export class TruckPickupSideLockFillSymbolComponent { }
+export class _TruckPickupSideLockFillSymbolComponent { }

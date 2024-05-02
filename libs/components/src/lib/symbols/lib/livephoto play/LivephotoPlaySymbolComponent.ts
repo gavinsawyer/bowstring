@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LivephotoPlaySymbolComponent.html",
 })
-export class LivephotoPlaySymbolComponent { }
+export class _LivephotoPlaySymbolComponent { }

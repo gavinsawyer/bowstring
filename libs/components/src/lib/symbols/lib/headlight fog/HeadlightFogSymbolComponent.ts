@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HeadlightFogSymbolComponent.html",
 })
-export class HeadlightFogSymbolComponent { }
+export class _HeadlightFogSymbolComponent { }

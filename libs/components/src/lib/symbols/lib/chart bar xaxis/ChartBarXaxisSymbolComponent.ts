@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChartBarXaxisSymbolComponent.html",
 })
-export class ChartBarXaxisSymbolComponent { }
+export class _ChartBarXaxisSymbolComponent { }

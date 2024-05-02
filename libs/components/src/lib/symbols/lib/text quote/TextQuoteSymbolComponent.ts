@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextQuoteSymbolComponent.html",
 })
-export class TextQuoteSymbolComponent { }
+export class _TextQuoteSymbolComponent { }

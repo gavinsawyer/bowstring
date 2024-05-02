@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "EntryLeverKeypadFillSymbolComponent.html",
 })
-export class EntryLeverKeypadFillSymbolComponent { }
+export class _EntryLeverKeypadFillSymbolComponent { }

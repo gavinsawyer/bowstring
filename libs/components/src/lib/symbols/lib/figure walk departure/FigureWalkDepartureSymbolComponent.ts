@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FigureWalkDepartureSymbolComponent.html",
 })
-export class FigureWalkDepartureSymbolComponent { }
+export class _FigureWalkDepartureSymbolComponent { }

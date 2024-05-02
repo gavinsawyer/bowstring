@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LassoSymbolComponent.html",
 })
-export class LassoSymbolComponent { }
+export class _LassoSymbolComponent { }

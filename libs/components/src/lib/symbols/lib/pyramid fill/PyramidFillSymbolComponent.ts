@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PyramidFillSymbolComponent.html",
 })
-export class PyramidFillSymbolComponent { }
+export class _PyramidFillSymbolComponent { }

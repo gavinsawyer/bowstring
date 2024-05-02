@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DivideCircleFillSymbolComponent.html",
 })
-export class DivideCircleFillSymbolComponent { }
+export class _DivideCircleFillSymbolComponent { }

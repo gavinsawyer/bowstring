@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CheckmarkApplewatchSymbolComponent.html",
 })
-export class CheckmarkApplewatchSymbolComponent { }
+export class _CheckmarkApplewatchSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PlaceholdertextFillSymbolComponent.html",
 })
-export class PlaceholdertextFillSymbolComponent { }
+export class _PlaceholdertextFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RotateLeftFillSymbolComponent.html",
 })
-export class RotateLeftFillSymbolComponent { }
+export class _RotateLeftFillSymbolComponent { }

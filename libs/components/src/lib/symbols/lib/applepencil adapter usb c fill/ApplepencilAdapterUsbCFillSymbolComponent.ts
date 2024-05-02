@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ApplepencilAdapterUsbCFillSymbolComponent.html",
 })
-export class ApplepencilAdapterUsbCFillSymbolComponent { }
+export class _ApplepencilAdapterUsbCFillSymbolComponent { }

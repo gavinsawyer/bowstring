@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ThermometerSunSymbolComponent.html",
 })
-export class ThermometerSunSymbolComponent { }
+export class _ThermometerSunSymbolComponent { }

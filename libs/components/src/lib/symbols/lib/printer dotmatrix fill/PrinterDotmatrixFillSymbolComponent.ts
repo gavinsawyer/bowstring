@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PrinterDotmatrixFillSymbolComponent.html",
 })
-export class PrinterDotmatrixFillSymbolComponent { }
+export class _PrinterDotmatrixFillSymbolComponent { }

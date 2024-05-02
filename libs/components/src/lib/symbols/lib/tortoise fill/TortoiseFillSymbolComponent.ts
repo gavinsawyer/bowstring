@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TortoiseFillSymbolComponent.html",
 })
-export class TortoiseFillSymbolComponent { }
+export class _TortoiseFillSymbolComponent { }

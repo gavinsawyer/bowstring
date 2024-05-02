@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CarTopRadiowavesRearRightBadgeExclamationmarkFillSymbolComponent.html",
 })
-export class CarTopRadiowavesRearRightBadgeExclamationmarkFillSymbolComponent { }
+export class _CarTopRadiowavesRearRightBadgeExclamationmarkFillSymbolComponent { }

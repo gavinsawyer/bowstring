@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "NetworkBadgeShieldHalfFilledSymbolComponent.html",
 })
-export class NetworkBadgeShieldHalfFilledSymbolComponent { }
+export class _NetworkBadgeShieldHalfFilledSymbolComponent { }

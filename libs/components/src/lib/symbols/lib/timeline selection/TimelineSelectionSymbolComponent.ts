@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TimelineSelectionSymbolComponent.html",
 })
-export class TimelineSelectionSymbolComponent { }
+export class _TimelineSelectionSymbolComponent { }

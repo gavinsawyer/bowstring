@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PlatterBottomApplewatchCaseSymbolComponent.html",
 })
-export class PlatterBottomApplewatchCaseSymbolComponent { }
+export class _PlatterBottomApplewatchCaseSymbolComponent { }

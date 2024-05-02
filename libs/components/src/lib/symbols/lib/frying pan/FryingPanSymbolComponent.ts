@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FryingPanSymbolComponent.html",
 })
-export class FryingPanSymbolComponent { }
+export class _FryingPanSymbolComponent { }

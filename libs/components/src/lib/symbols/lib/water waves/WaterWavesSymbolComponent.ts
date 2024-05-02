@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WaterWavesSymbolComponent.html",
 })
-export class WaterWavesSymbolComponent { }
+export class _WaterWavesSymbolComponent { }

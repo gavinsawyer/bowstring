@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TvAndHifispeakerFillSymbolComponent.html",
 })
-export class TvAndHifispeakerFillSymbolComponent { }
+export class _TvAndHifispeakerFillSymbolComponent { }

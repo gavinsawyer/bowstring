@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextformatSizeLargerSymbolComponent.html",
 })
-export class TextformatSizeLargerSymbolComponent { }
+export class _TextformatSizeLargerSymbolComponent { }

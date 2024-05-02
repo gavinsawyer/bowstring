@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SteeringwheelAndLiquidWaveSymbolComponent.html",
 })
-export class SteeringwheelAndLiquidWaveSymbolComponent { }
+export class _SteeringwheelAndLiquidWaveSymbolComponent { }

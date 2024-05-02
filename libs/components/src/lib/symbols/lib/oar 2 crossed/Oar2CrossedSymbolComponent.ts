@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Oar2CrossedSymbolComponent.html",
 })
-export class Oar2CrossedSymbolComponent { }
+export class _Oar2CrossedSymbolComponent { }

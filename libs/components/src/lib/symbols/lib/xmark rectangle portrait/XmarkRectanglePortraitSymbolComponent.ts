@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "XmarkRectanglePortraitSymbolComponent.html",
 })
-export class XmarkRectanglePortraitSymbolComponent { }
+export class _XmarkRectanglePortraitSymbolComponent { }

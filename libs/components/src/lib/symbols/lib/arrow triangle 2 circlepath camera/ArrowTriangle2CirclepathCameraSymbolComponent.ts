@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArrowTriangle2CirclepathCameraSymbolComponent.html",
 })
-export class ArrowTriangle2CirclepathCameraSymbolComponent { }
+export class _ArrowTriangle2CirclepathCameraSymbolComponent { }

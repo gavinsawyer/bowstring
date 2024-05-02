@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SoccerballCircleInverseSymbolComponent.html",
 })
-export class SoccerballCircleInverseSymbolComponent { }
+export class _SoccerballCircleInverseSymbolComponent { }

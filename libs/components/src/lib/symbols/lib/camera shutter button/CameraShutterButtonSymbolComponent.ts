@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CameraShutterButtonSymbolComponent.html",
 })
-export class CameraShutterButtonSymbolComponent { }
+export class _CameraShutterButtonSymbolComponent { }

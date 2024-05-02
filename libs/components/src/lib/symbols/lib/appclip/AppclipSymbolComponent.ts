@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AppclipSymbolComponent.html",
 })
-export class AppclipSymbolComponent { }
+export class _AppclipSymbolComponent { }

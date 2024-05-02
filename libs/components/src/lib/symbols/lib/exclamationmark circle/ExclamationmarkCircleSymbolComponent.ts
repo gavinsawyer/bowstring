@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ExclamationmarkCircleSymbolComponent.html",
 })
-export class ExclamationmarkCircleSymbolComponent { }
+export class _ExclamationmarkCircleSymbolComponent { }

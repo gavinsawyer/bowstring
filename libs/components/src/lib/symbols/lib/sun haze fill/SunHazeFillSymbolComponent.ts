@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SunHazeFillSymbolComponent.html",
 })
-export class SunHazeFillSymbolComponent { }
+export class _SunHazeFillSymbolComponent { }

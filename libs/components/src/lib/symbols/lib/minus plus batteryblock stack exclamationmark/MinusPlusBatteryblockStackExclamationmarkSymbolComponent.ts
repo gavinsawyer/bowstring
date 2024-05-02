@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MinusPlusBatteryblockStackExclamationmarkSymbolComponent.html",
 })
-export class MinusPlusBatteryblockStackExclamationmarkSymbolComponent { }
+export class _MinusPlusBatteryblockStackExclamationmarkSymbolComponent { }

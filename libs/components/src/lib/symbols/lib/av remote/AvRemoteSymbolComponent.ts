@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AvRemoteSymbolComponent.html",
 })
-export class AvRemoteSymbolComponent { }
+export class _AvRemoteSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CaseFillSymbolComponent.html",
 })
-export class CaseFillSymbolComponent { }
+export class _CaseFillSymbolComponent { }

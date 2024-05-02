@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SliderHorizontalBelowSquareAndSquareFilledSymbolComponent.html",
 })
-export class SliderHorizontalBelowSquareAndSquareFilledSymbolComponent { }
+export class _SliderHorizontalBelowSquareAndSquareFilledSymbolComponent { }

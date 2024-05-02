@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SprinklerFillSymbolComponent.html",
 })
-export class SprinklerFillSymbolComponent { }
+export class _SprinklerFillSymbolComponent { }

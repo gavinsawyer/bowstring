@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Battery0percentSymbolComponent.html",
 })
-export class Battery0percentSymbolComponent { }
+export class _Battery0percentSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SidebarSquaresLeadingSymbolComponent.html",
 })
-export class SidebarSquaresLeadingSymbolComponent { }
+export class _SidebarSquaresLeadingSymbolComponent { }

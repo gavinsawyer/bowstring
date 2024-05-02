@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DigitalcrownPressSymbolComponent.html",
 })
-export class DigitalcrownPressSymbolComponent { }
+export class _DigitalcrownPressSymbolComponent { }

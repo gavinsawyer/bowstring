@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FxSymbolComponent.html",
 })
-export class FxSymbolComponent { }
+export class _FxSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WifiSlashSymbolComponent.html",
 })
-export class WifiSlashSymbolComponent { }
+export class _WifiSlashSymbolComponent { }

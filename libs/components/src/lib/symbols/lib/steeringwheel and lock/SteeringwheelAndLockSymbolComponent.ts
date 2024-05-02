@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SteeringwheelAndLockSymbolComponent.html",
 })
-export class SteeringwheelAndLockSymbolComponent { }
+export class _SteeringwheelAndLockSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ContextualmenuAndCursorarrowSymbolComponent.html",
 })
-export class ContextualmenuAndCursorarrowSymbolComponent { }
+export class _ContextualmenuAndCursorarrowSymbolComponent { }

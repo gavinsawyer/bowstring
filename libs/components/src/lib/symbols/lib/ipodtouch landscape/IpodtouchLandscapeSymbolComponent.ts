@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "IpodtouchLandscapeSymbolComponent.html",
 })
-export class IpodtouchLandscapeSymbolComponent { }
+export class _IpodtouchLandscapeSymbolComponent { }

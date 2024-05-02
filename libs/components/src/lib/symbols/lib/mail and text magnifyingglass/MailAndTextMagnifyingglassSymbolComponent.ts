@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MailAndTextMagnifyingglassSymbolComponent.html",
 })
-export class MailAndTextMagnifyingglassSymbolComponent { }
+export class _MailAndTextMagnifyingglassSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MediastickSymbolComponent.html",
 })
-export class MediastickSymbolComponent { }
+export class _MediastickSymbolComponent { }

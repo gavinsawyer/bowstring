@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FigureSeatedSideWindshieldFrontAndHeatWavesAirDistributionUpperAndLowerSymbolComponent.html",
 })
-export class FigureSeatedSideWindshieldFrontAndHeatWavesAirDistributionUpperAndLowerSymbolComponent { }
+export class _FigureSeatedSideWindshieldFrontAndHeatWavesAirDistributionUpperAndLowerSymbolComponent { }

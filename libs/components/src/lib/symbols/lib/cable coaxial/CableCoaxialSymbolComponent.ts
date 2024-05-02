@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CableCoaxialSymbolComponent.html",
 })
-export class CableCoaxialSymbolComponent { }
+export class _CableCoaxialSymbolComponent { }

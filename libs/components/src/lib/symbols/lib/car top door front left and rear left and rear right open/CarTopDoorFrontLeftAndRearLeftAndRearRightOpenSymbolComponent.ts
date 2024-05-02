@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CarTopDoorFrontLeftAndRearLeftAndRearRightOpenSymbolComponent.html",
 })
-export class CarTopDoorFrontLeftAndRearLeftAndRearRightOpenSymbolComponent { }
+export class _CarTopDoorFrontLeftAndRearLeftAndRearRightOpenSymbolComponent { }

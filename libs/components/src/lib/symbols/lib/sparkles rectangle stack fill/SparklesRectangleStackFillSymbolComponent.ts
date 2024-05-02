@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SparklesRectangleStackFillSymbolComponent.html",
 })
-export class SparklesRectangleStackFillSymbolComponent { }
+export class _SparklesRectangleStackFillSymbolComponent { }

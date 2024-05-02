@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FilemenuAndCursorarrowSymbolComponent.html",
 })
-export class FilemenuAndCursorarrowSymbolComponent { }
+export class _FilemenuAndCursorarrowSymbolComponent { }

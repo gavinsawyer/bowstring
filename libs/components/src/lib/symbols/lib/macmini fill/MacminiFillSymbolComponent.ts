@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MacminiFillSymbolComponent.html",
 })
-export class MacminiFillSymbolComponent { }
+export class _MacminiFillSymbolComponent { }

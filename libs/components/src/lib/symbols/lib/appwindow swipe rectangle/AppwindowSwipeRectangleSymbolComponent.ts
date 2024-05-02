@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AppwindowSwipeRectangleSymbolComponent.html",
 })
-export class AppwindowSwipeRectangleSymbolComponent { }
+export class _AppwindowSwipeRectangleSymbolComponent { }

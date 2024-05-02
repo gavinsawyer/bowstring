@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MicSlashCircleSymbolComponent.html",
 })
-export class MicSlashCircleSymbolComponent { }
+export class _MicSlashCircleSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ListBulletRectangleSymbolComponent.html",
 })
-export class ListBulletRectangleSymbolComponent { }
+export class _ListBulletRectangleSymbolComponent { }

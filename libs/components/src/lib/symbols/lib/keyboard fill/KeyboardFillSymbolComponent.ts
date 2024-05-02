@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "KeyboardFillSymbolComponent.html",
 })
-export class KeyboardFillSymbolComponent { }
+export class _KeyboardFillSymbolComponent { }

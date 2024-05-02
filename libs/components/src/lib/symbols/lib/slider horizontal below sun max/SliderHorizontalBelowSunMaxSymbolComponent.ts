@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SliderHorizontalBelowSunMaxSymbolComponent.html",
 })
-export class SliderHorizontalBelowSunMaxSymbolComponent { }
+export class _SliderHorizontalBelowSunMaxSymbolComponent { }

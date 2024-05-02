@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "XmarkOctagonFillSymbolComponent.html",
 })
-export class XmarkOctagonFillSymbolComponent { }
+export class _XmarkOctagonFillSymbolComponent { }

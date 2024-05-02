@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HeaterVerticalSymbolComponent.html",
 })
-export class HeaterVerticalSymbolComponent { }
+export class _HeaterVerticalSymbolComponent { }

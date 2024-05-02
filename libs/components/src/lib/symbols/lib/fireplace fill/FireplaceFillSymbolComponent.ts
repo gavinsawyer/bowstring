@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FireplaceFillSymbolComponent.html",
 })
-export class FireplaceFillSymbolComponent { }
+export class _FireplaceFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArchiveboxSymbolComponent.html",
 })
-export class ArchiveboxSymbolComponent { }
+export class _ArchiveboxSymbolComponent { }

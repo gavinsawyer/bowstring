@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextformatAbcDottedunderlineSymbolComponent.html",
 })
-export class TextformatAbcDottedunderlineSymbolComponent { }
+export class _TextformatAbcDottedunderlineSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WaveformPathEcgRectangleSymbolComponent.html",
 })
-export class WaveformPathEcgRectangleSymbolComponent { }
+export class _WaveformPathEcgRectangleSymbolComponent { }

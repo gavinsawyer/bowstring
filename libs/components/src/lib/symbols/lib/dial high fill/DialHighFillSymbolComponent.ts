@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DialHighFillSymbolComponent.html",
 })
-export class DialHighFillSymbolComponent { }
+export class _DialHighFillSymbolComponent { }

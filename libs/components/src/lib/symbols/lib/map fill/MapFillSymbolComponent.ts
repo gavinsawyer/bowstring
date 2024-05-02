@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MapFillSymbolComponent.html",
 })
-export class MapFillSymbolComponent { }
+export class _MapFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "GaugeWithNeedleFillSymbolComponent.html",
 })
-export class GaugeWithNeedleFillSymbolComponent { }
+export class _GaugeWithNeedleFillSymbolComponent { }

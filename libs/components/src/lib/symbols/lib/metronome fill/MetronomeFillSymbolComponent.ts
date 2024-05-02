@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MetronomeFillSymbolComponent.html",
 })
-export class MetronomeFillSymbolComponent { }
+export class _MetronomeFillSymbolComponent { }

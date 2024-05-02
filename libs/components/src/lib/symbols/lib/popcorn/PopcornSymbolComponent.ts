@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PopcornSymbolComponent.html",
 })
-export class PopcornSymbolComponent { }
+export class _PopcornSymbolComponent { }

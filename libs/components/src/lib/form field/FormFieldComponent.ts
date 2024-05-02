@@ -3,7 +3,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModu
 
 
 @Component({
-  imports: [
+  imports:     [
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -35,7 +35,7 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
     read:   ElementRef<HTMLTextAreaElement>,
     static: true,
   })
-  private htmlTextAreaElement?: ElementRef<HTMLTextAreaElement>;
+  private htmlTextAreaElementRef?: ElementRef<HTMLTextAreaElement>;
 
   private readonly abortController: AbortController = new AbortController();
 
@@ -77,13 +77,13 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
     },
   );
 
-  public ngOnDestroy():                                      void {
+  public ngOnDestroy      ():                                 void {
     this
       .abortController
       .abort();
   }
-  public registerOnChange(handler: (value: string) => void): void {
-    (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
+  public registerOnChange (handler: (value: string) => void): void {
+    (this.htmlInputElementRef || this.htmlTextAreaElementRef as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .addEventListener(
         "change",
@@ -95,8 +95,8 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
         },
       );
   }
-  public registerOnTouched(handler: () => void):             void {
-    (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
+  public registerOnTouched(handler: () => void):              void {
+    (this.htmlInputElementRef || this.htmlTextAreaElementRef as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .addEventListener(
         "blur",
@@ -106,13 +106,13 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
         },
       );
   }
-  public setDisabledState?(isDisabled: boolean):             void {
-    (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
+  public setDisabledState?(isDisabled: boolean):              void {
+    (this.htmlInputElementRef || this.htmlTextAreaElementRef as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .disabled = isDisabled;
   }
-  public writeValue(value: string):                          void {
-    (this.htmlInputElementRef || this.htmlTextAreaElement as ElementRef<HTMLTextAreaElement>)
+  public writeValue       (value: string):                    void {
+    (this.htmlInputElementRef || this.htmlTextAreaElementRef as ElementRef<HTMLTextAreaElement>)
       .nativeElement
       .value = value;
   }

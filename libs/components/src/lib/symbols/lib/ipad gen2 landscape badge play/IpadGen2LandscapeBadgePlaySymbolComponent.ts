@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "IpadGen2LandscapeBadgePlaySymbolComponent.html",
 })
-export class IpadGen2LandscapeBadgePlaySymbolComponent { }
+export class _IpadGen2LandscapeBadgePlaySymbolComponent { }

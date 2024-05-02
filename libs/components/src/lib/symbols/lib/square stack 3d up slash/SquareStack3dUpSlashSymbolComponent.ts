@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquareStack3dUpSlashSymbolComponent.html",
 })
-export class SquareStack3dUpSlashSymbolComponent { }
+export class _SquareStack3dUpSlashSymbolComponent { }

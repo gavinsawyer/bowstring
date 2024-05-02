@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TogglepowerSymbolComponent.html",
 })
-export class TogglepowerSymbolComponent { }
+export class _TogglepowerSymbolComponent { }

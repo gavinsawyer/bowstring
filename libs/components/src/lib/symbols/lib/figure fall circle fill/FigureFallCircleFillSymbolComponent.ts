@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FigureFallCircleFillSymbolComponent.html",
 })
-export class FigureFallCircleFillSymbolComponent { }
+export class _FigureFallCircleFillSymbolComponent { }

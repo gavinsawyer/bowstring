@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CircleGridCrossDownFilledSymbolComponent.html",
 })
-export class CircleGridCrossDownFilledSymbolComponent { }
+export class _CircleGridCrossDownFilledSymbolComponent { }

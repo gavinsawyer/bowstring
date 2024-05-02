@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MirrorSideRightAndHeatWavesSymbolComponent.html",
 })
-export class MirrorSideRightAndHeatWavesSymbolComponent { }
+export class _MirrorSideRightAndHeatWavesSymbolComponent { }

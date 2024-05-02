@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MicAndSignalMeterFillSymbolComponent.html",
 })
-export class MicAndSignalMeterFillSymbolComponent { }
+export class _MicAndSignalMeterFillSymbolComponent { }

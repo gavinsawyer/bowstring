@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "FigureSeatedSeatbeltAndAirbagOffSymbolComponent.html",
 })
-export class FigureSeatedSeatbeltAndAirbagOffSymbolComponent { }
+export class _FigureSeatedSeatbeltAndAirbagOffSymbolComponent { }

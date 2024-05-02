@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MappinSlashCircleFillSymbolComponent.html",
 })
-export class MappinSlashCircleFillSymbolComponent { }
+export class _MappinSlashCircleFillSymbolComponent { }

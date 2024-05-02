@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CheckmarkCircleFillSymbolComponent.html",
 })
-export class CheckmarkCircleFillSymbolComponent { }
+export class _CheckmarkCircleFillSymbolComponent { }

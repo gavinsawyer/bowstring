@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DocBadgeClockFillSymbolComponent.html",
 })
-export class DocBadgeClockFillSymbolComponent { }
+export class _DocBadgeClockFillSymbolComponent { }

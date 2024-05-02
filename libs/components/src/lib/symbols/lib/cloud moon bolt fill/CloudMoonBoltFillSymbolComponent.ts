@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CloudMoonBoltFillSymbolComponent.html",
 })
-export class CloudMoonBoltFillSymbolComponent { }
+export class _CloudMoonBoltFillSymbolComponent { }

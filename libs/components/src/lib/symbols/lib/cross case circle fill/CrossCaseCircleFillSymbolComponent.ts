@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CrossCaseCircleFillSymbolComponent.html",
 })
-export class CrossCaseCircleFillSymbolComponent { }
+export class _CrossCaseCircleFillSymbolComponent { }

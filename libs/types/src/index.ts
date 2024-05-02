@@ -1,1 +1,2 @@
-export * from "./lib/FlexboxAlignment";
+export * from "./lib/DistributedAlignment";
+export * from "./lib/PositionalAlignment";

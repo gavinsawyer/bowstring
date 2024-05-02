@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "HeadlightDaytimeFillSymbolComponent.html",
 })
-export class HeadlightDaytimeFillSymbolComponent { }
+export class _HeadlightDaytimeFillSymbolComponent { }

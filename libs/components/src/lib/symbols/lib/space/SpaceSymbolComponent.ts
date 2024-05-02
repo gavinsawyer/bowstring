@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SpaceSymbolComponent.html",
 })
-export class SpaceSymbolComponent { }
+export class _SpaceSymbolComponent { }

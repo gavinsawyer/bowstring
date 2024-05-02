@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DocRichtextFillSymbolComponent.html",
 })
-export class DocRichtextFillSymbolComponent { }
+export class _DocRichtextFillSymbolComponent { }

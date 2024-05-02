@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ArkitSymbolComponent.html",
 })
-export class ArkitSymbolComponent { }
+export class _ArkitSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ParenthesesSymbolComponent.html",
 })
-export class ParenthesesSymbolComponent { }
+export class _ParenthesesSymbolComponent { }

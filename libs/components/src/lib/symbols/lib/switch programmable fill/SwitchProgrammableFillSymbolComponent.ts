@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SwitchProgrammableFillSymbolComponent.html",
 })
-export class SwitchProgrammableFillSymbolComponent { }
+export class _SwitchProgrammableFillSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "OpticaldiscdriveFillSymbolComponent.html",
 })
-export class OpticaldiscdriveFillSymbolComponent { }
+export class _OpticaldiscdriveFillSymbolComponent { }

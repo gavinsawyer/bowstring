@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ExclamationmarkSquareFillSymbolComponent.html",
 })
-export class ExclamationmarkSquareFillSymbolComponent { }
+export class _ExclamationmarkSquareFillSymbolComponent { }

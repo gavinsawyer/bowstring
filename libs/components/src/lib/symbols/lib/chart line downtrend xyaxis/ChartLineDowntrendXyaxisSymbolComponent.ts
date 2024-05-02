@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ChartLineDowntrendXyaxisSymbolComponent.html",
 })
-export class ChartLineDowntrendXyaxisSymbolComponent { }
+export class _ChartLineDowntrendXyaxisSymbolComponent { }

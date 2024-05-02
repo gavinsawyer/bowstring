@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "AntennaRadiowavesLeftAndRightSlashSymbolComponent.html",
 })
-export class AntennaRadiowavesLeftAndRightSlashSymbolComponent { }
+export class _AntennaRadiowavesLeftAndRightSlashSymbolComponent { }

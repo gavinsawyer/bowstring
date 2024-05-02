@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WrenchAndScrewdriverSymbolComponent.html",
 })
-export class WrenchAndScrewdriverSymbolComponent { }
+export class _WrenchAndScrewdriverSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShazamLogoFillSymbolComponent.html",
 })
-export class ShazamLogoFillSymbolComponent { }
+export class _ShazamLogoFillSymbolComponent { }

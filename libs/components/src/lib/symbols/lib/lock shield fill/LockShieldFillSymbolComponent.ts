@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LockShieldFillSymbolComponent.html",
 })
-export class LockShieldFillSymbolComponent { }
+export class _LockShieldFillSymbolComponent { }

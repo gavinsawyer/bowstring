@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DoorGarageClosedTrianglebadgeExclamationmarkSymbolComponent.html",
 })
-export class DoorGarageClosedTrianglebadgeExclamationmarkSymbolComponent { }
+export class _DoorGarageClosedTrianglebadgeExclamationmarkSymbolComponent { }

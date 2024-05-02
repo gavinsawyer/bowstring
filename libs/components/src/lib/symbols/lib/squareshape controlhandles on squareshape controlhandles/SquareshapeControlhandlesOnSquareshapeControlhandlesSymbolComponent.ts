@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquareshapeControlhandlesOnSquareshapeControlhandlesSymbolComponent.html",
 })
-export class SquareshapeControlhandlesOnSquareshapeControlhandlesSymbolComponent { }
+export class _SquareshapeControlhandlesOnSquareshapeControlhandlesSymbolComponent { }

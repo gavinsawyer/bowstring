@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TextLineLastAndArrowtriangleForwardSymbolComponent.html",
 })
-export class TextLineLastAndArrowtriangleForwardSymbolComponent { }
+export class _TextLineLastAndArrowtriangleForwardSymbolComponent { }

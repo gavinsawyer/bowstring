@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "LightRecessedSymbolComponent.html",
 })
-export class LightRecessedSymbolComponent { }
+export class _LightRecessedSymbolComponent { }

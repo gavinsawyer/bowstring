@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "KeyViewfinderSymbolComponent.html",
 })
-export class KeyViewfinderSymbolComponent { }
+export class _KeyViewfinderSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "WaveformSlashSymbolComponent.html",
 })
-export class WaveformSlashSymbolComponent { }
+export class _WaveformSlashSymbolComponent { }

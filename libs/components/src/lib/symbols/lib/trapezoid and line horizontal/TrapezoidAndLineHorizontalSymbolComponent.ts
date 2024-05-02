@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TrapezoidAndLineHorizontalSymbolComponent.html",
 })
-export class TrapezoidAndLineHorizontalSymbolComponent { }
+export class _TrapezoidAndLineHorizontalSymbolComponent { }

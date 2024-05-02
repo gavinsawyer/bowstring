@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ScalemassFillSymbolComponent.html",
 })
-export class ScalemassFillSymbolComponent { }
+export class _ScalemassFillSymbolComponent { }

@@ -1,5 +1,5 @@
-import { Component, Input, numberAttribute } from "@angular/core";
-import { FlexboxAlignment }                  from "@standard/types";
+import { Component, Input, numberAttribute }         from "@angular/core";
+import { DistributedAlignment, PositionalAlignment } from "@standard/types";
 
 
 @Component({
@@ -12,17 +12,16 @@ import { FlexboxAlignment }                  from "@standard/types";
 })
 export class FlexboxComponent {
 
-  @Input() public alignContent?:   FlexboxAlignment;
-  @Input() public alignItems?:     FlexboxAlignment;
+  @Input() public alignContent?:   DistributedAlignment | PositionalAlignment;
+  @Input() public alignItems?:     DistributedAlignment | PositionalAlignment;
   @Input() public basis?:          string;
-  @Input() public justifyContent?: FlexboxAlignment;
-  @Input() public reverse?:        boolean;
+  @Input() public justifyContent?: DistributedAlignment | PositionalAlignment;
   @Input() public wrap?:           "nowrap" | "wrap" | "wrap-reverse";
 
   @Input({
     required: true,
   })
-  public direction?: "column" | "row";
+  public direction?: "column" | "column-reverse" | "row" | "row-reverse";
 
   @Input({
     transform: numberAttribute,

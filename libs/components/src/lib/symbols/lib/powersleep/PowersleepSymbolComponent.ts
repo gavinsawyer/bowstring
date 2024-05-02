@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PowersleepSymbolComponent.html",
 })
-export class PowersleepSymbolComponent { }
+export class _PowersleepSymbolComponent { }

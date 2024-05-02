@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MoonphaseLastQuarterSymbolComponent.html",
 })
-export class MoonphaseLastQuarterSymbolComponent { }
+export class _MoonphaseLastQuarterSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "MountSymbolComponent.html",
 })
-export class MountSymbolComponent { }
+export class _MountSymbolComponent { }

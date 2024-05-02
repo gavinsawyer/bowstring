@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RosetteSymbolComponent.html",
 })
-export class RosetteSymbolComponent { }
+export class _RosetteSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleAndPencilAndEllipsisSymbolComponent.html",
 })
-export class RectangleAndPencilAndEllipsisSymbolComponent { }
+export class _RectangleAndPencilAndEllipsisSymbolComponent { }

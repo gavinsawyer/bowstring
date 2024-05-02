@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VisionproCircleFillSymbolComponent.html",
 })
-export class VisionproCircleFillSymbolComponent { }
+export class _VisionproCircleFillSymbolComponent { }

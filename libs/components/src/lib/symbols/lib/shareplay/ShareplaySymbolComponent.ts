@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "ShareplaySymbolComponent.html",
 })
-export class ShareplaySymbolComponent { }
+export class _ShareplaySymbolComponent { }

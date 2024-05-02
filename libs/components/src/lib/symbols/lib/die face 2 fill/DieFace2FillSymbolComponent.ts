@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "DieFace2FillSymbolComponent.html",
 })
-export class DieFace2FillSymbolComponent { }
+export class _DieFace2FillSymbolComponent { }

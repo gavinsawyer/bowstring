@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "CameraMeteringCenterWeightedSymbolComponent.html",
 })
-export class CameraMeteringCenterWeightedSymbolComponent { }
+export class _CameraMeteringCenterWeightedSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "Person2Wave2SymbolComponent.html",
 })
-export class Person2Wave2SymbolComponent { }
+export class _Person2Wave2SymbolComponent { }

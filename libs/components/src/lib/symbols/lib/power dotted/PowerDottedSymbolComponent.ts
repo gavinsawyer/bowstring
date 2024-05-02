@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "PowerDottedSymbolComponent.html",
 })
-export class PowerDottedSymbolComponent { }
+export class _PowerDottedSymbolComponent { }

@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "BoltBadgeAutomaticSymbolComponent.html",
 })
-export class BoltBadgeAutomaticSymbolComponent { }
+export class _BoltBadgeAutomaticSymbolComponent { }

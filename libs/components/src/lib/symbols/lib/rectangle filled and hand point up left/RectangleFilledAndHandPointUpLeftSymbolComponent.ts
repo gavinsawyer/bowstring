@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "RectangleFilledAndHandPointUpLeftSymbolComponent.html",
 })
-export class RectangleFilledAndHandPointUpLeftSymbolComponent { }
+export class _RectangleFilledAndHandPointUpLeftSymbolComponent { }

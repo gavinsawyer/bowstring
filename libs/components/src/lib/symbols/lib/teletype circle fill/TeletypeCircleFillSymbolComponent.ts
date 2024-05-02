@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "TeletypeCircleFillSymbolComponent.html",
 })
-export class TeletypeCircleFillSymbolComponent { }
+export class _TeletypeCircleFillSymbolComponent { }

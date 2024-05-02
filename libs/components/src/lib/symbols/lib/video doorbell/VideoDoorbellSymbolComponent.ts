@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "VideoDoorbellSymbolComponent.html",
 })
-export class VideoDoorbellSymbolComponent { }
+export class _VideoDoorbellSymbolComponent { }

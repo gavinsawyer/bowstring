@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SquareSplitDiagonalSymbolComponent.html",
 })
-export class SquareSplitDiagonalSymbolComponent { }
+export class _SquareSplitDiagonalSymbolComponent { }

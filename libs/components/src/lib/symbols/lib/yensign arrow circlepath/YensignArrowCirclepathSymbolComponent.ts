@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "YensignArrowCirclepathSymbolComponent.html",
 })
-export class YensignArrowCirclepathSymbolComponent { }
+export class _YensignArrowCirclepathSymbolComponent { }

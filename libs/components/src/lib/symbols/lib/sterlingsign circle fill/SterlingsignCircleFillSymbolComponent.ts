@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "SterlingsignCircleFillSymbolComponent.html",
 })
-export class SterlingsignCircleFillSymbolComponent { }
+export class _SterlingsignCircleFillSymbolComponent { }

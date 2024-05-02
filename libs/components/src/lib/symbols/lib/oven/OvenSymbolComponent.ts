@@ -9,4 +9,4 @@ import { Component } from "@angular/core";
   ],
   templateUrl: "OvenSymbolComponent.html",
 })
-export class OvenSymbolComponent { }
+export class _OvenSymbolComponent { }
