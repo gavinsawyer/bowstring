@@ -4,7 +4,7 @@ import { AsideComponent, MainComponent as _MainComponent } from "@standard/compo
 
 
 @Component({
-  imports: [
+  imports:     [
     _MainComponent,
     RouterOutlet,
     AsideComponent,

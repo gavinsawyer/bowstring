@@ -2,9 +2,6 @@
   display: contents
 
   hgroup::ng-deep
-    > standard--section::ng-deep > section
-      max-width: calc(1em * pow(var(--phi), 8))
-
     &,
     > standard--section::ng-deep > section::ng-deep
       > span
@@ -30,30 +27,6 @@
           line-height: calc(2em * pow(var(--phi), -2.5))
           margin: calc(2em * pow(var(--phi),-5)) calc(1em * pow(var(--phi),-5)) 0 0
 
-\:host-context(standard--card:has(standard--image:first-child))
-  > hgroup
-    margin-top: calc(-1rem * pow(var(--phi), -1))
-    position: relative
-
-    &::ng-deep > standard--header::ng-deep > header
-      background: hsla(0, 0%, 0%, 0.25)
-      backdrop-filter: blur(0.25rem) saturate(1.125)
-      margin: 0 calc(-1rem * pow(var(--phi), 0))
-      mask-image: linear-gradient(to bottom, transparent, black calc(1rem * pow(var(--phi), 2)))
-      padding: calc(1rem * pow(var(--phi), 2)) calc(1rem * pow(var(--phi), 0)) calc(1rem * pow(var(--phi), -2))
-      position: absolute
-      translate: 0 -100%
-
-      > h1,
-      > h2,
-      > h3,
-      > h4,
-      > h5
-        color: whitesmoke
-
-        &:first-child
-          margin-top: 0
-
-        &:last-child
-          margin-bottom: 0
-
+\:host-context(standard--card:has(standard--image:first-child)) > hgroup
+  margin-top: calc(-1rem * pow(var(--phi), -1))
+  position: relative

@@ -11,13 +11,12 @@
   [class.raised]="form === 'raised'"
   [class.symbol]="form === 'symbol'"
   [class.transitionTranslate]="transitionTranslate$()"
+  #htmlAnchorElement=""
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
   (mousemove)="mousemove($event);"
   [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y"
-  [style.flex-grow]="grow"
-  [style.flex-shrink]="shrink">
+  [style.--translation-y]="translation$().y">
   <ng-container *ngTemplateOutlet="templateRef"></ng-container>
 </a>} @else {<!--suppress CssUnknownProperty --><a
   [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex ?? 1"
@@ -27,6 +26,7 @@
   [class.raised]="form === 'raised'"
   [class.symbol]="form === 'symbol'"
   [class.transitionTranslate]="transitionTranslate$()"
+  #htmlAnchorElement=""
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
   (mousemove)="mousemove($event);"
@@ -35,9 +35,7 @@
   routerLinkActive="no-op"
   [routerLinkActiveOptions]="{ exact: true }"
   [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y"
-  [style.flex-grow]="grow"
-  [style.flex-shrink]="shrink">
+  [style.--translation-y]="translation$().y">
   <ng-container *ngTemplateOutlet="templateRef"></ng-container>
 </a>}} @else {<!--suppress CssUnknownProperty --><button
   [attr.disabled]="disabled || undefined"
@@ -48,12 +46,11 @@
   [class.raised]="form === 'raised'"
   [class.symbol]="form === 'symbol'"
   [class.transitionTranslate]="transitionTranslate$()"
+  #htmlButtonElement=""
   (mouseenter)="mouseenter();"
   (mouseleave)="mouseleave();"
   (mousemove)="mousemove($event);"
   [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y"
-  [style.flex-grow]="grow"
-  [style.flex-shrink]="shrink">
+  [style.--translation-y]="translation$().y">
   <ng-container *ngTemplateOutlet="templateRef"></ng-container>
 </button>}

@@ -3,8 +3,10 @@
     <standard--header>
       <h4>
         <standard--flexbox
-          direction="row"
-          wrap="wrap">
+          columnGap="calc(1rem * pow(var(--phi), -1))"
+          flexDirection="row"
+          flexWrap="wrap"
+          rowGap="calc(1rem * pow(var(--phi), -2))">
           <standard--capsule
             i18n-text=""
             text="legal" />

@@ -52,9 +52,37 @@
 \:host-context(standard--card) > header
   font-size: calc(1rem * pow(var(--phi), 0))
 
+\:host-context(standard--card:has(standard--image:first-child)) > header
+  background: hsla(0, 0%, 0%, 0.25)
+  backdrop-filter: blur(0.25rem) saturate(1.125)
+  margin: 0 calc(-1rem * pow(var(--phi), 0))
+  mask-image: linear-gradient(to bottom, transparent, black calc(1rem * pow(var(--phi), 2)))
+  padding: calc(1rem * pow(var(--phi), 2)) calc(1rem * pow(var(--phi), 0)) calc(1rem * pow(var(--phi), -2))
+  position: absolute
+  translate: 0 -100%
+
+  &::ng-deep
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5
+      color: whitesmoke
+
+      &:first-child
+        margin-top: 0
+
+      &:last-child
+        margin-bottom: 0
+
+
 \:host-context(standard-website--header) > header
   font-size: calc(1rem * pow(var(--phi), -2))
 
+\:host-context(standard-website--footer) > header
+  font-size: calc(1rem * pow(var(--phi), -3))
+
+\:host-context(standard-website--header, standard-website--footer) > header
   &::ng-deep
     > h1,
     > h2

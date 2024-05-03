@@ -1,12 +1,9 @@
 <standard--aside
-  alignItems="stretch"
-  basis="1px"
-  direction="column"
-  grow="1"
-  shrink="1">
-  <standard--card
-    alignItems="stretch"
-    direction="column">
+  flexBasis="1px"
+  flexDirection="column"
+  flexGrow="1"
+  flexShrink="1">
+  <standard--card flexDirection="column">
     <standard--heading-group>
       <standard--header>
         <h4 i18n="@@ConnectForm--Title">Want to connect?</h4>
@@ -16,8 +13,9 @@
       </p>
     </standard--heading-group>
     <standard--flexbox
-      alignItems="stretch"
-      direction="column">
+      columnGap="calc(1rem * pow(var(--phi), 0))"
+      flexDirection="column"
+      rowGap="calc(1rem * pow(var(--phi), -1))">
       <standard--form-field>
         <input
           i18n-placeholder="@@ConnectForm--Name--Placeholder"
@@ -48,12 +46,15 @@
       </standard--form-field>
     </standard--flexbox>
     <standard--flexbox
-      direction="row"
-      justifyContent="flex-end">
+      columnGap="calc(1rem * pow(var(--phi), 0))"
+      flexDirection="row"
+      justifyContent="flex-end"
+      rowGap="calc(1rem * pow(var(--phi), -1))">
       <standard--button
-        form="symbol"
+        form="raised"
         symbol="ArrowForward"
-        type="submit"></standard--button>
+        text="Send"
+        type="submit" />
     </standard--flexbox>
   </standard--card>
   <standard--list type="inline">

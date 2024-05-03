@@ -2,14 +2,11 @@
   display: contents
 
   > div
+    align-content: var(--standard--flexbox--align-content)
+    align-items: var(--standard--flexbox--align-items)
     display: flex
-    gap: calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 2))
-
-\:host-context(standard--dialog) > div
-  gap: calc(1rem * pow(var(--phi), 0)) calc(1rem * pow(var(--phi), 1))
-
-\:host-context(standard--card) > div
-  gap: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
-
-\:host-context(standard--header) > div
-  gap: calc(1em * pow(var(--phi), -3)) calc(1em * pow(var(--phi), -2))
+    flex: var(--standard--flexbox--flex-grow) var(--standard--flexbox--flex-shrink) var(--standard--flexbox--flex-basis)
+    flex-direction: var(--standard--flexbox--flex-direction)
+    flex-wrap: var(--standard--flexbox--flex-wrap)
+    gap: var(--standard--flexbox--row-gap) var(--standard--flexbox--column-gap)
+    justify-content: var(--standard--flexbox--justify-content)

@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                                                    from "@angular/common";
-import { AfterViewInit, Component, ElementRef, inject, NgZone, PLATFORM_ID, Signal, signal, ViewChild, WritableSignal }                                   from "@angular/core";
+import { AfterViewInit, Component, ElementRef, HostBinding, inject, Input, NgZone, PLATFORM_ID, Signal, signal, ViewChild, WritableSignal }               from "@angular/core";
 import { toObservable, toSignal }                                                                                                                         from "@angular/core/rxjs-interop";
 import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, fromEvent, map, merge, Observable, Observer, startWith, switchMap, TeardownLogic, timer } from "rxjs";
 import { FlexboxComponent }                                                                                                                               from "../flexbox/FlexboxComponent";
@@ -14,6 +14,9 @@ import { FlexboxComponent }                                                     
   templateUrl: "FooterComponent.html",
 })
 export class FooterComponent extends FlexboxComponent implements AfterViewInit {
+
+  @HostBinding("style.--standard--flexbox--column-gap") @Input() public override columnGap: string = "calc(1rem * pow(var(--phi), 0))" as const;
+  @HostBinding("style.--standard--flexbox--row-gap")    @Input() public override rowGap:    string = "calc(1rem * pow(var(--phi), -1))" as const;
 
   @ViewChild("htmlDivElement", {
     read:   ElementRef<HTMLDivElement>,

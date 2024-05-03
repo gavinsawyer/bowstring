@@ -1,5 +1,5 @@
 import { NgComponentOutlet, NgTemplateOutlet } from "@angular/common";
-import { Component, Input }                    from "@angular/core";
+import { Component, Input, numberAttribute }   from "@angular/core";
 import { RouterLink, RouterLinkActive }        from "@angular/router";
 import { SymbolComponent }                     from "../symbol/SymbolComponent";
 
@@ -21,8 +21,11 @@ import { SymbolComponent }                     from "../symbol/SymbolComponent";
 export class LinkComponent extends SymbolComponent {
 
   @Input() public disabled?: boolean;
-  @Input() public tabindex?: number;
   @Input() public url?:      string;
+
+  @Input({
+    transform: numberAttribute,
+  }) public tabindex?: number;
 
   @Input({
     required: true,

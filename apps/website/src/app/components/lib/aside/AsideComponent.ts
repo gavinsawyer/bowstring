@@ -4,7 +4,7 @@ import { NgxMaskDirective }                                                     
 
 
 @Component({
-  imports: [
+  imports:     [
     _AsideComponent,
     ButtonComponent,
     CardComponent,

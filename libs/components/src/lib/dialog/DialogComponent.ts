@@ -2,6 +2,7 @@ import { isPlatformBrowser }                                                    
 import { AfterViewInit, Component, effect, EffectCleanupRegisterFn, EffectRef, ElementRef, inject, OnDestroy, PLATFORM_ID, signal, ViewChild, WritableSignal } from "@angular/core";
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks }                                                                                        from "body-scroll-lock";
 import { CardComponent }                                                                                                                                       from "../card/CardComponent";
+import { FlexboxComponent }                                                                                                                                    from "../flexbox/FlexboxComponent";
 
 
 @Component({
@@ -16,7 +17,7 @@ import { CardComponent }                                                        
   ],
   templateUrl: "DialogComponent.html",
 })
-export class DialogComponent implements AfterViewInit, OnDestroy {
+export class DialogComponent extends FlexboxComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild("htmlDialogElement", {
     read:   ElementRef<HTMLDialogElement>,

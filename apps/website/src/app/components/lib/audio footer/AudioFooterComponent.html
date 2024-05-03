@@ -1,9 +1,8 @@
 <standard--footer
-  alignItems="stretch"
-  direction="row"
+  flexDirection="row"
+  flexWrap="wrap"
   #footerComponent
-  justifyContent="center"
-  wrap="wrap">
+  justifyContent="center">
   <div [style.border-radius]="footerComponent.stuck$() && footerComponent.raised$() ? 'calc(0.5rem * pow(var(--phi), -1))' : ''">
     <div>
       <img

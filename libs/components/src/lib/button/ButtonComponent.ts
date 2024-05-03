@@ -1,11 +1,11 @@
-import { NgComponentOutlet, NgTemplateOutlet }                       from "@angular/common";
-import { Component, Input, numberAttribute, signal, WritableSignal } from "@angular/core";
-import { RouterLink, RouterLinkActive }                              from "@angular/router";
-import { SymbolComponent }                                           from "../symbol/SymbolComponent";
+import { NgComponentOutlet, NgTemplateOutlet }                                                           from "@angular/common";
+import { Component, ElementRef, HostBinding, Input, numberAttribute, signal, ViewChild, WritableSignal } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                  from "@angular/router";
+import { SymbolComponent }                                                                               from "../symbol/SymbolComponent";
 
 
 @Component({
-  imports: [
+  imports:     [
     NgComponentOutlet,
     NgTemplateOutlet,
     RouterLink,
@@ -20,6 +20,18 @@ import { SymbolComponent }                                           from "../sy
 })
 export class ButtonComponent extends SymbolComponent {
 
+  @HostBinding("style.--standard--button--flex-grow")
+  @Input({
+    transform: numberAttribute,
+  })
+  public flexGrow?: number;
+
+  @HostBinding("style.--standard--button--flex-shrink")
+  @Input({
+    transform: numberAttribute,
+  })
+  public flexShrink?: number;
+
   @Input() public color?:    "primary" | "none";
   @Input() public disabled?: boolean;
   @Input() public form?:     "flat" | "raised" | "symbol";
@@ -28,15 +40,14 @@ export class ButtonComponent extends SymbolComponent {
   @Input() public type?:     "button" | "reset" | "submit";
   @Input() public url?:      string;
 
-  @Input({
-    transform: numberAttribute,
+  @ViewChild("htmlAnchorElement", {
+    read: ElementRef<HTMLAnchorElement>,
   })
-  public grow?: number;
-
-  @Input({
-    transform: numberAttribute,
+  private htmlAnchorElementRef?: ElementRef<HTMLAnchorElement>;
+  @ViewChild("htmlButtonElement", {
+    read: ElementRef<HTMLButtonElement>,
   })
-  public shrink?: number;
+  private htmlButtonElementRef?: ElementRef<HTMLButtonElement>;
 
   protected readonly mouseenter:           () => void                               = (): void => setTimeout(
     (): void => this.transitionTranslate$.set(false),
@@ -57,16 +68,14 @@ export class ButtonComponent extends SymbolComponent {
       );
   };
   protected readonly mousemove:            (mouseEvent: MouseEvent) => void         = (mouseEvent: MouseEvent): void => {
-    console.log(mouseEvent.target);
-
-    mouseEvent.target instanceof HTMLElement ? ((domRect: DOMRect): void => this.translation$.set(
+    ((domRect: DOMRect): void => this.translation$.set(
       {
         x: ((2 * ((mouseEvent.clientX - domRect.left) / domRect.width)) - 1) / 8,
         y: ((2 * ((mouseEvent.clientY - domRect.top) / domRect.height)) - 1) / 8,
       },
     ))(
-      mouseEvent.target.getBoundingClientRect(),
-    ) : void (0);
+      (this.htmlAnchorElementRef || this.htmlButtonElementRef as ElementRef<HTMLButtonElement>).nativeElement.getBoundingClientRect(),
+    );
   };
   protected readonly transitionTranslate$: WritableSignal<boolean>                  = signal<boolean>(true);
   protected readonly translation$:         WritableSignal<{ x: number, y: number }> = signal<{ x: number, y: number }>(

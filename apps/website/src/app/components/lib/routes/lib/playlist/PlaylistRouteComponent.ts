@@ -1,12 +1,13 @@
-import { Component }                                                                                                                                                                 from "@angular/core";
-import { ArticleComponent, ButtonComponent, CardComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LinkComponent, ListComponent, ListItemComponent, RouteComponent } from "@standard/components";
+import { Component }                                                                                                                                                                                   from "@angular/core";
+import { ArticleComponent, ButtonComponent, CardComponent, FlexboxComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LinkComponent, ListComponent, ListItemComponent, RouteComponent } from "@standard/components";
 
 
 @Component({
-  imports: [
+  imports:     [
     ArticleComponent,
     ButtonComponent,
     CardComponent,
+    FlexboxComponent,
     HeaderComponent,
     HeadingGroupComponent,
     LinkComponent,

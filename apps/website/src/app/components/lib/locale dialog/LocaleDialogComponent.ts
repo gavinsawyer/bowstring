@@ -7,7 +7,7 @@ import { LocaleId }                                                             
 
 @Component({
   exportAs:    "standardWebsiteLocaleDialog",
-  imports: [
+  imports:     [
     _DialogComponent,
     ButtonComponent,
     FlexboxComponent,

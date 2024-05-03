@@ -1,5 +1,5 @@
-import { Component, ContentChild, ElementRef, forwardRef, OnDestroy, signal, WritableSignal } from "@angular/core";
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }          from "@angular/forms";
+import { Component, ContentChild, ElementRef, forwardRef, OnDestroy, signal, ViewChild, WritableSignal } from "@angular/core";
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                     from "@angular/forms";
 
 
 @Component({
@@ -37,6 +37,12 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
   })
   private htmlTextAreaElementRef?: ElementRef<HTMLTextAreaElement>;
 
+  @ViewChild("htmlDivElement", {
+    read:   ElementRef<HTMLDivElement>,
+    static: true,
+  })
+  private htmlDivElementRef?: ElementRef<HTMLDivElement>;
+
   private readonly abortController: AbortController = new AbortController();
 
   protected readonly mousedown:            () => void                               = (): void => setTimeout(
@@ -67,7 +73,7 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
       y: ((2 * ((mouseEvent.clientY - domRect.top) / domRect.height)) - 1) / 8,
     },
   ))(
-    mouseEvent.target.getBoundingClientRect(),
+    (this.htmlDivElementRef as ElementRef<HTMLDivElement>).nativeElement.getBoundingClientRect(),
   ) : void (0);
   protected readonly transitionTranslate$: WritableSignal<boolean>                  = signal<boolean>(true);
   protected readonly translation$:         WritableSignal<{ x: number, y: number }> = signal<{ x: number, y: number }>(

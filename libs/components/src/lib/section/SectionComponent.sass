@@ -6,10 +6,15 @@
     border-bottom: 1px solid var(--body--grey--foreground)
     padding: calc(1rem * pow(var(--phi), 0)) 0 calc(1rem * pow(var(--phi), -1))
 
-    &:last-of-type
+    &:last-child
       border-bottom: none
       padding-bottom: 0
 
-\:host-context(standard--card)
-  > section
-    border-color: var(--card--grey--foreground)
+\:host-context(standard--footer) > section
+  padding: calc(1rem*pow(var(--phi),-1)) 0 calc(1rem*pow(var(--phi),-2))
+
+\:host-context(standard--card) > section
+  border-color: var(--card--grey--foreground)
+
+\:host-context(standard--heading-group) > section
+  max-width: calc(1em * pow(var(--phi), 8))

@@ -2,7 +2,13 @@
   display: contents
 
   > main
+    align-content: var(--standard--flexbox--align-content)
+    align-items: var(--standard--flexbox--align-items)
     display: flex
+    flex: var(--standard--flexbox--flex-grow) var(--standard--flexbox--flex-shrink) var(--standard--flexbox--flex-basis)
+    flex-direction: var(--standard--flexbox--flex-direction)
+    flex-wrap: var(--standard--flexbox--flex-wrap)
+    justify-content: var(--standard--flexbox--justify-content)
 
     &::ng-deep > router-outlet
       display: none

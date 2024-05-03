@@ -5,7 +5,7 @@ import { BRAND }                                                                
 
 
 @Component({
-  imports: [
+  imports:     [
     _HeaderComponent,
     FlexboxComponent,
     LinkComponent,

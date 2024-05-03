@@ -25,9 +25,14 @@
     @include close--dialog
 
     > div
+      align-content: var(--standard--flexbox--align-content)
+      align-items: var(--standard--flexbox--align-items)
       display: flex
-      flex-direction: row
-      justify-content: center
+      flex: var(--standard--flexbox--flex-grow) var(--standard--flexbox--flex-shrink) var(--standard--flexbox--flex-basis)
+      flex-direction: var(--standard--flexbox--flex-direction)
+      flex-wrap: var(--standard--flexbox--flex-wrap)
+      gap: var(--standard--flexbox--row-gap) var(--standard--flexbox--column-gap)
+      justify-content: var(--standard--flexbox--justify-content)
       padding: 1.125rem 2rem
 
       > standard--card::ng-deep > div

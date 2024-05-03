@@ -13,22 +13,22 @@ export class SymbolComponent implements OnInit, OnChanges {
 
   protected readonly symbolComponent$: WritableSignal<Type<unknown> | undefined> = signal<Type<unknown> | undefined>(undefined);
 
-  public async ngOnInit   ():                       Promise<void> {
-    this
-      .symbol && this
-      .symbolComponent$
-      .set(
-        await symbols[this.symbol](),
-      );
-  }
-  public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+  public ngOnChanges(changes: SimpleChanges): void {
     Object
       .hasOwnProperty
       .call(changes, "symbol") && changes["symbol"]
-      .currentValue && this
-      .symbolComponent$
-      .set(
-        await symbols[changes["symbol"].currentValue as keyof typeof symbols](),
+      .currentValue && symbols[changes["symbol"].currentValue as keyof typeof symbols]
+      .loadComponent()
+      .then(
+        (symbolComponent: Type<unknown>): void => this.symbolComponent$.set(symbolComponent),
+      );
+  }
+  public ngOnInit   ():                       void {
+    this
+      .symbol && symbols[this.symbol]
+      .loadComponent()
+      .then(
+        (symbolComponent: Type<unknown>): void => this.symbolComponent$.set(symbolComponent),
       );
   }
 

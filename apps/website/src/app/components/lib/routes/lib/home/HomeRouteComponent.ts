@@ -5,7 +5,7 @@ import { LocaleId }                                                             
 
 
 @Component({
-  imports: [
+  imports:     [
     ArticleComponent,
     ButtonComponent,
     CapsuleComponent,

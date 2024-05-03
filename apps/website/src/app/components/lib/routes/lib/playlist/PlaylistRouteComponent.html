@@ -1,7 +1,5 @@
 <standard--article>
-  <standard--card
-    alignItems="stretch"
-    direction="column">
+  <standard--card flexDirection="column">
     <standard--image
       alt="Playlist cover"
       height="610"
@@ -33,7 +31,10 @@
         Song???
       </standard--list-item>
     </standard--list>
-    <div>
+    <standard--flexbox
+      columnGap="calc(1rem * pow(var(--phi), 0))"
+      flexDirection="row"
+      rowGap="calc(1rem * pow(var(--phi), -1))">
       <standard--button
         form="raised"
         symbol="AppleLogo"
@@ -42,6 +43,6 @@
         form="raised"
         symbol="SpotifyLogo"
         text="Spotify" />
-    </div>
+    </standard--flexbox>
   </standard--card>
 </standard--article>

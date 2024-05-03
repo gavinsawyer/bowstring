@@ -8,7 +8,7 @@
     color: var(--primary--canvas--background)
     cursor: pointer
     text-decoration: none
-    text-shadow: var(--body--canvas--background) 0.07em 0.07em, var(--body--canvas--background) 0 0.07em, var(--body--canvas--background) -0.07em 0.07em, var(--body--canvas--background) -0.07em 0, var(--body--canvas--background) -0.07em -0.07em, var(--body--canvas--background) 0 -0.07em, var(--body--canvas--background) 0.07em -0.07em, var(--body--canvas--background) 0.07em 0
+    text-shadow: var(--body--canvas--background) calc(1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--body--canvas--background) 0 calc(1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(-1em * pow(var(--phi), -6)) 0, var(--body--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--body--canvas--background) 0 calc(-1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(1em * pow(var(--phi), -6)) 0
     transition: color 200ms ease
     user-select: none
     white-space: nowrap
@@ -17,10 +17,10 @@
 
     &::before
       background: currentColor
-      bottom: 0.03em
+      bottom: calc(0.5em * pow(var(--phi), -6))
       content: ""
       display: block
-      height: 0.06em
+      height: calc(1em * pow(var(--phi), -6))
       right: 0
       position: absolute
       transition: background 200ms ease, width 200ms ease
@@ -46,10 +46,11 @@
     &.no-op
       color: var(--body--grey--foreground)
 
+
 \:host-context(standard--card)
   > a,
   > button
-    text-shadow: var(--card--canvas--background) 0.07em 0.07em, var(--card--canvas--background) 0 0.07em, var(--card--canvas--background) -0.07em 0.07em, var(--card--canvas--background) -0.07em 0, var(--card--canvas--background) -0.07em -0.07em, var(--card--canvas--background) 0 -0.07em, var(--card--canvas--background) 0.07em -0.07em, var(--card--canvas--background) 0.07em 0
+    text-shadow: var(--card--canvas--background) calc(1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--card--canvas--background) 0 calc(1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(-1em * pow(var(--phi), -6)) 0, var(--card--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--card--canvas--background) 0 calc(-1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(1em * pow(var(--phi), -6)) 0
 
     &:active,
     &.no-op
@@ -58,19 +59,21 @@
 \:host-context(standard--footer)
   > a,
   > button
-    text-shadow: var(--footer--canvas--background) 0.07em 0.07em, var(--footer--canvas--background) 0 0.07em, var(--footer--canvas--background) -0.07em 0.07em, var(--footer--canvas--background) -0.07em 0, var(--footer--canvas--background) -0.07em -0.07em, var(--footer--canvas--background) 0 -0.07em, var(--footer--canvas--background) 0.07em -0.07em, var(--footer--canvas--background) 0.07em 0
+    text-shadow: var(--footer--canvas--background) calc(1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--footer--canvas--background) 0 calc(1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(-1em * pow(var(--phi), -6)) 0, var(--footer--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--footer--canvas--background) 0 calc(-1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(1em * pow(var(--phi), -6)) 0
 
     &:active,
     &.no-op
       color: var(--footer--grey--foreground)
 
-\:host-context(standard-website--header standard--header)
+
+\:host-context(standard-website--header standard--header, standard-website--footer standard--header)
   > a,
   > button
     color: currentColor
 
     &::before
-      height: 0.08em
+      bottom: calc(0.5em * pow(var(--phi), -5.5))
+      height: calc(1em * pow(var(--phi), -5.5))
 
     &:active,
     &.no-op

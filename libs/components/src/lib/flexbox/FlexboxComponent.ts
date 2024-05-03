@@ -1,5 +1,5 @@
-import { Component, Input, numberAttribute }         from "@angular/core";
-import { DistributedAlignment, PositionalAlignment } from "@standard/types";
+import { Component, HostBinding, Input, numberAttribute }                                      from "@angular/core";
+import { FlexDirection, DistributedAlignment, NormalAlignment, PositionalAlignment, FlexWrap } from "@standard/types";
 
 
 @Component({
@@ -12,25 +12,30 @@ import { DistributedAlignment, PositionalAlignment } from "@standard/types";
 })
 export class FlexboxComponent {
 
-  @Input() public alignContent?:   DistributedAlignment | PositionalAlignment;
-  @Input() public alignItems?:     DistributedAlignment | PositionalAlignment;
-  @Input() public basis?:          string;
-  @Input() public justifyContent?: DistributedAlignment | PositionalAlignment;
-  @Input() public wrap?:           "nowrap" | "wrap" | "wrap-reverse";
+  @HostBinding("style.--standard--flexbox--align-content")   @Input() public alignContent:   DistributedAlignment | NormalAlignment | PositionalAlignment = "normal";
+  @HostBinding("style.--standard--flexbox--align-items")     @Input() public alignItems:     DistributedAlignment | NormalAlignment | PositionalAlignment = "normal";
+  @HostBinding("style.--standard--flexbox--column-gap")      @Input() public columnGap:      string                                                       = "calc(1rem * pow(var(--phi), 2))" as const;
+  @HostBinding("style.--standard--flexbox--flex-basis")      @Input() public flexBasis:      string                                                       = "auto" as const;
+  @HostBinding("style.--standard--flexbox--flex-wrap")       @Input() public flexWrap:       FlexWrap                                                     = "nowrap";
+  @HostBinding("style.--standard--flexbox--justify-content") @Input() public justifyContent: DistributedAlignment | NormalAlignment | PositionalAlignment = "normal";
+  @HostBinding("style.--standard--flexbox--row-gap")         @Input() public rowGap:         string                                                       = "calc(1rem * pow(var(--phi), 1))" as const;
 
+  @HostBinding("style.--standard--flexbox--flex-direction")
   @Input({
     required: true,
   })
-  public direction?: "column" | "column-reverse" | "row" | "row-reverse";
+  public flexDirection!: FlexDirection;
 
+  @HostBinding("style.--standard--flexbox--flex-grow")
   @Input({
     transform: numberAttribute,
   })
-  public grow?: number;
+  public flexGrow: number = 0 as const;
 
+  @HostBinding("style.--standard--flexbox--flex-shrink")
   @Input({
     transform: numberAttribute,
   })
-  public shrink?: number;
+  public flexShrink: number = 1 as const;
 
 }
