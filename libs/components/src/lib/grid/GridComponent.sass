@@ -1,0 +1,17 @@
+\:host
+  display: contents
+
+  > div
+    align-content: var(--standard--grid--align-content, normal)
+    align-items: var(--standard--grid--align-items, normal)
+    display: grid
+    flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
+    flex-wrap: var(--standard--grid--flex-wrap, nowrap)
+    gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 1)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 2))))
+    justify-content: var(--standard--grid--justify-content, normal)
+
+\:host-context(standard--card, standard--footer) > div
+  gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), -1)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 0))))
+
+\:host-context(standard--header) > div
+  gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), -2)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), -1))))

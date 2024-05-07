@@ -1,13 +1,17 @@
-import { Component, ContentChild, ElementRef, forwardRef, OnDestroy, signal, ViewChild, WritableSignal } from "@angular/core";
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                     from "@angular/forms";
+import { Component, ContentChild, ElementRef, forwardRef, inject, OnDestroy }        from "@angular/core";
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
+import { TranslationHoverDirective }                                                 from "@standard/directives";
 
 
 @Component({
-  imports:     [
+  hostDirectives: [
+    TranslationHoverDirective,
+  ],
+  imports:        [
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers:   [
+  providers:      [
     {
       multi:       true,
       provide:     NG_VALUE_ACCESSOR,
@@ -16,12 +20,12 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModu
       ),
     },
   ],
-  selector:    "standard--form-field",
-  standalone:  true,
-  styleUrls:   [
+  selector:       "standard--form-field",
+  standalone:     true,
+  styleUrls:      [
     "FormFieldComponent.sass",
   ],
-  templateUrl: "FormFieldComponent.html",
+  templateUrl:    "FormFieldComponent.html",
 })
 export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
 
@@ -37,51 +41,9 @@ export class FormFieldComponent implements ControlValueAccessor, OnDestroy {
   })
   private htmlTextAreaElementRef?: ElementRef<HTMLTextAreaElement>;
 
-  @ViewChild("htmlDivElement", {
-    read:   ElementRef<HTMLDivElement>,
-    static: true,
-  })
-  private htmlDivElementRef?: ElementRef<HTMLDivElement>;
-
   private readonly abortController: AbortController = new AbortController();
 
-  protected readonly mousedown:            () => void                               = (): void => setTimeout(
-    (): void => this.transitionTranslate$.set(false),
-    200,
-  ) && this.transitionTranslate$.set(true);
-  protected readonly mouseenter:           () => void                               = (): void => setTimeout(
-    (): void => this.transitionTranslate$.set(false),
-    200,
-  ) && void (0);
-  protected readonly mouseleave:           () => void                               = (): void => {
-    this
-      .transitionTranslate$
-      .set(true);
-
-    this
-      .translation$
-      .set(
-        {
-          x: 0,
-          y: 0,
-        },
-      );
-  };
-  protected readonly mousemove:            (mouseEvent: MouseEvent) => void         = (mouseEvent: MouseEvent): void => mouseEvent.target instanceof HTMLElement ? ((domRect: DOMRect): void => this.translation$.set(
-    {
-      x: ((2 * ((mouseEvent.clientX - domRect.left) / domRect.width)) - 1) / 8,
-      y: ((2 * ((mouseEvent.clientY - domRect.top) / domRect.height)) - 1) / 8,
-    },
-  ))(
-    (this.htmlDivElementRef as ElementRef<HTMLDivElement>).nativeElement.getBoundingClientRect(),
-  ) : void (0);
-  protected readonly transitionTranslate$: WritableSignal<boolean>                  = signal<boolean>(true);
-  protected readonly translation$:         WritableSignal<{ x: number, y: number }> = signal<{ x: number, y: number }>(
-    {
-      x: 0,
-      y: 0,
-    },
-  );
+  protected readonly translationHoverDirective: TranslationHoverDirective = inject<TranslationHoverDirective>(TranslationHoverDirective);
 
   public ngOnDestroy      ():                                 void {
     this

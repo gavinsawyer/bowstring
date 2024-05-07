@@ -10,10 +10,10 @@ import { ReactiveFormsModule }                                                  
 import { BrowserModule, provideClientHydration }                                                                                       from "@angular/platform-browser";
 import { BrowserAnimationsModule }                                                                                                     from "@angular/platform-browser/animations";
 import { RouterModule }                                                                                                                from "@angular/router";
-import * as brand                   from "@standard/brand";
-import { FlexboxComponent }         from "@standard/components";
-import { routes as standardRoutes } from "@standard/components/routes";
+import * as brand                                                                                                                      from "@standard/brand";
+import { FlexboxComponent }                                                                                                            from "@standard/components";
 import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                               from "@standard/injection-tokens";
+import { routes as standardRoutes }                                                                                                    from "@standard/route-components";
 import { AppCheckOptionsService }                                                                                                      from "@standard/services";
 import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                 from "ngx-mask";
 import project                                                                                                                         from "../../../../project.json";
@@ -21,8 +21,8 @@ import { gitInfo }                                                              
 import { packageVersion }                                                                                                              from "../../../.package-version";
 import { environment }                                                                                                                 from "../../../environment";
 import { AsideComponent, AudioFooterComponent, FooterComponent, HeaderComponent, LocaleDialogComponent, MainComponent, RootComponent } from "../../components";
-import { routes as websiteRoutes }                                                                                                     from "../../components/lib/routes";
 import { LOCALE_IDS }                                                                                                                  from "../../injection tokens";
+import { routes as websiteRoutes }                                                                                                     from "../../route components";
 
 
 @NgModule({
@@ -32,7 +32,7 @@ import { LOCALE_IDS }                                                           
   declarations: [
     RootComponent,
   ],
-  imports: [
+  imports:      [
     AngularFirestoreModule.enablePersistence(),
     AsideComponent,
     AudioFooterComponent,

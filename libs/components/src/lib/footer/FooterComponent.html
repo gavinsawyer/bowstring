@@ -1,17 +1,13 @@
-<!--suppress CssUnknownProperty -->
-<div
+<div #htmlDivElement
   [class.hiding]="(raisedOrLowering$() && !raised$()) || (stuckOrUnsticking$() && !stuck$())"
-  [class.shown]="raisedOrLowering$() && stuckOrUnsticking$()"
-  #htmlDivElement>
+  [class.shown]="raisedOrLowering$() && stuckOrUnsticking$()">
   <div></div>
 </div>
-<!--suppress CssUnknownProperty -->
-<footer
+<!--suppress CssUnknownProperty --><footer #htmlFooterElement
   [class.lowering]="raisedOrLowering$() && !raised$()"
   [class.raised]="raisedOrLowering$()"
   [class.stuck]="stuckOrUnsticking$()"
   [class.unsticking]="stuckOrUnsticking$() && !stuck$()"
-  #htmlFooterElement
   [style.--unsticking-translation]="unstickingTranslation$() + 'px'">
   <ng-content />
 </footer>

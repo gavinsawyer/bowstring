@@ -2,13 +2,12 @@
   display: contents
 
   > main
-    align-content: var(--standard--flexbox--align-content)
-    align-items: var(--standard--flexbox--align-items)
+    align-content: var(--standard--flexbox--align-content, normal)
+    align-items: var(--standard--flexbox--align-items, normal)
     display: flex
-    flex: var(--standard--flexbox--flex-grow) var(--standard--flexbox--flex-shrink) var(--standard--flexbox--flex-basis)
+    flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
     flex-direction: var(--standard--flexbox--flex-direction)
-    flex-wrap: var(--standard--flexbox--flex-wrap)
-    justify-content: var(--standard--flexbox--justify-content)
+    justify-content: var(--standard--flexbox--justify-content, normal)
 
     &::ng-deep > router-outlet
       display: none

@@ -49,18 +49,18 @@
         animation: hide--backdrop 200ms ease-in-out forwards
 
   > footer
-    align-content: var(--standard--flexbox--align-content)
-    align-items: var(--standard--flexbox--align-items)
+    align-content: var(--standard--flexbox--align-content, normal)
+    align-items: var(--standard--flexbox--align-items, normal)
     background: var(--footer--canvas--background)
     bottom: calc(1rem * pow(var(--phi), 0))
     color: var(--footer--canvas--foreground)
     cursor: default
     display: flex
-    flex: var(--standard--flexbox--flex-grow) var(--standard--flexbox--flex-shrink) var(--standard--flexbox--flex-basis)
+    flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
     flex-direction: var(--standard--flexbox--flex-direction)
-    flex-wrap: var(--standard--flexbox--flex-wrap)
-    gap: var(--standard--flexbox--row-gap) var(--standard--flexbox--column-gap)
-    justify-content: var(--standard--flexbox--justify-content)
+    flex-wrap: var(--standard--flexbox--flex-wrap, nowrap)
+    gap: var(--standard--flexbox--row-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), -1)))) var(--standard--flexbox--column-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 0))))
+    justify-content: var(--standard--flexbox--justify-content, normal)
     padding: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
     z-index: 3
 

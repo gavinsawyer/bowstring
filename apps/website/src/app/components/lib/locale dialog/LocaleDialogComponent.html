@@ -1,5 +1,4 @@
-<standard--dialog
-  #dialogComponent=""
+<standard--dialog #dialogComponent
   flexDirection="row"
   justifyContent="center">
   <standard--heading-group>
@@ -8,15 +7,13 @@
     </standard--header>
   </standard--heading-group>
   <standard--flexbox
-    columnGap="calc(1rem * pow(var(--phi), 1))"
     flexDirection="row"
-    flexWrap="wrap"
-    rowGap="calc(1rem * pow(var(--phi), 0))">
+    flexWrap="wrap">
     @for (locale of localeIds; track locale) {<standard--button
       (click)="locale === localeId || changeLocale(locale);"
       color="primary"
       [disabled]="locale === localeId"
-      form="raised"
+      appearance="raised"
       flexGrow="1"
       symbol="Globe"
       [text]="localeDisplayNames.of(locale) || locale" />}

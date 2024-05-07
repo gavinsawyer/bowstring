@@ -1,11 +1,10 @@
-<!--suppress CssUnknownProperty --><div
-  [class.transitionTranslate]="transitionTranslate$()"
-  #htmlDivElement=""
-  (mousedown)="mousedown();"
-  (mouseenter)="mouseenter();"
-  (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event);"
-  [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y">
+<!--suppress CssUnknownProperty --><div #htmlDivElement
+  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
+  (pointerdown)="translationHoverDirective.pointerdown();"
+  (pointerenter)="translationHoverDirective.pointerenter();"
+  (pointerleave)="translationHoverDirective.pointerleave();"
+  (pointermove)="translationHoverDirective.pointermove($event, htmlDivElement);"
+  [style.--translation-x]="translationHoverDirective.translation$().x"
+  [style.--translation-y]="translationHoverDirective.translation$().y">
   <ng-content />
 </div>

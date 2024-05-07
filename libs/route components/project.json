@@ -1,0 +1,17 @@
+{
+  "name":        "route-components",
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot":  "libs/route components/src",
+  "targets":     {
+    "eslint": {
+      "executor": "@nx/linter:eslint",
+      "options":  {
+        "lintFilePatterns": [
+          "libs/route components/src/**/*.html",
+          "libs/route components/src/**/*.ts"
+        ]
+      }
+    }
+  }
+}

@@ -24,13 +24,13 @@ export class ImageComponent {
   @Input({
     required: true,
   })
-  public src?: string;
+  public src!: string;
 
   @Input({
     required:  true,
     transform: numberAttribute,
   })
-  public width?: number;
+  public width!: number;
 
   @Input() public alt?: string;
 

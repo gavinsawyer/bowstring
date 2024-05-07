@@ -30,17 +30,18 @@
           color: var(--body--canvas--foreground)
           opacity: 1
 
-          &:hover
-            box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
-            scale: 1.015625 1.015625 1.015625
-            translate: calc(var(--translation-x) * 0.5rem) calc(var(--translation-y) * 0.5rem)
-            z-index: 1
+          @media (hover: hover)
+            &:hover
+              box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
+              scale: 1.015625 1.015625 1.015625
+              translate: calc(var(--translation-x) * 0.5rem) calc(var(--translation-y) * 0.5rem)
+              z-index: 1
 
-          &:focus-within
-            box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
-            scale: 1.03125 1.03125 1.03125
-            translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
-            z-index: 2
+            &:focus-visible
+              box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
+              scale: 1.03125 1.03125 1.03125
+              translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+              z-index: 2
 
       > textarea
         resize: none

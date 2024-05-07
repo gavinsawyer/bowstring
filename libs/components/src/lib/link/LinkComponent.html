@@ -1,12 +1,11 @@
-<ng-template #templateRef>@if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</ng-template>
+<ng-template #templateRef>@if (symbolContainerDirective.symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />&nbsp;}{{ text }}</ng-template>
 @if (url) {@if (url.includes("://")) {<a
   [attr.href]="url"
   [attr.tabindex]="tabindex ?? 1"
   target="_blank">
   <ng-container *ngTemplateOutlet="templateRef"/>
-</a>} @else {<a
+</a>} @else {<a #routerLinkActive="routerLinkActive"
   [attr.tabindex]="routerLinkActive.isActive ? -1 : tabindex ?? 1"
-  #routerLinkActive="routerLinkActive"
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLink]="url"
   routerLinkActive="no-op">

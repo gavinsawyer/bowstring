@@ -1,9 +1,11 @@
 <standard--aside
   flexBasis="1px"
   flexDirection="column"
-  flexGrow="1"
-  flexShrink="1">
-  <standard--card flexDirection="column">
+  flexGrow="1">
+  <standard--card
+    flexBasis="auto"
+    flexDirection="column"
+    flexGrow="0">
     <standard--heading-group>
       <standard--header>
         <h4 i18n="@@ConnectForm--Title">Want to connect?</h4>
@@ -12,10 +14,7 @@
         <span style="font-variant: small-caps">Lorem ipsum dolor</span> sit amet, consectetur adipisicing elit. Adipisci dicta doloremque fuga libero maxime minima molestiae nihil quidem voluptatem voluptatibus.
       </p>
     </standard--heading-group>
-    <standard--flexbox
-      columnGap="calc(1rem * pow(var(--phi), 0))"
-      flexDirection="column"
-      rowGap="calc(1rem * pow(var(--phi), -1))">
+    <standard--flexbox flexDirection="column">
       <standard--form-field>
         <input
           i18n-placeholder="@@ConnectForm--Name--Placeholder"
@@ -46,12 +45,10 @@
       </standard--form-field>
     </standard--flexbox>
     <standard--flexbox
-      columnGap="calc(1rem * pow(var(--phi), 0))"
       flexDirection="row"
-      justifyContent="flex-end"
-      rowGap="calc(1rem * pow(var(--phi), -1))">
+      justifyContent="flex-end">
       <standard--button
-        form="raised"
+        appearance="raised"
         symbol="ArrowForward"
         text="Send"
         type="submit" />

@@ -36,11 +36,11 @@
       "@standard/components":       [
         "libs/components/src/index.ts"
       ],
-      "@standard/components/routes":       [
-        "libs/components/src/lib/routes/index.ts"
+      "@standard/route-components":       [
+        "libs/route components/src/index.ts"
       ],
-      "@standard/components/symbols":       [
-        "libs/components/src/lib/symbols/index.ts"
+      "@standard/directives":       [
+        "libs/directives/src/index.ts"
       ],
       "@standard/injection-tokens": [
         "libs/injection tokens/src/index.ts"
@@ -50,6 +50,9 @@
       ],
       "@standard/services":         [
         "libs/services/src/index.ts"
+      ],
+      "@standard/symbol-components":       [
+        "libs/symbol components/src/index.ts"
       ],
       "@standard/types":            [
         "libs/types/src/index.ts"

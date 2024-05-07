@@ -1,6 +1,5 @@
-<dialog
-  [class.closing]="closing$()"
-  #htmlDialogElement="">
+<dialog #htmlDialogElement
+  [class.closing]="closing$()">
   <div>
     <standard--card
       (click)="$event.stopPropagation();"

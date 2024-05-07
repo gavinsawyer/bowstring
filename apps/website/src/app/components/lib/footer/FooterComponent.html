@@ -1,11 +1,11 @@
-<standard--footer flexDirection="column">
+<standard--footer
+  flexDirection="column"
+  flexGrow="0">
   <standard--flexbox
     alignItems="center"
-    columnGap="calc(1rem * pow(var(--phi), 0))"
     flexDirection="row"
     flexWrap="wrap"
-    justifyContent="center"
-    rowGap="calc(1rem * pow(var(--phi), -1))">
+    justifyContent="center">
     <standard--link
       (click)="localeDialogComponent?.dialogComponent?.open$?.set(true);"
       symbol="Globe"
@@ -25,23 +25,24 @@
   </standard--flexbox>
   <standard--section>
     <standard--flexbox
-      columnGap="calc(1rem * pow(var(--phi), 0))"
       flexDirection="row"
-      flexWrap="wrap"
-      rowGap="calc(1rem * pow(var(--phi), -1))">
+      flexWrap="wrap">
       <standard--header>
         <h1>{{ brand.title }}</h1>
         <h2>{{ brand.subtitle }}</h2>
       </standard--header>
       <standard--flexbox
+        columnGap="calc(1rem * pow(var(--phi), 2))"
         flexDirection="row"
         flexGrow="1"
-        flexWrap="wrap">
+        justifyContent="space-between"
+        rowGap="calc(1rem * pow(var(--phi), 1))">
         <standard--flexbox
           flexDirection="row"
-          flexGrow="1">
+          flexGrow="0">
           <standard--flexbox
             flexDirection="column"
+            flexWrap="nowrap"
             rowGap="calc(1rem * pow(var(--phi), -1))">
             <standard--link
               [tabindex]="0"
@@ -52,6 +53,7 @@
           </standard--flexbox>
           <standard--flexbox
             flexDirection="column"
+            flexWrap="nowrap"
             rowGap="calc(1rem * pow(var(--phi), -1))">
             <standard--link
               [tabindex]="0"
@@ -61,9 +63,12 @@
               text="Careers" />
           </standard--flexbox>
         </standard--flexbox>
-        <standard--flexbox flexDirection="row">
+        <standard--flexbox
+          flexDirection="row"
+          flexGrow="0">
           <standard--flexbox
             flexDirection="column"
+            flexWrap="nowrap"
             rowGap="calc(1rem * pow(var(--phi), -1))">
             <standard--link
               symbol="RssLogo"
@@ -72,11 +77,8 @@
           </standard--flexbox>
           <standard--flexbox
             flexDirection="column"
+            flexWrap="nowrap"
             rowGap="calc(1rem * pow(var(--phi), -1))">
-            <standard--link
-              symbol="FacebookLogo"
-              [tabindex]="0"
-              text="Facebook" />
             <standard--link
               symbol="InstagramLogo"
               [tabindex]="0"

@@ -1,48 +1,73 @@
-<standard--footer
+<standard--footer #footerComponent
   flexDirection="row"
   flexWrap="wrap"
-  #footerComponent
   justifyContent="center">
-  <div [style.border-radius]="footerComponent.stuck$() && footerComponent.raised$() ? 'calc(0.5rem * pow(var(--phi), -1))' : ''">
-    <div>
+  <standard--flexbox
+    alignItems="stretch"
+    flexBasis="100%"
+    flexDirection="column"
+    flexWrap="nowrap"
+    justifyContent="normal">
+    <standard--flexbox
+      alignItems="center"
+      flexBasis="auto"
+      flexDirection="row">
       <img
         alt=""
         height="24"
         ngSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/af/7b/9f/af7b9f4b-59a8-4c37-017c-dd69dcf91273/33804.jpg/72x72bb.webp"
         width="24" />
-      <div>
+      <standard--grid
+        columnGap="0"
+        flexGrow="1"
+        rowGap="0">
         <span>Coca1ne (Ed1t)</span>
         <span>DJ これからの緊急災害</span>
-      </div>
-      <div></div>
+      </standard--grid>
       @if (footerComponent.raised$() && !responsivityService.pastMediumBreakpoint$()) {<standard--button
         (click)="footerComponent.stuck$.set(!footerComponent.stuck$());"
-        form="symbol"
+        appearance="symbol"
         [symbol]="footerComponent.stuck$() ? 'ChevronDown' : 'ChevronUp'" />}
-    </div>
-    <div>
+    </standard--flexbox>
+    <standard--flexbox
+      flexBasis="auto"
+      flexDirection="column"
+      flexGrow="1"
+      gap="0">
       <progress></progress>
-      <div>
+      <standard--flexbox
+        alignItems="center"
+        flexDirection="row"
+        flexGrow="1"
+        justifyContent="space-between">
         <span>0:00</span>
         <span>4:47</span>
-      </div>
-    </div>
-  </div>
-  <div>
+      </standard--flexbox>
+    </standard--flexbox>
+  </standard--flexbox>
+  <standard--flexbox
+    alignItems="center"
+    flexDirection="row"
+    flexWrap="nowrap"
+    justifyContent="center">
     <standard--button
-      form="symbol"
+      appearance="symbol"
       symbol="BackwardFill" />
     <standard--button
       (click)="playing$.set(!playing$());"
-      form="symbol"
+      appearance="symbol"
       [symbol]="playing$() ? 'PauseFill' : 'PlayFill'" />
     <standard--button
-      form="symbol"
+      appearance="symbol"
       symbol="ForwardFill" />
-  </div>
-  <div>
+  </standard--flexbox>
+  <standard--flexbox
+    alignItems="center"
+    flexDirection="row"
+    flexWrap="nowrap"
+    justifyContent="center">
     <standard--button
-      form="symbol"
+      appearance="symbol"
       symbol="Airplayaudio" />
-  </div>
+  </standard--flexbox>
 </standard--footer>

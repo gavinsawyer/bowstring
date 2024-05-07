@@ -25,15 +25,15 @@
     @include close--dialog
 
     > div
-      align-content: var(--standard--flexbox--align-content)
-      align-items: var(--standard--flexbox--align-items)
+      align-content: var(--standard--flexbox--align-content, normal)
+      align-items: var(--standard--flexbox--align-items, normal)
       display: flex
-      flex: var(--standard--flexbox--flex-grow) var(--standard--flexbox--flex-shrink) var(--standard--flexbox--flex-basis)
+      flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
       flex-direction: var(--standard--flexbox--flex-direction)
-      flex-wrap: var(--standard--flexbox--flex-wrap)
-      gap: var(--standard--flexbox--row-gap) var(--standard--flexbox--column-gap)
-      justify-content: var(--standard--flexbox--justify-content)
-      padding: 1.125rem 2rem
+      flex-wrap: var(--standard--flexbox--flex-wrap, nowrap)
+      gap: var(--standard--flexbox--row-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 1)))) var(--standard--flexbox--column-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 2))))
+      justify-content: var(--standard--flexbox--justify-content, normal)
+      padding: calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 2))
 
       > standard--card::ng-deep > div
         transform-origin: top

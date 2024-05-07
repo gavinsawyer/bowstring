@@ -1,56 +1,52 @@
 <ng-template #templateRef>
-  @if (symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />}
-  @if (form !== 'symbol' && text) {{{ text }}}
+  @if (symbolContainerDirective.symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />}
+  @if (appearance !== 'symbol' && text) {{{ text }}}
 </ng-template>
-@if (url; as url) {@if (url.includes("://")) {<!--suppress CssUnknownProperty --><a
+@if (url; as url) {@if (url.includes("://")) {<!--suppress CssUnknownProperty --><a #htmlAnchorElement
   [attr.href]="url"
-  [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
-  [class.flat]="form === 'flat'"
+  [attr.tabindex]="disabled ? -1 : tabIndexOverride ?? 1"
+  [class.flat]="appearance === 'flat'"
   [class.no-op]="disabled"
   [class.primary]="color === 'primary'"
-  [class.raised]="form === 'raised'"
-  [class.symbol]="form === 'symbol'"
-  [class.transitionTranslate]="transitionTranslate$()"
-  #htmlAnchorElement=""
-  (mouseenter)="mouseenter();"
-  (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event);"
-  [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y">
+  [class.raised]="appearance === 'raised'"
+  [class.symbol]="appearance === 'symbol'"
+  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
+  (pointerenter)="translationHoverDirective.pointerenter();"
+  (pointerleave)="translationHoverDirective.pointerleave();"
+  (pointermove)="translationHoverDirective.pointermove($event, htmlAnchorElement);"
+  [style.--translation-x]="translationHoverDirective.translation$().x"
+  [style.--translation-y]="translationHoverDirective.translation$().y">
   <ng-container *ngTemplateOutlet="templateRef"></ng-container>
-</a>} @else {<!--suppress CssUnknownProperty --><a
-  [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabindex ?? 1"
-  [class.flat]="form === 'flat'"
+</a>} @else {<!--suppress CssUnknownProperty --><a #htmlAnchorElement #routerLinkActive="routerLinkActive"
+  [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabIndexOverride ?? 1"
+  [class.flat]="appearance === 'flat'"
   [class.no-op]="disabled"
   [class.primary]="color === 'primary'"
-  [class.raised]="form === 'raised'"
-  [class.symbol]="form === 'symbol'"
-  [class.transitionTranslate]="transitionTranslate$()"
-  #htmlAnchorElement=""
-  (mouseenter)="mouseenter();"
-  (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event);"
+  [class.raised]="appearance === 'raised'"
+  [class.symbol]="appearance === 'symbol'"
+  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
+  (pointerenter)="translationHoverDirective.pointerenter();"
+  (pointerleave)="translationHoverDirective.pointerleave();"
+  (pointermove)="translationHoverDirective.pointermove($event, htmlAnchorElement);"
   [routerLink]="url"
-  #routerLinkActive="routerLinkActive"
   routerLinkActive="no-op"
   [routerLinkActiveOptions]="{ exact: true }"
-  [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y">
+  [style.--translation-x]="translationHoverDirective.translation$().x"
+  [style.--translation-y]="translationHoverDirective.translation$().y">
   <ng-container *ngTemplateOutlet="templateRef"></ng-container>
-</a>}} @else {<!--suppress CssUnknownProperty --><button
+</a>}} @else {<!--suppress CssUnknownProperty --><button #htmlButtonElement
   [attr.disabled]="disabled || undefined"
-  [attr.tabindex]="disabled ? -1 : tabindex ?? 1"
+  [attr.tabindex]="disabled ? -1 : tabIndexOverride ?? 1"
   [attr.type]="type || 'button'"
-  [class.flat]="form === 'flat'"
+  [class.flat]="appearance === 'flat'"
   [class.primary]="color === 'primary'"
-  [class.raised]="form === 'raised'"
-  [class.symbol]="form === 'symbol'"
-  [class.transitionTranslate]="transitionTranslate$()"
-  #htmlButtonElement=""
-  (mouseenter)="mouseenter();"
-  (mouseleave)="mouseleave();"
-  (mousemove)="mousemove($event);"
-  [style.--translation-x]="translation$().x"
-  [style.--translation-y]="translation$().y">
+  [class.raised]="appearance === 'raised'"
+  [class.symbol]="appearance === 'symbol'"
+  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
+  (pointerenter)="translationHoverDirective.pointerenter();"
+  (pointerleave)="translationHoverDirective.pointerleave();"
+  (pointermove)="translationHoverDirective.pointermove($event, htmlButtonElement);"
+  [style.--translation-x]="translationHoverDirective.translation$().x"
+  [style.--translation-y]="translationHoverDirective.translation$().y">
   <ng-container *ngTemplateOutlet="templateRef"></ng-container>
 </button>}
