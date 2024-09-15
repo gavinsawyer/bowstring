@@ -6,19 +6,24 @@ import { PathService }                                                          
 import { Response }                                                                 from "express";
 
 
-@Component({
-  imports:        [
-    ArticleComponent,
-    HeaderComponent,
-    HeadingGroupComponent,
-  ],
-  standalone:     true,
-  templateUrl:    "OtherwiseRouteComponent.html",
-})
+@Component(
+  {
+    imports:     [
+      ArticleComponent,
+      HeaderComponent,
+      HeadingGroupComponent,
+    ],
+    standalone:  true,
+    styleUrls:   [
+      "OtherwiseRouteComponent.sass",
+    ],
+    templateUrl: "OtherwiseRouteComponent.html",
+  },
+)
 export class OtherwiseRouteComponent extends RouteComponent implements OnInit {
 
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly response:   Response | null      = inject<Response | null>(
+  private readonly response: Response | null        = inject<Response | null>(
     RESPONSE,
     {
       optional: true,
@@ -28,12 +33,9 @@ export class OtherwiseRouteComponent extends RouteComponent implements OnInit {
   protected readonly pathService: PathService = inject<PathService>(PathService);
 
   public override ngOnInit(): void {
-    super
-      .ngOnInit();
+    super.ngOnInit();
 
-    isPlatformBrowser(this.platformId) || this
-      .response
-      ?.status(404);
+    isPlatformBrowser(this.platformId) || this.response?.status(404);
   }
 
 }

@@ -1,5 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import * as brand         from "@standard/brand";
+import { Brand }          from "@standard/types";
 
 
-export const BRAND: InjectionToken<typeof brand> = new InjectionToken<typeof brand>("BRAND");
+export const BRAND: InjectionToken<Brand> = new InjectionToken<Brand>("BRAND");

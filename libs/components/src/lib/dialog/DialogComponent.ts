@@ -1,121 +1,134 @@
-import { isPlatformBrowser }                                                                                                                                   from "@angular/common";
-import { AfterViewInit, Component, effect, EffectCleanupRegisterFn, EffectRef, ElementRef, inject, OnDestroy, PLATFORM_ID, signal, ViewChild, WritableSignal } from "@angular/core";
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks }                                                                                        from "body-scroll-lock";
-import { CardComponent }                                                                                                                                       from "../card/CardComponent";
-import { FlexboxComponent }                                                                                                                                    from "../flexbox/FlexboxComponent";
+import { DOCUMENT, isPlatformBrowser }                                                                                                  from "@angular/common";
+import { Component, computed, effect, EffectCleanupRegisterFn, ElementRef, inject, model, ModelSignal, PLATFORM_ID, Signal, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                   from "@angular/core/rxjs-interop";
+import { ContainerDirective, FlexboxContainerDirective }                                                                                from "@standard/directives";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                 from "body-scroll-lock";
+import { delayWhen, fromEvent, map, Observable, timer }                                                                                 from "rxjs";
 
 
-@Component({
-  exportAs:    "standardDialog",
-  imports:     [
-    CardComponent,
-  ],
-  selector:    "standard--dialog",
-  standalone:  true,
-  styleUrls:   [
-    "DialogComponent.sass",
-  ],
-  templateUrl: "DialogComponent.html",
-})
-export class DialogComponent extends FlexboxComponent implements AfterViewInit, OnDestroy {
-
-  @ViewChild("htmlDialogElement", {
-    read:   ElementRef<HTMLDialogElement>,
-    static: true,
-  })
-  private htmlDialogElementRef?: ElementRef<HTMLDialogElement>;
-
-  private readonly abortController: AbortController      = new AbortController();
-  private readonly close:           () => void           = (): void => setTimeout(
-    (): void => {
-      this
-        .closing$
-        .set(false);
-
-      this
-        .open$
-        .set(false);
+@Component(
+  {
+    host:           {
+      "[class.open]":          "openModelWithTransform$()",
+      "[class.openOrClosing]": "openOrClosing$()",
     },
-    200,
-  ) && this.closing$.set(true);
-  private readonly openEffect:      EffectRef            = effect(
-    (onCleanup: EffectCleanupRegisterFn): void => {
-      isPlatformBrowser(
-        this.platformId,
-      ) && this.htmlDialogElementRef ? this
-        .open$() ? ((): void => {
-          this
-            .htmlDialogElementRef
-            .nativeElement
-            .showModal();
+    hostDirectives: [
+      {
+        directive: FlexboxContainerDirective,
+        inputs:    [
+          "alignContent",
+          "alignItems",
+          "collapsable",
+          "columnGap",
+          "flexDirection",
+          "flexWrap",
+          "justifyContent",
+          "listenToScrollEvent",
+          "rowGap",
+        ],
+      },
+    ],
+    selector:       "standard--dialog",
+    standalone:     true,
+    styleUrls:      [
+      "DialogComponent.sass",
+    ],
+    templateUrl:    "DialogComponent.html",
+  },
+)
+export class DialogComponent {
 
-           disableBodyScroll(
-            this.htmlDialogElementRef.nativeElement,
+  constructor() {
+    effect(
+      (): void => {
+        this.containerDirective.htmlElementRef$.set(
+          this.htmlDivElementRef$(),
+        );
+        this.flexboxContainerDirective.htmlElementRef$.set(
+          this.htmlDivElementRef$(),
+        );
+      },
+      {
+        allowSignalWrites: true,
+      },
+    );
+
+    isPlatformBrowser(
+      this.platformId,
+    ) && effect(
+      (effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
+        this.openOrClosing$() ? ((): void => {
+          disableBodyScroll(
+            this.htmlDialogElementRef$().nativeElement,
+          );
+
+          this.htmlDialogElementRef$().nativeElement.showModal();
+
+          setTimeout(
+            (): void => this.htmlDialogElementRef$().nativeElement.focus(),
+            0,
           );
         })() : ((): void => {
-          this
-            .htmlDialogElementRef
-            .nativeElement
-            .close();
-
           enableBodyScroll(
-            this.htmlDialogElementRef.nativeElement,
+            this.htmlDialogElementRef$().nativeElement,
           );
-        })() : void (0);
 
-      onCleanup(
-        (): void => isPlatformBrowser(
-          this.platformId,
-        ) ? clearAllBodyScrollLocks() : void (0),
-      );
-    },
+          this.htmlDialogElementRef$().nativeElement.close();
+        })();
+
+        effectCleanupRegisterFn(
+          (): void => clearAllBodyScrollLocks(),
+        );
+      },
+    );
+    fromEvent<KeyboardEvent>(
+      this.document,
+      "keydown",
+    ).pipe<KeyboardEvent>(
+      takeUntilDestroyed<KeyboardEvent>(),
+    ).subscribe(
+      (keyboardEvent: KeyboardEvent): void => this.containerKeydown(keyboardEvent) && void (0),
+    );
+  }
+
+  private readonly containerDirective: ContainerDirective                       = inject<ContainerDirective>(ContainerDirective);
+  private readonly document: Document                                           = inject<Document>(DOCUMENT);
+  private readonly flexboxContainerDirective: FlexboxContainerDirective         = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
+  private readonly htmlDialogElementRef$: Signal<ElementRef<HTMLDialogElement>> = viewChild.required<ElementRef<HTMLDialogElement>>("htmlDialogElement");
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
+
+  protected readonly openModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
+    (): boolean | undefined => ((open?: "" | boolean | `${ boolean }`): boolean | undefined => open === "" || open === true || open === "true" || open !== "false" && open)(
+      this.openModel$(),
+    ),
+  );
+  protected readonly openOrClosing$: Signal<boolean | undefined>          = toSignal<boolean | undefined, undefined>(
+    toObservable<boolean | undefined>(
+      this.openModelWithTransform$,
+    ).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (open?: boolean): Observable<number> => open ? timer(0) : timer(200),
+      ),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.openModelWithTransform$(),
+      ),
+    ),
     {
-      manualCleanup: true,
+      initialValue: undefined,
     },
   );
-  private readonly platformId:      NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly closing$: WritableSignal<boolean> = signal<boolean>(false);
+  public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
+    false,
+    {
+      alias: "stuck",
+    },
+  );
 
-  public ngAfterViewInit(): void {
-    this
-      .htmlDialogElementRef
-      ?.nativeElement
-      .addEventListener(
-        "click",
-        this.close,
-        {
-          signal: this.abortController.signal,
-        },
-      );
-
-    this
-      .htmlDialogElementRef
-      ?.nativeElement
-      .addEventListener(
-        "keydown",
-        (keyboardEvent: KeyboardEvent): void => keyboardEvent.key === "Escape" ? ((): void => {
-          keyboardEvent
-            .preventDefault();
-
-          this
-            .close();
-        })() : void (0),
-        {
-          signal: this.abortController.signal,
-        },
-      );
+  protected containerKeydown(keyboardEvent: KeyboardEvent): true | void {
+    keyboardEvent.key === "Escape" || keyboardEvent.stopPropagation();
+    return (keyboardEvent.key === "Escape" && this.openOrClosing$() ? this.openModel$.set(false) : true) || keyboardEvent.preventDefault();
   }
-  public ngOnDestroy():     void {
-    this
-      .abortController
-      .abort();
-
-    this
-      .openEffect
-      .destroy();
-  }
-
-  public readonly open$: WritableSignal<boolean> = signal<boolean>(false);
 
 }

@@ -37,10 +37,10 @@
       }
     },
     {
-      "files":   [
+      "files": [
         "./apps/website/src/app/components/lib/**/*.ts"
       ],
-      "rules":   {
+      "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -52,14 +52,29 @@
       }
     },
     {
-      "files":   [
+      "files": [
         "./libs/components/src/lib/**/*.ts"
       ],
-      "rules":   {
+      "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
             "prefix": "standard-",
+            "style":  "kebab-case",
+            "type":   "element"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "./libs/route components/src/lib/**/*.ts"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "standard-routes-",
             "style":  "kebab-case",
             "type":   "element"
           }

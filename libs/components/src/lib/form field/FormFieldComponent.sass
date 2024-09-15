@@ -1,52 +1,55 @@
+@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+@use "../../../../directives/src/lib/RoundedContainerDirective"
+
+
 \:host
   display: contents
 
+  @include FlexboxContainerChildDirective.host
+  @include RoundedContainerDirective.host
+
+  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+
   > div
-    border-radius: calc(0.5rem * pow(var(--phi), 0))
-    display: flex
-    flex-direction: row
-    flex-grow: 1
-    transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease
+    display: grid
     user-select: none
 
-    &::ng-deep
-      > input,
-      > textarea
-        background: var(--body--canvas--background)
-        border: 1px solid var(--body--grey--foreground)
-        border-radius: calc(0.5rem * pow(var(--phi), 0))
-        display: flex
-        flex-grow: 1
-        opacity: 0.5
-        outline: none
-        padding: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
-        width: 0
+    > div
+      background: var(--body--canvas--background)
+      box-shadow: inset transparentize(black, 0.25) 0 0.125rem 0.375rem -0.25rem
+      display: flex
+      flex-direction: row
 
-        &,
-        &::placeholder
-          color: var(--body--grey--foreground)
+      &::ng-deep
+        > *
+          @include FlexboxContainerChildDirective.children
+          @include RoundedContainerDirective.children
 
-        &:not([disabled])
-          color: var(--body--canvas--foreground)
-          opacity: 1
+        > input,
+        > select,
+        > textarea
+          appearance: initial
+          background: transparent
+          border: none
+          display: flex
+          flex-grow: 1
+          opacity: 0.5
+          outline: none
+          width: 0
 
-          @media (hover: hover)
-            &:hover
-              box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
-              scale: 1.015625 1.015625 1.015625
-              translate: calc(var(--translation-x) * 0.5rem) calc(var(--translation-y) * 0.5rem)
-              z-index: 1
+          &,
+          &::placeholder
+            color: var(--card--grey--foreground)
 
-            &:focus-visible
-              box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
-              scale: 1.03125 1.03125 1.03125
-              translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
-              z-index: 2
+          &:not([disabled])
+            color: var(--card--canvas--foreground)
+            opacity: 1
 
-      > textarea
-        resize: none
+        > textarea
+          resize: none
 
-    &.transitionTranslate::ng-deep
-      > input,
-      > textarea
-        transition: box-shadow 200ms ease, color 200ms ease, opacity 200ms ease, scale 200ms ease, translate 200ms ease
+
+\:host-context(standard--card) > div > div
+  background: var(--card--glass--background)

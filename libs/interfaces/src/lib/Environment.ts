@@ -9,6 +9,6 @@ export interface Environment {
     "storageBucket": string
   },
   "production": boolean,
-  "project": "console" | "website",
+  "project": "website",
   "recaptchaKeyID": string,
 }

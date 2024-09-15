@@ -1,46 +1,62 @@
-import { NgComponentOutlet, NgTemplateOutlet }                             from "@angular/common";
-import { Component, inject, Input, numberAttribute, Type, WritableSignal } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                    from "@angular/router";
-import { SymbolContainerDirective }                                        from "@standard/directives";
+import { NgComponentOutlet, NgTemplateOutlet }                                                                from "@angular/common";
+import { booleanAttribute, Component, inject, input, InputSignal, InputSignalWithTransform, numberAttribute } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                       from "@angular/router";
+import { SymbolPathsLoaderDirective }                                                                         from "@standard/directives";
 
 
-@Component({
-  hostDirectives: [
-    {
-      directive: SymbolContainerDirective,
-      inputs:    [
-        "symbol",
-      ],
-    },
-  ],
-  imports:        [
-    NgComponentOutlet,
-    NgTemplateOutlet,
-    RouterLink,
-    RouterLinkActive,
-  ],
-  selector:       "standard--link",
-  standalone:     true,
-  styleUrls:      [
-    "LinkComponent.sass",
-  ],
-  templateUrl:    "LinkComponent.html",
-})
+@Component(
+  {
+    hostDirectives: [
+      {
+        directive: SymbolPathsLoaderDirective,
+        inputs:    [
+          "symbolName",
+        ],
+      },
+    ],
+    imports:        [
+      NgComponentOutlet,
+      NgTemplateOutlet,
+      RouterLink,
+      RouterLinkActive,
+    ],
+    selector:       "standard--link",
+    standalone:     true,
+    styleUrls:      [
+      "LinkComponent.sass",
+    ],
+    templateUrl:    "LinkComponent.html",
+  },
+)
 export class LinkComponent {
 
-  @Input() public disabled?: boolean;
-  @Input() public url?:      string;
+  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
 
-  @Input({
-    transform: numberAttribute,
-  })
-  public tabindex?: number;
-
-  @Input({
-    required: true,
-  })
-  public text!: string;
-
-  protected readonly symbolContainerDirective: SymbolContainerDirective = inject<SymbolContainerDirective>(SymbolContainerDirective);
+  public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+    undefined,
+    {
+      alias:     "disabled",
+      transform: booleanAttribute,
+    },
+  );
+  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`> = input<number | undefined, number | `${ number }`>(
+    undefined,
+    {
+      alias:     "tabIndexOverride",
+      transform: numberAttribute,
+    },
+  );
+  public readonly textInput$: InputSignal<string | undefined>                                                  = input<string | undefined>(
+    undefined,
+    {
+      alias: "text",
+    },
+  );
+  public readonly urlInput$: InputSignal<string | undefined>                                                   = input<string | undefined>(
+    undefined,
+    {
+      alias: "url",
+    },
+  );
 
 }

@@ -8,34 +8,34 @@ import { title }                from "@standard/brand";
 export const routes: Route[] = [
   {
     data:          {
-      description: $localize`:@@PrivacyRoute--Description:Standard’s Privacy Policy describes how Standard collects, uses, and shares your personal data.`,
+      description: $localize`:@@libs--RouteComponents--PrivacyRoute--Description:...`,
     },
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
       (module: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.PrivacyRouteComponent,
     ),
     path:          "privacy",
     pathMatch:     "full",
-    title:         $localize`:@@PrivacyRoute--Title:Privacy` + ` - ${ title }`,
+    title:         $localize`:@@libs--RouteComponents--PrivacyRoute--Title:Privacy` + ` - ${ title }`,
   },
   {
     data:          {
-      description: $localize`:@@TermsRoute--Description:Terms, etc.`,
+      description: $localize`:@@libs--RouteComponents--TermsRoute--Description:...`,
     },
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./terms/TermsRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
       (module: typeof import("./terms/TermsRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.TermsRouteComponent,
     ),
     path:          "terms",
     pathMatch:     "full",
-    title:          $localize`:@@TermsRoute--Title:Terms` + ` - ${ title }`,
+    title:         $localize`:@@libs--RouteComponents--TermsRoute--Title:Terms` + ` - ${ title }`,
   },
   {
     data:          {
-      description: $localize`:@@OtherwiseRoute--Description:This page was not found.`,
+      description: $localize`:@@libs--RouteComponents--OtherwiseRoute--Description:...`,
     },
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./otherwise/OtherwiseRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
       (module: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.OtherwiseRouteComponent,
     ),
     path:          "**",
-    title:         $localize`:@@OtherwiseRoute--Title:Page not found` + ` - ${ title }`,
+    title:         $localize`:@@libs--RouteComponents--OtherwiseRoute--Title:Page not found` + ` - ${ title }`,
   },
 ];

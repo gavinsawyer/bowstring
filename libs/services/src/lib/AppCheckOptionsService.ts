@@ -5,13 +5,15 @@ import { ENVIRONMENT }                                                          
 import { Environment }                                                                 from "@standard/interfaces";
 
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable(
+  {
+    providedIn: "root",
+  },
+)
 export class AppCheckOptionsService {
 
-  private readonly environment: Environment          = inject<Environment>(ENVIRONMENT);
-  private readonly platformId:  NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly environment: Environment         = inject<Environment>(ENVIRONMENT);
+  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   public readonly appCheckOptions: AppCheckOptions = isPlatformBrowser(
     this.platformId,

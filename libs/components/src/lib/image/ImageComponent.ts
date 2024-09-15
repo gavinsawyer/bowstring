@@ -1,37 +1,88 @@
-import { NgOptimizedImage }                  from "@angular/common";
-import { Component, Input, numberAttribute } from "@angular/core";
+import { NgOptimizedImage }                                                                                                        from "@angular/common";
+import { Component, effect, ElementRef, inject, input, InputSignal, InputSignalWithTransform, numberAttribute, Signal, viewChild } from "@angular/core";
+import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }               from "@standard/directives";
 
 
-@Component({
-  imports:     [
-    NgOptimizedImage,
-  ],
-  selector:    "standard--image",
-  standalone:  true,
-  styleUrls:   [
-    "ImageComponent.sass",
-  ],
-  templateUrl: "ImageComponent.html",
-})
+@Component(
+  {
+    hostDirectives: [
+      {
+        directive: ElevatedContainerDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
+        directive: FlexboxContainerChildDirective,
+        inputs:    [
+          "flexBasis",
+          "flexGrow",
+          "flexShrink",
+        ],
+      },
+      {
+        directive: RoundedContainerDirective,
+        inputs:    [
+          "borderRadiusFactor",
+        ],
+      },
+    ],
+    imports:        [
+      NgOptimizedImage,
+    ],
+    selector:       "standard--image",
+    standalone:     true,
+    styleUrls:      [
+      "ImageComponent.sass",
+    ],
+    templateUrl:    "ImageComponent.html",
+  },
+)
 export class ImageComponent {
 
-  @Input({
-    required:  true,
-    transform: numberAttribute,
-  })
-  public height?: number;
+  constructor() {
+    effect(
+      (): void => {
+        this.containerDirective.htmlElementRef$.set(
+          this.htmlImageElementRef$(),
+        );
+        this.roundedContainerDirective.htmlElementRef$.set(
+          this.htmlImageElementRef$(),
+        );
+      },
+      {
+        allowSignalWrites: true,
+      },
+    );
+  }
 
-  @Input({
-    required: true,
-  })
-  public src!: string;
+  private readonly containerDirective: ContainerDirective                     = inject<ContainerDirective>(ContainerDirective);
+  private readonly htmlImageElementRef$: Signal<ElementRef<HTMLImageElement>> = viewChild.required<ElementRef<HTMLImageElement>>("htmlImageElement");
 
-  @Input({
-    required:  true,
-    transform: numberAttribute,
-  })
-  public width!: number;
+  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
 
-  @Input() public alt?: string;
+  public readonly altInput$: InputSignal<string | undefined>                             = input<string | undefined>(
+    undefined,
+    {
+      alias: "alt",
+    },
+  );
+  public readonly heightInput$: InputSignalWithTransform<number, number | `${ number }`> = input.required<number, number | `${ number }`>(
+    {
+      alias:     "height",
+      transform: numberAttribute,
+    },
+  );
+  public readonly srcInput$: InputSignal<string | URL>                                   = input.required<string | URL>(
+    {
+      alias: "src",
+    },
+  );
+  public readonly widthInput$: InputSignalWithTransform<number, number | `${ number }`>  = input.required<number, number | `${ number }`>(
+    {
+      alias:     "width",
+      transform: numberAttribute,
+    },
+  );
 
 }

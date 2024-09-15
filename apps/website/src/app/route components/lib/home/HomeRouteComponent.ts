@@ -1,27 +1,56 @@
-import { DatePipe }                                                                                                                                     from "@angular/common";
-import { Component, inject, LOCALE_ID }                                                                                                                                 from "@angular/core";
-import { ArticleComponent, ButtonComponent, CapsuleComponent, CardComponent, FlexboxComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent } from "@standard/components";
-import { LocaleId }                                                                                                                                                     from "../../../types";
+import { DOCUMENT }                                                                                                                                                                 from "@angular/common";
+import { Component, inject, signal, WritableSignal }                                                                                                                                from "@angular/core";
+import { ArticleComponent, AsideComponent, CardComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent } from "@standard/components";
+import { ScrollStackItemDirective }                                                                                                                                                 from "@standard/directives";
+import { ORIGIN }                                                                                                                                                                   from "@standard/injection-tokens";
 
 
-@Component({
-  imports:        [
-    ArticleComponent,
-    ButtonComponent,
-    CapsuleComponent,
-    CardComponent,
-    DatePipe,
-    FlexboxComponent,
-    HeaderComponent,
-    HeadingGroupComponent,
-    ImageComponent,
-  ],
-  standalone:     true,
-  templateUrl:    "HomeRouteComponent.html",
-})
-export class HomeRouteComponent extends RouteComponent {
+@Component(
+  {
+    imports:     [
+      ArticleComponent,
+      AsideComponent,
+      CardComponent,
+      FlexboxContainerComponent,
+      HeaderComponent,
+      HeadingGroupComponent,
+      ImageComponent,
+      ScrollStackComponent,
+      ScrollStackItemDirective,
+    ],
+    standalone:  true,
+    styleUrls:   [
+      "HomeRouteComponent.sass",
+    ],
+    templateUrl: "HomeRouteComponent.html",
+  },
+)
+export class HomeRouteComponent
+  extends RouteComponent {
 
-  protected readonly localeId: LocaleId = inject<LocaleId>(LOCALE_ID);
-  protected readonly now:      Date     = new Date();
+  private readonly document: Document = inject<Document>(DOCUMENT);
+  private readonly origin: URL | null = inject<URL>(
+    ORIGIN,
+    {
+      optional: true,
+    },
+  );
+
+  protected readonly imageUrls$: WritableSignal<URL[]> = signal<URL[]>(
+    [
+      new URL(
+        "/assets/photos/1.jpeg",
+        this.origin || this.document.location.origin,
+      ),
+      new URL(
+        "/assets/photos/2.jpeg",
+        this.origin || this.document.location.origin,
+      ),
+      new URL(
+        "/assets/photos/3.jpeg",
+        this.origin || this.document.location.origin,
+      ),
+    ],
+  );
 
 }

@@ -1,17 +1,42 @@
+@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+
+
 \:host
   display: contents
 
+  @include FlexboxContainerChildDirective.host
+
   > div
-    align-content: var(--standard--grid--align-content, normal)
-    align-items: var(--standard--grid--align-items, normal)
     display: grid
-    flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
-    flex-wrap: var(--standard--grid--flex-wrap, nowrap)
-    gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 1)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 2))))
-    justify-content: var(--standard--grid--justify-content, normal)
 
-\:host-context(standard--card, standard--footer) > div
-  gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), -1)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 0))))
+    > div
+      align-content: var(--standard--grid--align-content, normal)
+      align-items: var(--standard--grid--align-items, normal)
+      display: grid
+      flex-wrap: var(--standard--grid--flex-wrap, nowrap)
+      gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 1)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), 2))))
+      justify-content: var(--standard--grid--justify-content, normal)
 
-\:host-context(standard--header) > div
-  gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), -2)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), -1))))
+      &::ng-deep > *
+        @include FlexboxContainerChildDirective.children
+
+        --standard--grid--align-content: initial
+        --standard--grid--align-items: initial
+        --standard--grid--column-gap: initial
+        --standard--grid--flex-wrap: initial
+        --standard--grid--gap: initial
+        --standard--grid--justify-content: initial
+        --standard--grid--row-gap: initial
+
+@mixin host-context($row-gap-exponent)
+  > div > div
+    gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), $row-gap-exponent)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), $row-gap-exponent + 1))))
+
+\:host-context(standard--main)
+  @include host-context(0)
+
+\:host-context(standard--card, standard--footer)
+  @include host-context(-1)
+
+\:host-context(standard--header)
+  @include host-context(-2)

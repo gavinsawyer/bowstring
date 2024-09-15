@@ -1,11 +1,22 @@
+@use "../../../../directives/src/lib/ElevatedContainerDirective"
+@use "../../../../directives/src/lib/RoundedContainerDirective"
+
+
 \:host
   display: contents
 
-  > span
-    background: var(--primary--canvas--background)
-    border-radius: 999px
-    color: var(--primary--canvas--foreground)
-    cursor: default
-    font-variant: all-small-caps
-    padding: 0 0.625em 0.125em
-    user-select: none
+  @include ElevatedContainerDirective.host
+  @include RoundedContainerDirective.host
+
+  > div
+    display: grid
+    position: relative
+
+    > span
+      background: var(--primary--canvas--background)
+      border-radius: 999px
+      color: var(--primary--canvas--foreground)
+      cursor: default
+      font-variant: all-small-caps
+      padding: 0 0.625em 0.125em
+      user-select: none

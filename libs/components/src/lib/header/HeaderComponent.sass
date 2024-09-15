@@ -6,7 +6,8 @@
     > h2,
     > h3,
     > h4,
-    > h5
+    > h5,
+    > h6
       cursor: default
       margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -1))
 
@@ -14,13 +15,13 @@
       font-size: calc(1em * pow(var(--phi), 4))
 
       &:has(+ h2)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
 
     > h2
       font-size: calc(1em * pow(var(--phi), 3))
 
       &:has(+ h3)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
 
       &:has(+ h1)
         margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
@@ -29,7 +30,7 @@
       font-size: calc(1em * pow(var(--phi), 2))
 
       &:has(+ h4)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
 
       &:has(+ h2)
         margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
@@ -38,52 +39,44 @@
       font-size: calc(1em * pow(var(--phi), 1))
 
       &:has(+ h5)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-1em * pow(var(--phi), -4))
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
 
       &:has(+ h3)
         margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
 
     > h5
-      font-size: calc(1em * pow(var(--phi), 0))
+      font-size: 1em
+
+      &:has(+ h6)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
 
       &:has(+ h4)
         margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
 
-\:host-context(standard--card) > header
-  font-size: calc(1rem * pow(var(--phi), 0))
+    > h6
+      font-size: calc(1em * pow(var(--phi), -1))
+      font-weight: lighter
 
-\:host-context(standard--card:has(standard--image:first-child)) > header
-  background: hsla(0, 0%, 0%, 0.25)
-  backdrop-filter: blur(0.25rem) saturate(1.125)
-  margin: 0 calc(-1rem * pow(var(--phi), 0))
-  mask-image: linear-gradient(to bottom, transparent, black calc(1rem * pow(var(--phi), 2)))
-  padding: calc(1rem * pow(var(--phi), 2)) calc(1rem * pow(var(--phi), 0)) calc(1rem * pow(var(--phi), -2))
-  position: absolute
-  translate: 0 -100%
-
-  &::ng-deep
-    > h1,
-    > h2,
-    > h3,
-    > h4,
-    > h5
-      color: whitesmoke
-
-      &:first-child
-        margin-top: 0
-
-      &:last-child
-        margin-bottom: 0
+      &:has(+ h5)
+        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
 
 
-\:host-context(standard-website--header) > header
-  font-size: calc(1rem * pow(var(--phi), -2))
+@mixin host-context($font-size-exponent)
+  > header
+    font-size: calc(1rem * pow(var(--phi), $font-size-exponent))
 
-\:host-context(standard-website--footer) > header
-  font-size: calc(1rem * pow(var(--phi), -3))
+\:host-context(standard--card)
+  @include host-context(0)
 
-\:host-context(standard-website--header, standard-website--footer) > header
-  &::ng-deep
-    > h1,
-    > h2
-      margin: 0
+
+\:host-context(standard-website--root standard--flexbox-container standard--footer)
+  @include host-context(-3)
+
+\:host-context(standard-website--root standard--flexbox-container standard--flexbox-container#menu)
+  @include host-context(-2)
+
+
+\:host-context(standard-website--root standard--flexbox-container standard--footer, standard-website--root standard--flexbox-container standard--flexbox-container#menu) > header::ng-deep
+  > h1,
+  > h2
+    margin: 0

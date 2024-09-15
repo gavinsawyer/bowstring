@@ -3,30 +3,28 @@
 
   hgroup::ng-deep
     &,
-    > standard--section::ng-deep > section::ng-deep
+    > standard--section > section
       > span
         display: block
 
       > p,
       > span
-        font-size: calc(1rem * pow(var(--phi), 0))
-        margin: calc(1em * pow(var(--phi), -1)) 0 calc(1em * pow(var(--phi), 0))
+        font-size: 1rem
+        margin: calc(1em * pow(var(--phi), -1)) 0 1em
         max-width: calc(1em * pow(var(--phi), 7))
         user-select: text
+
+        &:first-child
+          margin-top: 0
 
         &:last-child
           margin-bottom: 0
 
-    > p
-      &:first-of-type
-        font-size: calc(1rem * pow(var(--phi), 0.5))
+    > p:first-of-type
+      font-size: calc(1rem * pow(var(--phi), 0.5))
 
-        &::first-letter
-          float: left
-          font-size: calc(2em * pow(var(--phi), 0.375))
-          line-height: calc(2em * pow(var(--phi), -2.5))
-          margin: calc(2em * pow(var(--phi),-5)) calc(1em * pow(var(--phi),-5)) 0 0
-
-\:host-context(standard--card:has(standard--image:first-child)) > hgroup
-  margin-top: calc(-1rem * pow(var(--phi), -1))
-  position: relative
+  &:not(.skipStylingFirstLetter) > hgroup::ng-deep > p:first-of-type::first-letter
+    float: left
+    font-size: calc(2em * pow(var(--phi), 0.375))
+    line-height: calc(2em * pow(var(--phi), -2.5))
+    margin: calc(2em * pow(var(--phi),-5)) calc(1em * pow(var(--phi),-5)) 0 0

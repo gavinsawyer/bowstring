@@ -1,4 +1,6 @@
 \:host
+  display: contents
+
   > button
     all: unset
 
@@ -7,41 +9,27 @@
     position: relative
     color: var(--primary--canvas--background)
     cursor: pointer
+    display: inline-flex
+    gap: 0.25em
+    outline: none
     text-decoration: none
-    text-shadow: var(--body--canvas--background) calc(1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--body--canvas--background) 0 calc(1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(-1em * pow(var(--phi), -6)) 0, var(--body--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--body--canvas--background) 0 calc(-1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--body--canvas--background) calc(1em * pow(var(--phi), -6)) 0
-    transition: color 200ms ease
+    transition: color 200ms ease-in-out
     user-select: none
     white-space: nowrap
     z-index: 0
     -webkit-tap-highlight-color: transparent
 
-    &::before
-      background: currentColor
-      bottom: calc(0.5em * pow(var(--phi), -6))
-      content: ""
-      display: block
-      height: calc(1em * pow(var(--phi), -6))
-      right: 0
-      position: absolute
-      transition: background 200ms ease, width 200ms ease
-      width: 0
-      z-index: -1
+    > svg
+      width: 1em
 
     @media (hover: hover)
-      &:hover,
-      &:focus-visible
-        outline: none
-
-        &::before
-          left: 0
-          width: 100%
+      &:not(.no-op)
+        &:hover,
+        &:focus-visible
+          text-decoration: underline
 
     &.no-op
       cursor: default
-
-      &::before
-        left: 0
-        width: 100%
 
     &:active,
     &.no-op
@@ -51,8 +39,6 @@
 \:host-context(standard--card)
   > a,
   > button
-    text-shadow: var(--card--canvas--background) calc(1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--card--canvas--background) 0 calc(1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(-1em * pow(var(--phi), -6)) 0, var(--card--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--card--canvas--background) 0 calc(-1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--card--canvas--background) calc(1em * pow(var(--phi), -6)) 0
-
     &:active,
     &.no-op
       color: var(--card--grey--foreground)
@@ -60,26 +46,17 @@
 \:host-context(standard--footer)
   > a,
   > button
-    text-shadow: var(--footer--canvas--background) calc(1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--footer--canvas--background) 0 calc(1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(-1em * pow(var(--phi), -6)) 0, var(--footer--canvas--background) calc(-1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--footer--canvas--background) 0 calc(-1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(1em * pow(var(--phi), -6)) calc(-1em * pow(var(--phi), -6)), var(--footer--canvas--background) calc(1em * pow(var(--phi), -6)) 0
-
     &:active,
     &.no-op
       color: var(--footer--grey--foreground)
 
 
-\:host-context(standard-website--header standard--header, standard-website--footer standard--header)
+\:host-context(standard-website--root standard--flexbox-container standard--flexbox-container#menu)
   > a,
   > button
     color: currentColor
 
-    &::before
-      bottom: calc(0.5em * pow(var(--phi), -5.5))
-      height: calc(1em * pow(var(--phi), -5.5))
-
-    &:active,
-    &.no-op
-      color: currentColor
-
-      &::before
-        left: unset
-        width: 0
+\:host-context(standard-website--root standard--flexbox-container standard--flexbox-container#menu standard--header, standard--footer standard--header)
+  > a,
+  > button
+    color: currentColor

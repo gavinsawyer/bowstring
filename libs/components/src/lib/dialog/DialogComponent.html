@@ -1,10 +1,8 @@
-<dialog #htmlDialogElement
-  [class.closing]="closing$()">
-  <div>
-    <standard--card
-      (click)="$event.stopPropagation();"
-      flexDirection="column">
-      <ng-content />
-    </standard--card>
+<dialog #htmlDialogElement class="containerDirective flexboxContainerChildDirective flexboxContainerDirective"
+  (click)="$event.stopPropagation(); openModel$.set(false);"
+  (keydown)="containerKeydown($event);"
+  tabindex="0">
+  <div #htmlDivElement class="subcontainer">
+    <ng-content />
   </div>
 </dialog>

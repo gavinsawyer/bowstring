@@ -1,3 +1,3 @@
 export interface ProfileDocument {
-  "name": string
+  "name": string,
 }

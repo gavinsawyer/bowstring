@@ -1,94 +1,177 @@
+@use "../../../../directives/src/lib/ElevatedContainerDirective"
+@use "../../../../directives/src/lib/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/HoverTranslatingContainerDirective"
+@use "../../../../directives/src/lib/RoundedContainerDirective"
+
+
 \:host
   display: contents
 
-  > a
-    text-shadow: none
-    z-index: unset
+  --standard--button--material-opacity: 0.875
 
-    &::before
-      display: none
+  @include ElevatedContainerDirective.host
+  @include FlexboxContainerDirective.host
+  @include HoverTranslatingContainerDirective.host
+  @include RoundedContainerDirective.host
 
-  > a,
-  > button
-    align-items: baseline
-    border: none
-    border-radius: calc(1rem * pow(var(--phi), 0))
-    display: flex
-    flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
-    flex-direction: row
-    font-size: 1.125rem
-    gap: calc(1rem * pow(var(--phi), -3))
-    justify-content: center
-    outline: none
-    transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease
-    user-select: none
-    -webkit-tap-highlight-color: transparent
+  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--justify-content: center !important
+  --standard--elevated-container-directive--material-opacity: var(--standard--button--material-opacity) !important
+  --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
+  --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
+
+  > div
+    display: inline-grid
+
+    > a
+      text-shadow: none
+      z-index: unset
+
+    > a,
+    > button
+      background: transparent
+      border: none
+      font-size: 1.125rem
+      gap: 0.25em
+      outline: none
+      transition: background-color 200ms ease, color 200ms ease
+      user-select: none
+      -webkit-tap-highlight-color: transparent
+
+      > svg
+        align-self: center
+        overflow: visible
+        width: 1em
 
     &.flat,
     &.raised
-      padding: calc(1rem * pow(var(--phi), -1)) calc(1rem * pow(var(--phi), 0))
+      &:after
+        content: ""
+
+      > a,
+      > button
+        box-shadow: inset var(--button--glass--border) 0 0 calc(1rem * pow(var(--phi), -3))
 
     &.symbol
-      background: transparent
-      font-size: 1.375rem
-      padding: calc(0.5rem * pow(var(--phi), -1)) calc(0.5rem * pow(var(--phi), 0))
+      --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+      --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+      --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+      --standard--elevated-container-directive--material-opacity: 0 !important
 
-    &.transitionTranslate
-      transition: background-color 200ms ease, box-shadow 200ms ease, color 200ms ease, scale 200ms ease, translate 200ms ease
+      > a,
+      > button
+        font-size: 1.375rem
 
-  > a:not(.no-op),
-  > button:not([disabled])
-    color: var(--button--canvas--foreground)
-    cursor: pointer
-    translate: calc(var(--translation-x) * 1rem) calc(var(--translation-y) * 1rem)
+    &.no-op
+      > a,
+      > button
+        color: var(--button--grey--foreground)
+        cursor: default
 
-    &.flat,
-    &.raised
-      background: var(--button--canvas--background)
+      &.flat,
+      &.raised
+        > a,
+        > button
+          background: var(--button--grey--background)
 
-    &.raised
-      box-shadow: black 0 calc(1 * var(--depth-offset)) calc(1 * var(--depth-blur)) calc(1 * var(--depth-spread))
-      scale: 1.015625 1.015625 1.015625
-      z-index: 1
+      &.primary
+        > a,
+        > button
+          color: var(--primary--grey--foreground)
+
+        &.flat,
+        &.raised
+          > a,
+          > button
+            background: var(--primary--grey--background)
+
+    &:not(.no-op)
+      > a,
+      > button
+        color: var(--button--glass--foreground)
+        cursor: pointer
+
+      &.flat,
+      &.raised
+        > a,
+        > button
+          background: var(--button--glass--background)
+
+      &.primary
+        > a,
+        > button
+          color: var(--primary--glass--foreground)
+
+        &.flat,
+        &.raised
+          > a,
+          > button
+            background: var(--primary--glass--background)
 
       @media (hover: hover)
         &:hover,
-        &:focus-visible
-          box-shadow: black 0 calc(2 * var(--depth-offset)) calc(2 * var(--depth-blur)) calc(2 * var(--depth-spread))
-          z-index: 2
+        &:focus-within
+          &.raised
+            z-index: 2
+
+            &:before
+              animation: expand-shadow 200ms ease-in-out
+
+
+\:host-context(standard--card, standard--footer) > div
+  &:before
+    box-shadow: black 0 0.5rem 2rem -1rem
+
+  &:after
+    content: initial
+
+  &.flat,
+  &.raised
+    > a,
+    > button
+      box-shadow: unset
+
+  &.no-op
+    > a,
+    > button
+      color: var(--button--grey--foreground)
 
     &.primary
-      color: var(--primary--canvas--foreground)
-
-      &.flat,
-      &.raised
-        background: var(--primary--canvas--background)
-
-      &.raised
-        box-shadow: var(--primary--canvas--shadow) 0 calc(var(--depth-offset) / 2) calc(var(--depth-blur) / 2) calc(var(--depth-spread) / 2)
-
-        @media (hover: hover)
-          &:hover,
-          &:focus-visible
-            box-shadow: var(--primary--canvas--shadow) 0 calc(1.5 * var(--depth-offset)) calc(1.5 * var(--depth-blur)) calc(1.5 * var(--depth-spread))
-
-    @media (hover: hover)
-      &:hover,
-      &:focus-visible
-        scale: 1.03125 1.03125 1.03125
-
-  > a.no-op,
-  > button[disabled]
-    color: var(--button--grey--foreground)
-    cursor: default
+      > a,
+      > button
+        color: var(--primary--grey--foreground)
 
     &.flat,
     &.raised
-      background: var(--button--grey--background)
+      > a,
+      > button
+        background: var(--button--grey--background)
+
+      &.primary
+        > a,
+        > button
+          background: var(--primary--grey--background)
+
+  &:not(.no-op)
+    > a,
+    > button
+      color: var(--button--canvas--foreground)
 
     &.primary
-      color: var(--primary--grey--foreground)
+      > a,
+      > button
+        color: var(--primary--canvas--foreground)
 
-      &.flat,
-      &.raised
-        background: var(--primary--grey--background)
+    &.flat,
+    &.raised
+      > a,
+      > button
+        background: var(--button--canvas--background)
+
+      &.primary
+        > a,
+        > button
+          background: var(--primary--canvas--background)

@@ -1,22 +1,36 @@
+@use "../../../../directives/src/lib/CanvasContainerDirective"
+@use "../../../../directives/src/lib/ElevatedContainerDirective"
+@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+@use "../../../../directives/src/lib/RoundedContainerDirective"
+
+
 \:host
   display: contents
 
-  > img
-    width: 100%
+  @include CanvasContainerDirective.host(6%)
+  @include ElevatedContainerDirective.host
+  @include FlexboxContainerChildDirective.host
+  @include RoundedContainerDirective.host
 
-\:host-context(standard--card)
-  > img
-    margin: 0 calc(-1rem * pow(var(--phi), 0))
-    width: calc(100% + 2rem * pow(var(--phi), 0))
+  > div
+    display: grid
 
-  &:first-child
     > img
-      border-top-left-radius: calc(1rem * pow(var(--phi), 0))
-      border-top-right-radius: calc(1rem * pow(var(--phi), 0))
-      margin-top: calc(-1rem * pow(var(--phi), -1))
+      background: var(--card--canvas--background)
+      height: auto
+      max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
+      padding: 0 !important
+      width: 100%
 
-  &:last-child
-    > img
-      border-bottom-left-radius: calc(1rem * pow(var(--phi), 0))
-      border-bottom-right-radius: calc(1rem * pow(var(--phi), 0))
-      margin-bottom: calc(-1rem * pow(var(--phi), -2))
+
+@mixin host-context($context-level)
+
+
+\:host-context(standard--main)
+  @include host-context(-0.5)
+
+\:host-context(standard--card, standard--footer)
+  @include host-context(-1)
+
+\:host-context(standard--header)
+  @include host-context(-2)

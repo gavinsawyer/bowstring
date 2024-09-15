@@ -1,10 +1,22 @@
-<!--suppress CssUnknownProperty --><div #htmlDivElement
-  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
-  (pointerdown)="translationHoverDirective.pointerdown();"
-  (pointerenter)="translationHoverDirective.pointerenter();"
-  (pointerleave)="translationHoverDirective.pointerleave();"
-  (pointermove)="translationHoverDirective.pointermove($event, htmlDivElement);"
-  [style.--translation-x]="translationHoverDirective.translation$().x"
-  [style.--translation-y]="translationHoverDirective.translation$().y">
-  <ng-content />
+<svg
+  height="1"
+  style="left: 0; opacity: 0; position: absolute; top: 0;"
+  viewBox="0 0 1 1"
+  width="1">
+  <clipPath
+    [attr.id]="roundedContainerDirective.clipPathId$()"
+    clipPathUnits="objectBoundingBox">
+    <!--suppress HtmlUnknownAttribute -->
+    <path
+      [attr.d]="roundedContainerDirective.pathDefinition$()"
+      fill="#000" />
+  </clipPath>
+</svg>
+<div #htmlDivElement class="containerDirective flexboxContainerChildDirective roundedContainerDirective"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  <div class="subcontainer">
+    <ng-content />
+  </div>
 </div>

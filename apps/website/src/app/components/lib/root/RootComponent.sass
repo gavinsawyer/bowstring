@@ -1,16 +1,44 @@
 \:host
   display: contents
 
-  > standard--flexbox::ng-deep > div
-    padding: calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 0)) calc(1rem * pow(var(--phi), -1))
+  --standard--root--padding-bottom: calc(1rem * pow(var(--phi), -2))
+  --standard--root--padding-top:    calc(1rem * pow(var(--phi), 1))
+  --standard--root--padding-sides:  calc(1rem * pow(var(--phi), -1))
 
-    > standard--flexbox > div > standard--flexbox > div
-      @media (min-width: calc(2rem * pow(1.6180339887, 0) + 1rem * pow(1.6180339887, 2) + 1rem * pow(1.6180339887, 5) + 1rem * pow(1.6180339887, 7)))
-        align-items: flex-start !important
-        flex-direction: row !important
+  @media (min-width: calc(1rem * pow(1.6180339887, 7)))
+    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), -1))
+    --standard--root--padding-top:    calc(1rem * pow(var(--phi), 2))
+    --standard--root--padding-sides:  calc(1rem * pow(var(--phi), 0))
 
-    @media (min-width: calc(2rem * pow(1.6180339887, 1) + 1rem * pow(1.6180339887, 2) + 1rem * pow(1.6180339887, 5) + 1rem * pow(1.6180339887, 7)))
-      padding: calc(1rem * pow(var(--phi), 2)) calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 0))
+  @media (min-width: calc(1rem * pow(1.6180339887, 8)))
+    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 0))
+    --standard--root--padding-top:    calc(1rem * pow(var(--phi), 3))
+    --standard--root--padding-sides:  calc(1rem * pow(var(--phi), 1))
 
-    @media (min-width: calc(2rem * pow(1.6180339887, 2) + 1rem * pow(1.6180339887, 2) + 1rem * pow(1.6180339887, 5) + 1rem * pow(1.6180339887, 7)))
-      padding: calc(1rem * pow(var(--phi), 3)) calc(1rem * pow(var(--phi), 2)) calc(1rem * pow(var(--phi), 1))
+  @media (min-width: calc(1rem * pow(1.6180339887, 9)))
+    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 1))
+    --standard--root--padding-top:    calc(1rem * pow(var(--phi), 4))
+    --standard--root--padding-sides:  calc(1rem * pow(var(--phi), 2))
+
+  --standard--root--column-gap: var(--standard--root--padding-sides)
+  --standard--root--row-gap:    var(--standard--root--padding-bottom)
+
+  > standard--flexbox-container::ng-deep > div > div
+    padding: calc(max(env(safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(env(safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(env(safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(env(safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
+
+    > standard--footer > div#container > footer > standard--flexbox-container
+      --standard--flexbox-container-directive--justify-content: center !important
+
+      @media (min-width: 32rem)
+        --standard--flexbox-container-directive--justify-content: space-between !important
+
+      > div > div > *
+        text-align: center
+        user-select: none
+        white-space: nowrap
+
+        &:first-child
+          flex-basis: 100%
+
+          @media (min-width: 32rem)
+            flex-basis: unset

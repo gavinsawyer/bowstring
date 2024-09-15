@@ -1,2 +1,1 @@
-# Standard
-A standard project with Nx, Firebase, and Angular 17.
+A standard project source built with Nx, Angular, and Firebase.

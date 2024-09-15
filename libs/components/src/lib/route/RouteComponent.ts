@@ -1,29 +1,30 @@
-import { Component, inject, Input, OnInit } from "@angular/core";
-import { Meta }                             from "@angular/platform-browser";
+import { Component, inject, input, InputSignal, OnInit } from "@angular/core";
+import { Meta }                                          from "@angular/platform-browser";
 
 
-@Component({
-  standalone: true,
-  template:   "",
-})
+@Component(
+  {
+    standalone: true,
+    template:   "",
+  },
+)
 export class RouteComponent implements OnInit {
-
-  @Input({
-    required: true,
-  })
-  private readonly description!: string;
 
   private readonly meta: Meta = inject<Meta>(Meta);
 
+  public readonly descriptionInput$: InputSignal<string> = input.required<string>(
+    {
+      alias: "description",
+    },
+  );
+
   public ngOnInit(): void {
-    this
-      .meta
-      .updateTag(
-        {
-          name:    "description",
-          content: this.description,
-        },
-      );
+    this.meta.updateTag(
+      {
+        name:    "description",
+        content: this.descriptionInput$(),
+      },
+    );
   }
 
 }

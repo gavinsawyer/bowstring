@@ -1,27 +1,31 @@
 import { NgTemplateOutlet }              from "@angular/common";
-import { Component, HostBinding, Input } from "@angular/core";
+import { Component, input, InputSignal } from "@angular/core";
 
 
-@Component({
-  imports:     [
-    NgTemplateOutlet,
-  ],
-  selector:    "standard--list",
-  standalone:  true,
-  styleUrls:   [
-    "ListComponent.sass",
-  ],
-  templateUrl: "ListComponent.html",
-})
+@Component(
+  {
+    host:        {
+      "[class.inline]":    "typeInput$() === 'inline'",
+      "[class.ordered]":   "typeInput$() === 'ordered'",
+      "[class.unordered]": "typeInput$() === 'unordered'",
+    },
+    imports:     [
+      NgTemplateOutlet,
+    ],
+    selector:    "standard--list",
+    standalone:  true,
+    styleUrls:   [
+      "ListComponent.sass",
+    ],
+    templateUrl: "ListComponent.html",
+  },
+)
 export class ListComponent {
 
-  @HostBinding("class.inline")    protected get classInline():    boolean { return this.type === "inline"; }
-  @HostBinding("class.ordered")   protected get classOrdered():   boolean { return this.type === "ordered"; }
-  @HostBinding("class.unordered") protected get classUnordered(): boolean { return this.type === "unordered"; }
-
-  @Input({
-    required: true,
-  })
-  public type!: "inline" | "ordered" | "unordered";
+  public typeInput$: InputSignal<"inline" | "ordered" | "unordered"> = input.required<"inline" | "ordered" | "unordered">(
+    {
+      alias: "type",
+    },
+  );
 
 }

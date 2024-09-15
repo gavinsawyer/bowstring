@@ -1,110 +1,92 @@
-import { APP_BASE_HREF }       from "@angular/common";
-import { LOCALE_ID }           from "@angular/core";
-import { CommonEngine }        from "@angular/ssr";
-import * as express            from "express";
-import { existsSync }          from "fs";
-import { join }                from "path";
+import { APP_BASE_HREF }                          from "@angular/common";
+import { LOCALE_ID }                              from "@angular/core";
+import { CommonEngine }                           from "@angular/ssr";
+import * as express                               from "express";
+import { existsSync }                             from "fs";
 import "zone.js/node";
-import project                 from "../../project.json";
-import { WebsiteServerModule } from "./modules";
+import { environment }                            from "../environment";
+import { WebsiteServerModule as AppServerModule } from "./modules";
+import { getI18nRequestHandler }                  from "./request handlers";
+import { LocaleId }                               from "./types";
+
+
+function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
+  return (
+    request: express.Request,
+    response: express.Response,
+    nextFunction: express.NextFunction,
+  ): Promise<void> => new CommonEngine(
+    {
+      bootstrap:                 AppServerModule,
+      enablePerformanceProfiler: !environment.production,
+      providers:                 [
+        {
+          provide:  APP_BASE_HREF,
+          useValue: `/${ String(localeId) }`,
+        },
+        {
+          provide:  LOCALE_ID,
+          useValue: localeId,
+        },
+      ],
+
+    },
+  ).render(
+    {
+      documentFilePath: `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }/${ existsSync(`${ process.cwd() }/dist/apps/website/browser/${ localeId }/index.original.html`) ? "index.original.html" : "index.html" }`,
+      url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
+      publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }`,
+    },
+  ).then<void>(
+    (html: string): void => response.send(html) && void (0),
+  ).catch<void>(
+    (err): void => nextFunction(err),
+  );
+}
+
+
+export {
+  AppServerModule,
+  getAppRequestHandler,
+};
 
 
 declare const __non_webpack_require__: NodeRequire;
 
-const mainModule: NodeJS.Module | undefined = __non_webpack_require__
-  .main;
-const moduleFilename: string = mainModule && mainModule
-  .filename || "";
-const requestHandler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void> = (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => ((localeId: keyof typeof project.i18n.locales | "en-US"): Promise<void> => new CommonEngine().render(
-  {
-    bootstrap:        WebsiteServerModule,
-    documentFilePath: join(
-      process.cwd(),
-      "dist/apps/website/browser",
-      localeId,
-      existsSync(
-        join(
-          process.cwd(),
-          "dist/apps/website/browser",
-          localeId,
-          "index.original.html",
-        ),
-      ) ? "index.original.html" : "index.html",
-    ),
-    url:              `${ req.protocol }://${ req.headers.host }${ req.originalUrl }`,
-    publicPath:       join(
-      process.cwd(),
-      "dist/apps/website/browser",
-      localeId,
-    ),
-    providers:        [
-      {
-        provide:  APP_BASE_HREF,
-        useValue: `/${ localeId }`,
+((moduleFilename: string): boolean => moduleFilename === __filename || moduleFilename.includes("iisnode"))(
+  ((mainModule: NodeJS.Module | undefined): string => mainModule && mainModule.filename || "")(
+    __non_webpack_require__.main,
+  ),
+) && express().set(
+  "view engine",
+  "html",
+).set(
+  "views",
+  `${ process.cwd() }/dist/apps/website/browser`,
+).get(
+  "*.*",
+  getI18nRequestHandler(
+    (
+      { staticRoot }: {
+        staticRoot: string,
       },
-      {
-        provide:  LOCALE_ID,
-        useValue: localeId,
-      },
-    ],
-  },
-).then<void>(
-  (html: string): void => res.send(html) && void (0),
-).catch<void>(
-  (err): void => next(err),
-))(
-  ([
-    "en-US",
-    ...Object.keys(
-      project.i18n.locales,
-    ),
-  ] as (keyof typeof project.i18n.locales | "en-US")[]).filter(
-    (localeId: keyof typeof project.i18n.locales | "en-US"): boolean => localeId === req.path.split("/")[1],
-  )[0] || req.acceptsLanguages(
-    [
-      "en-US",
-      ...Object.keys(
-        project.i18n.locales,
-      ),
-    ],
-  ) as keyof typeof project.i18n.locales | "en-US" | false || "en-US",
-);
-
-(moduleFilename === __filename || moduleFilename.includes("iisnode")) && express()
-  .set(
-    "view engine",
-    "html",
-  )
-  .set(
-    "views",
-    join(
-      process.cwd(),
-      "dist/apps/website/browser",
-    ),
-  )
-  .get(
-    "*.*",
-    express.static(
-      join(
-        process.cwd(),
-        "dist/apps/website/browser",
-      ),
+    ): express.RequestHandler => express.static(
+      staticRoot,
       {
         maxAge: "1y",
       },
     ),
-  )
-  .get(
-    "*",
-    requestHandler,
-  )
-  .listen(
-    process.env["PORT"] || 4000,
-    (): void => console.log(`Node Express server listening on http://localhost:${ process.env["PORT"] || 4000 }`),
-  );
-
-// noinspection JSUnusedGlobalSymbols
-export {
-  requestHandler,
-  WebsiteServerModule as AppServerModule,
-};
+  ),
+).get(
+  "*",
+  getI18nRequestHandler(
+    (
+      { localeId }: {
+        localeId: LocaleId,
+      },
+    ): express.RequestHandler => getAppRequestHandler(localeId),
+  ),
+).listen(
+  process.env["PORT"] || 4000,
+  (): void => console.log(`Node Express server listening on http://localhost:${ process.env["PORT"] || 4000 }`),
+);

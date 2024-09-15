@@ -1,13 +1,76 @@
-import { Component }        from "@angular/core";
-import { FlexboxComponent } from "../flexbox/FlexboxComponent";
+import { Component, effect, ElementRef, inject, Signal, viewChild }                                                                      from "@angular/core";
+import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, RoundedContainerDirective } from "@standard/directives";
 
 
-@Component({
-  selector:    "standard--card",
-  standalone:  true,
-  styleUrls:   [
-    "CardComponent.sass",
-  ],
-  templateUrl: "CardComponent.html",
-})
-export class CardComponent extends FlexboxComponent { }
+@Component(
+  {
+    hostDirectives: [
+      {
+        directive: ElevatedContainerDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
+        directive: FlexboxContainerDirective,
+        inputs:    [
+          "alignContent",
+          "alignItems",
+          "collapsable",
+          "columnGap",
+          "flexDirection",
+          "flexWrap",
+          "justifyContent",
+          "listenToScrollEvent",
+          "rowGap",
+        ],
+      },
+      {
+        directive: GlassContainerDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
+        directive: RoundedContainerDirective,
+        inputs:    [
+          "borderRadiusFactor",
+        ],
+      },
+    ],
+    selector:       "standard--card",
+    standalone:     true,
+    styleUrls:      [
+      "CardComponent.sass",
+    ],
+    templateUrl:    "CardComponent.html",
+  },
+)
+export class CardComponent {
+
+  constructor() {
+    effect(
+      (): void => {
+        this.containerDirective.htmlElementRef$.set(
+          this.htmlDivElementRef$(),
+        );
+        this.flexboxContainerDirective.htmlElementRef$.set(
+          this.htmlDivElementRef$(),
+        );
+        this.roundedContainerDirective.htmlElementRef$.set(
+          this.htmlDivElementRef$(),
+        );
+      },
+      {
+        allowSignalWrites: true,
+      },
+    );
+  }
+
+  private readonly containerDirective: ContainerDirective                 = inject<ContainerDirective>(ContainerDirective);
+  private readonly flexboxContainerDirective: FlexboxContainerDirective   = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+
+  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
+
+}

@@ -1,20 +1,31 @@
+@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+
+
 \:host
   display: contents
 
-  > section
-    border-top: 1px solid var(--body--grey--foreground)
-    border-bottom: 1px solid var(--body--grey--foreground)
-    padding: calc(1rem * pow(var(--phi), 0)) 0 calc(1rem * pow(var(--phi), -1))
+  @include FlexboxContainerChildDirective.host
 
-    &:last-child
-      border-bottom: none
-      padding-bottom: 0
+  > div
+    display: grid
 
-\:host-context(standard--footer) > section
-  padding: calc(1rem*pow(var(--phi),-1)) 0 calc(1rem*pow(var(--phi),-2))
+    > section
+      border-bottom: 1px solid var(--body--grey--foreground)
 
-\:host-context(standard--card) > section
+      &::ng-deep > *
+        @include FlexboxContainerChildDirective.children
+
+  &:last-of-type > div > section
+    border-bottom: none
+    padding-bottom: 0
+
+
+\:host-context(standard--footer) > div > section
+  border-color: var(--footer--grey--foreground)
+  padding: var(--standard--container-directive--padding-top-input, 0) var(--standard--container-directive--padding-sides-input, 0) var(--standard--container-directive--padding-bottom-input, calc(1rem * pow(var(--phi), -2)))
+
+\:host-context(standard--card) > div > section
   border-color: var(--card--grey--foreground)
 
-\:host-context(standard--heading-group) > section
+\:host-context(standard--heading-group) > div > section
   max-width: calc(1em * pow(var(--phi), 8))

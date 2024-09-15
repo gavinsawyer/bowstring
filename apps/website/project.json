@@ -1,4 +1,5 @@
 {
+  "name":        "website",
   "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "i18n":        {
     "locales":      {
@@ -13,7 +14,6 @@
     },
     "sourceLocale": "en-US"
   },
-  "name":        "website",
   "prefix":      "standard-website",
   "projectType": "application",
   "sourceRoot":  "apps/website/src",
@@ -33,8 +33,8 @@
               "type":           "initial"
             },
             {
-              "maximumError":   "10kb",
-              "maximumWarning": "5kb",
+              "maximumError":   "24kb",
+              "maximumWarning": "12kb",
               "type":           "anyComponentStyle"
             }
           ],
@@ -75,7 +75,7 @@
         "tsConfig":                    "apps/website/tsconfig.app.json"
       },
       "outputs":              [
-        "{workspaceRoot}/{options.outputPath}"
+        "{workspaceRoot}/dist/apps/website/browser"
       ]
     },
     "angular-extract-i18n":    {
@@ -166,7 +166,7 @@
         "tsConfig":            "apps/website/tsconfig.app.json"
       },
       "outputs":              [
-        "{workspaceRoot}/{options.outputPath}"
+        "{workspaceRoot}/dist/apps/website/server"
       ]
     },
     "angular-ssr-dev-server":  {
@@ -217,7 +217,7 @@
         "tsConfig":         "apps/website/tsconfig.app.json"
       },
       "outputs":   [
-        "{workspaceRoot}/{options.outputPath}"
+        "{workspaceRoot}/dist/apps/website/server"
       ]
     },
     "eslint":                  {

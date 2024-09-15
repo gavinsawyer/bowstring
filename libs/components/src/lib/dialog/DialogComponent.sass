@@ -1,121 +1,95 @@
+@use "../../../../directives/src/lib/FlexboxContainerDirective"
+
+
 \:host
   display: contents
 
-  > dialog
-    background: unset
-    border: none
-    flex-direction: column
-    height: 100%
-    justify-content: center
-    left: 0
-    margin: 0
-    max-height: 100%
-    max-width: 100%
-    padding: 0
-    position: fixed
-    top: 0
-    width: 100%
+  @include FlexboxContainerDirective.host
 
-    @mixin close--dialog
+  --standard--container-directive--left-position: 0 !important
+  --standard--container-directive--padding-bottom: calc(2 * var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--padding-sides: calc(2 * var(--standard--root--padding-sides)) !important
+  --standard--container-directive--padding-top: calc(2 * var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--position: fixed !important
+  --standard--container-directive--top-position: 0 !important
+  --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--justify-content: center !important
+
+  > dialog
+    background: transparent
+    border: none
+    display: grid
+    height: 100dvh
+    max-height: 100dvh
+    max-width: 100dvw
+    padding: 0
+    visibility: collapse
+    width: 100dvw
+
+    @mixin keyframes--close-dialog
       opacity: 0
 
-    @mixin open--dialog
+    @mixin keyframes--open-dialog
       opacity: 1
 
-    @include close--dialog
+    @include keyframes--close-dialog
 
-    > div
-      align-content: var(--standard--flexbox--align-content, normal)
-      align-items: var(--standard--flexbox--align-items, normal)
-      display: flex
-      flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
-      flex-direction: var(--standard--flexbox--flex-direction)
-      flex-wrap: var(--standard--flexbox--flex-wrap, nowrap)
-      gap: var(--standard--flexbox--row-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 1)))) var(--standard--flexbox--column-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 2))))
-      justify-content: var(--standard--flexbox--justify-content, normal)
-      padding: calc(1rem * pow(var(--phi), 1)) calc(1rem * pow(var(--phi), 2))
+    @keyframes close-dialog
+      0%
+        @include keyframes--open-dialog
 
-      > standard--card::ng-deep > div
-        transform-origin: top
+      100%
+        @include keyframes--close-dialog
 
-        @mixin close--card
-          transform: perspective(100vw) rotateX(-30deg) scale(0.9)
+    @keyframes open-dialog
+      0%
+        @include keyframes--close-dialog
 
-        @mixin open--card
-          transform: unset
-
-        @include open--card
-
-        @keyframes close--card
-          0%
-            @include open--card
-
-          100%
-            @include close--card
-
-        @keyframes open--card
-          0%
-            @include close--card
-
-          100%
-            @include open--card
+      100%
+        @include keyframes--open-dialog
 
     &::backdrop
-      background: var(--glass--background)
-
-      @mixin close--backdrop
-        backdrop-filter: blur(0) saturate(1)
+      @mixin keyframes--close-backdrop
+        backdrop-filter: blur(0)
         opacity: 0
 
-      @mixin open--backdrop
-        backdrop-filter: blur(2rem) saturate(2)
+      @mixin keyframes--open-backdrop
+        backdrop-filter: blur(0.25rem)
         opacity: 1
 
-      @include close--backdrop
+      @include keyframes--close-backdrop
 
-      @keyframes close--backdrop
+      @keyframes close-backdrop
         0%
-          @include open--backdrop
+          @include keyframes--open-backdrop
 
         100%
-          @include close--backdrop
+          @include keyframes--close-backdrop
 
-      @keyframes open--backdrop
+      @keyframes open-backdrop
         0%
-          @include close--backdrop
+          @include keyframes--close-backdrop
 
         100%
-          @include open--backdrop
+          @include keyframes--open-backdrop
 
-    &[open]
-      animation: open--dialog 200ms ease-in forwards
-      display: flex
+    > div
+      padding: calc(max(env(safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(env(safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(env(safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(env(safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
+
+      &::ng-deep > *
+        @include FlexboxContainerDirective.children
+
+  &.openOrClosing
+    > dialog
+      animation: open-dialog 200ms ease-in forwards
+      visibility: visible
 
       &::backdrop
-        animation: open--backdrop 200ms ease-in forwards
+        animation: open-backdrop 200ms ease-in forwards
 
-      > div > standard--card::ng-deep > div
-        animation: open--card 200ms ease-in forwards
+    &:not(.open) > dialog
+      animation: close-dialog 200ms ease-in forwards
 
-      &.closing
-        animation: close--dialog 200ms ease-in forwards
+      &::backdrop
+        animation: close-backdrop 200ms ease-in forwards
 
-        &::backdrop
-          animation: close--backdrop 200ms ease-in forwards
-
-        > div > standard--card::ng-deep > div
-          animation: close--card 200ms ease-in forwards
-
-    @keyframes close--dialog
-      0%
-        @include open--dialog
-
-      100%
-        @include close--dialog
-
-    @keyframes open--dialog
-      0%
-        @include close--dialog
-
-      100%
-        @include open--dialog

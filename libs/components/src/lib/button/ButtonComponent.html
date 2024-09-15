@@ -1,52 +1,50 @@
-<ng-template #templateRef>
-  @if (symbolContainerDirective.symbolComponent$(); as symbolComponent) {<ng-container *ngComponentOutlet="symbolComponent" />}
-  @if (appearance !== 'symbol' && text) {{{ text }}}
+<svg
+  height="1"
+  style="left: 0; opacity: 0; position: absolute; top: 0;"
+  viewBox="0 0 1 1"
+  width="1">
+  <clipPath
+    [attr.id]="roundedContainerDirective.clipPathId$()"
+    clipPathUnits="objectBoundingBox">
+    <!--suppress HtmlUnknownAttribute -->
+    <path
+      [attr.d]="roundedContainerDirective.pathDefinition$()"
+      fill="#000" />
+  </clipPath>
+</svg>
+<ng-template #template>
+  @if (symbolPathsLoaderDirective.symbolPaths$(); as symbolPaths) {<svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''">
+    <g>
+      <rect [attr.height]="symbolPaths.viewBoxHeight" opacity="0" [attr.width]="symbolPaths.viewBoxWidth" x="0" y="0"/>
+      @for (path of symbolPaths.paths; track path) {<path [attr.d]="path.definition" fill="currentColor" [attr.fill-opacity]="path.opacity"/>}
+    </g>
+  </svg>}
+  @if (appearanceInput$() !== "symbol" && textInput$()) {{{ textInput$() }}}
 </ng-template>
-@if (url; as url) {@if (url.includes("://")) {<!--suppress CssUnknownProperty --><a #htmlAnchorElement
-  [attr.href]="url"
-  [attr.tabindex]="disabled ? -1 : tabIndexOverride ?? 1"
-  [class.flat]="appearance === 'flat'"
-  [class.no-op]="disabled"
-  [class.primary]="color === 'primary'"
-  [class.raised]="appearance === 'raised'"
-  [class.symbol]="appearance === 'symbol'"
-  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
-  (pointerenter)="translationHoverDirective.pointerenter();"
-  (pointerleave)="translationHoverDirective.pointerleave();"
-  (pointermove)="translationHoverDirective.pointermove($event, htmlAnchorElement);"
-  [style.--translation-x]="translationHoverDirective.translation$().x"
-  [style.--translation-y]="translationHoverDirective.translation$().y">
-  <ng-container *ngTemplateOutlet="templateRef"></ng-container>
-</a>} @else {<!--suppress CssUnknownProperty --><a #htmlAnchorElement #routerLinkActive="routerLinkActive"
-  [attr.tabindex]="disabled || routerLinkActive.isActive ? -1 : tabIndexOverride ?? 1"
-  [class.flat]="appearance === 'flat'"
-  [class.no-op]="disabled"
-  [class.primary]="color === 'primary'"
-  [class.raised]="appearance === 'raised'"
-  [class.symbol]="appearance === 'symbol'"
-  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
-  (pointerenter)="translationHoverDirective.pointerenter();"
-  (pointerleave)="translationHoverDirective.pointerleave();"
-  (pointermove)="translationHoverDirective.pointermove($event, htmlAnchorElement);"
-  [routerLink]="url"
-  routerLinkActive="no-op"
-  [routerLinkActiveOptions]="{ exact: true }"
-  [style.--translation-x]="translationHoverDirective.translation$().x"
-  [style.--translation-y]="translationHoverDirective.translation$().y">
-  <ng-container *ngTemplateOutlet="templateRef"></ng-container>
-</a>}} @else {<!--suppress CssUnknownProperty --><button #htmlButtonElement
-  [attr.disabled]="disabled || undefined"
-  [attr.tabindex]="disabled ? -1 : tabIndexOverride ?? 1"
-  [attr.type]="type || 'button'"
-  [class.flat]="appearance === 'flat'"
-  [class.primary]="color === 'primary'"
-  [class.raised]="appearance === 'raised'"
-  [class.symbol]="appearance === 'symbol'"
-  [class.transitionTranslate]="translationHoverDirective.transitionTranslate$()"
-  (pointerenter)="translationHoverDirective.pointerenter();"
-  (pointerleave)="translationHoverDirective.pointerleave();"
-  (pointermove)="translationHoverDirective.pointermove($event, htmlButtonElement);"
-  [style.--translation-x]="translationHoverDirective.translation$().x"
-  [style.--translation-y]="translationHoverDirective.translation$().y">
-  <ng-container *ngTemplateOutlet="templateRef"></ng-container>
-</button>}
+<div class="containerDirective elevatedContainerDirective flexboxContainerChildDirective flexboxContainerDirective hoverTranslatingContainerDirective roundedContainerDirective"
+  [class.flat]="appearanceInput$() === 'flat'"
+  [class.no-op]="disabledInput$()"
+  [class.primary]="colorInput$() === 'primary'"
+  [class.raised]="appearanceInput$() === 'raised'"
+  [class.symbol]="appearanceInput$() === 'symbol'"
+  [class.text]="textInput$()"
+  (click)="$event.stopPropagation(); selectOutput.emit();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  @if (urlInput$(); as url) {@if (url.includes("://")) {<a #htmlAnchorElement class="subcontainer"
+    [attr.href]="url"
+    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </a>} @else {<a #htmlAnchorElement #routerLinkActive="routerLinkActive" class="subcontainer"
+    [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
+    [routerLink]="url"
+    routerLinkActive="no-op"
+    [routerLinkActiveOptions]="{ exact: true }">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </a>}} @else {<button #htmlButtonElement class="subcontainer"
+    [attr.disabled]="disabledInput$() || undefined"
+    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
+    [attr.type]="typeInput$() || 'button'">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </button>}
+</div>

@@ -1,80 +1,71 @@
+@use 'sass:math'
 @import 'normalize.css'
 
-$phi: 1.6180339887
 
-$depth-blur:   0.5rem
-$depth-offset: $depth-blur * 0.5
-$depth-spread: $depth-offset * -1.03125
+$grey-factor: 25%
 
-$grey-factor:       0.5
-$dark-theme-factor: 0.8
+$body-shade:   6%
+$button-shade: 8%
+$footer-shade: 6%
 
 $primary--canvas--background: hsl(34, 29%, 54%)
-$primary--canvas--foreground: hsl(34, 58%, 86.5%)
-$primary--canvas--shadow:     hsl(34, 14.5%, 27%)
-$primary--grey--background:   darken(desaturate($primary--canvas--background, $grey-factor * 12.5%), $grey-factor * 6.25%)
-$primary--grey--foreground:   lighten(desaturate($primary--canvas--foreground, $grey-factor * 50%), $grey-factor * 50%)
+$primary--canvas--foreground: lighten($primary--canvas--background, 37.5%)
+$primary--canvas--shadow:     darken($primary--canvas--background, 37.5%)
+$primary--grey--background:   lighten(desaturate($primary--canvas--background, $grey-factor * 0.5), $grey-factor)
+$primary--grey--foreground:   darken(desaturate($primary--canvas--foreground, $grey-factor * 0.5), $grey-factor)
 
-$body-shade:   4%
-$button-shade: 6%
-$footer-shade: 2%
-$card-shade:   0%
+$body--light-canvas--background: hsl(0, 0%, 100%)
+$body--light-canvas--foreground: hsl(0, 0%, 10%)
+$body--light-grey--background:   darken(desaturate($body--light-canvas--background, $grey-factor * 0.5), $grey-factor)
+$body--light-grey--foreground:   lighten(desaturate($body--light-canvas--foreground, $grey-factor * 0.5), $grey-factor)
+$body--dark-canvas--background:  hsl(0, 0%, 0%)
+$body--dark-canvas--foreground:  hsl(0, 0%, 90%)
+$body--dark-grey--background:    lighten(desaturate($body--dark-canvas--background, $grey-factor * 0.5), $grey-factor)
+$body--dark-grey--foreground:    darken(desaturate($body--dark-canvas--foreground, $grey-factor * 0.5), $grey-factor)
+$body--light-glass--background:  transparentize($body--light-canvas--background, 0.25)
+$body--dark-glass--background:   transparentize($body--dark-canvas--background, 0.25)
+$body--light-glass--border:      transparentize(lighten($body--light-canvas--background, 25%), 0.25)
+$body--dark-glass--border:       transparentize(lighten($body--dark-canvas--background, 75%), 0.75)
 
-$body--light-canvas--background: hsl(0, 0%, 100% - $body-shade)
-$body--light-canvas--foreground: hsl(0, 0%, $body-shade)
-$body--light-grey--background:   darken(desaturate($body--light-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$body--light-grey--foreground:   lighten(desaturate($body--light-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
-$body--dark-canvas--background:  darken($body--light-canvas--background, $dark-theme-factor * 100%)
-$body--dark-canvas--foreground:  lighten($body--light-canvas--foreground, $dark-theme-factor * 100%)
-$body--dark-grey--background:    lighten(desaturate($body--dark-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$body--dark-grey--foreground:    darken(desaturate($body--dark-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
-
-$button--light-canvas--background: hsl(0, 0%, 100% - $button-shade)
+$button--light-canvas--background: hsl(0, 0%, 100% - math.div($button-shade, 2))
 $button--light-canvas--foreground: hsl(0, 0%, $button-shade)
-$button--light-grey--background:   darken(desaturate($button--light-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$button--light-grey--foreground:   lighten(desaturate($button--light-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
-$button--dark-canvas--background:  darken($button--light-canvas--background, $dark-theme-factor * 100%)
-$button--dark-canvas--foreground:  lighten($button--light-canvas--foreground, $dark-theme-factor * 100%)
-$button--dark-grey--background:    lighten(desaturate($button--dark-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$button--dark-grey--foreground:    darken(desaturate($button--dark-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
+$button--light-grey--background:   darken(desaturate($button--light-canvas--background, $grey-factor * 0.5), $grey-factor)
+$button--light-grey--foreground:   lighten(desaturate($button--light-canvas--foreground, $grey-factor * 0.5), $grey-factor)
+$button--dark-canvas--background:  hsl(0, 0%, $body-shade + $button-shade)
+$button--dark-canvas--foreground:  hsl(0, 0%, 90% - $button-shade)
+$button--dark-grey--background:    lighten(desaturate($button--dark-canvas--background, $grey-factor * 0.5), $grey-factor)
+$button--dark-grey--foreground:    darken(desaturate($button--dark-canvas--foreground, $grey-factor * 0.5), $grey-factor)
+$button--light-glass--background:  transparentize($button--light-canvas--background, 0.25)
+$button--dark-glass--background:   transparentize($button--dark-canvas--background, 0.25)
+$button--light-glass--border:      transparentize(lighten($button--light-canvas--background, 25%), 0.25)
+$button--dark-glass--border:       transparentize(lighten($button--dark-canvas--background, 75%), 0.75)
 
-$card--light-canvas--background: hsl(0, 0%, 100% - $card-shade)
-$card--light-canvas--foreground: hsl(0, 0%, $card-shade)
-$card--light-grey--background:   darken(desaturate($card--light-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$card--light-grey--foreground:   lighten(desaturate($card--light-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
-$card--dark-canvas--background:  darken($card--light-canvas--background, $dark-theme-factor * 100%)
-$card--dark-canvas--foreground:  lighten($card--light-canvas--foreground, $dark-theme-factor * 100%)
-$card--dark-grey--background:    lighten(desaturate($card--light-grey--background, $grey-factor * 50%), $grey-factor * 25%)
-$card--dark-grey--foreground:    darken(desaturate($card--light-grey--foreground, $grey-factor * 100%), $grey-factor * 100%)
-
-$footer--light-canvas--background: hsl(0, 0%, 100% - $footer-shade)
+$footer--light-canvas--background: hsl(0, 0%, 100% - math.div($footer-shade, 2))
 $footer--light-canvas--foreground: hsl(0, 0%, $footer-shade)
-$footer--light-grey--background:   darken(desaturate($footer--light-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$footer--light-grey--foreground:   lighten(desaturate($footer--light-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
-$footer--dark-canvas--background:  darken($footer--light-canvas--background, $dark-theme-factor * 100%)
-$footer--dark-canvas--foreground:  lighten($footer--light-canvas--foreground, $dark-theme-factor * 100%)
-$footer--dark-grey--background:    lighten(desaturate($footer--dark-canvas--background, $grey-factor * 50%), $grey-factor * 25%)
-$footer--dark-grey--foreground:    darken(desaturate($footer--dark-canvas--foreground, $grey-factor * 100%), $grey-factor * 100%)
+$footer--light-grey--background:   darken(desaturate($footer--light-canvas--background, $grey-factor * 0.5), $grey-factor)
+$footer--light-grey--foreground:   lighten(desaturate($footer--light-canvas--foreground, $grey-factor * 0.5), $grey-factor)
+$footer--dark-canvas--background:  hsl(0, 0%, $body-shade + $footer-shade)
+$footer--dark-canvas--foreground:  hsl(0, 0%, 90% - $footer-shade)
+$footer--dark-grey--background:    lighten(desaturate($footer--dark-canvas--background, $grey-factor * 0.5), $grey-factor)
+$footer--dark-grey--foreground:    darken(desaturate($footer--dark-canvas--foreground, $grey-factor * 0.5), $grey-factor)
+$footer--light-glass--background:  transparentize($footer--light-canvas--background, 0.25)
+$footer--dark-glass--background:   transparentize($footer--dark-canvas--background, 0.25)
+$footer--light-glass--border:      transparentize(darken($footer--light-canvas--background, 75%), 0.75)
+$footer--dark-glass--border:       transparentize(lighten($footer--dark-canvas--background, 75%), 0.75)
 
-$glass--light-canvas--background:  transparentize(darken($body--light-canvas--background, 10%), 0.4)
-$glass--light-canvas--border:      transparentize(darken($body--light-canvas--background, 50%), 0.4)
-$glass--light-primary--background: transparentize(lighten(desaturate($primary--canvas--background, $grey-factor * 12.5%), $grey-factor * 6.25%), 0.2)
-$glass--light-primary--border:     transparentize(lighten(desaturate($primary--canvas--background, $grey-factor * 50%), $grey-factor * 50%), 0.2)
-$glass--dark-canvas--background:   transparentize(darken($body--dark-canvas--background, 10%), 0.4)
-$glass--dark-canvas--border:       transparentize(darken($body--dark-canvas--background, 50%), 0.4)
-$glass--dark-primary--background:  transparentize(lighten(desaturate($primary--canvas--background, $grey-factor * 12.5%), $grey-factor * 6.25%), 0.2)
-$glass--dark-primary--border:      transparentize(lighten(desaturate($primary--canvas--background, $grey-factor * 50%), $grey-factor * 50%), 0.2)
 
-html,
-body
-  font-size: 16px
+:root
+  --bounce: cubic-bezier(0.25, 0.175, 0.25, 1.75)
+  --phi: 1.6180339887
 
-body
-  --phi: #{ $phi }
+  --safe-area-inset-bottom: env(safe-area-inset-bottom)
 
-  --depth-blur:   #{ $depth-blur }
-  --depth-offset: #{ $depth-offset }
-  --depth-spread: #{ $depth-spread }
+  --color-scheme-dark: 0
+  --color-scheme-light: 1
+
+  @media (prefers-color-scheme: dark)
+    --color-scheme-dark: 1
+    --color-scheme-light: 0
 
   --primary--canvas--background: #{ $primary--canvas--background }
   --primary--canvas--foreground: #{ $primary--canvas--foreground }
@@ -86,61 +77,54 @@ body
   --body--canvas--foreground: #{ $body--light-canvas--foreground }
   --body--grey--background:   #{ $body--light-grey--background }
   --body--grey--foreground:   #{ $body--light-grey--foreground }
+  --body--glass--background:  #{ $body--light-glass--background }
+  --body--glass--border:      #{ $body--light-glass--border }
 
   --button--canvas--background: #{ $button--light-canvas--background }
   --button--canvas--foreground: #{ $button--light-canvas--foreground }
   --button--grey--background:   #{ $button--light-grey--background }
   --button--grey--foreground:   #{ $button--light-grey--foreground }
-
-  --card--canvas--background:      #{ $card--light-canvas--background }
-  --card--canvas--foreground:      #{ $card--light-canvas--foreground }
-  --card--dark-canvas--foreground: #{ $card--dark-canvas--foreground }
-  --card--grey--background:        #{ $card--light-grey--background }
-  --card--grey--foreground:        #{ $card--light-grey--foreground }
+  --button--glass--background:  #{ $button--light-glass--background }
+  --button--glass--border:      #{ $button--light-glass--border }
 
   --footer--canvas--background: #{ $footer--light-canvas--background }
   --footer--canvas--foreground: #{ $footer--light-canvas--foreground }
   --footer--grey--background:   #{ $footer--light-grey--background }
   --footer--grey--foreground:   #{ $footer--light-grey--foreground }
-
-  --glass--background:          #{ $glass--light-canvas--background }
-  --glass--border:              #{ $glass--light-canvas--border }
-  --glass--primary--background: #{ $glass--light-primary--background }
-  --glass--primary--border:     #{ $glass--light-primary--border }
+  --footer--glass--background:  #{ $footer--light-glass--background }
+  --footer--glass--border:      #{ $footer--light-glass--border }
 
   @media (prefers-color-scheme: dark)
     --body--canvas--background: #{ $body--dark-canvas--background }
     --body--canvas--foreground: #{ $body--dark-canvas--foreground }
     --body--grey--background:   #{ $body--dark-grey--background }
     --body--grey--foreground:   #{ $body--dark-grey--foreground }
+    --body--glass--background:  #{ $body--dark-glass--background }
+    --body--glass--border:      #{ $body--dark-glass--border }
 
     --button--canvas--background: #{ $button--dark-canvas--background }
     --button--canvas--foreground: #{ $button--dark-canvas--foreground }
     --button--grey--background:   #{ $button--dark-grey--background }
     --button--grey--foreground:   #{ $button--dark-grey--foreground }
-
-    --card--canvas--background: #{ $card--dark-canvas--background }
-    --card--canvas--foreground: #{ $card--dark-canvas--foreground }
-    --card--grey--background:   #{ $card--dark-grey--background }
-    --card--grey--foreground:   #{ $card--dark-grey--foreground }
+    --button--glass--background:  #{ $button--dark-glass--background }
+    --button--glass--border:      #{ $button--dark-glass--border }
 
     --footer--canvas--background: #{ $footer--dark-canvas--background }
     --footer--canvas--foreground: #{ $footer--dark-canvas--foreground }
     --footer--grey--background:   #{ $footer--dark-grey--background }
     --footer--grey--foreground:   #{ $footer--dark-grey--foreground }
+    --footer--glass--background:  #{ $footer--dark-glass--background }
+    --footer--glass--border:      #{ $footer--dark-glass--border }
 
-    --glass--background:          #{ $glass--dark-canvas--background }
-    --glass--border:              #{ $glass--dark-canvas--border }
-    --glass--primary--background: #{ $glass--dark-primary--background }
-    --glass--primary--border:     #{ $glass--dark-primary--border }
-
+body
   background: var(--body--canvas--background)
   color: var(--body--canvas--foreground)
   display: flex
-  flex-direction: row
+  flex-direction: column
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif
+  font-optical-sizing: auto
+  font-style: normal
   justify-content: center
   letter-spacing: -0.03444185375em
   line-height: 1.1458980338
   min-height: 100dvh
-  touch-action: pan-x pan-y

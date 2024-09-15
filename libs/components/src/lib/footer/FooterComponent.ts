@@ -1,124 +1,94 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                                    from "@angular/common";
-import { AfterViewInit, Component, ElementRef, inject, NgZone, PLATFORM_ID, Signal, signal, ViewChild, WritableSignal }                                   from "@angular/core";
-import { toObservable, toSignal }                                                                                                                         from "@angular/core/rxjs-interop";
-import { combineLatest, delayWhen, distinctUntilChanged, EMPTY, fromEvent, map, merge, Observable, Observer, startWith, switchMap, TeardownLogic, timer } from "rxjs";
-import { FlexboxComponent }                                                                                                                               from "../flexbox/FlexboxComponent";
+import { DOCUMENT, isPlatformBrowser }                                                                                                   from "@angular/common";
+import { Component, computed, effect, ElementRef, inject, model, ModelSignal, NgZone, PLATFORM_ID, Signal, signal, viewChild }           from "@angular/core";
+import { toObservable, toSignal }                                                                                                        from "@angular/core/rxjs-interop";
+import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, RoundedContainerDirective } from "@standard/directives";
+import { Dimensions }                                                                                                                    from "@standard/interfaces";
+import { ViewportService }                                                                                                               from "@standard/services";
+import { combineLatestWith, delayWhen, map, Observable, Observer, switchMap, TeardownLogic, timer }                                      from "rxjs";
 
 
-@Component({
-  selector:    "standard--footer",
-  standalone:  true,
-  styleUrls:   [
-    "FooterComponent.sass",
-  ],
-  templateUrl: "FooterComponent.html",
-})
-export class FooterComponent extends FlexboxComponent implements AfterViewInit {
-
-  @ViewChild("htmlDivElement", {
-    read:   ElementRef<HTMLDivElement>,
-    static: true,
-  })
-  private readonly htmlDivElementRef?:    ElementRef<HTMLDivElement>;
-
-  @ViewChild("htmlFooterElement", {
-    read:   ElementRef<HTMLElement>,
-    static: true,
-  })
-  private readonly htmlFooterElementRef?: ElementRef<HTMLElement>;
-
-  private readonly afterViewInit$: WritableSignal<boolean> = signal<boolean>(false);
-  private readonly document:       Document                = inject<Document>(DOCUMENT);
-  private readonly ngZone:         NgZone                  = inject<NgZone>(NgZone);
-  private readonly platformId:     NonNullable<unknown>    = inject<NonNullable<unknown>>(PLATFORM_ID);
-
-  public readonly stuck$: WritableSignal<boolean> = signal<boolean>(false);
-
-  protected readonly footerBottomProperty$:  Signal<number>  = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<number>(
-    this.document.defaultView ? merge<[ boolean, Event ]>(
-      toObservable<boolean>(
-        this.afterViewInit$,
-      ),
-      fromEvent<Event>(
-        this.document.defaultView,
-        "resize",
-      ),
-    ).pipe<number, number, number>(
-      map<boolean | Event, number>(
-        (): number => this.htmlFooterElementRef?.nativeElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
-          bottomPropertyValue.replace(
-            "px",
-            "",
-          ),
-        ) : 0)(
-          getComputedStyle(
-            this.htmlFooterElementRef.nativeElement,
-          ).getPropertyValue("bottom"),
-        ) : 0,
-      ),
-      startWith<number, [ number ]>(
-        this.htmlFooterElementRef?.nativeElement ? ((bottomPropertyValue: string): number => bottomPropertyValue.includes("px") ? Number(
-          bottomPropertyValue.replace(
-            "px",
-            "",
-          ),
-        ) : 0)(
-          getComputedStyle(
-            this.htmlFooterElementRef.nativeElement,
-          ).getPropertyValue("bottom"),
-        ) : 0,
-      ),
-      distinctUntilChanged<number>(),
-    ) : EMPTY,
-    {
-      requireSync: true,
+@Component(
+  {
+    host:           {
+      "[class.raisedOrLoweringWhenStuckOrUnsticking]":      "raisedOrLoweringWhenStuckOrUnsticking$()",
+      "[class.raisedWhenStuckOrUnsticking]":                "raisedWhenStuckOrUnsticking$()",
+      "[class.stuck]":                                      "stuckModelWithTransform$()",
+      "[class.stuckOrUnsticking]":                          "stuckOrUnsticking$()",
+      "[style.--standard--footer--height]":                 "footerHeight$()",
+      "[style.--standard--footer--raising-scale]":          "raisingScale$()",
+      "[style.--standard--footer--unsticking-translation]": "unstickingTranslation$()",
     },
-  ) : signal<number>(0);
-  protected readonly footerHeight$:          Signal<number>  = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<number>(
-    toObservable(
-      this.afterViewInit$,
-    ).pipe<number, number, number>(
-      switchMap<boolean, Observable<number>>(
-        (): Observable<number> => new Observable<number>(
-          (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-            this
-              .htmlFooterElementRef && resizeObserver
-              .observe(
-                this.htmlFooterElementRef.nativeElement,
-              );
+    hostDirectives: [
+      {
+        directive: ElevatedContainerDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
+        directive: FlexboxContainerDirective,
+        inputs:    [
+          "alignContent",
+          "alignItems",
+          "collapsable",
+          "columnGap",
+          "flexDirection",
+          "flexWrap",
+          "justifyContent",
+          "listenToScrollEvent",
+          "rowGap",
+        ],
+      },
+      {
+        directive: GlassContainerDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
+        directive: RoundedContainerDirective,
+        inputs:    [
+          "borderRadiusFactor",
+        ],
+      },
+    ],
+    selector:       "standard--footer",
+    standalone:     true,
+    styleUrls:      [
+      "FooterComponent.sass",
+    ],
+    templateUrl:    "FooterComponent.html",
+  },
+)
+export class FooterComponent {
 
-            return (): void => resizeObserver.disconnect();
-          })(
-            new ResizeObserver(
-              (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
-                (): void => resizeEventObserver.next(
-                  resizeObserverEntries[0].target.clientHeight,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-      startWith<number, [ number ]>(
-        this.htmlFooterElementRef?.nativeElement.clientHeight || 0,
-      ),
-      distinctUntilChanged<number>(),
-    ),
-    {
-      requireSync: true,
-    },
-  ) : signal<number>(0);
-  protected readonly bodyHeight$:            Signal<number>  = toSignal<number>(
+  constructor() {
+    effect(
+      (): void => {
+        this.containerDirective.htmlElementRef$.set(
+          this.htmlElementRef$(),
+        );
+        this.roundedContainerDirective.htmlElementRef$.set(
+          this.htmlElementRef$(),
+        );
+        this.flexboxContainerDirective.htmlElementRef$.set(
+          this.htmlElementRef$(),
+        );
+      },
+      {
+        allowSignalWrites: true,
+      },
+    );
+  }
+
+  private readonly backdropHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("backdropHtmlDivElement");
+  private readonly document: Document                                             = inject<Document>(DOCUMENT);
+  private readonly bodyHeight$: Signal<number>                                    = toSignal<number, number>(
     new Observable<number>(
       (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-        resizeObserver
-          .observe(
-            this.document.body,
-          );
+        resizeObserver.observe(
+          this.document.body,
+        );
 
         return (): void => resizeObserver.disconnect();
       })(
@@ -130,159 +100,205 @@ export class FooterComponent extends FlexboxComponent implements AfterViewInit {
           ),
         ),
       ),
-    ).pipe<number, number>(
-      startWith<number, [ number ]>(
-        this.document.body.clientHeight,
-      ),
-      distinctUntilChanged<number>(),
     ),
     {
-      requireSync: true,
+      initialValue: this.document.body.clientHeight,
     },
   );
-  protected readonly footerOffsetBottom$:    Signal<number>  = isPlatformBrowser(
+  private readonly containerDirective: ContainerDirective                         = inject<ContainerDirective>(ContainerDirective);
+  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
+  private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly footerDimensions$: Signal<Dimensions>                          = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<number>(
-    combineLatest<{ bodyHeight: Observable<number>, footerBottomProperty: Observable<number>, footerHeight: Observable<number> }>(
-      {
-        bodyHeight:           toObservable<number>(
+  ) ? toSignal<Dimensions, { height: 0, width: 0 }>(
+    toObservable<ElementRef<HTMLElement>>(
+      this.htmlElementRef$,
+    ).pipe<Dimensions>(
+      switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
+          (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
+            resizeObserver.observe(
+              htmlElementRef.nativeElement,
+            );
+
+            return (): void => resizeObserver.disconnect();
+          })(
+            new ResizeObserver(
+              (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
+                (): void => resizeEventObserver.next(
+                  {
+                    height: resizeObserverEntries[0].target.clientHeight,
+                    width:  resizeObserverEntries[0].target.clientWidth,
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+    {
+      initialValue: {
+        height: 0,
+        width:  0,
+      },
+    },
+  ) : signal<{ height: 0, width: 0 }>(
+    {
+      height: 0,
+      width:  0,
+    },
+  );
+  private readonly flexboxContainerDirective: FlexboxContainerDirective           = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
+  private readonly footerWidth$: Signal<number>                                   = computed<number>(
+    (): number => this.footerDimensions$().width,
+  );
+  private readonly ngZone: NgZone                                                 = inject<NgZone>(NgZone);
+  private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
+
+  protected readonly footerHeight$: Signal<number>                        = computed<number>(
+    (): number => this.footerDimensions$().height,
+  );
+  protected readonly footerOffsetBottom$: Signal<number>                  = isPlatformBrowser(
+    this.platformId,
+  ) ? toSignal<number, number>(
+    toObservable<ElementRef<HTMLDivElement>>(
+      this.backdropHtmlDivElementRef$,
+    ).pipe(
+      combineLatestWith<ElementRef<HTMLDivElement>, [ number, number, number | undefined ]>(
+        toObservable<number>(
           this.bodyHeight$,
         ),
-        footerBottomProperty: toObservable<number>(
-          this.footerBottomProperty$,
-        ),
-        footerHeight:         toObservable<number>(
+        toObservable<number>(
           this.footerHeight$,
         ),
-      },
-    ).pipe<number, number, number>(
-      map<{ bodyHeight: number, footerBottomProperty: number, footerHeight: number }, number>(
-        (latest: { bodyHeight: number, footerBottomProperty: number, footerHeight: number }): number => latest.bodyHeight - (this.htmlDivElementRef?.nativeElement.offsetTop || 0) - latest.footerBottomProperty - latest.footerHeight,
+        toObservable<number | undefined>(
+          this.viewportService.scrollTop$,
+        ),
       ),
-      startWith<number, [ number ]>(
-        this.bodyHeight$() - (this.htmlDivElementRef?.nativeElement.offsetTop || 0) - this.footerBottomProperty$() - this.footerHeight$(),
+      map<[ ElementRef<HTMLDivElement>, number, number, number | undefined ], number>(
+        ([ backdropHtmlDivElementRef, bodyHeight, , viewportScrollTop ]: [ ElementRef<HTMLDivElement>, number, number, number | undefined ]): number => bodyHeight - backdropHtmlDivElementRef.nativeElement.getBoundingClientRect().bottom - Math.max(
+          viewportScrollTop || 0,
+          0,
+        ),
       ),
-      distinctUntilChanged<number>(),
     ),
     {
-      requireSync: true,
+      initialValue: 0,
     },
-  ) : signal<number>(0);
-  protected readonly unstickingTranslation$: Signal<number>  = isPlatformBrowser(
+  ) : signal<0>(0);
+  protected readonly raisingScale$: Signal<number>                        = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<number>(
-    combineLatest<{ bodyHeight: Observable<number>, footerOffsetBottom: Observable<number>, scrollY: Observable<number>, viewportHeight: Observable<number> }>(
-      {
-        bodyHeight:         toObservable<number>(
-          this.bodyHeight$,
-        ),
-        footerOffsetBottom: toObservable<number>(
-          this.footerOffsetBottom$,
-        ),
-        scrollY:            fromEvent<Event>(
-          this.document,
-          "scroll",
-        ).pipe<number, number, number>(
-          map<Event, number>(
-            (): number => Math.max(
-              this.document.defaultView?.scrollY || 0,
-              0,
-            ),
-          ),
-          startWith<number, [ number ]>(
-            Math.max(
-              this.document.defaultView?.scrollY || 0,
-              0,
-            ),
-          ),
-          distinctUntilChanged<number>(),
-        ),
-        viewportHeight:     this.document.defaultView ? fromEvent<Event>(
-          this.document.defaultView,
-          "resize",
-        ).pipe<number, number, number>(
-          map<Event, number>(
-            (): number => this.document.defaultView?.innerHeight || 0,
-          ),
-          startWith<number, [ number ]>(
-            this.document.defaultView?.innerHeight || 0,
-          ),
-          distinctUntilChanged<number>(),
-        ) : EMPTY,
-      },
-    ).pipe<number, number, number>(
-      map<{ bodyHeight: number, footerOffsetBottom: number, scrollY: number, viewportHeight: number }, number>(
-        (latest: { bodyHeight: number, footerOffsetBottom: number, scrollY: number, viewportHeight: number }): number => Math.max(
-          latest.bodyHeight - latest.scrollY - latest.viewportHeight - latest.footerOffsetBottom,
-          0,
+  ) ? toSignal<number, number>(
+    toObservable<number>(
+      this.footerWidth$,
+    ).pipe<[ number, number | undefined ], number>(
+      combineLatestWith<number, [ number | undefined ]>(
+        toObservable<number | undefined>(
+          this.viewportService.width$,
         ),
       ),
-      startWith<number, [ number ]>(
-        Math.max(
-          this.bodyHeight$() - Math.max(
-            this.document.defaultView?.scrollY || 0,
-            0,
-          ) - (this.document.defaultView?.innerHeight || 0) - this.footerOffsetBottom$(),
-          0,
-        ),
+      map<[ number, number | undefined ], number>(
+        ([ footerWidth, viewportWidth ]: [ number, number | undefined ]): number => ((viewportWidth || footerWidth) - footerWidth) / (viewportWidth || footerWidth) / 2.6180339887,
       ),
-      distinctUntilChanged<number>(),
     ),
     {
-      requireSync: true,
+      initialValue: 0,
     },
-  ) : signal<number>(0);
-  protected readonly stuckOrUnsticking$:     Signal<boolean> = toSignal<boolean>(
-    toObservable<boolean>(
-      this.stuck$,
-    ).pipe<boolean, boolean, boolean>(
-      delayWhen<boolean>(
-        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
-      ),
-      startWith<boolean>(
-        this.stuck$(),
-      ),
-      distinctUntilChanged<boolean>(),
+  ) : signal<0>(0);
+  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
+
+  public readonly stuckModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
+    (): boolean | undefined => ((stuck?: "" | boolean | `${ boolean }`): boolean | undefined => stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && stuck)(
+      this.stuckModel$(),
     ),
-    {
-      requireSync: true,
-    },
   );
 
-  public readonly raised$: Signal<boolean> = toSignal<boolean>(
+  protected readonly stuckOrUnsticking$: Signal<boolean | undefined> = toSignal<boolean | undefined, undefined>(
+    toObservable<boolean | undefined>(
+      this.stuckModelWithTransform$,
+    ).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (stuck?: boolean): Observable<number> => stuck ? timer(0) : timer(360),
+      ),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.stuckModelWithTransform$(),
+      ),
+    ),
+    {
+      initialValue: undefined,
+    },
+  );
+  protected readonly unstickingTranslation$: Signal<number>          = isPlatformBrowser(
+    this.platformId,
+  ) ? toSignal<number, number>(
+    toObservable<number>(
+      this.bodyHeight$,
+    ).pipe<[ number, number, number | undefined, number | undefined ], number>(
+      combineLatestWith<number, [ number, number | undefined, number | undefined ]>(
+        toObservable<number>(
+          this.footerOffsetBottom$,
+        ),
+        toObservable<number | undefined>(
+          this.viewportService.height$,
+        ),
+        toObservable<number | undefined>(
+          this.viewportService.scrollTop$,
+        ),
+      ),
+      map<[ number, number, number | undefined, number | undefined ], number>(
+        ([ bodyHeight, footerOffsetBottom, viewportHeight, viewportScrollTop ]: [ number, number, number | undefined, number | undefined ]): number => Math.round(
+          Math.max(
+            bodyHeight - footerOffsetBottom - (viewportHeight || 0) - Math.max(
+              viewportScrollTop || 0,
+              0,
+            ) + parseInt(
+              getComputedStyle(document.documentElement).getPropertyValue("--safe-area-inset-bottom") || "0",
+            ),
+            0,
+          ),
+        ),
+      ),
+    ),
+    {
+      initialValue: 0,
+    },
+  ) : signal<0>(0);
+
+  public readonly raisedWhenStuckOrUnsticking$: Signal<boolean> = toSignal<boolean, false>(
     toObservable<number>(
       this.unstickingTranslation$,
-    ).pipe<boolean, boolean, boolean>(
+    ).pipe<boolean>(
       map<number, boolean>(
         (unstickingTranslation: number): boolean => unstickingTranslation !== 0,
       ),
-      startWith<boolean, [ boolean ]>(false),
-      distinctUntilChanged<boolean>(),
     ),
     {
-      requireSync: true,
+      initialValue: false,
     },
   );
 
-  protected readonly raisedOrLowering$: Signal<boolean> = toSignal<boolean>(
+  protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean> = toSignal<boolean, false>(
     toObservable<boolean>(
-      this.raised$,
-    ).pipe<boolean, boolean, boolean>(
+      this.raisedWhenStuckOrUnsticking$,
+    ).pipe<boolean, boolean>(
       delayWhen<boolean>(
-        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(200),
+        (raisedWhenStuckOrUnsticking: boolean): Observable<number> => raisedWhenStuckOrUnsticking ? timer(0) : timer(360),
       ),
-      startWith<boolean>(false),
-      distinctUntilChanged<boolean>(),
+      map<boolean, boolean>(
+        (): boolean => this.raisedWhenStuckOrUnsticking$(),
+      ),
     ),
     {
-      requireSync: true,
+      initialValue: false,
     },
   );
 
-  public ngAfterViewInit(): void {
-    this
-      .afterViewInit$
-      .set(true);
-  }
+  public readonly stuckModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
+    false,
+    {
+      alias: "stuck",
+    },
+  );
 
 }

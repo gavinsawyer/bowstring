@@ -1,0 +1,27 @@
+@use "../../../../directives/src/lib/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  @include FlexboxContainerDirective.host
+
+  > div
+    display: grid
+
+    > div::ng-deep > *
+      @include FlexboxContainerDirective.children
+
+
+@mixin host-context($row-gap-exponent)
+  --standard--flexbox-container-directive--column-gap: calc(1rem * pow(var(--phi), #{ $row-gap-exponent + 1 })) !important
+  --standard--flexbox-container-directive--row-gap: calc(1rem * pow(var(--phi), #{ $row-gap-exponent })) !important
+
+\:host-context(standard--main)
+  @include host-context(0)
+
+\:host-context(standard--card, standard--footer)
+  @include host-context(-1)
+
+\:host-context(standard--header)
+  @include host-context(-2)

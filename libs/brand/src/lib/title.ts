@@ -1,3 +1,3 @@
 /// <reference types="@angular/localize" />
 
-export const title: string = $localize`:@@Brand--Title:Standard`;
+export const title: string = $localize`:@@libs--Brand--Title:Bowstring`;

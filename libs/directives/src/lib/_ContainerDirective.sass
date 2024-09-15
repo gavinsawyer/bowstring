@@ -1,0 +1,132 @@
+@use "./Directive"
+
+
+$namespace: "container-directive"
+
+$align-self: Directive.input-reference($namespace, "align-self", auto)
+$aspect-ratio: Directive.input-reference($namespace, "aspect-ratio", auto)
+$bottom-position: Directive.input-reference($namespace, "bottom-position", auto)
+$left-position: Directive.input-reference($namespace, "left-position", auto)
+$margin-bottom: Directive.input-reference($namespace, "margin-bottom", 0)
+$margin-sides: Directive.input-reference($namespace, "margin-sides", 0)
+$margin-top: Directive.input-reference($namespace, "margin-top", 0)
+$overflow-x: Directive.input-reference($namespace, "overflow-x", visible)
+$overflow-y: Directive.input-reference($namespace, "overflow-y", visible)
+$padding-bottom: Directive.input-reference($namespace, "padding-bottom", 0)
+$padding-sides: Directive.input-reference($namespace, "padding-sides", 0)
+$padding-top: Directive.input-reference($namespace, "padding-top", 0)
+$position: Directive.input-reference($namespace, "position", relative)
+$right-position: Directive.input-reference($namespace, "right-position", auto)
+$scroll-snap-align: Directive.input-reference($namespace, "scroll-snap-align", none)
+$scroll-snap-stop: Directive.input-reference($namespace, "scroll-snap-stop", normal)
+$scroll-snap-type: Directive.input-reference($namespace, "scroll-snap-type", none)
+$top-position: Directive.input-reference($namespace, "top-position", auto)
+
+$offset-height: Directive.value-reference($namespace, "offset-height")
+$offset-width: Directive.value-reference($namespace, "offset-width")
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include Directive.reset-colors($namespace, ())
+  @include Directive.reset-inputs($namespace, ("align-self", "aspect-ratio", "bottom-position", "left-position", "margin-bottom", "margin-sides", "margin-top", "overflow-x", "overflow-y", "padding-bottom", "padding-sides", "padding-top", "position", "right-position", "scroll-snap-align", "scroll-snap-stop", "scroll-snap-type", "top-position"))
+  @include Directive.reset-values($namespace, ("offset-height", "offset-width"))
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .containerDirective
+    align-self: $align-self
+    aspect-ratio: $aspect-ratio
+    bottom: $bottom-position
+    left: $left-position
+    margin: $margin-top $margin-sides $margin-bottom
+    overflow-x: $overflow-x
+    overflow-y: $overflow-y
+    position: $position
+    right: $right-position
+    scroll-snap-align: $scroll-snap-align
+    scroll-snap-stop: $scroll-snap-stop
+    scroll-snap-type: $scroll-snap-type
+    top: $top-position
+
+    &:before,
+    &:after
+      position: absolute
+      z-index: -1
+
+    > .subcontainer
+      padding: $padding-top $padding-sides $padding-bottom
+
+      @keyframes collapse-subcontainer
+        0%
+          @include keyframes--uncollapse-subcontainer
+
+        100%
+          @include keyframes--collapse-subcontainer
+
+      @keyframes uncollapse-subcontainer
+        0%
+          @include keyframes--collapse-subcontainer
+
+        100%
+          @include keyframes--uncollapse-subcontainer
+
+    @keyframes collapse-host
+      0%
+        @include keyframes--uncollapse-host
+
+      100%
+        @include keyframes--collapse-host
+
+    @keyframes uncollapse-host
+      0%
+        @include keyframes--collapse-host
+
+      100%
+        @include keyframes--uncollapse-host
+
+  &.collapsable > .containerDirective
+    @include keyframes--uncollapse-host
+
+    > .subcontainer
+      @include keyframes--uncollapse-subcontainer
+
+    &.expanded
+      animation: uncollapse-host 200ms ease-in-out forwards
+
+      > .subcontainer
+        animation: uncollapse-subcontainer 200ms ease-in-out forwards
+
+      &.collapsing
+        animation: collapse-host 200ms ease-in-out forwards
+
+        > .subcontainer
+          animation: collapse-subcontainer 200ms ease-in-out forwards
+
+    &:not(.expanded)
+      display: none
+
+  &.hideScrollbar > .containerDirective::-webkit-scrollbar
+    display: none
+
+
+@mixin keyframes--collapse-host
+  flex-basis: 0
+  opacity: 0
+
+@mixin keyframes--uncollapse-host
+  flex-basis: var(--standard--flexbox-container-child-directive--flex-basis, auto)
+  opacity: 1
+
+@mixin keyframes--collapse-subcontainer
+  padding: 0
+
+@mixin keyframes--uncollapse-subcontainer
+  padding: var(--standard--container-directive--padding-top-input, 0) var(--standard--container-directive--padding-sides-input, 0) var(--standard--container-directive--padding-bottom-input, 0)

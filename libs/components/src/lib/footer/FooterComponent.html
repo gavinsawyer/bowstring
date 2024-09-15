@@ -1,13 +1,23 @@
-<div #htmlDivElement
-  [class.hiding]="(raisedOrLowering$() && !raised$()) || (stuckOrUnsticking$() && !stuck$())"
-  [class.shown]="raisedOrLowering$() && stuckOrUnsticking$()">
-  <div></div>
+<svg
+  height="1"
+  style="left: 0; opacity: 0; position: absolute; top: 0;"
+  viewBox="0 0 1 1"
+  width="1">
+  <clipPath
+    [attr.id]="roundedContainerDirective.clipPathId$()"
+    clipPathUnits="objectBoundingBox">
+    <!--suppress HtmlUnknownAttribute -->
+    <path
+      [attr.d]="roundedContainerDirective.pathDefinition$()"
+      fill="#000" />
+  </clipPath>
+</svg>
+<div id="container" class="containerDirective elevatedContainerDirective flexboxContainerChildDirective flexboxContainerDirective glassContainerDirective roundedContainerDirective"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && stuckOrUnsticking$() ? stuckModel$.set(false) : true) || $event.preventDefault();"
+  tabindex="-1">
+  <footer #htmlElement class="subcontainer">
+    <ng-content />
+  </footer>
 </div>
-<!--suppress CssUnknownProperty --><footer #htmlFooterElement
-  [class.lowering]="raisedOrLowering$() && !raised$()"
-  [class.raised]="raisedOrLowering$()"
-  [class.stuck]="stuckOrUnsticking$()"
-  [class.unsticking]="stuckOrUnsticking$() && !stuck$()"
-  [style.--unsticking-translation]="unstickingTranslation$() + 'px'">
-  <ng-content />
-</footer>
+<div id="backdrop" #backdropHtmlDivElement></div>

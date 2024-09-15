@@ -1,1 +1,8 @@
-<main><ng-content /></main>
+<div class="containerDirective flexboxContainerChildDirective flexboxContainerDirective"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  <main #htmlElement class="subcontainer">
+    <router-outlet />
+  </main>
+</div>

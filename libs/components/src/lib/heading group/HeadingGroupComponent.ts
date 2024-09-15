@@ -1,12 +1,27 @@
-import { Component } from "@angular/core";
+import { booleanAttribute, Component, input, InputSignalWithTransform } from "@angular/core";
 
 
-@Component({
-  selector:    "standard--heading-group",
-  standalone:  true,
-  styleUrls:   [
-    "HeadingGroupComponent.sass",
-  ],
-  templateUrl: "HeadingGroupComponent.html",
-})
-export class HeadingGroupComponent { }
+@Component(
+  {
+    host:        {
+      "[class.skipStylingFirstLetter]": "skipStylingFirstLetterInput$()",
+    },
+    selector:    "standard--heading-group",
+    standalone:  true,
+    styleUrls:   [
+      "HeadingGroupComponent.sass",
+    ],
+    templateUrl: "HeadingGroupComponent.html",
+  },
+)
+export class HeadingGroupComponent {
+
+  public readonly skipStylingFirstLetterInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+    undefined,
+    {
+      alias:     "skipStylingFirstLetter",
+      transform: booleanAttribute,
+    },
+  );
+
+}

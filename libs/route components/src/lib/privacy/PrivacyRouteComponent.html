@@ -2,20 +2,18 @@
   <standard--heading-group>
     <standard--header>
       <h4>
-        <standard--flexbox
+        <standard--flexbox-container
           flexDirection="row"
           flexWrap="wrap">
           <standard--capsule
-            i18n-text=""
+            i18n-text
             text="legal" />
           <span>{{ now | date:"fullDate" }}</span>
-        </standard--flexbox>
+        </standard--flexbox-container>
       </h4>
-      <h3 i18n="@@PrivacyRoute--CardTitle">Standard Privacy Policy</h3>
+      <h3 i18n="@@libs--RouteComponents--PrivacyRoute--CardTitle">Privacy Policy</h3>
     </standard--header>
-    <p i18n="@@PrivacyRoute--CardContent_1">
-      <span style="font-variant: small-caps;">This site stores information</span> in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.
-    </p>
+    <p i18n="@@libs--RouteComponents--PrivacyRoute--CardContent_1"><span style="font-variant: small-caps;">This site stores information</span> in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.</p>
     <standard--section>
       <standard--header>
         <h4>Google</h4>
@@ -23,20 +21,20 @@
           <standard--list type="inline">
             <standard--list-item type="inline">
               <standard--link
-                i18n-text=""
+                i18n-text
                 text="privacy policy"
                 url="https://www.google.com/intl/en/policies/privacy/" />
             </standard--list-item>
             <standard--list-item type="inline">
               <standard--link
-                i18n-text=""
+                i18n-text
                 text="terms"
                 url="https://www.google.com/intl/en/policies/terms/" />
             </standard--list-item>
           </standard--list>
         </h5>
       </standard--header>
-      <p i18n="@@PrivacyRoute--CardContent_2">This site is protected by <standard--link
+      <p i18n="@@libs--RouteComponents--PrivacyRoute--CardContent_2">This site is protected by <standard--link
         text="reCAPTCHA"
         url="https://www.google.com/recaptcha/" /> and uses <standard--link
         text="Google Analytics"

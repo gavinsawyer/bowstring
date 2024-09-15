@@ -1,0 +1,26 @@
+<standard--aside flexDirection="column">
+  <standard--card
+    position="sticky"
+    topPosition="var(--standard--root--padding-bottom)">
+    <standard--heading-group>
+      <standard--header>
+        <h4 i18n="@@apps--Website--RouteComponents--DevelopRoute--Aside--Title">Develop</h4>
+      </standard--header>
+      <p i18n="@@apps--Website--RouteComponents--DevelopRoute--Aside--Content"><span style="font-variant: small-caps;">Lorem ipsum dolor</span> sit amet, consectetur adipisicing elit. Ab alias atque consectetur earum expedita iste iusto labore, minus nobis sunt.</p>
+    </standard--heading-group>
+  </standard--card>
+</standard--aside>
+<standard--flexbox-container
+  flexDirection="row"
+  flexGrow="1"
+  flexShrink="0">
+  <standard--article>
+    <standard--scroll-stack minimumAspectRatio="0.75">
+      @for (imageUrl of imageUrls$(); track imageUrl) {<standard--image
+        height="400"
+        *scrollStackItem
+        [src]="imageUrl"
+        width="300" />}
+    </standard--scroll-stack>
+  </standard--article>
+</standard--flexbox-container>

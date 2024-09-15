@@ -2,7 +2,6 @@ import { Environment } from "@standard/interfaces";
 
 
 export const environment: Environment = {
-  project:        "website",
   firebase:       {
     apiKey:            "AIzaSyBRD3zmnjKjPnPyzgDwGsmX5CEpj42WIRY",
     appId:             "1:343836520956:web:c2aed087ae5be2fce84279",
@@ -13,5 +12,6 @@ export const environment: Environment = {
     storageBucket:     "standard-3eac7.appspot.com",
   },
   production:     true,
+  project:        "website",
   recaptchaKeyID: "6LdUnL8nAAAAAGxCWDCrFYMIHwhXD3gg0yj30POI",
 };

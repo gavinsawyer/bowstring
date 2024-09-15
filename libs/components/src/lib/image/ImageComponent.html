@@ -1,6 +1,25 @@
-<img
-  [attr.alt]="alt"
-  height="auto"
-  [style.aspect-ratio]="width + '/' + height"
-  [width]="width"
-  [ngSrc]="src || ''" />
+<svg
+  height="1"
+  style="left: 0; opacity: 0; position: absolute; top: 0;"
+  viewBox="0 0 1 1"
+  width="1">
+  <clipPath
+    [attr.id]="roundedContainerDirective.clipPathId$()"
+    clipPathUnits="objectBoundingBox">
+    <!--suppress HtmlUnknownAttribute -->
+    <path
+      [attr.d]="roundedContainerDirective.pathDefinition$()"
+      fill="#000" />
+  </clipPath>
+</svg>
+<div class="canvasContainerDirective containerDirective elevatedContainerDirective flexboxContainerChildDirective roundedContainerDirective"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  <img #htmlImageElement class="subcontainer"
+    [attr.alt]="altInput$()"
+    [height]="heightInput$()"
+    [style.aspect-ratio]="widthInput$() + '/' + heightInput$()"
+    [width]="widthInput$()"
+    [ngSrc]="srcInput$()" />
+</div>

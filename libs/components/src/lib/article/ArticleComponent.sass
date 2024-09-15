@@ -1,2 +1,15 @@
+@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+
+
 \:host
   display: contents
+
+  @include FlexboxContainerChildDirective.host
+
+  --standard--flexbox-container-child-directive--flex-basis: 100% !important
+
+  > div
+    display: grid
+
+    > article::ng-deep > *
+      @include FlexboxContainerChildDirective.children

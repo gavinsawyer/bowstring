@@ -1,12 +1,21 @@
+@use "../../../../directives/src/lib/FlexboxContainerDirective"
+
+
 \:host
   display: contents
 
-  > aside
-    align-content: var(--standard--flexbox--align-content, normal)
-    align-items: var(--standard--flexbox--align-items, normal)
-    display: flex
-    flex: var(--standard--flexbox-child--flex-grow, 0) var(--standard--flexbox-child--flex-shrink, 1) var(--standard--flexbox-child--flex-basis, auto)
-    flex-direction: var(--standard--flexbox--flex-direction)
-    flex-wrap: var(--standard--flexbox--flex-wrap, nowrap)
-    gap: var(--standard--flexbox--row-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 1)))) var(--standard--flexbox--column-gap, var(--standard--flexbox--gap, calc(1rem * pow(var(--phi), 2))))
-    justify-content: var(--standard--flexbox--justify-content, normal)
+  @include FlexboxContainerDirective.host
+
+  @media (min-width: 48rem)
+    --standard--flexbox-container-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
+    --standard--flexbox-container-child-directive--flex-grow: pow(var(--phi), -2) !important
+
+  > div
+    display: grid
+
+    > aside::ng-deep > *
+      @include FlexboxContainerDirective.children
+
+  @media (min-width: 48rem)
+    > div
+      z-index: 2

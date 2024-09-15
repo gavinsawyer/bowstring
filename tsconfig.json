@@ -36,9 +36,6 @@
       "@standard/components":       [
         "libs/components/src/index.ts"
       ],
-      "@standard/route-components":       [
-        "libs/route components/src/index.ts"
-      ],
       "@standard/directives":       [
         "libs/directives/src/index.ts"
       ],
@@ -48,11 +45,14 @@
       "@standard/interfaces":       [
         "libs/interfaces/src/index.ts"
       ],
+      "@standard/route-components": [
+        "libs/route components/src/index.ts"
+      ],
       "@standard/services":         [
         "libs/services/src/index.ts"
       ],
-      "@standard/symbol-components":       [
-        "libs/symbol components/src/index.ts"
+      "@standard/symbol-paths":     [
+        "libs/symbol paths/src/index.ts"
       ],
       "@standard/types":            [
         "libs/types/src/index.ts"

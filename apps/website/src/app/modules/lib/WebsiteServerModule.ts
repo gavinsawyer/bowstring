@@ -4,16 +4,19 @@ import { RootComponent }                        from "../../components";
 import { WebsiteBrowserModule }                 from "../../modules";
 
 
-@NgModule({
-  bootstrap: [
-    RootComponent,
-  ],
-  imports:   [
-    WebsiteBrowserModule,
-    ServerModule,
-  ],
-  providers: [
-    provideServerRendering(),
-  ],
-})
-export class WebsiteServerModule { }
+@NgModule(
+  {
+    bootstrap: [
+      RootComponent,
+    ],
+    imports:   [
+      WebsiteBrowserModule,
+      ServerModule,
+    ],
+    providers: [
+      provideServerRendering(),
+    ],
+  },
+)
+export class WebsiteServerModule {
+}
