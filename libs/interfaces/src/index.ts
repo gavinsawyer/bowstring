@@ -1,4 +1,4 @@
-export * from "./lib/Dimensions";
-export * from "./lib/Environment";
-export * from "./lib/ProfileDocument";
-export * from "./lib/SymbolPaths";
+export type * from "./lib/Dimensions";
+export type * from "./lib/Environment";
+export type * from "./lib/ProfileDocument";
+export type * from "./lib/SymbolPaths";

@@ -21,7 +21,7 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
       providers:                 [
         {
           provide:  APP_BASE_HREF,
-          useValue: `/${ String(localeId) }`,
+          useValue: `/${ localeId }`,
         },
         {
           provide:  LOCALE_ID,
@@ -32,8 +32,8 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
     },
   ).render(
     {
-      documentFilePath: `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }/${ existsSync(`${ process.cwd() }/dist/apps/website/browser/${ localeId }/index.original.html`) ? "index.original.html" : "index.html" }`,
-      publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }`,
+      documentFilePath: `${ process.cwd() }/dist/apps/website/browser/${ localeId }/${ existsSync(`${ process.cwd() }/dist/apps/website/browser/${ localeId }/index.original.html`) ? "index.original.html" : "index.html" }`,
+      publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ localeId }`,
       url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
     },
   ).then<void>(

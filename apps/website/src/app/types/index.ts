@@ -1,3 +1,3 @@
-export * from "./lib/LanguageId";
-export * from "./lib/LocaleId";
-export * from "./lib/RegionId";
+export type * from "./lib/LanguageId";
+export type * from "./lib/LocaleId";
+export type * from "./lib/RegionId";
