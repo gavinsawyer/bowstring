@@ -18,7 +18,7 @@
     <standard--scroll-stack minimumAspectRatio="0.75">
       @for (imageUrl of imageUrls$(); track imageUrl) {<standard--image
         height="400"
-        *scrollStackItem
+        *standardScrollStackItem
         [src]="imageUrl"
         width="300" />}
     </standard--scroll-stack>

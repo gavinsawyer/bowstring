@@ -15,7 +15,7 @@ export * from "./lib/link/LinkComponent";
 export * from "./lib/list/ListComponent";
 export * from "./lib/list item/ListItemComponent";
 export * from "./lib/main/MainComponent";
-export * from "./lib/route/RouteComponent";
+export * from "./lib/RouteComponent";
 export * from "./lib/scroll stack/ScrollStackComponent";
 export * from "./lib/section/SectionComponent";
 export * from "./lib/video/VideoComponent";

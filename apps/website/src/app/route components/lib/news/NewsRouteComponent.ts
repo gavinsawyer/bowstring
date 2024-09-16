@@ -28,9 +28,9 @@ export class NewsRouteComponent
 
   protected readonly imageSources$: WritableSignal<string[]> = signal<string[]>(
     [
-      "/assets/photos/1.jpeg",
-      "/assets/photos/2.jpeg",
-      "/assets/photos/3.jpeg",
+      "/assets/photos/1.webp",
+      "/assets/photos/2.webp",
+      "/assets/photos/3.webp",
     ],
   );
 

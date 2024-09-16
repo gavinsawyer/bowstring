@@ -1,9 +1,10 @@
-export * from "./lib/ContainerDirective";
-export * from "./lib/ElevatedDirective";
-export * from "./lib/FlexboxChildDirective";
-export * from "./lib/FlexboxContainerDirective";
-export * from "./lib/GlassDirective";
-export * from "./lib/HoverTranslatingDirective";
-export * from "./lib/RoundedDirective";
+export * from "./lib/canvas/CanvasDirective";
+export * from "./lib/container/ContainerDirective";
+export * from "./lib/elevated/ElevatedDirective";
+export * from "./lib/flexbox child/FlexboxChildDirective";
+export * from "./lib/flexbox container/FlexboxContainerDirective";
+export * from "./lib/glass/GlassDirective";
+export * from "./lib/hover translating/HoverTranslatingDirective";
+export * from "./lib/rounded/RoundedDirective";
 export * from "./lib/ScrollStackItemDirective";
 export * from "./lib/SymbolPathsLoaderDirective";

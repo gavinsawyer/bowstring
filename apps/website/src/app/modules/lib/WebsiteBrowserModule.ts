@@ -7,8 +7,7 @@ import { AngularFirestoreModule }                                               
 import { type Firestore, getFirestore, provideFirestore }                                                                                                                                                     from "@angular/fire/firestore";
 import { type Functions, getFunctions, provideFunctions }                                                                                                                                                     from "@angular/fire/functions";
 import { ReactiveFormsModule }                                                                                                                                                                                from "@angular/forms";
-import { BrowserModule, provideClientHydration, withI18nSupport }                                                                                                                                             from "@angular/platform-browser";
-import { BrowserAnimationsModule }                                                                                                                                                                            from "@angular/platform-browser/animations";
+import { BrowserModule, provideClientHydration, withEventReplay, withI18nSupport }                                                                                                                            from "@angular/platform-browser";
 import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling }                                                                                              from "@angular/router";
 import * as brand                                                                                                                                                                                             from "@standard/brand";
 import { ButtonComponent, CardComponent, DialogComponent, FlexboxContainerComponent, FooterComponent, GridComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, MainComponent, SectionComponent } from "@standard/components";
@@ -36,7 +35,6 @@ import { routes as websiteRoutes }                                              
     imports:      [
       AngularFirestoreModule.enablePersistence(),
       ButtonComponent,
-      BrowserAnimationsModule,
       BrowserModule,
       CardComponent,
       DialogComponent,
@@ -90,6 +88,7 @@ import { routes as websiteRoutes }                                              
         (): Auth => getAuth(),
       ),
       provideClientHydration(
+        withEventReplay(),
         withI18nSupport(),
       ),
       provideExperimentalZonelessChangeDetection(),

@@ -53,6 +53,21 @@
     },
     {
       "files": [
+        "./apps/website/src/app/directives/src/lib/**/*.ts"
+      ],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "prefix": "standardWebsite",
+            "style":  "camelCase",
+            "type":   "attribute"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "./libs/components/src/lib/**/*.ts"
       ],
       "rules": {
@@ -68,15 +83,15 @@
     },
     {
       "files": [
-        "./libs/route components/src/lib/**/*.ts"
+        "./libs/directives/src/lib/**/*.ts"
       ],
       "rules": {
-        "@angular-eslint/component-selector": [
+        "@angular-eslint/directive-selector": [
           "error",
           {
-            "prefix": "standard-routes-",
-            "style":  "kebab-case",
-            "type":   "element"
+            "prefix": "standard",
+            "style":  "camelCase",
+            "type":   "attribute"
           }
         ]
       }

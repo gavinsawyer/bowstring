@@ -39,15 +39,15 @@ export class DesignRouteComponent
   protected readonly imageUrls$: WritableSignal<URL[]> = signal<URL[]>(
     [
       new URL(
-        "/assets/photos/1.jpeg",
+        "/assets/photos/1.webp",
         this.origin || this.document.location.origin,
       ),
       new URL(
-        "/assets/photos/2.jpeg",
+        "/assets/photos/2.webp",
         this.origin || this.document.location.origin,
       ),
       new URL(
-        "/assets/photos/3.jpeg",
+        "/assets/photos/3.webp",
         this.origin || this.document.location.origin,
       ),
     ],
