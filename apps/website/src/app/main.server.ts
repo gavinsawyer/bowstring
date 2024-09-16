@@ -3,7 +3,6 @@ import { LOCALE_ID }                              from "@angular/core";
 import { CommonEngine }                           from "@angular/ssr";
 import * as express                               from "express";
 import { existsSync }                             from "fs";
-import "zone.js/node";
 import { environment }                            from "../environment";
 import { WebsiteServerModule as AppServerModule } from "./modules";
 import { getI18nRequestHandler }                  from "./request handlers";

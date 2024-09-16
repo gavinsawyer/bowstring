@@ -1,4 +1,4 @@
-import { Injector, NgModule }                                                                                                                                                                                 from "@angular/core";
+import { Injector, NgModule, provideExperimentalZonelessChangeDetection }                                                                                                                                     from "@angular/core";
 import { Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                                                                              from "@angular/fire/analytics";
 import { FirebaseApp, initializeApp, provideFirebaseApp }                                                                                                                                                     from "@angular/fire/app";
 import { AppCheck, initializeAppCheck, provideAppCheck }                                                                                                                                                      from "@angular/fire/app-check";
@@ -92,6 +92,7 @@ import { routes as websiteRoutes }                                              
       provideClientHydration(
         withI18nSupport(),
       ),
+      provideExperimentalZonelessChangeDetection(),
       provideEnvironmentNgxMask(),
       provideFirebaseApp(
         (): FirebaseApp => initializeApp(environment.firebase),

@@ -1,11 +1,11 @@
-import { isPlatformBrowser }                                                                                                                                        from "@angular/common";
-import { computed, Directive, ElementRef, inject, Injector, input, InputSignalWithTransform, NgZone, numberAttribute, PLATFORM_ID, Signal, signal, WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                   from "@angular/core/rxjs-interop";
-import { BRAND }                                                                                                                                                    from "@standard/injection-tokens";
-import { Dimensions }                                                                                                                                               from "@standard/interfaces";
-import { Brand }                                                                                                                                                    from "@standard/types";
-import { filter, map, Observable, Observer, switchMap, TeardownLogic }                                                                                              from "rxjs";
-import { v4 as uuid }                                                                                                                                               from "uuid";
+import { isPlatformBrowser }                                                                                                                                from "@angular/common";
+import { computed, Directive, ElementRef, inject, Injector, input, InputSignalWithTransform, numberAttribute, PLATFORM_ID, Signal, signal, WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                           from "@angular/core/rxjs-interop";
+import { BRAND }                                                                                                                                            from "@standard/injection-tokens";
+import { Dimensions }                                                                                                                                       from "@standard/interfaces";
+import { Brand }                                                                                                                                            from "@standard/types";
+import { filter, map, Observable, Observer, switchMap, TeardownLogic }                                                                                      from "rxjs";
+import { v4 as uuid }                                                                                                                                       from "uuid";
 
 
 @Directive(
@@ -22,7 +22,6 @@ export class RoundedContainerDirective {
 
   private readonly brand: Brand                     = inject<Brand>(BRAND);
   private readonly injector: Injector               = inject<Injector>(Injector);
-  private readonly ngZone: NgZone                   = inject<NgZone>(NgZone);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   protected readonly brandRoundness$: Signal<number>                                                     = signal<number>(this.brand.roundness);
@@ -63,13 +62,11 @@ export class RoundedContainerDirective {
             return (): void => resizeObserver.disconnect();
           })(
             new ResizeObserver(
-              (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
-                (): void => resizeEventObserver.next(
-                  {
-                    height: resizeObserverEntries[0].target.clientHeight,
-                    width:  resizeObserverEntries[0].target.clientWidth,
-                  },
-                ),
+              (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
+                {
+                  height: resizeObserverEntries[0].target.clientHeight,
+                  width:  resizeObserverEntries[0].target.clientWidth,
+                },
               ),
             ),
           ),

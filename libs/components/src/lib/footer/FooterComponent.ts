@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                                   from "@angular/common";
-import { Component, computed, effect, ElementRef, inject, model, ModelSignal, NgZone, PLATFORM_ID, Signal, signal, viewChild }           from "@angular/core";
+import { Component, computed, effect, ElementRef, inject, model, ModelSignal, PLATFORM_ID, Signal, signal, viewChild }                   from "@angular/core";
 import { toObservable, toSignal }                                                                                                        from "@angular/core/rxjs-interop";
 import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, RoundedContainerDirective } from "@standard/directives";
 import { Dimensions }                                                                                                                    from "@standard/interfaces";
@@ -93,10 +93,8 @@ export class FooterComponent {
         return (): void => resizeObserver.disconnect();
       })(
         new ResizeObserver(
-          (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
-            (): void => resizeEventObserver.next(
-              resizeObserverEntries[0].target.clientHeight,
-            ),
+          (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
+            resizeObserverEntries[0].target.clientHeight,
           ),
         ),
       ),
@@ -124,13 +122,11 @@ export class FooterComponent {
             return (): void => resizeObserver.disconnect();
           })(
             new ResizeObserver(
-              (resizeObserverEntries: ResizeObserverEntry[]): void => this.ngZone.run<void>(
-                (): void => resizeEventObserver.next(
-                  {
-                    height: resizeObserverEntries[0].target.clientHeight,
-                    width:  resizeObserverEntries[0].target.clientWidth,
-                  },
-                ),
+              (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
+                {
+                  height: resizeObserverEntries[0].target.clientHeight,
+                  width:  resizeObserverEntries[0].target.clientWidth,
+                },
               ),
             ),
           ),
@@ -153,7 +149,6 @@ export class FooterComponent {
   private readonly footerWidth$: Signal<number>                                   = computed<number>(
     (): number => this.footerDimensions$().width,
   );
-  private readonly ngZone: NgZone                                                 = inject<NgZone>(NgZone);
   private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
 
   protected readonly footerHeight$: Signal<number>                        = computed<number>(
