@@ -1,6 +1,6 @@
 {
   "name":            "@standard/source",
-  "version":         "18.0.0",
+  "version":         "18.0.1",
   "license":         "MIT",
   "author":          {
     "name":  "Gavin Sawyer",
@@ -35,8 +35,7 @@
     "ngx-mask":                          "^18.0.0",
     "normalize.css":                     "^8.0.1",
     "rxjs":                              "^7.8.1",
-    "uuid":                              "^10.0.0",
-    "zone.js":                           "^0.14.10"
+    "uuid":                              "^10.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular":          "^18.2.4",

@@ -68,7 +68,6 @@
         "main":                        "apps/website/src/app/main.browser.ts",
         "outputHashing":               "all",
         "outputPath":                  "dist/apps/website/browser",
-        "polyfills":                   "apps/website/src/polyfills.ts",
         "styles":                      [
           "apps/website/src/styles.sass"
         ],
