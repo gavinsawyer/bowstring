@@ -1,5 +1,5 @@
-import { Component, inject, input, InputSignal, OnInit } from "@angular/core";
-import { Meta }                                          from "@angular/platform-browser";
+import { Component, inject, input, type InputSignal, type OnInit } from "@angular/core";
+import { Meta }                                                    from "@angular/platform-browser";
 
 
 @Component(
@@ -8,7 +8,8 @@ import { Meta }                                          from "@angular/platform
     template:   "",
   },
 )
-export class RouteComponent implements OnInit {
+export class RouteComponent
+  implements OnInit {
 
   private readonly meta: Meta = inject<Meta>(Meta);
 

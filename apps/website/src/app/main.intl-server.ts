@@ -1,6 +1,6 @@
 import express                   from "express";
 import { getI18nRequestHandler } from "./request handlers";
-import { LocaleId }              from "./types";
+import { type LocaleId }         from "./types";
 
 
 express().set(

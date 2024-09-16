@@ -1,6 +1,7 @@
-import { SymbolPaths } from "@standard/interfaces";
+import { type SymbolPaths } from "@standard/interfaces";
 
 
+// noinspection JSUnusedGlobalSymbols
 export const _SquareGrid3x3MiddleleftFilledSymbolPaths: SymbolPaths = {
   paths:         [
     {

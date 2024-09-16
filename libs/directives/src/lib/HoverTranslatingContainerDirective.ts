@@ -1,8 +1,8 @@
-import { isPlatformBrowser }                                                                    from "@angular/common";
-import { computed, Directive, ElementRef, inject, PLATFORM_ID, Signal, signal, WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                               from "@angular/core/rxjs-interop";
-import { PointerService }                                                                       from "@standard/services";
-import { combineLatestWith, delayWhen, filter, map, Observable, timer }                         from "rxjs";
+import { isPlatformBrowser }                                                                                   from "@angular/common";
+import { computed, Directive, type ElementRef, inject, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                              from "@angular/core/rxjs-interop";
+import { PointerService }                                                                                      from "@standard/services";
+import { combineLatestWith, delayWhen, filter, map, Observable, timer }                                        from "rxjs";
 
 
 @Directive(

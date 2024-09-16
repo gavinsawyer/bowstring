@@ -1,5 +1,5 @@
-import { Component, effect, ElementRef, inject, Signal, viewChild } from "@angular/core";
-import { ContainerDirective, FlexboxContainerDirective }            from "@standard/directives";
+import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
+import { ContainerDirective, FlexboxContainerDirective }                      from "@standard/directives";
 
 
 @Component(

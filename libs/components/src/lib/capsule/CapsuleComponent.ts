@@ -1,5 +1,5 @@
-import { Component, effect, ElementRef, inject, input, InputSignal, Signal, viewChild } from "@angular/core";
-import { ElevatedContainerDirective, RoundedContainerDirective }                        from "@standard/directives";
+import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
+import { ElevatedContainerDirective, RoundedContainerDirective }                                       from "@standard/directives";
 
 
 @Component(

@@ -1,7 +1,7 @@
-import { NgComponentOutlet, NgTemplateOutlet }                                                                from "@angular/common";
-import { booleanAttribute, Component, inject, input, InputSignal, InputSignalWithTransform, numberAttribute } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                       from "@angular/router";
-import { SymbolPathsLoaderDirective }                                                                         from "@standard/directives";
+import { NgComponentOutlet, NgTemplateOutlet }                                                                          from "@angular/common";
+import { booleanAttribute, Component, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                 from "@angular/router";
+import { SymbolPathsLoaderDirective }                                                                                   from "@standard/directives";
 
 
 @Component(

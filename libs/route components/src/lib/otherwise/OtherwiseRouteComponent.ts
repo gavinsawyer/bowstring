@@ -1,9 +1,9 @@
 import { isPlatformBrowser }                                                        from "@angular/common";
-import { Component, inject, OnInit, PLATFORM_ID }                                   from "@angular/core";
+import { Component, inject, type OnInit, PLATFORM_ID }                              from "@angular/core";
 import { ArticleComponent, HeaderComponent, HeadingGroupComponent, RouteComponent } from "@standard/components";
 import { RESPONSE }                                                                 from "@standard/injection-tokens";
 import { PathService }                                                              from "@standard/services";
-import { Response }                                                                 from "express";
+import { type Response }                                                            from "express";
 
 
 @Component(
@@ -20,7 +20,9 @@ import { Response }                                                             
     templateUrl: "OtherwiseRouteComponent.html",
   },
 )
-export class OtherwiseRouteComponent extends RouteComponent implements OnInit {
+export class OtherwiseRouteComponent
+  extends RouteComponent
+  implements OnInit {
 
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly response: Response | null        = inject<Response | null>(

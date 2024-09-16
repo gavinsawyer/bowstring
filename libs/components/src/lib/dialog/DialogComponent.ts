@@ -1,9 +1,9 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                  from "@angular/common";
-import { Component, computed, effect, EffectCleanupRegisterFn, ElementRef, inject, model, ModelSignal, PLATFORM_ID, Signal, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                   from "@angular/core/rxjs-interop";
-import { ContainerDirective, FlexboxContainerDirective }                                                                                from "@standard/directives";
-import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                 from "body-scroll-lock";
-import { delayWhen, fromEvent, map, Observable, timer }                                                                                 from "rxjs";
+import { DOCUMENT, isPlatformBrowser }                                                                                                                      from "@angular/common";
+import { Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                       from "@angular/core/rxjs-interop";
+import { ContainerDirective, FlexboxContainerDirective }                                                                                                    from "@standard/directives";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                     from "body-scroll-lock";
+import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                from "rxjs";
 
 
 @Component(

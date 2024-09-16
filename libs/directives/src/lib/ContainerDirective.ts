@@ -1,8 +1,8 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                                                                       from "@angular/common";
-import { booleanAttribute, computed, DestroyRef, Directive, ElementRef, inject, input, InputSignal, InputSignalWithTransform, numberAttribute, PLATFORM_ID, Signal, signal, WritableSignal } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                        from "@angular/core/rxjs-interop";
-import { BaselineAlignment, DistributedAlignment, FlexPositionalAlignment, Inherit, NormalAlignment, Overflow, Position, ScalarString, ScrollSnapAlign, ScrollSnapStop, ScrollSnapType }     from "@standard/types";
-import { combineLatestWith, filter, fromEvent, map, Observable, of, startWith, switchMap }                                                                                                   from "rxjs";
+import { DOCUMENT, isPlatformBrowser }                                                                                                                                                                                                          from "@angular/common";
+import { booleanAttribute, computed, DestroyRef, Directive, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, type Signal, signal, type WritableSignal }                           from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                                           from "@angular/core/rxjs-interop";
+import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@standard/types";
+import { combineLatestWith, filter, fromEvent, map, type Observable, of, startWith, switchMap }                                                                                                                                                 from "rxjs";
 
 
 @Directive(

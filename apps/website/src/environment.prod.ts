@@ -1,4 +1,4 @@
-import { Environment } from "@standard/interfaces";
+import { type Environment } from "@standard/interfaces";
 
 
 export const environment: Environment = {

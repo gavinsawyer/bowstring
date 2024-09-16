@@ -1,10 +1,10 @@
-import { isPlatformBrowser }                                                   from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, Signal }                     from "@angular/core";
-import { toSignal }                                                            from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, User }                                        from "@angular/fire/auth";
-import { doc, docSnapshots, DocumentReference, DocumentSnapshot, Firestore }   from "@angular/fire/firestore";
-import { ProfileDocument }                                                     from "@standard/interfaces";
-import { catchError, map, Observable, Observer, of, switchMap, TeardownLogic } from "rxjs";
+import { isPlatformBrowser }                                                             from "@angular/common";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal }                          from "@angular/core";
+import { toSignal }                                                                      from "@angular/core/rxjs-interop";
+import { Auth, onIdTokenChanged, type User }                                             from "@angular/fire/auth";
+import { doc, docSnapshots, type DocumentReference, type DocumentSnapshot, Firestore }   from "@angular/fire/firestore";
+import { type ProfileDocument }                                                          from "@standard/interfaces";
+import { catchError, map, Observable, type Observer, of, switchMap, type TeardownLogic } from "rxjs";
 
 
 @Injectable(

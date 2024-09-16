@@ -1,8 +1,8 @@
-import { isPlatformBrowser }                                                           from "@angular/common";
-import { inject, Injectable, PLATFORM_ID }                                             from "@angular/core";
-import { AppCheckOptions, AppCheckToken, CustomProvider, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
-import { ENVIRONMENT }                                                                 from "@standard/injection-tokens";
-import { Environment }                                                                 from "@standard/interfaces";
+import { isPlatformBrowser }                                                                     from "@angular/common";
+import { inject, Injectable, PLATFORM_ID }                                                       from "@angular/core";
+import { type AppCheckOptions, type AppCheckToken, CustomProvider, ReCaptchaEnterpriseProvider } from "@angular/fire/app-check";
+import { ENVIRONMENT }                                                                           from "@standard/injection-tokens";
+import { type Environment }                                                                      from "@standard/interfaces";
 
 
 @Injectable(

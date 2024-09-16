@@ -1,6 +1,6 @@
-import { Component, contentChild, effect, ElementRef, forwardRef, inject, OnDestroy, Signal, viewChild } from "@angular/core";
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                     from "@angular/forms";
-import { ContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                 from "@standard/directives";
+import { Component, contentChild, effect, type ElementRef, forwardRef, inject, type OnDestroy, type Signal, viewChild } from "@angular/core";
+import { type ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                               from "@angular/forms";
+import { ContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                                from "@standard/directives";
 
 
 @Component(

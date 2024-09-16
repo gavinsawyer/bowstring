@@ -1,6 +1,7 @@
-import { SymbolPaths } from "@standard/interfaces";
+import { type SymbolPaths } from "@standard/interfaces";
 
 
+// noinspection JSUnusedGlobalSymbols
 export const _PoweroutletTypeNSymbolPaths: SymbolPaths = {
   paths:         [
     {

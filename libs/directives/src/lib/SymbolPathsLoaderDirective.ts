@@ -1,10 +1,10 @@
-import { Directive, input, InputSignal, Signal } from "@angular/core";
-import { toObservable, toSignal }                from "@angular/core/rxjs-interop";
-import { SymbolPaths }                           from "@standard/interfaces";
-import loadSymbolPaths                           from "@standard/symbol-paths";
-import { SymbolName }                            from "@standard/types";
-import { filter, Observable, switchMap }         from "rxjs";
-import { fromPromise }                           from "rxjs/internal/observable/innerFrom";
+import { Directive, input, type InputSignal, type Signal } from "@angular/core";
+import { toObservable, toSignal }                          from "@angular/core/rxjs-interop";
+import { type SymbolPaths }                                from "@standard/interfaces";
+import loadSymbolPaths                                     from "@standard/symbol-paths";
+import { type SymbolName }                                 from "@standard/types";
+import { filter, type Observable, switchMap }              from "rxjs";
+import { fromPromise }                                     from "rxjs/internal/observable/innerFrom";
 
 
 @Directive(

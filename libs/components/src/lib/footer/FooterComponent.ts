@@ -1,10 +1,10 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                                   from "@angular/common";
-import { Component, computed, effect, ElementRef, inject, model, ModelSignal, PLATFORM_ID, Signal, signal, viewChild }                   from "@angular/core";
+import { Component, computed, effect, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, signal, viewChild }    from "@angular/core";
 import { toObservable, toSignal }                                                                                                        from "@angular/core/rxjs-interop";
 import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, RoundedContainerDirective } from "@standard/directives";
-import { Dimensions }                                                                                                                    from "@standard/interfaces";
+import { type Dimensions }                                                                                                               from "@standard/interfaces";
 import { ViewportService }                                                                                                               from "@standard/services";
-import { combineLatestWith, delayWhen, map, Observable, Observer, switchMap, TeardownLogic, timer }                                      from "rxjs";
+import { combineLatestWith, delayWhen, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                            from "rxjs";
 
 
 @Component(

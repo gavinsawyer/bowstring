@@ -1,12 +1,12 @@
 import { APP_BASE_HREF }                          from "@angular/common";
 import { LOCALE_ID }                              from "@angular/core";
 import { CommonEngine }                           from "@angular/ssr";
-import * as express                               from "express";
+import express                                    from "express";
 import { existsSync }                             from "fs";
 import { environment }                            from "../environment";
 import { WebsiteServerModule as AppServerModule } from "./modules";
 import { getI18nRequestHandler }                  from "./request handlers";
-import { LocaleId }                               from "./types";
+import { type LocaleId }                          from "./types";
 
 
 function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
@@ -33,8 +33,8 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
   ).render(
     {
       documentFilePath: `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }/${ existsSync(`${ process.cwd() }/dist/apps/website/browser/${ localeId }/index.original.html`) ? "index.original.html" : "index.html" }`,
-      url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
       publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }`,
+      url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
     },
   ).then<void>(
     (html: string): void => response.send(html) && void (0),

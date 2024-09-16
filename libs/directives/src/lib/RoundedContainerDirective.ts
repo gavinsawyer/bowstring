@@ -1,11 +1,11 @@
-import { isPlatformBrowser }                                                                                                                                from "@angular/common";
-import { computed, Directive, ElementRef, inject, Injector, input, InputSignalWithTransform, numberAttribute, PLATFORM_ID, Signal, signal, WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                           from "@angular/core/rxjs-interop";
-import { BRAND }                                                                                                                                            from "@standard/injection-tokens";
-import { Dimensions }                                                                                                                                       from "@standard/interfaces";
-import { Brand }                                                                                                                                            from "@standard/types";
-import { filter, map, Observable, Observer, switchMap, TeardownLogic }                                                                                      from "rxjs";
-import { v4 as uuid }                                                                                                                                       from "uuid";
+import { isPlatformBrowser }                                                                                                                                                    from "@angular/common";
+import { computed, Directive, type ElementRef, inject, Injector, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                               from "@angular/core/rxjs-interop";
+import { BRAND }                                                                                                                                                                from "@standard/injection-tokens";
+import { type Dimensions }                                                                                                                                                      from "@standard/interfaces";
+import { type Brand }                                                                                                                                                           from "@standard/types";
+import { filter, map, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                from "rxjs";
+import { v4 as uuid }                                                                                                                                                           from "uuid";
 
 
 @Directive(

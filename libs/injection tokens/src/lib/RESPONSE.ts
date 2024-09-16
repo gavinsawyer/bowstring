@@ -1,5 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import { Response }       from "express";
+import { type Response }  from "express";
 
 
 export const RESPONSE: InjectionToken<Response> = new InjectionToken<Response>("RESPONSE");

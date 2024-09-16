@@ -1,4 +1,4 @@
-import { Directive, input, InputSignalWithTransform, numberAttribute } from "@angular/core";
+import { Directive, input, type InputSignalWithTransform, numberAttribute } from "@angular/core";
 
 
 @Directive(

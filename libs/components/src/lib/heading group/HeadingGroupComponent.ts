@@ -1,4 +1,4 @@
-import { booleanAttribute, Component, input, InputSignalWithTransform } from "@angular/core";
+import { booleanAttribute, Component, input, type InputSignalWithTransform } from "@angular/core";
 
 
 @Component(

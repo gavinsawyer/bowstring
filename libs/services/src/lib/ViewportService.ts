@@ -1,9 +1,9 @@
-import { ViewportScrollPosition }                                    from "@angular/cdk/scrolling";
-import { DOCUMENT, isPlatformBrowser }                               from "@angular/common";
-import { computed, inject, Injectable, PLATFORM_ID, signal, Signal } from "@angular/core";
-import { toSignal }                                                  from "@angular/core/rxjs-interop";
-import { Dimensions }                                                from "@standard/interfaces";
-import { fromEvent, map, startWith }                                 from "rxjs";
+import { type ViewportScrollPosition }                                    from "@angular/cdk/scrolling";
+import { DOCUMENT, isPlatformBrowser }                                    from "@angular/common";
+import { computed, inject, Injectable, PLATFORM_ID, signal, type Signal } from "@angular/core";
+import { toSignal }                                                       from "@angular/core/rxjs-interop";
+import { type Dimensions }                                                from "@standard/interfaces";
+import { fromEvent, map, startWith }                                      from "rxjs";
 
 
 @Injectable(

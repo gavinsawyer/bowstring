@@ -1,11 +1,11 @@
 import { isPlatformBrowser }                                                                                       from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, Signal }                                                         from "@angular/core";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                                    from "@angular/core";
 import { toSignal }                                                                                                from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, signInAnonymously, User, UserCredential }                                         from "@angular/fire/auth";
+import { Auth, onIdTokenChanged, signInAnonymously, type User, type UserCredential }                               from "@angular/fire/auth";
 import { Functions }                                                                                               from "@angular/fire/functions";
 import { createUserWithPasskey, FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey } from "@firebase-web-authn/browser";
-import { ProfileDocument }                                                                                         from "@standard/interfaces";
-import { Observable, Observer, TeardownLogic }                                                                     from "rxjs";
+import { type ProfileDocument }                                                                                    from "@standard/interfaces";
+import { Observable, type Observer, type TeardownLogic }                                                           from "rxjs";
 import { fromPromise }                                                                                             from "rxjs/internal/observable/innerFrom";
 import { ProfileService }                                                                                          from "./ProfileService";
 

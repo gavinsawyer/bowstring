@@ -1,5 +1,5 @@
 import { DOCUMENT }                                                                                                                                                                 from "@angular/common";
-import { Component, inject, signal, WritableSignal }                                                                                                                                from "@angular/core";
+import { Component, inject, signal, type WritableSignal }                                                                                                                           from "@angular/core";
 import { ArticleComponent, AsideComponent, CardComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent } from "@standard/components";
 import { ScrollStackItemDirective }                                                                                                                                                 from "@standard/directives";
 import { ORIGIN }                                                                                                                                                                   from "@standard/injection-tokens";

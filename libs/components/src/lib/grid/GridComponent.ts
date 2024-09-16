@@ -1,6 +1,6 @@
-import { Component, effect, ElementRef, inject, input, InputSignal, Signal, viewChild }          from "@angular/core";
-import { ContainerDirective, FlexboxContainerChildDirective }                                    from "@standard/directives";
-import { DistributedAlignment, GridPositionalAlignment, Inherit, NormalAlignment, ScalarString } from "@standard/types";
+import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild }                    from "@angular/core";
+import { ContainerDirective, FlexboxContainerChildDirective }                                                             from "@standard/directives";
+import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
 
 
 @Component(

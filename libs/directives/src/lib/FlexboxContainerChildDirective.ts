@@ -1,6 +1,6 @@
-import { Directive, input, InputSignal, InputSignalWithTransform, numberAttribute } from "@angular/core";
-import { Auto, Inherit, ScalarString }                                              from "@standard/types";
-import { ContainerDirective }                                                       from "./ContainerDirective";
+import { Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute } from "@angular/core";
+import { type Auto, type Inherit, type ScalarString }                                         from "@standard/types";
+import { ContainerDirective }                                                                 from "./ContainerDirective";
 
 
 @Directive(

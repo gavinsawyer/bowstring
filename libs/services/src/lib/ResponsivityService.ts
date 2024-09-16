@@ -1,8 +1,8 @@
-import { BreakpointObserver, BreakpointState }             from "@angular/cdk/layout";
-import { isPlatformBrowser }                               from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, Signal } from "@angular/core";
-import { toSignal }                                        from "@angular/core/rxjs-interop";
-import { map }                                             from "rxjs";
+import { BreakpointObserver, type BreakpointState }             from "@angular/cdk/layout";
+import { isPlatformBrowser }                                    from "@angular/common";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal } from "@angular/core";
+import { toSignal }                                             from "@angular/core/rxjs-interop";
+import { map }                                                  from "rxjs";
 
 
 @Injectable(

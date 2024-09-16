@@ -1,5 +1,5 @@
-import { booleanAttribute, Component, effect, ElementRef, inject, input, InputSignal, InputSignalWithTransform, numberAttribute, Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                                 from "@standard/directives";
+import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                                                     from "@standard/directives";
 
 
 @Component(

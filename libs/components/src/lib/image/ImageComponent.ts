@@ -1,6 +1,6 @@
-import { NgOptimizedImage }                                                                                                        from "@angular/common";
-import { Component, effect, ElementRef, inject, input, InputSignal, InputSignalWithTransform, numberAttribute, Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }               from "@standard/directives";
+import { NgOptimizedImage }                                                                                                                            from "@angular/common";
+import { Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                                   from "@standard/directives";
 
 
 @Component(

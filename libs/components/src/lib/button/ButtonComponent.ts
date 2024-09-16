@@ -1,7 +1,7 @@
-import { NgComponentOutlet, NgTemplateOutlet }                                                                                                                                       from "@angular/common";
-import { booleanAttribute, Component, effect, ElementRef, inject, input, InputSignal, InputSignalWithTransform, numberAttribute, output, OutputEmitterRef, Signal, viewChild }       from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                                                              from "@angular/router";
-import { ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, HoverTranslatingContainerDirective, RoundedContainerDirective, SymbolPathsLoaderDirective } from "@standard/directives";
+import { NgComponentOutlet, NgTemplateOutlet }                                                                                                                                                          from "@angular/common";
+import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                                                 from "@angular/router";
+import { ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, HoverTranslatingContainerDirective, RoundedContainerDirective, SymbolPathsLoaderDirective }                    from "@standard/directives";
 
 
 @Component(
@@ -89,7 +89,7 @@ export class ButtonComponent {
   private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLAnchorElement> | undefined> = viewChild<ElementRef<HTMLAnchorElement>>("htmlAnchorElement");
   private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement>>("htmlButtonElement");
 
-  protected readonly roundedContainerDirective: RoundedContainerDirective                     = inject<RoundedContainerDirective>(RoundedContainerDirective);
+  protected readonly roundedContainerDirective: RoundedContainerDirective   = inject<RoundedContainerDirective>(RoundedContainerDirective);
   protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
 
   public readonly appearanceInput$: InputSignal<"flat" | "raised" | "symbol" | undefined>                      = input<"flat" | "raised" | "symbol" | undefined>(

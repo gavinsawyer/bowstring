@@ -1,8 +1,8 @@
 /// <reference types="@angular/localize" />
 
-import { Type }                 from "@angular/core";
-import { DefaultExport, Route } from "@angular/router";
-import { description, title }   from "@standard/brand";
+import { type Type }                      from "@angular/core";
+import { type DefaultExport, type Route } from "@angular/router";
+import { description, title }             from "@standard/brand";
 
 
 export const routes: Route[] = [

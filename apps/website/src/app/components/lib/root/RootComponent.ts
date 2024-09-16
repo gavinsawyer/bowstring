@@ -2,10 +2,10 @@ import { DOCUMENT, isPlatformBrowser, Location }     from "@angular/common";
 import { Component, inject, LOCALE_ID, PLATFORM_ID } from "@angular/core";
 import { BRAND, GIT_INFO, PACKAGE_VERSION }          from "@standard/injection-tokens";
 import { ResponsivityService }                       from "@standard/services";
-import { Brand }                                     from "@standard/types";
-import { GitInfo }                                   from "git-describe";
+import { type Brand }                                from "@standard/types";
+import { type GitInfo }                              from "git-describe";
 import { LOCALE_IDS }                                from "../../../injection tokens";
-import { LocaleId }                                  from "../../../types";
+import { type LocaleId }                             from "../../../types";
 
 
 @Component(

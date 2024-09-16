@@ -1,9 +1,9 @@
-import { isPlatformBrowser }                                                                                                                                                                  from "@angular/common";
-import { booleanAttribute, DestroyRef, Directive, effect, ElementRef, inject, input, InputSignal, InputSignalWithTransform, model, ModelSignal, PLATFORM_ID, Signal, signal, WritableSignal } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                         from "@angular/core/rxjs-interop";
-import { BaselineAlignment, DistributedAlignment, FlexDirection, FlexPositionalAlignment, FlexWrap, Inherit, NormalAlignment, ScalarString }                                                  from "@standard/types";
-import { combineLatestWith, delayWhen, filter, fromEvent, map, Observable, startWith, switchMap, timer }                                                                                      from "rxjs";
-import { FlexboxContainerChildDirective }                                                                                                                                                     from "./FlexboxContainerChildDirective";
+import { isPlatformBrowser }                                                                                                                                                                                                from "@angular/common";
+import { booleanAttribute, DestroyRef, Directive, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
+import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString }                                        from "@standard/types";
+import { combineLatestWith, delayWhen, filter, fromEvent, map, type Observable, startWith, switchMap, timer }                                                                                                               from "rxjs";
+import { FlexboxContainerChildDirective }                                                                                                                                                                                   from "./FlexboxContainerChildDirective";
 
 
 @Directive(

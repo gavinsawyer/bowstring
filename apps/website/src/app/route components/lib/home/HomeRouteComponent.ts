@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal }                                                                                                                                        from "@angular/core";
+import { Component, signal, type WritableSignal }                                                                                                                                   from "@angular/core";
 import { ArticleComponent, AsideComponent, CardComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent } from "@standard/components";
 import { ScrollStackItemDirective }                                                                                                                                                 from "@standard/directives";
 

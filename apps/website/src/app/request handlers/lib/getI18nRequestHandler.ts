@@ -1,7 +1,7 @@
-import express      from "express";
-import { join }     from "path";
-import project      from "../../../../project.json";
-import { LocaleId } from "../../types";
+import type express      from "express";
+import { join }          from "path";
+import project           from "../../../../project.json";
+import { type LocaleId } from "../../types";
 
 
 export default function getI18nRequestHandler(

@@ -1,5 +1,5 @@
-import { NgTemplateOutlet }              from "@angular/common";
-import { Component, input, InputSignal } from "@angular/core";
+import { NgTemplateOutlet }                   from "@angular/common";
+import { Component, input, type InputSignal } from "@angular/core";
 
 
 @Component(

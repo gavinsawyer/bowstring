@@ -1,6 +1,7 @@
-import { SymbolPaths } from "@standard/interfaces";
+import { type SymbolPaths } from "@standard/interfaces";
 
 
+// noinspection JSUnusedGlobalSymbols
 export const _ArrowTrianglehead2ClockwiseRotate90IcloudSymbolPaths: SymbolPaths = {
   paths:         [
     {
