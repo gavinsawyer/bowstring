@@ -16,10 +16,10 @@
   flexShrink="0">
   <standard--article>
     <standard--scroll-stack minimumAspectRatio="0.75">
-      @for (imageUrl of imageUrls$(); track imageUrl) {<standard--image
+      @for (imageSource of imageSources$(); track imageSource) {<standard--image
         height="400"
         *scrollStackItem
-        [src]="imageUrl"
+        [src]="imageSource"
         width="300" />}
     </standard--scroll-stack>
   </standard--article>

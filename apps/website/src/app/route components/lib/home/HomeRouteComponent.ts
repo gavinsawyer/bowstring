@@ -1,8 +1,6 @@
-import { DOCUMENT }                                                                                                                                                                 from "@angular/common";
-import { Component, inject, signal, WritableSignal }                                                                                                                                from "@angular/core";
+import { Component, signal, WritableSignal }                                                                                                                                        from "@angular/core";
 import { ArticleComponent, AsideComponent, CardComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent } from "@standard/components";
 import { ScrollStackItemDirective }                                                                                                                                                 from "@standard/directives";
-import { ORIGIN }                                                                                                                                                                   from "@standard/injection-tokens";
 
 
 @Component(
@@ -28,28 +26,11 @@ import { ORIGIN }                                                               
 export class HomeRouteComponent
   extends RouteComponent {
 
-  private readonly document: Document = inject<Document>(DOCUMENT);
-  private readonly origin: URL | null = inject<URL>(
-    ORIGIN,
-    {
-      optional: true,
-    },
-  );
-
-  protected readonly imageUrls$: WritableSignal<URL[]> = signal<URL[]>(
+  protected readonly imageSources$: WritableSignal<string[]> = signal<string[]>(
     [
-      new URL(
-        "/assets/photos/1.jpeg",
-        this.origin || this.document.location.origin,
-      ),
-      new URL(
-        "/assets/photos/2.jpeg",
-        this.origin || this.document.location.origin,
-      ),
-      new URL(
-        "/assets/photos/3.jpeg",
-        this.origin || this.document.location.origin,
-      ),
+      "/assets/photos/1.jpeg",
+      "/assets/photos/2.jpeg",
+      "/assets/photos/3.jpeg",
     ],
   );
 
