@@ -2,8 +2,9 @@ import { isPlatformBrowser }                                                    
 import { booleanAttribute, DestroyRef, Directive, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
 import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString }                                        from "@standard/types";
-import { combineLatestWith, delayWhen, filter, fromEvent, map, type Observable, startWith, switchMap, timer }                                                                                                               from "rxjs";
-import { FlexboxContainerChildDirective }                                                                                                                                                                                   from "./FlexboxContainerChildDirective";
+import { combineLatestWith, delayWhen, filter, fromEvent, map, type Observable, startWith, switchMap, timer } from "rxjs";
+import { ContainerDirective }                                                                                                                                                                                               from "./ContainerDirective";
+import { FlexboxChildDirective }                                                                              from "./FlexboxChildDirective";
 
 
 @Directive(
@@ -22,7 +23,32 @@ import { FlexboxContainerChildDirective }                                       
     },
     hostDirectives: [
       {
-        directive: FlexboxContainerChildDirective,
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "listenToResizeEvent",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
+      {
+        directive: FlexboxChildDirective,
         inputs:    [
           "flexBasis",
           "flexGrow",

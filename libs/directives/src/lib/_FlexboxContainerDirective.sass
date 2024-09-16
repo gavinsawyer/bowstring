@@ -1,8 +1,9 @@
 @use "./Directive"
-@use "./FlexboxContainerChildDirective"
+@use "ContainerDirective"
+@use "FlexboxChildDirective"
 
 
-$namespace: "flexbox-container-directive"
+$namespace: "flexbox-container"
 
 $align-content: Directive.input-reference($namespace, "align-content", normal)
 $align-items: Directive.input-reference($namespace, "align-items", normal)
@@ -18,21 +19,23 @@ $row-gap: Directive.input-reference($namespace, "row-gap", calc(1rem * pow(var(-
 @mixin color-scheme($theme)
 
 @mixin children
-  @include FlexboxContainerChildDirective.children
+  @include ContainerDirective.children
+  @include FlexboxChildDirective.children
 
   @include Directive.reset-colors($namespace, ())
   @include Directive.reset-inputs($namespace, ("align-content", "align-items", "column-gap", "flex-direction", "flex-wrap", "gap", "justify-content", "row-gap", "scroll-left", "scroll-top"))
   @include Directive.reset-values($namespace, ())
 
 @mixin host
-  @include FlexboxContainerChildDirective.host
+  @include ContainerDirective.host
+  @include FlexboxChildDirective.host
 
   @include color-scheme("light")
 
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .flexboxContainerDirective > .subcontainer
+  > .harness > .element
     align-content: $align-content
     align-items: $align-items
     display: flex

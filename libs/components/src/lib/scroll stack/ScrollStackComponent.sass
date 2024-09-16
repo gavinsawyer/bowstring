@@ -1,4 +1,5 @@
-@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+@use "../../../../directives/src/lib/ContainerDirective"
+@use "../../../../directives/src/lib/FlexboxChildDirective"
 
 
 \:host
@@ -6,7 +7,8 @@
 
   --standard--scroll-stack--current-image-index: calc(1 + var(--standard--scroll-stack--scroll-left, 0) / var(--standard--scroll-stack--offset-width, 0))
 
-  @include FlexboxContainerChildDirective.host
+  @include ContainerDirective.host
+  @include FlexboxChildDirective.host
 
   > div
     display: grid
@@ -51,7 +53,8 @@
           z-index: calc(1 - round(1 * var(--standard--scroll-stack--item--relative-transformation--absolute-value), 1))
 
           &::ng-deep > *
-            @include FlexboxContainerChildDirective.children
+            @include ContainerDirective.children
+            @include FlexboxChildDirective.children
 
             --standard--scroll-stack--minimum-aspect-ratio-input: initial
             --standard--scroll-stack--offset-width: initial

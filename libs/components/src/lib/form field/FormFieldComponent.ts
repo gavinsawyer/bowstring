@@ -1,13 +1,38 @@
 import { Component, contentChild, effect, type ElementRef, forwardRef, inject, type OnDestroy, type Signal, viewChild } from "@angular/core";
 import { type ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                               from "@angular/forms";
-import { ContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                                from "@standard/directives";
+import { ContainerDirective, FlexboxChildDirective, RoundedDirective }                                                  from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
       {
-        directive: FlexboxContainerChildDirective,
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "listenToResizeEvent",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
+      {
+        directive: FlexboxChildDirective,
         inputs:    [
           "flexBasis",
           "flexGrow",
@@ -15,7 +40,7 @@ import { ContainerDirective, FlexboxContainerChildDirective, RoundedContainerDir
         ],
       },
       {
-        directive: RoundedContainerDirective,
+        directive: RoundedDirective,
         inputs:    [
           "borderRadiusFactor",
         ],
@@ -67,7 +92,7 @@ export class FormFieldComponent
   private readonly htmlInputElementRef$: Signal<ElementRef<HTMLInputElement> | undefined>       = contentChild<ElementRef<HTMLInputElement>>("htmlInputElement");
   private readonly htmlTextAreaElementRef$: Signal<ElementRef<HTMLTextAreaElement> | undefined> = contentChild<ElementRef<HTMLTextAreaElement>>("htmlTextAreaElement");
 
-  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
+  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public ngOnDestroy(): void {
     this.abortController.abort();

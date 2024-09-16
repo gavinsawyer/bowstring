@@ -8,14 +8,14 @@ import { combineLatestWith, delayWhen, filter, map, Observable, timer }         
 @Directive(
   {
     host:       {
-      "[style.--standard--hover-translating-container-directive--translation-transition-duration]": "translationTransitionDuration$()",
-      "[style.--standard--hover-translating-container-directive--translation-x]":                   "translationX$()",
-      "[style.--standard--hover-translating-container-directive--translation-y]":                   "translationY$()",
+      "[style.--standard--hover-translating-directive--translation-transition-duration]": "translationTransitionDuration$()",
+      "[style.--standard--hover-translating-directive--translation-x]":                   "translationX$()",
+      "[style.--standard--hover-translating-directive--translation-y]":                   "translationY$()",
     },
     standalone: true,
   },
 )
-export class HoverTranslatingContainerDirective {
+export class HoverTranslatingDirective {
 
   private readonly platformId: NonNullable<unknown>                   = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly pointerService: PointerService                     = inject<PointerService>(PointerService);

@@ -14,9 +14,9 @@
       stroke-width="0.008849557522px" />
   </clipPath>
 </svg>
-<div class="elevatedContainerDirective roundedContainerDirective"
+<div class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <span #htmlSpanElement class="subcontainer">{{ textInput$() }}</span>
+  <span #htmlSpanElement class="element">{{ textInput$() }}</span>
 </div>

@@ -1,8 +1,7 @@
 @use "./Directive"
-@use "./ContainerDirective"
 
 
-$namespace: "flexbox-container-child-directive"
+$namespace: "flexbox-child"
 
 $flex-basis: Directive.input-reference($namespace, "flex-basis", auto)
 $flex-grow: Directive.input-reference($namespace, "flex-grow", 0)
@@ -14,19 +13,15 @@ $flex-shrink: Directive.input-reference($namespace, "flex-shrink", 1)
 @mixin color-scheme($theme)
 
 @mixin children
-  @include ContainerDirective.children
-
   @include Directive.reset-colors($namespace, ())
   @include Directive.reset-inputs($namespace, ("flex-basis" "flex-grow" "flex-shrink"))
   @include Directive.reset-values($namespace, ())
 
 @mixin host
-  @include ContainerDirective.host
-
   @include color-scheme("light")
 
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .flexboxContainerChildDirective
+  > .harness
     flex: $flex-grow $flex-shrink $flex-basis

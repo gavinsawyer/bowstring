@@ -1,12 +1,14 @@
-@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
-@use "../../../../directives/src/lib/RoundedContainerDirective"
+@use "../../../../directives/src/lib/ContainerDirective"
+@use "../../../../directives/src/lib/FlexboxChildDirective"
+@use "../../../../directives/src/lib/RoundedDirective"
 
 
 \:host
   display: contents
 
-  @include FlexboxContainerChildDirective.host
-  @include RoundedContainerDirective.host
+  @include ContainerDirective.host
+  @include FlexboxChildDirective.host
+  @include RoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
@@ -24,8 +26,9 @@
 
       &::ng-deep
         > *
-          @include FlexboxContainerChildDirective.children
-          @include RoundedContainerDirective.children
+          @include ContainerDirective.children
+          @include FlexboxChildDirective.children
+          @include RoundedDirective.children
 
         > input,
         > select,

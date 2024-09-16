@@ -4,12 +4,12 @@ import { Directive, input, type InputSignalWithTransform, numberAttribute } from
 @Directive(
   {
     host:       {
-      "[style.--standard--elevated-container-directive--material-opacity-input]": "materialOpacityInput$()",
+      "[style.--standard--glass-directive--material-opacity-input]": "materialOpacityInput$()",
     },
     standalone: true,
   },
 )
-export class ElevatedContainerDirective {
+export class GlassDirective {
 
   public readonly materialOpacityInput$: InputSignalWithTransform<number | undefined, "" | number | `${ number }`> = input<number | undefined, "" | number | `${ number }`>(
     undefined,

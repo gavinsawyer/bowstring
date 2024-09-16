@@ -1,10 +1,12 @@
-@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
+@use "../../../../directives/src/lib/ContainerDirective"
+@use "../../../../directives/src/lib/FlexboxChildDirective"
 
 
 \:host
   display: contents
 
-  @include FlexboxContainerChildDirective.host
+  @include ContainerDirective.host
+  @include FlexboxChildDirective.host
 
   > div
     display: grid
@@ -18,7 +20,8 @@
       justify-content: var(--standard--grid--justify-content, normal)
 
       &::ng-deep > *
-        @include FlexboxContainerChildDirective.children
+        @include ContainerDirective.children
+        @include FlexboxChildDirective.children
 
         --standard--grid--align-content: initial
         --standard--grid--align-items: initial

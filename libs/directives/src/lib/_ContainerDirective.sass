@@ -1,7 +1,7 @@
 @use "./Directive"
 
 
-$namespace: "container-directive"
+$namespace: "container"
 
 $align-self: Directive.input-reference($namespace, "align-self", auto)
 $aspect-ratio: Directive.input-reference($namespace, "aspect-ratio", auto)
@@ -41,7 +41,7 @@ $offset-width: Directive.value-reference($namespace, "offset-width")
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .containerDirective
+  > .harness
     align-self: $align-self
     aspect-ratio: $aspect-ratio
     bottom: $bottom-position
@@ -61,7 +61,7 @@ $offset-width: Directive.value-reference($namespace, "offset-width")
       position: absolute
       z-index: -1
 
-    > .subcontainer
+    > .element
       padding: $padding-top $padding-sides $padding-bottom
 
       @keyframes collapse-subcontainer
@@ -92,28 +92,28 @@ $offset-width: Directive.value-reference($namespace, "offset-width")
       100%
         @include keyframes--uncollapse-host
 
-  &.collapsable > .containerDirective
+  &.collapsable > .harness
     @include keyframes--uncollapse-host
 
-    > .subcontainer
+    > .element
       @include keyframes--uncollapse-subcontainer
 
     &.expanded
       animation: uncollapse-host 200ms ease-in-out forwards
 
-      > .subcontainer
+      > .element
         animation: uncollapse-subcontainer 200ms ease-in-out forwards
 
       &.collapsing
         animation: collapse-host 200ms ease-in-out forwards
 
-        > .subcontainer
+        > .element
           animation: collapse-subcontainer 200ms ease-in-out forwards
 
     &:not(.expanded)
       display: none
 
-  &.hideScrollbar > .containerDirective::-webkit-scrollbar
+  &.hideScrollbar > .harness::-webkit-scrollbar
     display: none
 
 
@@ -122,7 +122,7 @@ $offset-width: Directive.value-reference($namespace, "offset-width")
   opacity: 0
 
 @mixin keyframes--uncollapse-host
-  flex-basis: var(--standard--flexbox-container-child-directive--flex-basis, auto)
+  flex-basis: var(--standard--flexbox-child-directive--flex-basis, auto)
   opacity: 1
 
 @mixin keyframes--collapse-subcontainer

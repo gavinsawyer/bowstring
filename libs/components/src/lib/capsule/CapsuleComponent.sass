@@ -1,12 +1,12 @@
-@use "../../../../directives/src/lib/ElevatedContainerDirective"
-@use "../../../../directives/src/lib/RoundedContainerDirective"
+@use "../../../../directives/src/lib/ElevatedDirective"
+@use "../../../../directives/src/lib/RoundedDirective"
 
 
 \:host
   display: contents
 
-  @include ElevatedContainerDirective.host
-  @include RoundedContainerDirective.host
+  @include ElevatedDirective.host
+  @include RoundedDirective.host
 
   > div
     display: grid

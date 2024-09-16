@@ -1,7 +1,7 @@
-@use "../../../../directives/src/lib/ElevatedContainerDirective"
+@use "../../../../directives/src/lib/ElevatedDirective"
 @use "../../../../directives/src/lib/FlexboxContainerDirective"
-@use "../../../../directives/src/lib/GlassContainerDirective"
-@use "../../../../directives/src/lib/RoundedContainerDirective"
+@use "../../../../directives/src/lib/GlassDirective"
+@use "../../../../directives/src/lib/RoundedDirective"
 
 
 \:host
@@ -9,18 +9,18 @@
 
   --standard--card--material-opacity: 0.8
 
-  @include ElevatedContainerDirective.host
+  @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
-  @include GlassContainerDirective.host(6%)
-  @include RoundedContainerDirective.host
+  @include GlassDirective.host(6%)
+  @include RoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-  --standard--elevated-container-directive--material-opacity: var(--standard--card--material-opacity) !important
+  --standard--elevated-directive--material-opacity: var(--standard--card--material-opacity) !important
   --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
   --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
-  --standard--glass-container-directive--material-opacity: var(--standard--card--material-opacity) !important
+  --standard--glass-directive--material-opacity: var(--standard--card--material-opacity) !important
 
   > div
     display: grid
@@ -31,7 +31,7 @@
       &::ng-deep > *
         --standard--card--material-opacity: initial
 
-        @include ElevatedContainerDirective.children
+        @include ElevatedDirective.children
         @include FlexboxContainerDirective.children
-        @include GlassContainerDirective.children
-        @include RoundedContainerDirective.children
+        @include GlassDirective.children
+        @include RoundedDirective.children

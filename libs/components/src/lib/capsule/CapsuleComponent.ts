@@ -1,18 +1,18 @@
 import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
-import { ElevatedContainerDirective, RoundedContainerDirective }                                       from "@standard/directives";
+import { ElevatedDirective, RoundedDirective }                                                         from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
       {
-        directive: ElevatedContainerDirective,
+        directive: ElevatedDirective,
         inputs:    [
           "materialOpacity",
         ],
       },
       {
-        directive: RoundedContainerDirective,
+        directive: RoundedDirective,
         inputs:    [
           "borderRadiusFactor",
         ],
@@ -43,7 +43,7 @@ export class CapsuleComponent {
 
   private readonly htmlSpanElementRef$: Signal<ElementRef<HTMLSpanElement>> = viewChild.required<ElementRef<HTMLSpanElement>>("htmlSpanElement");
 
-  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
+  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly textInput$: InputSignal<string> = input.required<string>(
     {

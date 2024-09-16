@@ -1,7 +1,7 @@
 @use "./Directive"
 
 
-$namespace: "hover-translating-container-directive"
+$namespace: "hover-translating"
 
 $translation-transition-duration: Directive.value-reference($namespace, "translation-transition-duration")
 $translation-x: Directive.value-reference($namespace, "translation-x")
@@ -23,7 +23,7 @@ $translation-y: Directive.value-reference($namespace, "translation-y")
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .hoverTranslatingContainerDirective
+  > .harness
     transition: scale 200ms ease, translate calc(1ms * $translation-transition-duration) ease
 
     &:not(.no-op)

@@ -1,7 +1,7 @@
 @use "./Directive"
 
 
-$namespace: "canvas-container-directive"
+$namespace: "canvas"
 
 $background: Directive.color-reference($namespace, "background")
 $foreground: Directive.color-reference($namespace, "foreground")
@@ -21,8 +21,8 @@ $foreground: Directive.color-reference($namespace, "foreground")
 
 
 @mixin color-scheme($theme, $shade)
-  --standard--#{ $namespace }--colors--background: #{ get-color($theme, "background", $shade) }
-  --standard--#{ $namespace }--colors--foreground: #{ get-color($theme, "foreground", $shade) }
+  --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
+  --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
 
 @mixin children
   @include Directive.reset-colors($namespace, ("background", "foreground"))
@@ -35,6 +35,6 @@ $foreground: Directive.color-reference($namespace, "foreground")
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark", $shade)
 
-  > .canvasContainerDirective > .subcontainer
+  > .harness > .element
     background: $background
     color: $foreground

@@ -1,12 +1,37 @@
 import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, FlexboxContainerChildDirective }                 from "@standard/directives";
+import { ContainerDirective, FlexboxChildDirective }                          from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
       {
-        directive: FlexboxContainerChildDirective,
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "listenToResizeEvent",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
+      {
+        directive: FlexboxChildDirective,
         inputs:    [
           "flexBasis",
           "flexGrow",

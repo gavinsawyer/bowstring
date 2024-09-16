@@ -1,8 +1,8 @@
-<div class="containerDirective flexboxContainerChildDirective flexboxContainerDirective"
+<div class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <main #htmlElement class="subcontainer">
+  <main #htmlElement class="element">
     <router-outlet />
   </main>
 </div>

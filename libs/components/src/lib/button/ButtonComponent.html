@@ -21,7 +21,7 @@
   </svg>}
   @if (appearanceInput$() !== "symbol" && textInput$()) {{{ textInput$() }}}
 </ng-template>
-<div class="containerDirective elevatedContainerDirective flexboxContainerChildDirective flexboxContainerDirective hoverTranslatingContainerDirective roundedContainerDirective"
+<div class="harness"
   [class.flat]="appearanceInput$() === 'flat'"
   [class.no-op]="disabledInput$()"
   [class.primary]="colorInput$() === 'primary'"
@@ -31,17 +31,17 @@
   (click)="$event.stopPropagation(); selectOutput.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  @if (urlInput$(); as url) {@if (url.includes("://")) {<a #htmlAnchorElement class="subcontainer"
+  @if (urlInput$(); as url) {@if (url.includes("://")) {<a #htmlAnchorElement class="element"
     [attr.href]="url"
     [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0">
     <ng-container *ngTemplateOutlet="template"></ng-container>
-  </a>} @else {<a #htmlAnchorElement #routerLinkActive="routerLinkActive" class="subcontainer"
+  </a>} @else {<a #htmlAnchorElement #routerLinkActive="routerLinkActive" class="element"
     [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
     [routerLink]="url"
     routerLinkActive="no-op"
     [routerLinkActiveOptions]="{ exact: true }">
     <ng-container *ngTemplateOutlet="template"></ng-container>
-  </a>}} @else {<button #htmlButtonElement class="subcontainer"
+  </a>}} @else {<button #htmlButtonElement class="element"
     [attr.disabled]="disabledInput$() || undefined"
     [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
     [attr.type]="typeInput$() || 'button'">

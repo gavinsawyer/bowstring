@@ -1,8 +1,8 @@
-<dialog #htmlDialogElement class="containerDirective flexboxContainerChildDirective flexboxContainerDirective"
+<dialog #htmlDialogElement class="harness"
   (click)="$event.stopPropagation(); openModel$.set(false);"
   (keydown)="containerKeydown($event);"
   tabindex="0">
-  <div #htmlDivElement class="subcontainer">
+  <div #htmlDivElement class="element">
     <ng-content />
   </div>
 </dialog>

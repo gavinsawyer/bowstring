@@ -1,7 +1,7 @@
-@use "../../../../directives/src/lib/ElevatedContainerDirective"
+@use "../../../../directives/src/lib/ElevatedDirective"
 @use "../../../../directives/src/lib/FlexboxContainerDirective"
-@use "../../../../directives/src/lib/HoverTranslatingContainerDirective"
-@use "../../../../directives/src/lib/RoundedContainerDirective"
+@use "../../../../directives/src/lib/HoverTranslatingDirective"
+@use "../../../../directives/src/lib/RoundedDirective"
 
 
 \:host
@@ -9,17 +9,17 @@
 
   --standard--button--material-opacity: 0.875
 
-  @include ElevatedContainerDirective.host
+  @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
-  @include HoverTranslatingContainerDirective.host
-  @include RoundedContainerDirective.host
+  @include HoverTranslatingDirective.host
+  @include RoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
   --standard--flexbox-container-directive--align-items: center !important
   --standard--flexbox-container-directive--justify-content: center !important
-  --standard--elevated-container-directive--material-opacity: var(--standard--button--material-opacity) !important
+  --standard--elevated-directive--material-opacity: var(--standard--button--material-opacity) !important
   --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
   --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
 
@@ -59,7 +59,7 @@
       --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
       --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-      --standard--elevated-container-directive--material-opacity: 0 !important
+      --standard--elevated-directive--material-opacity: 0 !important
 
       > a,
       > button

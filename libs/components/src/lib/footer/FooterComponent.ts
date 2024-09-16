@@ -1,10 +1,10 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                   from "@angular/common";
-import { Component, computed, effect, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, signal, viewChild }    from "@angular/core";
-import { toObservable, toSignal }                                                                                                        from "@angular/core/rxjs-interop";
-import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerDirective, GlassContainerDirective, RoundedContainerDirective } from "@standard/directives";
-import { type Dimensions }                                                                                                               from "@standard/interfaces";
-import { ViewportService }                                                                                                               from "@standard/services";
-import { combineLatestWith, delayWhen, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                            from "rxjs";
+import { DOCUMENT, isPlatformBrowser }                                                                                                from "@angular/common";
+import { Component, computed, effect, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, signal, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                     from "@angular/core/rxjs-interop";
+import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                         from "@standard/directives";
+import { type Dimensions }                                                                                                            from "@standard/interfaces";
+import { ViewportService }                                                                                                            from "@standard/services";
+import { combineLatestWith, delayWhen, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                         from "rxjs";
 
 
 @Component(
@@ -20,7 +20,7 @@ import { combineLatestWith, delayWhen, map, Observable, type Observer, switchMap
     },
     hostDirectives: [
       {
-        directive: ElevatedContainerDirective,
+        directive: ElevatedDirective,
         inputs:    [
           "materialOpacity",
         ],
@@ -40,13 +40,13 @@ import { combineLatestWith, delayWhen, map, Observable, type Observer, switchMap
         ],
       },
       {
-        directive: GlassContainerDirective,
+        directive: GlassDirective,
         inputs:    [
           "materialOpacity",
         ],
       },
       {
-        directive: RoundedContainerDirective,
+        directive: RoundedDirective,
         inputs:    [
           "borderRadiusFactor",
         ],
@@ -151,10 +151,10 @@ export class FooterComponent {
   );
   private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
 
-  protected readonly footerHeight$: Signal<number>                        = computed<number>(
+  protected readonly footerHeight$: Signal<number>               = computed<number>(
     (): number => this.footerDimensions$().height,
   );
-  protected readonly footerOffsetBottom$: Signal<number>                  = isPlatformBrowser(
+  protected readonly footerOffsetBottom$: Signal<number>         = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number, number>(
     toObservable<ElementRef<HTMLDivElement>>(
@@ -182,7 +182,7 @@ export class FooterComponent {
       initialValue: 0,
     },
   ) : signal<0>(0);
-  protected readonly raisingScale$: Signal<number>                        = isPlatformBrowser(
+  protected readonly raisingScale$: Signal<number>               = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number, number>(
     toObservable<number>(
@@ -201,7 +201,7 @@ export class FooterComponent {
       initialValue: 0,
     },
   ) : signal<0>(0);
-  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
+  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly stuckModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
     (): boolean | undefined => ((stuck?: "" | boolean | `${ boolean }`): boolean | undefined => stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && stuck)(

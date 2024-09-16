@@ -1,8 +1,7 @@
 @use "./Directive"
-@use "./CanvasContainerDirective"
 
 
-$namespace: "glass-container-directive"
+$namespace: "glass"
 
 $background: Directive.color-reference($namespace, "background")
 $foreground: Directive.color-reference($namespace, "foreground")
@@ -29,9 +28,9 @@ $material-opacity: Directive.input-reference($namespace, "material-opacity", 0.8
 
 
 @mixin color-scheme($theme, $shade)
-  --standard--#{ $namespace }--colors--background: #{ get-color($theme, "background", $shade) }
-  --standard--#{ $namespace }--colors--foreground: #{ get-color($theme, "foreground", $shade) }
-  --standard--#{ $namespace }--colors--pseudoelement-background: #{ get-color($theme, "pseudoelement-background", $shade) }
+  --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
+  --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
+  --standard--#{ $namespace }-directive--colors--pseudoelement-background: #{ get-color($theme, "pseudoelement-background", $shade) }
 
 @mixin children
   @include Directive.reset-colors($namespace, ("background", "foreground", "pseudoelement-background"))
@@ -44,7 +43,7 @@ $material-opacity: Directive.input-reference($namespace, "material-opacity", 0.8
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark", $shade)
 
-  > .glassContainerDirective
+  > .harness
     &:after
       backdrop-filter: blur(calc(1rem * pow(var(--phi), $material-opacity))) saturate(calc(1 + max(-0.5, var(--color-scheme-dark) - var(--color-scheme-light)) * pow($material-opacity, 2))) brightness(calc(1 + pow($material-opacity, 2)))
       background: $pseudoelement-background
@@ -54,6 +53,6 @@ $material-opacity: Directive.input-reference($namespace, "material-opacity", 0.8
       top: -0.75px
       width: calc(100% + 1.5px)
 
-    > .subcontainer
+    > .element
       background: $background
       color: $foreground

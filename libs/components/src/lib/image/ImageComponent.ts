@@ -1,19 +1,44 @@
 import { NgOptimizedImage }                                                                                                                            from "@angular/common";
 import { Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDirective, RoundedContainerDirective }                                   from "@standard/directives";
+import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                              from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
       {
-        directive: ElevatedContainerDirective,
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "listenToResizeEvent",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
+      {
+        directive: ElevatedDirective,
         inputs:    [
           "materialOpacity",
         ],
       },
       {
-        directive: FlexboxContainerChildDirective,
+        directive: FlexboxChildDirective,
         inputs:    [
           "flexBasis",
           "flexGrow",
@@ -21,7 +46,7 @@ import { ContainerDirective, ElevatedContainerDirective, FlexboxContainerChildDi
         ],
       },
       {
-        directive: RoundedContainerDirective,
+        directive: RoundedDirective,
         inputs:    [
           "borderRadiusFactor",
         ],
@@ -59,7 +84,7 @@ export class ImageComponent {
   private readonly containerDirective: ContainerDirective                     = inject<ContainerDirective>(ContainerDirective);
   private readonly htmlImageElementRef$: Signal<ElementRef<HTMLImageElement>> = viewChild.required<ElementRef<HTMLImageElement>>("htmlImageElement");
 
-  protected readonly roundedContainerDirective: RoundedContainerDirective = inject<RoundedContainerDirective>(RoundedContainerDirective);
+  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly altInput$: InputSignal<string | undefined>                             = input<string | undefined>(
     undefined,

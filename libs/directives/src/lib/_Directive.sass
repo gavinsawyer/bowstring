@@ -1,22 +1,22 @@
 @function color-reference($namespace, $color)
-  @return var(--standard--#{ $namespace }--colors--#{ $color })
+  @return var(--standard--#{ $namespace }-directive--colors--#{ $color })
 
 @function input-reference($namespace, $input, $default)
-  @return var(--standard--#{ $namespace }--#{ $input }-input, var(--standard--#{ $namespace }--#{ $input }, $default))
+  @return var(--standard--#{ $namespace }-directive--#{ $input }-input, var(--standard--#{ $namespace }-directive--#{ $input }, $default))
 
 @function value-reference($namespace, $value)
-  @return var(--standard--#{ $namespace }--#{ $value })
+  @return var(--standard--#{ $namespace }-directive--#{ $value })
 
 
 @mixin reset-colors($namespace, $colors)
   @each $color in $colors
-    --standard--#{ $namespace }--colors--#{ $color }: initial
+    --standard--#{ $namespace }-directive--colors--#{ $color }: initial
 
 @mixin reset-inputs($namespace, $inputs)
   @each $input in $inputs
-    --standard--#{ $namespace }--#{ $input }: initial
-    --standard--#{ $namespace }--#{ $input }-input: initial
+    --standard--#{ $namespace }-directive--#{ $input }: initial
+    --standard--#{ $namespace }-directive--#{ $input }-input: initial
 
 @mixin reset-values($namespace, $values)
   @each $value in $values
-    --standard--#{ $namespace }--#{ $value }: initial
+    --standard--#{ $namespace }-directive--#{ $value }: initial

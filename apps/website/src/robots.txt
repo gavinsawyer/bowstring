@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-Sitemap: https://XXXXXXXX.XXX/sitemap.xml
+Sitemap: https://bowstr.ing/sitemap.xml

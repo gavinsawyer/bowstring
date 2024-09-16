@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                            from "@angular/common";
 import { Component, contentChildren, DestroyRef, effect, type ElementRef, inject, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                               from "@angular/core/rxjs-interop";
-import { ContainerDirective, FlexboxContainerChildDirective, ScrollStackItemDirective }                                                                                                             from "@standard/directives";
+import { ContainerDirective, FlexboxChildDirective, ScrollStackItemDirective }                                                                                                                      from "@standard/directives";
 import { filter, fromEvent, map, type Observable, of, startWith, switchMap }                                                                                                                        from "rxjs";
 
 
@@ -14,7 +14,32 @@ import { filter, fromEvent, map, type Observable, of, startWith, switchMap }    
     },
     hostDirectives: [
       {
-        directive: FlexboxContainerChildDirective,
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "listenToResizeEvent",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
+      {
+        directive: FlexboxChildDirective,
         inputs:    [
           "flexBasis",
           "flexGrow",

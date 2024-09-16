@@ -1,7 +1,7 @@
 @use "./Directive"
 
 
-$namespace: "rounded-container-directive"
+$namespace: "rounded"
 
 $border-radius-factor: Directive.input-reference($namespace, "border-radius-factor", 1)
 
@@ -24,7 +24,7 @@ $clip-path-source: Directive.value-reference($namespace, "clip-path-source")
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .roundedContainerDirective
+  > .harness
     &:before
       border-radius: calc($border-radius-factor * $brand-roundness * 0.9375rem)
 
@@ -32,7 +32,7 @@ $clip-path-source: Directive.value-reference($namespace, "clip-path-source")
       border-radius: calc($border-radius-factor * $brand-roundness * 0.6875rem)
       clip-path: $clip-path-source
 
-    > .subcontainer
+    > .element
       border-radius: calc($border-radius-factor * $brand-roundness * 0.6875rem)
       clip-path: $clip-path-source
       overflow: hidden

@@ -11,14 +11,14 @@ import { v4 as uuid }                                                           
 @Directive(
   {
     host:       {
-      "[style.--standard--rounded-container-directive--border-radius-factor-input]": "borderRadiusFactorInput$()",
-      "[style.--standard--rounded-container-directive--brand-roundness]":            "brandRoundness$()",
-      "[style.--standard--rounded-container-directive--clip-path-source]":           "clipPathSource$()",
+      "[style.--standard--rounded-directive--border-radius-factor-input]": "borderRadiusFactorInput$()",
+      "[style.--standard--rounded-directive--brand-roundness]":            "brandRoundness$()",
+      "[style.--standard--rounded-directive--clip-path-source]":           "clipPathSource$()",
     },
     standalone: true,
   },
 )
-export class RoundedContainerDirective {
+export class RoundedDirective {
 
   private readonly brand: Brand                     = inject<Brand>(BRAND);
   private readonly injector: Injector               = inject<Injector>(Injector);

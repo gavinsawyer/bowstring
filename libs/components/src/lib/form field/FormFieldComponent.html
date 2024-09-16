@@ -12,11 +12,11 @@
       fill="#000" />
   </clipPath>
 </svg>
-<div #htmlDivElement class="containerDirective flexboxContainerChildDirective roundedContainerDirective"
+<div #htmlDivElement class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <div class="subcontainer">
+  <div class="element">
     <ng-content />
   </div>
 </div>

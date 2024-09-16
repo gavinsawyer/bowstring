@@ -12,11 +12,11 @@
       fill="#000" />
   </clipPath>
 </svg>
-<div class="canvasContainerDirective containerDirective elevatedContainerDirective flexboxContainerChildDirective roundedContainerDirective"
+<div class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <img #htmlImageElement class="subcontainer"
+  <img #htmlImageElement class="element"
     [attr.alt]="altInput$()"
     [height]="heightInput$()"
     [style.aspect-ratio]="widthInput$() + '/' + heightInput$()"

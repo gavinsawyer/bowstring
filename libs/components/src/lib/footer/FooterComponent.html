@@ -12,11 +12,11 @@
       fill="#000" />
   </clipPath>
 </svg>
-<div id="container" class="containerDirective elevatedContainerDirective flexboxContainerChildDirective flexboxContainerDirective glassContainerDirective roundedContainerDirective"
+<div id="container" class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && stuckOrUnsticking$() ? stuckModel$.set(false) : true) || $event.preventDefault();"
   tabindex="-1">
-  <footer #htmlElement class="subcontainer">
+  <footer #htmlElement class="element">
     <ng-content />
   </footer>
 </div>

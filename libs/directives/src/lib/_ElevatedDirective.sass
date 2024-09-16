@@ -1,7 +1,7 @@
 @use "./Directive"
 
 
-$namespace: "elevated-container-directive"
+$namespace: "elevated"
 
 $material-opacity: Directive.input-reference($namespace, "material-opacity", 1)
 
@@ -21,7 +21,7 @@ $material-opacity: Directive.input-reference($namespace, "material-opacity", 1)
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .elevatedContainerDirective:before
+  > .harness:before
     content: ""
     height: 100%
     opacity: calc(pow($material-opacity, 4))

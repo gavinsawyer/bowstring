@@ -1,16 +1,18 @@
-@use "../../../../directives/src/lib/CanvasContainerDirective"
-@use "../../../../directives/src/lib/ElevatedContainerDirective"
-@use "../../../../directives/src/lib/FlexboxContainerChildDirective"
-@use "../../../../directives/src/lib/RoundedContainerDirective"
+@use "../../../../directives/src/lib/CanvasDirective"
+@use "../../../../directives/src/lib/ContainerDirective"
+@use "../../../../directives/src/lib/ElevatedDirective"
+@use "../../../../directives/src/lib/FlexboxChildDirective"
+@use "../../../../directives/src/lib/RoundedDirective"
 
 
 \:host
   display: contents
 
-  @include CanvasContainerDirective.host(6%)
-  @include ElevatedContainerDirective.host
-  @include FlexboxContainerChildDirective.host
-  @include RoundedContainerDirective.host
+  @include CanvasDirective.host(6%)
+  @include ContainerDirective.host
+  @include ElevatedDirective.host
+  @include FlexboxChildDirective.host
+  @include RoundedDirective.host
 
   > div
     display: grid

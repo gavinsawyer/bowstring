@@ -1,5 +1,5 @@
 import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild }                    from "@angular/core";
-import { ContainerDirective, FlexboxContainerChildDirective }                                                             from "@standard/directives";
+import { ContainerDirective, FlexboxChildDirective }                                                                      from "@standard/directives";
 import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
 
 
@@ -15,7 +15,32 @@ import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, 
     },
     hostDirectives: [
       {
-        directive: FlexboxContainerChildDirective,
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "listenToResizeEvent",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
+      {
+        directive: FlexboxChildDirective,
         inputs:    [
           "flexBasis",
           "flexGrow",

@@ -1,8 +1,8 @@
-<div class="containerDirective flexboxContainerChildDirective flexboxContainerDirective"
+<div class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <aside #htmlElement class="subcontainer">
+  <aside #htmlElement class="element">
     <ng-content />
   </aside>
 </div>
