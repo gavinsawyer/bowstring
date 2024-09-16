@@ -160,25 +160,27 @@
   </standard--footer>
 </standard--flexbox-container>
 <standard--dialog #dialogComponent>
-  <standard--card>
-    <standard--heading-group>
-      <standard--header>
-        <h3 i18n="@@apps--Website--Components--Root--LocaleDialog--Title">Choose your locale</h3>
-      </standard--header>
-    </standard--heading-group>
-    <standard--flexbox-container
-      flexDirection="row"
-      flexWrap="wrap">
-      @for (locale of localeIds; track locale) {<standard--button
-        appearance="raised"
-        color="primary"
-        [disabled]="locale === localeId"
+  @defer {
+    <standard--card>
+      <standard--heading-group>
+        <standard--header>
+          <h3 i18n="@@apps--Website--Components--Root--LocaleDialog--Title">Choose your locale</h3>
+        </standard--header>
+      </standard--heading-group>
+      <standard--flexbox-container
         flexDirection="row"
-        flexGrow="1"
-        borderRadiusFactor="0.5"
-        (select)="locale === localeId || changeLocale(locale);"
-        symbolName="Globe"
-        [text]="localeDisplayNames.of(locale) || locale" />}
-    </standard--flexbox-container>
-  </standard--card>
+        flexWrap="wrap">
+        @for (locale of localeIds; track locale) {<standard--button
+          appearance="raised"
+          color="primary"
+          [disabled]="locale === localeId"
+          flexDirection="row"
+          flexGrow="1"
+          borderRadiusFactor="0.5"
+          (select)="locale === localeId || changeLocale(locale);"
+          symbolName="Globe"
+          [text]="localeDisplayNames.of(locale) || locale" />}
+      </standard--flexbox-container>
+    </standard--card>
+  }
 </standard--dialog>
