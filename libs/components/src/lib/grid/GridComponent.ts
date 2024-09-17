@@ -9,7 +9,6 @@ import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, 
       "[style.--standard--grid--align-content]":   "alignContentInput$()",
       "[style.--standard--grid--align-items]":     "alignItemsInput$()",
       "[style.--standard--grid--column-gap]":      "columnGapInput$()",
-      "[style.--standard--grid--gap]":             "gapInput$()",
       "[style.--standard--grid--justify-content]": "justifyContentInput$()",
       "[style.--standard--grid--row-gap]":         "rowGapInput$()",
     },
@@ -22,7 +21,6 @@ import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, 
           "bottomPosition",
           "hideScrollbar",
           "leftPosition",
-          "listenToResizeEvent",
           "marginBottom",
           "marginSides",
           "marginTop",
@@ -88,12 +86,6 @@ export class GridComponent {
     undefined,
     {
       alias: "columnGap",
-    },
-  );
-  public readonly gapInput$: InputSignal<ScalarString | Inherit | undefined>                                                      = input<ScalarString | Inherit | undefined>(
-    undefined,
-    {
-      alias: "gap",
     },
   );
   public readonly justifyContentInput$: InputSignal<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined> = input<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined>(

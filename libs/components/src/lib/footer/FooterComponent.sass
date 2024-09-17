@@ -14,7 +14,7 @@
   @include GlassDirective.host(6%)
   @include RoundedDirective.host
 
-  --standard--container-directive--bottom-position: max(env(safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--bottom-position: max(var(--safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
@@ -55,7 +55,7 @@
       translate: 0 0 0
 
     @mixin keyframes--unstick-container
-      translate: 0 calc(min(1px * var(--standard--footer--height) + var(--standard--root--padding-bottom) + env(safe-area-inset-bottom) + 100vh - 100dvh, max(0px, 1px * var(--standard--footer--unsticking-translation) + var(--standard--container-directive--bottom-position) - var(--standard--root--padding-bottom) - env(safe-area-inset-bottom)))) 0
+      translate: 0 calc(min(1px * var(--standard--footer--height) + var(--standard--root--row-gap) + var(--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
 
     @include keyframes--unstick-container
 
@@ -126,7 +126,7 @@
         translate: 0 0 0
 
       @mixin keyframes--unstick-backdrop
-        translate: 0 calc(min(1px * var(--standard--footer--height) + var(--standard--root--padding-bottom) + env(safe-area-inset-bottom) + 100vh - 100dvh, max(0px, 1px * var(--standard--footer--unsticking-translation) + var(--standard--container-directive--bottom-position) - var(--standard--root--padding-bottom) - env(safe-area-inset-bottom)))) 0
+        translate: 0 calc(min(1px * var(--standard--footer--height) + var(--standard--root--padding-bottom) + var(--safe-area-inset-bottom) + 100vh - 100dvh, max(0px, 1px * var(--standard--footer--unsticking-translation) + var(--standard--container-directive--bottom-position) - var(--standard--root--padding-bottom) - var(--safe-area-inset-bottom)))) 0
 
       @include keyframes--unstick-backdrop
 

@@ -13,7 +13,6 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
           "bottomPosition",
           "hideScrollbar",
           "leftPosition",
-          "listenToResizeEvent",
           "marginBottom",
           "marginSides",
           "marginTop",

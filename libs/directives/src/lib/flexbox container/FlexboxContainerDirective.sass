@@ -24,8 +24,8 @@ $row-gap: functions.get-input-reference($namespace, "row-gap", calc(1rem * pow(v
   @include FlexboxChildDirective.children
 
   @include mixins.reset-colors($namespace, ())
-  @include mixins.reset-inputs($namespace, ("align-content", "align-items", "column-gap", "flex-direction", "flex-wrap", "gap", "justify-content", "row-gap", "scroll-left", "scroll-top"))
-  @include mixins.reset-values($namespace, ())
+  @include mixins.reset-inputs($namespace, ("align-content", "align-items", "column-gap", "flex-direction", "flex-wrap", "justify-content", "row-gap", "scroll-left", "scroll-top"))
+  @include mixins.reset-values($namespace, ("scroll-left", "scroll-top"))
 
 @mixin host
   @include ContainerDirective.host

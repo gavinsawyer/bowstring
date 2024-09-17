@@ -18,7 +18,6 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
         inputs:    [
           "alignContent",
           "alignItems",
-          "collapsable",
           "columnGap",
           "flexDirection",
           "flexWrap",
@@ -98,24 +97,24 @@ export class DialogComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly openModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
-    (): boolean | undefined => ((open?: "" | boolean | `${ boolean }`): boolean | undefined => open === "" || open === true || open === "true" || open !== "false" && open)(
+  protected readonly openModelWithTransform$: Signal<boolean> = computed<boolean>(
+    (): boolean => ((open?: "" | boolean | `${ boolean }`): boolean => open === "" || open === true || open === "true" || open !== "false" && false)(
       this.openModel$(),
     ),
   );
-  protected readonly openOrClosing$: Signal<boolean | undefined>          = toSignal<boolean | undefined, undefined>(
-    toObservable<boolean | undefined>(
+  protected readonly openOrClosing$: Signal<boolean>          = toSignal<boolean, false>(
+    toObservable<boolean>(
       this.openModelWithTransform$,
-    ).pipe<boolean | undefined, boolean | undefined>(
-      delayWhen<boolean | undefined>(
-        (open?: boolean): Observable<number> => open ? timer(0) : timer(200),
+    ).pipe<boolean, boolean>(
+      delayWhen<boolean>(
+        (open: boolean): Observable<number> => open ? timer(0) : timer(200),
       ),
-      map<boolean | undefined, boolean | undefined>(
-        (): boolean | undefined => this.openModelWithTransform$(),
+      map<boolean, boolean>(
+        (): boolean => this.openModelWithTransform$(),
       ),
     ),
     {
-      initialValue: undefined,
+      initialValue: false,
     },
   );
 

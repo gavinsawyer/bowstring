@@ -10,7 +10,6 @@ import { ContainerDirective, FlexboxContainerDirective }                      fr
         inputs:    [
           "alignContent",
           "alignItems",
-          "collapsable",
           "columnGap",
           "flexDirection",
           "flexWrap",
@@ -49,8 +48,7 @@ export class FlexboxContainerComponent {
   }
 
   private readonly containerDirective: ContainerDirective                 = inject<ContainerDirective>(ContainerDirective);
+  private readonly flexboxContainerDirective: FlexboxContainerDirective   = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
-
-  protected readonly flexboxContainerDirective: FlexboxContainerDirective = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
 
 }

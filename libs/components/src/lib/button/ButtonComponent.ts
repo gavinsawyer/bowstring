@@ -18,7 +18,6 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTran
         inputs:    [
           "alignContent",
           "alignItems",
-          "collapsable",
           "columnGap",
           "flexDirection",
           "flexWrap",

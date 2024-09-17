@@ -13,7 +13,6 @@ import { ContainerDirective, FlexboxChildDirective }                          fr
           "bottomPosition",
           "hideScrollbar",
           "leftPosition",
-          "listenToResizeEvent",
           "marginBottom",
           "marginSides",
           "marginTop",

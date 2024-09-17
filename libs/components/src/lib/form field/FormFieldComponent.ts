@@ -14,7 +14,6 @@ import { ContainerDirective, FlexboxChildDirective, RoundedDirective }          
           "bottomPosition",
           "hideScrollbar",
           "leftPosition",
-          "listenToResizeEvent",
           "marginBottom",
           "marginSides",
           "marginTop",

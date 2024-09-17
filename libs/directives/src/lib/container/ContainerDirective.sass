@@ -23,9 +23,6 @@ $scroll-snap-stop: functions.get-input-reference($namespace, "scroll-snap-stop",
 $scroll-snap-type: functions.get-input-reference($namespace, "scroll-snap-type", none)
 $top-position: functions.get-input-reference($namespace, "top-position", auto)
 
-$offset-height: functions.get-value-reference($namespace, "offset-height")
-$offset-width: functions.get-value-reference($namespace, "offset-width")
-
 @function get-color($theme, $type, $shade)
 
 
@@ -34,7 +31,7 @@ $offset-width: functions.get-value-reference($namespace, "offset-width")
 @mixin children
   @include mixins.reset-colors($namespace, ())
   @include mixins.reset-inputs($namespace, ("align-self", "aspect-ratio", "bottom-position", "left-position", "margin-bottom", "margin-sides", "margin-top", "overflow-x", "overflow-y", "padding-bottom", "padding-sides", "padding-top", "position", "right-position", "scroll-snap-align", "scroll-snap-stop", "scroll-snap-type", "top-position"))
-  @include mixins.reset-values($namespace, ("offset-height", "offset-width"))
+  @include mixins.reset-values($namespace, ())
 
 @mixin host
   @include color-scheme("light")
@@ -65,69 +62,5 @@ $offset-width: functions.get-value-reference($namespace, "offset-width")
     > .element
       padding: $padding-top $padding-sides $padding-bottom
 
-      @keyframes collapse-subcontainer
-        0%
-          @include keyframes--uncollapse-subcontainer
-
-        100%
-          @include keyframes--collapse-subcontainer
-
-      @keyframes uncollapse-subcontainer
-        0%
-          @include keyframes--collapse-subcontainer
-
-        100%
-          @include keyframes--uncollapse-subcontainer
-
-    @keyframes collapse-host
-      0%
-        @include keyframes--uncollapse-host
-
-      100%
-        @include keyframes--collapse-host
-
-    @keyframes uncollapse-host
-      0%
-        @include keyframes--collapse-host
-
-      100%
-        @include keyframes--uncollapse-host
-
-  &.collapsable > .harness
-    @include keyframes--uncollapse-host
-
-    > .element
-      @include keyframes--uncollapse-subcontainer
-
-    &.expanded
-      animation: uncollapse-host 200ms ease-in-out forwards
-
-      > .element
-        animation: uncollapse-subcontainer 200ms ease-in-out forwards
-
-      &.collapsing
-        animation: collapse-host 200ms ease-in-out forwards
-
-        > .element
-          animation: collapse-subcontainer 200ms ease-in-out forwards
-
-    &:not(.expanded)
-      display: none
-
   &.hideScrollbar > .harness::-webkit-scrollbar
     display: none
-
-
-@mixin keyframes--collapse-host
-  flex-basis: 0
-  opacity: 0
-
-@mixin keyframes--uncollapse-host
-  flex-basis: var(--standard--flexbox-child-directive--flex-basis, auto)
-  opacity: 1
-
-@mixin keyframes--collapse-subcontainer
-  padding: 0
-
-@mixin keyframes--uncollapse-subcontainer
-  padding: var(--standard--container-directive--padding-top-input, 0) var(--standard--container-directive--padding-sides-input, 0) var(--standard--container-directive--padding-bottom-input, 0)

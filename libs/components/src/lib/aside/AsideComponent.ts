@@ -10,7 +10,6 @@ import { ContainerDirective, FlexboxContainerDirective }                      fr
         inputs:    [
           "alignContent",
           "alignItems",
-          "collapsable",
           "columnGap",
           "flexDirection",
           "flexWrap",

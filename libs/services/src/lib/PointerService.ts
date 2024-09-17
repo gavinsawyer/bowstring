@@ -1,7 +1,7 @@
-import { isPlatformBrowser }                               from "@angular/common";
+import { isPlatformBrowser }                                    from "@angular/common";
 import { inject, Injectable, PLATFORM_ID, signal, type Signal } from "@angular/core";
-import { toObservable, toSignal }                          from "@angular/core/rxjs-interop";
-import { filter, fromEvent, map }                          from "rxjs";
+import { toObservable, toSignal }                               from "@angular/core/rxjs-interop";
+import { filter, fromEvent, map }                               from "rxjs";
 
 
 @Injectable(

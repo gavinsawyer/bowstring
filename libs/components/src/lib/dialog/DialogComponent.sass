@@ -74,7 +74,7 @@
           @include keyframes--open-backdrop
 
     > div
-      padding: calc(max(env(safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(env(safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(env(safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(env(safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
+      padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
 
       &::ng-deep > *
         @include FlexboxContainerDirective.children

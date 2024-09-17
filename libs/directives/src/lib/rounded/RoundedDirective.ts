@@ -1,11 +1,11 @@
-import { isPlatformBrowser }                                                                                                                                                    from "@angular/common";
-import { computed, Directive, type ElementRef, inject, Injector, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                               from "@angular/core/rxjs-interop";
-import { BRAND }                                                                                                                                                                from "@standard/injection-tokens";
-import { type Dimensions }                                                                                                                                                      from "@standard/interfaces";
-import { type Brand }                                                                                                                                                           from "@standard/types";
-import { filter, map, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                from "rxjs";
-import { v4 as uuid }                                                                                                                                                           from "uuid";
+import { isPlatformBrowser }                                                                                                                                          from "@angular/common";
+import { computed, Directive, type ElementRef, inject, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                     from "@angular/core/rxjs-interop";
+import { BRAND }                                                                                                                                                      from "@standard/injection-tokens";
+import { type Dimensions }                                                                                                                                            from "@standard/interfaces";
+import { type Brand }                                                                                                                                                 from "@standard/types";
+import { filter, map, Observable, type Observer, switchMap, type TeardownLogic }                                                                                      from "rxjs";
+import { v4 as uuid }                                                                                                                                                 from "uuid";
 
 
 @Directive(
@@ -21,7 +21,6 @@ import { v4 as uuid }                                                           
 export class RoundedDirective {
 
   private readonly brand: Brand                     = inject<Brand>(BRAND);
-  private readonly injector: Injector               = inject<Injector>(Injector);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   protected readonly brandRoundness$: Signal<number>                                                     = signal<number>(this.brand.roundness);
@@ -45,9 +44,6 @@ export class RoundedDirective {
   ) ? toSignal<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`, "M 0,0 L 1,0 C 1,0 1,0 1,0 L 1,0.5 C 1,1 1,1 1,1 L 0,1 C 0,1 0,1 0,0.5 L 0,0.5 C 0,0 0,0 0,0 Z">(
     toObservable<ElementRef<HTMLElement> | undefined>(
       this.htmlElementRef$,
-      {
-        injector: this.injector,
-      },
     ).pipe<ElementRef<HTMLElement>, Dimensions, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
       filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLElement> => !!htmlElementRef,

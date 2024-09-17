@@ -16,7 +16,6 @@ import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, Glass
         inputs:    [
           "alignContent",
           "alignItems",
-          "collapsable",
           "columnGap",
           "flexDirection",
           "flexWrap",

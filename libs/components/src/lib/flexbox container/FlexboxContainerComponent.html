@@ -1,6 +1,4 @@
 <div class="harness"
-  [class.collapsing]="flexboxContainerDirective.expandedOrCollapsing$() && !flexboxContainerDirective.expanded$()"
-  [class.expanded]="flexboxContainerDirective.expandedOrCollapsing$()"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">

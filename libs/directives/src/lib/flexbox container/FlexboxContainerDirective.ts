@@ -1,16 +1,16 @@
-import { isPlatformBrowser }                                                                                                                                                                                                from "@angular/common";
-import { booleanAttribute, DestroyRef, Directive, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
-import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString }                                        from "@standard/types";
-import { combineLatestWith, delayWhen, filter, fromEvent, map, type Observable, startWith, switchMap, timer }                                                                                                               from "rxjs";
-import { ContainerDirective }                                                                                                                                                                                               from "../container/ContainerDirective";
-import { FlexboxChildDirective }                                                                                                                                                                                            from "../flexbox child/FlexboxChildDirective";
+import { type ViewportScrollPosition }                                                                                                                                                                       from "@angular/cdk/scrolling";
+import { isPlatformBrowser }                                                                                                                                                                                 from "@angular/common";
+import { booleanAttribute, Directive, effect, type ElementRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, PLATFORM_ID, signal, type WritableSignal } from "@angular/core";
+import { toObservable }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
+import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString }                         from "@standard/types";
+import { filter, fromEvent, map, type Observable, startWith, switchMap }                                                                                                                                     from "rxjs";
+import { ContainerDirective }                                                                                                                                                                                from "../container/ContainerDirective";
+import { FlexboxChildDirective }                                                                                                                                                                             from "../flexbox child/FlexboxChildDirective";
 
 
 @Directive(
   {
     host:           {
-      "[class.collapsable]":                                                    "collapsableInput$()",
       "[style.--standard--flexbox-container-directive--align-content-input]":   "alignContentInput$()",
       "[style.--standard--flexbox-container-directive--align-items-input]":     "alignItemsInput$()",
       "[style.--standard--flexbox-container-directive--column-gap-input]":      "columnGapInput$()",
@@ -18,8 +18,8 @@ import { FlexboxChildDirective }                                                
       "[style.--standard--flexbox-container-directive--flex-wrap-input]":       "flexWrapInput$()",
       "[style.--standard--flexbox-container-directive--justify-content-input]": "justifyContentInput$()",
       "[style.--standard--flexbox-container-directive--row-gap-input]":         "rowGapInput$()",
-      "[style.--standard--flexbox-container-directive--scroll-left-input]":     "scrollLeftModel$()",
-      "[style.--standard--flexbox-container-directive--scroll-top-input]":      "scrollTopModel$()",
+      "[style.--standard--flexbox-container-directive--scroll-left]":           "scrollLeftModel$()",
+      "[style.--standard--flexbox-container-directive--scroll-top]":            "scrollTopModel$()",
     },
     hostDirectives: [
       {
@@ -30,7 +30,6 @@ import { FlexboxChildDirective }                                                
           "bottomPosition",
           "hideScrollbar",
           "leftPosition",
-          "listenToResizeEvent",
           "marginBottom",
           "marginSides",
           "marginTop",
@@ -64,36 +63,40 @@ export class FlexboxContainerDirective {
   constructor() {
     isPlatformBrowser(
       this.platformId,
-    ) && toObservable<boolean | undefined>(
-      this.listenToScrollEventInput$,
-    ).pipe<[ boolean | undefined, ElementRef<HTMLElement> | undefined ], [ true, ElementRef<HTMLElement> ], { "left": number, "top": number }, { "left": number, "top": number }>(
-      combineLatestWith<boolean | undefined, [ ElementRef<HTMLElement> | undefined ]>(
-        toObservable<ElementRef<HTMLElement> | undefined>(
-          this.htmlElementRef$,
-        ),
+    ) && toObservable<ElementRef<HTMLElement> | undefined>(
+      this.htmlElementRef$,
+    ).pipe<ElementRef<HTMLElement>, ViewportScrollPosition>(
+      filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
+        (htmlElementRef: ElementRef<HTMLElement> | undefined): htmlElementRef is ElementRef<HTMLElement> => !!htmlElementRef,
       ),
-      filter<[ boolean | undefined, ElementRef<HTMLElement> | undefined ], [ true, ElementRef<HTMLElement> ]>(
-        (latest: [ boolean | undefined, ElementRef<HTMLElement> | undefined ]): latest is [ true, ElementRef<HTMLElement> ] => !!latest[0] && !!latest[1],
-      ),
-      switchMap<[ true, ElementRef<HTMLElement> ], Observable<{ "left": number, "top": number }>>(
-        ([ , htmlElementRef ]: [ true, ElementRef<HTMLElement> ]): Observable<{ "left": number, "top": number }> => fromEvent<Event>(
-          htmlElementRef.nativeElement,
-          "scroll",
-        ).pipe<Event | null, { "left": number, "top": number }>(
-          startWith<Event, [ null ]>(null),
-          map<Event | null, { "left": number, "top": number }>(
-            (): { "left": number, "top": number } => ({
-              left: htmlElementRef.nativeElement.scrollLeft,
-              top:  htmlElementRef.nativeElement.scrollTop,
-            }),
+      switchMap<ElementRef<HTMLElement>, Observable<ViewportScrollPosition>>(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<ViewportScrollPosition> => toObservable<boolean>(
+          this.listenToScrollEventInput$,
+          {
+            injector: this.injector,
+          },
+        ).pipe<true, ViewportScrollPosition>(
+          filter<boolean, true>(
+            (listenToScrollEventInput: boolean): listenToScrollEventInput is true => listenToScrollEventInput,
+          ),
+          switchMap<true, Observable<ViewportScrollPosition>>(
+            (): Observable<ViewportScrollPosition> => fromEvent<Event>(
+              htmlElementRef.nativeElement,
+              "scroll",
+            ).pipe<Event | null, ViewportScrollPosition>(
+              startWith<Event, [ null ]>(null),
+              map<Event | null, ViewportScrollPosition>(
+                (): ViewportScrollPosition => ({
+                  left: htmlElementRef.nativeElement.scrollLeft,
+                  top:  htmlElementRef.nativeElement.scrollTop,
+                }),
+              ),
+            ),
           ),
         ),
       ),
-      takeUntilDestroyed<{ "left": number, "top": number }>(
-        this.destroyRef,
-      ),
     ).subscribe(
-      (scrollPosition: { "left": number, "top": number }): void => {
+      (scrollPosition: ViewportScrollPosition): void => {
         this.scrollLeftModel$.set(
           scrollPosition.left,
         );
@@ -106,9 +109,7 @@ export class FlexboxContainerDirective {
     isPlatformBrowser(
       this.platformId,
     ) && effect(
-      () => ((
-        htmlElementRef?: ElementRef<HTMLElement>,
-      ): void => htmlElementRef && ((
+      (): void => ((htmlElementRef?: ElementRef<HTMLElement>): void => htmlElementRef && ((
         scrollLeft?: number,
         scrollTop?: number,
       ): void => {
@@ -129,7 +130,7 @@ export class FlexboxContainerDirective {
     );
   }
 
-  private readonly destroyRef: DestroyRef           = inject<DestroyRef>(DestroyRef);
+  private readonly injector: Injector               = inject<Injector>(Injector);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   public readonly alignContentInput$: InputSignal<BaselineAlignment | DistributedAlignment | NormalAlignment | FlexPositionalAlignment | Inherit | undefined> = input<BaselineAlignment | DistributedAlignment | NormalAlignment | FlexPositionalAlignment | Inherit | undefined>(
@@ -150,28 +151,6 @@ export class FlexboxContainerDirective {
       alias: "columnGap",
     },
   );
-  public readonly collapsableInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`>                                             = input<boolean | undefined, "" | boolean | `${ boolean }`>(
-    undefined,
-    {
-      alias:     "collapsable",
-      transform: booleanAttribute,
-    },
-  );
-  public readonly expanded$: WritableSignal<boolean>                                                                                                          = signal<boolean>(false);
-  public readonly expandedOrCollapsing$: Signal<boolean>                                                                                                      = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.expanded$,
-    ).pipe<boolean>(
-      delayWhen<boolean>(
-        (expanded: boolean): Observable<number> => expanded ? timer(0) : timer(200),
-      ),
-    ),
-    {
-      initialValue: false,
-    },
-  ) : signal<boolean>(false);
   public readonly flexDirectionInput$: InputSignal<FlexDirection | Inherit | undefined>                                                                       = input<FlexDirection | Inherit | undefined>(
     undefined,
     {
