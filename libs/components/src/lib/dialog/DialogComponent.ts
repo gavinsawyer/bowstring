@@ -115,7 +115,7 @@ export class DialogComponent {
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
     false,
     {
-      alias: "stuck",
+      alias: "open",
     },
   );
 

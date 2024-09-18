@@ -162,19 +162,13 @@
         <h3 i18n="@@apps--Website--Components--Root--LocaleDialog--Title">Choose your locale</h3>
       </standard--header>
     </standard--heading-group>
-    <standard--flexbox-container
-      flexDirection="row"
-      flexWrap="wrap">
-      @for (locale of localeIds; track locale) {<standard--button
-        appearance="raised"
-        color="primary"
-        [disabled]="locale === localeId"
-        flexDirection="row"
-        flexGrow="1"
-        roundnessFactor="0.5"
-        (select)="locale === localeId || changeLocale(locale);"
-        symbolName="Globe"
-        [text]="localeDisplayNames.of(locale) || locale" />}
-    </standard--flexbox-container>
+    @for (locale of localeIds; track locale) {<standard--button
+      appearance="raised"
+      color="primary"
+      [disabled]="locale === localeId"
+      roundnessFactor="0.5"
+      (select)="locale === localeId || changeLocale(locale);"
+      symbolName="Globe"
+      [text]="localeDisplayNames.of(locale) || locale" />}
   </standard--card>}
 </standard--dialog>

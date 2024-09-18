@@ -28,11 +28,11 @@
     transform-origin: bottom
     z-index: 3
 
-    @mixin keyframes--raise-harness
-      scale: calc(1 + max(0, var(--standard--footer--raising-scale))) calc(1 + max(0, var(--standard--footer--raising-scale))) calc(1 + max(0, var(--standard--footer--raising-scale)))
-
     @mixin keyframes--lower-harness
-      scale: 1 1 1
+      scale: 1
+
+    @mixin keyframes--raise-harness
+      scale: calc(1 + max(0, var(--standard--footer--raising-scale)))
 
     @include keyframes--lower-harness
 
@@ -99,11 +99,11 @@
       position: fixed
       width: 100vw
 
-      @mixin keyframes--show-backdrop
-        backdrop-filter: blur(0.25rem)
-
       @mixin keyframes--hide-backdrop
         backdrop-filter: blur(0)
+
+      @mixin keyframes--show-backdrop
+        backdrop-filter: blur(0.25rem)
 
       @include keyframes--hide-backdrop
 
@@ -145,7 +145,6 @@
 
   &:not(.stuckOrUnsticking)
     > .harness
-      scale: 1 1 1
       translate: 0 0 0
 
     > .backdrop:before
