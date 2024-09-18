@@ -37,3 +37,11 @@ $clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
       border-radius: calc($roundness-factor * $brand-roundness-factor * 0.6875rem)
       clip-path: $clip-path-source
       overflow: hidden
+
+  > svg
+    height: 1px
+    left: 0
+    position: absolute
+    top: 0
+    visibility: hidden
+    width: 1px
