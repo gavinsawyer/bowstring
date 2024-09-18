@@ -10,11 +10,10 @@
   @include ContainerDirective.host
   @include FlexboxChildDirective.host
 
-  > div
-    display: grid
+  > .harness
     transform: translateZ(0)
 
-    > div
+    > .element
       display: flex
       flex-direction: row
       overflow: auto

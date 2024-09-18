@@ -4,9 +4,9 @@
 
 $namespace: "rounded"
 
-$border-radius-factor: functions.get-input-reference($namespace, "border-radius-factor", 1)
+$roundness-factor: functions.get-input-reference($namespace, "roundness-factor", 1)
 
-$brand-roundness: functions.get-value-reference($namespace, "brand-roundness")
+$brand-roundness-factor: functions.get-value-reference($namespace, "brand-roundness-factor")
 $clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
 
 @function get-color($theme, $type, $shade)
@@ -16,8 +16,8 @@ $clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
 
 @mixin children
   @include mixins.reset-colors($namespace, ())
-  @include mixins.reset-inputs($namespace, ("border-radius-factor"))
-  @include mixins.reset-values($namespace, ("brand-roundness", "clip-path-source"))
+  @include mixins.reset-inputs($namespace, ("roundness-factor"))
+  @include mixins.reset-values($namespace, ("brand-roundness-factor", "clip-path-source"))
 
 @mixin host
   @include color-scheme("light")
@@ -27,13 +27,13 @@ $clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
 
   > .harness
     &:before
-      border-radius: calc($border-radius-factor * $brand-roundness * 0.9375rem)
+      border-radius: calc($roundness-factor * $brand-roundness-factor * 1.3125rem)
 
     &:after
-      border-radius: calc($border-radius-factor * $brand-roundness * 0.6875rem)
+      border-radius: calc($roundness-factor * $brand-roundness-factor * 0.6875rem)
       clip-path: $clip-path-source
 
     > .element
-      border-radius: calc($border-radius-factor * $brand-roundness * 0.6875rem)
+      border-radius: calc($roundness-factor * $brand-roundness-factor * 0.6875rem)
       clip-path: $clip-path-source
       overflow: hidden

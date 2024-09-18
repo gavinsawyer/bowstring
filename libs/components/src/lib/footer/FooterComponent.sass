@@ -24,56 +24,55 @@
   --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
   --standard--glass-directive--material-opacity: var(--standard--footer--material-opacity) !important
 
-  > div#container
-    display: grid
+  > .harness
     transform-origin: bottom
     z-index: 3
 
-    @mixin keyframes--raise-container
+    @mixin keyframes--raise-harness
       scale: calc(1 + max(0, var(--standard--footer--raising-scale))) calc(1 + max(0, var(--standard--footer--raising-scale))) calc(1 + max(0, var(--standard--footer--raising-scale)))
 
-    @mixin keyframes--lower-container
+    @mixin keyframes--lower-harness
       scale: 1 1 1
 
-    @include keyframes--lower-container
+    @include keyframes--lower-harness
 
-    @keyframes raise-container
+    @keyframes raise-harness
       0%
-        @include keyframes--lower-container
+        @include keyframes--lower-harness
 
       100%
-        @include keyframes--raise-container
+        @include keyframes--raise-harness
 
-    @keyframes lower-container
+    @keyframes lower-harness
       0%
-        @include keyframes--raise-container
+        @include keyframes--raise-harness
 
       100%
-        @include keyframes--lower-container
+        @include keyframes--lower-harness
 
-    @mixin keyframes--stick-container
+    @mixin keyframes--stick-harness
       translate: 0 0 0
 
-    @mixin keyframes--unstick-container
-      translate: 0 calc(min(1px * var(--standard--footer--height) + var(--standard--root--row-gap) + var(--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
+    @mixin keyframes--unstick-harness
+      translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--row-gap) + var(--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
 
-    @include keyframes--unstick-container
+    @include keyframes--unstick-harness
 
-    @keyframes stick-container
+    @keyframes stick-harness
       0%
-        @include keyframes--unstick-container
+        @include keyframes--unstick-harness
 
       100%
-        @include keyframes--stick-container
+        @include keyframes--stick-harness
 
-    @keyframes unstick-container
+    @keyframes unstick-harness
       0%
-        @include keyframes--stick-container
+        @include keyframes--stick-harness
 
       100%
-        @include keyframes--unstick-container
+        @include keyframes--unstick-harness
 
-    > footer
+    > .element
       cursor: default
 
       &::ng-deep > *
@@ -87,7 +86,7 @@
         @include GlassDirective.children
         @include RoundedDirective.children
 
-  > div#backdrop
+  > .backdrop
     display: grid
     margin-bottom: calc(-1 * var(--standard--root--row-gap))
     z-index: 2
@@ -126,7 +125,7 @@
         translate: 0 0 0
 
       @mixin keyframes--unstick-backdrop
-        translate: 0 calc(min(1px * var(--standard--footer--height) + var(--standard--root--padding-bottom) + var(--safe-area-inset-bottom) + 100vh - 100dvh, max(0px, 1px * var(--standard--footer--unsticking-translation) + var(--standard--container-directive--bottom-position) - var(--standard--root--padding-bottom) - var(--safe-area-inset-bottom)))) 0
+        translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--row-gap) + var(--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
 
       @include keyframes--unstick-backdrop
 
@@ -145,47 +144,47 @@
           @include keyframes--unstick-backdrop
 
   &:not(.stuckOrUnsticking)
-    > div#container
+    > .harness
       scale: 1 1 1
       translate: 0 0 0
 
-    > div#backdrop:before
+    > .backdrop:before
       translate: 0 0 0
 
   &.stuckOrUnsticking
     --standard--container-directive--position: sticky !important
 
-    > div#container
-      animation: stick-container 360ms var(--bounce) forwards
+    > .harness
+      animation: stick-harness 360ms var(--bounce) forwards
 
-    > div#backdrop:before
+    > .backdrop:before
       animation: stick-backdrop 360ms var(--bounce) forwards
       content: ""
 
     &:not(.stuck)
-      > div#container
-        animation: unstick-container 360ms var(--bounce) forwards
+      > .harness
+        animation: unstick-harness 360ms var(--bounce) forwards
 
-      > div#backdrop:before
+      > .backdrop:before
         animation: unstick-backdrop 360ms var(--bounce) forwards
 
     &.raisedOrLoweringWhenStuckOrUnsticking
-      > div#container
-        animation: stick-container 360ms var(--bounce) forwards, raise-container 360ms var(--bounce) forwards
+      > .harness
+        animation: stick-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
 
         &:before
           animation: expand-shadow 360ms var(--bounce) forwards
 
-      > div#backdrop:before
+      > .backdrop:before
         animation: stick-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
 
       &:not(.stuck),
       &:not(.raisedWhenStuckOrUnsticking)
-        > div#container
-          animation: unstick-container 360ms var(--bounce) forwards, lower-container 360ms var(--bounce) forwards
+        > .harness
+          animation: unstick-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
 
           &:before
             animation: contract-shadow 360ms var(--bounce) forwards
 
-        > div#backdrop:before
+        > .backdrop:before
           animation: unstick-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards

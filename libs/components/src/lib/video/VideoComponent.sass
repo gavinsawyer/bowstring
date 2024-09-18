@@ -14,26 +14,11 @@
   @include FlexboxChildDirective.host
   @include RoundedDirective.host
 
-  > div
-    display: grid
-
-    &:before
-      // Elevated Container Directive
-      box-shadow: black 0 0.5rem 2rem -1rem
-      content: ""
-      height: calc(100% - 2px)
-      left: 50%
-      position: absolute
-      top: 50%
-      transform: translate(-50%, -50%) translateZ(0)
-      width: calc(100% - 2px)
-      z-index: -1
-
-    > video
-      background: var(--card--canvas--background)
-      height: auto
-      max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
-      width: 100%
+  > .harness > .element
+    background: var(--card--canvas--background)
+    height: auto
+    max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
+    width: 100%
 
 
 @mixin host-context($context-level)

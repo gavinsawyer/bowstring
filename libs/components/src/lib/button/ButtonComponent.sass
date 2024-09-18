@@ -23,19 +23,17 @@
   --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
   --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
 
-  > div
-    display: inline-grid
+  > .harness
+    display: inline-grid !important
 
     > a
       text-shadow: none
       z-index: unset
 
-    > a,
-    > button
+    > .element
       background: transparent
       border: none
       font-size: 1.125rem
-      gap: 0.25em
       outline: none
       transition: background-color 200ms ease, color 200ms ease
       user-select: none
@@ -51,8 +49,7 @@
       &:after
         content: ""
 
-      > a,
-      > button
+      > .element
         box-shadow: inset var(--button--glass--border) 0 0 calc(1rem * pow(var(--phi), -3))
 
     &.symbol
@@ -61,54 +58,45 @@
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
       --standard--elevated-directive--material-opacity: 0 !important
 
-      > a,
-      > button
+      > .element
         font-size: 1.375rem
 
     &.no-op
-      > a,
-      > button
+      > .element
         color: var(--button--grey--foreground)
         cursor: default
 
       &.flat,
       &.raised
-        > a,
-        > button
+        > .element
           background: var(--button--grey--background)
 
       &.primary
-        > a,
-        > button
+        > .element
           color: var(--primary--grey--foreground)
 
         &.flat,
         &.raised
-          > a,
-          > button
+          > .element
             background: var(--primary--grey--background)
 
     &:not(.no-op)
-      > a,
-      > button
+      > .element
         color: var(--button--glass--foreground)
         cursor: pointer
 
       &.flat,
       &.raised
-        > a,
-        > button
+        > .element
           background: var(--button--glass--background)
 
       &.primary
-        > a,
-        > button
+        > .element
           color: var(--primary--glass--foreground)
 
         &.flat,
         &.raised
-          > a,
-          > button
+          > .element
             background: var(--primary--glass--background)
 
       @media (hover: hover)
@@ -121,7 +109,7 @@
               animation: expand-shadow 200ms ease-in-out
 
 
-\:host-context(standard--card, standard--footer) > div
+\:host-context(standard--card, standard--footer) > .harness
   &:before
     box-shadow: black 0 0.5rem 2rem -1rem
 
@@ -130,48 +118,35 @@
 
   &.flat,
   &.raised
-    > a,
-    > button
+    > .element
       box-shadow: unset
 
   &.no-op
-    > a,
-    > button
+    > .element
       color: var(--button--grey--foreground)
 
-    &.primary
-      > a,
-      > button
-        color: var(--primary--grey--foreground)
+    &.primary > .element
+      color: var(--primary--grey--foreground)
 
     &.flat,
     &.raised
-      > a,
-      > button
+      > .element
         background: var(--button--grey--background)
 
-      &.primary
-        > a,
-        > button
-          background: var(--primary--grey--background)
+      &.primary > .element
+        background: var(--primary--grey--background)
 
   &:not(.no-op)
-    > a,
-    > button
+    > .element
       color: var(--button--canvas--foreground)
 
-    &.primary
-      > a,
-      > button
-        color: var(--primary--canvas--foreground)
+    &.primary > .element
+      color: var(--primary--canvas--foreground)
 
     &.flat,
     &.raised
-      > a,
-      > button
+      > .element
         background: var(--button--canvas--background)
 
-      &.primary
-        > a,
-        > button
-          background: var(--primary--canvas--background)
+      &.primary > .element
+        background: var(--primary--canvas--background)

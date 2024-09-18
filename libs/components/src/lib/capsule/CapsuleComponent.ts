@@ -1,10 +1,34 @@
 import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
-import { ElevatedDirective, RoundedDirective }                                                         from "@standard/directives";
+import { ContainerDirective, ElevatedDirective, RoundedDirective }                                     from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
+      {
+        directive: ContainerDirective,
+        inputs:    [
+          "aspectRatio",
+          "alignSelf",
+          "bottomPosition",
+          "hideScrollbar",
+          "leftPosition",
+          "marginBottom",
+          "marginSides",
+          "marginTop",
+          "overflowX",
+          "overflowY",
+          "paddingBottom",
+          "paddingSides",
+          "paddingTop",
+          "position",
+          "rightPosition",
+          "scrollSnapAlign",
+          "scrollSnapStop",
+          "scrollSnapType",
+          "topPosition",
+        ],
+      },
       {
         directive: ElevatedDirective,
         inputs:    [
@@ -14,7 +38,7 @@ import { ElevatedDirective, RoundedDirective }                                  
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
     ],
@@ -30,11 +54,9 @@ export class CapsuleComponent {
 
   constructor() {
     effect(
-      (): void => {
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlSpanElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(
+        this.htmlSpanElementRef$(),
+      ),
       {
         allowSignalWrites: true,
       },

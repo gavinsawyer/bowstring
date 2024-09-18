@@ -1,3 +1,4 @@
+@use "../../../../directives/src/lib/container/ContainerDirective"
 @use "../../../../directives/src/lib/elevated/ElevatedDirective"
 @use "../../../../directives/src/lib/rounded/RoundedDirective"
 
@@ -5,18 +6,16 @@
 \:host
   display: contents
 
+  @include ContainerDirective.host
   @include ElevatedDirective.host
   @include RoundedDirective.host
 
-  > div
-    display: grid
-    position: relative
+  --standard--container-directive--padding-bottom: 0.125em !important
+  --standard--container-directive--padding-sides: 0.625em !important
 
-    > span
-      background: var(--primary--canvas--background)
-      border-radius: 999px
-      color: var(--primary--canvas--foreground)
-      cursor: default
-      font-variant: all-small-caps
-      padding: 0 0.625em 0.125em
-      user-select: none
+  > .harness > .element
+    background: var(--primary--canvas--background)
+    color: var(--primary--canvas--foreground)
+    cursor: default
+    font-variant: all-small-caps
+    user-select: none

@@ -10,9 +10,6 @@
 
   --standard--flexbox-child-directive--flex-basis: 100% !important
 
-  > div
-    display: grid
-
-    > article::ng-deep > *
-      @include ContainerDirective.children
-      @include FlexboxChildDirective.children
+  > .harness > .element::ng-deep > *
+    @include ContainerDirective.children
+    @include FlexboxChildDirective.children

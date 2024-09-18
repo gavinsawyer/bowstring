@@ -47,7 +47,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
     ],
@@ -66,21 +66,15 @@ export class ImageComponent {
 
   constructor() {
     effect(
-      (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlImageElementRef$(),
-        );
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlImageElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(
+        this.htmlImageElementRef$(),
+      ),
       {
         allowSignalWrites: true,
       },
     );
   }
 
-  private readonly containerDirective: ContainerDirective                     = inject<ContainerDirective>(ContainerDirective);
   private readonly htmlImageElementRef$: Signal<ElementRef<HTMLImageElement>> = viewChild.required<ElementRef<HTMLImageElement>>("htmlImageElement");
 
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);

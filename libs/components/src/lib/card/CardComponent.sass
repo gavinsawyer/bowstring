@@ -22,16 +22,13 @@
   --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
   --standard--glass-directive--material-opacity: var(--standard--card--material-opacity) !important
 
-  > div
-    display: grid
+  > .harness > .element
+    user-select: none
 
-    > div
-      user-select: none
+    &::ng-deep > *
+      --standard--card--material-opacity: initial
 
-      &::ng-deep > *
-        --standard--card--material-opacity: initial
-
-        @include ElevatedDirective.children
-        @include FlexboxContainerDirective.children
-        @include GlassDirective.children
-        @include RoundedDirective.children
+      @include ElevatedDirective.children
+      @include FlexboxContainerDirective.children
+      @include GlassDirective.children
+      @include RoundedDirective.children

@@ -1,4 +1,4 @@
-import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild }                    from "@angular/core";
+import { Component, input, type InputSignal }                                                                             from "@angular/core";
 import { ContainerDirective, FlexboxChildDirective }                                                                      from "@standard/directives";
 import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
 
@@ -55,20 +55,6 @@ import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, 
   },
 )
 export class GridComponent {
-
-  constructor() {
-    effect(
-      (): void => this.containerDirective.htmlElementRef$.set(
-        this.htmlDivElementRef$(),
-      ),
-      {
-        allowSignalWrites: true,
-      },
-    );
-  }
-
-  private readonly containerDirective: ContainerDirective                 = inject<ContainerDirective>(ContainerDirective);
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   public readonly alignContentInput$: InputSignal<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined>   = input<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined>(
     undefined,

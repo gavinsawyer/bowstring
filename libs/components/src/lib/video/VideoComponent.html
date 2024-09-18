@@ -1,22 +1,9 @@
-<svg
-  height="1"
-  style="left: 0; opacity: 0; position: absolute; top: 0;"
-  viewBox="0 0 1 1"
-  width="1">
-  <clipPath
-    [attr.id]="roundedContainerDirective.clipPathId$()"
-    clipPathUnits="objectBoundingBox">
-    <!--suppress HtmlUnknownAttribute -->
-    <path
-      [attr.d]="roundedContainerDirective.pathDefinition$()"
-      fill="#000" />
-  </clipPath>
-</svg>
 <div class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <video #htmlVideoElement class="element"
+  <!--suppress HtmlUnknownAttribute -->
+  <video class="element" #htmlVideoElement
     playsinline
     [attr.autoplay]="autoplayInput$()"
     [attr.controls]="controlsInput$()"
@@ -31,3 +18,17 @@
     [attr.width]="widthInput$()"
     [style.aspect-ratio]="widthInput$() + '/' + heightInput$()"></video>
 </div>
+<svg
+  height="1"
+  style="left: 0; opacity: 0; position: absolute; top: 0;"
+  viewBox="0 0 1 1"
+  width="1">
+  <clipPath
+    [attr.id]="roundedContainerDirective.clipPathId$()"
+    clipPathUnits="objectBoundingBox">
+    <!--suppress HtmlUnknownAttribute -->
+    <path
+      [attr.d]="roundedContainerDirective.pathDefinition$()"
+      fill="#000" />
+  </clipPath>
+</svg>

@@ -1,7 +1,16 @@
+<div class="harness"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  <div class="element" #htmlDivElement>
+    <ng-content />
+  </div>
+</div>
 <svg
   height="1"
   style="left: 0; opacity: 0; position: absolute; top: 0;"
   viewBox="0 0 1 1"
+  visibility="hidden"
   width="1">
   <clipPath
     [attr.id]="roundedContainerDirective.clipPathId$()"
@@ -12,11 +21,3 @@
       fill="#000" />
   </clipPath>
 </svg>
-<div class="harness"
-  (click)="$event.stopPropagation();"
-  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-  tabindex="-1">
-  <div #htmlDivElement class="element">
-    <ng-content />
-  </div>
-</div>

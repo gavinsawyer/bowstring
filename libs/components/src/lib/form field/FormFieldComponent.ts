@@ -41,7 +41,7 @@ import { ContainerDirective, FlexboxChildDirective, RoundedDirective }          
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
     ],
@@ -71,14 +71,9 @@ export class FormFieldComponent
 
   constructor() {
     effect(
-      (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(
+        this.htmlDivElementRef$(),
+      ),
       {
         allowSignalWrites: true,
       },
@@ -86,7 +81,6 @@ export class FormFieldComponent
   }
 
   private readonly abortController: AbortController                                             = new AbortController();
-  private readonly containerDirective: ContainerDirective                                       = inject<ContainerDirective>(ContainerDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>                       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly htmlInputElementRef$: Signal<ElementRef<HTMLInputElement> | undefined>       = contentChild<ElementRef<HTMLInputElement>>("htmlInputElement");
   private readonly htmlTextAreaElementRef$: Signal<ElementRef<HTMLTextAreaElement> | undefined> = contentChild<ElementRef<HTMLTextAreaElement>>("htmlTextAreaElement");

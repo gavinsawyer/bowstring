@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                                                      from "@angular/common";
 import { Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                       from "@angular/core/rxjs-interop";
-import { ContainerDirective, FlexboxContainerDirective }                                                                                                    from "@standard/directives";
+import { FlexboxContainerDirective }                                                                                                                        from "@standard/directives";
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                     from "body-scroll-lock";
 import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                from "rxjs";
 
@@ -39,14 +39,9 @@ export class DialogComponent {
 
   constructor() {
     effect(
-      (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-        this.flexboxContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-      },
+      (): void => this.flexboxContainerDirective.htmlElementRef$.set(
+        this.htmlDivElementRef$(),
+      ),
       {
         allowSignalWrites: true,
       },
@@ -90,7 +85,6 @@ export class DialogComponent {
     );
   }
 
-  private readonly containerDirective: ContainerDirective                       = inject<ContainerDirective>(ContainerDirective);
   private readonly document: Document                                           = inject<Document>(DOCUMENT);
   private readonly flexboxContainerDirective: FlexboxContainerDirective         = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDialogElementRef$: Signal<ElementRef<HTMLDialogElement>> = viewChild.required<ElementRef<HTMLDialogElement>>("htmlDialogElement");

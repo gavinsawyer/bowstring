@@ -10,12 +10,9 @@
     --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
     --standard--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
 
-  > div
-    display: grid
-
-    > aside::ng-deep > *
-      @include FlexboxContainerDirective.children
+  > .harness > .element::ng-deep > *
+    @include FlexboxContainerDirective.children
 
   @media (min-width: 48rem)
-    > div
+    > .harness
       z-index: 2

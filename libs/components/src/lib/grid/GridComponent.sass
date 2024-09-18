@@ -8,30 +8,27 @@
   @include ContainerDirective.host
   @include FlexboxChildDirective.host
 
-  > div
+  > .harness > .element
+    align-content: var(--standard--grid--align-content, normal)
+    align-items: var(--standard--grid--align-items, normal)
     display: grid
+    flex-wrap: var(--standard--grid--flex-wrap, nowrap)
+    gap: var(--standard--grid--row-gap, calc(1rem * pow(var(--phi), 1))) var(--standard--grid--column-gap, calc(1rem * pow(var(--phi), 2)))
+    justify-content: var(--standard--grid--justify-content, normal)
 
-    > div
-      align-content: var(--standard--grid--align-content, normal)
-      align-items: var(--standard--grid--align-items, normal)
-      display: grid
-      flex-wrap: var(--standard--grid--flex-wrap, nowrap)
-      gap: var(--standard--grid--row-gap, calc(1rem * pow(var(--phi), 1))) var(--standard--grid--column-gap, calc(1rem * pow(var(--phi), 2)))
-      justify-content: var(--standard--grid--justify-content, normal)
+    &::ng-deep > *
+      @include ContainerDirective.children
+      @include FlexboxChildDirective.children
 
-      &::ng-deep > *
-        @include ContainerDirective.children
-        @include FlexboxChildDirective.children
-
-        --standard--grid--align-content: initial
-        --standard--grid--align-items: initial
-        --standard--grid--column-gap: initial
-        --standard--grid--flex-wrap: initial
-        --standard--grid--justify-content: initial
-        --standard--grid--row-gap: initial
+      --standard--grid--align-content: initial
+      --standard--grid--align-items: initial
+      --standard--grid--column-gap: initial
+      --standard--grid--flex-wrap: initial
+      --standard--grid--justify-content: initial
+      --standard--grid--row-gap: initial
 
 @mixin host-context($row-gap-exponent)
-  > div > div
+  > .harness > .element
     gap: var(--standard--grid--row-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), $row-gap-exponent)))) var(--standard--grid--column-gap, var(--standard--grid--gap, calc(1rem * pow(var(--phi), $row-gap-exponent + 1))))
 
 \:host-context(standard--main)

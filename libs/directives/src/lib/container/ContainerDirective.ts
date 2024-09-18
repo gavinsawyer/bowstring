@@ -1,4 +1,4 @@
-import { booleanAttribute, Directive, type ElementRef, input, type InputSignal, type InputSignalWithTransform, numberAttribute, signal, type WritableSignal }                                                                                   from "@angular/core";
+import { booleanAttribute, Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                 from "@angular/core";
 import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@standard/types";
 
 
@@ -56,7 +56,6 @@ export class ContainerDirective {
       transform: booleanAttribute,
     },
   );
-  public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined>                                                                     = signal<ElementRef<HTMLElement> | undefined>(undefined);
   public readonly leftPositionInput$: InputSignal<ScalarString | Inherit | undefined>                                                                      = input<ScalarString | Inherit | undefined>(
     undefined,
     {

@@ -69,14 +69,14 @@
   @include host-context(0)
 
 
-\:host-context(standard-website--root standard--flexbox-container standard--footer)
+\:host-context(standard-website--root > .harness > .element > standard--footer)
   @include host-context(-3)
 
-\:host-context(standard-website--root standard--flexbox-container standard--flexbox-container#menu)
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu)
   @include host-context(-2)
 
 
-\:host-context(standard-website--root standard--flexbox-container standard--footer, standard-website--root standard--flexbox-container standard--flexbox-container#menu) > header::ng-deep
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu, standard-website--root > .harness > .element > standard--footer) > header::ng-deep
   > h1,
   > h2
     margin: 0

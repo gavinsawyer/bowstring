@@ -2,7 +2,7 @@
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <aside #htmlElement class="element">
+  <aside class="element" #htmlElement>
     <ng-content />
   </aside>
 </div>

@@ -38,7 +38,7 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTran
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
       {

@@ -8,27 +8,14 @@
   @include ContainerDirective.host
   @include FlexboxChildDirective.host
 
-  > div
-    display: grid
+  > .harness > .element::ng-deep > *
+    @include ContainerDirective.children
+    @include FlexboxChildDirective.children
 
-    > section
-      border-bottom: 1px solid var(--body--grey--foreground)
-
-      &::ng-deep > *
-        @include ContainerDirective.children
-        @include FlexboxChildDirective.children
-
-  &:last-of-type > div > section
+  &:last-of-type > .harness > .element
     border-bottom: none
     padding-bottom: 0
 
 
-\:host-context(standard--footer) > div > section
-  border-color: var(--footer--grey--foreground)
-  padding: var(--standard--container-directive--padding-top-input, 0) var(--standard--container-directive--padding-sides-input, 0) var(--standard--container-directive--padding-bottom-input, calc(1rem * pow(var(--phi), -2)))
-
-\:host-context(standard--card) > div > section
-  border-color: var(--card--grey--foreground)
-
-\:host-context(standard--heading-group) > div > section
+\:host-context(standard--heading-group) > .harness > .element
   max-width: calc(1em * pow(var(--phi), 8))

@@ -11,9 +11,9 @@ import { v4 as uuid }                                                           
 @Directive(
   {
     host:       {
-      "[style.--standard--rounded-directive--border-radius-factor-input]": "borderRadiusFactorInput$()",
-      "[style.--standard--rounded-directive--brand-roundness]":            "brandRoundness$()",
-      "[style.--standard--rounded-directive--clip-path-source]":           "clipPathSource$()",
+      "[style.--standard--rounded-directive--brand-roundness-factor]": "brandRoundnessFactor$()",
+      "[style.--standard--rounded-directive--clip-path-source]":       "clipPathSource$()",
+      "[style.--standard--rounded-directive--roundness-factor-input]": "roundnessFactorInput$()",
     },
     standalone: true,
   },
@@ -23,16 +23,16 @@ export class RoundedDirective {
   private readonly brand: Brand                     = inject<Brand>(BRAND);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly brandRoundness$: Signal<number>                                                     = signal<number>(this.brand.roundness);
+  protected readonly brandRoundnessFactor$: Signal<number>                                               = signal<number>(this.brand.roundnessFactor);
   protected readonly clipPathSource$: Signal<`url(#standard--rounded-container--clip-path-${ string })`> = computed<`url(#standard--rounded-container--clip-path-${ string })`>(
     (): `url(#standard--rounded-container--clip-path-${ string })` => `url(#${ this.clipPathId$() })`,
   );
 
   public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined>                                                                                                                                         = signal<undefined>(undefined);
-  public readonly borderRadiusFactorInput$: InputSignalWithTransform<number, number | `${ number }`>                                                                                                                           = input<number, number | `${ number }`>(
-    1,
+  public readonly roundnessFactorInput$: InputSignalWithTransform<number | undefined, "" | number | `${ number }`>                                                                                                             = input<number | undefined, "" | number | `${ number }`>(
+    undefined,
     {
-      alias:     "borderRadiusFactor",
+      alias:     "roundnessFactor",
       transform: numberAttribute,
     },
   );
@@ -69,7 +69,7 @@ export class RoundedDirective {
         ),
       ),
       map<Dimensions, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
-        (htmlElementDimensions: Dimensions): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => `M ${ this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.width || 1) },0 L ${ 1 - this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.width || 1) },0 C 1,0 1,0 1,${ this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.height || 1) } L 1,${ 1 - this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.height || 1) } C 1,1 1,1 ${ 1 - this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.width || 1) },1 L ${ this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.width || 1) },1 C 0,1 0,1 0,${ 1 - this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.height || 1) } L 0,${ this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.height || 1) } C 0,0 0,0 ${ this.borderRadiusFactorInput$() * this.brandRoundness$() * 29 / (htmlElementDimensions.width || 1) },0 Z`,
+        (htmlElementDimensions: Dimensions): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => `M ${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },0 L ${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },0 C 1,0 1,0 1,${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } L 1,${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } C 1,1 1,1 ${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },1 L ${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },1 C 0,1 0,1 0,${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } L 0,${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } C 0,0 0,0 ${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },0 Z`,
       ),
     ),
     {

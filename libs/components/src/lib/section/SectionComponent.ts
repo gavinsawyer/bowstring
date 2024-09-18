@@ -1,5 +1,5 @@
-import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, FlexboxChildDirective }                          from "@standard/directives";
+import { Component }                                 from "@angular/core";
+import { ContainerDirective, FlexboxChildDirective } from "@standard/directives";
 
 
 @Component(
@@ -47,19 +47,4 @@ import { ContainerDirective, FlexboxChildDirective }                          fr
   },
 )
 export class SectionComponent {
-
-  constructor() {
-    effect(
-      (): void => this.containerDirective.htmlElementRef$.set(
-        this.htmlElementRef$(),
-      ),
-      {
-        allowSignalWrites: true,
-      },
-    );
-  }
-
-  private readonly containerDirective: ContainerDirective           = inject<ContainerDirective>(ContainerDirective);
-  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>> = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
-
 }

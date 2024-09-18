@@ -1,5 +1,5 @@
-import { Component, effect, type ElementRef, inject, type Signal, viewChild }                                 from "@angular/core";
-import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective } from "@standard/directives";
+import { Component, effect, type ElementRef, inject, type Signal, viewChild }             from "@angular/core";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective } from "@standard/directives";
 
 
 @Component(
@@ -33,7 +33,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, Glass
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
     ],
@@ -50,9 +50,6 @@ export class CardComponent {
   constructor() {
     effect(
       (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
         this.flexboxContainerDirective.htmlElementRef$.set(
           this.htmlDivElementRef$(),
         );
@@ -66,7 +63,6 @@ export class CardComponent {
     );
   }
 
-  private readonly containerDirective: ContainerDirective                 = inject<ContainerDirective>(ContainerDirective);
   private readonly flexboxContainerDirective: FlexboxContainerDirective   = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 

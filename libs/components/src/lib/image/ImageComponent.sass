@@ -14,15 +14,10 @@
   @include FlexboxChildDirective.host
   @include RoundedDirective.host
 
-  > div
-    display: grid
-
-    > img
-      background: var(--card--canvas--background)
-      height: auto
-      max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
-      padding: 0 !important
-      width: 100%
+  > .harness > .element
+    height: auto
+    max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
+    width: 100%
 
 
 @mixin host-context($context-level)

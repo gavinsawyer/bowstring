@@ -1,38 +1,50 @@
+@use "../../../../../../../libs/directives/src/lib/flexbox container/FlexboxContainerDirective"
+
+
 \:host
   display: contents
 
-  --standard--root--padding-bottom: calc(1rem * pow(var(--phi), -2))
-  --standard--root--padding-top:    calc(1rem * pow(var(--phi), 1))
-  --standard--root--padding-sides:  calc(1rem * pow(var(--phi), -1))
+  --standard--root--column-gap: var(--standard--flexbox-container-directive--column-gap)
+  --standard--root--padding-bottom: var(--standard--container-directive--padding-bottom)
+  --standard--root--padding-top: var(--standard--container-directive--padding-top)
+  --standard--root--padding-sides: var(--standard--container-directive--padding-sides)
+  --standard--root--row-gap: var(--standard--flexbox-container-directive--row-gap)
+
+  @include FlexboxContainerDirective.host
+
+  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 1)) !important
+  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
 
   @media (min-width: calc(1rem * pow(1.6180339887, 7)))
-    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), -1))
-    --standard--root--padding-top:    calc(1rem * pow(var(--phi), 2))
-    --standard--root--padding-sides:  calc(1rem * pow(var(--phi), 0))
+    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 2)) !important
+    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
 
   @media (min-width: calc(1rem * pow(1.6180339887, 8)))
-    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 0))
-    --standard--root--padding-top:    calc(1rem * pow(var(--phi), 3))
-    --standard--root--padding-sides:  calc(1rem * pow(var(--phi), 1))
+    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 0)) !important
+    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 3)) !important
+    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 1)) !important
 
   @media (min-width: calc(1rem * pow(1.6180339887, 9)))
-    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 1))
-    --standard--root--padding-top:    calc(1rem * pow(var(--phi), 4))
-    --standard--root--padding-sides:  calc(1rem * pow(var(--phi), 2))
+    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 1)) !important
+    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 4)) !important
+    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 2)) !important
 
-  --standard--root--column-gap: var(--standard--root--padding-sides)
-  --standard--root--row-gap:    var(--standard--root--padding-bottom)
+  --standard--flexbox-child-directive--flex-grow: 1 !important
+  --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
+  --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
 
-  > standard--flexbox-container::ng-deep > div > div
-    padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
+  > .harness > .element
+    padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides))) !important
 
-    > standard--footer > div#container > footer > standard--flexbox-container
+    > standard--footer::ng-deep > .harness > .element > standard--flexbox-container
       --standard--flexbox-container-directive--justify-content: center !important
 
       @media (min-width: 32rem)
         --standard--flexbox-container-directive--justify-content: space-between !important
 
-      > div > div > *
+      > .harness > .element > *
         text-align: center
         user-select: none
         white-space: nowrap
@@ -42,3 +54,6 @@
 
           @media (min-width: 32rem)
             flex-basis: unset
+
+    &::ng-deep > *
+      @include FlexboxContainerDirective.children

@@ -1,10 +1,11 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                                                 from "@angular/common";
-import { Component, computed, effect, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                      from "@angular/core/rxjs-interop";
-import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                          from "@standard/directives";
-import { type Dimensions }                                                                                                                                             from "@standard/interfaces";
-import { ViewportService }                                                                                                                                             from "@standard/services";
-import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                  from "rxjs";
+import { DOCUMENT, isPlatformBrowser }                                                                                                                                                   from "@angular/common";
+import { Component, computed, effect, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                        from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                from "@standard/directives";
+import { type Dimensions }                                                                                                                                                               from "@standard/interfaces";
+import { ViewportService }                                                                                                                                                               from "@standard/services";
+import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                    from "rxjs";
+import { ButtonComponent }                                                                                                                                                               from "../button/ButtonComponent";
 
 
 @Component(
@@ -47,7 +48,7 @@ import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, s
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
     ],
@@ -57,6 +58,9 @@ import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, s
       "FooterComponent.sass",
     ],
     templateUrl:    "FooterComponent.html",
+    imports:        [
+      ButtonComponent,
+    ],
   },
 )
 export class FooterComponent {
@@ -64,9 +68,6 @@ export class FooterComponent {
   constructor() {
     effect(
       (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlElementRef$(),
-        );
         this.roundedContainerDirective.htmlElementRef$.set(
           this.htmlElementRef$(),
         );
@@ -102,9 +103,7 @@ export class FooterComponent {
       initialValue: this.document.body.clientHeight,
     },
   );
-  private readonly containerDirective: ContainerDirective                         = inject<ContainerDirective>(ContainerDirective);
   private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
-  private readonly injector: Injector                                             = inject<Injector>(Injector);
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly dimensions$: Signal<Dimensions>                                = isPlatformBrowser(
     this.platformId,
@@ -145,6 +144,7 @@ export class FooterComponent {
       width:  0,
     },
   );
+  private readonly injector: Injector                                             = inject<Injector>(Injector);
   private readonly flexboxContainerDirective: FlexboxContainerDirective           = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly width$: Signal<number>                                         = computed<number>(
     (): number => this.dimensions$().width,
@@ -228,7 +228,14 @@ export class FooterComponent {
             map<[ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number, number ], number>(
               ([ backdropHtmlDivElementRef, viewportHeight ]: [ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number, number ]): number => Math.round(
                 Math.max(
-                  backdropHtmlDivElementRef.nativeElement.getBoundingClientRect().bottom - (viewportHeight || 0),
+                  backdropHtmlDivElementRef.nativeElement.getBoundingClientRect().bottom - (viewportHeight || 0) + Math.max(
+                    0,
+                    parseInt(
+                      backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("margin-bottom")?.toString() || "0",
+                    ) + parseInt(
+                        backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("--safe-area-inset-bottom")?.toString() || "0",
+                      ),
+                  ),
                   0,
                 ),
               ),
@@ -271,6 +278,7 @@ export class FooterComponent {
     },
   );
 
+  public readonly disclosureControlTemplateRef$: Signal<TemplateRef<never>>           = viewChild.required<TemplateRef<never>>("disclosureControlTemplate");
   public readonly stuckModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
     false,
     {

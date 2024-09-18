@@ -6,11 +6,8 @@
 
   @include FlexboxContainerDirective.host
 
-  > div
-    display: grid
-
-    > div::ng-deep > *
-      @include FlexboxContainerDirective.children
+  > .harness > .element::ng-deep > *
+    @include FlexboxContainerDirective.children
 
 
 @mixin host-context($row-gap-exponent)

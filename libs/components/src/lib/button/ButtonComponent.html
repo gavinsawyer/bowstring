@@ -1,26 +1,3 @@
-<svg
-  height="1"
-  style="left: 0; opacity: 0; position: absolute; top: 0;"
-  viewBox="0 0 1 1"
-  width="1">
-  <clipPath
-    [attr.id]="roundedContainerDirective.clipPathId$()"
-    clipPathUnits="objectBoundingBox">
-    <!--suppress HtmlUnknownAttribute -->
-    <path
-      [attr.d]="roundedContainerDirective.pathDefinition$()"
-      fill="#000" />
-  </clipPath>
-</svg>
-<ng-template #template>
-  @if (symbolPathsLoaderDirective.symbolPaths$(); as symbolPaths) {<svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''">
-    <g>
-      <rect [attr.height]="symbolPaths.viewBoxHeight" opacity="0" [attr.width]="symbolPaths.viewBoxWidth" x="0" y="0"/>
-      @for (path of symbolPaths.paths; track path) {<path [attr.d]="path.definition" fill="currentColor" [attr.fill-opacity]="path.opacity"/>}
-    </g>
-  </svg>}
-  @if (appearanceInput$() !== "symbol" && textInput$()) {{{ textInput$() }}}
-</ng-template>
 <div class="harness"
   [class.flat]="appearanceInput$() === 'flat'"
   [class.no-op]="disabledInput$()"
@@ -31,20 +8,44 @@
   (click)="$event.stopPropagation(); selectOutput.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  @if (urlInput$(); as url) {@if (url.includes("://")) {<a #htmlAnchorElement class="element"
+  @if (urlInput$(); as url) {@if (url.includes("://")) {<a class="element" #htmlAnchorElement
     [attr.href]="url"
     [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0">
-    <ng-container *ngTemplateOutlet="template"></ng-container>
-  </a>} @else {<a #htmlAnchorElement #routerLinkActive="routerLinkActive" class="element"
+    <ng-container *ngTemplateOutlet="contentTemplate" />
+  </a>} @else {<a #routerLinkActive="routerLinkActive" class="element" #htmlAnchorElement
     [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
     [routerLink]="url"
     routerLinkActive="no-op"
     [routerLinkActiveOptions]="{ exact: true }">
-    <ng-container *ngTemplateOutlet="template"></ng-container>
-  </a>}} @else {<button #htmlButtonElement class="element"
+    <ng-container *ngTemplateOutlet="contentTemplate" />
+  </a>}} @else {<button class="element" #htmlButtonElement
     [attr.disabled]="disabledInput$() || undefined"
     [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
     [attr.type]="typeInput$() || 'button'">
-    <ng-container *ngTemplateOutlet="template"></ng-container>
+    <ng-container *ngTemplateOutlet="contentTemplate" />
   </button>}
 </div>
+<svg
+  height="1"
+  style="left: 0; opacity: 0; position: absolute; top: 0;"
+  viewBox="0 0 1 1"
+  visibility="hidden"
+  width="1">
+  <clipPath
+    [attr.id]="roundedContainerDirective.clipPathId$()"
+    clipPathUnits="objectBoundingBox">
+    <!--suppress HtmlUnknownAttribute -->
+    <path
+      [attr.d]="roundedContainerDirective.pathDefinition$()"
+      fill="#000" />
+  </clipPath>
+</svg>
+<ng-template #contentTemplate>
+  @if (symbolPathsLoaderDirective.symbolPaths$(); as symbolPaths) {<svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''">
+    <g>
+      <rect [attr.height]="symbolPaths.viewBoxHeight" opacity="0" [attr.width]="symbolPaths.viewBoxWidth" x="0" y="0"/>
+      @for (path of symbolPaths.paths; track path) {<path [attr.d]="path.definition" fill="currentColor" [attr.fill-opacity]="path.opacity"/>}
+    </g>
+  </svg>}
+  @if (appearanceInput$() !== "symbol" && textInput$()) {{{ textInput$() }}}
+</ng-template>

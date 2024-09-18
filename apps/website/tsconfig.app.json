@@ -5,8 +5,11 @@
     ]
   },
   "extends":         "../../tsconfig.json",
+  "files":           [
+    "src/app/main.browser.ts",
+    "src/app/main.server.ts"
+  ],
   "include":         [
-    "src/**/*.ts",
-    "../../libs/symbol paths/src/**/*.ts"
+    "../../libs/symbol paths/src/lib/**/*.ts"
   ]
 }

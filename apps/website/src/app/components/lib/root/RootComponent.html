@@ -1,165 +1,161 @@
-<standard--flexbox-container
-  columnGap="var(--standard--root--column-gap)"
-  flexGrow="1"
-  paddingBottom="var(--standard--root--padding-bottom)"
-  paddingSides="var(--standard--root--padding-sides)"
-  paddingTop="var(--standard--root--padding-top)"
-  rowGap="var(--standard--root--row-gap)">
-  <standard--flexbox-container id="menu"
-    alignItems="last baseline"
-    columnGap="inherit"
-    flexDirection="row"
-    flexWrap="wrap"
-    justifyContent="space-between"
-    marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
-    marginSides="calc(-1 * var(--standard--container-directive--padding-sides-input))"
-    marginTop="calc(-1 * var(--standard--container-directive--padding-top-input))"
-    paddingBottom="var(--standard--root--row-gap)"
-    paddingSides="var(--standard--root--column-gap)"
-    paddingTop="var(--standard--root--row-gap)"
-    rowGap="inherit">
-    <standard--header>
-      <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
-        <standard--link
-          [text]="brand.title"
-          url="/" />
-      </h1>
-    </standard--header>
-    <standard--grid flexGrow="1">
-      <standard--flexbox-container
-        columnGap="calc(0.5 * var(--standard--root--column-gap))"
-        flexDirection="row"
-        flexGrow="0"
-        hideScrollbar
-        justifyContent="space-between"
-        marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
-        marginSides="calc(-1 * var(--standard--container-directive--padding-sides-input))"
-        marginTop="calc(-1 * var(--standard--container-directive--padding-top-input))"
-        overflowX="scroll"
-        paddingBottom="var(--standard--root--row-gap)"
-        paddingSides="var(--standard--root--column-gap)"
-        paddingTop="var(--standard--root--row-gap)"
-        rowGap="calc(0.5 * var(--standard--root--row-gap))">
-        <standard--link
-          i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
-          text="News"
-          url="/news" />
-        <standard--link
-          i18n-text="@@apps--Website--RouteComponents--DesignRoute--Title"
-          text="Design"
-          url="/design" />
-        <standard--link
-          i18n-text="@@apps--Website--RouteComponents--DevelopRoute--Title"
-          text="Develop"
-          url="/develop" />
-        <standard--link
-          i18n-text="@@libs--RouteComponents--AccountRoute--Title"
-          text="Account"
-          url="/account" />
-      </standard--flexbox-container>
-    </standard--grid>
-  </standard--flexbox-container>
-  <standard--flexbox-container
-    columnGap="inherit"
-    flexGrow="1"
-    rowGap="inherit">
-    <standard--main
-      columnGap="calc(0.5 * var(--standard--root--column-gap))"
-      flexGrow="1"
-      rowGap="calc(0.5 * var(--standard--root--row-gap))" />
-  </standard--flexbox-container>
-  <standard--footer>
-    <standard--flexbox-container
-      alignItems="center"
+<div class="harness"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  <div class="element" #htmlDivElement>
+    <standard--flexbox-container id="menu"
+      alignItems="last baseline"
+      columnGap="var(--standard--root--column-gap)"
       flexDirection="row"
-      flexWrap="wrap">
-      <ng-template #topToMiddle>
-        <span>
+      flexWrap="wrap"
+      justifyContent="space-between"
+      marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
+      marginSides="calc(-1 * var(--standard--container-directive--padding-sides-input))"
+      marginTop="calc(-1 * var(--standard--container-directive--padding-top-input))"
+      paddingBottom="var(--standard--root--row-gap)"
+      paddingSides="var(--standard--root--column-gap)"
+      paddingTop="var(--standard--root--row-gap)"
+      rowGap="var(--standard--root--row-gap)">
+      <standard--header>
+        <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
           <standard--link
-            (click)="dialogComponent.openModel$.set(true);"
-            symbolName="Globe"
-            [text]="localeDisplayNames.of(localeId) || localeId" />
-        </span>
-      </ng-template>
-      <ng-template #middleToStart>
-        <span>
-          &copy;&nbsp;<standard--link
-            [text]="brand.copyrightHolder"
-            [url]="brand.copyrightHolderUrl" />
-        </span>
-      </ng-template>
-      @if (responsivityService.pastSmallBreakpoint$()) {<ng-container *ngTemplateOutlet="middleToStart" /><ng-container *ngTemplateOutlet="topToMiddle" />} @else {<ng-container *ngTemplateOutlet="topToMiddle" /><ng-container *ngTemplateOutlet="middleToStart" />}
-      <span>
-        {{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
-          [text]="gitInfo.hash || ''"
-          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />&rpar;
-      </span>
+            [text]="brand.title"
+            url="/" />
+        </h1>
+      </standard--header>
+      <standard--grid flexGrow="1">
+        <standard--flexbox-container
+          columnGap="calc(0.5 * var(--standard--root--column-gap))"
+          flexDirection="row"
+          flexGrow="0"
+          hideScrollbar
+          justifyContent="space-between"
+          marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
+          marginSides="calc(-1 * var(--standard--container-directive--padding-sides-input))"
+          marginTop="calc(-1 * var(--standard--container-directive--padding-top-input))"
+          overflowX="scroll"
+          paddingBottom="var(--standard--root--row-gap)"
+          paddingSides="var(--standard--root--column-gap)"
+          paddingTop="var(--standard--root--row-gap)"
+          rowGap="calc(0.5 * var(--standard--root--row-gap))">
+          <standard--link
+            i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
+            text="News"
+            url="/news" />
+          <standard--link
+            i18n-text="@@apps--Website--RouteComponents--DesignRoute--Title"
+            text="Design"
+            url="/design" />
+          <standard--link
+            i18n-text="@@apps--Website--RouteComponents--DevelopRoute--Title"
+            text="Develop"
+            url="/develop" />
+          <standard--link
+            i18n-text="@@libs--RouteComponents--AccountRoute--Title"
+            text="Account"
+            url="/account" />
+        </standard--flexbox-container>
+      </standard--grid>
     </standard--flexbox-container>
-    <standard--section>
+    <standard--flexbox-container
+      columnGap="var(--standard--root--column-gap)"
+      flexGrow="1"
+      rowGap="var(--standard--root--row-gap)">
+      <standard--main />
+    </standard--flexbox-container>
+    <standard--footer>
       <standard--flexbox-container
+        alignItems="center"
         flexDirection="row"
         flexWrap="wrap">
-        <standard--header>
-          <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
+        <ng-template #topToMiddleTemplate>
+          <span>
             <standard--link
-              [text]="brand.title"
-              url="/" />
-          </h1>
-        </standard--header>
+              (click)="localeDialogComponent.openModel$.set(true);"
+              symbolName="Globe"
+              [text]="localeDisplayNames.of(localeId) || localeId" />
+          </span>
+        </ng-template>
+        <ng-template #middleToStartTemplate>
+          <span>
+            &copy;&nbsp;<standard--link
+              [text]="brand.copyrightHolder"
+              [url]="brand.copyrightHolderUrl" />
+          </span>
+        </ng-template>
+        @if (responsivityService.pastSmallBreakpoint$()) {<ng-container *ngTemplateOutlet="middleToStartTemplate" /><ng-container *ngTemplateOutlet="topToMiddleTemplate" />} @else {<ng-container *ngTemplateOutlet="topToMiddleTemplate" /><ng-container *ngTemplateOutlet="middleToStartTemplate" />}
+        <span>
+          {{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
+            [text]="gitInfo.hash || ''"
+            [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />&rpar;
+        </span>
+      </standard--flexbox-container>
+      <standard--section>
         <standard--flexbox-container
-          columnGap="inherit"
           flexDirection="row"
-          flexGrow="1"
-          flexWrap="wrap"
-          justifyContent="space-between"
-          rowGap="inherit">
-          <standard--flexbox-container flexDirection="row">
-            <standard--flexbox-container alignItems="flex-start">
+          flexWrap="wrap">
+          <standard--header>
+            <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
               <standard--link
-                i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
-                text="News"
-                url="/news" />
-              <standard--link
-                i18n-text="@@apps--Website--RouteComponents--DesignRoute--Title"
-                text="Design"
-                url="/design" />
-              <standard--link
-                i18n-text="@@apps--Website--RouteComponents--DevelopRoute--Title"
-                text="Develop"
-                url="/develop" />
+                [text]="brand.title"
+                url="/" />
+            </h1>
+          </standard--header>
+          <standard--flexbox-container
+            columnGap="inherit"
+            flexDirection="row"
+            flexGrow="1"
+            flexWrap="wrap"
+            justifyContent="space-between"
+            rowGap="inherit">
+            <standard--flexbox-container flexDirection="row">
+              <standard--flexbox-container alignItems="flex-start">
+                <standard--link
+                  i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
+                  text="News"
+                  url="/news" />
+                <standard--link
+                  i18n-text="@@apps--Website--RouteComponents--DesignRoute--Title"
+                  text="Design"
+                  url="/design" />
+                <standard--link
+                  i18n-text="@@apps--Website--RouteComponents--DevelopRoute--Title"
+                  text="Develop"
+                  url="/develop" />
+              </standard--flexbox-container>
+              <standard--flexbox-container alignItems="flex-start">
+                <standard--link
+                  i18n-text="@@libs--DialogComponents--SigninDialog--Title"
+                  text="Sign in" />
+                <standard--link
+                  i18n-text="@@libs--DialogComponents--SignupDialog--Title"
+                  text="Create an account" />
+              </standard--flexbox-container>
+              <standard--flexbox-container alignItems="flex-start">
+                <standard--link
+                  i18n-text="@@libs--RouteComponents--PrivacyRoute--Title"
+                  text="Privacy"
+                  url="/privacy" />
+                <standard--link
+                  i18n-text="@@libs--RouteComponents--TermsRoute--Title"
+                  text="Terms"
+                  url="/terms" />
+              </standard--flexbox-container>
             </standard--flexbox-container>
-            <standard--flexbox-container alignItems="flex-start">
-              <standard--link
-                i18n-text="@@libs--DialogComponents--SigninDialog--Title"
-                text="Sign in" />
-              <standard--link
-                i18n-text="@@libs--DialogComponents--SignupDialog--Title"
-                text="Create an account" />
-            </standard--flexbox-container>
-            <standard--flexbox-container alignItems="flex-start">
-              <standard--link
-                i18n-text="@@libs--RouteComponents--PrivacyRoute--Title"
-                text="Privacy"
-                url="/privacy" />
-              <standard--link
-                i18n-text="@@libs--RouteComponents--TermsRoute--Title"
-                text="Terms"
-                url="/terms" />
-            </standard--flexbox-container>
-          </standard--flexbox-container>
-          <standard--flexbox-container flexDirection="row">
-            <standard--flexbox-container alignItems="flex-start">
-              <standard--link
-                symbolName="ArrowUpForwardAppFill"
-                text="Instagram" />
+            <standard--flexbox-container flexDirection="row">
+              <standard--flexbox-container alignItems="flex-start">
+                <standard--link
+                  symbolName="ArrowUpForwardAppFill"
+                  text="Instagram" />
+              </standard--flexbox-container>
             </standard--flexbox-container>
           </standard--flexbox-container>
         </standard--flexbox-container>
-      </standard--flexbox-container>
-    </standard--section>
-  </standard--footer>
-</standard--flexbox-container>
-<standard--dialog #dialogComponent>
+      </standard--section>
+    </standard--footer>
+  </div>
+</div>
+<standard--dialog #localeDialogComponent>
   @defer {<standard--card>
     <standard--heading-group>
       <standard--header>
@@ -175,7 +171,7 @@
         [disabled]="locale === localeId"
         flexDirection="row"
         flexGrow="1"
-        borderRadiusFactor="0.5"
+        roundnessFactor="0.5"
         (select)="locale === localeId || changeLocale(locale);"
         symbolName="Globe"
         [text]="localeDisplayNames.of(locale) || locale" />}

@@ -46,7 +46,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: RoundedDirective,
         inputs:    [
-          "borderRadiusFactor",
+          "roundnessFactor",
         ],
       },
     ],
@@ -62,21 +62,15 @@ export class VideoComponent {
 
   constructor() {
     effect(
-      (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlVideoElementRef$(),
-        );
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlVideoElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(
+        this.htmlVideoElementRef$(),
+      ),
       {
         allowSignalWrites: true,
       },
     );
   }
 
-  private readonly containerDirective: ContainerDirective                     = inject<ContainerDirective>(ContainerDirective);
   private readonly htmlVideoElementRef$: Signal<ElementRef<HTMLVideoElement>> = viewChild.required<ElementRef<HTMLVideoElement>>("htmlVideoElement");
 
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);

@@ -1,5 +1,5 @@
 import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, FlexboxContainerDirective }                      from "@standard/directives";
+import { FlexboxContainerDirective }                                          from "@standard/directives";
 
 
 @Component(
@@ -33,21 +33,15 @@ export class FlexboxContainerComponent {
 
   constructor() {
     effect(
-      (): void => {
-        this.containerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-        this.flexboxContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-      },
+      (): void => this.flexboxContainerDirective.htmlElementRef$.set(
+        this.htmlDivElementRef$(),
+      ),
       {
         allowSignalWrites: true,
       },
     );
   }
 
-  private readonly containerDirective: ContainerDirective                 = inject<ContainerDirective>(ContainerDirective);
   private readonly flexboxContainerDirective: FlexboxContainerDirective   = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 

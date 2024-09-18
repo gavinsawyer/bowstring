@@ -14,11 +14,10 @@
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
 
-  > div
-    display: grid
+  > .harness
     user-select: none
 
-    > div
+    > .element
       background: var(--body--canvas--background)
       box-shadow: inset transparentize(black, 0.25) 0 0.125rem 0.375rem -0.25rem
       display: flex
@@ -54,5 +53,5 @@
           resize: none
 
 
-\:host-context(standard--card) > div > div
+\:host-context(standard--card) > .harness > .element
   background: var(--card--glass--background)

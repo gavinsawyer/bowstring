@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src/index.ts"
+  "files":   [
+    "src/lib/main.ts"
   ]
 }

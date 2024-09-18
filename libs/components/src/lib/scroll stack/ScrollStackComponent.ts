@@ -1,8 +1,8 @@
-import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                          from "@angular/common";
-import { Component, contentChildren, effect, type ElementRef, inject, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                       from "@angular/core/rxjs-interop";
-import { ContainerDirective, FlexboxChildDirective, ScrollStackItemDirective }                                                                                                          from "@standard/directives";
-import { filter, fromEvent, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }                                                                                  from "rxjs";
+import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                  from "@angular/common";
+import { Component, contentChildren, type ElementRef, inject, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                               from "@angular/core/rxjs-interop";
+import { ContainerDirective, FlexboxChildDirective, ScrollStackItemDirective }                                                                                                  from "@standard/directives";
+import { filter, fromEvent, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }                                                                          from "rxjs";
 
 
 @Component(
@@ -59,18 +59,6 @@ import { filter, fromEvent, map, Observable, type Observer, startWith, switchMap
 )
 export class ScrollStackComponent {
 
-  constructor() {
-    effect(
-      (): void => this.containerDirective.htmlElementRef$.set(
-        this.htmlDivElementRef$(),
-      ),
-      {
-        allowSignalWrites: true,
-      },
-    );
-  }
-
-  private readonly containerDirective: ContainerDirective                 = inject<ContainerDirective>(ContainerDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                       = inject<NonNullable<unknown>>(PLATFORM_ID);
 

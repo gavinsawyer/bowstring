@@ -51,12 +51,12 @@
       color: var(--footer--grey--foreground)
 
 
-\:host-context(standard-website--root standard--flexbox-container standard--flexbox-container#menu)
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu)
   > a,
   > button
     color: currentColor
 
-\:host-context(standard-website--root standard--flexbox-container standard--flexbox-container#menu standard--header, standard--footer standard--header)
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu standard--header, standard-website--root > .harness > .element > standard--footer standard--header)
   > a,
   > button
     color: currentColor
