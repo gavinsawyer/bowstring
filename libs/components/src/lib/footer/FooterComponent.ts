@@ -144,36 +144,16 @@ export class FooterComponent {
       width:  0,
     },
   );
-  private readonly injector: Injector                                             = inject<Injector>(Injector);
   private readonly flexboxContainerDirective: FlexboxContainerDirective           = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
+  private readonly injector: Injector                                             = inject<Injector>(Injector);
+  private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
   private readonly width$: Signal<number>                                         = computed<number>(
     (): number => this.dimensions$().width,
   );
-  private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
 
-  protected readonly height$: Signal<number>                     = computed<number>(
+  protected readonly height$: Signal<number> = computed<number>(
     (): number => this.dimensions$().height,
   );
-  protected readonly raisingScale$: Signal<number>               = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<number, 0>(
-    toObservable<number>(
-      this.width$,
-    ).pipe<[ number, number | undefined ], number>(
-      combineLatestWith<number, [ number | undefined ]>(
-        toObservable<number | undefined>(
-          this.viewportService.width$,
-        ),
-      ),
-      map<[ number, number | undefined ], number>(
-        ([ footerWidth, viewportWidth ]: [ number, number | undefined ]): number => ((viewportWidth || footerWidth) - footerWidth) / (viewportWidth || footerWidth) / 2.6180339887,
-      ),
-    ),
-    {
-      initialValue: 0,
-    },
-  ) : signal<0>(0);
-  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly stuckModelWithTransform$: Signal<boolean> = computed<boolean>(
     (): boolean => ((stuck?: "" | boolean | `${ boolean }`): boolean => stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && false)(
@@ -181,22 +161,7 @@ export class FooterComponent {
     ),
   );
 
-  protected readonly stuckOrUnsticking$: Signal<boolean>    = toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.stuckModelWithTransform$,
-    ).pipe<boolean, boolean>(
-      delayWhen<boolean>(
-        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(360),
-      ),
-      map<boolean, boolean>(
-        (): boolean => this.stuckModelWithTransform$(),
-      ),
-    ),
-    {
-      initialValue: false,
-    },
-  );
-  protected readonly unstickingTranslation$: Signal<number> = isPlatformBrowser(
+  protected readonly unstickingTranslation$: Signal<number>                  = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<number, 0>(
     toObservable<boolean>(
@@ -248,8 +213,7 @@ export class FooterComponent {
       initialValue: 0,
     },
   ) : signal<0>(0);
-
-  public readonly raisedWhenStuckOrUnsticking$: Signal<boolean> = toSignal<boolean, false>(
+  protected readonly raisedWhenStuckOrUnsticking$: Signal<boolean>           = toSignal<boolean, false>(
     toObservable<number>(
       this.unstickingTranslation$,
     ).pipe<boolean>(
@@ -261,7 +225,6 @@ export class FooterComponent {
       initialValue: false,
     },
   );
-
   protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean> = toSignal<boolean, false>(
     toObservable<boolean>(
       this.raisedWhenStuckOrUnsticking$,
@@ -271,6 +234,41 @@ export class FooterComponent {
       ),
       map<boolean, boolean>(
         (): boolean => this.raisedWhenStuckOrUnsticking$(),
+      ),
+    ),
+    {
+      initialValue: false,
+    },
+  );
+  protected readonly raisingScale$: Signal<number>                           = isPlatformBrowser(
+    this.platformId,
+  ) ? toSignal<number, 0>(
+    toObservable<number>(
+      this.width$,
+    ).pipe<[ number, number | undefined ], number>(
+      combineLatestWith<number, [ number | undefined ]>(
+        toObservable<number | undefined>(
+          this.viewportService.width$,
+        ),
+      ),
+      map<[ number, number | undefined ], number>(
+        ([ footerWidth, viewportWidth ]: [ number, number | undefined ]): number => ((viewportWidth || footerWidth) - footerWidth) / (viewportWidth || footerWidth) / 2.6180339887,
+      ),
+    ),
+    {
+      initialValue: 0,
+    },
+  ) : signal<0>(0);
+  protected readonly roundedContainerDirective: RoundedDirective             = inject<RoundedDirective>(RoundedDirective);
+  protected readonly stuckOrUnsticking$: Signal<boolean>                     = toSignal<boolean, false>(
+    toObservable<boolean>(
+      this.stuckModelWithTransform$,
+    ).pipe<boolean, boolean>(
+      delayWhen<boolean>(
+        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(360),
+      ),
+      map<boolean, boolean>(
+        (): boolean => this.stuckModelWithTransform$(),
       ),
     ),
     {

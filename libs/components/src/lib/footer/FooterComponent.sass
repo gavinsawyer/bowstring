@@ -36,19 +36,19 @@
 
     @include keyframes--lower-harness
 
-    @keyframes raise-harness
-      0%
-        @include keyframes--lower-harness
-
-      100%
-        @include keyframes--raise-harness
-
     @keyframes lower-harness
       0%
         @include keyframes--raise-harness
 
       100%
         @include keyframes--lower-harness
+
+    @keyframes raise-harness
+      0%
+        @include keyframes--lower-harness
+
+      100%
+        @include keyframes--raise-harness
 
     @mixin keyframes--stick-harness
       translate: 0 0 0

@@ -15,7 +15,7 @@
   --standard--flexbox-container-directive--align-items: center !important
   --standard--flexbox-container-directive--justify-content: center !important
 
-  > dialog
+  > .harness
     background: transparent
     border: none
     display: grid
@@ -80,16 +80,15 @@
         @include FlexboxContainerDirective.children
 
   &.openOrClosing
-    > dialog
+    > .harness
       animation: open-dialog 200ms ease-in forwards
       visibility: visible
 
       &::backdrop
         animation: open-backdrop 200ms ease-in forwards
 
-    &:not(.open) > dialog
+    &:not(.open) > .harness
       animation: close-dialog 200ms ease-in forwards
 
       &::backdrop
         animation: close-backdrop 200ms ease-in forwards
-

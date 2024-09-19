@@ -30,7 +30,7 @@ import { SymbolPathsLoaderDirective }                                           
 )
 export class LinkComponent {
 
-  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>("routerLinkActive");
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
   protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective  = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
 
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
