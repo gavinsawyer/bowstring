@@ -73,7 +73,7 @@ export class RootComponent {
     return isPlatformBrowser(
       this.platformId,
     ) ? ((): void => {
-      this.document.location.href = "/" + localeId + this.location.path();
+      this.document.location.href = `/${ localeId + this.location.path() }`;
     })() : void (0);
   }
 

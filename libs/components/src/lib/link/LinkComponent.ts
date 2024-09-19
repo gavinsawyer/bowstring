@@ -1,7 +1,7 @@
-import { NgComponentOutlet, NgTemplateOutlet }                                                                          from "@angular/common";
-import { booleanAttribute, Component, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                 from "@angular/router";
-import { SymbolPathsLoaderDirective }                                                                                   from "@standard/directives";
+import { NgComponentOutlet, NgTemplateOutlet }                                                                                                                                 from "@angular/common";
+import { booleanAttribute, Component, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
+import { SymbolPathsLoaderDirective }                                                                                                                                          from "@standard/directives";
 
 
 @Component(
@@ -30,13 +30,19 @@ import { SymbolPathsLoaderDirective }                                           
 )
 export class LinkComponent {
 
-  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>("routerLinkActive");
+  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective  = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
 
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,
     {
       alias:     "disabled",
       transform: booleanAttribute,
+    },
+  );
+  public readonly selectOutput: OutputEmitterRef<void>                                                         = output<void>(
+    {
+      alias: "select",
     },
   );
   public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`> = input<number | undefined, number | `${ number }`>(

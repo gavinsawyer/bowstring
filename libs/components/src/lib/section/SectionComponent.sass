@@ -11,11 +11,3 @@
   > .harness > .element::ng-deep > *
     @include ContainerDirective.children
     @include FlexboxChildDirective.children
-
-  &:last-of-type > .harness > .element
-    border-bottom: none
-    padding-bottom: 0
-
-
-\:host-context(standard--heading-group) > .harness > .element
-  max-width: calc(1em * pow(var(--phi), 8))

@@ -1,62 +1,68 @@
+@use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
+
+
 \:host
   display: contents
 
-  > button
-    all: unset
+  @include FlexboxContainerDirective.host
 
-  > a,
-  > button
-    position: relative
-    color: var(--primary--canvas--background)
-    cursor: pointer
-    display: inline-flex
-    gap: 0.25em
-    outline: none
-    text-decoration: none
-    transition: color 200ms ease-in-out
-    user-select: none
-    white-space: nowrap
-    z-index: 0
-    -webkit-tap-highlight-color: transparent
+  --standard--container-directive--padding-bottom: 0px !important
+  --standard--container-directive--padding-sides: 0px !important
+  --standard--container-directive--padding-top: 0px !important
+  --standard--flexbox-container-directive--column-gap: 0.25em !important
+  --standard--flexbox-container-directive--flex-direction: row !important
 
-    > svg
-      width: 1em
+  > .harness
+    display: inline-grid !important
+
+    > button
+      all: unset
+
+    > .element
+      color: var(--primary--canvas--background)
+      cursor: pointer
+      display: inline-flex
+      outline: none
+      text-decoration: none
+      transition: color 200ms ease-in-out
+      user-select: none
+      white-space: nowrap
+      z-index: 0
+      -webkit-tap-highlight-color: transparent
+
+      > svg
+        height: 1.1458980338em
+        left: 0
+        position: absolute
+
+    &.symbol > .element
+      padding: var(--standard--container-directive--padding-top) var(--standard--container-directive--padding-sides) var(--standard--container-directive--padding-bottom) calc(1.3958980338em + var(--standard--container-directive--padding-sides)) !important
 
     @media (hover: hover)
       &:not(.no-op)
         &:hover,
         &:focus-visible
-          text-decoration: underline
+          > .element
+            text-decoration: underline
 
-    &.no-op
+    &.no-op > .element
       cursor: default
 
-    &:active,
-    &.no-op
+    > .element:active,
+    &.no-op > .element
       color: var(--body--grey--foreground)
 
 
-\:host-context(standard--card)
-  > a,
-  > button
-    &:active,
-    &.no-op
-      color: var(--card--grey--foreground)
+\:host-context(standard--card) > .harness
+  > .element:active,
+  &.no-op > .element
+    color: var(--card--grey--foreground)
 
-\:host-context(standard--footer)
-  > a,
-  > button
-    &:active,
-    &.no-op
-      color: var(--footer--grey--foreground)
+\:host-context(standard--footer) > .harness
+  > .element:active,
+  &.no-op > .element
+    color: var(--footer--grey--foreground)
 
 
-\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu)
-  > a,
-  > button
-    color: currentColor
-
-\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu standard--header, standard-website--root > .harness > .element > standard--footer standard--header)
-  > a,
-  > button
-    color: currentColor
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu, standard-website--root > .harness > .element > standard--footer standard--header) > .harness > .element
+  color: currentColor

@@ -9,74 +9,43 @@
     > h5,
     > h6
       cursor: default
-      margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -1))
+      margin: 0
 
     > h1
-      font-size: calc(1em * pow(var(--phi), 4))
-
-      &:has(+ h2)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
+      font-size: calc(1em * pow(var(--phi), 6))
 
     > h2
-      font-size: calc(1em * pow(var(--phi), 3))
-
-      &:has(+ h3)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
-
-      &:has(+ h1)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
+      font-size: calc(1em * pow(var(--phi), 5))
 
     > h3
-      font-size: calc(1em * pow(var(--phi), 2))
-
-      &:has(+ h4)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
-
-      &:has(+ h2)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
+      font-size: calc(1em * pow(var(--phi), 4))
 
     > h4
-      font-size: calc(1em * pow(var(--phi), 1))
-
-      &:has(+ h5)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
-
-      &:has(+ h3)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
+      font-size: calc(1em * pow(var(--phi), 4))
 
     > h5
-      font-size: 1em
-
-      &:has(+ h6)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(-0.25em * pow(var(--phi), -4))
-
-      &:has(+ h4)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
+      font-size: calc(1em * pow(var(--phi), 3))
 
     > h6
-      font-size: calc(1em * pow(var(--phi), -1))
-      font-weight: lighter
-
-      &:has(+ h5)
-        margin: calc(1em * pow(var(--phi), -3)) 0 calc(1em * pow(var(--phi), -2))
+      font-size: calc(1em * pow(var(--phi), 2))
 
 
 @mixin host-context($font-size-exponent)
   > header
     font-size: calc(1rem * pow(var(--phi), $font-size-exponent))
 
-\:host-context(standard--card)
-  @include host-context(0)
+\:host-context(standard--dialog)
+  @include host-context(-1)
 
+\:host-context(standard--footer)
+  @include host-context(-1)
 
-\:host-context(standard-website--root > .harness > .element > standard--footer)
+\:host-context(standard--main)
   @include host-context(-3)
 
+\:host-context(standard--aside)
+  @include host-context(-4)
+
+
 \:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu)
-  @include host-context(-2)
-
-
-\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu, standard-website--root > .harness > .element > standard--footer) > header::ng-deep
-  > h1,
-  > h2
-    margin: 0
+  @include host-context(-4)

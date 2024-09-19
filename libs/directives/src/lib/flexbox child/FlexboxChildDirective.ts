@@ -14,20 +14,20 @@ import { type Auto, type Inherit, type ScalarString }                           
 )
 export class FlexboxChildDirective {
 
-  public readonly flexBasisInput$: InputSignal<Auto | ScalarString | Inherit | undefined>                                    = input<Auto | ScalarString | Inherit | undefined>(
+  public readonly flexBasisInput$: InputSignal<Auto | ScalarString | Inherit | undefined>                     = input<Auto | ScalarString | Inherit | undefined>(
     undefined,
     {
       alias: "flexBasis",
     },
   );
-  public readonly flexGrowInput$: InputSignalWithTransform<Inherit | number | undefined, Inherit | number | `${ number }`>   = input<Inherit | number | undefined, Inherit | number | `${ number }`>(
+  public readonly flexGrowInput$: InputSignalWithTransform<number | undefined, "" | number | `${ number }`>   = input<number | undefined, "" | number | `${ number }`>(
     undefined,
     {
       alias:     "flexGrow",
       transform: numberAttribute,
     },
   );
-  public readonly flexShrinkInput$: InputSignalWithTransform<Inherit | number | undefined, Inherit | number | `${ number }`> = input<Inherit | number | undefined, Inherit | number | `${ number }`>(
+  public readonly flexShrinkInput$: InputSignalWithTransform<number | undefined, "" | number | `${ number }`> = input<number | undefined, "" | number | `${ number }`>(
     undefined,
     {
       alias:     "flexShrink",

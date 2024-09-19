@@ -38,22 +38,8 @@
   > .harness > .element
     padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides))) !important
 
-    > standard--footer::ng-deep > .harness > .element > standard--flexbox-container
-      --standard--flexbox-container-directive--justify-content: center !important
-
-      @media (min-width: 32rem)
-        --standard--flexbox-container-directive--justify-content: space-between !important
-
-      > .harness > .element > *
-        text-align: center
-        user-select: none
-        white-space: nowrap
-
-        &:first-child
-          flex-basis: 100%
-
-          @media (min-width: 32rem)
-            flex-basis: unset
+    > standard--footer::ng-deep > .harness > .element > standard--flexbox-container:last-of-type > .harness > .element
+      border-top: 1px solid currentColor
 
     &::ng-deep > *
       @include FlexboxContainerDirective.children

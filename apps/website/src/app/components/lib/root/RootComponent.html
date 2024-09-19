@@ -27,7 +27,6 @@
         <standard--flexbox-container
           columnGap="calc(0.5 * var(--standard--root--column-gap))"
           flexDirection="row"
-          flexGrow="0"
           hideScrollbar
           justifyContent="space-between"
           marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
@@ -65,93 +64,98 @@
     </standard--flexbox-container>
     <standard--footer>
       <standard--flexbox-container
-        alignItems="center"
         flexDirection="row"
         flexWrap="wrap">
-        <ng-template #topToMiddleTemplate>
-          <span>
+        <standard--header>
+          <h6 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
             <standard--link
-              (click)="localeDialogComponent.openModel$.set(true);"
-              symbolName="Globe"
-              [text]="localeDisplayNames.of(localeId) || localeId" />
-          </span>
-        </ng-template>
-        <ng-template #middleToStartTemplate>
-          <span>
-            &copy;&nbsp;<standard--link
-              [text]="brand.copyrightHolder"
-              [url]="brand.copyrightHolderUrl" />
-          </span>
-        </ng-template>
-        @if (responsivityService.pastSmallBreakpoint$()) {<ng-container *ngTemplateOutlet="middleToStartTemplate" /><ng-container *ngTemplateOutlet="topToMiddleTemplate" />} @else {<ng-container *ngTemplateOutlet="topToMiddleTemplate" /><ng-container *ngTemplateOutlet="middleToStartTemplate" />}
-        <span>
-          {{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
-            [text]="gitInfo.hash || ''"
-            [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />&rpar;
-        </span>
-      </standard--flexbox-container>
-      <standard--section>
+              [text]="brand.title"
+              url="/" />
+          </h6>
+        </standard--header>
         <standard--flexbox-container
+          columnGap="inherit"
           flexDirection="row"
-          flexWrap="wrap">
-          <standard--header>
-            <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
+          flexGrow="1"
+          flexWrap="wrap"
+          justifyContent="space-between"
+          rowGap="inherit">
+          <standard--flexbox-container flexDirection="row">
+            <standard--flexbox-container alignItems="flex-start">
               <standard--link
-                [text]="brand.title"
-                url="/" />
-            </h1>
-          </standard--header>
-          <standard--flexbox-container
-            columnGap="inherit"
-            flexDirection="row"
-            flexGrow="1"
-            flexWrap="wrap"
-            justifyContent="space-between"
-            rowGap="inherit">
-            <standard--flexbox-container flexDirection="row">
-              <standard--flexbox-container alignItems="flex-start">
-                <standard--link
-                  i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
-                  text="News"
-                  url="/news" />
-                <standard--link
-                  i18n-text="@@apps--Website--RouteComponents--DesignRoute--Title"
-                  text="Design"
-                  url="/design" />
-                <standard--link
-                  i18n-text="@@apps--Website--RouteComponents--DevelopRoute--Title"
-                  text="Develop"
-                  url="/develop" />
-              </standard--flexbox-container>
-              <standard--flexbox-container alignItems="flex-start">
-                <standard--link
-                  i18n-text="@@libs--DialogComponents--SigninDialog--Title"
-                  text="Sign in" />
-                <standard--link
-                  i18n-text="@@libs--DialogComponents--SignupDialog--Title"
-                  text="Create an account" />
-              </standard--flexbox-container>
-              <standard--flexbox-container alignItems="flex-start">
-                <standard--link
-                  i18n-text="@@libs--RouteComponents--PrivacyRoute--Title"
-                  text="Privacy"
-                  url="/privacy" />
-                <standard--link
-                  i18n-text="@@libs--RouteComponents--TermsRoute--Title"
-                  text="Terms"
-                  url="/terms" />
-              </standard--flexbox-container>
+                i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
+                text="News"
+                url="/news" />
+              <standard--link
+                i18n-text="@@apps--Website--RouteComponents--DesignRoute--Title"
+                text="Design"
+                url="/design" />
+              <standard--link
+                i18n-text="@@apps--Website--RouteComponents--DevelopRoute--Title"
+                text="Develop"
+                url="/develop" />
             </standard--flexbox-container>
-            <standard--flexbox-container flexDirection="row">
-              <standard--flexbox-container alignItems="flex-start">
-                <standard--link
-                  symbolName="ArrowUpForwardAppFill"
-                  text="Instagram" />
-              </standard--flexbox-container>
+            <standard--flexbox-container alignItems="flex-start">
+              <standard--link
+                i18n-text="@@libs--DialogComponents--SigninDialog--Title"
+                text="Sign in" />
+              <standard--link
+                i18n-text="@@libs--DialogComponents--SignupDialog--Title"
+                text="Create an account" />
+            </standard--flexbox-container>
+            <standard--flexbox-container alignItems="flex-start">
+              <standard--link
+                i18n-text="@@libs--RouteComponents--PrivacyRoute--Title"
+                text="Privacy"
+                url="/privacy" />
+              <standard--link
+                i18n-text="@@libs--RouteComponents--TermsRoute--Title"
+                text="Terms"
+                url="/terms" />
+            </standard--flexbox-container>
+          </standard--flexbox-container>
+          <standard--flexbox-container flexDirection="row">
+            <standard--flexbox-container alignItems="flex-start">
+              <standard--link
+                symbolName="ArrowUpForwardAppFill"
+                text="Instagram" />
             </standard--flexbox-container>
           </standard--flexbox-container>
         </standard--flexbox-container>
-      </standard--section>
+      </standard--flexbox-container>
+      <standard--flexbox-container
+        flexDirection="row"
+        flexWrap="wrap"
+        justifyContent="center"
+        paddingTop="calc(0.5 * var(--standard--flexbox-container-directive--row-gap))">
+        <standard--flexbox-container
+          flexDirection="row"
+          [flexGrow]="responsivityService.pastMediumBreakpoint$() ? 1 : 0"
+          flexWrap="wrap"
+          [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
+          <span style="white-space: nowrap;">
+            @if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2024&nbsp;}<standard--link
+              [text]="brand.copyrightHolder"
+              [url]="brand.copyrightHolderUrl" />
+          </span>
+          <span style="white-space: nowrap;">
+            {{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
+              [text]="gitInfo.hash || ''"
+              [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash" />&rpar;
+          </span>
+        </standard--flexbox-container>
+        <standard--flexbox-container
+          [flexBasis]="responsivityService.pastSmallBreakpoint$() ? 'auto' : '100%'"
+          flexDirection="row"
+          justifyContent="center">
+          <span>
+            <standard--link
+              (select)="localeDialogComponent.openModel$.set(true);"
+              symbolName="Globe"
+              [text]="localeDisplayNames.of(localeId) || localeId" />
+          </span>
+        </standard--flexbox-container>
+      </standard--flexbox-container>
     </standard--footer>
   </div>
 </div>
@@ -159,7 +163,7 @@
   @defer {<standard--card>
     <standard--heading-group>
       <standard--header>
-        <h3 i18n="@@apps--Website--Components--Root--LocaleDialog--Title">Choose your locale</h3>
+        <h6 i18n="@@apps--Website--Components--Root--LocaleDialog--Title">Choose your locale</h6>
       </standard--header>
     </standard--heading-group>
     @for (locale of localeIds; track locale) {<standard--button
