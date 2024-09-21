@@ -4,7 +4,7 @@
       "@angular/localize"
     ]
   },
-  "extends":         "../../tsconfig.json",
+  "extends":         "../../tsconfig.base.json",
   "files":           [
     "src/app/main.browser.ts",
     "src/app/main.server.ts"

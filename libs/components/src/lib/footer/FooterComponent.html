@@ -19,8 +19,8 @@
   </clipPath>
 </svg>
 <ng-template #disclosureControlTemplate>
-  <standard--button
+  @if (!stuckModelWithTransform$() || raisedWhenStuckOrUnsticking$()) {<standard--button
     appearance="symbol"
     (select)="stuckModel$.set(!stuckModelWithTransform$());"
-    [symbolName]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />
+    [symbolName]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />}
 </ng-template>

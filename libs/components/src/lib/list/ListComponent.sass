@@ -10,6 +10,14 @@
     display: inline-flex
     flex-direction: row
 
+    > span:not(:first-child)
+      display: inline-flex
+      flex-direction: row
+      gap: calc(1rem * pow(var(--phi), -3))
+
+      &:before
+        content: "•"
+
   > ol,
   > ul
     margin: 0

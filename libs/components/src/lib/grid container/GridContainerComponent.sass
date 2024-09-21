@@ -1,0 +1,16 @@
+@use "../../../../directives/src/lib/grid container/GridContainerDirective"
+
+
+\:host
+  display: contents
+
+  @include GridContainerDirective.host
+
+  > .harness > .element::ng-deep > *
+    @include GridContainerDirective.children
+
+
+@each $host-context-namespace in ("dialog", "main", "footer", "card", "button")
+  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+    --standard--grid-container-directive--gap-column: var(--standard--#{ $host-context-namespace }--gap-column) !important
+    --standard--grid-container-directive--gap-row: var(--standard--#{ $host-context-namespace }--gap-row) !important

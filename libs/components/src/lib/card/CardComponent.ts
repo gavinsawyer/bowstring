@@ -16,12 +16,12 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
         inputs:    [
           "alignContent",
           "alignItems",
-          "columnGap",
           "flexDirection",
           "flexWrap",
+          "gapColumn",
+          "gapRow",
           "justifyContent",
           "listenToScrollEvent",
-          "rowGap",
         ],
       },
       {

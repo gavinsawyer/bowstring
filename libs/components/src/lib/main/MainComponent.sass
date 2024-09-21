@@ -4,14 +4,15 @@
 \:host
   display: contents
 
-  --standard--main--column-gap: var(--standard--flexbox-container-directive--column-gap)
-  --standard--main--row-gap: var(--standard--flexbox-container-directive--row-gap)
+  --standard--main--font-size-exponent: -3
+  --standard--main--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--main--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
   --standard--flexbox-child-directive--flex-grow: 1 !important
-  --standard--flexbox-container-directive--column-gap: calc(0.5 * var(--standard--root--column-gap)) !important
-  --standard--flexbox-container-directive--row-gap: calc(0.5 * var(--standard--root--row-gap)) !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--main--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--main--gap-row) !important
 
   @media (min-width: 48rem)
     --standard--flexbox-container-directive--flex-direction: row !important

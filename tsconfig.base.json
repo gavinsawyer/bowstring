@@ -27,34 +27,37 @@
     "noPropertyAccessFromIndexSignature": true,
     "outDir":                             "dist/out-tsc",
     "paths":                              {
-      "@standard/brand":            [
+      "@standard/brand":             [
         "libs/brand/src/index.ts"
       ],
-      "@standard/cloud-functions":  [
+      "@standard/cloud-functions":   [
         "libs/cloud functions/src/index.ts"
       ],
-      "@standard/components":       [
+      "@standard/components":        [
         "libs/components/src/index.ts"
       ],
-      "@standard/directives":       [
+      "@standard/dialog-components": [
+        "libs/dialog components/src/index.ts"
+      ],
+      "@standard/directives":        [
         "libs/directives/src/index.ts"
       ],
-      "@standard/injection-tokens": [
+      "@standard/injection-tokens":  [
         "libs/injection tokens/src/index.ts"
       ],
-      "@standard/interfaces":       [
+      "@standard/interfaces":        [
         "libs/interfaces/src/index.ts"
       ],
-      "@standard/route-components": [
+      "@standard/route-components":  [
         "libs/route components/src/index.ts"
       ],
-      "@standard/services":         [
+      "@standard/services":          [
         "libs/services/src/index.ts"
       ],
-      "@standard/symbol-paths":     [
+      "@standard/symbol-paths":      [
         "libs/symbol paths/src/index.ts"
       ],
-      "@standard/types":            [
+      "@standard/types":             [
         "libs/types/src/index.ts"
       ]
     },

@@ -8,11 +8,11 @@ $namespace: "flexbox-container"
 
 $align-content: functions.get-input-reference($namespace, "align-content", normal)
 $align-items: functions.get-input-reference($namespace, "align-items", normal)
-$column-gap: functions.get-input-reference($namespace, "column-gap", calc(1rem * pow(var(--phi), 2)))
 $flex-direction: functions.get-input-reference($namespace, "flex-direction", column)
 $flex-wrap: functions.get-input-reference($namespace, "flex-wrap", nowrap)
+$gap-column: functions.get-input-reference($namespace, "gap-column", 0)
+$gap-row: functions.get-input-reference($namespace, "gap-row", 0)
 $justify-content: functions.get-input-reference($namespace, "justify-content", normal)
-$row-gap: functions.get-input-reference($namespace, "row-gap", calc(1rem * pow(var(--phi), 1)))
 
 @function get-color($theme, $type, $shade)
 
@@ -24,7 +24,7 @@ $row-gap: functions.get-input-reference($namespace, "row-gap", calc(1rem * pow(v
   @include FlexboxChildDirective.children
 
   @include mixins.reset-colors($namespace, ())
-  @include mixins.reset-inputs($namespace, ("align-content", "align-items", "column-gap", "flex-direction", "flex-wrap", "justify-content", "row-gap", "scroll-left", "scroll-top"))
+  @include mixins.reset-inputs($namespace, ("align-content", "align-items", "flex-direction", "flex-wrap", "gap-column", "gap-row", "justify-content", "scroll-left", "scroll-top"))
   @include mixins.reset-values($namespace, ("scroll-left", "scroll-top"))
 
 @mixin host
@@ -42,5 +42,5 @@ $row-gap: functions.get-input-reference($namespace, "row-gap", calc(1rem * pow(v
     display: flex
     flex-direction: $flex-direction
     flex-wrap: $flex-wrap
-    gap: $row-gap $column-gap
+    gap: $gap-row $gap-column
     justify-content: $justify-content

@@ -1,36 +1,35 @@
 @use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
 
 
-\:host
+@mixin host
   display: contents
+
+  --standard--dialog--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), 0))
+  --standard--dialog--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), 0))
+  --standard--dialog--font-size-exponent: -1
 
   @include FlexboxContainerDirective.host
 
   --standard--container-directive--left-position: 0 !important
-  --standard--container-directive--padding-bottom: calc(2 * var(--standard--root--padding-bottom)) !important
-  --standard--container-directive--padding-sides: calc(2 * var(--standard--root--padding-sides)) !important
-  --standard--container-directive--padding-top: calc(2 * var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--padding-bottom: calc(var(--standard--root--padding-bottom) * pow(var(--phi), 1)) !important
+  --standard--container-directive--padding-sides: calc(var(--standard--root--padding-sides) * pow(var(--phi), 1)) !important
+  --standard--container-directive--padding-top: calc(var(--standard--root--padding-bottom) * pow(var(--phi), 1)) !important
   --standard--container-directive--position: fixed !important
   --standard--container-directive--top-position: 0 !important
   --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--dialog--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--dialog--gap-row) !important
   --standard--flexbox-container-directive--justify-content: center !important
 
   > .harness
     background: transparent
     border: none
-    display: grid
     height: 100dvh
     max-height: 100dvh
     max-width: 100dvw
     padding: 0
     visibility: collapse
     width: 100dvw
-
-    @mixin keyframes--close-dialog
-      opacity: 0
-
-    @mixin keyframes--open-dialog
-      opacity: 1
 
     @include keyframes--close-dialog
 
@@ -49,29 +48,21 @@
         @include keyframes--open-dialog
 
     &::backdrop
-      @mixin keyframes--close-backdrop
-        backdrop-filter: blur(0)
-        opacity: 0
+      @include keyframes--hide-backdrop
 
-      @mixin keyframes--open-backdrop
-        backdrop-filter: blur(0.25rem)
-        opacity: 1
-
-      @include keyframes--close-backdrop
-
-      @keyframes close-backdrop
+      @keyframes hide-backdrop
         0%
-          @include keyframes--open-backdrop
+          @include keyframes--show-backdrop
 
         100%
-          @include keyframes--close-backdrop
+          @include keyframes--hide-backdrop
 
-      @keyframes open-backdrop
+      @keyframes show-backdrop
         0%
-          @include keyframes--close-backdrop
+          @include keyframes--hide-backdrop
 
         100%
-          @include keyframes--open-backdrop
+          @include keyframes--show-backdrop
 
     > .element
       padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
@@ -85,10 +76,27 @@
       visibility: visible
 
       &::backdrop
-        animation: open-backdrop 200ms ease-in forwards
+        animation: show-backdrop 200ms ease-in forwards
 
     &:not(.open) > .harness
       animation: close-dialog 200ms ease-in forwards
 
       &::backdrop
-        animation: close-backdrop 200ms ease-in forwards
+        animation: hide-backdrop 200ms ease-in forwards
+
+@mixin keyframes--close-dialog
+  opacity: 0
+
+@mixin keyframes--open-dialog
+  opacity: 1
+
+@mixin keyframes--hide-backdrop
+  backdrop-filter: blur(0)
+  opacity: 0
+
+@mixin keyframes--show-backdrop
+  backdrop-filter: blur(0.25rem)
+  opacity: 1
+
+\:host
+  @include host

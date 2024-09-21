@@ -1,8 +1,8 @@
-import { isPlatformBrowser }                                                                                   from "@angular/common";
-import { computed, Directive, type ElementRef, inject, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                              from "@angular/core/rxjs-interop";
-import { PointerService }                                                                                      from "@standard/services";
-import { combineLatestWith, delayWhen, filter, map, Observable, timer }                                        from "rxjs";
+import { isPlatformBrowser }                                                                                             from "@angular/common";
+import { computed, Directive, type ElementRef, inject, Injector, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                        from "@angular/core/rxjs-interop";
+import { PointerService }                                                                                                from "@standard/services";
+import { delayWhen, filter, map, type Observable, switchMap, timer }                                                     from "rxjs";
 
 
 @Directive(
@@ -17,6 +17,7 @@ import { combineLatestWith, delayWhen, filter, map, Observable, timer }         
 )
 export class HoverTranslatingDirective {
 
+  private readonly injector: Injector                                 = inject<Injector>(Injector);
   private readonly platformId: NonNullable<unknown>                   = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly pointerService: PointerService                     = inject<PointerService>(PointerService);
   private readonly translation$: Signal<{ "x": number, "y": number }> = isPlatformBrowser(
@@ -46,26 +47,28 @@ export class HoverTranslatingDirective {
   ) ? toSignal<200 | 0, 200>(
     toObservable<ElementRef<HTMLElement> | undefined>(
       this.htmlElementRef$,
-    ).pipe<ElementRef<HTMLElement>, [ ElementRef<HTMLElement>, boolean | undefined ], [ ElementRef<HTMLElement>, boolean | undefined ], 200 | 0>(
+    ).pipe<ElementRef<HTMLElement>, 200 | 0>(
       filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLElement> => !!htmlElementRef,
       ),
-      combineLatestWith<ElementRef<HTMLElement>, [ boolean | undefined ]>(
-        toObservable<boolean | undefined>(
+      switchMap<ElementRef<HTMLElement>, Observable<200 | 0>>(
+        (): Observable<200 | 0> => toObservable<boolean | undefined>(
           computed<boolean | undefined>(
             (): boolean | undefined => ((domRect?: DOMRect): boolean => domRect ? this.pointerService.position$().x >= domRect.left && this.pointerService.position$().x <= domRect.right && this.pointerService.position$().y >= domRect.top && this.pointerService.position$().y <= domRect.bottom : false)(
               this.htmlElementRef$()?.nativeElement.getBoundingClientRect(),
             ),
           ),
+          {
+            injector: this.injector,
+          },
+        ).pipe<boolean | undefined, 200 | 0>(
+          delayWhen<boolean | undefined>(
+            (pointerInHtmlElementBoundingClientRect: boolean | undefined): Observable<number> => pointerInHtmlElementBoundingClientRect ? timer(200) : timer(0),
+          ),
+          map<boolean | undefined, 200 | 0>(
+            (pointerInHtmlElementBoundingClientRect: boolean | undefined): 200 | 0 => pointerInHtmlElementBoundingClientRect ? 0 : 200,
+          ),
         ),
-      ),
-      delayWhen<[ ElementRef<HTMLElement>, boolean | undefined ]>(
-        ([ , pointerInHtmlElementBoundingClientRect ]: [ ElementRef<HTMLElement>, boolean | undefined ]): Observable<number> => pointerInHtmlElementBoundingClientRect ? timer(200) : timer(0),
-      ),
-      map<[ ElementRef<HTMLElement>, boolean | undefined ], 200 | 0>(
-        ([ htmlElementRef ]: [ ElementRef<HTMLElement>, boolean | undefined ]): 200 | 0 => ((domRect: DOMRect): boolean => this.pointerService.position$().x >= domRect.left && this.pointerService.position$().x <= domRect.right && this.pointerService.position$().y >= domRect.top && this.pointerService.position$().y <= domRect.bottom)(
-          htmlElementRef.nativeElement.getBoundingClientRect(),
-        ) ? 0 : 200,
       ),
     ),
     {

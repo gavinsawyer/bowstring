@@ -1,15 +1,16 @@
 <standard--article>
-  <standard--heading-group>
+  <standard--heading-group styleFirstLetter>
     <standard--header>
       <h2 i18n="@@libs--RouteComponents--PrivacyRoute--CardTitle">Privacy Policy</h2>
       <h3>
         <standard--flexbox-container
+          alignItems="baseline"
           flexDirection="row"
           flexWrap="wrap">
           <standard--capsule
             i18n-text
             text="legal" />
-          <span>{{ now | date:"fullDate" }}</span>
+          <span>{{ now | date:"longDate" }}</span>
         </standard--flexbox-container>
       </h3>
     </standard--header>
@@ -19,18 +20,16 @@
         <h4>Google</h4>
         <h5>
           <standard--list type="inline">
-            <standard--list-item type="inline">
-              <standard--link
-                i18n-text
-                text="privacy policy"
-                url="https://www.google.com/intl/en/policies/privacy/" />
-            </standard--list-item>
-            <standard--list-item type="inline">
-              <standard--link
-                i18n-text
-                text="terms"
-                url="https://www.google.com/intl/en/policies/terms/" />
-            </standard--list-item>
+            <standard--link
+              i18n-text
+              *standardListItem
+              text="privacy policy"
+              url="https://www.google.com/intl/en/policies/privacy/" />
+            <standard--link
+              i18n-text
+              *standardListItem
+              text="terms"
+              url="https://www.google.com/intl/en/policies/terms/" />
           </standard--list>
         </h5>
       </standard--header>

@@ -1,40 +1,21 @@
-import { Component }                                 from "@angular/core";
-import { ContainerDirective, FlexboxChildDirective } from "@standard/directives";
+import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
+import { FlexboxContainerDirective }                                          from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
       {
-        directive: ContainerDirective,
+        directive: FlexboxContainerDirective,
         inputs:    [
-          "aspectRatio",
-          "alignSelf",
-          "bottomPosition",
-          "hideScrollbar",
-          "leftPosition",
-          "marginBottom",
-          "marginSides",
-          "marginTop",
-          "overflowX",
-          "overflowY",
-          "paddingBottom",
-          "paddingSides",
-          "paddingTop",
-          "position",
-          "rightPosition",
-          "scrollSnapAlign",
-          "scrollSnapStop",
-          "scrollSnapType",
-          "topPosition",
-        ],
-      },
-      {
-        directive: FlexboxChildDirective,
-        inputs:    [
-          "flexBasis",
-          "flexGrow",
-          "flexShrink",
+          "alignContent",
+          "alignItems",
+          "flexDirection",
+          "flexWrap",
+          "gapColumn",
+          "gapRow",
+          "justifyContent",
+          "listenToScrollEvent",
         ],
       },
     ],
@@ -47,4 +28,19 @@ import { ContainerDirective, FlexboxChildDirective } from "@standard/directives"
   },
 )
 export class ArticleComponent {
+
+  constructor() {
+    effect(
+      (): void => this.flexboxContainerDirective.htmlElementRef$.set(
+        this.htmlElementRef$(),
+      ),
+      {
+        allowSignalWrites: true,
+      },
+    );
+  }
+
+  private readonly flexboxContainerDirective: FlexboxContainerDirective = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
+  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>     = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
+
 }

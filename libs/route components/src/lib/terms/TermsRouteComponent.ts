@@ -21,7 +21,8 @@ import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderCo
     templateUrl: "TermsRouteComponent.html",
   },
 )
-export class TermsRouteComponent extends RouteComponent {
+export class TermsRouteComponent
+  extends RouteComponent {
 
   protected readonly now: Date = new Date();
 

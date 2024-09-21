@@ -13,11 +13,11 @@ import { FlexboxChildDirective }                                                
     host:           {
       "[style.--standard--flexbox-container-directive--align-content-input]":   "alignContentInput$()",
       "[style.--standard--flexbox-container-directive--align-items-input]":     "alignItemsInput$()",
-      "[style.--standard--flexbox-container-directive--column-gap-input]":      "columnGapInput$()",
       "[style.--standard--flexbox-container-directive--flex-direction-input]":  "flexDirectionInput$()",
       "[style.--standard--flexbox-container-directive--flex-wrap-input]":       "flexWrapInput$()",
+      "[style.--standard--flexbox-container-directive--gap-column-input]":      "gapColumnInput$()",
+      "[style.--standard--flexbox-container-directive--gap-row-input]":         "gapRowInput$()",
       "[style.--standard--flexbox-container-directive--justify-content-input]": "justifyContentInput$()",
-      "[style.--standard--flexbox-container-directive--row-gap-input]":         "rowGapInput$()",
       "[style.--standard--flexbox-container-directive--scroll-left]":           "scrollLeftModel$()",
       "[style.--standard--flexbox-container-directive--scroll-top]":            "scrollTopModel$()",
     },
@@ -145,10 +145,10 @@ export class FlexboxContainerDirective {
       alias: "alignItems",
     },
   );
-  public readonly columnGapInput$: InputSignal<ScalarString | Inherit | undefined>                                                                            = input<ScalarString | Inherit | undefined>(
+  public readonly gapColumnInput$: InputSignal<ScalarString | Inherit | undefined>                                                                            = input<ScalarString | Inherit | undefined>(
     undefined,
     {
-      alias: "columnGap",
+      alias: "gapColumn",
     },
   );
   public readonly flexDirectionInput$: InputSignal<FlexDirection | Inherit | undefined>                                                                       = input<FlexDirection | Inherit | undefined>(
@@ -170,10 +170,10 @@ export class FlexboxContainerDirective {
       alias: "justifyContent",
     },
   );
-  public readonly rowGapInput$: InputSignal<ScalarString | Inherit | undefined>                                                                               = input<ScalarString | Inherit | undefined>(
+  public readonly gapRowInput$: InputSignal<ScalarString | Inherit | undefined>                                                                               = input<ScalarString | Inherit | undefined>(
     undefined,
     {
-      alias: "rowGap",
+      alias: "gapRow",
     },
   );
   public readonly scrollLeftModel$: ModelSignal<number | undefined>                                                                                           = model<number | undefined>(

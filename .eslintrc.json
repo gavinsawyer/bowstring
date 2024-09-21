@@ -53,6 +53,21 @@
     },
     {
       "files": [
+        "./apps/website/src/app/dialog components/lib/**/*.ts"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "standard-website-dialogs-",
+            "style":  "kebab-case",
+            "type":   "element"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "./apps/website/src/app/directives/src/lib/**/*.ts"
       ],
       "rules": {
@@ -75,6 +90,21 @@
           "error",
           {
             "prefix": "standard-",
+            "style":  "kebab-case",
+            "type":   "element"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "./libs/dialog components/src/lib/**/*.ts"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "standard-dialogs-",
             "style":  "kebab-case",
             "type":   "element"
           }

@@ -7,6 +7,7 @@ export type * from "./lib/FlexPositionalAlignment";
 export type * from "./lib/FlexWrap";
 export type * from "./lib/GridPositionalAlignment";
 export type * from "./lib/Inherit";
+export type * from "./lib/InverseVariableString";
 export type * from "./lib/NormalAlignment";
 export type * from "./lib/Overflow";
 export type * from "./lib/PercentageString";

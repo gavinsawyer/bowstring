@@ -1,30 +1,43 @@
+@use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
+
+
 \:host
   display: contents
 
-  > hgroup::ng-deep
+  --standard--heading-group--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -3))
+  --standard--heading-group--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -3))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-container-directive--gap-column: var(--standard--heading-group--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--heading-group--gap-row) !important
+
+  > .harness > .element::ng-deep
+    > *
+      @include FlexboxContainerDirective.children
+
     &,
-    > standard--section > section
+    > standard--section > .harness > .element
       > span
         display: block
 
       > p,
       > span
-        font-size: 1rem
-        margin: calc(1em * pow(var(--phi), -1)) 0 1em
-        max-width: calc(1em * pow(var(--phi), 7))
+        margin: 0
+        max-width: calc(1em * pow(var(--phi), 8))
         user-select: text
-
-        &:first-child
-          margin-top: 0
-
-        &:last-child
-          margin-bottom: 0
 
     > p:first-of-type
       font-size: calc(1rem * pow(var(--phi), 0.5))
 
-  &:not(.skipStylingFirstLetter) > hgroup::ng-deep > p:first-of-type:first-letter
+  &.styleFirstLetter > .harness > .element::ng-deep > p:first-of-type:first-letter
     float: left
     font-size: calc(2em * pow(var(--phi), 0.375))
     line-height: calc(2em * pow(var(--phi), -2.5))
-    margin: calc(2em * pow(var(--phi),-5)) calc(1em * pow(var(--phi),-5)) 0 0
+    margin: calc(2em * pow(var(--phi), -5)) calc(1em * pow(var(--phi), -5)) 0 0
+
+
+@each $host-context-namespace in ("dialog", "main", "footer", "card", "article")
+  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+    --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
+    --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

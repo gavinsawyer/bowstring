@@ -1,6 +1,7 @@
-import { DatePipe }                                                                                                                                                                                 from "@angular/common";
-import { Component }                                                                                                                                                                                from "@angular/core";
-import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, ListComponent, ListItemComponent, RouteComponent, SectionComponent } from "@standard/components";
+import { DatePipe }                                                                                                                                                              from "@angular/common";
+import { Component }                                                                                                                                                             from "@angular/core";
+import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, ListComponent, RouteComponent, SectionComponent } from "@standard/components";
+import { ListItemDirective }                                                                                                                                                     from "@standard/directives";
 
 
 @Component(
@@ -14,7 +15,7 @@ import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderCo
       HeadingGroupComponent,
       LinkComponent,
       ListComponent,
-      ListItemComponent,
+      ListItemDirective,
       SectionComponent,
     ],
     standalone:  true,
@@ -24,7 +25,8 @@ import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderCo
     templateUrl: "PrivacyRouteComponent.html",
   },
 )
-export class PrivacyRouteComponent extends RouteComponent {
+export class PrivacyRouteComponent
+  extends RouteComponent {
 
   protected readonly now: Date = new Date();
 

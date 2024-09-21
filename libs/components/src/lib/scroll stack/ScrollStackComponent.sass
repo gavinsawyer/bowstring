@@ -46,7 +46,7 @@
           left: 0
           position: fixed
           // noinspection CssInvalidFunction
-          transform: rotate(calc(5.625deg * var(--standard--scroll-stack--item--transformation--dulled))) scale(calc(1 - 0.1875 * var(--standard--scroll-stack--item--transformation--dulled-absolute-value))) translate3d(calc(18.75% * var(--standard--scroll-stack--item--transformation--dulled)), calc(-12.5% * var(--standard--scroll-stack--item--transformation--dulled-absolute-value)), 0)
+          transform: rotate(calc(5.625deg * var(--standard--scroll-stack--item--transformation--dulled))) scale(calc(1 - 0.1875 * var(--standard--scroll-stack--item--transformation--dulled-absolute-value))) translate3d(calc(15.625% * var(--standard--scroll-stack--item--transformation--dulled)), calc(-12.5% * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) - 0.0001627604167px * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) * var(--standard--scroll-stack--viewport-vertical-offset)), 0)
           transform-origin: 50% 100% 0
           width: 100%
           z-index: calc(1 - round(1 * var(--standard--scroll-stack--item--relative-transformation--absolute-value), 1))
@@ -55,9 +55,11 @@
             @include ContainerDirective.children
             @include FlexboxChildDirective.children
 
+            --standard--scroll-stack--height: initial
             --standard--scroll-stack--minimum-aspect-ratio-input: initial
             --standard--scroll-stack--width: initial
             --standard--scroll-stack--scroll-left: initial
+            --standard--scroll-stack--viewport-vertical-offset: initial
 
             --standard--scroll-stack--current-image-index: initial
             --standard--scroll-stack--item--relative-transformation: initial

@@ -1,13 +1,30 @@
-@use "../../../../directives/src/lib/container/ContainerDirective"
-@use "../../../../directives/src/lib/flexbox child/FlexboxChildDirective"
+@use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
 
 
 \:host
   display: contents
 
-  @include ContainerDirective.host
-  @include FlexboxChildDirective.host
+  --standard--section--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -4))
+  --standard--section--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -4))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-container-directive--gap-column: var(--standard--section--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--section--gap-row) !important
 
   > .harness > .element::ng-deep > *
-    @include ContainerDirective.children
-    @include FlexboxChildDirective.children
+    @include FlexboxContainerDirective.children
+
+  &:not(:first-of-type)
+    --standard--container-directive--padding-top: calc(var(--standard--root--gap-row) * pow(var(--phi), -4)) !important
+
+    > .harness > .element
+      border-top: 1px solid currentColor
+
+@each $host-context-namespace in ("dialog", "main", "footer", "card", "article", "heading-group")
+  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+    --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
+    --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important
+
+    &:not(:first-of-type)
+      --standard--container-directive--padding-top: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

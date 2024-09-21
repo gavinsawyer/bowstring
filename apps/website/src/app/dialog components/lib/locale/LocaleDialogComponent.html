@@ -1,0 +1,20 @@
+<dialog class="harness" #htmlDialogElement
+  (click)="$event.stopPropagation(); openModel$.set(false);"
+  (keydown)="containerKeydown($event);"
+  tabindex="0">
+  <div class="element" #htmlDivElement>
+    @defer {<standard--card>
+      <standard--header>
+        <h6 i18n="@@apps--Website--DialogComponents--LocaleDialog--CardTitle">Select your locale</h6>
+      </standard--header>
+      <standard--flexbox-container alignItems="flex-start">
+        @for (locale of localeIds; track locale) {<standard--button
+          [disabled]="locale === localeId"
+          roundnessFactor="0.5"
+          (select)="locale === localeId || changeLocale(locale);"
+          symbolName="Globe"
+          [text]="localeDisplayNames.of(locale) || locale" />}
+      </standard--flexbox-container>
+    </standard--card>}
+  </div>
+</dialog>

@@ -1,15 +1,16 @@
 <standard--article>
-  <standard--heading-group>
+  <standard--heading-group styleFirstLetter>
     <standard--header>
       <h2 i18n="@@libs--RouteComponents--TermsRoute--CardTitle">Terms of Service</h2>
       <h3>
         <standard--flexbox-container
+          alignItems="baseline"
           flexDirection="row"
           flexWrap="wrap">
           <standard--capsule
             i18n-text
             text="legal" />
-          <span>{{ now | date:"fullDate" }}</span>
+          <span>{{ now | date:"longDate" }}</span>
         </standard--flexbox-container>
       </h3>
     </standard--header>

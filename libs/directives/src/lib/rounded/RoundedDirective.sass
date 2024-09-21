@@ -27,14 +27,14 @@ $clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
 
   > .harness
     &:before
-      border-radius: calc($roundness-factor * $brand-roundness-factor * 1.3125rem)
+      border-radius: calc($roundness-factor * $brand-roundness-factor * 1rem * pow(var(--phi), 1))
 
     &:after
-      border-radius: calc($roundness-factor * $brand-roundness-factor * 0.6875rem)
+      border-radius: calc($roundness-factor * $brand-roundness-factor * 1rem)
       clip-path: $clip-path-source
 
     > .element
-      border-radius: calc($roundness-factor * $brand-roundness-factor * 0.6875rem)
+      border-radius: calc($roundness-factor * $brand-roundness-factor * 1rem)
       clip-path: $clip-path-source
       overflow: hidden
 

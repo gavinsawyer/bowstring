@@ -7,19 +7,30 @@
 \:host
   display: contents
 
+  --standard--card--gap-column: var(--standard--card--padding-sides)
+  --standard--card--gap-row: var(--standard--card--padding-bottom)
   --standard--card--material-opacity: 0.8
+
+  --standard--card--padding-bottom: calc(1rem * pow(var(--phi), -1))
+  --standard--card--padding-sides: calc(1rem * pow(var(--phi), 0))
+
+  @media (min-width: 48rem)
+    --standard--card--padding-bottom: calc(1rem * pow(var(--phi), 0))
+    --standard--card--padding-sides: calc(1rem * pow(var(--phi), 1))
+
+  --standard--card--padding-top: calc(var(--standard--card--padding-bottom) * pow(var(--phi), 0))
 
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
   @include GlassDirective.host(6%)
   @include RoundedDirective.host
 
-  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+  --standard--container-directive--padding-bottom: var(--standard--card--padding-bottom) !important
+  --standard--container-directive--padding-sides: var(--standard--card--padding-sides) !important
+  --standard--container-directive--padding-top: var(--standard--card--padding-top) !important
   --standard--elevated-directive--material-opacity: var(--standard--card--material-opacity) !important
-  --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
-  --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--card--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--card--gap-row) !important
   --standard--glass-directive--material-opacity: var(--standard--card--material-opacity) !important
 
   > .harness > .element

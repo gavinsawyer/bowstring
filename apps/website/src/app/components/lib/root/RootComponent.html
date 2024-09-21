@@ -5,38 +5,32 @@
   <div class="element" #htmlDivElement>
     <standard--flexbox-container id="menu"
       alignItems="last baseline"
-      columnGap="var(--standard--root--column-gap)"
       flexDirection="row"
       flexWrap="wrap"
-      justifyContent="space-between"
-      marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
-      marginSides="calc(-1 * var(--standard--container-directive--padding-sides-input))"
-      marginTop="calc(-1 * var(--standard--container-directive--padding-top-input))"
-      paddingBottom="var(--standard--root--row-gap)"
-      paddingSides="var(--standard--root--column-gap)"
-      paddingTop="var(--standard--root--row-gap)"
-      rowGap="var(--standard--root--row-gap)">
-      <standard--header>
+      gapColumn="calc(var(--standard--root--gap-column) * pow(var(--phi), -1))"
+      gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
+      justifyContent="space-between">
+      <standard--header fontSizeExponent="-4">
         <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
           <standard--link
             [text]="brand.title"
             url="/" />
         </h1>
       </standard--header>
-      <standard--grid flexGrow="1">
+      <standard--grid-container flexGrow="1">
         <standard--flexbox-container
-          columnGap="calc(0.5 * var(--standard--root--column-gap))"
           flexDirection="row"
+          gapColumn="calc(var(--standard--root--gap-column) * pow(var(--phi), -1))"
+          gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
           hideScrollbar
           justifyContent="space-between"
           marginBottom="calc(-1 * var(--standard--container-directive--padding-bottom-input))"
           marginSides="calc(-1 * var(--standard--container-directive--padding-sides-input))"
           marginTop="calc(-1 * var(--standard--container-directive--padding-top-input))"
           overflowX="scroll"
-          paddingBottom="var(--standard--root--row-gap)"
-          paddingSides="var(--standard--root--column-gap)"
-          paddingTop="var(--standard--root--row-gap)"
-          rowGap="calc(0.5 * var(--standard--root--row-gap))">
+          paddingBottom="var(--standard--root--gap-row)"
+          paddingSides="var(--standard--root--gap-column)"
+          paddingTop="var(--standard--root--gap-row)">
           <standard--link
             i18n-text="@@apps--Website--RouteComponents--NewsRoute--Title"
             text="News"
@@ -54,32 +48,30 @@
             text="Account"
             url="/account" />
         </standard--flexbox-container>
-      </standard--grid>
+      </standard--grid-container>
     </standard--flexbox-container>
     <standard--flexbox-container
-      columnGap="var(--standard--root--column-gap)"
       flexGrow="1"
-      rowGap="var(--standard--root--row-gap)">
+      gapColumn="var(--standard--root--gap-column)"
+      gapRow="var(--standard--root--gap-row)">
       <standard--main />
     </standard--flexbox-container>
     <standard--footer>
-      <standard--flexbox-container
+      <standard--header>
+        <h6 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
+          <standard--link
+            [text]="brand.title"
+            url="/" />
+        </h6>
+      </standard--header>
+      <standard--section
         flexDirection="row"
         flexWrap="wrap">
-        <standard--header>
-          <h6 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
-            <standard--link
-              [text]="brand.title"
-              url="/" />
-          </h6>
-        </standard--header>
         <standard--flexbox-container
-          columnGap="inherit"
           flexDirection="row"
           flexGrow="1"
           flexWrap="wrap"
-          justifyContent="space-between"
-          rowGap="inherit">
+          justifyContent="space-between">
           <standard--flexbox-container flexDirection="row">
             <standard--flexbox-container alignItems="flex-start">
               <standard--link
@@ -97,9 +89,11 @@
             </standard--flexbox-container>
             <standard--flexbox-container alignItems="flex-start">
               <standard--link
+                (select)="signinDialogComponent.openModel$.set(true);"
                 i18n-text="@@libs--DialogComponents--SigninDialog--Title"
                 text="Sign in" />
               <standard--link
+                (select)="signupDialogComponent.openModel$.set(true);"
                 i18n-text="@@libs--DialogComponents--SignupDialog--Title"
                 text="Create an account" />
             </standard--flexbox-container>
@@ -122,12 +116,11 @@
             </standard--flexbox-container>
           </standard--flexbox-container>
         </standard--flexbox-container>
-      </standard--flexbox-container>
-      <standard--flexbox-container
+      </standard--section>
+      <standard--section
         flexDirection="row"
         flexWrap="wrap"
-        justifyContent="center"
-        paddingTop="calc(0.5 * var(--standard--flexbox-container-directive--row-gap))">
+        justifyContent="center">
         <standard--flexbox-container
           flexDirection="row"
           [flexGrow]="responsivityService.pastMediumBreakpoint$() ? 1 : 0"
@@ -155,24 +148,10 @@
               [text]="localeDisplayNames.of(localeId) || localeId" />
           </span>
         </standard--flexbox-container>
-      </standard--flexbox-container>
+      </standard--section>
     </standard--footer>
   </div>
 </div>
-<standard--dialog #localeDialogComponent>
-  @defer {<standard--card>
-    <standard--heading-group>
-      <standard--header>
-        <h6 i18n="@@apps--Website--Components--Root--LocaleDialog--Title">Choose your locale</h6>
-      </standard--header>
-    </standard--heading-group>
-    @for (locale of localeIds; track locale) {<standard--button
-      appearance="raised"
-      color="primary"
-      [disabled]="locale === localeId"
-      roundnessFactor="0.5"
-      (select)="locale === localeId || changeLocale(locale);"
-      symbolName="Globe"
-      [text]="localeDisplayNames.of(locale) || locale" />}
-  </standard--card>}
-</standard--dialog>
+<standard-dialogs--signin #signinDialogComponent />
+<standard-dialogs--signup #signupDialogComponent />
+<standard-website-dialogs--locale #localeDialogComponent />

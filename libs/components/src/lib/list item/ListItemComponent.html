@@ -1,6 +1,0 @@
-<ng-template #contentTemplate><ng-content /></ng-template>
-@switch (typeInput$()) {
-  @case ("inline") {<span><ng-container *ngTemplateOutlet="contentTemplate" /></span>}
-  @case ("ordered") {<li><ng-container *ngTemplateOutlet="contentTemplate" /></li>}
-  @case ("unordered") {<li><ng-container *ngTemplateOutlet="contentTemplate" /></li>}
-}

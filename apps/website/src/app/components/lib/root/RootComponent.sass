@@ -4,42 +4,33 @@
 \:host
   display: contents
 
-  --standard--root--column-gap: var(--standard--flexbox-container-directive--column-gap)
-  --standard--root--padding-bottom: var(--standard--container-directive--padding-bottom)
-  --standard--root--padding-top: var(--standard--container-directive--padding-top)
-  --standard--root--padding-sides: var(--standard--container-directive--padding-sides)
-  --standard--root--row-gap: var(--standard--flexbox-container-directive--row-gap)
+  --standard--root--gap-column: var(--standard--root--padding-sides)
+  --standard--root--gap-row: var(--standard--root--padding-bottom)
+
+  --standard--root--padding-bottom: calc(1rem * pow(var(--phi), -2))
+  --standard--root--padding-sides: calc(1rem * pow(var(--phi), -1))
+
+  @media (min-width: 24rem)
+    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 0))
+    --standard--root--padding-sides: calc(1rem * pow(var(--phi), 1))
+
+  @media (min-width: 48rem)
+    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 1))
+    --standard--root--padding-sides: calc(1rem * pow(var(--phi), 2))
+
+  --standard--root--padding-top: calc(var(--standard--root--padding-bottom) * pow(var(--phi), 2))
 
   @include FlexboxContainerDirective.host
 
-  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
-  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 1)) !important
-  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
-
-  @media (min-width: calc(1rem * pow(1.6180339887, 7)))
-    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 2)) !important
-    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-
-  @media (min-width: calc(1rem * pow(1.6180339887, 8)))
-    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 0)) !important
-    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 3)) !important
-    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 1)) !important
-
-  @media (min-width: calc(1rem * pow(1.6180339887, 9)))
-    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 1)) !important
-    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 4)) !important
-    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 2)) !important
-
+  --standard--container-directive--padding-bottom: var(--standard--root--padding-bottom) !important
+  --standard--container-directive--padding-sides: var(--standard--root--padding-sides) !important
+  --standard--container-directive--padding-top: var(--standard--root--padding-top) !important
   --standard--flexbox-child-directive--flex-grow: 1 !important
-  --standard--flexbox-container-directive--column-gap: var(--standard--container-directive--padding-sides) !important
-  --standard--flexbox-container-directive--row-gap: var(--standard--container-directive--padding-bottom) !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--root--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--root--gap-row) !important
 
   > .harness > .element
     padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides))) !important
-
-    > standard--footer::ng-deep > .harness > .element > standard--flexbox-container:last-of-type > .harness > .element
-      border-top: 1px solid currentColor
 
     &::ng-deep > *
       @include FlexboxContainerDirective.children

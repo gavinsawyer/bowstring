@@ -1,25 +1,41 @@
 import { booleanAttribute, Component, input, type InputSignalWithTransform } from "@angular/core";
+import { FlexboxContainerDirective }                                         from "@standard/directives";
 
 
 @Component(
   {
-    host:        {
-      "[class.skipStylingFirstLetter]": "skipStylingFirstLetterInput$()",
+    host:           {
+      "[class.styleFirstLetter]": "styleFirstLetter$()",
     },
-    selector:    "standard--heading-group",
-    standalone:  true,
-    styleUrls:   [
+    hostDirectives: [
+      {
+        directive: FlexboxContainerDirective,
+        inputs:    [
+          "alignContent",
+          "alignItems",
+          "flexDirection",
+          "flexWrap",
+          "gapColumn",
+          "gapRow",
+          "justifyContent",
+          "listenToScrollEvent",
+        ],
+      },
+    ],
+    selector:       "standard--heading-group",
+    standalone:     true,
+    styleUrls:      [
       "HeadingGroupComponent.sass",
     ],
-    templateUrl: "HeadingGroupComponent.html",
+    templateUrl:    "HeadingGroupComponent.html",
   },
 )
 export class HeadingGroupComponent {
 
-  public readonly skipStylingFirstLetterInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+  public readonly styleFirstLetter$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,
     {
-      alias:     "skipStylingFirstLetter",
+      alias:     "styleFirstLetter",
       transform: booleanAttribute,
     },
   );

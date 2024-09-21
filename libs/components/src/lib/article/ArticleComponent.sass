@@ -1,15 +1,23 @@
-@use "../../../../directives/src/lib/container/ContainerDirective"
-@use "../../../../directives/src/lib/flexbox child/FlexboxChildDirective"
+@use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
 
 
 \:host
   display: contents
 
-  @include ContainerDirective.host
-  @include FlexboxChildDirective.host
+  --standard--article--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -2))
+  --standard--article--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -2))
+
+  @include FlexboxContainerDirective.host
 
   --standard--flexbox-child-directive--flex-basis: 100% !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--article--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--article--gap-row) !important
 
   > .harness > .element::ng-deep > *
-    @include ContainerDirective.children
-    @include FlexboxChildDirective.children
+    @include FlexboxContainerDirective.children
+
+
+@each $host-context-namespace in ("dialog", "main", "footer", "card")
+  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+    --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
+    --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

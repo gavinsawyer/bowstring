@@ -31,12 +31,12 @@ import { ButtonComponent }                                                      
         inputs:    [
           "alignContent",
           "alignItems",
-          "columnGap",
           "flexDirection",
           "flexWrap",
+          "gapColumn",
+          "gapRow",
           "justifyContent",
           "listenToScrollEvent",
-          "rowGap",
         ],
       },
       {

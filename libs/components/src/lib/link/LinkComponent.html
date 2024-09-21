@@ -1,19 +1,17 @@
 <div class="harness"
-  [class.no-op]="routerLinkActive$()?.isActive || disabledInput$()"
-  [class.symbol]="symbolPathsLoaderDirective.symbolPaths$()"
   (click)="$event.stopPropagation(); selectOutput.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  routerLinkActive="routerLinkActive"
+  [routerLinkActiveOptions]="{ exact: true }"
   tabindex="-1">
   @if (urlInput$(); as url) {@if (url.includes("://")) {<a class="element"
     [attr.href]="url"
-    [attr.tabindex]="tabIndexOverrideInput$() ?? 0"
+    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
     target="_blank">
     <ng-container *ngTemplateOutlet="contentTemplate"/>
-  </a>} @else {<a #routerLinkActive="routerLinkActive" class="element"
-    [attr.tabindex]="routerLinkActive.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
-    [routerLinkActiveOptions]="{ exact: true }"
-    [routerLink]="url"
-    routerLinkActive>
+  </a>} @else {<a class="element"
+    [attr.tabindex]="disabledInput$() || routerLinkActive$().isActive ? -1 : tabIndexOverrideInput$() ?? 0"
+    [routerLink]="url">
     <ng-container *ngTemplateOutlet="contentTemplate"/>
   </a>}} @else {<button class="element"
     [attr.disabled]="disabledInput$()"

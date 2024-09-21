@@ -18,12 +18,12 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
         inputs:    [
           "alignContent",
           "alignItems",
-          "columnGap",
           "flexDirection",
           "flexWrap",
+          "gapColumn",
+          "gapRow",
           "justifyContent",
           "listenToScrollEvent",
-          "rowGap",
         ],
       },
     ],
@@ -85,12 +85,11 @@ export class DialogComponent {
     );
   }
 
-  private readonly document: Document                                           = inject<Document>(DOCUMENT);
   private readonly flexboxContainerDirective: FlexboxContainerDirective         = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDialogElementRef$: Signal<ElementRef<HTMLDialogElement>> = viewChild.required<ElementRef<HTMLDialogElement>>("htmlDialogElement");
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
-  private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
+  protected readonly document: Document                       = inject<Document>(DOCUMENT);
   protected readonly openModelWithTransform$: Signal<boolean> = computed<boolean>(
     (): boolean => ((open?: "" | boolean | `${ boolean }`): boolean => open === "" || open === true || open === "true" || open !== "false" && false)(
       this.openModel$(),
@@ -111,6 +110,7 @@ export class DialogComponent {
       initialValue: false,
     },
   );
+  protected readonly platformId: NonNullable<unknown>         = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
     false,

@@ -6,10 +6,7 @@
 
   @include FlexboxContainerDirective.host
 
-  --standard--container-directive--padding-bottom: 0px !important
-  --standard--container-directive--padding-sides: 0px !important
-  --standard--container-directive--padding-top: 0px !important
-  --standard--flexbox-container-directive--column-gap: 0.25em !important
+  --standard--flexbox-container-directive--gap-column: 0.25em !important
   --standard--flexbox-container-directive--flex-direction: row !important
 
   > .harness
@@ -30,37 +27,38 @@
       z-index: 0
       -webkit-tap-highlight-color: transparent
 
+      &:active
+        color: var(--body--grey--foreground)
+
       > svg
         height: 1.1458980338em
         left: 0
         position: absolute
 
-    &.symbol > .element
-      padding: var(--standard--container-directive--padding-top) var(--standard--container-directive--padding-sides) var(--standard--container-directive--padding-bottom) calc(1.3958980338em + var(--standard--container-directive--padding-sides)) !important
+  &.hasSymbol > .harness > .element
+    padding: var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)) var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)) var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)) calc(1.3958980338em + 1px * var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0))) !important
 
-    @media (hover: hover)
-      &:not(.no-op)
-        &:hover,
-        &:focus-within
-          > .element
-            text-decoration: underline
+  @media (hover: hover)
+    &:not(.disabled) > .harness
+      &:hover,
+      &:focus-within
+        > .element
+          text-decoration: underline
 
-    &.no-op > .element
-      cursor: default
-
-    > .element:active,
-    &.no-op > .element
-      color: var(--body--grey--foreground)
+  &.disabled > .harness > .element
+    color: var(--body--grey--foreground)
+    cursor: default
+    pointer-events: none
 
 
-\:host-context(standard--card) > .harness
-  > .element:active,
-  &.no-op > .element
+\:host-context(standard--card)
+  > .harness > .element:active,
+  &.disabled > .harness > .element
     color: var(--card--grey--foreground)
 
-\:host-context(standard--footer) > .harness
-  > .element:active,
-  &.no-op > .element
+\:host-context(standard--footer)
+  > .harness > .element:active,
+  &.disabled > .harness > .element
     color: var(--footer--grey--foreground)
 
 

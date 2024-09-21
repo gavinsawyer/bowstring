@@ -4,7 +4,7 @@ import { toObservable, toSignal }                                               
 import { BRAND }                                                                                                                                                      from "@standard/injection-tokens";
 import { type Dimensions }                                                                                                                                            from "@standard/interfaces";
 import { type Brand }                                                                                                                                                 from "@standard/types";
-import { filter, map, Observable, type Observer, switchMap, type TeardownLogic }                                                                                      from "rxjs";
+import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                           from "rxjs";
 import { v4 as uuid }                                                                                                                                                 from "uuid";
 
 
@@ -44,13 +44,13 @@ export class RoundedDirective {
   ) ? toSignal<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`, "M 0,0 L 1,0 C 1,0 1,0 1,0 L 1,0.5 C 1,1 1,1 1,1 L 0,1 C 0,1 0,1 0,0.5 L 0,0.5 C 0,0 0,0 0,0 Z">(
     toObservable<ElementRef<HTMLElement> | undefined>(
       this.htmlElementRef$,
-    ).pipe<ElementRef<HTMLElement>, Dimensions, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
+    ).pipe<ElementRef<HTMLElement>, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
       filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLElement> => !!htmlElementRef,
       ),
-      switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
-          (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
+      switchMap<ElementRef<HTMLElement>, Observable<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>>(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`> => new Observable<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
+          (resizeEventObserver: Observer<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
             resizeObserver.observe(
               htmlElementRef.nativeElement,
             );
@@ -59,17 +59,18 @@ export class RoundedDirective {
           })(
             new ResizeObserver(
               (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
-                {
-                  height: resizeObserverEntries[0].target.clientHeight,
-                  width:  resizeObserverEntries[0].target.clientWidth,
-                },
+                ((htmlElementDimensions: Dimensions): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => ((positionDividend: number): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => `M ${ positionDividend / (htmlElementDimensions.width || 1) },0 L ${ 1 - positionDividend / (htmlElementDimensions.width || 1) },0 C 1,0 1,0 1,${ positionDividend / (htmlElementDimensions.height || 1) } L 1,${ 1 - positionDividend / (htmlElementDimensions.height || 1) } C 1,1 1,1 ${ 1 - positionDividend / (htmlElementDimensions.width || 1) },1 L ${ positionDividend / (htmlElementDimensions.width || 1) },1 C 0,1 0,1 0,${ 1 - positionDividend / (htmlElementDimensions.height || 1) } L 0,${ positionDividend / (htmlElementDimensions.height || 1) } C 0,0 0,0 ${ positionDividend / (htmlElementDimensions.width || 1) },0 Z`)(
+                  (this.roundnessFactorInput$() || 1) * this.brand.roundnessFactor * 42,
+                ))(
+                  {
+                    height: resizeObserverEntries[0].target.clientHeight,
+                    width:  resizeObserverEntries[0].target.clientWidth,
+                  },
+                ),
               ),
             ),
           ),
         ),
-      ),
-      map<Dimensions, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
-        (htmlElementDimensions: Dimensions): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => `M ${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },0 L ${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },0 C 1,0 1,0 1,${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } L 1,${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } C 1,1 1,1 ${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },1 L ${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },1 C 0,1 0,1 0,${ 1 - (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } L 0,${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.height || 1) } C 0,0 0,0 ${ (this.roundnessFactorInput$() || 1) * this.brandRoundnessFactor$() * 29 / (htmlElementDimensions.width || 1) },0 Z`,
       ),
     ),
     {

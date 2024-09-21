@@ -1,4 +1,4 @@
-import { NgComponentOutlet, NgTemplateOutlet }                                                                                                                                 from "@angular/common";
+import { NgTemplateOutlet }                                                                                                                                                    from "@angular/common";
 import { booleanAttribute, Component, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
 import { SymbolPathsLoaderDirective }                                                                                                                                          from "@standard/directives";
@@ -6,6 +6,10 @@ import { SymbolPathsLoaderDirective }                                           
 
 @Component(
   {
+    host:           {
+      "[class.disabled]":  "disabledInput$() || routerLinkActive$().isActive",
+      "[class.hasSymbol]": "symbolPathsLoaderDirective.symbolPaths$()",
+    },
     hostDirectives: [
       {
         directive: SymbolPathsLoaderDirective,
@@ -15,7 +19,6 @@ import { SymbolPathsLoaderDirective }                                           
       },
     ],
     imports:        [
-      NgComponentOutlet,
       NgTemplateOutlet,
       RouterLink,
       RouterLinkActive,
@@ -30,8 +33,8 @@ import { SymbolPathsLoaderDirective }                                           
 )
 export class LinkComponent {
 
-  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
-  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective  = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive>            = viewChild.required<RouterLinkActive>(RouterLinkActive);
+  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
 
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,

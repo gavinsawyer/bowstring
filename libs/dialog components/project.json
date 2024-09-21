@@ -1,0 +1,17 @@
+{
+  "name":        "dialog-components",
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot":  "libs/dialog components/src",
+  "targets":     {
+    "eslint": {
+      "executor": "@nx/linter:eslint",
+      "options":  {
+        "lintFilePatterns": [
+          "libs/dialog components/src/**/*.html",
+          "libs/dialog components/src/**/*.ts"
+        ]
+      }
+    }
+  }
+}
