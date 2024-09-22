@@ -29,32 +29,32 @@
       margin: 0
 
     > h1
-      font-size: calc(1em * pow(var(--phi), 6))
+      font-size: calc(1em * pow(var(--phi), 5))
 
     > h2
-      font-size: calc(1em * pow(var(--phi), 5))
+      font-size: calc(1em * pow(var(--phi), 4))
 
       &:has(+ h3)
         order: 1
 
     > h3
-      font-size: calc(1em * pow(var(--phi), 4))
-
-    > h4
-      font-size: calc(1em * pow(var(--phi), 4))
-
-    > h5
       font-size: calc(1em * pow(var(--phi), 3))
 
-    > h6
+    > h4
+      font-size: calc(1em * pow(var(--phi), 3))
+
+    > h5
       font-size: calc(1em * pow(var(--phi), 2))
 
+    > h6
+      font-size: calc(1em * pow(var(--phi), 1))
 
-@each $host-context-namespace in ("dialog", "main", "footer", "card", "article", "heading-group", "section")
-  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+
+@each $host-context-namespace in ("dialog", "footer", "main", "card", "article", "heading-group", "section")
+  \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important
 
-@each $host-context-namespace in ("dialog", "main", "footer", "aside")
-  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+@each $host-context-namespace in ("dialog", "footer", "main", "aside")
+  \:host-context(standard--#{ $host-context-namespace })
     --standard--typography-directive--font-size-exponent: var(--standard--#{ $host-context-namespace }--font-size-exponent) !important

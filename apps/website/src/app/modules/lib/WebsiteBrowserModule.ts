@@ -1,29 +1,29 @@
-import { Injector, NgModule, provideExperimentalZonelessChangeDetection }                                                                                                                             from "@angular/core";
-import { type Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                                                                 from "@angular/fire/analytics";
-import { type FirebaseApp, initializeApp, provideFirebaseApp }                                                                                                                                        from "@angular/fire/app";
-import { type AppCheck, initializeAppCheck, provideAppCheck }                                                                                                                                         from "@angular/fire/app-check";
-import { type Auth, getAuth, provideAuth }                                                                                                                                                            from "@angular/fire/auth";
-import { AngularFirestoreModule }                                                                                                                                                                     from "@angular/fire/compat/firestore";
-import { type Firestore, getFirestore, provideFirestore }                                                                                                                                             from "@angular/fire/firestore";
-import { type Functions, getFunctions, provideFunctions }                                                                                                                                             from "@angular/fire/functions";
-import { ReactiveFormsModule }                                                                                                                                                                        from "@angular/forms";
-import { BrowserModule, provideClientHydration, withEventReplay, withI18nSupport }                                                                                                                    from "@angular/platform-browser";
-import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling }                                                                                      from "@angular/router";
-import * as brand                                                                                                                                                                                     from "@standard/brand";
-import { ButtonComponent, CardComponent, FlexboxContainerComponent, FooterComponent, GridContainerComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, MainComponent, SectionComponent } from "@standard/components";
-import { SigninDialogComponent, SignupDialogComponent }                                                                                                                                               from "@standard/dialog-components";
-import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                                                                              from "@standard/injection-tokens";
-import { routes as standardRoutes }                                                                                                                                                                   from "@standard/route-components";
-import { AppCheckOptionsService }                                                                                                                                                                     from "@standard/services";
-import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                                                                                from "ngx-mask";
-import project                                                                                                                                                                                        from "../../../../project.json";
-import { gitInfo }                                                                                                                                                                                    from "../../../.git-info";
-import { packageVersion }                                                                                                                                                                             from "../../../.package-version";
-import { environment }                                                                                                                                                                                from "../../../environment";
-import { RootComponent }                                                                                                                                                                              from "../../components";
-import { LocaleDialogComponent }                                                                                                                                                                      from "../../dialog components";
-import { LOCALE_IDS }                                                                                                                                                                                 from "../../injection tokens";
-import { routes as websiteRoutes }                                                                                                                                                                    from "../../route components";
+import { Injector, NgModule, provideExperimentalZonelessChangeDetection }                                                                                                                                                            from "@angular/core";
+import { type Analytics, getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService }                                                                                                                                from "@angular/fire/analytics";
+import { type FirebaseApp, initializeApp, provideFirebaseApp }                                                                                                                                                                       from "@angular/fire/app";
+import { type AppCheck, initializeAppCheck, provideAppCheck }                                                                                                                                                                        from "@angular/fire/app-check";
+import { type Auth, getAuth, provideAuth }                                                                                                                                                                                           from "@angular/fire/auth";
+import { AngularFirestoreModule }                                                                                                                                                                                                    from "@angular/fire/compat/firestore";
+import { type Firestore, getFirestore, provideFirestore }                                                                                                                                                                            from "@angular/fire/firestore";
+import { type Functions, getFunctions, provideFunctions }                                                                                                                                                                            from "@angular/fire/functions";
+import { ReactiveFormsModule }                                                                                                                                                                                                       from "@angular/forms";
+import { BrowserModule, provideClientHydration, withEventReplay, withI18nSupport }                                                                                                                                                   from "@angular/platform-browser";
+import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling }                                                                                                                     from "@angular/router";
+import * as brand                                                                                                                                                                                                                    from "@standard/brand";
+import { ButtonComponent, CardComponent, DialogComponent, FlexboxContainerComponent, FooterComponent, GridContainerComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, MainComponent, NavComponent, SectionComponent } from "@standard/components";
+import { SigninDialogContentsComponent, SignupDialogContentsComponent }                                                                                                                                                              from "@standard/dialog-contents-components";
+import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                                                                                                             from "@standard/injection-tokens";
+import { routes as standardRoutes }                                                                                                                                                                                                  from "@standard/route-components";
+import { AppCheckOptionsService }                                                                                                                                                                                                    from "@standard/services";
+import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                                                                                                               from "ngx-mask";
+import project                                                                                                                                                                                                                       from "../../../../project.json";
+import { gitInfo }                                                                                                                                                                                                                   from "../../../.git-info";
+import { packageVersion }                                                                                                                                                                                                            from "../../../.package-version";
+import { environment }                                                                                                                                                                                                               from "../../../environment";
+import { RootComponent }                                                                                                                                                                                                             from "../../components";
+import { LocaleDialogContentsComponent }                                                                                                                                                                                             from "../../dialog contents components";
+import { LOCALE_IDS }                                                                                                                                                                                                                from "../../injection tokens";
+import { routes as websiteRoutes }                                                                                                                                                                                                   from "../../route components";
 
 
 @NgModule(
@@ -39,19 +39,21 @@ import { routes as websiteRoutes }                                              
       ButtonComponent,
       BrowserModule,
       CardComponent,
+      DialogComponent,
       FlexboxContainerComponent,
       FooterComponent,
       GridContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,
       LinkComponent,
-      LocaleDialogComponent,
+      LocaleDialogContentsComponent,
       MainComponent,
+      NavComponent,
       NgxMaskDirective,
       ReactiveFormsModule,
       SectionComponent,
-      SigninDialogComponent,
-      SignupDialogComponent,
+      SigninDialogContentsComponent,
+      SignupDialogContentsComponent,
     ],
     providers:    [
       {

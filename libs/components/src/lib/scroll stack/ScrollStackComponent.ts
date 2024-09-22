@@ -152,14 +152,17 @@ export class ScrollStackComponent {
           this.injector,
           (): Observable<number> => toObservable<number | undefined>(
             this.viewportService.height$,
-          ).pipe<[ number | undefined, number | undefined ], number>(
-            combineLatestWith<number | undefined, [ number | undefined ]>(
+          ).pipe<[ number | undefined, number | undefined, number | undefined ], number>(
+            combineLatestWith<number | undefined, [ number | undefined, number | undefined ]>(
+              toObservable<number | undefined>(
+                this.viewportService.width$,
+              ),
               toObservable<number | undefined>(
                 this.viewportService.scrollTop$,
               ),
             ),
-            map<[ number | undefined, number | undefined ], number>(
-              ([ viewportHeight ]: [ number | undefined, number | undefined ]): number => ((domRect?: DOMRect): number => domRect ? domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2 : 0)(
+            map<[ number | undefined, number | undefined, number | undefined ], number>(
+              ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number => ((domRect?: DOMRect): number => domRect ? domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2 : 0)(
                 htmlDivElementRef.nativeElement.getBoundingClientRect(),
               ) * (viewportHeight || 1),
             ),

@@ -5,12 +5,7 @@ import { type LocaleId } from "../../types";
 
 
 export default function getI18nRequestHandler(
-  getRequestHandler: (
-    i18nRequestHandlerResponse: {
-      "localeId": LocaleId,
-      "staticRoot": string,
-    },
-  ) => express.RequestHandler,
+  getRequestHandler: (i18nRequestHandlerResponse: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler,
 ): express.RequestHandler {
   return (
     request: express.Request,

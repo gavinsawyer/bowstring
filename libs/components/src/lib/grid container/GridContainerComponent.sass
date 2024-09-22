@@ -10,7 +10,7 @@
     @include GridContainerDirective.children
 
 
-@each $host-context-namespace in ("dialog", "main", "footer", "card", "button")
-  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+@each $host-context-namespace in ("dialog", "nav", "footer", "main", "card", "button")
+  \:host-context(standard--#{ $host-context-namespace })
     --standard--grid-container-directive--gap-column: var(--standard--#{ $host-context-namespace }--gap-column) !important
     --standard--grid-container-directive--gap-row: var(--standard--#{ $host-context-namespace }--gap-row) !important

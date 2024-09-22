@@ -9,7 +9,7 @@
 
   --standard--button--gap-column: calc(var(--standard--button--padding-sides) * pow(var(--phi), -1))
   --standard--button--gap-row: calc(var(--standard--button--padding-bottom) * pow(var(--phi), -1))
-  --standard--button--material-opacity: 0.875
+  --standard--button--material-opacity: 0
 
   --standard--button--padding-bottom: calc(1rem * pow(var(--phi), -2))
   --standard--button--padding-sides: calc(1rem * pow(var(--phi), -1))
@@ -58,17 +58,12 @@
 
     &.flat,
     &.raised
-      &:after
-        content: ""
-
-      > .element
-        box-shadow: inset var(--button--glass--border) 0 0 calc(1rem * pow(var(--phi), -3))
+      --standard--button--material-opacity: 0.875
 
     &.symbol
       --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
       --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-      --standard--elevated-directive--material-opacity: 0 !important
 
       > .element
         font-size: 1.375rem
@@ -119,46 +114,3 @@
 
             &:before
               animation: expand-shadow 200ms ease-in-out
-
-
-\:host-context(standard--card, standard--footer) > .harness
-  &:before
-    box-shadow: black 0 0.5rem 2rem -1rem
-
-  &:after
-    content: initial
-
-  &.flat,
-  &.raised
-    > .element
-      box-shadow: unset
-
-  &.no-op
-    > .element
-      color: var(--button--grey--foreground)
-
-    &.primary > .element
-      color: var(--primary--grey--foreground)
-
-    &.flat,
-    &.raised
-      > .element
-        background: var(--button--grey--background)
-
-      &.primary > .element
-        background: var(--primary--grey--background)
-
-  &:not(.no-op)
-    > .element
-      color: var(--button--canvas--foreground)
-
-    &.primary > .element
-      color: var(--primary--canvas--foreground)
-
-    &.flat,
-    &.raised
-      > .element
-        background: var(--button--canvas--background)
-
-      &.primary > .element
-        background: var(--primary--canvas--background)

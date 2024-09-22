@@ -1,0 +1,49 @@
+import { DOCUMENT, isPlatformBrowser, Location }                                      from "@angular/common";
+import { Component, inject, LOCALE_ID, PLATFORM_ID }                                  from "@angular/core";
+import { ButtonComponent, CardComponent, FlexboxContainerComponent, HeaderComponent } from "@standard/components";
+import { LOCALE_IDS }                                                                 from "../../../injection tokens";
+import { type LocaleId }                                                              from "../../../types";
+
+
+@Component(
+  {
+    selector:    "standard-website-dialog-contents--locale",
+    standalone:  true,
+    styleUrls:   [
+      "LocaleDialogContentsComponent.sass",
+    ],
+    templateUrl: "LocaleDialogContentsComponent.html",
+    imports:     [
+      ButtonComponent,
+      CardComponent,
+      FlexboxContainerComponent,
+      HeaderComponent,
+    ],
+  },
+)
+export class LocaleDialogContentsComponent {
+
+  private readonly document: Document               = inject<Document>(DOCUMENT);
+  private readonly location: Location               = inject<Location>(Location);
+  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
+
+  protected readonly localeId: LocaleId                    = inject<LocaleId>(LOCALE_ID);
+  protected readonly localeDisplayNames: Intl.DisplayNames = new Intl.DisplayNames(
+    [
+      this.localeId,
+    ],
+    {
+      type: "language",
+    },
+  );
+  protected readonly localeIds: LocaleId[]                 = inject<LocaleId[]>(LOCALE_IDS);
+
+  public changeLocale(localeId: LocaleId): void {
+    return isPlatformBrowser(
+      this.platformId,
+    ) ? ((): void => {
+      this.document.location.href = `/${ localeId + this.location.path() }`;
+    })() : void (0);
+  }
+
+}

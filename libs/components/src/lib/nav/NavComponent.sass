@@ -1,0 +1,26 @@
+@use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--nav--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--nav--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--container-directive--margin-bottom: calc(-1 * var(--standard--root--gap-row)) !important
+  --standard--container-directive--margin-sides: calc(-1 * var(--standard--root--gap-column)) !important
+  --standard--container-directive--margin-top: calc(-1 * var(--standard--root--gap-row)) !important
+  --standard--container-directive--overflow-x: scroll !important
+  --standard--container-directive--padding-bottom: var(--standard--root--gap-row) !important
+  --standard--container-directive--padding-sides: var(--standard--root--gap-column) !important
+  --standard--container-directive--padding-top: var(--standard--root--gap-row) !important
+  --standard--flexbox-child-directive--flex-grow: 1 !important
+  --standard--flexbox-container-directive--flex-direction: row !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--nav--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--nav--gap-row) !important
+  --standard--flexbox-container-directive--justify-content: space-between !important
+
+  > .harness > .element::ng-deep > *
+    @include FlexboxContainerDirective.children

@@ -1,12 +1,12 @@
 @use "../../../../directives/src/lib/flexbox container/FlexboxContainerDirective"
 
 
-@mixin host
+\:host
   display: contents
 
   --standard--dialog--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), 0))
   --standard--dialog--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), 0))
-  --standard--dialog--font-size-exponent: -1
+  --standard--dialog--font-size-exponent: 0
 
   @include FlexboxContainerDirective.host
 
@@ -31,6 +31,12 @@
     visibility: collapse
     width: 100dvw
 
+    @mixin keyframes--close-dialog
+      opacity: 0
+
+    @mixin keyframes--open-dialog
+      opacity: 1
+
     @include keyframes--close-dialog
 
     @keyframes close-dialog
@@ -48,6 +54,14 @@
         @include keyframes--open-dialog
 
     &::backdrop
+      @mixin keyframes--hide-backdrop
+        backdrop-filter: blur(0)
+        opacity: 0
+
+      @mixin keyframes--show-backdrop
+        backdrop-filter: blur(0.25rem)
+        opacity: 1
+
       @include keyframes--hide-backdrop
 
       @keyframes hide-backdrop
@@ -83,20 +97,3 @@
 
       &::backdrop
         animation: hide-backdrop 200ms ease-in forwards
-
-@mixin keyframes--close-dialog
-  opacity: 0
-
-@mixin keyframes--open-dialog
-  opacity: 1
-
-@mixin keyframes--hide-backdrop
-  backdrop-filter: blur(0)
-  opacity: 0
-
-@mixin keyframes--show-backdrop
-  backdrop-filter: blur(0.25rem)
-  opacity: 1
-
-\:host
-  @include host

@@ -17,7 +17,7 @@
     @include FlexboxContainerDirective.children
 
 
-@each $host-context-namespace in ("dialog", "main", "footer", "card")
-  \:host-context(standard--#{ $host-context-namespace }, .extends-standard--#{ $host-context-namespace })
+@each $host-context-namespace in ("dialog", "footer", "main", "card")
+  \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

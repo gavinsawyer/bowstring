@@ -53,13 +53,13 @@
     },
     {
       "files": [
-        "./apps/website/src/app/dialog components/lib/**/*.ts"
+        "./apps/website/src/app/dialog contents components/lib/**/*.ts"
       ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
-            "prefix": "standard-website-dialogs-",
+            "prefix": "standard-website-dialog-contents-",
             "style":  "kebab-case",
             "type":   "element"
           }
@@ -98,13 +98,13 @@
     },
     {
       "files": [
-        "./libs/dialog components/src/lib/**/*.ts"
+        "./libs/dialog contents components/src/lib/**/*.ts"
       ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
-            "prefix": "standard-dialogs-",
+            "prefix": "standard-dialog-contents-",
             "style":  "kebab-case",
             "type":   "element"
           }

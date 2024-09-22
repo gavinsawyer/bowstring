@@ -61,6 +61,9 @@
   &.disabled > .harness > .element
     color: var(--footer--grey--foreground)
 
+\:host-context(standard--nav) > .harness > .element
+  color: currentColor
 
-\:host-context(standard-website--root > .harness > .element > standard--flexbox-container#menu, standard-website--root > .harness > .element > standard--footer standard--header) > .harness > .element
+
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container:first-of-type > .harness > .element > standard--header, standard-website--root > .harness > .element > standard--footer > .harness > .element > standard--header) > .harness > .element
   color: currentColor

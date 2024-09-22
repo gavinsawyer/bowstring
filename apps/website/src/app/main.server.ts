@@ -65,11 +65,7 @@ declare const __non_webpack_require__: NodeRequire;
 ).get(
   "*.*",
   getI18nRequestHandler(
-    (
-      { staticRoot }: {
-        staticRoot: string,
-      },
-    ): express.RequestHandler => express.static(
+    ({ staticRoot }: { staticRoot: string }): express.RequestHandler => express.static(
       staticRoot,
       {
         maxAge: "1y",
@@ -79,11 +75,7 @@ declare const __non_webpack_require__: NodeRequire;
 ).get(
   "*",
   getI18nRequestHandler(
-    (
-      { localeId }: {
-        localeId: LocaleId,
-      },
-    ): express.RequestHandler => getAppRequestHandler(localeId),
+    ({ localeId }: { localeId: LocaleId }): express.RequestHandler => getAppRequestHandler(localeId),
   ),
 ).listen(
   process.env["PORT"] || 4000,
