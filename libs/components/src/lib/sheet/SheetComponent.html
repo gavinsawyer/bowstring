@@ -1,0 +1,26 @@
+<dialog class="harness" #htmlDialogElement
+  (click)="$event.stopPropagation(); openModel$.set(false);"
+  (keydown)="containerKeydown($event);"
+  tabindex="0">
+  <div class="element">
+    <div>
+      <div class="harness">
+        <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+      </div>
+
+      <svg
+        viewBox="0 0 1 1"
+        xmlns="http://www.w3.org/2000/svg">
+        <clipPath
+          [attr.id]="roundedContainerDirective.clipPathId$()"
+          clipPathUnits="objectBoundingBox">
+          <path
+            [attr.d]="roundedContainerDirective.pathDefinition$()"
+            fill="#000" />
+        </clipPath>
+      </svg>
+    </div>
+  </div>
+</dialog>
+
+<ng-template #contentTemplate><ng-content /></ng-template>

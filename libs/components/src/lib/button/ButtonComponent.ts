@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                                                             from "@angular/common";
 import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                                                 from "@angular/router";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTranslatingDirective, RoundedDirective, SymbolPathsLoaderDirective }                                                        from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTranslatingDirective, RoundedDirective }                                                                                    from "@standard/directives";
 
 
 @Component(
@@ -23,7 +23,6 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTran
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
         ],
       },
       {
@@ -39,12 +38,6 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTran
         directive: RoundedDirective,
         inputs:    [
           "roundnessFactor",
-        ],
-      },
-      {
-        directive: SymbolPathsLoaderDirective,
-        inputs:    [
-          "symbolName",
         ],
       },
     ],
@@ -66,9 +59,6 @@ export class ButtonComponent {
   constructor() {
     effect(
       (): void => {
-        this.flexboxContainerDirective.htmlElementRef$.set(
-          this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
-        );
         this.hoverTranslatingDirective.htmlElementRef$.set(
           this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
         );
@@ -82,13 +72,11 @@ export class ButtonComponent {
     );
   }
 
-  private readonly flexboxContainerDirective: FlexboxContainerDirective                     = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly hoverTranslatingDirective: HoverTranslatingDirective                     = inject<HoverTranslatingDirective>(HoverTranslatingDirective);
   private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLAnchorElement> | undefined> = viewChild<ElementRef<HTMLAnchorElement>>("htmlAnchorElement");
   private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement>>("htmlButtonElement");
 
-  protected readonly roundedContainerDirective: RoundedDirective            = inject<RoundedDirective>(RoundedDirective);
-  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
+  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly appearanceInput$: InputSignal<"flat" | "raised" | "symbol" | undefined>                      = input<"flat" | "raised" | "symbol" | undefined>(
     undefined,
@@ -119,12 +107,6 @@ export class ButtonComponent {
     {
       alias:     "tabIndexOverride",
       transform: numberAttribute,
-    },
-  );
-  public readonly textInput$: InputSignal<string | undefined>                                                  = input<string | undefined>(
-    undefined,
-    {
-      alias: "text",
     },
   );
   public readonly typeInput$: InputSignal<"button" | "reset" | "submit" | undefined>                           = input<"button" | "reset" | "submit" | undefined>(

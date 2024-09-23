@@ -2,11 +2,13 @@
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <div class="element" #htmlDivElement>
-    @for (itemTemplateRef of itemTemplateRefs$(); track itemTemplateRef) {<!--suppress CssUnknownProperty --><div [style.--standard--scroll-stack--item--index]="$index + 1">
-      <div>
-        <ng-container [ngTemplateOutlet]="itemTemplateRef" />
-      </div>
-    </div>}
-  </div>
+  <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
+
+<ng-template #contentTemplate>
+  @for (itemTemplateRef of itemTemplateRefs$(); track itemTemplateRef) {<!--suppress CssUnknownProperty --><div [style.--standard--scroll-stack--item--index]="$index + 1">
+    <div>
+      <ng-container *ngTemplateOutlet="itemTemplateRef" />
+    </div>
+  </div>}
+</ng-template>

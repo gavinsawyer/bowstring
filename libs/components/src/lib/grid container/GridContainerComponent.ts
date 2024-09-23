@@ -1,3 +1,4 @@
+import { NgTemplateOutlet }       from "@angular/common";
 import { Component }              from "@angular/core";
 import { GridContainerDirective } from "@standard/directives";
 
@@ -15,6 +16,9 @@ import { GridContainerDirective } from "@standard/directives";
           "justifyContent",
         ],
       },
+    ],
+    imports:        [
+      NgTemplateOutlet,
     ],
     selector:       "standard--grid-container",
     standalone:     true,

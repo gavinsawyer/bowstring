@@ -18,11 +18,7 @@
 
     &,
     > standard--section > .harness > .element
-      > span
-        display: block
-
-      > p,
-      > span
+      > p
         margin: 0
         max-width: calc(1em * pow(var(--phi), 8))
         user-select: text
@@ -37,7 +33,7 @@
     margin: calc(2em * pow(var(--phi), -5)) calc(1em * pow(var(--phi), -5)) 0 0
 
 
-@each $host-context-namespace in ("dialog", "footer", "main", "card", "article")
+@each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "card")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

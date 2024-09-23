@@ -1,7 +1,7 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                                      from "@angular/common";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                    from "@angular/common";
 import { Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                       from "@angular/core/rxjs-interop";
-import { FlexboxContainerDirective }                                                                                                                        from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                   from "@standard/directives";
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                     from "body-scroll-lock";
 import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                from "rxjs";
 
@@ -14,6 +14,12 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
     },
     hostDirectives: [
       {
+        directive: ElevatedDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
         directive: FlexboxContainerDirective,
         inputs:    [
           "alignContent",
@@ -23,25 +29,41 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
+        ],
+      },
+      {
+        directive: GlassDirective,
+        inputs:    [
+          "materialOpacity",
+        ],
+      },
+      {
+        directive: RoundedDirective,
+        inputs:    [
+          "roundnessFactor",
         ],
       },
     ],
-    selector:       "standard--dialog",
+    imports:        [
+      NgTemplateOutlet,
+    ],
+    selector:       "standard--sheet",
     standalone:     true,
     styleUrls:      [
-      "DialogComponent.sass",
+      "SheetComponent.sass",
     ],
-    templateUrl:    "DialogComponent.html",
+    templateUrl:    "SheetComponent.html",
   },
 )
-export class DialogComponent {
+export class SheetComponent {
 
   constructor() {
     effect(
-      (): void => this.flexboxContainerDirective.htmlElementRef$.set(
-        this.htmlDivElementRef$(),
-      ),
+      (): void => {
+        this.roundedContainerDirective.htmlElementRef$.set(
+          this.htmlDivElementRef$(),
+        );
+      },
       {
         allowSignalWrites: true,
       },
@@ -86,17 +108,17 @@ export class DialogComponent {
   }
 
   private readonly document: Document                                           = inject<Document>(DOCUMENT);
-  private readonly flexboxContainerDirective: FlexboxContainerDirective         = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDialogElementRef$: Signal<ElementRef<HTMLDialogElement>> = viewChild.required<ElementRef<HTMLDialogElement>>("htmlDialogElement");
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly openModelWithTransform$: Signal<boolean> = computed<boolean>(
+  public readonly openModelWithTransform$: Signal<boolean> = computed<boolean>(
     (): boolean => ((open?: "" | boolean | `${ boolean }`): boolean => open === "" || open === true || open === "true" || open !== "false" && false)(
       this.openModel$(),
     ),
   );
-  protected readonly openOrClosing$: Signal<boolean>          = toSignal<boolean, false>(
+
+  protected readonly openOrClosing$: Signal<boolean>             = toSignal<boolean, false>(
     toObservable<boolean>(
       this.openModelWithTransform$,
     ).pipe<boolean, boolean>(
@@ -111,6 +133,7 @@ export class DialogComponent {
       initialValue: false,
     },
   );
+  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
     false,

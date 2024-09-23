@@ -14,16 +14,17 @@ import { combineLatestWith, filter, fromEvent, map, Observable, type Observer, s
       "[style.--standard--scroll-stack--minimum-aspect-ratio-input]": "minimumAspectRatioInput$()",
       "[style.--standard--scroll-stack--width]":                      "width$()",
       "[style.--standard--scroll-stack--scroll-left]":                "scrollLeft$()",
+      "[style.--standard--scroll-stack--viewport-height]":            "viewportHeight$()",
       "[style.--standard--scroll-stack--viewport-vertical-offset]":   "viewportVerticalOffset$()",
+      "[style.--standard--scroll-stack--viewport-width]":             "viewportWidth$()",
     },
     hostDirectives: [
       {
         directive: ContainerDirective,
         inputs:    [
-          "aspectRatio",
           "alignSelf",
+          "aspectRatio",
           "bottomPosition",
-          "hideScrollbar",
           "leftPosition",
           "marginBottom",
           "marginSides",
@@ -140,6 +141,9 @@ export class ScrollStackComponent {
       initialValue: undefined,
     },
   ) : signal<undefined>(undefined);
+  protected readonly viewportHeight$: Signal<number | undefined>                                 = computed<number | undefined>(
+    (): number | undefined => this.viewportService.height$(),
+  );
   protected readonly viewportService: ViewportService                                            = inject<ViewportService>(ViewportService);
   protected readonly viewportVerticalOffset$: Signal<number>                                     = isPlatformBrowser(
     this.platformId,
@@ -164,7 +168,7 @@ export class ScrollStackComponent {
             map<[ number | undefined, number | undefined, number | undefined ], number>(
               ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number => ((domRect?: DOMRect): number => domRect ? domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2 : 0)(
                 htmlDivElementRef.nativeElement.getBoundingClientRect(),
-              ) * (viewportHeight || 1),
+              ),
             ),
           ),
         ),
@@ -174,6 +178,9 @@ export class ScrollStackComponent {
       initialValue: 0,
     },
   ) : signal<0>(0);
+  protected readonly viewportWidth$: Signal<number | undefined>                                  = computed<number | undefined>(
+    (): number | undefined => this.viewportService.width$(),
+  );
   protected readonly width$: Signal<number>                                                      = computed<number>(
     (): number => this.dimensions$().width,
   );

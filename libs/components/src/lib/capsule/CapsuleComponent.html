@@ -2,8 +2,9 @@
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <span class="element" #htmlSpanElement>{{ textInput$() }}</span>
+  <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
+
 <svg
   viewBox="0 0 1 1"
   xmlns="http://www.w3.org/2000/svg">
@@ -15,3 +16,5 @@
       fill="#000" />
   </clipPath>
 </svg>
+
+<ng-template #contentTemplate><ng-content /></ng-template>

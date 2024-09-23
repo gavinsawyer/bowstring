@@ -7,23 +7,11 @@
   @if (urlInput$(); as url) {@if (url.includes("://")) {<a class="element"
     [attr.href]="url"
     [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
-    target="_blank">
-    <ng-container *ngTemplateOutlet="contentTemplate"/>
-  </a>} @else {<a class="element"
+    target="_blank"><ng-container *ngTemplateOutlet="contentTemplate" /></a>} @else {<a class="element"
     [attr.tabindex]="disabledInput$() || routerLinkActive$().isActive ? -1 : tabIndexOverrideInput$() ?? 0"
-    [routerLink]="url">
-    <ng-container *ngTemplateOutlet="contentTemplate"/>
-  </a>}} @else {<button class="element"
-    [attr.disabled]="disabledInput$()"
-    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0">
-    <ng-container *ngTemplateOutlet="contentTemplate"/>
-  </button>}
+    [routerLink]="url"><ng-container *ngTemplateOutlet="contentTemplate" /></a>}} @else {<button class="element"
+    [attr.disabled]="disabledInput$() || undefined"
+    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"><ng-container *ngTemplateOutlet="contentTemplate" /></button>}
 </div>
-<ng-template #contentTemplate>@if (symbolPathsLoaderDirective.symbolPaths$(); as symbolPaths) {<svg
-  [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
-  xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <rect [attr.height]="symbolPaths.viewBoxHeight" opacity="0" [attr.width]="symbolPaths.viewBoxWidth" x="0" y="0"/>
-    @for (path of symbolPaths.paths; track path) {<path [attr.d]="path.definition" fill="currentColor" [attr.fill-opacity]="path.opacity"/>}
-  </g>
-</svg>}{{ textInput$() }}</ng-template>
+
+<ng-template #contentTemplate><ng-content /></ng-template>

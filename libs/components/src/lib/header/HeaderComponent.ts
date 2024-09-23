@@ -1,5 +1,6 @@
-import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { FlexboxContainerDirective, TypographyDirective }                     from "@standard/directives";
+import { NgTemplateOutlet }                               from "@angular/common";
+import { Component }                                      from "@angular/core";
+import { FlexboxContainerDirective, TypographyDirective } from "@standard/directives";
 
 
 @Component(
@@ -15,7 +16,6 @@ import { FlexboxContainerDirective, TypographyDirective }                     fr
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
         ],
       },
       {
@@ -24,6 +24,9 @@ import { FlexboxContainerDirective, TypographyDirective }                     fr
           "fontSizeExponent",
         ],
       },
+    ],
+    imports:        [
+      NgTemplateOutlet,
     ],
     selector:       "standard--header",
     standalone:     true,
@@ -34,19 +37,4 @@ import { FlexboxContainerDirective, TypographyDirective }                     fr
   },
 )
 export class HeaderComponent {
-
-  constructor() {
-    effect(
-      () => this.flexboxContainerDirective.htmlElementRef$.set(
-        this.htmlElementRef$(),
-      ),
-      {
-        allowSignalWrites: true,
-      },
-    );
-  }
-
-  private readonly flexboxContainerDirective: FlexboxContainerDirective = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
-  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>     = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
-
 }

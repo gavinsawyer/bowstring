@@ -5,19 +5,20 @@
   <!--suppress HtmlUnknownAttribute -->
   <video class="element" #htmlVideoElement
     playsinline
-    [attr.autoplay]="autoplayInput$()"
-    [attr.controls]="controlsInput$()"
-    [attr.disablepictureinpicture]="disablePictureInPictureInput$()"
-    [attr.disableremoteplayback]="disableRemotePlaybackInput$()"
+    [attr.autoplay]="autoplayInput$() || undefined"
+    [attr.controls]="controlsInput$() || undefined"
+    [attr.disablepictureinpicture]="disablePictureInPictureInput$() || undefined"
+    [attr.disableremoteplayback]="disableRemotePlaybackInput$() || undefined"
     [attr.height]="heightInput$()"
-    [attr.loop]="loopInput$()"
-    [attr.muted]="autoplayInput$() || mutedInput$()"
-    [attr.preload]="preloadInput$()"
+    [attr.loop]="loopInput$() || undefined"
+    [attr.muted]="autoplayInput$() || mutedInput$() || undefined"
+    [attr.preload]="preloadInput$() || undefined"
     [attr.src]="srcInput$()"
     [attr.tabindex]="tabIndexOverrideInput$() ?? 0"
     [attr.width]="widthInput$()"
     [style.aspect-ratio]="widthInput$() + '/' + heightInput$()"></video>
 </div>
+
 <svg
   viewBox="0 0 1 1"
   xmlns="http://www.w3.org/2000/svg">

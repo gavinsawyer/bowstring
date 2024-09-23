@@ -1,3 +1,4 @@
+import { NgTemplateOutlet }                                                  from "@angular/common";
 import { booleanAttribute, Component, input, type InputSignalWithTransform } from "@angular/core";
 import { FlexboxContainerDirective }                                         from "@standard/directives";
 
@@ -18,9 +19,11 @@ import { FlexboxContainerDirective }                                         fro
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
         ],
       },
+    ],
+    imports:        [
+      NgTemplateOutlet,
     ],
     selector:       "standard--heading-group",
     standalone:     true,

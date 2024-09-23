@@ -50,11 +50,11 @@
       font-size: calc(1em * pow(var(--phi), 1))
 
 
-@each $host-context-namespace in ("dialog", "footer", "main", "card", "article", "heading-group", "section")
+@each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "card", "heading-group", "section")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important
 
-@each $host-context-namespace in ("dialog", "footer", "main", "aside")
+@each $host-context-namespace in ("main", "nav", "footer", "sheet", "aside")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--typography-directive--font-size-exponent: var(--standard--#{ $host-context-namespace }--font-size-exponent) !important

@@ -7,10 +7,8 @@
           alignItems="baseline"
           flexDirection="row"
           flexWrap="wrap">
-          <standard--capsule
-            i18n-text
-            text="legal" />
-          <span>{{ now | date:"longDate" }}</span>
+          <standard--capsule i18n>legal</standard--capsule>
+          {{ now | date:"longDate" }}
         </standard--flexbox-container>
       </h3>
     </standard--header>
@@ -21,26 +19,19 @@
         <h5>
           <standard--list type="inline">
             <standard--link
-              i18n-text
+              i18n
               *standardListItem
-              text="privacy policy"
-              url="https://www.google.com/intl/en/policies/privacy/" />
+              url="https://www.google.com/intl/en/policies/privacy/">privacy policy</standard--link>
             <standard--link
-              i18n-text
+              i18n
               *standardListItem
-              text="terms"
-              url="https://www.google.com/intl/en/policies/terms/" />
+              url="https://www.google.com/intl/en/policies/terms/">terms</standard--link>
           </standard--list>
         </h5>
       </standard--header>
-      <p i18n="@@libs--RouteComponents--PrivacyRoute--CardContent_2">This site is protected by <standard--link
-        text="reCAPTCHA"
-        url="https://www.google.com/recaptcha/" /> and uses <standard--link
-        text="Google Analytics"
-        url="https://www.google.com/analytics/" />. If you are signed into Google with this browser and have turned on <standard--link
-        i18n-text
-        text="personalized ads"
-        url="https://myadcenter.google.com/" />, your engagement with this site may be tracked across devices.</p>
+      <p i18n="@@libs--RouteComponents--PrivacyRoute--CardContent_2">This site is protected by <standard--link url="https://www.google.com/recaptcha/">reCAPTCHA</standard--link> and uses <standard--link url="https://www.google.com/analytics/">Google Analytics</standard--link>. If you are signed into Google with this browser and have turned on <standard--link url="https://myadcenter.google.com/"><standard--text
+        i18n-input
+        input="personalized ads" /></standard--link>, your engagement with this site may be tracked across devices.</p>
     </standard--section>
   </standard--heading-group>
 </standard--article>

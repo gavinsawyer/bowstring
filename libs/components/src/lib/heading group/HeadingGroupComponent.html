@@ -1,6 +1,8 @@
-<div class="harness"
+<hgroup class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <hgroup class="element" #htmlElement><ng-content /></hgroup>
-</div>
+  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</hgroup>
+
+<ng-template #contentTemplate><ng-content /></ng-template>

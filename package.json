@@ -1,6 +1,6 @@
 {
   "name":            "@standard/source",
-  "version":         "18.2.1",
+  "version":         "18.3.0",
   "license":         "MIT",
   "author":          {
     "name":  "Gavin Sawyer",
@@ -52,9 +52,9 @@
     "@types/body-scroll-lock":                "^3.1.2",
     "@types/uuid":                            "^10.0.0",
     "@typescript-eslint/eslint-plugin":       "^7.18.0",
-    "browser-sync":                           "^3.0.2",
+    "browser-sync":                           "^3.0.3",
     "firebase-functions":                     "^6.0.1",
-    "firebase-tools":                         "^13.18.0",
+    "firebase-tools":                         "^13.19.0",
     "git-describe":                           "^4.1.1",
     "nx":                                     "^19.7.4",
     "url":                                    "^0.11.4"

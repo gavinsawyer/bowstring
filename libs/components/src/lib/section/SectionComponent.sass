@@ -21,7 +21,7 @@
     > .harness > .element
       border-top: 1px solid currentColor
 
-@each $host-context-namespace in ("dialog", "footer", "main", "card", "article", "heading-group")
+@each $host-context-namespace in ("sheet", "footer", "main", "card", "article", "heading-group")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

@@ -1,10 +1,10 @@
-import { Component, effect, type ElementRef, inject, LOCALE_ID, type Signal, viewChild } from "@angular/core";
-import { FlexboxContainerDirective }                                                     from "@standard/directives";
-import { BRAND, GIT_INFO, PACKAGE_VERSION }                                              from "@standard/injection-tokens";
-import { ResponsivityService }                                                           from "@standard/services";
-import { type Brand }                                                                    from "@standard/types";
-import { type GitInfo }                                                                  from "git-describe";
-import { type LocaleId }                                                                 from "../../../types";
+import { Component, inject, LOCALE_ID }     from "@angular/core";
+import { FlexboxContainerDirective }        from "@standard/directives";
+import { BRAND, GIT_INFO, PACKAGE_VERSION } from "@standard/injection-tokens";
+import { ResponsivityService }              from "@standard/services";
+import { type Brand }                       from "@standard/types";
+import { type GitInfo }                     from "git-describe";
+import { type LocaleId }                    from "../../../types";
 
 
 @Component(
@@ -20,9 +20,6 @@ import { type LocaleId }                                                        
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
-          "scrollLeft",
-          "scrollTop",
         ],
       },
     ],
@@ -34,20 +31,6 @@ import { type LocaleId }                                                        
   },
 )
 export class RootComponent {
-
-  constructor() {
-    effect(
-      (): void => this.flexboxContainerDirective.htmlElementRef$.set(
-        this.htmlDivElementRef$(),
-      ),
-      {
-        allowSignalWrites: true,
-      },
-    );
-  }
-
-  private readonly flexboxContainerDirective: FlexboxContainerDirective   = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly brand: Brand                             = inject<Brand>(BRAND);
   protected readonly gitInfo: Partial<GitInfo>                = inject<Partial<GitInfo>>(GIT_INFO);

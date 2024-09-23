@@ -1,27 +1,28 @@
-import { DOCUMENT, isPlatformBrowser, Location }                                      from "@angular/common";
-import { Component, inject, LOCALE_ID, PLATFORM_ID }                                  from "@angular/core";
-import { ButtonComponent, CardComponent, FlexboxContainerComponent, HeaderComponent } from "@standard/components";
-import { LOCALE_IDS }                                                                 from "../../../injection tokens";
-import { type LocaleId }                                                              from "../../../types";
+import { DOCUMENT, isPlatformBrowser, Location, NgTemplateOutlet }                      from "@angular/common";
+import { Component, inject, LOCALE_ID, PLATFORM_ID }                                    from "@angular/core";
+import { ButtonComponent, FlexboxContainerComponent, HeaderComponent, SymbolComponent } from "@standard/components";
+import { LOCALE_IDS }                                                                   from "../../../injection tokens";
+import { type LocaleId }                                                                from "../../../types";
 
 
 @Component(
   {
-    selector:    "standard-website-dialog-contents--locale",
-    standalone:  true,
-    styleUrls:   [
-      "LocaleDialogContentsComponent.sass",
-    ],
-    templateUrl: "LocaleDialogContentsComponent.html",
     imports:     [
       ButtonComponent,
-      CardComponent,
       FlexboxContainerComponent,
       HeaderComponent,
+      NgTemplateOutlet,
+      SymbolComponent,
     ],
+    selector:    "standard-website-sheet-contents--locale",
+    standalone:  true,
+    styleUrls:   [
+      "LocaleSheetContentsComponent.sass",
+    ],
+    templateUrl: "LocaleSheetContentsComponent.html",
   },
 )
-export class LocaleDialogContentsComponent {
+export class LocaleSheetContentsComponent {
 
   private readonly document: Document               = inject<Document>(DOCUMENT);
   private readonly location: Location               = inject<Location>(Location);

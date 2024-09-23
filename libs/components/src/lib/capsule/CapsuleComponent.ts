@@ -1,5 +1,6 @@
-import { Component, effect, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, RoundedDirective }                                     from "@standard/directives";
+import { NgTemplateOutlet }                                                   from "@angular/common";
+import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
+import { ContainerDirective, ElevatedDirective, RoundedDirective }            from "@standard/directives";
 
 
 @Component(
@@ -8,10 +9,9 @@ import { ContainerDirective, ElevatedDirective, RoundedDirective }              
       {
         directive: ContainerDirective,
         inputs:    [
-          "aspectRatio",
           "alignSelf",
+          "aspectRatio",
           "bottomPosition",
-          "hideScrollbar",
           "leftPosition",
           "marginBottom",
           "marginSides",
@@ -42,6 +42,9 @@ import { ContainerDirective, ElevatedDirective, RoundedDirective }              
         ],
       },
     ],
+    imports:        [
+      NgTemplateOutlet,
+    ],
     selector:       "standard--capsule",
     standalone:     true,
     styleUrls:      [
@@ -55,7 +58,7 @@ export class CapsuleComponent {
   constructor() {
     effect(
       (): void => this.roundedContainerDirective.htmlElementRef$.set(
-        this.htmlSpanElementRef$(),
+        this.htmlDivElementRef$(),
       ),
       {
         allowSignalWrites: true,
@@ -63,14 +66,8 @@ export class CapsuleComponent {
     );
   }
 
-  private readonly htmlSpanElementRef$: Signal<ElementRef<HTMLSpanElement>> = viewChild.required<ElementRef<HTMLSpanElement>>("htmlSpanElement");
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
-
-  public readonly textInput$: InputSignal<string> = input.required<string>(
-    {
-      alias: "text",
-    },
-  );
 
 }

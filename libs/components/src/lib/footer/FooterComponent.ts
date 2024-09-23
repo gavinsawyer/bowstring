@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser }                                                                                                                                                   from "@angular/common";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                 from "@angular/common";
 import { Component, computed, effect, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                        from "@angular/core/rxjs-interop";
 import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                from "@standard/directives";
@@ -6,6 +6,7 @@ import { type Dimensions }                                                      
 import { ViewportService }                                                                                                                                                               from "@standard/services";
 import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                    from "rxjs";
 import { ButtonComponent }                                                                                                                                                               from "../button/ButtonComponent";
+import { SymbolComponent }                                                                                                                                                               from "../symbol/SymbolComponent";
 
 
 @Component(
@@ -36,7 +37,6 @@ import { ButtonComponent }                                                      
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
         ],
       },
       {
@@ -52,15 +52,17 @@ import { ButtonComponent }                                                      
         ],
       },
     ],
+    imports:        [
+      ButtonComponent,
+      NgTemplateOutlet,
+      SymbolComponent,
+    ],
     selector:       "standard--footer",
     standalone:     true,
     styleUrls:      [
       "FooterComponent.sass",
     ],
     templateUrl:    "FooterComponent.html",
-    imports:        [
-      ButtonComponent,
-    ],
   },
 )
 export class FooterComponent {
@@ -69,10 +71,7 @@ export class FooterComponent {
     effect(
       (): void => {
         this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlElementRef$(),
-        );
-        this.flexboxContainerDirective.htmlElementRef$.set(
-          this.htmlElementRef$(),
+          this.htmlDivElementRef$(),
         );
       },
       {
@@ -103,19 +102,19 @@ export class FooterComponent {
       initialValue: this.document.body.clientHeight,
     },
   );
-  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>         = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly dimensions$: Signal<Dimensions>                                = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<Dimensions, { "height": 0, "width": 0 }>(
-    toObservable<ElementRef<HTMLElement>>(
-      this.htmlElementRef$,
+    toObservable<ElementRef<HTMLDivElement>>(
+      this.htmlDivElementRef$,
     ).pipe<Dimensions>(
-      switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
+      switchMap<ElementRef<HTMLDivElement>, Observable<Dimensions>>(
+        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<Dimensions> => new Observable<Dimensions>(
           (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
             resizeObserver.observe(
-              htmlElementRef.nativeElement,
+              htmlDivElementRef.nativeElement,
             );
 
             return (): void => resizeObserver.disconnect();
@@ -144,7 +143,6 @@ export class FooterComponent {
       width:  0,
     },
   );
-  private readonly flexboxContainerDirective: FlexboxContainerDirective           = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly injector: Injector                                             = inject<Injector>(Injector);
   private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
   private readonly width$: Signal<number>                                         = computed<number>(

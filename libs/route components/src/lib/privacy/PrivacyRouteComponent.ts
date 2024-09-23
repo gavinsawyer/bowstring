@@ -1,12 +1,12 @@
 import { DatePipe }                                                                                                                                                              from "@angular/common";
-import { Component }                                                                                                                                                             from "@angular/core";
-import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, ListComponent, RouteComponent, SectionComponent } from "@standard/components";
-import { ListItemDirective }                                                                                                                                                     from "@standard/directives";
+import { Component }                                                                                                                                                                            from "@angular/core";
+import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LinkComponent, ListComponent, RouteComponent, SectionComponent, TextComponent } from "@standard/components";
+import { ListItemDirective }                                                                                                                                                                    from "@standard/directives";
 
 
 @Component(
   {
-    imports:     [
+    imports: [
       ArticleComponent,
       CapsuleComponent,
       DatePipe,
@@ -17,6 +17,7 @@ import { ListItemDirective }                                                    
       ListComponent,
       ListItemDirective,
       SectionComponent,
+      TextComponent,
     ],
     standalone:  true,
     styleUrls:   [

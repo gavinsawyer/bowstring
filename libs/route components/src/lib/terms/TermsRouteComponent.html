@@ -7,10 +7,8 @@
           alignItems="baseline"
           flexDirection="row"
           flexWrap="wrap">
-          <standard--capsule
-            i18n-text
-            text="legal" />
-          <span>{{ now | date:"longDate" }}</span>
+          <standard--capsule i18n>legal</standard--capsule>
+          {{ now | date:"longDate" }}
         </standard--flexbox-container>
       </h3>
     </standard--header>

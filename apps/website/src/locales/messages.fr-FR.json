@@ -32,7 +32,7 @@
     "libs--RouteComponents--OtherwiseRoute--Description":           "...",
     "libs--RouteComponents--OtherwiseRoute--Title":                 "Page non trouvée",
     "libs--RouteComponents--PrivacyRoute--CardContent_1":           "{$START_TAG_SPAN}Ce site stocke des informations{$CLOSE_TAG_SPAN} dans votre navigateur pour améliorer votre expérience. L'activité est partagée avec des tiers listés ci-dessous et peut être stockée en dehors de votre pays de résidence.",
-    "libs--RouteComponents--PrivacyRoute--CardContent_2":           "Ce site est protégé par {$START_TAG_STANDARD__LINK}{$CLOSE_TAG_STANDARD__LINK} et utilise {$START_TAG_STANDARD__LINK_1}{$CLOSE_TAG_STANDARD__LINK}. Si vous êtes connecté à Google avec ce navigateur et que vous avez activé {$START_TAG_STANDARD__LINK_2}{$CLOSE_TAG_STANDARD__LINK}, votre interaction avec ce site peut être suivie sur différents appareils.",
+    "libs--RouteComponents--PrivacyRoute--CardContent_2":           "Ce site est protégé par {$START_TAG_STANDARD__LINK}reCAPTCHA{$CLOSE_TAG_STANDARD__LINK} et utilise {$START_TAG_STANDARD__LINK_1}Google Analytics{$CLOSE_TAG_STANDARD__LINK}. Si vous êtes connecté à Google avec ce navigateur et que vous avez activé {$START_TAG_STANDARD__LINK_2}{$START_TAG_STANDARD__TEXT}{$CLOSE_TAG_STANDARD__TEXT}{$CLOSE_TAG_STANDARD__LINK}, votre interaction avec ce site peut être suivie sur différents appareils.",
     "libs--RouteComponents--PrivacyRoute--CardTitle":               "Politique de confidentialité",
     "libs--RouteComponents--PrivacyRoute--Description":             "...",
     "libs--RouteComponents--PrivacyRoute--Title":                   "Confidentialité",

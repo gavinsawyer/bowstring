@@ -10,4 +10,3 @@ export * from "./lib/rounded/RoundedDirective";
 export * from "./lib/typography/TypographyDirective";
 export * from "./lib/ListItemDirective";
 export * from "./lib/ScrollStackItemDirective";
-export * from "./lib/SymbolPathsLoaderDirective";

@@ -7,33 +7,29 @@
 \:host
   display: contents
 
-  --standard--button--gap-column: calc(var(--standard--button--padding-sides) * pow(var(--phi), -1))
-  --standard--button--gap-row: calc(var(--standard--button--padding-bottom) * pow(var(--phi), -1))
+  --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
+  --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
   --standard--button--material-opacity: 0
-
-  --standard--button--padding-bottom: calc(1rem * pow(var(--phi), -2))
-  --standard--button--padding-sides: calc(1rem * pow(var(--phi), -1))
-
-  @media (min-width: 48rem)
-    --standard--button--padding-bottom: calc(1rem * pow(var(--phi), -1))
-    --standard--button--padding-sides: calc(1rem * pow(var(--phi), 0))
-
-  --standard--button--padding-top: calc(var(--standard--button--padding-bottom) * pow(var(--phi), 0))
 
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
   @include HoverTranslatingDirective.host
   @include RoundedDirective.host
 
-  --standard--container-directive--padding-bottom: var(--standard--button--padding-bottom) !important
-  --standard--container-directive--padding-sides: var(--standard--button--padding-sides) !important
-  --standard--container-directive--padding-top: var(--standard--button--padding-top) !important
+  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
   --standard--elevated-directive--material-opacity: var(--standard--button--material-opacity) !important
   --standard--flexbox-container-directive--align-items: center !important
   --standard--flexbox-container-directive--flex-direction: row !important
   --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
   --standard--flexbox-container-directive--justify-content: center !important
+
+  @media (min-width: 48rem)
+    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
   > .harness
     display: inline-grid !important
@@ -51,10 +47,13 @@
       user-select: none
       -webkit-tap-highlight-color: transparent
 
-      > svg
-        align-self: center
-        overflow: visible
-        width: 1em
+      &::ng-deep > *
+        --standard--button--material-opacity: 0
+
+        @include ElevatedDirective.children
+        @include FlexboxContainerDirective.children
+        @include HoverTranslatingDirective.children
+        @include RoundedDirective.children
 
     &.flat,
     &.raised

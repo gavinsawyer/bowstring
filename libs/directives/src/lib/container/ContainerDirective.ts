@@ -1,11 +1,10 @@
-import { booleanAttribute, Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                 from "@angular/core";
+import { Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                                   from "@angular/core";
 import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@standard/types";
 
 
 @Directive(
   {
     host:       {
-      "[class.hideScrollbar]":                                            "hideScrollbarInput$()",
       "[style.--standard--container-directive--align-self-input]":        "alignSelfInput$()",
       "[style.--standard--container-directive--aspect-ratio-input]":      "aspectRatioInput$()",
       "[style.--standard--container-directive--bottom-position-input]":   "bottomPositionInput$()",
@@ -47,13 +46,6 @@ export class ContainerDirective {
     undefined,
     {
       alias: "bottomPosition",
-    },
-  );
-  public readonly hideScrollbarInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`>                                        = input<boolean | undefined, "" | boolean | `${ boolean }`>(
-    undefined,
-    {
-      alias:     "hideScrollbar",
-      transform: booleanAttribute,
     },
   );
   public readonly leftPositionInput$: InputSignal<ScalarString | Inherit | undefined>                                                                      = input<ScalarString | Inherit | undefined>(

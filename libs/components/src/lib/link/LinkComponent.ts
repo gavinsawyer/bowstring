@@ -1,40 +1,29 @@
-import { NgTemplateOutlet }                                                                                                                                                    from "@angular/common";
-import { booleanAttribute, Component, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
-import { SymbolPathsLoaderDirective }                                                                                                                                          from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                            from "@angular/common";
+import { booleanAttribute, Component, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                from "@angular/router";
 
 
 @Component(
   {
-    host:           {
-      "[class.disabled]":  "disabledInput$() || routerLinkActive$().isActive",
-      "[class.hasSymbol]": "symbolPathsLoaderDirective.symbolPaths$()",
+    host:        {
+      "[class.disabled]": "disabledInput$() || routerLinkActive$().isActive",
     },
-    hostDirectives: [
-      {
-        directive: SymbolPathsLoaderDirective,
-        inputs:    [
-          "symbolName",
-        ],
-      },
-    ],
-    imports:        [
+    imports:     [
       NgTemplateOutlet,
       RouterLink,
       RouterLinkActive,
     ],
-    selector:       "standard--link",
-    standalone:     true,
-    styleUrls:      [
+    selector:    "standard--link",
+    standalone:  true,
+    styleUrls:   [
       "LinkComponent.sass",
     ],
-    templateUrl:    "LinkComponent.html",
+    templateUrl: "LinkComponent.html",
   },
 )
 export class LinkComponent {
 
-  protected readonly routerLinkActive$: Signal<RouterLinkActive>            = viewChild.required<RouterLinkActive>(RouterLinkActive);
-  protected readonly symbolPathsLoaderDirective: SymbolPathsLoaderDirective = inject<SymbolPathsLoaderDirective>(SymbolPathsLoaderDirective);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive> = viewChild.required<RouterLinkActive>(RouterLinkActive);
 
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,
@@ -53,12 +42,6 @@ export class LinkComponent {
     {
       alias:     "tabIndexOverride",
       transform: numberAttribute,
-    },
-  );
-  public readonly textInput$: InputSignal<string | undefined>                                                  = input<string | undefined>(
-    undefined,
-    {
-      alias: "text",
     },
   );
   public readonly urlInput$: InputSignal<string | undefined>                                                   = input<string | undefined>(

@@ -6,6 +6,9 @@
 \:host
   display: contents
 
+  --standard--form-field--gap-column: var(--standard--container-directive--padding-sides)
+  --standard--form-field--gap-row: var(--standard--container-directive--padding-bottom)
+
   @include ContainerDirective.host
   @include FlexboxChildDirective.host
   @include RoundedDirective.host
@@ -13,6 +16,8 @@
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--form-field--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--form-field--gap-row) !important
 
   > .harness
     user-select: none

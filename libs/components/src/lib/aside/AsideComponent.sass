@@ -5,8 +5,13 @@
   display: contents
 
   --standard--aside--font-size-exponent: -3
+  --standard--aside--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -2))
+  --standard--aside--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -2))
 
   @include FlexboxContainerDirective.host
+
+  --standard--flexbox-container-directive--gap-column: var(--standard--aside--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--aside--gap-row) !important
 
   @media (min-width: 48rem)
     --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important

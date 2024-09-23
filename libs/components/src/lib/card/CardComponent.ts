@@ -1,3 +1,4 @@
+import { NgTemplateOutlet }                                                               from "@angular/common";
 import { Component, effect, type ElementRef, inject, type Signal, viewChild }             from "@angular/core";
 import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective } from "@standard/directives";
 
@@ -21,7 +22,6 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
         ],
       },
       {
@@ -37,6 +37,9 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
         ],
       },
     ],
+    imports:        [
+      NgTemplateOutlet,
+    ],
     selector:       "standard--card",
     standalone:     true,
     styleUrls:      [
@@ -50,9 +53,6 @@ export class CardComponent {
   constructor() {
     effect(
       (): void => {
-        this.flexboxContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
         this.roundedContainerDirective.htmlElementRef$.set(
           this.htmlDivElementRef$(),
         );
@@ -63,7 +63,6 @@ export class CardComponent {
     );
   }
 
-  private readonly flexboxContainerDirective: FlexboxContainerDirective   = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);

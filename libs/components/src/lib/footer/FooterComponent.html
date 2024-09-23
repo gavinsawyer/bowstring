@@ -1,12 +1,11 @@
-<div class="harness"
+<footer class="harness"
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && stuckOrUnsticking$() ? stuckModel$.set(false) : true) || $event.preventDefault();"
   tabindex="-1">
-  <footer class="element" #htmlElement>
-    <ng-content />
-  </footer>
-</div>
+  <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</footer>
 <div class="backdrop" #backdropHtmlDivElement></div>
+
 <svg
   viewBox="0 0 1 1"
   xmlns="http://www.w3.org/2000/svg">
@@ -18,9 +17,12 @@
       fill="#000" />
   </clipPath>
 </svg>
+
+<ng-template #contentTemplate><ng-content /></ng-template>
 <ng-template #disclosureControlTemplate>
   @if (!stuckModelWithTransform$() || raisedWhenStuckOrUnsticking$()) {<standard--button
     appearance="symbol"
-    (select)="stuckModel$.set(!stuckModelWithTransform$());"
-    [symbolName]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />}
+    (select)="stuckModel$.set(!stuckModelWithTransform$());">
+    <standard--symbol [symbolName]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />
+  </standard--button>}
 </ng-template>

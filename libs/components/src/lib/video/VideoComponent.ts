@@ -8,10 +8,9 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: ContainerDirective,
         inputs:    [
-          "aspectRatio",
           "alignSelf",
+          "aspectRatio",
           "bottomPosition",
-          "hideScrollbar",
           "leftPosition",
           "marginBottom",
           "marginSides",

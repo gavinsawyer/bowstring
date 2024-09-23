@@ -1,15 +1,15 @@
 {
-  "name":        "dialog-contents-components",
+  "name":        "sheet-contents-components",
   "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot":  "libs/dialog contents components/src",
+  "sourceRoot":  "libs/sheet contents components/src",
   "targets":     {
     "eslint": {
       "executor": "@nx/linter:eslint",
       "options":  {
         "lintFilePatterns": [
-          "libs/dialog contents components/src/**/*.html",
-          "libs/dialog contents components/src/**/*.ts"
+          "libs/sheet contents components/src/**/*.html",
+          "libs/sheet contents components/src/**/*.ts"
         ]
       }
     }

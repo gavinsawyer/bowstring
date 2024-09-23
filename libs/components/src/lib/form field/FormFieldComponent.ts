@@ -1,3 +1,4 @@
+import { NgTemplateOutlet }                                                                                             from "@angular/common";
 import { Component, contentChild, effect, type ElementRef, forwardRef, inject, type OnDestroy, type Signal, viewChild } from "@angular/core";
 import { type ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                               from "@angular/forms";
 import { ContainerDirective, FlexboxChildDirective, RoundedDirective }                                                  from "@standard/directives";
@@ -9,10 +10,9 @@ import { ContainerDirective, FlexboxChildDirective, RoundedDirective }          
       {
         directive: ContainerDirective,
         inputs:    [
-          "aspectRatio",
           "alignSelf",
+          "aspectRatio",
           "bottomPosition",
-          "hideScrollbar",
           "leftPosition",
           "marginBottom",
           "marginSides",
@@ -45,8 +45,9 @@ import { ContainerDirective, FlexboxChildDirective, RoundedDirective }          
         ],
       },
     ],
-    imports:        [
+    imports: [
       FormsModule,
+      NgTemplateOutlet,
       ReactiveFormsModule,
     ],
     providers:      [

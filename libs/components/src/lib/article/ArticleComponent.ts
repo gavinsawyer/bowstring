@@ -1,5 +1,6 @@
-import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { FlexboxContainerDirective }                                          from "@standard/directives";
+import { NgTemplateOutlet }          from "@angular/common";
+import { Component }                 from "@angular/core";
+import { FlexboxContainerDirective } from "@standard/directives";
 
 
 @Component(
@@ -15,9 +16,11 @@ import { FlexboxContainerDirective }                                          fr
           "gapColumn",
           "gapRow",
           "justifyContent",
-          "listenToScrollEvent",
         ],
       },
+    ],
+    imports:        [
+      NgTemplateOutlet,
     ],
     selector:       "standard--article",
     standalone:     true,
@@ -28,19 +31,4 @@ import { FlexboxContainerDirective }                                          fr
   },
 )
 export class ArticleComponent {
-
-  constructor() {
-    effect(
-      (): void => this.flexboxContainerDirective.htmlElementRef$.set(
-        this.htmlElementRef$(),
-      ),
-      {
-        allowSignalWrites: true,
-      },
-    );
-  }
-
-  private readonly flexboxContainerDirective: FlexboxContainerDirective = inject<FlexboxContainerDirective>(FlexboxContainerDirective);
-  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>     = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
-
 }

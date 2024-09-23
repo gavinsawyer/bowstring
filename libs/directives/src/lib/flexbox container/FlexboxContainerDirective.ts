@@ -1,11 +1,7 @@
-import { type ViewportScrollPosition }                                                                                                                                                                       from "@angular/cdk/scrolling";
-import { isPlatformBrowser }                                                                                                                                                                                 from "@angular/common";
-import { booleanAttribute, Directive, effect, type ElementRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, PLATFORM_ID, signal, type WritableSignal } from "@angular/core";
-import { toObservable }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
-import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString }                         from "@standard/types";
-import { filter, fromEvent, map, type Observable, startWith, switchMap }                                                                                                                                     from "rxjs";
-import { ContainerDirective }                                                                                                                                                                                from "../container/ContainerDirective";
-import { FlexboxChildDirective }                                                                                                                                                                             from "../flexbox child/FlexboxChildDirective";
+import { Directive, input, type InputSignal }                                                                                                                                        from "@angular/core";
+import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
+import { ContainerDirective }                                                                                                                                                        from "../container/ContainerDirective";
+import { FlexboxChildDirective }                                                                                                                                                     from "../flexbox child/FlexboxChildDirective";
 
 
 @Directive(
@@ -18,17 +14,14 @@ import { FlexboxChildDirective }                                                
       "[style.--standard--flexbox-container-directive--gap-column-input]":      "gapColumnInput$()",
       "[style.--standard--flexbox-container-directive--gap-row-input]":         "gapRowInput$()",
       "[style.--standard--flexbox-container-directive--justify-content-input]": "justifyContentInput$()",
-      "[style.--standard--flexbox-container-directive--scroll-left]":           "scrollLeftModel$()",
-      "[style.--standard--flexbox-container-directive--scroll-top]":            "scrollTopModel$()",
     },
     hostDirectives: [
       {
         directive: ContainerDirective,
         inputs:    [
-          "aspectRatio",
           "alignSelf",
+          "aspectRatio",
           "bottomPosition",
-          "hideScrollbar",
           "leftPosition",
           "marginBottom",
           "marginSides",
@@ -60,79 +53,6 @@ import { FlexboxChildDirective }                                                
 )
 export class FlexboxContainerDirective {
 
-  constructor() {
-    isPlatformBrowser(
-      this.platformId,
-    ) && toObservable<ElementRef<HTMLElement> | undefined>(
-      this.htmlElementRef$,
-    ).pipe<ElementRef<HTMLElement>, ViewportScrollPosition>(
-      filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
-        (htmlElementRef: ElementRef<HTMLElement> | undefined): htmlElementRef is ElementRef<HTMLElement> => !!htmlElementRef,
-      ),
-      switchMap<ElementRef<HTMLElement>, Observable<ViewportScrollPosition>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<ViewportScrollPosition> => toObservable<boolean>(
-          this.listenToScrollEventInput$,
-          {
-            injector: this.injector,
-          },
-        ).pipe<true, ViewportScrollPosition>(
-          filter<boolean, true>(
-            (listenToScrollEventInput: boolean): listenToScrollEventInput is true => listenToScrollEventInput,
-          ),
-          switchMap<true, Observable<ViewportScrollPosition>>(
-            (): Observable<ViewportScrollPosition> => fromEvent<Event>(
-              htmlElementRef.nativeElement,
-              "scroll",
-            ).pipe<Event | null, ViewportScrollPosition>(
-              startWith<Event, [ null ]>(null),
-              map<Event | null, ViewportScrollPosition>(
-                (): ViewportScrollPosition => ({
-                  left: htmlElementRef.nativeElement.scrollLeft,
-                  top:  htmlElementRef.nativeElement.scrollTop,
-                }),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ).subscribe(
-      (scrollPosition: ViewportScrollPosition): void => {
-        this.scrollLeftModel$.set(
-          scrollPosition.left,
-        );
-        this.scrollTopModel$.set(
-          scrollPosition.top,
-        );
-      },
-    );
-
-    isPlatformBrowser(
-      this.platformId,
-    ) && effect(
-      (): void => ((htmlElementRef?: ElementRef<HTMLElement>): void => htmlElementRef && ((
-        scrollLeft?: number,
-        scrollTop?: number,
-      ): void => {
-        scrollLeft !== htmlElementRef.nativeElement.scrollLeft && htmlElementRef.nativeElement.scrollTo(
-          scrollLeft || 0,
-          htmlElementRef.nativeElement.scrollTop,
-        );
-        scrollTop !== htmlElementRef.nativeElement.scrollTop && htmlElementRef.nativeElement.scrollTo(
-          htmlElementRef.nativeElement.scrollLeft,
-          scrollTop || 0,
-        );
-      })(
-        this.scrollLeftModel$(),
-        this.scrollTopModel$(),
-      ))(
-        this.htmlElementRef$(),
-      ),
-    );
-  }
-
-  private readonly injector: Injector               = inject<Injector>(Injector);
-  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
-
   public readonly alignContentInput$: InputSignal<BaselineAlignment | DistributedAlignment | NormalAlignment | FlexPositionalAlignment | Inherit | undefined> = input<BaselineAlignment | DistributedAlignment | NormalAlignment | FlexPositionalAlignment | Inherit | undefined>(
     undefined,
     {
@@ -163,7 +83,6 @@ export class FlexboxContainerDirective {
       alias: "flexWrap",
     },
   );
-  public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined>                                                                        = signal<undefined>(undefined);
   public readonly justifyContentInput$: InputSignal<DistributedAlignment | NormalAlignment | FlexPositionalAlignment | Inherit | undefined>                   = input<DistributedAlignment | NormalAlignment | FlexPositionalAlignment | Inherit | undefined>(
     undefined,
     {
@@ -174,25 +93,6 @@ export class FlexboxContainerDirective {
     undefined,
     {
       alias: "gapRow",
-    },
-  );
-  public readonly scrollLeftModel$: ModelSignal<number | undefined>                                                                                           = model<number | undefined>(
-    undefined,
-    {
-      alias: "scrollLeft",
-    },
-  );
-  public readonly scrollTopModel$: ModelSignal<number | undefined>                                                                                            = model<number | undefined>(
-    undefined,
-    {
-      alias: "scrollTop",
-    },
-  );
-  public readonly listenToScrollEventInput$: InputSignalWithTransform<boolean, "" | boolean | `${ boolean }`>                                                 = input<boolean, "" | boolean | `${ boolean }`>(
-    false,
-    {
-      alias:     "listenToScrollEvent",
-      transform: booleanAttribute,
     },
   );
 

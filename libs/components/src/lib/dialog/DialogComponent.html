@@ -1,8 +1,0 @@
-<dialog class="harness" #htmlDialogElement
-  (click)="$event.stopPropagation(); openModel$.set(false);"
-  (keydown)="containerKeydown($event);"
-  tabindex="0">
-  <div class="element" #htmlDivElement>
-    <ng-content />
-  </div>
-</dialog>

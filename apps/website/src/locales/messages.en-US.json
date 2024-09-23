@@ -32,7 +32,7 @@
     "libs--RouteComponents--OtherwiseRoute--Description":           "...",
     "libs--RouteComponents--OtherwiseRoute--Title":                 "Page not found",
     "libs--RouteComponents--PrivacyRoute--CardContent_1":           "{$START_TAG_SPAN}This site stores information{$CLOSE_TAG_SPAN} in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.",
-    "libs--RouteComponents--PrivacyRoute--CardContent_2":           "This site is protected by {$START_TAG_STANDARD__LINK}{$CLOSE_TAG_STANDARD__LINK} and uses {$START_TAG_STANDARD__LINK_1}{$CLOSE_TAG_STANDARD__LINK}. If you are signed into Google with this browser and have turned on {$START_TAG_STANDARD__LINK_2}{$CLOSE_TAG_STANDARD__LINK}, your engagement with this site may be tracked across devices.",
+    "libs--RouteComponents--PrivacyRoute--CardContent_2":           "This site is protected by {$START_TAG_STANDARD__LINK}reCAPTCHA{$CLOSE_TAG_STANDARD__LINK} and uses {$START_TAG_STANDARD__LINK_1}Google Analytics{$CLOSE_TAG_STANDARD__LINK}. If you are signed into Google with this browser and have turned on {$START_TAG_STANDARD__LINK_2}{$START_TAG_STANDARD__TEXT}{$CLOSE_TAG_STANDARD__TEXT}{$CLOSE_TAG_STANDARD__LINK}, your engagement with this site may be tracked across devices.",
     "libs--RouteComponents--PrivacyRoute--CardTitle":               "Privacy Policy",
     "libs--RouteComponents--PrivacyRoute--Description":             "...",
     "libs--RouteComponents--PrivacyRoute--Title":                   "Privacy",
