@@ -7,8 +7,6 @@ import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalA
     host:       {
       "[style.--standard--container-directive--align-self-input]":        "alignSelfInput$()",
       "[style.--standard--container-directive--aspect-ratio-input]":      "aspectRatioInput$()",
-      "[style.--standard--container-directive--bottom-position-input]":   "bottomPositionInput$()",
-      "[style.--standard--container-directive--left-position-input]":     "leftPositionInput$()",
       "[style.--standard--container-directive--margin-bottom-input]":     "marginBottomInput$()",
       "[style.--standard--container-directive--margin-sides-input]":      "marginSidesInput$()",
       "[style.--standard--container-directive--margin-top-input]":        "marginTopInput$()",
@@ -18,11 +16,13 @@ import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalA
       "[style.--standard--container-directive--padding-sides-input]":     "paddingSidesInput$()",
       "[style.--standard--container-directive--padding-top-input]":       "paddingTopInput$()",
       "[style.--standard--container-directive--position-input]":          "positionInput$()",
-      "[style.--standard--container-directive--right-position-input]":    "rightPositionInput$()",
+      "[style.--standard--container-directive--position-bottom-input]":   "positionBottomInput$()",
+      "[style.--standard--container-directive--position-left-input]":     "positionLeftInput$()",
+      "[style.--standard--container-directive--position-right-input]":    "positionRightInput$()",
+      "[style.--standard--container-directive--position-top-input]":      "positionTopInput$()",
       "[style.--standard--container-directive--scroll-snap-align-input]": "scrollSnapAlignInput$()",
       "[style.--standard--container-directive--scroll-snap-stop-input]":  "scrollSnapStopInput$()",
       "[style.--standard--container-directive--scroll-snap-type-input]":  "scrollSnapTypeInput$()",
-      "[style.--standard--container-directive--top-position-input]":      "topPositionInput$()",
     },
     standalone: true,
   },
@@ -40,18 +40,6 @@ export class ContainerDirective {
     {
       alias:     "aspectRatio",
       transform: numberAttribute,
-    },
-  );
-  public readonly bottomPositionInput$: InputSignal<ScalarString | Inherit | undefined>                                                                    = input<ScalarString | Inherit | undefined>(
-    undefined,
-    {
-      alias: "bottomPosition",
-    },
-  );
-  public readonly leftPositionInput$: InputSignal<ScalarString | Inherit | undefined>                                                                      = input<ScalarString | Inherit | undefined>(
-    undefined,
-    {
-      alias: "leftPosition",
     },
   );
   public readonly marginBottomInput$: InputSignal<ScalarString | Inherit | undefined>                                                                      = input<ScalarString | Inherit | undefined>(
@@ -108,10 +96,28 @@ export class ContainerDirective {
       alias: "position",
     },
   );
-  public readonly rightPositionInput$: InputSignal<ScalarString | Inherit | undefined>                                                                     = input<ScalarString | Inherit | undefined>(
+  public readonly positionBottomInput$: InputSignal<ScalarString | Inherit | undefined>                                                                    = input<ScalarString | Inherit | undefined>(
     undefined,
     {
-      alias: "rightPosition",
+      alias: "positionBottom",
+    },
+  );
+  public readonly positionLeftInput$: InputSignal<ScalarString | Inherit | undefined>                                                                      = input<ScalarString | Inherit | undefined>(
+    undefined,
+    {
+      alias: "positionLeft",
+    },
+  );
+  public readonly positionRightInput$: InputSignal<ScalarString | Inherit | undefined>                                                                     = input<ScalarString | Inherit | undefined>(
+    undefined,
+    {
+      alias: "positionRight",
+    },
+  );
+  public readonly positionTopInput$: InputSignal<ScalarString | Inherit | undefined>                                                                       = input<ScalarString | Inherit | undefined>(
+    undefined,
+    {
+      alias: "positionTop",
     },
   );
   public readonly scrollSnapAlignInput$: InputSignal<ScrollSnapAlign | Inherit | undefined>                                                                = input<ScrollSnapAlign | Inherit | undefined>(
@@ -130,12 +136,6 @@ export class ContainerDirective {
     undefined,
     {
       alias: "scrollSnapType",
-    },
-  );
-  public readonly topPositionInput$: InputSignal<ScalarString | Inherit | undefined>                                                                       = input<ScalarString | Inherit | undefined>(
-    undefined,
-    {
-      alias: "topPosition",
     },
   );
 

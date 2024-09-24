@@ -17,11 +17,11 @@
   @include GlassDirective.host(6%)
   @include RoundedDirective.host
 
-  --standard--container-directive--bottom-position: max(var(--safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-  --standard--container-directive--top-position: 0 !important
+  --standard--container-directive--position-bottom: max(var(--safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--position-top: 0 !important
   --standard--elevated-directive--material-opacity: var(--standard--footer--material-opacity) !important
   --standard--flexbox-container-directive--gap-column: var(--standard--footer--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--footer--gap-row) !important
@@ -100,10 +100,10 @@
     z-index: 2
 
     &:before
-      bottom: calc(-1 * var(--standard--container-directive--bottom-position))
-      height: calc(1px * var(--standard--footer--height) + 4 * var(--standard--container-directive--bottom-position))
+      bottom: calc(-1 * var(--standard--container-directive--position-bottom))
+      height: calc(1px * var(--standard--footer--height) + 4 * var(--standard--container-directive--position-bottom))
       left: 0
-      mask-image: linear-gradient(to bottom, transparent, red calc(0px + 1.5 * var(--standard--container-directive--bottom-position)), red calc(1px * var(--standard--footer--height) + 3 * var(--standard--container-directive--bottom-position)), transparent calc(1px * var(--standard--footer--height) + 4 * var(--standard--container-directive--bottom-position)))
+      mask-image: linear-gradient(to bottom, transparent, red calc(0px + 1.5 * var(--standard--container-directive--position-bottom)), red calc(1px * var(--standard--footer--height) + 3 * var(--standard--container-directive--position-bottom)), transparent calc(1px * var(--standard--footer--height) + 4 * var(--standard--container-directive--position-bottom)))
       position: fixed
       width: 100vw
 
