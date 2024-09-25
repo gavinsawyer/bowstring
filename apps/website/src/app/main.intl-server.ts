@@ -1,9 +1,12 @@
+import compression               from "compression";
 import express                   from "express";
 import { getI18nRequestHandler } from "./request handlers";
 import { type LocaleId }         from "./types";
 
 
-express().set(
+express().use(
+  compression(),
+).set(
   "view engine",
   "html",
 ).set(

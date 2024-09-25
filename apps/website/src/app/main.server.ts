@@ -1,6 +1,7 @@
 import { APP_BASE_HREF }                          from "@angular/common";
 import { LOCALE_ID }                              from "@angular/core";
 import { CommonEngine }                           from "@angular/ssr";
+import compression                                from "compression";
 import express                                    from "express";
 import { existsSync }                             from "fs";
 import { environment }                            from "../environment";
@@ -56,7 +57,9 @@ declare const __non_webpack_require__: NodeRequire;
   ((mainModule: NodeJS.Module | undefined): string => mainModule && mainModule.filename || "")(
     __non_webpack_require__.main,
   ),
-) && express().set(
+) && express().use(
+  compression(),
+).set(
   "view engine",
   "html",
 ).set(
