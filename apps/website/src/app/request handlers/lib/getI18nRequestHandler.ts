@@ -7,11 +7,11 @@ import { type LocaleId } from "../../types";
 export default function getI18nRequestHandler(
   getRequestHandler: (i18nRequestHandlerResponse: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler,
 ): express.RequestHandler {
-  return (
+  return async (
     request: express.Request,
     response: express.Response,
     nextFunction: express.NextFunction,
-  ): void => ((localeId: LocaleId): void => getRequestHandler(
+  ): Promise<void> => await (async (localeId: LocaleId): Promise<void> => await getRequestHandler(
     {
       localeId:   localeId,
       staticRoot: join(
