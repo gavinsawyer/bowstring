@@ -1,17 +1,15 @@
-@use "../../sass/functions"
-@use "../../sass/mixins"
+@use "../../../sass/functions"
+@use "../../../sass/mixins"
 @use "../container/ContainerDirective"
 @use "../flexbox child/FlexboxChildDirective"
 
 
-$namespace: "flexbox-container"
+$namespace: "grid-container"
 
 $align-content: functions.get-input-reference($namespace, "align-content", normal)
 $align-items: functions.get-input-reference($namespace, "align-items", normal)
-$flex-direction: functions.get-input-reference($namespace, "flex-direction", column)
-$flex-wrap: functions.get-input-reference($namespace, "flex-wrap", nowrap)
-$gap-column: functions.get-input-reference($namespace, "gap-column", 0)
-$gap-row: functions.get-input-reference($namespace, "gap-row", 0)
+$gap-column: functions.get-input-reference($namespace, "gap-column", calc(1rem * pow(var(--phi), 2)))
+$gap-row: functions.get-input-reference($namespace, "gap-row", calc(1rem * pow(var(--phi), 1)))
 $justify-content: functions.get-input-reference($namespace, "justify-content", normal)
 
 @function get-color($theme, $type, $shade)
@@ -39,8 +37,6 @@ $justify-content: functions.get-input-reference($namespace, "justify-content", n
   > .harness > .element
     align-content: $align-content
     align-items: $align-items
-    display: flex
-    flex-direction: $flex-direction
-    flex-wrap: $flex-wrap
+    display: grid
     gap: $gap-row $gap-column
     justify-content: $justify-content

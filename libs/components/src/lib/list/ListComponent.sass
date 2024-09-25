@@ -1,23 +1,39 @@
+@use "../../../../directives/src/lib/layout and organization/flexbox container/FlexboxContainerDirective"
+
+
 \:host
   display: contents
 
-  > span,
-  > ol,
-  > ul
-    gap: calc(1rem * pow(var(--phi), -3))
+  --standard--list--font-size-exponent: -3
+  --standard--list--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -2))
+  --standard--list--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -2))
 
-  > span
-    display: inline-flex
-    flex-direction: row
+  @include FlexboxContainerDirective.host
 
-    > span:not(:first-child)
-      display: inline-flex
-      flex-direction: row
+  --standard--flexbox-container-directive--gap-column: var(--standard--list--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--list--gap-row) !important
+
+  > .harness > .element
+    > span,
+    > ol,
+    > ul
       gap: calc(1rem * pow(var(--phi), -3))
 
-      &:before
-        content: "•"
+    > span
+      display: inline-flex
+      flex-direction: row
 
-  > ol,
-  > ul
-    margin: 0
+      > span:not(:first-child)
+        display: inline-flex
+        flex-direction: row
+        gap: calc(1rem * pow(var(--phi), -3))
+
+        &:before
+          content: "•"
+
+    > ol,
+    > ul
+      margin: 0
+
+    &::ng-deep > *
+      @include FlexboxContainerDirective.children
