@@ -1,4 +1,4 @@
-@use "../../../../directives/src/lib/layout and organization/flexbox container/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 
 
 \:host
@@ -6,29 +6,34 @@
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-container-directive--gap-column: 0.25em !important
+  --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
   --standard--flexbox-container-directive--flex-direction: row !important
 
   > .harness
+    background: none
+    border: 0
+    color: var(--primary--canvas--background)
+    cursor: pointer
     display: inline-grid !important
+    font: inherit
+    letter-spacing: inherit
+    line-height: inherit
+    outline: 0
+    padding: 0
+    text-decoration: none
+    transition: color 200ms ease-in-out
+    user-select: none
+    white-space: nowrap
+    z-index: 0
+    -webkit-tap-highlight-color: transparent
 
-    > button
-      all: unset
+    &:active
+      color: var(--body--grey--foreground)
 
     > .element
-      color: var(--primary--canvas--background)
-      cursor: pointer
-      display: inline-flex
-      outline: none
-      text-decoration: none
-      transition: color 200ms ease-in-out
-      user-select: none
-      white-space: nowrap
-      z-index: 0
-      -webkit-tap-highlight-color: transparent
-
-      &:active
-        color: var(--body--grey--foreground)
+      display: inline-flex !important
+      font-size: 1em
 
   @media (hover: hover)
     &:not(.disabled) > .harness
@@ -37,25 +42,14 @@
         > .element
           text-decoration: underline
 
-  &.disabled > .harness > .element
+  &.disabled > .harness
     color: var(--body--grey--foreground)
     cursor: default
     pointer-events: none
 
-
-\:host-context(standard--card)
-  > .harness > .element:active,
-  &.disabled > .harness > .element
-    color: var(--card--grey--foreground)
-
-\:host-context(standard--footer)
-  > .harness > .element:active,
-  &.disabled > .harness > .element
-    color: var(--footer--grey--foreground)
-
-\:host-context(standard--nav) > .harness > .element
+\:host-context(standard--nav, standard--footer > .harness > .element > standard--header) > .harness
   color: currentColor
 
 
-\:host-context(standard-website--root > .harness > .element > standard--flexbox-container:first-of-type > .harness > .element > standard--header, standard-website--root > .harness > .element > standard--footer > .harness > .element > standard--header) > .harness > .element
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container:first-of-type > .harness > .element > standard--header) > .harness
   color: currentColor

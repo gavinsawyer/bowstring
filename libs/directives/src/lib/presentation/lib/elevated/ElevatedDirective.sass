@@ -1,0 +1,50 @@
+@use "../../../../sass/functions"
+@use "../../../../sass/mixins"
+
+
+$namespace: "elevated"
+
+$level: functions.get-input-reference($namespace, "level", 1)
+$material-opacity: functions.get-input-reference($namespace, "material-opacity", 1)
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include mixins.reset-colors($namespace, ())
+  @include mixins.reset-inputs($namespace, ("material-opacity"))
+  @include mixins.reset-values($namespace, ())
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness:before
+    content: ""
+    height: 100%
+    opacity: calc(pow($material-opacity, 2))
+    width: 100%
+
+    @include shadow($level)
+
+    @keyframes expand-shadow
+      0%
+        @include shadow($level)
+
+      100%
+        @include shadow($level / 1.6180339887)
+
+    @keyframes contract-shadow
+      0%
+        @include shadow($level / 1.6180339887)
+
+      100%
+        @include shadow($level)
+
+
+@mixin shadow($level)
+  box-shadow: transparentize(black, 0.6180339887) 0 calc(1rem * pow(var(--phi), 0 - $level)) calc(1rem * pow(var(--phi), 0 - $level) * pow(var(--phi), 1)) calc(-1rem * pow(var(--phi), 0 - $level) * pow(var(--phi), -1))

@@ -1,116 +1,84 @@
-@use "../../../../directives/src/lib/layout and organization/flexbox container/FlexboxContainerDirective"
-
-@use "../../../../directives/src/lib/elevated/ElevatedDirective"
-@use "../../../../directives/src/lib/hover translating/HoverTranslatingDirective"
-@use "../../../../directives/src/lib/rounded/RoundedDirective"
+@use "../../../../directives/src/lib/interaction/lib/hover transforming/HoverTransformingDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
 
 \:host
   display: contents
 
-  --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
-  --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
-  --standard--button--material-opacity: 0
+  --standard--button--gap-column: calc(1rem * pow(var(--phi), -2))
+  --standard--button--gap-row: calc(1rem * pow(var(--phi), -3))
 
-  @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
-  @include HoverTranslatingDirective.host
-  @include RoundedDirective.host
 
-  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
-  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
-  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
-  --standard--elevated-directive--material-opacity: var(--standard--button--material-opacity) !important
   --standard--flexbox-container-directive--align-items: center !important
   --standard--flexbox-container-directive--flex-direction: row !important
   --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
   --standard--flexbox-container-directive--justify-content: center !important
 
-  @media (min-width: 48rem)
-    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-
   > .harness
+    background: none
+    border: 0
+    color: inherit
     display: inline-grid !important
-
-    > a
-      text-shadow: none
-      z-index: unset
+    font: inherit
+    letter-spacing: inherit
+    line-height: inherit
+    outline: 0
+    padding: 0
+    -webkit-tap-highlight-color: transparent
 
     > .element
-      background: transparent
-      border: none
-      font-size: 1.125rem
-      outline: none
+      font-size: calc(1rem * pow(var(--phi), 0.5))
       transition: background-color 200ms ease, color 200ms ease
       user-select: none
-      -webkit-tap-highlight-color: transparent
 
       &::ng-deep > *
         --standard--button--material-opacity: 0
 
-        @include ElevatedDirective.children
         @include FlexboxContainerDirective.children
-        @include HoverTranslatingDirective.children
-        @include RoundedDirective.children
 
-    &.flat,
-    &.raised
-      --standard--button--material-opacity: 0.875
+  &.appearance-raised
+    --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
+    --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
 
-    &.symbol
+    @include CanvasDirective.host(6%)
+    @include ElevatedDirective.host
+    @include HoverTransformingDirective.host
+    @include RoundedDirective.host
+
+    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+    --standard--elevated-directive--material-opacity: 0.8 !important
+
+    @media (min-width: 48rem)
       --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
       --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
-      > .element
-        font-size: 1.375rem
+    > .harness > .element::ng-deep > *
+      @include CanvasDirective.children
+      @include ElevatedDirective.children
+      @include HoverTransformingDirective.children
+      @include RoundedDirective.children
 
-    &.no-op
-      > .element
-        color: var(--button--grey--foreground)
-        cursor: default
+  &.appearance-symbol > .harness > .element
+    font-size: calc(1rem * pow(var(--phi), 1))
 
-      &.flat,
-      &.raised
-        > .element
-          background: var(--button--grey--background)
+  &.disabled > .harness > .element
+    color: var(--button--grey--foreground)
+    cursor: default
 
-      &.primary
-        > .element
-          color: var(--primary--grey--foreground)
+  &:not(.disabled)
+    > .harness > .element
+      color: var(--button--glass--foreground)
+      cursor: pointer
 
-        &.flat,
-        &.raised
-          > .element
-            background: var(--primary--grey--background)
-
-    &:not(.no-op)
-      > .element
-        color: var(--button--glass--foreground)
-        cursor: pointer
-
-      &.flat,
-      &.raised
-        > .element
-          background: var(--button--glass--background)
-
-      &.primary
-        > .element
-          color: var(--primary--glass--foreground)
-
-        &.flat,
-        &.raised
-          > .element
-            background: var(--primary--glass--background)
-
-      @media (hover: hover)
-        &:hover,
-        &:focus-within
-          &.raised
-            z-index: 2
-
-            &:before
-              animation: expand-shadow 200ms ease-in-out
+    @media (hover: hover)
+      &:hover,
+      &:focus-within
+        z-index: 2

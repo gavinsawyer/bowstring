@@ -14,8 +14,8 @@ import { SymbolComponent }                                                      
     host:           {
       "[class.raisedOrLoweringWhenStuckOrUnsticking]":      "raisedOrLoweringWhenStuckOrUnsticking$()",
       "[class.raisedWhenStuckOrUnsticking]":                "raisedWhenStuckOrUnsticking$()",
-      "[class.stuck]":                                      "stuckModelWithTransform$()",
       "[class.stuckOrUnsticking]":                          "stuckOrUnsticking$()",
+      "[class.stuck]":                                      "stuckModelWithTransform$()",
       "[style.--standard--footer--height]":                 "height$()",
       "[style.--standard--footer--raising-scale]":          "raisingScale$()",
       "[style.--standard--footer--unsticking-translation]": "unstickingTranslation$()",
@@ -24,6 +24,7 @@ import { SymbolComponent }                                                      
       {
         directive: ElevatedDirective,
         inputs:    [
+          "level",
           "materialOpacity",
         ],
       },
@@ -48,7 +49,7 @@ import { SymbolComponent }                                                      
       {
         directive: RoundedDirective,
         inputs:    [
-          "roundnessFactor",
+          "level",
         ],
       },
     ],

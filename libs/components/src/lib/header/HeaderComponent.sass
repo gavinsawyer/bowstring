@@ -1,4 +1,4 @@
-@use "../../../../directives/src/lib/layout and organization/flexbox container/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 
 @use "../../../../directives/src/lib/typography/TypographyDirective"
 
@@ -6,8 +6,8 @@
 \:host
   display: contents
 
-  --standard--header--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -5))
-  --standard--header--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -5))
+  --standard--header--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--header--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
   @include TypographyDirective.host
@@ -35,9 +35,6 @@
     > h2
       font-size: calc(1em * pow(var(--phi), 4))
 
-      &:has(+ h3)
-        order: 1
-
     > h3
       font-size: calc(1em * pow(var(--phi), 3))
 
@@ -51,7 +48,7 @@
       font-size: calc(1em * pow(var(--phi), 1))
 
 
-@each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "card", "heading-group", "section")
+@each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "box", "heading-group", "section")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

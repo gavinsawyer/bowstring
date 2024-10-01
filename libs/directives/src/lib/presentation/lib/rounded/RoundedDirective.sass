@@ -1,0 +1,46 @@
+@use "../../../../sass/functions"
+@use "../../../../sass/mixins"
+
+
+$namespace: "rounded"
+
+$level: functions.get-input-reference($namespace, "level", 1)
+
+$brand-roundness-factor: functions.get-value-reference($namespace, "brand-roundness-factor")
+$clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include mixins.reset-colors($namespace, ())
+  @include mixins.reset-inputs($namespace, ("level"))
+  @include mixins.reset-values($namespace, ("brand-roundness-factor", "clip-path-source"))
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness
+    &:before
+      border-radius: calc($brand-roundness-factor * 1rem * pow(var(--phi), 1) / $level)
+
+    &:after
+      border-radius: calc($brand-roundness-factor * 1rem / $level)
+      clip-path: $clip-path-source
+
+    > .element
+      border-radius: calc($brand-roundness-factor * 1rem / $level)
+      clip-path: $clip-path-source
+      overflow: hidden
+
+  > svg
+    height: 1px
+    left: 0
+    position: absolute
+    top: 0
+    width: 1px

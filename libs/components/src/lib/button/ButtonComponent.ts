@@ -1,15 +1,21 @@
 import { NgTemplateOutlet }                                                                                                                                                                             from "@angular/common";
 import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                                                 from "@angular/router";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTranslatingDirective, RoundedDirective }                                                                                    from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, RoundedDirective }                                                                                   from "@standard/directives";
 
 
 @Component(
   {
+    host:           {
+      "[class.appearance-raised]": "appearanceInput$() === 'raised'",
+      "[class.appearance-symbol]": "appearanceInput$() === 'symbol'",
+      "[class.disabled]":          "disabledInput$() || routerLinkActive$()?.isActive || false",
+    },
     hostDirectives: [
       {
         directive: ElevatedDirective,
         inputs:    [
+          "level",
           "materialOpacity",
         ],
       },
@@ -32,12 +38,12 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTran
         ],
       },
       {
-        directive: HoverTranslatingDirective,
+        directive: HoverTransformingDirective,
       },
       {
         directive: RoundedDirective,
         inputs:    [
-          "roundnessFactor",
+          "level",
         ],
       },
     ],
@@ -60,10 +66,10 @@ export class ButtonComponent {
     effect(
       (): void => {
         this.hoverTranslatingDirective.htmlElementRef$.set(
-          this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
+          this.htmlDivElementRef$(),
         );
         this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
+          this.htmlDivElementRef$(),
         );
       },
       {
@@ -72,22 +78,16 @@ export class ButtonComponent {
     );
   }
 
-  private readonly hoverTranslatingDirective: HoverTranslatingDirective                     = inject<HoverTranslatingDirective>(HoverTranslatingDirective);
-  private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLAnchorElement> | undefined> = viewChild<ElementRef<HTMLAnchorElement>>("htmlAnchorElement");
-  private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement>>("htmlButtonElement");
+  private readonly hoverTranslatingDirective: HoverTransformingDirective              = inject<HoverTransformingDirective>(HoverTransformingDirective);
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly roundedContainerDirective: RoundedDirective             = inject<RoundedDirective>(RoundedDirective);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
 
-  public readonly appearanceInput$: InputSignal<"flat" | "raised" | "symbol" | undefined>                      = input<"flat" | "raised" | "symbol" | undefined>(
+  public readonly appearanceInput$: InputSignal<"raised" | "symbol" | undefined>                               = input<"raised" | "symbol" | undefined>(
     undefined,
     {
       alias: "appearance",
-    },
-  );
-  public readonly colorInput$: InputSignal<"primary" | "none" | undefined>                                     = input<"primary" | "none" | undefined>(
-    undefined,
-    {
-      alias: "color",
     },
   );
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(

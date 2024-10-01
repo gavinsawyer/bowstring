@@ -7,7 +7,8 @@
   "extends":         "../../tsconfig.base.json",
   "files":           [
     "src/app/main.browser.ts",
-    "src/app/main.server.ts"
+    "src/app/main.server.ts",
+    "src/polyfills.ts"
   ],
   "include":         [
     "../../libs/symbol paths/src/lib/**/*.ts"

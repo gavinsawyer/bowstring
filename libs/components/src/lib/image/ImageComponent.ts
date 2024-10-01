@@ -5,6 +5,9 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
 
 @Component(
   {
+    host:           {
+      "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
+    },
     hostDirectives: [
       {
         directive: ContainerDirective,
@@ -32,6 +35,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: ElevatedDirective,
         inputs:    [
+          "level",
           "materialOpacity",
         ],
       },
@@ -46,7 +50,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: RoundedDirective,
         inputs:    [
-          "roundnessFactor",
+          "level",
         ],
       },
     ],
@@ -66,7 +70,7 @@ export class ImageComponent {
   constructor() {
     effect(
       (): void => this.roundedContainerDirective.htmlElementRef$.set(
-        this.htmlImageElementRef$(),
+        this.htmlDivElementRef$(),
       ),
       {
         allowSignalWrites: true,
@@ -74,7 +78,7 @@ export class ImageComponent {
     );
   }
 
-  private readonly htmlImageElementRef$: Signal<ElementRef<HTMLImageElement>> = viewChild.required<ElementRef<HTMLImageElement>>("htmlImageElement");
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 

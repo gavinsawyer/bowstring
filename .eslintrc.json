@@ -53,13 +53,13 @@
     },
     {
       "files": [
-        "./apps/website/src/app/sheet contents components/lib/**/*.ts"
+        "./apps/website/src/app/components/lib/sheet contents/lib/**/*.ts"
       ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
-            "prefix": "standard-website-sheet-contents-",
+            "prefix": "standard-website--sheet-contents-",
             "style":  "kebab-case",
             "type":   "element"
           }
@@ -68,7 +68,7 @@
     },
     {
       "files": [
-        "./apps/website/src/app/directives/src/lib/**/*.ts"
+        "./apps/website/src/app/directives/lib/**/*.ts"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -98,13 +98,13 @@
     },
     {
       "files": [
-        "./libs/sheet contents components/src/lib/**/*.ts"
+        "./libs/components/src/lib/sheet contents/lib/**/*.ts"
       ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
-            "prefix": "standard-sheet-contents-",
+            "prefix": "standard--sheet-contents-",
             "style":  "kebab-case",
             "type":   "element"
           }

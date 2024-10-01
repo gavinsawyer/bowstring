@@ -11,10 +11,10 @@ import { filter, fromEvent, map }                               from "rxjs";
 )
 export class PointerService {
 
-  private readonly platformId: NonNullable<unknown>          = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly events$: Signal<PointerEvent | undefined> = isPlatformBrowser(
+  private readonly platformId: NonNullable<unknown>     = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly events$: Signal<PointerEvent | null> = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<PointerEvent | undefined, undefined>(
+  ) ? toSignal<PointerEvent | null, null>(
     fromEvent<PointerEvent>(
       window,
       "pointermove",
@@ -24,20 +24,23 @@ export class PointerService {
       ),
     ),
     {
-      initialValue: undefined,
+      initialValue: null,
     },
-  ) : signal<undefined>(undefined);
+  ) : signal<null>(null);
 
   public readonly position$: Signal<{ "x": number, "y": number }> = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<{ "x": number, "y": number }, { "x": 0, "y": 0 }>(
-    toObservable<PointerEvent | undefined>(
+    toObservable<PointerEvent | null>(
       this.events$,
-    ).pipe<{ "x": number, "y": number }>(
-      map<PointerEvent | undefined, { "x": number, "y": number }>(
-        (pointerEvent?: PointerEvent): { "x": number, "y": number } => ({
-          x: pointerEvent?.x || 0,
-          y: pointerEvent?.y || 0,
+    ).pipe<PointerEvent, { "x": number, "y": number }>(
+      filter<PointerEvent | null, PointerEvent>(
+        (pointerEvent: PointerEvent | null): pointerEvent is PointerEvent => !!pointerEvent,
+      ),
+      map<PointerEvent, { "x": number, "y": number }>(
+        (pointerEvent: PointerEvent): { "x": number, "y": number } => ({
+          x: pointerEvent.x,
+          y: pointerEvent.y,
         }),
       ),
     ),
@@ -55,12 +58,15 @@ export class PointerService {
   );
   public readonly pressure$: Signal<number | undefined>           = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<number | undefined, undefined>(
-    toObservable<PointerEvent | undefined>(
+  ) ? toSignal<number>(
+    toObservable<PointerEvent | null>(
       this.events$,
-    ).pipe<number | undefined>(
-      map<PointerEvent | undefined, number | undefined>(
-        (pointerEvent?: PointerEvent): number | undefined => pointerEvent?.pressure,
+    ).pipe<PointerEvent, number>(
+      filter<PointerEvent | null, PointerEvent>(
+        (pointerEvent: PointerEvent | null): pointerEvent is PointerEvent => !!pointerEvent,
+      ),
+      map<PointerEvent, number>(
+        (pointerEvent: PointerEvent): number => pointerEvent.pressure,
       ),
     ),
     {

@@ -32,13 +32,14 @@ import { ContainerDirective, ElevatedDirective, RoundedDirective }            fr
       {
         directive: ElevatedDirective,
         inputs:    [
+          "level",
           "materialOpacity",
         ],
       },
       {
         directive: RoundedDirective,
         inputs:    [
-          "roundnessFactor",
+          "level",
         ],
       },
     ],

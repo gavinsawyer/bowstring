@@ -4,9 +4,7 @@ import project           from "../../../../project.json";
 import { type LocaleId } from "../../types";
 
 
-export default function getI18nRequestHandler(
-  getRequestHandler: (i18nRequestHandlerResponse: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler,
-): express.RequestHandler {
+function getI18nRequestHandler(getRequestHandler: (i18nRequestHandlerResponse: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler): express.RequestHandler {
   return async (
     request: express.Request,
     response: express.Response,
@@ -25,7 +23,7 @@ export default function getI18nRequestHandler(
     nextFunction,
   ))(
     ((localeIds: LocaleId[]): LocaleId => localeIds.filter(
-      (localeId: LocaleId): boolean => localeId === request.path.split("/")[1],
+      (localeId: LocaleId): boolean => localeId === request.path.split("/")[1] || localeId === request.headers.referer?.split("://")[1]?.split("/")[1],
     )[0] || request.acceptsLanguages(
       localeIds,
     ) || "en-US")(
@@ -38,3 +36,5 @@ export default function getI18nRequestHandler(
     ),
   );
 }
+
+export default getI18nRequestHandler;

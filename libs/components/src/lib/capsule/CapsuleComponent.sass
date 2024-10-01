@@ -1,7 +1,6 @@
-@use "../../../../directives/src/lib/layout and organization/container/ContainerDirective"
-
-@use "../../../../directives/src/lib/elevated/ElevatedDirective"
-@use "../../../../directives/src/lib/rounded/RoundedDirective"
+@use "../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
 
 \:host
@@ -10,13 +9,19 @@
   --standard--capsule--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
   --standard--capsule--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
 
-  @include ContainerDirective.host
   @include ElevatedDirective.host
+  @include FlexboxContainerDirective.host
   @include RoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+  --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--flex-direction: row !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--capsule--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--capsule--gap-row) !important
+  --standard--flexbox-container-directive--justify-content: center !important
+
 
   > .harness > .element
     background: var(--primary--canvas--background)
@@ -25,3 +30,9 @@
     font-size: calc(1em * pow(var(--phi), -0.1))
     text-transform: uppercase
     user-select: none
+
+    &::ng-deep > *
+      @include ElevatedDirective.children
+      @include FlexboxContainerDirective.children
+      @include RoundedDirective.children
+

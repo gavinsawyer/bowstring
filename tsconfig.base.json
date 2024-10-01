@@ -36,8 +36,11 @@
       "@standard/components":                [
         "libs/components/src/index.ts"
       ],
-      "@standard/sheet-contents-components": [
-        "libs/sheet contents components/src/index.ts"
+      "@standard/components/routes":         [
+        "libs/components/src/lib/routes/index.ts"
+      ],
+      "@standard/components/sheets-content": [
+        "libs/components/src/lib/sheets content/index.ts"
       ],
       "@standard/directives":                [
         "libs/directives/src/index.ts"
@@ -47,9 +50,6 @@
       ],
       "@standard/interfaces":                [
         "libs/interfaces/src/index.ts"
-      ],
-      "@standard/route-components":          [
-        "libs/route components/src/index.ts"
       ],
       "@standard/services":                  [
         "libs/services/src/index.ts"

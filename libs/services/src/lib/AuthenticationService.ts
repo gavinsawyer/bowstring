@@ -25,7 +25,7 @@ export class AuthenticationService {
   public readonly hasWebAuthn$: Signal<boolean>                                   = signal<boolean>(typeof PublicKeyCredential === "function");
   public readonly hasWebAuthnConditionalMediation$: Signal<boolean>               = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<boolean, boolean>(
+  ) ? toSignal<boolean, false>(
     fromPromise<boolean>(
       PublicKeyCredential.isConditionalMediationAvailable(),
     ),
@@ -35,7 +35,7 @@ export class AuthenticationService {
   ) : signal<false>(false);
   public readonly hasWebAuthnUserVerifyingPlatformAuthenticator$: Signal<boolean> = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<boolean, boolean>(
+  ) ? toSignal<boolean, false>(
     fromPromise<boolean>(
       PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(),
     ),

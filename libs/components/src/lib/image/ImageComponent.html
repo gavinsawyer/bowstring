@@ -2,12 +2,13 @@
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <img class="element" #htmlImageElement
-    [attr.alt]="altInput$()"
-    [height]="heightInput$()"
-    [style.aspect-ratio]="widthInput$() + '/' + heightInput$()"
-    [width]="widthInput$()"
-    [ngSrc]="srcInput$()" />
+  <div class="element" #htmlDivElement>
+    <img
+      [attr.alt]="altInput$()"
+      [height]="heightInput$()"
+      [width]="widthInput$()"
+      [ngSrc]="srcInput$()" />
+  </div>
 </div>
 
 <svg

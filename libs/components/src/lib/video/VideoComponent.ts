@@ -1,3 +1,4 @@
+import { NgTemplateOutlet }                                                                                                                                              from "@angular/common";
 import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
 import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                                                from "@standard/directives";
 
@@ -31,6 +32,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: ElevatedDirective,
         inputs:    [
+          "level",
           "materialOpacity",
         ],
       },
@@ -45,7 +47,7 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       {
         directive: RoundedDirective,
         inputs:    [
-          "roundnessFactor",
+          "level",
         ],
       },
     ],
@@ -55,6 +57,9 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       "VideoComponent.sass",
     ],
     templateUrl:    "VideoComponent.html",
+    imports:        [
+      NgTemplateOutlet,
+    ],
   },
 )
 export class VideoComponent {
@@ -62,7 +67,7 @@ export class VideoComponent {
   constructor() {
     effect(
       (): void => this.roundedContainerDirective.htmlElementRef$.set(
-        this.htmlVideoElementRef$(),
+        this.htmlDivElementRef$(),
       ),
       {
         allowSignalWrites: true,
@@ -70,6 +75,7 @@ export class VideoComponent {
     );
   }
 
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>     = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly htmlVideoElementRef$: Signal<ElementRef<HTMLVideoElement>> = viewChild.required<ElementRef<HTMLVideoElement>>("htmlVideoElement");
 
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);

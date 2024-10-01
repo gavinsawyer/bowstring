@@ -1,9 +1,10 @@
-@use "../../../../../../../libs/directives/src/lib/layout and organization/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../../libs/directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 
 
 \:host
   display: contents
 
+  --standard--root--font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue
   --standard--root--gap-column: var(--standard--root--padding-sides)
   --standard--root--gap-row: var(--standard--root--padding-bottom)
 
@@ -30,6 +31,12 @@
   --standard--flexbox-container-directive--gap-row: var(--standard--root--gap-row) !important
 
   > .harness > .element
+    flex-direction: column
+    font-family: var(--standard--root--font-family), sans-serif
+    font-optical-sizing: auto
+    font-style: normal
+    letter-spacing: -0.03444185375em
+    line-height: 1.1458980338
     padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides))) !important
 
     &::ng-deep > *

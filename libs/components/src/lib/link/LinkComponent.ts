@@ -6,7 +6,7 @@ import { RouterLink, RouterLinkActive }                                         
 @Component(
   {
     host:        {
-      "[class.disabled]": "disabledInput$() || routerLinkActive$().isActive",
+      "[class.disabled]": "disabledInput$() || routerLinkActive$()?.isActive || false",
     },
     imports:     [
       NgTemplateOutlet,
@@ -23,7 +23,7 @@ import { RouterLink, RouterLinkActive }                                         
 )
 export class LinkComponent {
 
-  protected readonly routerLinkActive$: Signal<RouterLinkActive> = viewChild.required<RouterLinkActive>(RouterLinkActive);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
 
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,

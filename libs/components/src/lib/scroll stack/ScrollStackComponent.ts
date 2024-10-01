@@ -12,11 +12,11 @@ import { combineLatestWith, filter, fromEvent, map, Observable, type Observer, s
     host:           {
       "[style.--standard--scroll-stack--height]":                     "height$()",
       "[style.--standard--scroll-stack--minimum-aspect-ratio-input]": "minimumAspectRatioInput$()",
-      "[style.--standard--scroll-stack--width]":                      "width$()",
       "[style.--standard--scroll-stack--scroll-left]":                "scrollLeft$()",
       "[style.--standard--scroll-stack--viewport-height]":            "viewportHeight$()",
       "[style.--standard--scroll-stack--viewport-vertical-offset]":   "viewportVerticalOffset$()",
       "[style.--standard--scroll-stack--viewport-width]":             "viewportWidth$()",
+      "[style.--standard--scroll-stack--width]":                      "width$()",
     },
     hostDirectives: [
       {
@@ -73,10 +73,10 @@ export class ScrollStackComponent {
       this.htmlDivElementRef$,
     ).pipe<Dimensions>(
       switchMap<ElementRef<HTMLDivElement>, Observable<Dimensions>>(
-        (htmlElementRef: ElementRef<HTMLDivElement>): Observable<Dimensions> => new Observable<Dimensions>(
+        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<Dimensions> => new Observable<Dimensions>(
           (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
             resizeObserver.observe(
-              htmlElementRef.nativeElement,
+              htmlDivElementRef.nativeElement,
             );
 
             return (): void => resizeObserver.disconnect();
@@ -118,7 +118,7 @@ export class ScrollStackComponent {
   );
   protected readonly scrollLeft$: Signal<number | undefined>                                     = isPlatformBrowser(
     this.platformId,
-  ) ? toSignal<number | undefined, undefined>(
+  ) ? toSignal<number>(
     toObservable<ElementRef<HTMLDivElement> | undefined>(
       this.htmlDivElementRef$,
     ).pipe<ElementRef<HTMLDivElement>, number>(

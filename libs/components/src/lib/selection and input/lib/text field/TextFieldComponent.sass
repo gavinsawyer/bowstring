@@ -1,0 +1,55 @@
+@use "../../../../../../directives/src/lib/interaction/lib/hover transforming/HoverTransformingDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+
+
+\:host
+  display: contents
+
+  --standard--text-field--gap-column: var(--standard--container-directive--padding-sides)
+  --standard--text-field--gap-row: var(--standard--container-directive--padding-bottom)
+
+  @include CanvasDirective.host(6%)
+  @include ElevatedDirective.host
+  @include FlexboxContainerDirective.host
+  @include HoverTransformingDirective.host
+  @include RoundedDirective.host
+
+  --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+  --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--elevated-directive--material-opacity: 1 !important
+  --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--flex-direction: row !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--text-field--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--text-field--gap-row) !important
+
+  > .harness > .element
+    width: 12rem
+
+    > input,
+    > button
+      background: none
+      border: 0
+      color: inherit
+      font: inherit
+      letter-spacing: inherit
+      line-height: inherit
+      outline: 0
+      padding: 0
+      -webkit-tap-highlight-color: transparent
+
+    > input
+      flex: 1 1 100%
+      min-width: 0
+
+    > button
+      cursor: pointer
+
+      > svg
+        display: grid
+        height: 1em
+        max-width: 1.125em
+        overflow: visible

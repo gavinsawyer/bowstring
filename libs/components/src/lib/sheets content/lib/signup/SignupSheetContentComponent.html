@@ -1,0 +1,14 @@
+<standard--header>
+  <h6 i18n="@@libs--Components--SheetContents--Signup--Title">Create an account</h6>
+</standard--header>
+<standard--flexbox-container>
+  <standard--text-field
+    [formControl]="signUpFormGroup.controls.username"
+    level="2"
+    placeholder="Username" />
+</standard--flexbox-container>
+<standard--flexbox-container
+  flexDirection="row"
+  justifyContent="flex-end">
+  <standard--button appearance="symbol"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+</standard--flexbox-container>

@@ -5,9 +5,9 @@
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
-<standard--sheet #signinSheetComponent>@defer {<standard-sheet-contents--signin />}</standard--sheet>
-<standard--sheet #signupSheetComponent>@defer {<standard-sheet-contents--signup />}</standard--sheet>
-<standard--sheet #localeSheetComponent>@defer {<standard-website-sheet-contents--locale />}</standard--sheet>
+<standard--sheet #signinSheetComponent>@defer {<standard--sheet-contents--signin />}</standard--sheet>
+<standard--sheet #signupSheetComponent>@defer {<standard--sheet-contents--signup />}</standard--sheet>
+<standard--sheet #localeSheetComponent>@defer {<standard-website--sheet-contents--locale />}</standard--sheet>
 
 <ng-template #contentTemplate>
   <standard--flexbox-container
@@ -18,20 +18,20 @@
     gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
     justifyContent="space-between">
     <standard--header fontSizeExponent="-3">
-      <h1 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h1>
+      <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h1>
     </standard--header>
     <standard--nav>
       <standard--link
-        i18n="@@apps--Website--RouteComponents--NewsRoute--Title"
+        i18n="@@apps--Website--Components--Routes--News--Title"
         url="/news">News</standard--link>
       <standard--link
-        i18n="@@apps--Website--RouteComponents--DesignRoute--Title"
+        i18n="@@apps--Website--Components--Routes--Design--Title"
         url="/design">Design</standard--link>
       <standard--link
-        i18n="@@apps--Website--RouteComponents--DevelopRoute--Title"
+        i18n="@@apps--Website--Components--Routes--Develop--Title"
         url="/develop">Develop</standard--link>
       <standard--link
-        i18n="@@libs--RouteComponents--AccountRoute--Title"
+        i18n="@@libs--Components--Routes--Account--Title"
         url="/account">Account</standard--link>
     </standard--nav>
   </standard--flexbox-container>
@@ -43,7 +43,7 @@
   </standard--flexbox-container>
   <standard--footer>
     <standard--header>
-      <h6 style="font-family: Anybody, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h6>
+      <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h6>
     </standard--header>
     <standard--section
       flexDirection="row"
@@ -52,37 +52,37 @@
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@apps--Website--RouteComponents--NewsRoute--Title"
+            i18n="@@apps--Website--Components--Routes--News--Title"
             url="/news">News</standard--link>
           <standard--link
-            i18n="@@apps--Website--RouteComponents--DesignRoute--Title"
+            i18n="@@apps--Website--Components--Routes--Design--Title"
             url="/design">Design</standard--link>
           <standard--link
-            i18n="@@apps--Website--RouteComponents--DevelopRoute--Title"
+            i18n="@@apps--Website--Components--Routes--Develop--Title"
             url="/develop">Develop</standard--link>
         </standard--flexbox-container>
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
             [disabled]="signinSheetComponent.openModelWithTransform$()"
             (select)="signinSheetComponent.openModel$.set(true);"
-            i18n="@@libs--DialogComponents--SigninDialog--Title">Sign in</standard--link>
+            i18n="@@libs--Components--SheetContents--Signin--Title">Sign in</standard--link>
           <standard--link
             [disabled]="signupSheetComponent.openModelWithTransform$()"
             (select)="signupSheetComponent.openModel$.set(true);"
-            i18n="@@libs--DialogComponents--SignupDialog--Title">Create an account</standard--link>
+            i18n="@@libs--Components--SheetContents--Signup--Title">Create an account</standard--link>
         </standard--flexbox-container>
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@libs--RouteComponents--PrivacyRoute--Title"
+            i18n="@@libs--Components--Routes--Privacy--Title"
             url="/privacy">Privacy</standard--link>
           <standard--link
-            i18n="@@libs--RouteComponents--TermsRoute--Title"
+            i18n="@@libs--Components--Routes--Terms--Title"
             url="/terms">Terms</standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
-          <standard--link><standard--symbol symbolName="ArrowUpForwardAppFill" />Instagram</standard--link>
+          <standard--link><standard--symbol input="ArrowUpForwardAppFill" />Instagram</standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>
     </standard--section>
@@ -104,7 +104,7 @@
         justifyContent="center">
         <standard--link
           [disabled]="localeSheetComponent.openModelWithTransform$()"
-          (select)="localeSheetComponent.openModel$.set(true);"><standard--symbol symbolName="Globe" />{{ localeDisplayNames.of(localeId) || localeId }}</standard--link>
+          (select)="localeSheetComponent.openModel$.set(true);"><standard--symbol input="Globe" />{{ localeDisplayNames.of(localeId) || localeId }}</standard--link>
       </standard--flexbox-container>
     </standard--section>
   </standard--footer>

@@ -33,7 +33,7 @@
               "type":           "initial"
             },
             {
-              "maximumError":   "24kb",
+              "maximumError":   "32kb",
               "maximumWarning": "12kb",
               "type":           "anyComponentStyle"
             }
@@ -68,6 +68,7 @@
         "main":                        "apps/website/src/app/main.browser.ts",
         "outputHashing":               "all",
         "outputPath":                  "dist/apps/website/browser",
+        "polyfills":                   "apps/website/src/polyfills.ts",
         "styles":                      [
           "apps/website/src/styles.sass"
         ],
@@ -236,7 +237,7 @@
       "options":  {
         "commands": [
           "rm -rf dist/apps/website",
-          "node -p \"'import { GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts",
+          "node -p \"'import { type GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts",
           "node -p \"'export const packageVersion: string = \\\"' + require('./package.json').version + '\\\" as const;'\" > apps/website/src/.package-version.ts"
         ]
       }

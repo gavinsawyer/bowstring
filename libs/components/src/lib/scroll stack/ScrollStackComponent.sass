@@ -1,5 +1,5 @@
-@use "../../../../directives/src/lib/layout and organization/container/ContainerDirective"
-@use "../../../../directives/src/lib/layout and organization/flexbox child/FlexboxChildDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
 
 
 \:host
@@ -46,7 +46,7 @@
           left: 0
           position: fixed
           // noinspection CssInvalidFunction
-          transform: rotate(calc(5.625deg * var(--standard--scroll-stack--item--transformation--dulled))) scale(calc(1 - 0.1875 * var(--standard--scroll-stack--item--transformation--dulled-absolute-value))) translate3d(calc(15.625% * var(--standard--scroll-stack--item--transformation--dulled)), calc(-12.5% * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) - 1px * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) * var(--standard--scroll-stack--viewport-vertical-offset, 0) / pow(var(--standard--scroll-stack--viewport-width, 1), 0.25)), 0)
+          transform: rotate(calc(5.625deg * var(--standard--scroll-stack--item--transformation--dulled))) scale(calc(1 - 0.1875 * var(--standard--scroll-stack--item--transformation--dulled-absolute-value))) translate3d(calc(15.625% * var(--standard--scroll-stack--item--transformation--dulled)), calc(-12.5% * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) - 0.0625px * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) * var(--standard--scroll-stack--viewport-vertical-offset, 0)), 0)
           transform-origin: 50% 100% 0
           width: 100%
           z-index: calc(1 - round(1 * var(--standard--scroll-stack--item--relative-transformation--absolute-value), 1))

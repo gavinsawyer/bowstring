@@ -8,6 +8,7 @@ import { environment }                            from "../environment";
 import { WebsiteServerModule as AppServerModule } from "./modules";
 import { getI18nRequestHandler }                  from "./request handlers";
 import { type LocaleId }                          from "./types";
+import "zone.js/node";
 
 
 function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
@@ -54,7 +55,7 @@ export {
 declare const __non_webpack_require__: NodeRequire;
 
 ((moduleFilename: string): boolean => moduleFilename === __filename || moduleFilename.includes("iisnode"))(
-  ((mainModule: NodeJS.Module | undefined): string => mainModule && mainModule.filename || "")(
+  ((mainModule?: NodeJS.Module): string => mainModule?.filename || "")(
     __non_webpack_require__.main,
   ),
 ) && express().use(

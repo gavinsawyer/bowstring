@@ -9,13 +9,14 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
 @Component(
   {
     host:           {
-      "[class.open]":          "openModelWithTransform$()",
       "[class.openOrClosing]": "openOrClosing$()",
+      "[class.open]":          "openModelWithTransform$()",
     },
     hostDirectives: [
       {
         directive: ElevatedDirective,
         inputs:    [
+          "level",
           "materialOpacity",
         ],
       },
@@ -40,7 +41,7 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
       {
         directive: RoundedDirective,
         inputs:    [
-          "roundnessFactor",
+          "level",
         ],
       },
     ],

@@ -19,14 +19,14 @@ import { fromPromise }                                     from "rxjs/internal/o
 )
 export class SymbolComponent {
 
-  public readonly symbolNameInput$: InputSignal<SymbolName>     = input.required<SymbolName>(
+  public readonly input$: InputSignal<SymbolName>               = input.required<SymbolName>(
     {
-      alias: "symbolName",
+      alias: "input",
     },
   );
-  public readonly symbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths | undefined, undefined>(
+  public readonly symbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
     toObservable<SymbolName>(
-      this.symbolNameInput$,
+      this.input$,
     ).pipe<SymbolPaths>(
       switchMap<SymbolName, Observable<SymbolPaths>>(
         (symbolName: SymbolName): Observable<SymbolPaths> => fromPromise<SymbolPaths>(

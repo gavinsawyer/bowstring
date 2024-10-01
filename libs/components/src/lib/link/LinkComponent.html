@@ -1,17 +1,24 @@
-<div class="harness"
+@if (urlInput$(); as url) {@if (url.includes("://")) {<a class="harness"
+  [attr.href]="url"
+  [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
   (click)="$event.stopPropagation(); selectOutput.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-  routerLinkActive="routerLinkActive"
-  [routerLinkActiveOptions]="{ exact: true }"
-  tabindex="-1">
-  @if (urlInput$(); as url) {@if (url.includes("://")) {<a class="element"
-    [attr.href]="url"
-    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
-    target="_blank"><ng-container *ngTemplateOutlet="contentTemplate" /></a>} @else {<a class="element"
-    [attr.tabindex]="disabledInput$() || routerLinkActive$().isActive ? -1 : tabIndexOverrideInput$() ?? 0"
-    [routerLink]="url"><ng-container *ngTemplateOutlet="contentTemplate" /></a>}} @else {<button class="element"
-    [attr.disabled]="disabledInput$() || undefined"
-    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"><ng-container *ngTemplateOutlet="contentTemplate" /></button>}
-</div>
+  target="_blank">
+  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</a>} @else {<a class="harness"
+  [attr.tabindex]="disabledInput$() || routerLinkActive$()?.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
+  (click)="$event.stopPropagation(); selectOutput.emit();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  [routerLink]="url"
+  routerLinkActive
+  [routerLinkActiveOptions]="{ exact: true }">
+  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</a>}} @else {<button class="harness"
+  [attr.disabled]="disabledInput$() || undefined"
+  [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
+  (click)="$event.stopPropagation(); selectOutput.emit();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();">
+  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</button>}
 
 <ng-template #contentTemplate><ng-content /></ng-template>

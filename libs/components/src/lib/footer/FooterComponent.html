@@ -23,6 +23,6 @@
   @if (!stuckModelWithTransform$() || raisedWhenStuckOrUnsticking$()) {<standard--button
     appearance="symbol"
     (select)="stuckModel$.set(!stuckModelWithTransform$());">
-    <standard--symbol [symbolName]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />
+    <standard--symbol [input]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />
   </standard--button>}
 </ng-template>

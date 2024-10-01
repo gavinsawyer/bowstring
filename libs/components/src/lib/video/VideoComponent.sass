@@ -1,9 +1,8 @@
-@use "../../../../directives/src/lib/layout and organization/flexbox child/FlexboxChildDirective"
-@use "../../../../directives/src/lib/layout and organization/container/ContainerDirective"
-@use "../../../../directives/src/lib/materials/canvas/CanvasDirective"
-
-@use "../../../../directives/src/lib/elevated/ElevatedDirective"
-@use "../../../../directives/src/lib/rounded/RoundedDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
+@use "../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
 
 \:host
@@ -16,9 +15,12 @@
   @include RoundedDirective.host
 
   > .harness > .element
-    height: auto
-    max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
-    width: 100%
+    display: flex
+
+    > video
+      height: auto
+      max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
+      width: 100%
 
 
 @mixin host-context($context-level)
@@ -27,7 +29,7 @@
 \:host-context(standard--main)
   @include host-context(-0.5)
 
-\:host-context(standard--card, standard--footer)
+\:host-context(standard--box, standard--footer)
   @include host-context(-1)
 
 \:host-context(standard--header)

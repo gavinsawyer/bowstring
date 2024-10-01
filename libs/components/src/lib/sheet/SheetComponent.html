@@ -4,7 +4,10 @@
   tabindex="0">
   <div class="element">
     <div>
-      <div class="harness">
+      <div class="harness"
+        (click)="$event.stopPropagation();"
+        (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+        tabindex="-1">
         <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
       </div>
 

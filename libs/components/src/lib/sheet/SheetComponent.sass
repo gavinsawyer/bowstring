@@ -1,8 +1,7 @@
-@use "../../../../directives/src/lib/layout and organization/flexbox container/FlexboxContainerDirective"
-@use "../../../../directives/src/lib/materials/glass/GlassDirective"
-
-@use "../../../../directives/src/lib/elevated/ElevatedDirective"
-@use "../../../../directives/src/lib/rounded/RoundedDirective"
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/materials/lib/glass/GlassDirective"
+@use "../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
 
 \:host
@@ -26,14 +25,16 @@
   --standard--flexbox-container-directive--justify-content: center !important
 
   > .harness
-    background: transparent
+    background: none
     border: none
     height: 100dvh
     max-height: 100dvh
     max-width: 100dvw
+    outline: 0
     padding: 0
     visibility: collapse
     width: 100dvw
+    -webkit-tap-highlight-color: transparent
 
     @mixin keyframes--close-sheet
       opacity: 0
@@ -83,6 +84,11 @@
           @include keyframes--show-backdrop
 
     > .element
+      font-family: var(--standard--root--font-family), sans-serif
+      font-optical-sizing: auto
+      font-style: normal
+      letter-spacing: -0.03444185375em
+      line-height: 1.1458980338
       padding: calc(max(var(--safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(var(--safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(var(--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(var(--safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
 
       > div
