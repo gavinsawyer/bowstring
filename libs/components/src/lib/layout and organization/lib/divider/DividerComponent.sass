@@ -1,0 +1,23 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
+@use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+
+
+\:host
+  display: contents
+
+  @include CanvasDirective.host(60%)
+  @include ContainerDirective.host
+  @include FlexboxChildDirective.host
+
+  > .harness > .element
+    display: flex
+    flex-direction: column
+
+    > div
+      flex: 0 0 1px
+
+
+@each $host-context-namespace in ("main", "nav", "article", "aside", "heading-group", "section", "header", "footer", "sheet", "box", "button", "capsule", "link", "text-field")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--container-directive--margin-sides: calc(-1 * var(--standard--#{ $host-context-namespace }--gap-column)) !important

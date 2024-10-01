@@ -124,7 +124,7 @@ export class SheetComponent {
       this.openModelWithTransform$,
     ).pipe<boolean, boolean>(
       delayWhen<boolean>(
-        (open: boolean): Observable<number> => open ? timer(0) : timer(200),
+        (open: boolean): Observable<number> => open ? timer(0) : timer(180),
       ),
       map<boolean, boolean>(
         (): boolean => this.openModelWithTransform$(),

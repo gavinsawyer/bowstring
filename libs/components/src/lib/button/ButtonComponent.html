@@ -1,14 +1,15 @@
-@if (urlInput$(); as url) {@if (url.includes("://")) {<a class="harness"
+@if (urlInput$(); as url) {@if (url.includes("://")) {<a class="harness" #htmlAnchorElement
   [attr.href]="url"
-  [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"><ng-container *ngTemplateOutlet="contentTemplate; context: { buttonComponent: this }" /></a>} @else {<a #routerLinkActive="routerLinkActive" class="element" #htmlAnchorElement
+  [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"><ng-container *ngTemplateOutlet="contentTemplate; context: { buttonComponent: this }" /></a>} @else {<a class="element" #htmlAnchorElement
   [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
   (click)="$event.stopPropagation(); selectOutput.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   [routerLink]="url"
   routerLinkActive
+  #routerLinkActive="routerLinkActive"
   [routerLinkActiveOptions]="{ exact: true }">
   <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate; context: { buttonComponent: this }" /></div>
-</a>}} @else {<button class="harness"
+</a>}} @else {<button class="harness" #htmlButtonElement
   [attr.disabled]="disabledInput$() || undefined"
   [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
   [attr.type]="typeInput$() || 'button'"

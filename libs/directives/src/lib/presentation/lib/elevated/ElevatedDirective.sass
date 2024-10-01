@@ -25,9 +25,11 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
 
   > .harness:before
     content: ""
-    height: 100%
+    left: 1px
+    height: calc(100% - 2px)
     opacity: calc(pow($material-opacity, 2))
-    width: 100%
+    top: 1px
+    width: calc(100% - 2px)
 
     @include shadow($level)
 

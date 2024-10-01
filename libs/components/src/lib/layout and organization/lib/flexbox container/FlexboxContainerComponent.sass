@@ -10,7 +10,7 @@
     @include FlexboxContainerDirective.children
 
 
-@each $host-context-namespace in ("main", "nav", "article", "aside", "heading-group", "section", "header", "footer", "sheet", "box", "button", "link", "capsule")
+@each $host-context-namespace in ("main", "nav", "article", "aside", "heading-group", "section", "header", "footer", "sheet", "box", "button", "capsule", "link", "text-field")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

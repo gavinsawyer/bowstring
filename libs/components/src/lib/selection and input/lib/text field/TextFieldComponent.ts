@@ -93,21 +93,27 @@ export class TextFieldComponent
     ),
   );
 
-  public readonly autocompleteInput$: InputSignal<string | undefined> = input<string | undefined>(
+  public readonly autocompleteInput$: InputSignal<string | undefined>                = input<string | undefined>(
     undefined,
     {
       alias: "autocomplete",
     },
   );
-  public readonly formControlInput$: InputSignal<FormControl<string>> = input.required<FormControl<string>>(
+  public readonly formControlInput$: InputSignal<FormControl<string>>                = input.required<FormControl<string>>(
     {
       alias: "formControl",
     },
   );
-  public readonly placeholderInput$: InputSignal<string | undefined>  = input<string | undefined>(
+  public readonly placeholderInput$: InputSignal<string | undefined>                 = input<string | undefined>(
     undefined,
     {
       alias: "placeholder",
+    },
+  );
+  public readonly typeInput$: InputSignal<"email" | "password" | "text" | undefined> = input<"email" | "password" | "text" | undefined>(
+    undefined,
+    {
+      alias: "type",
     },
   );
 

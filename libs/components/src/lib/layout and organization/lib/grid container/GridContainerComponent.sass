@@ -10,7 +10,7 @@
     @include GridContainerDirective.children
 
 
-@each $host-context-namespace in ("main", "nav", "article", "aside", "heading-group", "section", "header", "footer", "sheet", "box", "button", "link", "capsule")
+@each $host-context-namespace in ("main", "nav", "article", "aside", "heading-group", "section", "header", "footer", "sheet", "box", "button", "capsule", "link", "text-field")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--grid-container-directive--gap-column: var(--standard--#{ $host-context-namespace }--gap-column) !important
     --standard--grid-container-directive--gap-row: var(--standard--#{ $host-context-namespace }--gap-row) !important

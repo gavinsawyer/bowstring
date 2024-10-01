@@ -21,6 +21,7 @@
   <input #htmlInputElement
     [attr.autocomplete]="autocompleteInput$()"
     [attr.placeholder]="placeholderInput$()"
+    [attr.type]="typeInput$()"
     [formControl]="formControlInput$()">
   @if (formControlInput$().value !== formControlInput$().defaultValue) {<button
     (click)="$event.stopPropagation(); formControlInput$().reset(); htmlInputElement.focus();"
