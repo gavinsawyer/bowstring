@@ -6,7 +6,8 @@ import { FlexboxContainerDirective }                                         fro
 @Component(
   {
     host:           {
-      "[class.styleFirstLetter]": "styleFirstLetter$()",
+      "[class.styleFirstLetter]":    "styleFirstLetter$()",
+      "[class.styleFirstParagraph]": "styleFirstParagraph$()",
     },
     hostDirectives: [
       {
@@ -35,10 +36,17 @@ import { FlexboxContainerDirective }                                         fro
 )
 export class HeadingGroupComponent {
 
-  public readonly styleFirstLetter$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+  public readonly styleFirstLetter$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`>    = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,
     {
       alias:     "styleFirstLetter",
+      transform: booleanAttribute,
+    },
+  );
+  public readonly styleFirstParagraph$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+    undefined,
+    {
+      alias:     "styleFirstParagraph",
       transform: booleanAttribute,
     },
   );

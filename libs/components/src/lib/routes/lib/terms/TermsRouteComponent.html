@@ -1,13 +1,17 @@
 <standard--article>
-  <standard--heading-group styleFirstLetter>
+  <standard--heading-group
+    styleFirstLetter
+    styleFirstParagraph>
     <standard--header>
-      <h2 i18n="@@libs--Components--Routes--Terms--Article--Title">Terms of Service</h2>
+      <h2 i18n="@@libs--Components--Routes--Terms--Article--HeadingGroup--Header">Terms of Service</h2>
       <h3>
         <standard--flexbox-container
           alignItems="baseline"
           flexDirection="row"
           flexWrap="wrap">
-          <standard--capsule i18n>legal</standard--capsule>
+          <standard--capsule
+            i18n
+            level="2">legal</standard--capsule>
           {{ now | date:"longDate" }}
         </standard--flexbox-container>
       </h3>

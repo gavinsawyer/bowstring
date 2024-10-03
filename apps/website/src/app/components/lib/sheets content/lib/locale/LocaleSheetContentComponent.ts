@@ -1,8 +1,8 @@
-import { DOCUMENT, isPlatformBrowser, Location, NgTemplateOutlet }                      from "@angular/common";
-import { Component, inject, LOCALE_ID, PLATFORM_ID }                                    from "@angular/core";
-import { ButtonComponent, FlexboxContainerComponent, HeaderComponent, SymbolComponent } from "@standard/components";
-import { LOCALE_IDS }                                                                   from "../../../../../injection tokens";
-import { type LocaleId }                                                                from "../../../../../types";
+import { DOCUMENT, isPlatformBrowser, Location, NgTemplateOutlet }                                      from "@angular/common";
+import { Component, inject, LOCALE_ID, PLATFORM_ID }                                                    from "@angular/core";
+import { ButtonComponent, FlexboxContainerComponent, HeaderComponent, LabelComponent, SymbolComponent } from "@standard/components";
+import { LOCALE_IDS }                                                                                   from "../../../../../injection tokens";
+import { type LocaleId }                                                                                from "../../../../../types";
 
 
 @Component(
@@ -11,6 +11,7 @@ import { type LocaleId }                                                        
       ButtonComponent,
       FlexboxContainerComponent,
       HeaderComponent,
+      LabelComponent,
       NgTemplateOutlet,
       SymbolComponent,
     ],

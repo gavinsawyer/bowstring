@@ -23,14 +23,14 @@
         max-width: calc(1em * pow(var(--phi), 8))
         user-select: text
 
-    > p:first-of-type
-      font-size: calc(1rem * pow(var(--phi), 0.5))
-
   &.styleFirstLetter > .harness > .element::ng-deep > p:first-of-type:first-letter
     float: left
     font-size: calc(2em * pow(var(--phi), 0.375))
     line-height: calc(2em * pow(var(--phi), -2.5))
-    margin: calc(2em * pow(var(--phi), -5)) calc(1em * pow(var(--phi), -5)) 0 0
+    margin: calc(2em * pow(var(--phi), -5)) calc(2em * pow(var(--phi), -10)) 0 0
+
+  &.styleFirstParagraph > .harness > .element::ng-deep > p:first-of-type
+    font-size: calc(1em * pow(var(--phi), 0.5))
 
 
 @each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "box")

@@ -1,14 +1,63 @@
 <standard--header>
-  <h6 i18n="@@libs--Components--SheetContents--Signup--Title">Create an account</h6>
+  <h6 i18n="@@libs--Components--SheetContents--Signup--Header">Create an account</h6>
 </standard--header>
-<standard--flexbox-container>
+<standard--section>
   <standard--text-field
-    [formControl]="signUpFormGroup.controls.username"
+    autocomplete="username"
+    [formControl]="signUpWithWebAuthnFormGroup.controls.username"
+    i18n-placeholder
     level="2"
     placeholder="Username" />
+</standard--section>
+<standard--flexbox-container>
+  <standard--button
+    appearance="raised"
+    [disabled]="signUpWithWebAuthnFormGroup.controls.username.value === signUpWithWebAuthnFormGroup.controls.username.defaultValue"
+    level="2">
+    <standard--symbol input="PersonBadgeKeyFill" />
+    <standard--label
+      i18n-input
+      input="Use Passkey" />
+  </standard--button>
 </standard--flexbox-container>
+<standard--divider />
+<standard--section>
+  <standard--text-field
+    autocomplete="username"
+    [formControl]="signUpFormGroup.controls.username"
+    i18n-placeholder
+    level="2"
+    placeholder="Username" />
+  <standard--text-field
+    autocomplete="new-password"
+    [formControl]="signUpFormGroup.controls.password"
+    i18n-placeholder
+    level="2"
+    placeholder="Password"
+    type="password" />
+  <standard--text-field
+    autocomplete="new-password"
+    [formControl]="signUpFormGroup.controls.passwordConfirmation"
+    i18n-placeholder
+    level="2"
+    placeholder="Confirm password"
+    type="password" />
+</standard--section>
 <standard--flexbox-container
+  alignItems="center"
   flexDirection="row"
-  justifyContent="flex-end">
-  <standard--button appearance="symbol"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+  justifyContent="space-between">
+  <standard--list type="inline">
+    <standard--link
+      i18n
+      *standardListItem
+      url="/privacy">privacy policy</standard--link>
+    <standard--link
+      i18n
+      *standardListItem
+      url="/terms">terms</standard--link>
+  </standard--list>
+  <standard--button
+    appearance="symbol"
+    disabled><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
 </standard--flexbox-container>

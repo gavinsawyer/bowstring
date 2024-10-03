@@ -1,9 +1,12 @@
 <standard--header>
-  <h6 i18n="@@apps--Website--Components--SheetContents--Locale--Title">Select your locale</h6>
+  <h6 i18n="@@apps--Website--Components--SheetContents--Locale--Header">Select your locale</h6>
 </standard--header>
 <standard--flexbox-container>
   @for (locale of localeIds; track locale) {<standard--button
     [disabled]="locale === localeId"
     level="2"
-    (select)="locale === localeId || changeLocale(locale);"><standard--symbol input="Globe" />{{ localeDisplayNames.of(locale) || locale }}</standard--button>}
+    (select)="locale === localeId || changeLocale(locale);">
+    <standard--symbol input="Globe" />
+    <standard--label [input]="localeDisplayNames.of(locale) || locale" />
+  </standard--button>}
 </standard--flexbox-container>

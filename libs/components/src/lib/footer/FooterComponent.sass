@@ -20,7 +20,7 @@
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-  --standard--container-directive--position-bottom: max(var(--safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--position-bottom: max(var(--standard--root--safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
   --standard--container-directive--position-top: 0 !important
   --standard--elevated-directive--material-opacity: var(--standard--footer--material-opacity) !important
   --standard--flexbox-container-directive--gap-column: var(--standard--footer--gap-column) !important
@@ -62,7 +62,7 @@
       translate: 0 0 0
 
     @mixin keyframes--unstick-harness
-      translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
+      translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
 
     @include keyframes--unstick-harness
 
@@ -133,7 +133,7 @@
         translate: 0 0 0
 
       @mixin keyframes--unstick-backdrop
-        translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
+        translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
 
       @include keyframes--unstick-backdrop
 

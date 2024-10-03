@@ -22,16 +22,16 @@
     </standard--header>
     <standard--nav>
       <standard--link
-        i18n="@@apps--Website--Components--Routes--News--Title"
+        i18n="@@apps--Website--Components--Routes--News--MetaTitle"
         url="/news">News</standard--link>
       <standard--link
-        i18n="@@apps--Website--Components--Routes--Design--Title"
+        i18n="@@apps--Website--Components--Routes--Design--MetaTitle"
         url="/design">Design</standard--link>
       <standard--link
-        i18n="@@apps--Website--Components--Routes--Develop--Title"
+        i18n="@@apps--Website--Components--Routes--Develop--MetaTitle"
         url="/develop">Develop</standard--link>
       <standard--link
-        i18n="@@libs--Components--Routes--Account--Title"
+        i18n="@@libs--Components--Routes--Account--MetaTitle"
         url="/account">Account</standard--link>
     </standard--nav>
   </standard--flexbox-container>
@@ -52,31 +52,31 @@
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@apps--Website--Components--Routes--News--Title"
+            i18n="@@apps--Website--Components--Routes--News--MetaTitle"
             url="/news">News</standard--link>
           <standard--link
-            i18n="@@apps--Website--Components--Routes--Design--Title"
+            i18n="@@apps--Website--Components--Routes--Design--MetaTitle"
             url="/design">Design</standard--link>
           <standard--link
-            i18n="@@apps--Website--Components--Routes--Develop--Title"
+            i18n="@@apps--Website--Components--Routes--Develop--MetaTitle"
             url="/develop">Develop</standard--link>
         </standard--flexbox-container>
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
             [disabled]="signinSheetComponent.openModelWithTransform$()"
             (select)="signinSheetComponent.openModel$.set(true);"
-            i18n="@@libs--Components--SheetContents--Signin--Title">Sign in</standard--link>
+            i18n="@@libs--Components--SheetContents--Signin">Sign in</standard--link>
           <standard--link
             [disabled]="signupSheetComponent.openModelWithTransform$()"
             (select)="signupSheetComponent.openModel$.set(true);"
-            i18n="@@libs--Components--SheetContents--Signup--Title">Create an account</standard--link>
+            i18n="@@libs--Components--SheetContents--Signup">Create an account</standard--link>
         </standard--flexbox-container>
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@libs--Components--Routes--Privacy--Title"
+            i18n="@@libs--Components--Routes--Privacy--MetaTitle"
             url="/privacy">Privacy</standard--link>
           <standard--link
-            i18n="@@libs--Components--Routes--Terms--Title"
+            i18n="@@libs--Components--Routes--Terms--MetaTitle"
             url="/terms">Terms</standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>

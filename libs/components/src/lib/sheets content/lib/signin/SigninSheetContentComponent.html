@@ -1,5 +1,5 @@
 <standard--header>
-  <h6 i18n="@@libs--Components--SheetContents--Signin--Title">Sign in</h6>
+  <h6 i18n="@@libs--Components--SheetContents--Signin--Header">Sign in</h6>
 </standard--header>
 <standard--section>
   <standard--button
@@ -7,8 +7,8 @@
     level="2">
     <standard--symbol input="PersonBadgeKeyFill" />
     <standard--label
-      input="Use Passkey"
-      i18n-input />
+      i18n-input
+      input="Use Passkey" />
   </standard--button>
 </standard--section>
 <standard--divider />
@@ -16,11 +16,13 @@
   <standard--text-field
     autocomplete="username"
     [formControl]="signInFormGroup.controls.username"
+    i18n-placeholder
     level="2"
     placeholder="Username" />
   <standard--text-field
     autocomplete="current-password"
     [formControl]="signInFormGroup.controls.password"
+    i18n-placeholder
     level="2"
     placeholder="Password"
     type="password" />
@@ -28,5 +30,7 @@
 <standard--flexbox-container
   flexDirection="row"
   justifyContent="flex-end">
-  <standard--button appearance="symbol"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+  <standard--button
+    appearance="symbol"
+    disabled><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
 </standard--flexbox-container>

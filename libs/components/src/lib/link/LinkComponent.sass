@@ -13,7 +13,6 @@
   > .harness
     background: none
     border: 0
-    color: var(--primary--canvas--background)
     cursor: pointer
     display: inline-grid !important
     font: inherit
@@ -25,11 +24,7 @@
     transition: color 200ms ease-in-out
     user-select: none
     white-space: nowrap
-    z-index: 0
     -webkit-tap-highlight-color: transparent
-
-    &:active
-      color: var(--body--grey--foreground)
 
     > .element
       display: inline-flex !important
@@ -43,7 +38,6 @@
           text-decoration: underline
 
   &.disabled > .harness
-    color: var(--body--grey--foreground)
     cursor: default
     pointer-events: none
 

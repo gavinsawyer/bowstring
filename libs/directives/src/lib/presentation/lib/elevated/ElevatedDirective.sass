@@ -14,7 +14,7 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
 
 @mixin children
   @include mixins.reset-colors($namespace, ())
-  @include mixins.reset-inputs($namespace, ("material-opacity"))
+  @include mixins.reset-inputs($namespace, ("level", "material-opacity"))
   @include mixins.reset-values($namespace, ())
 
 @mixin host

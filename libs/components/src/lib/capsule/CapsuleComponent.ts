@@ -1,6 +1,6 @@
-import { NgTemplateOutlet }                                                   from "@angular/common";
-import { Component, effect, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, RoundedDirective }            from "@standard/directives";
+import { NgTemplateOutlet }                                                          from "@angular/common";
+import { Component, effect, type ElementRef, inject, type Signal, viewChild }        from "@angular/core";
+import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective } from "@standard/directives";
 
 
 @Component(
@@ -34,6 +34,15 @@ import { ContainerDirective, ElevatedDirective, RoundedDirective }            fr
         inputs:    [
           "level",
           "materialOpacity",
+        ],
+      },
+      {
+        directive: PrimaryDirective,
+        inputs:    [
+          "backgroundDark",
+          "backgroundLight",
+          "foregroundDark",
+          "foregroundLight",
         ],
       },
       {

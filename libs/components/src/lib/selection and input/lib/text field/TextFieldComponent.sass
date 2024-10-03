@@ -44,6 +44,10 @@
       flex: 1 1 100%
       min-width: 0
 
+      //noinspection CssInvalidPseudoSelector
+      &:is(:-webkit-autofill, :autofill)
+        box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background) inset
+
     > button
       cursor: pointer
 
@@ -52,3 +56,6 @@
         height: 1em
         max-width: 1.125em
         overflow: visible
+
+    &:not(:focus-within) > button
+      display: none

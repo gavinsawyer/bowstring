@@ -1,0 +1,52 @@
+@use "../../../../sass/functions"
+@use "../../../../sass/mixins"
+
+
+$namespace: "primary"
+
+$primary: hsl(34, 29%, 54%)
+
+$background: functions.get-color-reference($namespace, "background")
+$foreground: functions.get-color-reference($namespace, "foreground")
+
+$brand-background-dark: functions.get-value-reference($namespace, "brand-background-dark")
+$brand-background-light: functions.get-value-reference($namespace, "brand-background-light")
+$brand-foreground-dark: functions.get-value-reference($namespace, "brand-foreground-dark")
+$brand-foreground-light: functions.get-value-reference($namespace, "brand-foreground-light")
+
+$background-dark: functions.get-input-reference($namespace, "background-dark", $brand-background-dark)
+$background-light: functions.get-input-reference($namespace, "background-light", $brand-background-light)
+$foreground-dark: functions.get-input-reference($namespace, "foreground-dark", $brand-foreground-dark)
+$foreground-light: functions.get-input-reference($namespace, "foreground-light", $brand-foreground-light)
+
+@function get-color($theme, $type)
+  @if ($theme == "light")
+    @if ($type == "background")
+      @return $background-light
+    @else if ($type == "foreground")
+      @return $foreground-light
+  @else if ($theme == "dark")
+    @if ($type == "background")
+      @return $background-dark
+    @else if ($type == "foreground")
+      @return $foreground-dark
+
+
+@mixin color-scheme($theme)
+  --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background") }
+  --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground") }
+
+@mixin children
+  @include mixins.reset-colors($namespace, ("background", "foreground"))
+  @include mixins.reset-inputs($namespace, ("background-dark", "background-light", "foreground-dark", "foreground-light"))
+  @include mixins.reset-values($namespace, ("brand-background-dark", "brand-background-light", "brand-foreground-dark", "brand-foreground-light"))
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness > .element
+    background: $background
+    color: $foreground

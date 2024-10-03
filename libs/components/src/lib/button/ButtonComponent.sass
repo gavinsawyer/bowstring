@@ -46,7 +46,6 @@
     --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
 
     @include CanvasDirective.host(6%)
-    @include ElevatedDirective.host
     @include HoverTransformingDirective.host
     @include RoundedDirective.host
 
@@ -59,9 +58,14 @@
       --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
+    &:not(.disabled)
+      @include ElevatedDirective.host
+
+      > .harness > .element::ng-deep > *
+        @include ElevatedDirective.children
+
     > .harness > .element::ng-deep > *
       @include CanvasDirective.children
-      @include ElevatedDirective.children
       @include HoverTransformingDirective.children
       @include RoundedDirective.children
 

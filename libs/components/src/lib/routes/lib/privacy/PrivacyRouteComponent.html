@@ -1,18 +1,22 @@
 <standard--article>
-  <standard--heading-group styleFirstLetter>
+  <standard--heading-group
+    styleFirstLetter
+    styleFirstParagraph>
     <standard--header>
-      <h2 i18n="@@libs--Components--Routes--Privacy--Article--Title">Privacy Policy</h2>
+      <h2 i18n="@@libs--Components--Routes--Privacy--Article--HeadingGroup--Header">Privacy Policy</h2>
       <h3>
         <standard--flexbox-container
           alignItems="baseline"
           flexDirection="row"
           flexWrap="wrap">
-          <standard--capsule i18n>legal</standard--capsule>
+          <standard--capsule
+            i18n
+            level="2">legal</standard--capsule>
           {{ now | date:"longDate" }}
         </standard--flexbox-container>
       </h3>
     </standard--header>
-    <p i18n="@@libs--Components--Routes--Privacy--Article--Content"><span style="font-variant: small-caps;">This site stores information</span> in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.</p>
+    <p i18n="@@libs--Components--Routes--Privacy--Article--HeadingGroup--Paragraph"><span style="font-variant: small-caps;">This site stores information</span> in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.</p>
     <standard--section>
       <standard--header>
         <h4>Google</h4>
