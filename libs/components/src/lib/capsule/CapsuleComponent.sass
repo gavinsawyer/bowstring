@@ -24,14 +24,16 @@
   --standard--flexbox-container-directive--gap-row: var(--standard--capsule--gap-row) !important
   --standard--flexbox-container-directive--justify-content: center !important
 
-  > .harness > .element
+  > .harness
     cursor: default
-    font-size: calc(1em * pow(var(--phi), -0.1))
-    text-transform: uppercase
     user-select: none
 
-    &::ng-deep > *
-      @include ElevatedDirective.children
-      @include FlexboxContainerDirective.children
-      @include PrimaryDirective.children
-      @include RoundedDirective.children
+    > .element
+      font-size: calc(1em * pow(var(--phi), -0.1))
+      text-transform: uppercase
+
+      &::ng-deep > *
+        @include ElevatedDirective.children
+        @include FlexboxContainerDirective.children
+        @include PrimaryDirective.children
+        @include RoundedDirective.children

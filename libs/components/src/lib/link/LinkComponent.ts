@@ -1,24 +1,42 @@
 import { NgTemplateOutlet }                                                                                                                                            from "@angular/common";
 import { booleanAttribute, Component, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                from "@angular/router";
+import { CanvasDirective, FlexboxContainerDirective }                                                                                                                  from "@standard/directives";
 
 
 @Component(
   {
-    host:        {
+    host:           {
       "[class.disabled]": "disabledInput$() || routerLinkActive$()?.isActive || false",
     },
-    imports:     [
+    hostDirectives: [
+      {
+        directive: CanvasDirective,
+      },
+      {
+        directive: FlexboxContainerDirective,
+        inputs:    [
+          "alignContent",
+          "alignItems",
+          "flexDirection",
+          "flexWrap",
+          "gapColumn",
+          "gapRow",
+          "justifyContent",
+        ],
+      },
+    ],
+    imports:        [
       NgTemplateOutlet,
       RouterLink,
       RouterLinkActive,
     ],
-    selector:    "standard--link",
-    standalone:  true,
-    styleUrls:   [
+    selector:       "standard--link",
+    standalone:     true,
+    styleUrls:      [
       "LinkComponent.sass",
     ],
-    templateUrl: "LinkComponent.html",
+    templateUrl:    "LinkComponent.html",
   },
 )
 export class LinkComponent {

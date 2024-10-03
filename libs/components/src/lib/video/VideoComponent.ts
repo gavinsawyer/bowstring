@@ -1,11 +1,14 @@
 import { NgTemplateOutlet }                                                                                                                                              from "@angular/common";
 import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                                                from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                               from "@standard/directives";
 
 
 @Component(
   {
     hostDirectives: [
+      {
+        directive: CanvasDirective,
+      },
       {
         directive: ContainerDirective,
         inputs:    [

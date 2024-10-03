@@ -1,9 +1,11 @@
 @use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 
 
 \:host
   display: contents
 
+  @include CanvasDirective.host(20%)
   @include FlexboxContainerDirective.host
 
   --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
@@ -13,6 +15,7 @@
   > .harness
     background: none
     border: 0
+    color: inherit
     cursor: pointer
     display: inline-grid !important
     font: inherit
@@ -26,11 +29,18 @@
     white-space: nowrap
 
     > .element
+      background: none !important
       display: inline-flex !important
       font-size: 1em
+      opacity: 1
+      transition: opacity 200ms var(--bounce)
 
-  @media (hover: hover)
-    &:not(.disabled) > .harness
+      &::ng-deep > *
+        @include CanvasDirective.children
+        @include FlexboxContainerDirective.children
+
+  &:not(.disabled) > .harness
+    @media (hover: hover)
       &:hover,
       &:focus-within
         > .element
@@ -40,9 +50,13 @@
     cursor: default
     pointer-events: none
 
-\:host-context(standard--nav, standard--footer > .harness > .element > standard--header) > .harness
+    > .element
+      opacity: 0.5
+
+\:host-context(standard--nav, standard--footer > .harness > .element > standard--header) > .harness > .element
   color: currentColor
 
 
-\:host-context(standard-website--root > .harness > .element > standard--flexbox-container:first-of-type > .harness > .element > standard--header) > .harness
+\:host-context(standard-website--root > .harness > .element > standard--flexbox-container:first-of-type > .harness > .element > standard--header) > .harness > .element
   color: currentColor
+  opacity: 1 !important

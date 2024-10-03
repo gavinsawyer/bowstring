@@ -15,37 +15,40 @@
   --standard--flexbox-container-directive--gap-column: var(--standard--header--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--header--gap-row) !important
 
-  > .harness > .element::ng-deep
-    > *
-      @include FlexboxContainerDirective.children
-      @include TypographyDirective.children
+  > .harness
+    cursor: default
+    user-select: none
 
-    > h1,
-    > h2,
-    > h3,
-    > h4,
-    > h5,
-    > h6
-      cursor: default
-      margin: 0
+    > .element::ng-deep
+      > *
+        @include FlexboxContainerDirective.children
+        @include TypographyDirective.children
 
-    > h1
-      font-size: calc(1em * pow(var(--phi), 5))
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6
+        margin: 0
 
-    > h2
-      font-size: calc(1em * pow(var(--phi), 4))
+      > h1
+        font-size: calc(1em * pow(var(--phi), 5))
 
-    > h3
-      font-size: calc(1em * pow(var(--phi), 3))
+      > h2
+        font-size: calc(1em * pow(var(--phi), 4))
 
-    > h4
-      font-size: calc(1em * pow(var(--phi), 3))
+      > h3
+        font-size: calc(1em * pow(var(--phi), 3))
 
-    > h5
-      font-size: calc(1em * pow(var(--phi), 2))
+      > h4
+        font-size: calc(1em * pow(var(--phi), 3))
 
-    > h6
-      font-size: calc(1em * pow(var(--phi), 1))
+      > h5
+        font-size: calc(1em * pow(var(--phi), 2))
+
+      > h6
+        font-size: calc(1em * pow(var(--phi), 1))
 
 
 @each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "box", "heading-group", "section")

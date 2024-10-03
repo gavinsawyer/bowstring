@@ -34,7 +34,7 @@
 
   > .harness
     transform-origin: bottom
-    z-index: 3
+    z-index: 1 !important
 
     @mixin keyframes--lower-harness
       scale: 1
@@ -80,24 +80,21 @@
       100%
         @include keyframes--unstick-harness
 
-    > .element
-      cursor: default
+    > .element::ng-deep > *
+      --standard--footer--height: initial
+      --standard--footer--material-opacity: initial
+      --standard--footer--raising-scale: initial
+      --standard--footer--unsticking-translation: initial
 
-      &::ng-deep > *
-        --standard--footer--height: initial
-        --standard--footer--material-opacity: initial
-        --standard--footer--raising-scale: initial
-        --standard--footer--unsticking-translation: initial
-
-        @include ElevatedDirective.children
-        @include FlexboxContainerDirective.children
-        @include GlassDirective.children
-        @include RoundedDirective.children
+      @include ElevatedDirective.children
+      @include FlexboxContainerDirective.children
+      @include GlassDirective.children
+      @include RoundedDirective.children
 
   > .backdrop
     display: grid
     margin-bottom: calc(-1 * var(--standard--root--gap-row))
-    z-index: 2
+    z-index: 0
 
     &:before
       bottom: calc(-1 * var(--standard--container-directive--position-bottom))

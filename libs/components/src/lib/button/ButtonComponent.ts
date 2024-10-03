@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                                                             from "@angular/common";
 import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                                                 from "@angular/router";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, RoundedDirective }                                                                                   from "@standard/directives";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, RoundedDirective }                                                                  from "@standard/directives";
 
 
 @Component(
@@ -12,6 +12,9 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTran
       "[class.disabled]":          "disabledInput$() || routerLinkActive$()?.isActive || false",
     },
     hostDirectives: [
+      {
+        directive: CanvasDirective,
+      },
       {
         directive: ElevatedDirective,
         inputs:    [

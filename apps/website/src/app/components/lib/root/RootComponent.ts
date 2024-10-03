@@ -1,15 +1,18 @@
-import { Component, inject, LOCALE_ID }     from "@angular/core";
-import { FlexboxContainerDirective }        from "@standard/directives";
-import { BRAND, GIT_INFO, PACKAGE_VERSION } from "@standard/injection-tokens";
-import { ResponsivityService }              from "@standard/services";
-import { type Brand }                       from "@standard/types";
-import { type GitInfo }                     from "git-describe";
-import { type LocaleId }                    from "../../../types";
+import { Component, inject, LOCALE_ID }               from "@angular/core";
+import { CanvasDirective, FlexboxContainerDirective } from "@standard/directives";
+import { BRAND, GIT_INFO, PACKAGE_VERSION }           from "@standard/injection-tokens";
+import { ResponsivityService }                        from "@standard/services";
+import { type Brand }                                 from "@standard/types";
+import { type GitInfo }                               from "git-describe";
+import { type LocaleId }                              from "../../../types";
 
 
 @Component(
   {
     hostDirectives: [
+      {
+        directive: CanvasDirective,
+      },
       {
         directive: FlexboxContainerDirective,
         inputs:    [

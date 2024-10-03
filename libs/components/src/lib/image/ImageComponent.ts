@@ -1,6 +1,6 @@
 import { NgOptimizedImage }                                                                                                                            from "@angular/common";
 import { Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                              from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                             from "@standard/directives";
 
 
 @Component(
@@ -9,6 +9,9 @@ import { ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDi
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
     },
     hostDirectives: [
+      {
+        directive: CanvasDirective,
+      },
       {
         directive: ContainerDirective,
         inputs:    [

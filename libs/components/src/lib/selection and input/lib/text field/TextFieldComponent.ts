@@ -2,7 +2,7 @@ import { NgTemplateOutlet }                                                     
 import { Component, effect, type ElementRef, forwardRef, inject, input, type InputSignal, type OnDestroy, type Signal, viewChild } from "@angular/core";
 import { toSignal }                                                                                                                from "@angular/core/rxjs-interop";
 import { type ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                             from "@angular/forms";
-import { ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }                              from "@standard/directives";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }             from "@standard/directives";
 import { type SymbolPaths }                                                                                                        from "@standard/interfaces";
 import loadSymbolPaths                                                                                                             from "@standard/symbol-paths";
 import { fromPromise }                                                                                                             from "rxjs/internal/observable/innerFrom";
@@ -11,6 +11,9 @@ import { fromPromise }                                                          
 @Component(
   {
     hostDirectives: [
+      {
+        directive: CanvasDirective,
+      },
       {
         directive: ElevatedDirective,
         inputs:    [

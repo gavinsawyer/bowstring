@@ -28,10 +28,11 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
     left: 1px
     height: calc(100% - 2px)
     opacity: calc(pow($material-opacity, 2))
+    position: absolute
     top: 1px
     width: calc(100% - 2px)
-
-    @include shadow($level)
+    transition: box-shadow 200ms var(--bounce)
+    z-index: -1
 
     @keyframes expand-shadow
       0%
@@ -46,6 +47,9 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
 
       100%
         @include shadow($level)
+
+  &:not(.disabled) > .harness:before
+    @include shadow($level)
 
 
 @mixin shadow($level)

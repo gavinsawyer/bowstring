@@ -23,17 +23,18 @@
     background: none
     border: 0
     color: inherit
-    display: inline-grid !important
+    cursor: pointer
     font: inherit
     letter-spacing: inherit
     line-height: inherit
     outline: 0
     padding: 0
+    user-select: none
 
     > .element
       font-size: calc(1rem * pow(var(--phi), 0.25))
-      transition: background-color 200ms ease, color 200ms ease
-      user-select: none
+      opacity: 1
+      transition: opacity 200ms var(--bounce)
 
       &::ng-deep > *
         --standard--button--material-opacity: 0
@@ -45,6 +46,7 @@
     --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
 
     @include CanvasDirective.host(6%)
+    @include ElevatedDirective.host
     @include HoverTransformingDirective.host
     @include RoundedDirective.host
 
@@ -57,30 +59,24 @@
       --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
-    &:not(.disabled)
-      @include ElevatedDirective.host
-
-      > .harness > .element::ng-deep > *
-        @include ElevatedDirective.children
-
     > .harness > .element::ng-deep > *
       @include CanvasDirective.children
+      @include ElevatedDirective.children
       @include HoverTransformingDirective.children
       @include RoundedDirective.children
 
-  &.appearance-symbol > .harness > .element
-    font-size: calc(1rem * pow(var(--phi), 1))
+  &.appearance-symbol
+    @include HoverTransformingDirective.host
 
-  &.disabled > .harness > .element
-    color: var(--button--grey--foreground)
-    cursor: default
-
-  &:not(.disabled)
     > .harness > .element
-      color: var(--button--glass--foreground)
-      cursor: pointer
+      font-size: calc(1rem * pow(var(--phi), 1))
 
-    @media (hover: hover)
-      &:hover,
-      &:focus-within
-        z-index: 2
+      &::ng-deep > *
+        @include HoverTransformingDirective.children
+
+  &.disabled > .harness
+    cursor: default
+    pointer-events: none
+
+    > .element
+      opacity: 0.5

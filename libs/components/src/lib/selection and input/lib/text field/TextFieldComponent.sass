@@ -48,14 +48,11 @@
       &:is(:-webkit-autofill, :-webkit-autofill-strong-password, :-webkit-autofill-strong-password-viewable, :-webkit-autofill-and-obscured, :autofill)
         box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background) inset
 
-    > button
-      cursor: pointer
-
-      > svg
-        display: grid
-        height: 1em
-        max-width: 1.125em
-        overflow: visible
+    > button > svg
+      display: grid
+      height: 1em
+      max-width: 1.125em
+      overflow: visible
 
     &:not(:focus-within) > button
       display: none
