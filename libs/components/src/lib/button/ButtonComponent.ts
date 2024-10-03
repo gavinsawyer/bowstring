@@ -69,7 +69,7 @@ export class ButtonComponent {
           this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
         );
         this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
+          this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
         );
       },
       {
@@ -81,7 +81,6 @@ export class ButtonComponent {
   private readonly hoverTranslatingDirective: HoverTransformingDirective                 = inject<HoverTransformingDirective>(HoverTransformingDirective);
   private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef<HTMLDivElement>>("htmlAnchorElement");
   private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef<HTMLDivElement>>("htmlButtonElement");
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement> | undefined>    = viewChild<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly roundedContainerDirective: RoundedDirective             = inject<RoundedDirective>(RoundedDirective);
   protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);

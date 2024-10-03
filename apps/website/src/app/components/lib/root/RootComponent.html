@@ -5,8 +5,8 @@
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
-<standard--sheet #signinSheetComponent>@defer {<standard--sheet-contents--signin />}</standard--sheet>
-<standard--sheet #signupSheetComponent>@defer {<standard--sheet-contents--signup />}</standard--sheet>
+<standard--sheet #signinSheetComponent>@defer {<standard--sheet-contents--signin [sheetComponent]="signinSheetComponent" />}</standard--sheet>
+<standard--sheet #signupSheetComponent>@defer {<standard--sheet-contents--signup [sheetComponent]="signupSheetComponent" />}</standard--sheet>
 <standard--sheet #localeSheetComponent>@defer {<standard-website--sheet-contents--locale />}</standard--sheet>
 
 <ng-template #contentTemplate>
@@ -82,7 +82,10 @@
       </standard--flexbox-container>
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
-          <standard--link><standard--symbol input="ArrowUpForwardAppFill" />Instagram</standard--link>
+          <standard--link>
+            <standard--symbol input="ArrowUpForwardAppFill" />
+            <standard--label input="Instagram" />
+          </standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>
     </standard--section>
@@ -105,7 +108,10 @@
         justifyContent="center">
         <standard--link
           [disabled]="localeSheetComponent.openModelWithTransform$()"
-          (select)="localeSheetComponent.openModel$.set(true);"><standard--symbol input="Globe" />{{ localeDisplayNames.of(localeId) || localeId }}</standard--link>
+          (select)="localeSheetComponent.openModel$.set(true);">
+          <standard--symbol input="Globe" />
+          <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
+        </standard--link>
       </standard--flexbox-container>
     </standard--section>
   </standard--footer>

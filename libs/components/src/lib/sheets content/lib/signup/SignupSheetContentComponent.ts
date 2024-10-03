@@ -1,4 +1,4 @@
-import { Component }                                                   from "@angular/core";
+import { Component, input, InputSignal }                               from "@angular/core";
 import { FormBuilder, Validators }                                     from "@angular/forms";
 import { ListItemDirective }                                           from "@standard/directives";
 import { ButtonComponent }                                             from "../../../button/ButtonComponent";
@@ -8,6 +8,7 @@ import { LinkComponent }                                               from "../
 import { ListComponent }                                               from "../../../list/ListComponent";
 import { SectionComponent }                                            from "../../../section/SectionComponent";
 import { TextFieldComponent }                                          from "../../../selection and input";
+import { SheetComponent }                                              from "../../../sheet/SheetComponent";
 import { SymbolComponent }                                             from "../../../symbol/SymbolComponent";
 
 
@@ -36,7 +37,7 @@ import { SymbolComponent }                                             from "../
 )
 export class SignupSheetContentComponent {
 
-  public readonly signUpWithWebAuthnFormGroup = new FormBuilder().nonNullable.group<{ "username": string }>(
+  public readonly signUpWithWebAuthnFormGroup                       = new FormBuilder().nonNullable.group<{ "username": string }>(
     {
       username: "",
     },
@@ -46,11 +47,16 @@ export class SignupSheetContentComponent {
       ],
     },
   );
-  public readonly signUpFormGroup             = new FormBuilder().nonNullable.group<{ "username": string, "password": string, "passwordConfirmation": string }>(
+  public readonly signUpFormGroup                                   = new FormBuilder().nonNullable.group<{ "username": string, "password": string, "passwordConfirmation": string }>(
     {
       username:             "",
       password:             "",
       passwordConfirmation: "",
+    },
+  );
+  public readonly sheetComponentInput$: InputSignal<SheetComponent> = input.required<SheetComponent>(
+    {
+      alias: "sheetComponent",
     },
   );
 

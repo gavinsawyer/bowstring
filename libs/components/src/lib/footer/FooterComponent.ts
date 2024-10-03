@@ -72,7 +72,7 @@ export class FooterComponent {
     effect(
       (): void => {
         this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
+          this.htmlElementRef$(),
         );
       },
       {
@@ -103,19 +103,19 @@ export class FooterComponent {
       initialValue: this.document.body.clientHeight,
     },
   );
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>         = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly dimensions$: Signal<Dimensions>                                = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<Dimensions, { "height": 0, "width": 0 }>(
-    toObservable<ElementRef<HTMLDivElement>>(
-      this.htmlDivElementRef$,
+    toObservable<ElementRef<HTMLElement>>(
+      this.htmlElementRef$,
     ).pipe<Dimensions>(
-      switchMap<ElementRef<HTMLDivElement>, Observable<Dimensions>>(
-        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<Dimensions> => new Observable<Dimensions>(
+      switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
           (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
             resizeObserver.observe(
-              htmlDivElementRef.nativeElement,
+              htmlElementRef.nativeElement,
             );
 
             return (): void => resizeObserver.disconnect();

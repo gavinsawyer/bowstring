@@ -1,10 +1,11 @@
-import { Component }                                                   from "@angular/core";
+import { Component, input, InputSignal }                               from "@angular/core";
 import { FormBuilder }                                                 from "@angular/forms";
 import { ButtonComponent }                                             from "../../../button/ButtonComponent";
 import { HeaderComponent }                                             from "../../../header/HeaderComponent";
 import { DividerComponent, FlexboxContainerComponent, LabelComponent } from "../../../layout and organization";
 import { SectionComponent }                                            from "../../../section/SectionComponent";
 import { TextFieldComponent }                                          from "../../../selection and input";
+import { SheetComponent }                                              from "../../../sheet/SheetComponent";
 import { SymbolComponent }                                             from "../../../symbol/SymbolComponent";
 
 
@@ -30,10 +31,15 @@ import { SymbolComponent }                                             from "../
 )
 export class SigninSheetContentComponent {
 
-  public readonly signInFormGroup = new FormBuilder().nonNullable.group<{ "username": string, "password": string }>(
+  public readonly signInFormGroup                                   = new FormBuilder().nonNullable.group<{ "username": string, "password": string }>(
     {
       "username": "",
       "password": "",
+    },
+  );
+  public readonly sheetComponentInput$: InputSignal<SheetComponent> = input.required<SheetComponent>(
+    {
+      alias: "sheetComponent",
     },
   );
 

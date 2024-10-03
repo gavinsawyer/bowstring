@@ -1,8 +1,8 @@
-<footer class="harness"
+<footer class="harness" #htmlElement
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && stuckOrUnsticking$() ? stuckModel$.set(false) : true) || $event.preventDefault();"
   tabindex="-1">
-  <div class="element" #htmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </footer>
 <div class="backdrop" #backdropHtmlDivElement></div>
 

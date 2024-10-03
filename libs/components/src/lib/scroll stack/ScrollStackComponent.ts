@@ -64,9 +64,10 @@ import { combineLatestWith, filter, fromEvent, map, Observable, type Observer, s
 )
 export class ScrollStackComponent {
 
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
-  private readonly platformId: NonNullable<unknown>                       = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly dimensions$: Signal<Dimensions>                        = isPlatformBrowser(
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>      = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly innerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("innerHtmlDivElement");
+  private readonly platformId: NonNullable<unknown>                            = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly dimensions$: Signal<Dimensions>                             = isPlatformBrowser(
     this.platformId,
   ) ? toSignal<Dimensions, { "height": 0, "width": 0 }>(
     toObservable<ElementRef<HTMLDivElement>>(
@@ -105,7 +106,7 @@ export class ScrollStackComponent {
       width:  0,
     },
   );
-  private readonly injector: Injector                                     = inject<Injector>(Injector);
+  private readonly injector: Injector                                          = inject<Injector>(Injector);
 
   protected readonly height$: Signal<number>                                                     = computed<number>(
     (): number => this.dimensions$().height,
@@ -120,19 +121,19 @@ export class ScrollStackComponent {
     this.platformId,
   ) ? toSignal<number>(
     toObservable<ElementRef<HTMLDivElement> | undefined>(
-      this.htmlDivElementRef$,
+      this.innerHtmlDivElementRef$,
     ).pipe<ElementRef<HTMLDivElement>, number>(
       filter<ElementRef<HTMLDivElement> | undefined, ElementRef<HTMLDivElement>>(
-        (htmlDivElementRef?: ElementRef<HTMLDivElement>): htmlDivElementRef is ElementRef<HTMLDivElement> => !!htmlDivElementRef,
+        (innerHtmlDivElementRef?: ElementRef<HTMLDivElement>): innerHtmlDivElementRef is ElementRef<HTMLDivElement> => !!innerHtmlDivElementRef,
       ),
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
-        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number> => fromEvent<Event>(
-          htmlDivElementRef.nativeElement,
+        (innerHtmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number> => fromEvent<Event>(
+          innerHtmlDivElementRef.nativeElement,
           "scroll",
         ).pipe<Event | null, number>(
           startWith<Event, [ null ]>(null),
           map<Event | null, number>(
-            (): number => htmlDivElementRef.nativeElement.scrollLeft,
+            (): number => innerHtmlDivElementRef.nativeElement.scrollLeft,
           ),
         ),
       ),
