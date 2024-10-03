@@ -47,16 +47,16 @@ $scroll-snap-type: functions.get-input-reference($namespace, "scroll-snap-type",
     left: $position-left
     margin: $margin-top $margin-sides $margin-bottom
     outline: 0
-    overflow-x: $overflow-x
-    overflow-y: $overflow-y
     position: $position
     right: $position-right
     scroll-snap-align: $scroll-snap-align
-    scroll-snap-stop: $scroll-snap-stop
-    scroll-snap-type: $scroll-snap-type
     top: $position-top
     z-index: 0
     -webkit-tap-highlight-color: transparent
 
     > .element
+      overflow-x: $overflow-x
+      overflow-y: $overflow-y
       padding: $padding-top $padding-sides $padding-bottom
+      scroll-snap-stop: $scroll-snap-stop
+      scroll-snap-type: $scroll-snap-type

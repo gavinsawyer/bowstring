@@ -10,14 +10,15 @@
   @include ContainerDirective.host
   @include FlexboxChildDirective.host
 
+  --standard--container-directive--overflow-x: scroll !important
+  --standard--container-directive--scroll-snap-type: x mandatory !important
+
   > .harness
     transform: translateZ(0)
 
     > .element
       display: flex
       flex-direction: row
-      overflow: auto
-      scroll-snap-type: x mandatory
 
       > div
         --standard--scroll-stack--item--relative-transformation: var(--standard--scroll-stack--item--index) - var(--standard--scroll-stack--current-image-index)
