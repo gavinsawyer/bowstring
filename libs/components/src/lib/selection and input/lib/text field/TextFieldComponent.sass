@@ -48,6 +48,11 @@
       &:is(:-webkit-autofill, :-webkit-autofill-strong-password, :-webkit-autofill-strong-password-viewable, :-webkit-autofill-and-obscured, :autofill)
         box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background) inset
 
+        @media (prefers-color-scheme: dark)
+          box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background-inverse) inset
+          filter: invert(1)
+          transform: translateZ(0)
+
     > button > svg
       display: grid
       height: 1em
