@@ -60,11 +60,11 @@
 
     &::backdrop
       @mixin keyframes--hide-backdrop
-        backdrop-filter: blur(0)
+        backdrop-filter: blur(0) brightness(1.125)
         opacity: 0
 
       @mixin keyframes--show-backdrop
-        backdrop-filter: blur(0.25rem)
+        backdrop-filter: blur(calc(1rem * pow(var(--phi), -3))) brightness(1.125)
         opacity: 1
 
       @include keyframes--hide-backdrop
@@ -96,7 +96,7 @@
 
         --standard--sheet--gap-column: var(--standard--sheet--padding-sides)
         --standard--sheet--gap-row: var(--standard--sheet--padding-bottom)
-        --standard--sheet--material-opacity: 0.8
+        --standard--sheet--material-opacity: 0.6
         --standard--sheet--padding-bottom: calc(1rem * pow(var(--phi), -1))
         --standard--sheet--padding-sides: calc(1rem * pow(var(--phi), 0))
         --standard--sheet--padding-top: calc(1rem * pow(var(--phi), -1))
@@ -108,7 +108,7 @@
 
         @include ElevatedDirective.host
         @include FlexboxContainerDirective.host
-        @include GlassDirective.host(6%)
+        @include GlassDirective.host(12%)
         @include RoundedDirective.host
 
         --standard--container-directive--padding-bottom: var(--standard--sheet--padding-bottom) !important

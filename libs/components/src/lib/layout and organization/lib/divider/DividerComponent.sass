@@ -6,13 +6,14 @@
 \:host
   display: contents
 
-  @include CanvasDirective.host(20%)
+  @include CanvasDirective.host(60%)
   @include ContainerDirective.host
   @include FlexboxChildDirective.host
 
   > .harness > .element
     display: flex
     flex-direction: column
+    opacity: 0.25
 
     > div
       flex: 0 0 1px

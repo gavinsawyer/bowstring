@@ -9,11 +9,11 @@
 
   --standard--box--gap-column: var(--standard--container-directive--padding-sides)
   --standard--box--gap-row: var(--standard--container-directive--padding-bottom)
-  --standard--box--material-opacity: 0.8
+  --standard--box--material-opacity: 0.6
 
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
-  @include GlassDirective.host(6%)
+  @include GlassDirective.host(9%)
   @include RoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important

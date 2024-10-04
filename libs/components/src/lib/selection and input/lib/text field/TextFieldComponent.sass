@@ -11,7 +11,7 @@
   --standard--text-field--gap-column: var(--standard--container-directive--padding-sides)
   --standard--text-field--gap-row: var(--standard--container-directive--padding-bottom)
 
-  @include CanvasDirective.host(6%)
+  @include CanvasDirective.host(0%)
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
   @include HoverTransformingDirective.host
@@ -32,7 +32,6 @@
     > button
       background: none
       border: 0
-      color: inherit
       font: inherit
       letter-spacing: inherit
       line-height: inherit
@@ -41,8 +40,15 @@
       -webkit-tap-highlight-color: transparent
 
     > input
+      color: black
       flex: 1 1 100%
       min-width: 0
+
+      @media (prefers-color-scheme: dark)
+        color: white
+
+      &::placeholder
+        color: hsl(0, 0%, 50%)
 
       //noinspection CssInvalidPseudoSelector
       &:is(:-webkit-autofill, :-webkit-autofill-strong-password, :-webkit-autofill-strong-password-viewable, :-webkit-autofill-and-obscured, :autofill)
@@ -53,11 +59,14 @@
           filter: invert(1)
           transform: translateZ(0)
 
-    > button > svg
-      display: grid
-      height: 1em
-      max-width: 1.125em
-      overflow: visible
+    > button
+      color: inherit
+
+      > svg
+        display: grid
+        height: 1em
+        max-width: 1.125em
+        overflow: visible
 
     &:not(:focus-within) > button
       display: none
