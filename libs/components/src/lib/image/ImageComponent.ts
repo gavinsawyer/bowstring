@@ -1,6 +1,6 @@
-import { NgOptimizedImage }                                                                                                                            from "@angular/common";
-import { Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                             from "@standard/directives";
+import { NgOptimizedImage }                                                                                                                                 from "@angular/common";
+import { afterRender, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                  from "@standard/directives";
 
 
 @Component(
@@ -71,13 +71,10 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDir
 export class ImageComponent {
 
   constructor() {
-    effect(
+    afterRender(
       (): void => this.roundedContainerDirective.htmlElementRef$.set(
         this.htmlDivElementRef$(),
       ),
-      {
-        allowSignalWrites: true,
-      },
     );
   }
 

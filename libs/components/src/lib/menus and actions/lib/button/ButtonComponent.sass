@@ -1,8 +1,10 @@
-@use "../../../../directives/src/lib/interaction/lib/hover transforming/HoverTransformingDirective"
-@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
-@use "../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
-@use "../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
-@use "../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+@use "../../../../../../directives/src/lib/interaction/lib/hover transforming/HoverTransformingDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../../../directives/src/lib/materials/lib/inverse/InverseDirective"
+@use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
 
 \:host
@@ -27,7 +29,6 @@
     font: inherit
     letter-spacing: inherit
     line-height: inherit
-    outline: 0
     padding: 0
     user-select: none
 
@@ -45,7 +46,6 @@
     --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
     --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
 
-    @include CanvasDirective.host(0%)
     @include ElevatedDirective.host
     @include HoverTransformingDirective.host
     @include RoundedDirective.host
@@ -59,20 +59,47 @@
       --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
       --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
+    &:not(.material-inverse):not(.material-primary)
+      @include CanvasDirective.host(0%)
+
+      > .harness > .element::ng-deep > *
+        @include CanvasDirective.children
+
+    &.material-inverse
+      @include InverseDirective.host(0%)
+
+      > .harness > .element::ng-deep > *
+        @include InverseDirective.children
+
+    &.material-primary
+      @include PrimaryDirective.host
+
+      > .harness > .element::ng-deep > *
+        @include PrimaryDirective.children
+
     > .harness > .element::ng-deep > *
-      @include CanvasDirective.children
       @include ElevatedDirective.children
       @include HoverTransformingDirective.children
       @include RoundedDirective.children
 
   &.appearance-symbol
-    @include HoverTransformingDirective.host
+    @include CanvasDirective.host(20%)
+
+    &.material-primary
+      @include PrimaryDirective.host
+
+      > .harness > .element
+        color: var(--standard--primary-directive--colors--background) !important
+
+        &::ng-deep > *
+          @include PrimaryDirective.children
 
     > .harness > .element
+      background: none !important
       font-size: calc(1rem * pow(var(--phi), 1))
 
       &::ng-deep > *
-        @include HoverTransformingDirective.children
+        @include CanvasDirective.children
 
   &.disabled > .harness
     cursor: default

@@ -1,1 +1,1 @@
-export const primaryForegroundLight: string = "hsl(32, 30%, 92%)" as const;
+export const primaryForegroundLight: string = "#CED5F3" as const;

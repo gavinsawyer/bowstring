@@ -1,5 +1,18 @@
 {
-  "overrides": [
+  "ignorePatterns": [
+    "*-debug.log",
+    ".DS_Store",
+    ".angular",
+    ".idea",
+    ".run",
+    "dist",
+    "node_modules",
+    "tmp",
+    ".firebase",
+    ".runtimeconfig.json",
+    "gha-creds-*.json"
+  ],
+  "overrides":      [
     {
       "extends": [
         "plugin:@angular-eslint/template/accessibility",
@@ -53,21 +66,6 @@
     },
     {
       "files": [
-        "./apps/website/src/app/components/lib/sheet contents/lib/**/*.ts"
-      ],
-      "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "prefix": "standard-website--sheet-contents-",
-            "style":  "kebab-case",
-            "type":   "element"
-          }
-        ]
-      }
-    },
-    {
-      "files": [
         "./apps/website/src/app/directives/lib/**/*.ts"
       ],
       "rules": {
@@ -98,21 +96,6 @@
     },
     {
       "files": [
-        "./libs/components/src/lib/sheet contents/lib/**/*.ts"
-      ],
-      "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "prefix": "standard--sheet-contents-",
-            "style":  "kebab-case",
-            "type":   "element"
-          }
-        ]
-      }
-    },
-    {
-      "files": [
         "./libs/directives/src/lib/**/*.ts"
       ],
       "rules": {
@@ -127,9 +110,9 @@
       }
     }
   ],
-  "plugins":   [
+  "plugins":        [
     "@angular-eslint",
     "@nx"
   ],
-  "root":      true
+  "root":           true
 }

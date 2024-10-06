@@ -33,7 +33,6 @@ express().use(
       { localeId }: {
         localeId: LocaleId,
       },
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
     ): express.RequestHandler => require(
       `${ process.cwd() }/dist/apps/website/server/${ localeId }/main.js`,
     )["getAppRequestHandler"](localeId),

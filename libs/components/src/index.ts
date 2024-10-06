@@ -1,11 +1,12 @@
 export * from "./lib/layout and organization";
+export * from "./lib/menus and actions";
 export * from "./lib/selection and input";
 
 export * from "./lib/article/ArticleComponent";
 export * from "./lib/aside/AsideComponent";
-export * from "./lib/button/ButtonComponent";
 export * from "./lib/capsule/CapsuleComponent";
 export * from "./lib/footer/FooterComponent";
+export * from "./lib/form/FormComponent";
 export * from "./lib/header/HeaderComponent";
 export * from "./lib/heading group/HeadingGroupComponent";
 export * from "./lib/image/ImageComponent";

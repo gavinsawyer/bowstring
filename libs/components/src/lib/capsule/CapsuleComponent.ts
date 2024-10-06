@@ -1,5 +1,5 @@
 import { NgTemplateOutlet }                                                          from "@angular/common";
-import { Component, effect, type ElementRef, inject, type Signal, viewChild }        from "@angular/core";
+import { afterRender, Component, type ElementRef, inject, type Signal, viewChild }   from "@angular/core";
 import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective } from "@standard/directives";
 
 
@@ -66,13 +66,10 @@ import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirecti
 export class CapsuleComponent {
 
   constructor() {
-    effect(
+    afterRender(
       (): void => this.roundedContainerDirective.htmlElementRef$.set(
         this.htmlDivElementRef$(),
       ),
-      {
-        allowSignalWrites: true,
-      },
     );
   }
 

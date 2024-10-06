@@ -4,8 +4,8 @@
 \:host
   display: contents
 
-  --standard--section--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -4))
-  --standard--section--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -4))
+  --standard--section--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--section--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
@@ -15,7 +15,7 @@
   > .harness > .element::ng-deep > *
     @include FlexboxContainerDirective.children
 
-@each $host-context-namespace in ("main", "nav", "article", "aside", "heading-group", "footer", "sheet", "box")
+@each $host-context-namespace in ("main", "nav", "aside", "article", "form", "footer", "sheet", "box")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

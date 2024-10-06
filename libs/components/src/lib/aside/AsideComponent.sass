@@ -5,8 +5,8 @@
   display: contents
 
   --standard--aside--font-size-exponent: -3
-  --standard--aside--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -2))
-  --standard--aside--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -2))
+  --standard--aside--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--aside--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
@@ -23,3 +23,9 @@
   @media (min-width: 48rem)
     > .harness
       z-index: 1
+
+
+@each $host-context-namespace in ("main", "sheet", "box")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
+    --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

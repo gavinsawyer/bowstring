@@ -1,6 +1,6 @@
-import { Directive, inject, input, InputSignal, signal, type Signal } from "@angular/core";
-import { BRAND }                                                      from "@standard/injection-tokens";
-import { type Brand }                                                 from "@standard/types";
+import { Directive, inject, input, type InputSignal, signal, type Signal } from "@angular/core";
+import { BRAND }                                                           from "@standard/injection-tokens";
+import { type Brand }                                                      from "@standard/types";
 
 
 @Directive(

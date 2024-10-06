@@ -22,7 +22,7 @@
 <ng-template #disclosureControlTemplate>
   @if (!stuckModelWithTransform$() || raisedWhenStuckOrUnsticking$()) {<standard--button
     appearance="symbol"
-    (select)="stuckModel$.set(!stuckModelWithTransform$());">
+    (output)="stuckModel$.set(!stuckModelWithTransform$());">
     <standard--symbol [input]="stuckModelWithTransform$() ? 'ChevronDown' : 'ChevronUp'" />
   </standard--button>}
 </ng-template>

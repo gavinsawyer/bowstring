@@ -51,7 +51,7 @@
         font-size: calc(1em * pow(var(--phi), 1))
 
 
-@each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "box", "heading-group", "section")
+@each $host-context-namespace in ("main", "nav", "aside", "article", "form", "footer", "sheet", "box", "section", "heading-group")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

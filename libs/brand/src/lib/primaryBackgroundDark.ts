@@ -1,1 +1,1 @@
-export const primaryBackgroundDark: string = "hsl(34, 29%, 54%)" as const;
+export const primaryBackgroundDark: string = "#6B80DB" as const;

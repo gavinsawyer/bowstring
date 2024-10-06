@@ -4,8 +4,8 @@
 \:host
   display: contents
 
-  --standard--heading-group--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -3))
-  --standard--heading-group--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -3))
+  --standard--heading-group--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--heading-group--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
@@ -33,7 +33,7 @@
     font-size: calc(1em * pow(var(--phi), 0.5))
 
 
-@each $host-context-namespace in ("main", "nav", "article", "aside", "footer", "sheet", "box")
+@each $host-context-namespace in ("main", "nav", "aside", "article", "form", "footer", "sheet", "box", "section")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--flexbox-container-directive--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1)) !important
     --standard--flexbox-container-directive--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1)) !important

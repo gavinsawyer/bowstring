@@ -1,6 +1,6 @@
-import { NgTemplateOutlet }                                                                                                                                              from "@angular/common";
-import { booleanAttribute, Component, effect, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                               from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                                   from "@angular/common";
+import { afterRender, booleanAttribute, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                                    from "@standard/directives";
 
 
 @Component(
@@ -68,13 +68,10 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDir
 export class VideoComponent {
 
   constructor() {
-    effect(
+    afterRender(
       (): void => this.roundedContainerDirective.htmlElementRef$.set(
         this.htmlDivElementRef$(),
       ),
-      {
-        allowSignalWrites: true,
-      },
     );
   }
 

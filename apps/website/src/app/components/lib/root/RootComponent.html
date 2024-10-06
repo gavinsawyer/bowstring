@@ -5,9 +5,142 @@
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
-<standard--sheet #signinSheetComponent>@defer {<standard--sheet-contents--signin [sheetComponent]="signinSheetComponent" />}</standard--sheet>
-<standard--sheet #signupSheetComponent>@defer {<standard--sheet-contents--signup [sheetComponent]="signupSheetComponent" />}</standard--sheet>
-<standard--sheet #localeSheetComponent>@defer {<standard-website--sheet-contents--locale />}</standard--sheet>
+<standard--sheet #signinSheetComponent>
+  <standard--header>
+    <h6 i18n="@@libs--Components--SheetContents--Signin--Header">Sign in</h6>
+  </standard--header>
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithWebAuthnFormSubmit(signinSheetComponent);">
+    <standard--flexbox-container>
+      <standard--button
+        appearance="raised"
+        level="2"
+        material="inverse"
+        type="submit">
+        <standard--symbol input="PersonBadgeKeyFill" />
+        <standard--label
+          i18n-input
+          input="Use Passkey" />
+      </standard--button>
+    </standard--flexbox-container>
+  </standard--form>
+  <standard--divider />}
+  <standard--form (output)="signinFormSubmit(signinSheetComponent);">
+    <standard--section>
+      <standard--text-field
+        autocomplete="username"
+        [formControl]="signinFormGroup.controls.email"
+        i18n-placeholder
+        level="2"
+        placeholder="Email"
+        type="email" />
+      <standard--text-field
+        autocomplete="current-password"
+        [formControl]="signinFormGroup.controls.password"
+        i18n-placeholder
+        level="2"
+        placeholder="Password"
+        type="password" />
+    </standard--section>
+    <standard--flexbox-container
+      flexDirection="row"
+      justifyContent="flex-end">
+      <standard--button
+        appearance="symbol"
+        [disabled]="signinFormGroup.invalid"
+        type="submit"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+    </standard--flexbox-container>
+  </standard--form>
+</standard--sheet>
+<standard--sheet #signupSheetComponent>
+  <standard--header>
+    <h6 i18n="@@libs--Components--SheetContents--Signup--Header">Create an account</h6>
+  </standard--header>
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithWebAuthnFormSubmit(signupSheetComponent);">
+    <standard--section>
+      <standard--text-field
+        autocomplete="email"
+        [formControl]="signupWithWebAuthnFormGroup.controls.email"
+        i18n-placeholder
+        level="2"
+        placeholder="Email"
+        type="email" />
+    </standard--section>
+    <standard--flexbox-container>
+      <standard--button
+        appearance="raised"
+        [disabled]="signupWithWebAuthnFormGroup.invalid"
+        level="2"
+        material="inverse"
+        type="submit">
+        <standard--symbol input="PersonBadgeKeyFill" />
+        <standard--label
+          i18n-input
+          input="Use Passkey" />
+      </standard--button>
+    </standard--flexbox-container>
+  </standard--form>
+  <standard--divider />}
+  <standard--form (output)="signupFormSubmit(signupSheetComponent);">
+    <standard--section>
+      <standard--text-field
+        autocomplete="email"
+        [formControl]="signupFormGroup.controls.email"
+        i18n-placeholder
+        level="2"
+        placeholder="Email"
+        type="email" />
+      <standard--text-field
+        autocomplete="new-password"
+        [formControl]="signupFormGroup.controls.password"
+        i18n-placeholder
+        level="2"
+        placeholder="Password"
+        type="password" />
+      <standard--text-field
+        autocomplete="new-password"
+        [formControl]="signupFormGroup.controls.passwordConfirmation"
+        i18n-placeholder
+        level="2"
+        placeholder="Confirm password"
+        type="password" />
+    </standard--section>
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row"
+      justifyContent="space-between">
+      <standard--list type="inline">
+        <standard--link
+          i18n
+          (output)="signupSheetComponent.openModel$.set(false);"
+          *standardListItem
+          url="/privacy">privacy policy</standard--link>
+        <standard--link
+          i18n
+          (output)="signupSheetComponent.openModel$.set(false);"
+          *standardListItem
+          url="/terms">terms</standard--link>
+      </standard--list>
+      <standard--button
+        appearance="symbol"
+        [disabled]="signupFormGroup.invalid"
+        type="submit"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+    </standard--flexbox-container>
+  </standard--form>
+</standard--sheet>
+<standard--sheet #localeSheetComponent>
+  <standard--header>
+    <h6 i18n="@@apps--Website--Components--SheetContents--Locale--Header">Select your locale</h6>
+  </standard--header>
+  <standard--flexbox-container>
+    @for (locale of localeIds; track locale) {<standard--button
+      [disabled]="locale === localeId"
+      level="2"
+      (output)="locale === localeId || changeLocale(locale);">
+      <standard--symbol input="Globe" />
+      <standard--label [input]="localeDisplayNames.of(locale) || locale" />
+    </standard--button>}
+  </standard--flexbox-container>
+</standard--sheet>
 
 <ng-template #contentTemplate>
   <standard--flexbox-container
@@ -61,16 +194,23 @@
             i18n="@@apps--Website--Components--Routes--Develop--MetaTitle"
             url="/develop">Develop</standard--link>
         </standard--flexbox-container>
-        <standard--flexbox-container alignItems="flex-start">
+        @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
           <standard--link
             [disabled]="signinSheetComponent.openModelWithTransform$()"
-            (select)="signinSheetComponent.openModel$.set(true);"
-            i18n="@@libs--Components--SheetContents--Signin">Sign in</standard--link>
+            i18n="@@libs--Components--SheetContents--Signin"
+            (output)="signinSheetComponent.openModel$.set(true);">Sign in</standard--link>
           <standard--link
             [disabled]="signupSheetComponent.openModelWithTransform$()"
-            (select)="signupSheetComponent.openModel$.set(true);"
-            i18n="@@libs--Components--SheetContents--Signup">Create an account</standard--link>
-        </standard--flexbox-container>
+            i18n="@@libs--Components--SheetContents--Signup"
+            (output)="signupSheetComponent.openModel$.set(true);">Create an account</standard--link>
+        </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
+          <standard--link
+            i18n="@@libs--Components--Routes--Account--MetaTitle"
+            url="/account">Account</standard--link>
+          <standard--link
+            i18n="@@libs--Components--Routes--Account--MetaTitle"
+            (output)="authenticationService.signInAnonymously();">Sign out</standard--link>
+        </standard--flexbox-container>}
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
             i18n="@@libs--Components--Routes--Privacy--MetaTitle"
@@ -108,7 +248,7 @@
         justifyContent="center">
         <standard--link
           [disabled]="localeSheetComponent.openModelWithTransform$()"
-          (select)="localeSheetComponent.openModel$.set(true);">
+          (output)="localeSheetComponent.openModel$.set(true);">
           <standard--symbol input="Globe" />
           <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
         </standard--link>

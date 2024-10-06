@@ -1,9 +1,9 @@
-import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                    from "@angular/common";
-import { Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                       from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                   from "@standard/directives";
-import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                     from "body-scroll-lock";
-import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                from "rxjs";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                 from "@angular/common";
+import { afterRender, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                    from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                from "@standard/directives";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                  from "body-scroll-lock";
+import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                             from "rxjs";
 
 
 @Component(
@@ -59,45 +59,46 @@ import { delayWhen, fromEvent, map, type Observable, timer }                    
 export class SheetComponent {
 
   constructor() {
-    effect(
+    afterRender(
       (): void => {
         this.roundedContainerDirective.htmlElementRef$.set(
           this.htmlDivElementRef$(),
         );
       },
-      {
-        allowSignalWrites: true,
-      },
     );
 
-    isPlatformBrowser(
+    if (isPlatformBrowser(
       this.platformId,
-    ) && effect(
-      (effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
-        this.openOrClosing$() ? ((): void => {
-          disableBodyScroll(
-            this.htmlDialogElementRef$().nativeElement,
+    ))
+      effect(
+        (effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
+          if (this.openOrClosing$())
+            ((): void => {
+              disableBodyScroll(
+                this.htmlDialogElementRef$().nativeElement,
+              );
+
+              this.htmlDialogElementRef$().nativeElement.showModal();
+
+              setTimeout(
+                (): void => this.htmlDialogElementRef$().nativeElement.focus(),
+                0,
+              );
+            })();
+          else
+            ((): void => {
+              enableBodyScroll(
+                this.htmlDialogElementRef$().nativeElement,
+              );
+
+              this.htmlDialogElementRef$().nativeElement.close();
+            })();
+
+          effectCleanupRegisterFn(
+            (): void => clearAllBodyScrollLocks(),
           );
-
-          this.htmlDialogElementRef$().nativeElement.showModal();
-
-          setTimeout(
-            (): void => this.htmlDialogElementRef$().nativeElement.focus(),
-            0,
-          );
-        })() : ((): void => {
-          enableBodyScroll(
-            this.htmlDialogElementRef$().nativeElement,
-          );
-
-          this.htmlDialogElementRef$().nativeElement.close();
-        })();
-
-        effectCleanupRegisterFn(
-          (): void => clearAllBodyScrollLocks(),
-        );
-      },
-    );
+        },
+      );
     fromEvent<KeyboardEvent>(
       this.document,
       "keydown",
@@ -144,7 +145,9 @@ export class SheetComponent {
   );
 
   protected containerKeydown(keyboardEvent: KeyboardEvent): true | void {
-    keyboardEvent.key === "Escape" || keyboardEvent.stopPropagation();
+    if (keyboardEvent.key !== "Escape")
+      keyboardEvent.stopPropagation();
+
     return (keyboardEvent.key === "Escape" && this.openOrClosing$() ? this.openModel$.set(false) : true) || keyboardEvent.preventDefault();
   }
 

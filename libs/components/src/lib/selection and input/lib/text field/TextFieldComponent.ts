@@ -1,15 +1,19 @@
-import { NgTemplateOutlet }                                                                                                        from "@angular/common";
-import { Component, effect, type ElementRef, forwardRef, inject, input, type InputSignal, type OnDestroy, type Signal, viewChild } from "@angular/core";
-import { toSignal }                                                                                                                from "@angular/core/rxjs-interop";
-import { type ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                             from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }             from "@standard/directives";
-import { type SymbolPaths }                                                                                                        from "@standard/interfaces";
-import loadSymbolPaths                                                                                                             from "@standard/symbol-paths";
-import { fromPromise }                                                                                                             from "rxjs/internal/observable/innerFrom";
+import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                                   from "@angular/common";
+import { afterRender, booleanAttribute, Component, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type OnDestroy, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                                                from "@angular/core/rxjs-interop";
+import { type ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                                                                                                                           from "@angular/forms";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }                                                                                                           from "@standard/directives";
+import { type SymbolPaths }                                                                                                                                                                                                      from "@standard/interfaces";
+import loadSymbolPaths                                                                                                                                                                                                           from "@standard/symbol-paths";
+import { firstValueFrom }                                                                                                                                                                                                        from "rxjs";
+import { fromPromise }                                                                                                                                                                                                           from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
   {
+    host:           {
+      "[class.disabled]": "disabledInput$() || false",
+    },
     hostDirectives: [
       {
         directive: CanvasDirective,
@@ -69,7 +73,7 @@ export class TextFieldComponent
   implements ControlValueAccessor, OnDestroy {
 
   constructor() {
-    effect(
+    afterRender(
       (): void => {
         this.hoverTranslatingDirective.htmlElementRef$.set(
           this.htmlDivElementRef$(),
@@ -78,16 +82,15 @@ export class TextFieldComponent
           this.htmlDivElementRef$(),
         );
       },
-      {
-        allowSignalWrites: true,
-      },
     );
   }
 
   private readonly abortController: AbortController                           = new AbortController();
   private readonly hoverTranslatingDirective: HoverTransformingDirective      = inject<HoverTransformingDirective>(HoverTransformingDirective);
+  private readonly injector: Injector                                         = inject<Injector>(Injector);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>     = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly htmlInputElementRef$: Signal<ElementRef<HTMLInputElement>> = viewChild.required<ElementRef<HTMLInputElement>>("htmlInputElement");
+  private readonly platformId: NonNullable<unknown>                           = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   protected readonly roundedContainerDirective: RoundedDirective                  = inject<RoundedDirective>(RoundedDirective);
   protected readonly xmarkCircleFillSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
@@ -96,24 +99,38 @@ export class TextFieldComponent
     ),
   );
 
-  public readonly autocompleteInput$: InputSignal<string | undefined>                = input<string | undefined>(
+  public readonly autocompleteInput$: InputSignal<string | undefined>                                          = input<string | undefined>(
     undefined,
     {
       alias: "autocomplete",
     },
   );
-  public readonly formControlInput$: InputSignal<FormControl<string>>                = input.required<FormControl<string>>(
+  public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+    undefined,
+    {
+      alias:     "disabled",
+      transform: booleanAttribute,
+    },
+  );
+  public readonly formControlInput$: InputSignal<FormControl<string>>                                          = input.required<FormControl<string>>(
     {
       alias: "formControl",
     },
   );
-  public readonly placeholderInput$: InputSignal<string | undefined>                 = input<string | undefined>(
+  public readonly placeholderInput$: InputSignal<string | undefined>                                           = input<string | undefined>(
     undefined,
     {
       alias: "placeholder",
     },
   );
-  public readonly typeInput$: InputSignal<"email" | "password" | "text" | undefined> = input<"email" | "password" | "text" | undefined>(
+  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`> = input<number | undefined, number | `${ number }`>(
+    undefined,
+    {
+      alias:     "tabIndexOverride",
+      transform: numberAttribute,
+    },
+  );
+  public readonly typeInput$: InputSignal<"email" | "password" | undefined>                                    = input<"email" | "password" | undefined>(
     undefined,
     {
       alias: "type",
@@ -124,30 +141,82 @@ export class TextFieldComponent
     this.abortController.abort();
   }
   public registerOnChange(handler: (value: string) => void): void {
-    this.htmlInputElementRef$().nativeElement.addEventListener(
-      "change",
-      (event: Event): void => handler(
-        (event.target as HTMLInputElement).value,
-      ),
-      {
-        signal: this.abortController.signal,
-      },
-    );
+    if (isPlatformBrowser(
+      this.platformId,
+    ))
+      firstValueFrom<ElementRef<HTMLInputElement>>(
+        toObservable<ElementRef<HTMLInputElement>>(
+          this.htmlInputElementRef$,
+          {
+            injector: this.injector,
+          },
+        ),
+      ).then<void>(
+        (htmlInputElementRef: ElementRef<HTMLInputElement>): void => htmlInputElementRef.nativeElement.addEventListener(
+          "change",
+          (event: Event): void => handler(
+            (event.target as HTMLInputElement).value,
+          ),
+          {
+            signal: this.abortController.signal,
+          },
+        ),
+      );
   }
   public registerOnTouched(handler: () => void): void {
-    this.htmlInputElementRef$().nativeElement.addEventListener(
-      "blur",
-      (): void => handler(),
-      {
-        signal: this.abortController.signal,
-      },
-    );
+    if (isPlatformBrowser(
+      this.platformId,
+    ))
+      firstValueFrom<ElementRef<HTMLInputElement>>(
+        toObservable<ElementRef<HTMLInputElement>>(
+          this.htmlInputElementRef$,
+          {
+            injector: this.injector,
+          },
+        ),
+      ).then<void>(
+        (htmlInputElementRef: ElementRef<HTMLInputElement>): void => htmlInputElementRef.nativeElement.addEventListener(
+          "blur",
+          (): void => handler(),
+          {
+            signal: this.abortController.signal,
+          },
+        ),
+      );
   }
   public setDisabledState?(isDisabled: boolean): void {
-    this.htmlInputElementRef$().nativeElement.disabled = isDisabled;
+    if (isPlatformBrowser(
+      this.platformId,
+    ))
+      firstValueFrom<ElementRef<HTMLInputElement>>(
+        toObservable<ElementRef<HTMLInputElement>>(
+          this.htmlInputElementRef$,
+          {
+            injector: this.injector,
+          },
+        ),
+      ).then<void>(
+        (htmlInputElementRef: ElementRef<HTMLInputElement>): void => {
+          htmlInputElementRef.nativeElement.disabled = isDisabled;
+        },
+      );
   }
   public writeValue(value: string): void {
-    this.htmlInputElementRef$().nativeElement.value = value;
+    if (isPlatformBrowser(
+      this.platformId,
+    ))
+      firstValueFrom<ElementRef<HTMLInputElement>>(
+        toObservable<ElementRef<HTMLInputElement>>(
+          this.htmlInputElementRef$,
+          {
+            injector: this.injector,
+          },
+        ),
+      ).then<void>(
+        (htmlInputElementRef: ElementRef<HTMLInputElement>): void => {
+          htmlInputElementRef.nativeElement.value = value;
+        },
+      );
   }
 
 }

@@ -1,13 +1,13 @@
-import { isPlatformBrowser }                                                                                       from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                                    from "@angular/core";
-import { toSignal }                                                                                                from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, signInAnonymously, type User, type UserCredential }                               from "@angular/fire/auth";
-import { Functions }                                                                                               from "@angular/fire/functions";
-import { createUserWithPasskey, FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey } from "@firebase-web-authn/browser";
-import { type ProfileDocument }                                                                                    from "@standard/interfaces";
-import { Observable, type Observer, type TeardownLogic }                                                           from "rxjs";
-import { fromPromise }                                                                                             from "rxjs/internal/observable/innerFrom";
-import { ProfileService }                                                                                          from "./ProfileService";
+import { isPlatformBrowser }                                                                                                                     from "@angular/common";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                                                                  from "@angular/core";
+import { toSignal }                                                                                                                              from "@angular/core/rxjs-interop";
+import { Auth, createUserWithEmailAndPassword, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User, type UserCredential } from "@angular/fire/auth";
+import { Functions }                                                                                                                             from "@angular/fire/functions";
+import { createUserWithPasskey, FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey }                               from "@firebase-web-authn/browser";
+import { type ProfileDocument }                                                                                                                  from "@standard/interfaces";
+import { Observable, type Observer, type TeardownLogic }                                                                                         from "rxjs";
+import { fromPromise }                                                                                                                           from "rxjs/internal/observable/innerFrom";
+import { ProfileService }                                                                                                                        from "./ProfileService";
 
 
 @Injectable(
@@ -51,10 +51,15 @@ export class AuthenticationService {
         this.auth,
         async (user: User | null): Promise<void> => user === null ? signInAnonymously(
           this.auth,
-        ).then<void>(
+        ).then<void, never>(
           (userCredential: UserCredential): void => userObserver.next(
             userCredential.user,
           ),
+          (error: unknown): never => {
+            console.error("Something went wrong.");
+
+            throw error;
+          },
         ) : userObserver.next(user),
       ),
     ),
@@ -63,6 +68,23 @@ export class AuthenticationService {
     },
   ) : signal<User | null>(null);
 
+  public createUserWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<void> {
+    return createUserWithEmailAndPassword(
+      this.auth,
+      email,
+      password,
+    ).then<void, never>(
+      (): void => console.log("Success"),
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw error;
+      },
+    );
+  }
   public createUserWithPasskey(name: string): Promise<void> {
     return createUserWithPasskey(
       this.auth,
@@ -97,6 +119,23 @@ export class AuthenticationService {
       this.auth,
     ).then<void, never>(
       (): void => void (0),
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw error;
+      },
+    );
+  }
+  public signInWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<void> {
+    return signInWithEmailAndPassword(
+      this.auth,
+      email,
+      password,
+    ).then<void, never>(
+      (): void => console.log("Success"),
       (error: unknown): never => {
         console.error("Something went wrong.");
 

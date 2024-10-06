@@ -1,12 +1,12 @@
-import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                 from "@angular/common";
-import { Component, computed, effect, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                        from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                from "@standard/directives";
-import { type Dimensions }                                                                                                                                                               from "@standard/interfaces";
-import { ViewportService }                                                                                                                                                               from "@standard/services";
-import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                    from "rxjs";
-import { ButtonComponent }                                                                                                                                                               from "../button/ButtonComponent";
-import { SymbolComponent }                                                                                                                                                               from "../symbol/SymbolComponent";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                      from "@angular/common";
+import { afterRender, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                             from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                     from "@standard/directives";
+import { type Dimensions }                                                                                                                                                                    from "@standard/interfaces";
+import { ViewportService }                                                                                                                                                                    from "@standard/services";
+import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                         from "rxjs";
+import { ButtonComponent }                                                                                                                                                                    from "../menus and actions";
+import { SymbolComponent }                                                                                                                                                                    from "../symbol/SymbolComponent";
 
 
 @Component(
@@ -69,14 +69,11 @@ import { SymbolComponent }                                                      
 export class FooterComponent {
 
   constructor() {
-    effect(
+    afterRender(
       (): void => {
         this.roundedContainerDirective.htmlElementRef$.set(
           this.htmlElementRef$(),
         );
-      },
-      {
-        allowSignalWrites: true,
       },
     );
   }

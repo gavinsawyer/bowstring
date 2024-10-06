@@ -18,22 +18,38 @@
 </svg>
 
 <ng-template #contentTemplate>
+  @if (formControlInput$().value !== formControlInput$().defaultValue) {<div>
+    <button class="harness"
+      (click)="$event.stopPropagation(); formControlInput$().reset(); htmlInputElement.focus();"
+      (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+      tabindex="-1"
+      type="button">
+      <div class="element">
+        @if (xmarkCircleFillSymbolPaths$(); as symbolPaths) {<svg
+          [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
+          xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <rect
+              [attr.height]="symbolPaths.viewBoxHeight"
+              [attr.width]="symbolPaths.viewBoxWidth"
+              opacity="0"
+              x="0"
+              y="0" />
+            @for (path of symbolPaths.paths; track path) {<path
+              [attr.d]="path.definition"
+              [attr.fill-opacity]="path.opacity"
+              fill="currentColor" />}
+          </g>
+        </svg>}
+      </div>
+    </button>
+  </div>}
   <input #htmlInputElement
     [attr.autocomplete]="autocompleteInput$()"
     [attr.placeholder]="placeholderInput$()"
+    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
     [attr.type]="typeInput$()"
-    [formControl]="formControlInput$()">
-  @if (formControlInput$().value !== formControlInput$().defaultValue) {<button
-    (click)="$event.stopPropagation(); formControlInput$().reset(); htmlInputElement.focus();"
-    (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-    tabindex="1">
-    @if (xmarkCircleFillSymbolPaths$(); as symbolPaths) {<svg
-      [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
-      xmlns="http://www.w3.org/2000/svg">
-      <g>
-        <rect [attr.height]="symbolPaths.viewBoxHeight" opacity="0" [attr.width]="symbolPaths.viewBoxWidth" x="0" y="0"/>
-        @for (path of symbolPaths.paths; track path) {<path [attr.d]="path.definition" fill="currentColor" [attr.fill-opacity]="path.opacity"/>}
-      </g>
-    </svg>}
-  </button>}
+    (click)="$event.stopPropagation();"
+    [formControl]="formControlInput$()"
+    (keydown)="$event.key === 'Escape' || $event.stopPropagation();">
 </ng-template>

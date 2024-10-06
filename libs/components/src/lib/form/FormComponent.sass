@@ -1,0 +1,23 @@
+@use "../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--form--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--form--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-child-directive--flex-basis: 100% !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--form--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--form--gap-row) !important
+
+  > .harness > .element::ng-deep > *
+    @include FlexboxContainerDirective.children
+
+
+@each $host-context-namespace in ("main", "sheet", "box")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--flexbox-container-directive--gap-column: var(--standard--#{ $host-context-namespace }--gap-column) !important
+    --standard--flexbox-container-directive--gap-row: var(--standard--#{ $host-context-namespace }--gap-row) !important
