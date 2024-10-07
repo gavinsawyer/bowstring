@@ -25,84 +25,88 @@
   --standard--flexbox-container-directive--gap-column: var(--standard--text-field--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--text-field--gap-row) !important
 
-  > .harness > .element
+  > .harness
     min-width: calc(1rem * pow(var(--phi), 5))
 
-    > div
-      display: contents
+    @media (min-width: 48rem)
+      min-width: calc(1rem * pow(var(--phi), 6))
 
-      @include CanvasDirective.children
-      @include ElevatedDirective.children
-      @include FlexboxContainerDirective.children
-      @include HoverTransformingDirective.children
-      @include RoundedDirective.children
+    > .element
+      > div
+        display: contents
 
-      @include CanvasDirective.host(20%)
-      @include FlexboxContainerDirective.host
+        @include CanvasDirective.children
+        @include ElevatedDirective.children
+        @include FlexboxContainerDirective.children
+        @include HoverTransformingDirective.children
+        @include RoundedDirective.children
 
-      --standard--flexbox-container-directive--align-items: center !important
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
-      --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
-      --standard--flexbox-container-directive--justify-content: center !important
+        @include CanvasDirective.host(20%)
+        @include FlexboxContainerDirective.host
 
-      > .harness
+        --standard--flexbox-container-directive--align-items: center !important
+        --standard--flexbox-container-directive--flex-direction: row !important
+        --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+        --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+        --standard--flexbox-container-directive--justify-content: center !important
+
+        > .harness
+          background: none
+          border: 0
+          color: inherit
+          cursor: pointer
+          font: inherit
+          letter-spacing: inherit
+          line-height: inherit
+          order: 1
+          outline: 0
+          padding: 0
+          user-select: none
+          -webkit-tap-highlight-color: transparent
+
+          > .element
+            background: none !important
+            opacity: 1
+            transition: opacity 200ms var(--bounce)
+
+            > svg
+              display: grid
+              height: 1em
+              max-width: 1.125em
+              overflow: visible
+
+      > input
         background: none
         border: 0
-        color: inherit
-        cursor: pointer
+        caret-color: currentColor
+        color: black
+        flex: 1 1 0
         font: inherit
         letter-spacing: inherit
         line-height: inherit
-        order: 1
         outline: 0
         padding: 0
-        user-select: none
+        width: 0
         -webkit-tap-highlight-color: transparent
 
-        > .element
-          background: none !important
-          opacity: 1
-          transition: opacity 200ms var(--bounce)
-
-          > svg
-            display: grid
-            height: 1em
-            max-width: 1.125em
-            overflow: visible
-
-    > input
-      background: none
-      border: 0
-      caret-color: currentColor
-      color: black
-      flex: 1 1 0
-      font: inherit
-      letter-spacing: inherit
-      line-height: inherit
-      outline: 0
-      padding: 0
-      width: 0
-      -webkit-tap-highlight-color: transparent
-
-      @media (prefers-color-scheme: dark)
-        color: white
-
-      &::placeholder
-        color: hsl(0, 0%, 50%)
-
-      //noinspection CssInvalidPseudoSelector
-      &:is(:-webkit-autofill, :-webkit-autofill-strong-password, :-webkit-autofill-strong-password-viewable, :-webkit-autofill-and-obscured, :autofill)
-        box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background) inset
-
-        &::selection
-          @media (prefers-color-scheme: dark)
-            background: #{ transparentize(invert(lightskyblue), 0.001961) }
-
         @media (prefers-color-scheme: dark)
-          box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background-inverse) inset
-          filter: invert(1)
-          transform: translateZ(0)
+          color: white
 
-    &:not(:focus-within) > div > .harness
-      display: none
+        &::placeholder
+          color: hsl(0, 0%, 50%)
+
+        //noinspection CssInvalidPseudoSelector
+        &:is(:-webkit-autofill, :-webkit-autofill-strong-password, :-webkit-autofill-strong-password-viewable, :-webkit-autofill-and-obscured, :autofill)
+          box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background) inset
+
+          &::selection
+            @media (prefers-color-scheme: dark)
+              background: #{ transparentize(invert(lightskyblue), 0.001961) }
+
+          @media (prefers-color-scheme: dark)
+            box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background-inverse) inset
+            filter: invert(1)
+            transform: translateZ(0)
+
+      &:not(:focus-within) > div > .harness
+        display: none
