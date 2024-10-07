@@ -1,10 +1,10 @@
-import { isPlatformBrowser }                                                             from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, type Signal }                          from "@angular/core";
-import { toSignal }                                                                      from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, type User }                                             from "@angular/fire/auth";
-import { doc, docSnapshots, type DocumentReference, type DocumentSnapshot, Firestore }   from "@angular/fire/firestore";
-import { type ProfileDocument }                                                          from "@standard/interfaces";
-import { catchError, map, Observable, type Observer, of, switchMap, type TeardownLogic } from "rxjs";
+import { isPlatformBrowser }                                                                                from "@angular/common";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                             from "@angular/core";
+import { toSignal }                                                                                         from "@angular/core/rxjs-interop";
+import { Auth, onIdTokenChanged, type User }                                                                from "@angular/fire/auth";
+import { doc, docSnapshots, type DocumentReference, type DocumentSnapshot, Firestore }                      from "@angular/fire/firestore";
+import { type ProfileDocument }                                                                             from "@standard/interfaces";
+import { catchError, filter, map, Observable, type Observer, of, startWith, switchMap, type TeardownLogic } from "rxjs";
 
 
 @Injectable(
@@ -18,42 +18,42 @@ export class ProfileService {
   private readonly firestore: Firestore             = inject<Firestore>(Firestore);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  public profileDocument$: Signal<ProfileDocument | null> = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<ProfileDocument | null, null>(
+  public profileDocument$: Signal<ProfileDocument | undefined> = isPlatformBrowser(this.platformId) ? toSignal<ProfileDocument | undefined>(
     new Observable<User | null>(
-      (userObserver: Observer<User | null>): TeardownLogic => {
-        userObserver.next(this.auth.currentUser);
+      (userObserver: Observer<User | null>): TeardownLogic => onIdTokenChanged(
+        this.auth,
+        (user: User | null) => userObserver.next(user),
+      ),
+    ).pipe<User | null, User, ProfileDocument | undefined>(
+      startWith<User | null, [ User | null ]>(this.auth.currentUser),
+      filter<User | null, User>(
+        (user: User | null): user is User => !!user,
+      ),
+      switchMap<User, Observable<ProfileDocument | undefined>>(
+        (user: User): Observable<ProfileDocument | undefined> => {
+          if (user.isAnonymous)
+            return of<undefined>(undefined);
+          else
+            return docSnapshots<ProfileDocument>(
+              doc(
+                this.firestore,
+                `/profiles/${ user.uid }`,
+              ) as DocumentReference<ProfileDocument>,
+            ).pipe<DocumentSnapshot<ProfileDocument> | undefined, ProfileDocument | undefined>(
+              catchError<DocumentSnapshot<ProfileDocument>, Observable<undefined>>(
+                (error: unknown): Observable<undefined> => {
+                  console.error(error);
 
-        return onIdTokenChanged(
-          this.auth,
-          (user: User | null) => userObserver.next(user),
-        );
-      },
-    ).pipe<ProfileDocument | null>(
-      switchMap<User | null, Observable<ProfileDocument | null>>(
-        (user: User | null): Observable<ProfileDocument | null> => user?.isAnonymous === false ? docSnapshots<ProfileDocument>(
-          doc(
-            this.firestore,
-            `/profiles/${ user.uid }`,
-          ) as DocumentReference<ProfileDocument>,
-        ).pipe<DocumentSnapshot<ProfileDocument>, ProfileDocument | null>(
-          catchError<DocumentSnapshot<ProfileDocument>, Observable<DocumentSnapshot<ProfileDocument>>>(
-            (error: unknown): Observable<DocumentSnapshot<ProfileDocument>> => {
-              console.error(error);
-
-              return new Observable<DocumentSnapshot<ProfileDocument>>();
-            },
-          ),
-          map<DocumentSnapshot<ProfileDocument>, ProfileDocument | null>(
-            (profileDocumentSnapshot: DocumentSnapshot<ProfileDocument>): ProfileDocument | null => profileDocumentSnapshot.data() || null,
-          ),
-        ) : of<null>(null),
+                  return of<undefined>(undefined);
+                },
+              ),
+              map<DocumentSnapshot<ProfileDocument> | undefined, ProfileDocument | undefined>(
+                (profileDocumentSnapshot?: DocumentSnapshot<ProfileDocument>): ProfileDocument | undefined => profileDocumentSnapshot?.data(),
+              ),
+            );
+        },
       ),
     ),
-    {
-      initialValue: null,
-    },
-  ) : signal<null>(null);
+  ) : signal<undefined>(undefined);
 
 }

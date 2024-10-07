@@ -15,9 +15,7 @@ export class AppCheckOptionsService {
   private readonly environment: Environment         = inject<Environment>(ENVIRONMENT);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  public readonly appCheckOptions: AppCheckOptions = isPlatformBrowser(
-    this.platformId,
-  ) ? {
+  public readonly appCheckOptions: AppCheckOptions = isPlatformBrowser(this.platformId) ? {
     isTokenAutoRefreshEnabled: true,
     provider:                  new ReCaptchaEnterpriseProvider(
       this.environment.recaptchaKeyID,
@@ -26,7 +24,7 @@ export class AppCheckOptionsService {
     isTokenAutoRefreshEnabled: false,
     provider:                  new CustomProvider(
       {
-        getToken: (): Promise<AppCheckToken> => Promise.resolve(
+        getToken: (): Promise<AppCheckToken> => Promise.resolve<AppCheckToken>(
           {
             token:            process.env[`APP_CHECK_TOKEN_${ this.environment.project.toUpperCase() }`] as string,
             expireTimeMillis: Date.now(),

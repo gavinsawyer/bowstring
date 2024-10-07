@@ -7,9 +7,9 @@
 
 <standard--sheet #signinSheetComponent>
   <standard--header>
-    <h6 i18n="@@libs--Components--SheetContents--Signin--Header">Sign in</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SigninSheet--Header">Sign in</h6>
   </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithWebAuthnFormSubmit(signinSheetComponent);">
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinSheetComponent);">
     <standard--flexbox-container>
       <standard--button
         appearance="raised"
@@ -53,13 +53,13 @@
 </standard--sheet>
 <standard--sheet #signupSheetComponent>
   <standard--header>
-    <h6 i18n="@@libs--Components--SheetContents--Signup--Header">Create an account</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SignupSheet--Header">Create an account</h6>
   </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithWebAuthnFormSubmit(signupSheetComponent);">
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupSheetComponent);">
     <standard--section>
       <standard--text-field
         autocomplete="email"
-        [formControl]="signupWithWebAuthnFormGroup.controls.email"
+        [formControl]="signupWithPasskeyFormGroup.controls.email"
         i18n-placeholder
         level="2"
         placeholder="Email"
@@ -68,7 +68,7 @@
     <standard--flexbox-container>
       <standard--button
         appearance="raised"
-        [disabled]="signupWithWebAuthnFormGroup.invalid"
+        [disabled]="signupWithPasskeyFormGroup.invalid"
         level="2"
         material="inverse"
         type="submit">
@@ -129,7 +129,7 @@
 </standard--sheet>
 <standard--sheet #localeSheetComponent>
   <standard--header>
-    <h6 i18n="@@apps--Website--Components--SheetContents--Locale--Header">Select your locale</h6>
+    <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale</h6>
   </standard--header>
   <standard--flexbox-container>
     @for (locale of localeIds; track locale) {<standard--button
@@ -197,11 +197,11 @@
         @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
           <standard--link
             [disabled]="signinSheetComponent.openModelWithTransform$()"
-            i18n="@@libs--Components--SheetContents--Signin"
+            i18n
             (output)="signinSheetComponent.openModel$.set(true);">Sign in</standard--link>
           <standard--link
             [disabled]="signupSheetComponent.openModelWithTransform$()"
-            i18n="@@libs--Components--SheetContents--Signup"
+            i18n
             (output)="signupSheetComponent.openModel$.set(true);">Create an account</standard--link>
         </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
           <standard--link

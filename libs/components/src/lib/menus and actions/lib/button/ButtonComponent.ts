@@ -76,12 +76,8 @@ export class ButtonComponent {
   constructor() {
     afterRender(
       (): void => {
-        this.hoverTranslatingDirective.htmlElementRef$.set(
-          this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
-        );
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlAnchorElementRef$() || this.htmlButtonElementRef$(),
-        );
+        this.hoverTranslatingDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
+        this.roundedContainerDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
       },
     );
   }
@@ -93,44 +89,44 @@ export class ButtonComponent {
   protected readonly roundedContainerDirective: RoundedDirective             = inject<RoundedDirective>(RoundedDirective);
   protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
 
-  public readonly appearanceInput$: InputSignal<"raised" | "symbol" | undefined>                               = input<"raised" | "symbol" | undefined>(
+  public readonly appearanceInput$: InputSignal<"raised" | "symbol" | undefined>                                           = input<"raised" | "symbol" | undefined>(
     undefined,
     {
       alias: "appearance",
     },
   );
-  public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+  public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }` | undefined> = input<boolean | undefined, "" | boolean | `${ boolean }` | undefined>(
     undefined,
     {
       alias:     "disabled",
       transform: booleanAttribute,
     },
   );
-  public readonly materialInput$: InputSignal<"inverse" | "primary" | undefined>                               = input<"inverse" | "primary" | undefined>(
+  public readonly materialInput$: InputSignal<"inverse" | "primary" | undefined>                                           = input<"inverse" | "primary" | undefined>(
     undefined,
     {
       alias: "material",
     },
   );
-  public readonly output: OutputEmitterRef<void>                                                               = output<void>(
+  public readonly output: OutputEmitterRef<void>                                                                           = output<void>(
     {
       alias: "output",
     },
   );
-  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`> = input<number | undefined, number | `${ number }`>(
+  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`>             = input<number | undefined, number | `${ number }`>(
     undefined,
     {
       alias:     "tabIndexOverride",
       transform: numberAttribute,
     },
   );
-  public readonly typeInput$: InputSignal<"reset" | "submit" | undefined>                                      = input<"reset" | "submit" | undefined>(
+  public readonly typeInput$: InputSignal<"reset" | "submit" | undefined>                                                  = input<"reset" | "submit" | undefined>(
     undefined,
     {
       alias: "type",
     },
   );
-  public readonly urlInput$: InputSignal<string | undefined>                                                   = input<string | undefined>(
+  public readonly urlInput$: InputSignal<string | undefined>                                                               = input<string | undefined>(
     undefined,
     {
       alias: "url",

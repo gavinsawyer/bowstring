@@ -5,8 +5,8 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
 import { type Dimensions }                                                                                                                                                                    from "@standard/interfaces";
 import { ViewportService }                                                                                                                                                                    from "@standard/services";
 import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                         from "rxjs";
-import { ButtonComponent }                                                                                                                                                                    from "../../../menus and actions";
 import { SymbolComponent }                                                                                                                                                                    from "../../../content";
+import { ButtonComponent }                                                                                                                                                                    from "../../../menus and actions";
 
 
 @Component(
@@ -70,50 +70,33 @@ export class FooterComponent {
 
   constructor() {
     afterRender(
-      (): void => {
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlElementRef$()),
     );
   }
 
   private readonly backdropHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("backdropHtmlDivElement");
   private readonly document: Document                                             = inject<Document>(DOCUMENT);
-  private readonly bodyHeight$: Signal<number>                                    = toSignal<number, number>(
+  private readonly bodyHeight$: Signal<number | undefined>                        = toSignal<number>(
     new Observable<number>(
       (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-        resizeObserver.observe(
-          this.document.body,
-        );
+        resizeObserver.observe(this.document.body);
 
         return (): void => resizeObserver.disconnect();
       })(
         new ResizeObserver(
-          (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
-            resizeObserverEntries[0].target.clientHeight,
-          ),
+          (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(resizeObserverEntries[0].target.clientHeight),
         ),
       ),
     ),
-    {
-      initialValue: this.document.body.clientHeight,
-    },
   );
   private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly dimensions$: Signal<Dimensions>                                = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<Dimensions, { "height": 0, "width": 0 }>(
-    toObservable<ElementRef<HTMLElement>>(
-      this.htmlElementRef$,
-    ).pipe<Dimensions>(
+  private readonly dimensions$: Signal<Dimensions | undefined>                    = isPlatformBrowser(this.platformId) ? toSignal<Dimensions>(
+    toObservable<ElementRef<HTMLElement>>(this.htmlElementRef$).pipe<Dimensions>(
       switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
         (htmlElementRef: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
           (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-            resizeObserver.observe(
-              htmlElementRef.nativeElement,
-            );
+            resizeObserver.observe(htmlElementRef.nativeElement);
 
             return (): void => resizeObserver.disconnect();
           })(
@@ -129,73 +112,47 @@ export class FooterComponent {
         ),
       ),
     ),
-    {
-      initialValue: {
-        height: 0,
-        width:  0,
-      },
-    },
-  ) : signal<{ "height": 0, "width": 0 }>(
-    {
-      height: 0,
-      width:  0,
-    },
-  );
+  ) : signal<undefined>(undefined);
   private readonly injector: Injector                                             = inject<Injector>(Injector);
   private readonly viewportService: ViewportService                               = inject<ViewportService>(ViewportService);
-  private readonly width$: Signal<number>                                         = computed<number>(
-    (): number => this.dimensions$().width,
+  private readonly width$: Signal<number | undefined>                             = computed<number | undefined>(
+    (): number | undefined => this.dimensions$()?.width,
   );
 
-  protected readonly height$: Signal<number> = computed<number>(
-    (): number => this.dimensions$().height,
+  protected readonly height$: Signal<number | undefined> = computed<number | undefined>(
+    (): number | undefined => this.dimensions$()?.height,
   );
 
-  public readonly stuckModelWithTransform$: Signal<boolean> = computed<boolean>(
-    (): boolean => ((stuck?: "" | boolean | `${ boolean }`): boolean => stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && false)(
-      this.stuckModel$(),
-    ),
+  public readonly stuckModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
+    (): boolean | undefined => ((stuck?: "" | boolean | `${ boolean }`): boolean | undefined => {
+      if (stuck === undefined)
+        return undefined;
+      else
+        return stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && false;
+    })(this.stuckModel$()),
   );
 
-  protected readonly unstickingTranslation$: Signal<number>                  = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<number, 0>(
-    toObservable<boolean>(
-      this.stuckModelWithTransform$,
-    ).pipe<true, number>(
-      filter<boolean, true>(
-        (stuck: boolean): stuck is true => stuck,
+  protected readonly unstickingTranslation$: Signal<number | undefined>                  = isPlatformBrowser(this.platformId) ? toSignal<number>(
+    toObservable<boolean | undefined>(this.stuckModelWithTransform$).pipe<true, number>(
+      filter<boolean | undefined, true>(
+        (stuck?: boolean): stuck is true => !!stuck,
       ),
       switchMap<true, Observable<number>>(
         (): Observable<number> => runInInjectionContext<Observable<number>>(
           this.injector,
-          (): Observable<number> => toObservable<ElementRef<HTMLDivElement>>(
-            this.backdropHtmlDivElementRef$,
-          ).pipe<[ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number, number ], number>(
-            combineLatestWith<ElementRef<HTMLDivElement>, [ number | undefined, number | undefined, number, number ]>(
-              toObservable<number | undefined>(
-                this.viewportService.height$,
-              ),
-              toObservable<number | undefined>(
-                this.viewportService.scrollTop$,
-              ),
-              toObservable<number>(
-                this.bodyHeight$,
-              ),
-              toObservable<number>(
-                this.height$,
-              ),
+          (): Observable<number> => toObservable<ElementRef<HTMLDivElement>>(this.backdropHtmlDivElementRef$).pipe<[ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number | undefined, number | undefined ], number>(
+            combineLatestWith<ElementRef<HTMLDivElement>, [ number | undefined, number | undefined, number | undefined, number | undefined ]>(
+              toObservable<number | undefined>(this.viewportService.height$),
+              toObservable<number | undefined>(this.viewportService.scrollTop$),
+              toObservable<number | undefined>(this.bodyHeight$),
+              toObservable<number | undefined>(this.height$),
             ),
-            map<[ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number, number ], number>(
-              ([ backdropHtmlDivElementRef, viewportHeight ]: [ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number, number ]): number => Math.round(
+            map<[ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number | undefined, number | undefined ], number>(
+              ([ backdropHtmlDivElementRef, viewportHeight ]: [ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number | undefined, number | undefined ]): number => Math.round(
                 Math.max(
                   backdropHtmlDivElementRef.nativeElement.getBoundingClientRect().bottom - (viewportHeight || 0) + Math.max(
                     0,
-                    parseInt(
-                      backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("margin-bottom")?.toString() || "0",
-                    ) + parseInt(
-                        backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("--safe-area-inset-bottom")?.toString() || "0",
-                      ),
+                    parseInt(backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("margin-bottom")?.toString() || "0") + parseInt(backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("--standard--root--safe-area-inset-bottom")?.toString() || "0"),
                   ),
                   0,
                 ),
@@ -205,71 +162,44 @@ export class FooterComponent {
         ),
       ),
     ),
-    {
-      initialValue: 0,
-    },
-  ) : signal<0>(0);
-  protected readonly raisedWhenStuckOrUnsticking$: Signal<boolean>           = toSignal<boolean, false>(
-    toObservable<number>(
-      this.unstickingTranslation$,
-    ).pipe<boolean>(
-      map<number, boolean>(
-        (unstickingTranslation: number): boolean => unstickingTranslation !== 0,
+  ) : signal<undefined>(undefined);
+  protected readonly raisedWhenStuckOrUnsticking$: Signal<boolean | undefined>           = toSignal<boolean | undefined>(
+    toObservable<number | undefined>(this.unstickingTranslation$).pipe<boolean | undefined>(
+      map<number | undefined, boolean | undefined>(
+        (unstickingTranslation?: number): boolean | undefined => unstickingTranslation === undefined ? unstickingTranslation : unstickingTranslation !== 0,
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
-  protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean> = toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.raisedWhenStuckOrUnsticking$,
-    ).pipe<boolean, boolean>(
-      delayWhen<boolean>(
-        (raisedWhenStuckOrUnsticking: boolean): Observable<number> => raisedWhenStuckOrUnsticking ? timer(0) : timer(360),
+  protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean | undefined> = toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.raisedWhenStuckOrUnsticking$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (raisedWhenStuckOrUnsticking?: boolean): Observable<number> => raisedWhenStuckOrUnsticking ? timer(0) : timer(360),
       ),
-      map<boolean, boolean>(
-        (): boolean => this.raisedWhenStuckOrUnsticking$(),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.raisedWhenStuckOrUnsticking$(),
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
-  protected readonly raisingScale$: Signal<number>                           = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<number, 0>(
-    toObservable<number>(
-      this.width$,
-    ).pipe<[ number, number | undefined ], number>(
-      combineLatestWith<number, [ number | undefined ]>(
-        toObservable<number | undefined>(
-          this.viewportService.width$,
-        ),
+  protected readonly raisingScale$: Signal<number | undefined>                           = isPlatformBrowser(this.platformId) ? toSignal<number>(
+    toObservable<number | undefined>(this.width$).pipe<[ number | undefined, number | undefined ], number>(
+      combineLatestWith<number | undefined, [ number | undefined ]>(
+        toObservable<number | undefined>(this.viewportService.width$),
       ),
-      map<[ number, number | undefined ], number>(
-        ([ footerWidth, viewportWidth ]: [ number, number | undefined ]): number => ((viewportWidth || footerWidth) - footerWidth) / (viewportWidth || footerWidth) / 2.6180339887,
+      map<[ number | undefined, number | undefined ], number>(
+        ([ footerWidth, viewportWidth ]: [ number | undefined, number | undefined ]): number => ((viewportWidth || footerWidth || 0) - (footerWidth || 0)) / (viewportWidth || footerWidth || 1) / 2.6180339887,
       ),
     ),
-    {
-      initialValue: 0,
-    },
-  ) : signal<0>(0);
-  protected readonly roundedContainerDirective: RoundedDirective             = inject<RoundedDirective>(RoundedDirective);
-  protected readonly stuckOrUnsticking$: Signal<boolean>                     = toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.stuckModelWithTransform$,
-    ).pipe<boolean, boolean>(
-      delayWhen<boolean>(
-        (stuck: boolean): Observable<number> => stuck ? timer(0) : timer(360),
+  ) : signal<undefined>(undefined);
+  protected readonly roundedContainerDirective: RoundedDirective                         = inject<RoundedDirective>(RoundedDirective);
+  protected readonly stuckOrUnsticking$: Signal<boolean | undefined>                     = toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.stuckModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (stuck?: boolean): Observable<number> => stuck ? timer(0) : timer(360),
       ),
-      map<boolean, boolean>(
-        (): boolean => this.stuckModelWithTransform$(),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.stuckModelWithTransform$(),
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
 
   public readonly disclosureControlTemplateRef$: Signal<TemplateRef<never>>           = viewChild.required<TemplateRef<never>>("disclosureControlTemplate");

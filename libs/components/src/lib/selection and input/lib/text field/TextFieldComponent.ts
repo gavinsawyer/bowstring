@@ -75,12 +75,8 @@ export class TextFieldComponent
   constructor() {
     afterRender(
       (): void => {
-        this.hoverTranslatingDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
+        this.hoverTranslatingDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+        this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$());
       },
     );
   }
@@ -99,38 +95,38 @@ export class TextFieldComponent
     ),
   );
 
-  public readonly autocompleteInput$: InputSignal<string | undefined>                                          = input<string | undefined>(
+  public readonly autocompleteInput$: InputSignal<string | undefined>                                                      = input<string | undefined>(
     undefined,
     {
       alias: "autocomplete",
     },
   );
-  public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`> = input<boolean | undefined, "" | boolean | `${ boolean }`>(
+  public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }` | undefined> = input<boolean | undefined, "" | boolean | `${ boolean }` | undefined>(
     undefined,
     {
       alias:     "disabled",
       transform: booleanAttribute,
     },
   );
-  public readonly formControlInput$: InputSignal<FormControl<string>>                                          = input.required<FormControl<string>>(
+  public readonly formControlInput$: InputSignal<FormControl<string>>                                                      = input.required<FormControl<string>>(
     {
       alias: "formControl",
     },
   );
-  public readonly placeholderInput$: InputSignal<string | undefined>                                           = input<string | undefined>(
+  public readonly placeholderInput$: InputSignal<string | undefined>                                                       = input<string | undefined>(
     undefined,
     {
       alias: "placeholder",
     },
   );
-  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`> = input<number | undefined, number | `${ number }`>(
+  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`>             = input<number | undefined, number | `${ number }`>(
     undefined,
     {
       alias:     "tabIndexOverride",
       transform: numberAttribute,
     },
   );
-  public readonly typeInput$: InputSignal<"email" | "password" | undefined>                                    = input<"email" | "password" | undefined>(
+  public readonly typeInput$: InputSignal<"email" | "password" | undefined>                                                = input<"email" | "password" | undefined>(
     undefined,
     {
       alias: "type",
@@ -141,9 +137,7 @@ export class TextFieldComponent
     this.abortController.abort();
   }
   public registerOnChange(handler: (value: string) => void): void {
-    if (isPlatformBrowser(
-      this.platformId,
-    ))
+    if (isPlatformBrowser(this.platformId))
       firstValueFrom<ElementRef<HTMLInputElement>>(
         toObservable<ElementRef<HTMLInputElement>>(
           this.htmlInputElementRef$,
@@ -164,9 +158,7 @@ export class TextFieldComponent
       );
   }
   public registerOnTouched(handler: () => void): void {
-    if (isPlatformBrowser(
-      this.platformId,
-    ))
+    if (isPlatformBrowser(this.platformId))
       firstValueFrom<ElementRef<HTMLInputElement>>(
         toObservable<ElementRef<HTMLInputElement>>(
           this.htmlInputElementRef$,
@@ -185,9 +177,7 @@ export class TextFieldComponent
       );
   }
   public setDisabledState?(isDisabled: boolean): void {
-    if (isPlatformBrowser(
-      this.platformId,
-    ))
+    if (isPlatformBrowser(this.platformId))
       firstValueFrom<ElementRef<HTMLInputElement>>(
         toObservable<ElementRef<HTMLInputElement>>(
           this.htmlInputElementRef$,
@@ -202,9 +192,7 @@ export class TextFieldComponent
       );
   }
   public writeValue(value: string): void {
-    if (isPlatformBrowser(
-      this.platformId,
-    ))
+    if (isPlatformBrowser(this.platformId))
       firstValueFrom<ElementRef<HTMLInputElement>>(
         toObservable<ElementRef<HTMLInputElement>>(
           this.htmlInputElementRef$,

@@ -6,13 +6,13 @@
       <h2 i18n="@@libs--Components--Routes--Privacy--Article--HeadingGroup--Header">Privacy Policy</h2>
       <h3>
         <standard--flexbox-container
-          alignItems="baseline"
+          alignItems="first baseline"
           flexDirection="row"
           flexWrap="wrap">
           <standard--capsule
             i18n
             level="2">legal</standard--capsule>
-          {{ now | date:"longDate" }}
+          <standard--label [input]="(now | date:'longDate') || ''" />
         </standard--flexbox-container>
       </h3>
     </standard--header>

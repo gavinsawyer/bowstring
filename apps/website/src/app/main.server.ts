@@ -39,7 +39,9 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
       url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
     },
   ).then<void>(
-    (html: string): void => response.send(html) && void (0),
+    (html: string): void => {
+      response.send(html);
+    },
   ).catch<void>(
     (err): void => nextFunction(err),
   );
@@ -54,11 +56,7 @@ export {
 
 declare const __non_webpack_require__: NodeRequire;
 
-if (((moduleFilename: string): boolean => moduleFilename === __filename || moduleFilename.includes("iisnode"))(
-  ((mainModule?: NodeJS.Module): string => mainModule?.filename || "")(
-    __non_webpack_require__.main,
-  ),
-))
+if (((moduleFilename: string): boolean => moduleFilename === __filename || moduleFilename.includes("iisnode"))(((mainModule?: NodeJS.Module): string => mainModule?.filename || "")(__non_webpack_require__.main)))
   express().use(
     compression(),
   ).set(

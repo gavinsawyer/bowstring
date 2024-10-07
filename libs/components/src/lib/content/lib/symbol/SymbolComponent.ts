@@ -55,18 +55,11 @@ export class SymbolComponent {
     },
   );
   public readonly symbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
-    toObservable<SymbolName>(
-      this.input$,
-    ).pipe<SymbolPaths>(
+    toObservable<SymbolName>(this.input$).pipe<SymbolPaths>(
       switchMap<SymbolName, Observable<SymbolPaths>>(
-        (symbolName: SymbolName): Observable<SymbolPaths> => fromPromise<SymbolPaths>(
-          loadSymbolPaths(symbolName),
-        ),
+        (symbolName: SymbolName): Observable<SymbolPaths> => fromPromise<SymbolPaths>(loadSymbolPaths(symbolName)),
       ),
     ),
-    {
-      initialValue: undefined,
-    },
   );
 
 }

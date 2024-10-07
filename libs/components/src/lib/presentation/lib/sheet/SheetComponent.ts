@@ -60,23 +60,15 @@ export class SheetComponent {
 
   constructor() {
     afterRender(
-      (): void => {
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
 
-    if (isPlatformBrowser(
-      this.platformId,
-    ))
+    if (isPlatformBrowser(this.platformId))
       effect(
         (effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
           if (this.openOrClosing$())
             ((): void => {
-              disableBodyScroll(
-                this.htmlDialogElementRef$().nativeElement,
-              );
+              disableBodyScroll(this.htmlDialogElementRef$().nativeElement);
 
               this.htmlDialogElementRef$().nativeElement.showModal();
 
@@ -87,9 +79,7 @@ export class SheetComponent {
             })();
           else
             ((): void => {
-              enableBodyScroll(
-                this.htmlDialogElementRef$().nativeElement,
-              );
+              enableBodyScroll(this.htmlDialogElementRef$().nativeElement);
 
               this.htmlDialogElementRef$().nativeElement.close();
             })();
@@ -99,13 +89,16 @@ export class SheetComponent {
           );
         },
       );
+
     fromEvent<KeyboardEvent>(
       this.document,
       "keydown",
     ).pipe<KeyboardEvent>(
       takeUntilDestroyed<KeyboardEvent>(),
     ).subscribe(
-      (keyboardEvent: KeyboardEvent): void => this.containerKeydown(keyboardEvent) && void (0),
+      (keyboardEvent: KeyboardEvent): void => {
+        this.containerKeydown(keyboardEvent);
+      },
     );
   }
 
@@ -114,26 +107,24 @@ export class SheetComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  public readonly openModelWithTransform$: Signal<boolean> = computed<boolean>(
-    (): boolean => ((open?: "" | boolean | `${ boolean }`): boolean => open === "" || open === true || open === "true" || open !== "false" && false)(
-      this.openModel$(),
-    ),
+  public readonly openModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
+    (): boolean | undefined => ((open?: "" | boolean | `${ boolean }`): boolean | undefined => {
+      if (open === undefined)
+        return undefined;
+      else
+        return open === "" || open === true || open === "true" || open !== "false" && false;
+    })(this.openModel$()),
   );
 
-  protected readonly openOrClosing$: Signal<boolean>             = toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.openModelWithTransform$,
-    ).pipe<boolean, boolean>(
-      delayWhen<boolean>(
-        (open: boolean): Observable<number> => open ? timer(0) : timer(180),
+  protected readonly openOrClosing$: Signal<boolean | undefined> = toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.openModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (open?: boolean): Observable<number> => open ? timer(0) : timer(180),
       ),
-      map<boolean, boolean>(
-        (): boolean => this.openModelWithTransform$(),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.openModelWithTransform$(),
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 

@@ -8,25 +8,36 @@ import { title }                          from "@standard/brand";
 const routes: Route[] = [
   {
     data:          {
+      description: $localize`:@@libs--Components--Routes--Account--MetaDescription:...`,
+    },
+    loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./account/AccountRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
+      ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => AccountRouteComponent,
+    ),
+    path:          "account",
+    pathMatch:     "full",
+    title:         `${ $localize`:@@libs--Components--Routes--Account--MetaTitle:Account` } - ${ title }`,
+  },
+  {
+    data:          {
       description: $localize`:@@libs--Components--Routes--Privacy--MetaDescription:...`,
     },
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      (module: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.PrivacyRouteComponent,
+      ({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => PrivacyRouteComponent,
     ),
     path:          "privacy",
     pathMatch:     "full",
-    title:         $localize`:@@libs--Components--Routes--Privacy--MetaTitle:Privacy` + ` - ${ title }`,
+    title:         `${ $localize`:@@libs--Components--Routes--Privacy--MetaTitle:Privacy` } - ${ title }`,
   },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Terms--MetaDescription:...`,
     },
     loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./terms/TermsRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      (module: typeof import("./terms/TermsRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.TermsRouteComponent,
+      ({ TermsRouteComponent }: typeof import("./terms/TermsRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => TermsRouteComponent,
     ),
     path:          "terms",
     pathMatch:     "full",
-    title:         $localize`:@@libs--Components--Routes--Terms--MetaTitle:Terms` + ` - ${ title }`,
+    title:         `${ $localize`:@@libs--Components--Routes--Terms--MetaTitle:Terms` } - ${ title }`,
   },
   {
     data:          {
@@ -36,7 +47,7 @@ const routes: Route[] = [
       (module: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.OtherwiseRouteComponent,
     ),
     path:          "**",
-    title:         $localize`:@@libs--Components--Routes--Otherwise--MetaTitle:Page not found` + ` - ${ title }`,
+    title:         `${ $localize`:@@libs--Components--Routes--Otherwise--MetaTitle:Page not found` } - ${ title }`,
   },
 ];
 

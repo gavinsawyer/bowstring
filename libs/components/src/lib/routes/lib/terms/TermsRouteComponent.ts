@@ -1,7 +1,7 @@
 import { DatePipe }                                                                   from "@angular/common";
 import { Component }                                                                  from "@angular/core";
 import { ArticleComponent, CapsuleComponent, HeaderComponent, HeadingGroupComponent } from "../../../content";
-import { FlexboxContainerComponent, SectionComponent }                                from "../../../layout and organization";
+import { FlexboxContainerComponent, LabelComponent, SectionComponent }                from "../../../layout and organization";
 import { RouteComponent }                                                             from "../../../navigation and search";
 
 
@@ -14,6 +14,7 @@ import { RouteComponent }                                                       
       FlexboxContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,
+      LabelComponent,
       SectionComponent,
     ],
     standalone:  true,

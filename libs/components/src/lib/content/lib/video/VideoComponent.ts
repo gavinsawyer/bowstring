@@ -69,9 +69,7 @@ export class VideoComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedContainerDirective.htmlElementRef$.set(
-        this.htmlDivElementRef$(),
-      ),
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
@@ -154,11 +152,11 @@ export class VideoComponent {
     },
   );
 
-  public async pause(): Promise<void> {
-    return this.htmlVideoElementRef$()?.nativeElement.pause();
+  public pause(): void {
+    this.htmlVideoElementRef$().nativeElement.pause();
   }
   public async play(): Promise<void> {
-    return this.htmlVideoElementRef$()?.nativeElement.play();
+    return this.htmlVideoElementRef$().nativeElement.play();
   }
 
 }

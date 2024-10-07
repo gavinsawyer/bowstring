@@ -5,23 +5,25 @@ import { type LocaleId } from "../../types";
 
 
 function getI18nRequestHandler(getRequestHandler: (i18nRequestHandlerResponse: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler): express.RequestHandler {
-  return async (
+  return (
     request: express.Request,
     response: express.Response,
     nextFunction: express.NextFunction,
-  ): Promise<void> => await (async (localeId: LocaleId): Promise<void> => await getRequestHandler(
-    {
-      localeId:   localeId,
-      staticRoot: join(
-        `${ process.cwd() }/dist/apps/website/browser`,
-        request.path.split("/")[1] !== localeId ? localeId : "",
-      ),
-    },
-  )(
-    request,
-    response,
-    nextFunction,
-  ))(
+  ): void => ((localeId: LocaleId): void => {
+    getRequestHandler(
+      {
+        localeId:   localeId,
+        staticRoot: join(
+          `${ process.cwd() }/dist/apps/website/browser`,
+          request.path.split("/")[1] !== localeId ? localeId : "",
+        ),
+      },
+    )(
+      request,
+      response,
+      nextFunction,
+    );
+  })(
     ((localeIds: LocaleId[]): LocaleId => localeIds.filter(
       (localeId: LocaleId): boolean => localeId === request.path.split("/")[1] || localeId === request.headers.referer?.split("://")[1]?.split("/")[1],
     )[0] || request.acceptsLanguages(

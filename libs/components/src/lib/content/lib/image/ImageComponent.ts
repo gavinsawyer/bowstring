@@ -73,9 +73,7 @@ export class ImageComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedContainerDirective.htmlElementRef$.set(
-        this.htmlDivElementRef$(),
-      ),
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 

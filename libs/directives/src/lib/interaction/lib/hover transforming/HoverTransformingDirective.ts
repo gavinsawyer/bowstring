@@ -22,35 +22,33 @@ import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Obser
 )
 export class HoverTransformingDirective {
 
-  private readonly platformId: NonNullable<unknown>                   = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly pointerService: PointerService                     = inject<PointerService>(PointerService);
-  private readonly translation$: Signal<{ "x": number, "y": number }> = isPlatformBrowser(
-    this.platformId,
-  ) ? computed<{ "x": number, "y": number }>(
-    (): { "x": number, "y": number } => ((domRect?: DOMRect): { "x": number, "y": number } => domRect && this.pointerService.position$().x >= domRect.left && this.pointerService.position$().x <= domRect.right && this.pointerService.position$().y >= domRect.top && this.pointerService.position$().y <= domRect.bottom ? {
-      x: domRect ? ((2 * ((this.pointerService.position$().x - domRect.left) / domRect.width)) - 1) / 8 : 0,
-      y: domRect ? ((2 * ((this.pointerService.position$().y - domRect.top) / domRect.height)) - 1) / 8 : 0,
-    } : {
-      x: 0,
-      y: 0,
+  private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly pointerService: PointerService                                 = inject<PointerService>(PointerService);
+  private readonly translation$: Signal<{ "x": number, "y": number } | undefined> = isPlatformBrowser(this.platformId) ? computed<{ "x": number, "y": number }>(
+    (): { "x": number, "y": number } => ((
+      domRect?: DOMRect,
+      pointerPosition?: { "x": number, "y": number },
+    ): { "x": number, "y": number } => {
+      if (domRect && pointerPosition && pointerPosition.x >= domRect.left && pointerPosition.x <= domRect.right && pointerPosition.y >= domRect.top && pointerPosition.y <= domRect.bottom)
+        return {
+          x: domRect ? ((2 * ((pointerPosition.x - domRect.left) / domRect.width)) - 1) / 8 : 0,
+          y: domRect ? ((2 * ((pointerPosition.y - domRect.top) / domRect.height)) - 1) / 8 : 0,
+        };
+      else
+        return {
+          x: 0,
+          y: 0,
+        };
     })(
       this.htmlElementRef$()?.nativeElement.getBoundingClientRect(),
+      this.pointerService.position$(),
     ),
-  ) : signal<{ "x": 0, "y": 0 }>(
-    {
-      x: 0,
-      y: 0,
-    },
-  );
+  ) : signal<undefined>(undefined);
 
   public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined> = signal<undefined>(undefined);
 
-  protected readonly focused$: Signal<boolean>                              = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<boolean, false>(
-    toObservable<ElementRef<HTMLElement> | undefined>(
-      this.htmlElementRef$,
-    ).pipe<ElementRef<HTMLElement>, boolean>(
+  protected readonly focused$: Signal<boolean | undefined>                              = isPlatformBrowser(this.platformId) ? toSignal<boolean>(
+    toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, boolean>(
       filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
       ),
@@ -75,90 +73,57 @@ export class HoverTransformingDirective {
         ),
       ),
     ),
-    {
-      initialValue: false,
-    },
   ) : signal<false>(false);
-  protected readonly focusedOrUnfocusing$: Signal<boolean>                  = toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.focused$,
-    ).pipe<boolean, boolean>(
-      delayWhen<boolean>(
-        (focused: boolean): Observable<number> => focused ? timer(0) : timer(200),
+  protected readonly focusedOrUnfocusing$: Signal<boolean | undefined>                  = toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.focused$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (focused?: boolean): Observable<number> => focused ? timer(0) : timer(200),
       ),
-      map<boolean, boolean>(
-        (): boolean => this.focused$(),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.focused$(),
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
-  protected readonly lastTranslation$: Signal<{ "x": number, "y": number }> = isPlatformBrowser(
-    this.platformId,
-  ) ? toSignal<{ "x": number, "y": number }, { "x": 0, "y": 0 }>(
-    toObservable<{ "x": number, "y": number }>(
+  protected readonly lastTranslation$: Signal<{ "x": number, "y": number } | undefined> = isPlatformBrowser(this.platformId) ? toSignal<{ "x": number, "y": number }>(
+    toObservable<{ "x": number, "y": number } | undefined>(
       this.translation$,
     ).pipe<{ "x": number, "y": number }>(
-      filter<{ "x": number, "y": number }>(
-        (translation: { "x": number, "y": number }): boolean => !(translation.x === 0 && translation.y === 0),
+      filter<{ "x": number, "y": number } | undefined, { "x": number, "y": number }>(
+        (translation?: { "x": number, "y": number }): translation is { "x": number, "y": number } => !!translation && !(translation.x === 0 && translation.y === 0),
       ),
     ),
-    {
-      initialValue: {
-        x: 0,
-        y: 0,
-      },
-    },
-  ) : signal<{ "x": 0, "y": 0 }>(
-    {
-      x: 0,
-      y: 0,
-    },
+  ) : signal<undefined>(undefined);
+  protected readonly lastTranslationX$: Signal<number | undefined>                      = computed<number | undefined>(
+    (): number | undefined => this.lastTranslation$()?.x,
   );
-  protected readonly lastTranslationX$: Signal<number>                      = computed<number>(
-    (): number => this.lastTranslation$().x,
+  protected readonly lastTranslationY$: Signal<number | undefined>                      = computed<number | undefined>(
+    (): number | undefined => this.lastTranslation$()?.y,
   );
-  protected readonly lastTranslationY$: Signal<number>                      = computed<number>(
-    (): number => this.lastTranslation$().y,
+  protected readonly translationX$: Signal<number | undefined>                          = computed<number | undefined>(
+    (): number | undefined => this.translation$()?.x,
   );
-  protected readonly translationX$: Signal<number>                          = computed<number>(
-    (): number => this.translation$().x,
+  protected readonly translationY$: Signal<number | undefined>                          = computed<number | undefined>(
+    (): number | undefined => this.translation$()?.y,
   );
-  protected readonly translationY$: Signal<number>                          = computed<number>(
-    (): number => this.translation$().y,
-  );
-  protected readonly transformed$: Signal<boolean>                          = toSignal<boolean, false>(
-    toObservable<number>(
-      this.translationX$,
-    ).pipe<[ number, number ], boolean>(
-      combineLatestWith<number, [ number ]>(
-        toObservable<number>(
-          this.translationY$,
-        ),
+  protected readonly transformed$: Signal<boolean | undefined>                          = toSignal<boolean>(
+    toObservable<number | undefined>(this.translationX$).pipe<[ number | undefined, number | undefined ], boolean>(
+      combineLatestWith<number | undefined, [ number | undefined ]>(
+        toObservable<number | undefined>(this.translationY$),
       ),
-      map<[ number, number ], boolean>(
-        ([ translationX, translationY ]: [ number, number ]): boolean => translationX !== 0 || translationY !== 0,
+      map<[ number | undefined, number | undefined ], boolean>(
+        ([ translationX, translationY ]: [ number | undefined, number | undefined ]): boolean => (translationX ? translationX !== 0 : false) || (translationY ? translationY !== 0 : false),
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
-  protected readonly transformedOrUntransforming$: Signal<boolean>          = toSignal<boolean, false>(
-    toObservable<boolean>(
-      this.transformed$,
-    ).pipe<boolean, boolean>(
-      delayWhen<boolean>(
-        (transformed: boolean): Observable<number> => transformed ? timer(0) : timer(200),
+  protected readonly transformedOrUntransforming$: Signal<boolean | undefined>          = toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.transformed$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (transformed?: boolean): Observable<number> => transformed ? timer(0) : timer(200),
       ),
-      map<boolean, boolean>(
-        (): boolean => this.transformed$(),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.transformed$(),
       ),
     ),
-    {
-      initialValue: false,
-    },
   );
 
 }

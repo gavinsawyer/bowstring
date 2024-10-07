@@ -118,13 +118,18 @@ export class RootComponent {
     },
     {
       validators: [
-        ({ value }: AbstractControl): ValidationErrors | null => value.password !== value.passwordConfirmation ? {
-          "passwordConfirmationMatches": true,
-        } : null,
+        ({ value }: AbstractControl): ValidationErrors => {
+          if (value.password !== value.passwordConfirmation)
+            return {
+              "passwordConfirmationMatches": true,
+            };
+          else
+            return {};
+        },
       ],
     },
   );
-  protected readonly signupWithWebAuthnFormGroup: FormGroup<{ "email": FormControl<string> }>                                                                   = new FormGroup<{ "email": FormControl<string> }>(
+  protected readonly signupWithPasskeyFormGroup: FormGroup<{ "email": FormControl<string> }>                                                                    = new FormGroup<{ "email": FormControl<string> }>(
     {
       email: new FormControl<string>(
         "",
@@ -140,11 +145,8 @@ export class RootComponent {
   );
 
   protected changeLocale(localeId: LocaleId): void {
-    return isPlatformBrowser(
-      this.platformId,
-    ) ? ((): void => {
-      this.document.location.href = `/${ localeId + this.location.path() }`;
-    })() : void (0);
+    if (isPlatformBrowser(this.platformId))
+      this.document.location.href = `/${ localeId }${ this.location.path() }`;
   }
   protected signinFormSubmit(sheetComponent: SheetComponent): void {
     if (this.signinFormGroup.value.email && this.signinFormGroup.value.password)
@@ -162,13 +164,13 @@ export class RootComponent {
         },
       );
   }
-  protected signinWithWebAuthnFormSubmit(sheetComponent: SheetComponent): void {
+  protected signinWithPasskeyFormSubmit(sheetComponent: SheetComponent): void {
     this.authenticationService.signInWithPasskey().then<void>(
       (): void => sheetComponent.openModel$.set(false),
     );
   }
   protected signupFormSubmit(sheetComponent: SheetComponent): void {
-    ((user: User | null): void => {
+    ((user?: User): void => {
       if (user)
         ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
           setDoc(
@@ -179,7 +181,7 @@ export class RootComponent {
           ).then<void, void>(
             (): void => {
               if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
-                this.authenticationService.createUserWithEmailAndPassword(
+                this.authenticationService.linkWithEmailAndPasswordCredential(
                   this.signupFormGroup.value.email,
                   this.signupFormGroup.value.password,
                 ).then<void, never>(
@@ -207,24 +209,24 @@ export class RootComponent {
         );
     })(this.authenticationService.user$());
   }
-  protected async signupWithWebAuthnFormSubmit(sheetComponent: SheetComponent): Promise<void> {
-    ((user: User | null): void => {
+  protected signupWithPasskeyFormSubmit(sheetComponent: SheetComponent): void {
+    ((user?: User): void => {
       if (user)
         ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
           setDoc(
             profileDocumentReference,
             {
-              email: this.signupWithWebAuthnFormGroup.value.email,
+              email: this.signupWithPasskeyFormGroup.value.email,
             },
           ).then<void, void>(
             (): void => {
-              if (this.signupWithWebAuthnFormGroup.value.email)
-                this.authenticationService.createUserWithPasskey(this.signupWithWebAuthnFormGroup.value.email).then<void, never>(
+              if (this.signupWithPasskeyFormGroup.value.email)
+                this.authenticationService.linkWithPasskey().then<void, never>(
                   (): void => {
                     sheetComponent.openModel$.set(false);
 
                     setTimeout(
-                      (): void => this.signupWithWebAuthnFormGroup.reset(),
+                      (): void => this.signupWithPasskeyFormGroup.reset(),
                       180,
                     );
                   },

@@ -53,11 +53,7 @@ export class BoxComponent {
 
   constructor() {
     afterRender(
-      (): void => {
-        this.roundedContainerDirective.htmlElementRef$.set(
-          this.htmlDivElementRef$(),
-        );
-      },
+      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
