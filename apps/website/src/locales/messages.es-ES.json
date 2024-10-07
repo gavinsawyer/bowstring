@@ -41,8 +41,8 @@
     "libs--Components--Routes--Terms--Article--HeadingGroup--Header":                  "Términos del servicio",
     "libs--Components--Routes--Terms--MetaDescription":                                "...",
     "libs--Components--Routes--Terms--MetaTitle":                                      "Términos",
-    "libs--Components--SheetContents--Signin":                                         "Acceder",
-    "libs--Components--SheetContents--Signin--Header":                                 "Acceda",
+    "libs--Components--SheetContents--Signin":                                         "Iniciar sesión",
+    "libs--Components--SheetContents--Signin--Header":                                 "Inicia sesión",
     "libs--Components--SheetContents--Signup":                                         "Crear una cuenta",
     "libs--Components--SheetContents--Signup--Header":                                 "Cree una cuenta"
   }

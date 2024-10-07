@@ -26,7 +26,7 @@
   --standard--flexbox-container-directive--gap-row: var(--standard--text-field--gap-row) !important
 
   > .harness > .element
-    width: 12rem
+    min-width: calc(1rem * pow(var(--phi), 5))
 
     > div
       display: contents
@@ -76,13 +76,13 @@
       border: 0
       caret-color: currentColor
       color: black
-      flex: 1 1 100%
+      flex: 1 1 0
       font: inherit
       letter-spacing: inherit
       line-height: inherit
       outline: 0
-      min-width: 0
       padding: 0
+      width: 0
       -webkit-tap-highlight-color: transparent
 
       @media (prefers-color-scheme: dark)
