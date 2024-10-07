@@ -50,7 +50,7 @@
       "cache":  true,
       "inputs": [
         "default",
-        "{workspaceRoot}/eslint.config.cjs"
+        "{workspaceRoot}/eslint.config.js"
       ]
     },
     "tsc":                 {

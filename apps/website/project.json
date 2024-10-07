@@ -226,7 +226,6 @@
       ],
       "executor":  "@nx/eslint:lint",
       "options":   {
-        "eslintConfig":     "eslint.config.cjs",
         "lintFilePatterns": [
           "apps/website/src/**/*.ts",
           "apps/website/src/**/*.html"

@@ -1,4 +1,4 @@
-import { isPlatformBrowser }                           from "@angular/common";
+import { isPlatformServer }                            from "@angular/common";
 import { Component, inject, type OnInit, PLATFORM_ID } from "@angular/core";
 import { RESPONSE }                                    from "@standard/injection-tokens";
 import { PathService }                                 from "@standard/services";
@@ -40,7 +40,8 @@ export class OtherwiseRouteComponent
   public override ngOnInit(): void {
     super.ngOnInit();
 
-    isPlatformBrowser(this.platformId) || this.response?.status(404);
+    if (isPlatformServer(this.platformId))
+      this.response?.status(404);
   }
 
 }

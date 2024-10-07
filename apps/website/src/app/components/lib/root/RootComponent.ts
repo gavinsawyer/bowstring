@@ -1,9 +1,12 @@
 import { DOCUMENT, isPlatformBrowser, Location }                                           from "@angular/common";
 import { Component, inject, LOCALE_ID, PLATFORM_ID }                                       from "@angular/core";
+import { type User }                                                                       from "@angular/fire/auth";
+import { deleteDoc, doc, type DocumentReference, Firestore, setDoc }                       from "@angular/fire/firestore";
 import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators } from "@angular/forms";
 import { type SheetComponent }                                                             from "@standard/components";
 import { CanvasDirective, FlexboxContainerDirective }                                      from "@standard/directives";
 import { BRAND, GIT_INFO, PACKAGE_VERSION }                                                from "@standard/injection-tokens";
+import { type ProfileDocument }                                                            from "@standard/interfaces";
 import { AuthenticationService, ResponsivityService }                                      from "@standard/services";
 import { type Brand }                                                                      from "@standard/types";
 import { type GitInfo }                                                                    from "git-describe";
@@ -40,6 +43,7 @@ import { type LocaleId }                                                        
 export class RootComponent {
 
   private readonly document: Document               = inject<Document>(DOCUMENT);
+  private readonly firestore: Firestore             = inject<Firestore>(Firestore);
   private readonly location: Location               = inject<Location>(Location);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
@@ -158,39 +162,87 @@ export class RootComponent {
         },
       );
   }
-  protected async signinWithWebAuthnFormSubmit(sheetComponent: SheetComponent): Promise<void> {
+  protected signinWithWebAuthnFormSubmit(sheetComponent: SheetComponent): void {
     this.authenticationService.signInWithPasskey().then<void>(
       (): void => sheetComponent.openModel$.set(false),
     );
   }
-  protected async signupFormSubmit(sheetComponent: SheetComponent): Promise<void> {
-    if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
-      this.authenticationService.createUserWithEmailAndPassword(
-        this.signupFormGroup.value.email,
-        this.signupFormGroup.value.password,
-      ).then<void>(
-        (): void => {
-          sheetComponent.openModel$.set(false);
+  protected signupFormSubmit(sheetComponent: SheetComponent): void {
+    ((user: User | null): void => {
+      if (user)
+        ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
+          setDoc(
+            profileDocumentReference,
+            {
+              email: this.signupFormGroup.value.email,
+            },
+          ).then<void, void>(
+            (): void => {
+              if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
+                this.authenticationService.createUserWithEmailAndPassword(
+                  this.signupFormGroup.value.email,
+                  this.signupFormGroup.value.password,
+                ).then<void, never>(
+                  (): void => {
+                    sheetComponent.openModel$.set(false);
 
-          setTimeout(
-            (): void => this.signupFormGroup.reset(),
-            180,
+                    setTimeout(
+                      (): void => this.signupFormGroup.reset(),
+                      180,
+                    );
+                  },
+                  (error: unknown): never => {
+                    deleteDoc(profileDocumentReference).then();
+
+                    throw error;
+                  },
+                );
+            },
           );
-        },
-      );
+        })(
+          doc(
+            this.firestore,
+            `/profiles/${ user.uid }`,
+          ) as DocumentReference<ProfileDocument>,
+        );
+    })(this.authenticationService.user$());
   }
   protected async signupWithWebAuthnFormSubmit(sheetComponent: SheetComponent): Promise<void> {
-    if (this.signupWithWebAuthnFormGroup.value.email)
-      this.authenticationService.createUserWithPasskey(this.signupWithWebAuthnFormGroup.value.email).then<void>(
-        (): void => {
-          sheetComponent.openModel$.set(false);
+    ((user: User | null): void => {
+      if (user)
+        ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
+          setDoc(
+            profileDocumentReference,
+            {
+              email: this.signupWithWebAuthnFormGroup.value.email,
+            },
+          ).then<void, void>(
+            (): void => {
+              if (this.signupWithWebAuthnFormGroup.value.email)
+                this.authenticationService.createUserWithPasskey(this.signupWithWebAuthnFormGroup.value.email).then<void, never>(
+                  (): void => {
+                    sheetComponent.openModel$.set(false);
 
-          setTimeout(
-            (): void => this.signupWithWebAuthnFormGroup.reset(),
-            180,
+                    setTimeout(
+                      (): void => this.signupWithWebAuthnFormGroup.reset(),
+                      180,
+                    );
+                  },
+                  (error: unknown): never => {
+                    deleteDoc(profileDocumentReference).then();
+
+                    throw error;
+                  },
+                );
+            },
           );
-        },
-      );
+        })(
+          doc(
+            this.firestore,
+            `/profiles/${ user.uid }`,
+          ) as DocumentReference<ProfileDocument>,
+        );
+    })(this.authenticationService.user$());
   }
 
 }
