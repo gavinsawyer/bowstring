@@ -1,0 +1,17 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
+
+
+\:host
+  display: contents
+
+  @include ContainerDirective.host
+
+  > .harness > .element
+    display: flex
+
+    > svg
+      display: grid
+      height: 1em
+      max-width: 1em
+      overflow: visible
+      transform: translateZ(0)

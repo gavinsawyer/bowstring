@@ -1,0 +1,75 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
+
+
+\:host
+  display: contents
+
+  --standard--scroll-stack--current-image-index: calc(1 + var(--standard--scroll-stack--scroll-left, 0) / var(--standard--scroll-stack--width, 0))
+
+  @include ContainerDirective.host
+  @include FlexboxChildDirective.host
+
+  --standard--container-directive--overflow-x: scroll !important
+  --standard--container-directive--scroll-snap-type: x mandatory !important
+
+  > .harness
+    transform: translateZ(0)
+
+    > .element
+      display: flex
+      flex-direction: row
+
+      > div
+        --standard--scroll-stack--item--relative-transformation: var(--standard--scroll-stack--item--index) - var(--standard--scroll-stack--current-image-index)
+        --standard--scroll-stack--item--relative-transformation--absolute-value: pow(pow(var(--standard--scroll-stack--item--relative-transformation), 2), 0.5)
+        --standard--scroll-stack--item--transformation: log(var(--standard--scroll-stack--item--relative-transformation--absolute-value) + 1) * (var(--standard--scroll-stack--item--relative-transformation)) / pow(pow(var(--standard--scroll-stack--item--relative-transformation) + 1 / 65536, 2), 0.5)
+        --standard--scroll-stack--item--transformation--dulled-absolute-value: max(0, pow(pow(var(--standard--scroll-stack--item--transformation), 2), 0.5) - 0.015625)
+        --standard--scroll-stack--item--transformation--dulled: var(--standard--scroll-stack--item--transformation) / pow(pow(var(--standard--scroll-stack--item--transformation), 2), 0.5) * var(--standard--scroll-stack--item--transformation--dulled-absolute-value)
+
+        display: flex
+        flex: 0 0 100%
+        flex-direction: row
+        user-select: none
+
+        &:before
+          aspect-ratio: var(--standard--scroll-stack--minimum-aspect-ratio-input)
+          content: ""
+          flex: 0 0 100%
+          scroll-snap-align: start
+          z-index: calc(2 - round(1 * var(--standard--scroll-stack--item--relative-transformation--absolute-value), 1))
+
+        > div
+          display: flex
+          filter: blur(calc(0.125rem * var(--standard--scroll-stack--item--transformation--dulled-absolute-value)))
+          flex-direction: column
+          height: 100%
+          justify-content: flex-end
+          left: 0
+          position: fixed
+          // noinspection CssInvalidFunction
+          transform: rotate(calc(5.625deg * var(--standard--scroll-stack--item--transformation--dulled))) scale(calc(1 - 0.1875 * var(--standard--scroll-stack--item--transformation--dulled-absolute-value))) translate3d(calc(15.625% * var(--standard--scroll-stack--item--transformation--dulled)), calc(-12.5% * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) - 0.0625px * var(--standard--scroll-stack--item--transformation--dulled-absolute-value) * var(--standard--scroll-stack--viewport-vertical-offset, 0)), 0)
+          transform-origin: 50% 100% 0
+          width: 100%
+          z-index: calc(1 - round(1 * var(--standard--scroll-stack--item--relative-transformation--absolute-value), 1))
+
+          &::ng-deep > *
+            @include ContainerDirective.children
+            @include FlexboxChildDirective.children
+
+            --standard--scroll-stack--height: initial
+            --standard--scroll-stack--minimum-aspect-ratio-input: initial
+            --standard--scroll-stack--width: initial
+            --standard--scroll-stack--scroll-left: initial
+            --standard--scroll-stack--viewport-vertical-offset: initial
+            --standard--scroll-stack--viewport-width: initial
+
+            --standard--scroll-stack--current-image-index: initial
+            --standard--scroll-stack--item--relative-transformation: initial
+            --standard--scroll-stack--item--relative-transformation--absolute-value: initial
+            --standard--scroll-stack--item--transformation: initial
+            --standard--scroll-stack--item--transformation--dulled-absolute-value: initial
+            --standard--scroll-stack--item--transformation--dulled: initial
+
+      &::-webkit-scrollbar
+        display: none

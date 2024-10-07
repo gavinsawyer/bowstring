@@ -1,12 +1,10 @@
-import { isPlatformServer }                            from "@angular/common";
-import { Component, inject, type OnInit, PLATFORM_ID } from "@angular/core";
-import { RESPONSE }                                    from "@standard/injection-tokens";
-import { PathService }                                 from "@standard/services";
-import { type Response }                               from "express";
-import { ArticleComponent }                            from "../../../article/ArticleComponent";
-import { HeaderComponent }                             from "../../../header/HeaderComponent";
-import { HeadingGroupComponent }                       from "../../../heading group/HeadingGroupComponent";
-import { RouteComponent }                              from "../../../route/RouteComponent";
+import { isPlatformServer }                                         from "@angular/common";
+import { Component, inject, type OnInit, PLATFORM_ID }              from "@angular/core";
+import { RESPONSE }                                                 from "@standard/injection-tokens";
+import { PathService }                                              from "@standard/services";
+import { type Response }                                            from "express";
+import { ArticleComponent, HeaderComponent, HeadingGroupComponent } from "../../../content";
+import { RouteComponent }                                           from "../../../navigation and search";
 
 
 @Component(

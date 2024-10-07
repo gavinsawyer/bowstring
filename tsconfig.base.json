@@ -36,9 +36,6 @@
       "@standard/components":        [
         "libs/components/src/index.ts"
       ],
-      "@standard/components/routes": [
-        "libs/components/src/lib/routes/index.ts"
-      ],
       "@standard/directives":        [
         "libs/directives/src/index.ts"
       ],

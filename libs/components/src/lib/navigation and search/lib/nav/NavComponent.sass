@@ -1,0 +1,37 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--nav--font-size-exponent: -2
+  --standard--nav--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--nav--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--container-directive--margin-bottom: calc(-1 * var(--standard--root--gap-row)) !important
+  --standard--container-directive--margin-sides: calc(-1 * var(--standard--root--gap-column)) !important
+  --standard--container-directive--margin-top: calc(-1 * var(--standard--root--gap-row)) !important
+  --standard--container-directive--overflow-x: scroll !important
+  --standard--container-directive--padding-bottom: var(--standard--root--gap-row) !important
+  --standard--container-directive--padding-sides: var(--standard--root--gap-column) !important
+  --standard--container-directive--padding-top: var(--standard--root--gap-row) !important
+  --standard--flexbox-child-directive--flex-grow: 1 !important
+  --standard--flexbox-container-directive--flex-direction: row !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--nav--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--nav--gap-row) !important
+  --standard--flexbox-container-directive--justify-content: space-between !important
+
+  > .harness
+    margin: calc(min(-1 * var(--standard--root--safe-area-inset-top), var(--standard--container-directive--margin-top))) calc(min(-1 * var(--standard--root--safe-area-inset-right), var(--standard--container-directive--margin-sides))) calc(min(-1 * var(--standard--root--safe-area-inset-bottom), var(--standard--container-directive--margin-bottom))) calc(min(-1 * var(--standard--root--safe-area-inset-left), var(--standard--container-directive--margin-sides))) !important
+    max-width: 100vw
+
+    > .element
+      padding: calc(max(var(--standard--root--safe-area-inset-top), var(--standard--container-directive--padding-top))) calc(max(var(--standard--root--safe-area-inset-right), var(--standard--container-directive--padding-sides))) calc(max(var(--standard--root--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom))) calc(max(var(--standard--root--safe-area-inset-left), var(--standard--container-directive--padding-sides))) !important
+
+      &::ng-deep > *
+        @include FlexboxContainerDirective.children
+
+    &::-webkit-scrollbar
+      display: none

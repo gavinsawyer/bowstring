@@ -1,0 +1,147 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/materials/lib/glass/GlassDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+
+
+\:host
+  display: contents
+
+  --standard--sheet--font-size-exponent: 0
+  --standard--sheet--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), 1))
+  --standard--sheet--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), 1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--container-directive--padding-bottom: calc(var(--standard--root--gap-row) * pow(var(--phi), 1)) !important
+  --standard--container-directive--padding-sides: calc(var(--standard--root--gap-column) * pow(var(--phi), 1)) !important
+  --standard--container-directive--padding-top: calc(var(--standard--root--gap-row) * pow(var(--phi), 1)) !important
+  --standard--container-directive--position: fixed !important
+  --standard--container-directive--position-left: 0 !important
+  --standard--container-directive--position-top: 0 !important
+  --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--sheet--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--sheet--gap-row) !important
+  --standard--flexbox-container-directive--justify-content: center !important
+
+  > .harness
+    background: none
+    border: none
+    max-height: 100dvh
+    min-height: 100dvh
+    max-width: 100dvw
+    min-width: 100dvw
+    outline: 0
+    overflow: scroll
+    padding: 0
+    visibility: collapse
+
+    @mixin keyframes--close-sheet
+      opacity: 0
+
+    @mixin keyframes--open-sheet
+      opacity: 1
+
+    @include keyframes--close-sheet
+
+    @keyframes close-sheet
+      0%
+        @include keyframes--open-sheet
+
+      100%
+        @include keyframes--close-sheet
+
+    @keyframes open-sheet
+      0%
+        @include keyframes--close-sheet
+
+      100%
+        @include keyframes--open-sheet
+
+    &::backdrop
+      @mixin keyframes--hide-backdrop
+        backdrop-filter: blur(0) brightness(1.125)
+        opacity: 0
+
+      @mixin keyframes--show-backdrop
+        backdrop-filter: blur(calc(1rem * pow(var(--phi), -3))) brightness(1.125)
+        opacity: 1
+
+      @include keyframes--hide-backdrop
+
+      @keyframes hide-backdrop
+        0%
+          @include keyframes--show-backdrop
+
+        100%
+          @include keyframes--hide-backdrop
+
+      @keyframes show-backdrop
+        0%
+          @include keyframes--hide-backdrop
+
+        100%
+          @include keyframes--show-backdrop
+
+    > .element
+      font-family: var(--standard--root--font-family), sans-serif
+      font-optical-sizing: auto
+      font-style: normal
+      letter-spacing: -0.03444185375em
+      line-height: 1.1458980338
+      padding: calc(max(var(--standard--root--safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(var(--standard--root--safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(var(--standard--root--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(var(--standard--root--safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
+
+      > div
+        display: contents
+
+        @include FlexboxContainerDirective.children
+
+        --standard--sheet--gap-column: var(--standard--sheet--padding-sides)
+        --standard--sheet--gap-row: var(--standard--sheet--padding-bottom)
+        --standard--sheet--material-opacity: 0.6
+        --standard--sheet--padding-bottom: calc(1rem * pow(var(--phi), -1))
+        --standard--sheet--padding-sides: calc(1rem * pow(var(--phi), 0))
+        --standard--sheet--padding-top: calc(1rem * pow(var(--phi), -1))
+
+        @media (min-width: 48rem)
+          --standard--sheet--padding-bottom: calc(1rem * pow(var(--phi), 0))
+          --standard--sheet--padding-sides: calc(1rem * pow(var(--phi), 1))
+          --standard--sheet--padding-top: calc(1rem * pow(var(--phi), 0))
+
+        @include ElevatedDirective.host
+        @include FlexboxContainerDirective.host
+        @include GlassDirective.host(12%)
+        @include RoundedDirective.host
+
+        --standard--container-directive--padding-bottom: var(--standard--sheet--padding-bottom) !important
+        --standard--container-directive--padding-sides: var(--standard--sheet--padding-sides) !important
+        --standard--container-directive--padding-top: var(--standard--sheet--padding-top) !important
+        --standard--elevated-directive--material-opacity: var(--standard--sheet--material-opacity) !important
+        --standard--flexbox-container-directive--gap-column: var(--standard--sheet--gap-column) !important
+        --standard--flexbox-container-directive--gap-row: var(--standard--sheet--gap-row) !important
+        --standard--glass-directive--material-opacity: var(--standard--sheet--material-opacity) !important
+
+        > .harness > .element
+          user-select: none
+
+          &::ng-deep > *
+            --standard--sheet--material-opacity: initial
+
+            @include ElevatedDirective.children
+            @include FlexboxContainerDirective.children
+            @include GlassDirective.children
+            @include RoundedDirective.children
+
+  &.openOrClosing
+    > .harness
+      animation: open-sheet 180ms ease-in forwards
+      visibility: visible
+
+      &::backdrop
+        animation: show-backdrop 180ms ease-in forwards
+
+    &:not(.open) > .harness
+      animation: close-sheet 180ms ease-in forwards
+
+      &::backdrop
+        animation: hide-backdrop 180ms ease-in forwards

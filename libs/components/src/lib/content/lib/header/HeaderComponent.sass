@@ -1,0 +1,60 @@
+@use "../../../../../../directives/src/lib/content/lib/typography/TypographyDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--header--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--header--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+  @include TypographyDirective.host
+
+  --standard--flexbox-container-directive--gap-column: var(--standard--header--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--header--gap-row) !important
+
+  > .harness
+    cursor: default
+    user-select: none
+
+    > .element::ng-deep
+      > *
+        @include FlexboxContainerDirective.children
+        @include TypographyDirective.children
+
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6
+        margin: 0
+
+      > h1
+        font-size: calc(1em * pow(var(--phi), 5))
+
+      > h2
+        font-size: calc(1em * pow(var(--phi), 4))
+
+      > h3
+        font-size: calc(1em * pow(var(--phi), 3))
+
+      > h4
+        font-size: calc(1em * pow(var(--phi), 3))
+
+      > h5
+        font-size: calc(1em * pow(var(--phi), 2))
+
+      > h6
+        font-size: calc(1em * pow(var(--phi), 1))
+
+
+@each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form", "section", "heading-group")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--header--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --standard--header--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+
+@each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--typography-directive--font-size-exponent: var(--standard--#{ $host-context-namespace }--font-size-exponent) !important

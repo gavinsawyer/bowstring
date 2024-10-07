@@ -1,12 +1,8 @@
-import { DatePipe }                  from "@angular/common";
-import { Component }                 from "@angular/core";
-import { ArticleComponent }          from "../../../article/ArticleComponent";
-import { CapsuleComponent }          from "../../../capsule/CapsuleComponent";
-import { HeaderComponent }           from "../../../header/HeaderComponent";
-import { HeadingGroupComponent }     from "../../../heading group/HeadingGroupComponent";
-import { FlexboxContainerComponent } from "../../../layout and organization";
-import { RouteComponent }            from "../../../route/RouteComponent";
-import { SectionComponent }          from "../../../section/SectionComponent";
+import { DatePipe }                                                                   from "@angular/common";
+import { Component }                                                                  from "@angular/core";
+import { ArticleComponent, CapsuleComponent, HeaderComponent, HeadingGroupComponent } from "../../../content";
+import { FlexboxContainerComponent, SectionComponent }                                from "../../../layout and organization";
+import { RouteComponent }                                                             from "../../../navigation and search";
 
 
 @Component(

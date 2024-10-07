@@ -1,22 +1,7 @@
+export * from "./lib/content";
 export * from "./lib/layout and organization";
 export * from "./lib/menus and actions";
+export * from "./lib/navigation and search";
+export * from "./lib/presentation";
+export * from "./lib/routes";
 export * from "./lib/selection and input";
-
-export * from "./lib/article/ArticleComponent";
-export * from "./lib/aside/AsideComponent";
-export * from "./lib/capsule/CapsuleComponent";
-export * from "./lib/footer/FooterComponent";
-export * from "./lib/form/FormComponent";
-export * from "./lib/header/HeaderComponent";
-export * from "./lib/heading group/HeadingGroupComponent";
-export * from "./lib/image/ImageComponent";
-export * from "./lib/link/LinkComponent";
-export * from "./lib/list/ListComponent";
-export * from "./lib/main/MainComponent";
-export * from "./lib/nav/NavComponent";
-export * from "./lib/route/RouteComponent";
-export * from "./lib/scroll stack/ScrollStackComponent";
-export * from "./lib/section/SectionComponent";
-export * from "./lib/sheet/SheetComponent";
-export * from "./lib/symbol/SymbolComponent";
-export * from "./lib/video/VideoComponent";

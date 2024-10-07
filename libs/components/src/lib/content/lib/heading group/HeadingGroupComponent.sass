@@ -1,0 +1,39 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--heading-group--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--heading-group--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-container-directive--gap-column: var(--standard--heading-group--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--heading-group--gap-row) !important
+
+  > .harness > .element::ng-deep
+    > *
+      @include FlexboxContainerDirective.children
+
+    &,
+    > standard--section > .harness > .element
+      > p
+        margin: 0
+        max-width: calc(1em * pow(var(--phi), 8))
+        user-select: text
+
+  &.styleFirstLetter > .harness > .element::ng-deep > p:first-of-type:first-letter
+    float: left
+    font-size: calc(2em * pow(var(--phi), 0.375))
+    line-height: calc(2em * pow(var(--phi), -2.5))
+    margin: calc(2em * pow(var(--phi), -5)) calc(2em * pow(var(--phi), -10)) 0 0
+
+  &.styleFirstParagraph > .harness > .element::ng-deep > p:first-of-type
+    font-size: calc(1em * pow(var(--phi), 0.5))
+
+
+@each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form", "section")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--heading-group--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --standard--heading-group--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
