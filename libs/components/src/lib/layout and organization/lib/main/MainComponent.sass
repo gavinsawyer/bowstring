@@ -20,8 +20,9 @@
     --standard--flexbox-container-directive--flex-wrap: wrap !important
 
   > .harness > .element
+    &::ng-deep > *
+      @include FlexboxContainerDirective.children
+
     > router-outlet
       display: none
 
-    &::ng-deep > *
-      @include FlexboxContainerDirective.children

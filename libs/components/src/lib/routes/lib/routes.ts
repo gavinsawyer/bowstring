@@ -36,7 +36,7 @@ const routes: Routes = [
     loadComponent: (): Promise<Type<unknown>> => import("./terms/TermsRouteComponent").then<Type<unknown>>(
       ({ TermsRouteComponent }: typeof import("./terms/TermsRouteComponent")): Type<unknown> => TermsRouteComponent,
     ),
-    path:          "info",
+    path:          "terms",
     title:         `${ $localize`:@@libs--Components--Routes--Terms--Meta--Title:Terms` } - ${ title }`,
   },
   {
@@ -44,7 +44,7 @@ const routes: Routes = [
       description: $localize`:@@libs--Components--Routes--Otherwise--Meta--Description:...`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./otherwise/OtherwiseRouteComponent").then<Type<unknown>>(
-      (module: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> => module.OtherwiseRouteComponent,
+      ({ OtherwiseRouteComponent }: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> => OtherwiseRouteComponent,
     ),
     path:          "**",
     title:         `${ $localize`:@@libs--Components--Routes--Otherwise--Meta--Title:Page not found` } - ${ title }`,

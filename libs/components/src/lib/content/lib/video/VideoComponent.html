@@ -30,7 +30,6 @@
     [attr.muted]="autoplayInput$() || mutedInput$() || undefined"
     [attr.preload]="preloadInput$() || undefined"
     [attr.src]="srcInput$()"
-    [attr.tabindex]="tabIndexOverrideInput$() ?? 0"
     [attr.width]="widthInput$()"
     [style.aspect-ratio]="widthInput$() + '/' + heightInput$()"></video>
 </ng-template>

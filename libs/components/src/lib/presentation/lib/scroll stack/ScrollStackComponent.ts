@@ -98,7 +98,12 @@ export class ScrollStackComponent {
               toObservable<number | undefined>(this.viewportService.scrollTop$),
             ),
             map<[ number | undefined, number | undefined, number | undefined ], number | undefined>(
-              ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number | undefined => ((domRect?: DOMRect): number | undefined => domRect === undefined ? domRect : domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2)(htmlDivElementRef.nativeElement.getBoundingClientRect()),
+              ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number | undefined => ((domRect?: DOMRect): number | undefined => {
+                if (domRect !== undefined)
+                  return domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2;
+                else
+                  return undefined;
+              })(htmlDivElementRef.nativeElement.getBoundingClientRect()),
             ),
           ),
         ),

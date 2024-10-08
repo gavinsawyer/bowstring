@@ -2,11 +2,11 @@ import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                        
 import { afterRender, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                             from "@angular/core/rxjs-interop";
 import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                     from "@standard/directives";
-import { type Dimensions }                                                                                                                                                                    from "@standard/interfaces";
+import { type Dimensions, type SymbolPaths }                                                                                                                                                  from "@standard/interfaces";
 import { ViewportService }                                                                                                                                                                    from "@standard/services";
+import loadSymbolPaths                                                                                                                                                                        from "@standard/symbol-paths";
 import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                         from "rxjs";
-import { SymbolComponent }                                                                                                                                                                    from "../../../content";
-import { ButtonComponent }                                                                                                                                                                    from "../../../menus and actions";
+import { fromPromise }                                                                                                                                                                        from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
@@ -54,9 +54,7 @@ import { ButtonComponent }                                                      
       },
     ],
     imports:        [
-      ButtonComponent,
       NgTemplateOutlet,
-      SymbolComponent,
     ],
     selector:       "standard--footer",
     standalone:     true,
@@ -76,7 +74,8 @@ export class FooterComponent {
 
   private readonly backdropHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("backdropHtmlDivElement");
   private readonly document: Document                                             = inject<Document>(DOCUMENT);
-  private readonly bodyHeight$: Signal<number | undefined>                        = toSignal<number>(
+  private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly bodyHeight$: Signal<number | undefined>                        = isPlatformBrowser(this.platformId) ? toSignal<number>(
     new Observable<number>(
       (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
         resizeObserver.observe(this.document.body);
@@ -88,9 +87,8 @@ export class FooterComponent {
         ),
       ),
     ),
-  );
+  ) : signal<undefined>(undefined);
   private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
-  private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly dimensions$: Signal<Dimensions | undefined>                    = isPlatformBrowser(this.platformId) ? toSignal<Dimensions>(
     toObservable<ElementRef<HTMLElement>>(this.htmlElementRef$).pipe<Dimensions>(
       switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
@@ -119,23 +117,35 @@ export class FooterComponent {
     (): number | undefined => this.dimensions$()?.width,
   );
 
+  protected readonly chevronDownSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
+    fromPromise<SymbolPaths>(
+      loadSymbolPaths("ChevronDown"),
+    ),
+  );
+  protected readonly chevronUpSymbolPaths$: Signal<SymbolPaths | undefined>   = toSignal<SymbolPaths>(
+    fromPromise<SymbolPaths>(
+      loadSymbolPaths("ChevronUp"),
+    ),
+  );
+
+
   protected readonly height$: Signal<number | undefined> = computed<number | undefined>(
     (): number | undefined => this.dimensions$()?.height,
   );
 
   public readonly stuckModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
     (): boolean | undefined => ((stuck?: "" | boolean | `${ boolean }`): boolean | undefined => {
-      if (stuck === undefined)
-        return undefined;
-      else
+      if (stuck !== undefined)
         return stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && false;
+      else
+        return undefined;
     })(this.stuckModel$()),
   );
 
   protected readonly unstickingTranslation$: Signal<number | undefined>                  = isPlatformBrowser(this.platformId) ? toSignal<number>(
     toObservable<boolean | undefined>(this.stuckModelWithTransform$).pipe<true, number>(
       filter<boolean | undefined, true>(
-        (stuck?: boolean): stuck is true => !!stuck,
+        (stuck?: boolean): stuck is true => stuck === true,
       ),
       switchMap<true, Observable<number>>(
         (): Observable<number> => runInInjectionContext<Observable<number>>(
@@ -163,14 +173,19 @@ export class FooterComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly raisedWhenStuckOrUnsticking$: Signal<boolean | undefined>           = toSignal<boolean | undefined>(
+  protected readonly raisedWhenStuckOrUnsticking$: Signal<boolean | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<number | undefined>(this.unstickingTranslation$).pipe<boolean | undefined>(
       map<number | undefined, boolean | undefined>(
-        (unstickingTranslation?: number): boolean | undefined => unstickingTranslation === undefined ? unstickingTranslation : unstickingTranslation !== 0,
+        (unstickingTranslation?: number): boolean | undefined => {
+          if (unstickingTranslation !== undefined)
+            return unstickingTranslation !== 0;
+          else
+            return undefined;
+        },
       ),
     ),
-  );
-  protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean | undefined> = toSignal<boolean | undefined>(
+  ) : signal<undefined>(undefined);
+  protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<boolean | undefined>(this.raisedWhenStuckOrUnsticking$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
         (raisedWhenStuckOrUnsticking?: boolean): Observable<number> => raisedWhenStuckOrUnsticking ? timer(0) : timer(360),
@@ -179,7 +194,7 @@ export class FooterComponent {
         (): boolean | undefined => this.raisedWhenStuckOrUnsticking$(),
       ),
     ),
-  );
+  ) : signal<undefined>(undefined);
   protected readonly raisingScale$: Signal<number | undefined>                           = isPlatformBrowser(this.platformId) ? toSignal<number>(
     toObservable<number | undefined>(this.width$).pipe<[ number | undefined, number | undefined ], number>(
       combineLatestWith<number | undefined, [ number | undefined ]>(
@@ -191,7 +206,7 @@ export class FooterComponent {
     ),
   ) : signal<undefined>(undefined);
   protected readonly roundedContainerDirective: RoundedDirective                         = inject<RoundedDirective>(RoundedDirective);
-  protected readonly stuckOrUnsticking$: Signal<boolean | undefined>                     = toSignal<boolean | undefined>(
+  protected readonly stuckOrUnsticking$: Signal<boolean | undefined>                     = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<boolean | undefined>(this.stuckModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
         (stuck?: boolean): Observable<number> => stuck ? timer(0) : timer(360),
@@ -200,7 +215,7 @@ export class FooterComponent {
         (): boolean | undefined => this.stuckModelWithTransform$(),
       ),
     ),
-  );
+  ) : signal<undefined>(undefined);
 
   public readonly disclosureControlTemplateRef$: Signal<TemplateRef<never>>           = viewChild.required<TemplateRef<never>>("disclosureControlTemplate");
   public readonly stuckModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(

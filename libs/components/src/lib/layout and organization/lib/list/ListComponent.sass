@@ -14,6 +14,9 @@
   --standard--flexbox-container-directive--gap-row: var(--standard--list--gap-row) !important
 
   > .harness > .element
+    &::ng-deep > *
+      @include FlexboxContainerDirective.children
+
     > span,
     > ol,
     > ul
@@ -34,6 +37,3 @@
     > ol,
     > ul
       margin: 0
-
-    &::ng-deep > *
-      @include FlexboxContainerDirective.children

@@ -1,12 +1,12 @@
-import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                                   from "@angular/common";
-import { afterRender, booleanAttribute, Component, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type OnDestroy, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                                                                from "@angular/core/rxjs-interop";
-import { type ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                                                                                                                           from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }                                                                                                           from "@standard/directives";
-import { type SymbolPaths }                                                                                                                                                                                                      from "@standard/interfaces";
-import loadSymbolPaths                                                                                                                                                                                                           from "@standard/symbol-paths";
-import { firstValueFrom }                                                                                                                                                                                                        from "rxjs";
-import { fromPromise }                                                                                                                                                                                                           from "rxjs/internal/observable/innerFrom";
+import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                  from "@angular/common";
+import { afterRender, booleanAttribute, Component, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, type OnDestroy, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                               from "@angular/core/rxjs-interop";
+import { type ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule }                                                                                                          from "@angular/forms";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }                                                                                          from "@standard/directives";
+import { type SymbolPaths }                                                                                                                                                                                     from "@standard/interfaces";
+import loadSymbolPaths                                                                                                                                                                                          from "@standard/symbol-paths";
+import { firstValueFrom }                                                                                                                                                                                       from "rxjs";
+import { fromPromise }                                                                                                                                                                                          from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
@@ -117,13 +117,6 @@ export class TextFieldComponent
     undefined,
     {
       alias: "placeholder",
-    },
-  );
-  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`>             = input<number | undefined, number | `${ number }`>(
-    undefined,
-    {
-      alias:     "tabIndexOverride",
-      transform: numberAttribute,
     },
   );
   public readonly typeInput$: InputSignal<"email" | "password" | undefined>                                                = input<"email" | "password" | undefined>(

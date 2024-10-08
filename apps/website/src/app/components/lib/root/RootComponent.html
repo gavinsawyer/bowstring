@@ -174,9 +174,13 @@
     gapRow="var(--standard--root--gap-row)">
     <standard--main />
   </standard--flexbox-container>
-  <standard--footer>
-    <standard--header>
+  <standard--footer #footerComponent
+    stuck>
+    <standard--header
+      flexDirection="row"
+      justifyContent="space-between">
       <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h6>
+      <ng-container *ngTemplateOutlet="footerComponent.disclosureControlTemplateRef$()" />
     </standard--header>
     <standard--section
       flexDirection="row"

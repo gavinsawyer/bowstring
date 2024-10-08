@@ -36,7 +36,7 @@ export class PointerService {
       ),
     ),
   ) : signal<undefined>(undefined);
-  public readonly pressure$: Signal<number | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<number>(
+  public readonly pressure$: Signal<number | undefined>                       = isPlatformBrowser(this.platformId) ? toSignal<number>(
     toObservable<PointerEvent | undefined>(this.pointerEvent$).pipe<PointerEvent, number>(
       filter<PointerEvent | undefined, PointerEvent>(
         (pointerEvent?: PointerEvent): pointerEvent is PointerEvent => !!pointerEvent,

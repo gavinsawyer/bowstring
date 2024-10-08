@@ -1,9 +1,9 @@
-import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                 from "@angular/common";
-import { afterRender, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, type Signal, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                    from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                from "@standard/directives";
-import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                  from "body-scroll-lock";
-import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                             from "rxjs";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                         from "@angular/common";
+import { afterRender, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                            from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                        from "@standard/directives";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                          from "body-scroll-lock";
+import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                     from "rxjs";
 
 
 @Component(
@@ -109,14 +109,14 @@ export class SheetComponent {
 
   public readonly openModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
     (): boolean | undefined => ((open?: "" | boolean | `${ boolean }`): boolean | undefined => {
-      if (open === undefined)
-        return undefined;
-      else
+      if (open !== undefined)
         return open === "" || open === true || open === "true" || open !== "false" && false;
+      else
+        return undefined;
     })(this.openModel$()),
   );
 
-  protected readonly openOrClosing$: Signal<boolean | undefined> = toSignal<boolean | undefined>(
+  protected readonly openOrClosing$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<boolean | undefined>(this.openModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
         (open?: boolean): Observable<number> => open ? timer(0) : timer(180),
@@ -125,7 +125,7 @@ export class SheetComponent {
         (): boolean | undefined => this.openModelWithTransform$(),
       ),
     ),
-  );
+  ) : signal<undefined>(undefined);
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(

@@ -1,7 +1,7 @@
-import { NgTemplateOutlet }                                                                                                                                            from "@angular/common";
-import { booleanAttribute, Component, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                                                from "@angular/router";
-import { CanvasDirective, FlexboxContainerDirective }                                                                                                                  from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                           from "@angular/common";
+import { booleanAttribute, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                               from "@angular/router";
+import { CanvasDirective, FlexboxContainerDirective }                                                                                                 from "@standard/directives";
 
 
 @Component(
@@ -53,13 +53,6 @@ export class LinkComponent {
   public readonly output: OutputEmitterRef<void>                                                                           = output<void>(
     {
       alias: "output",
-    },
-  );
-  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`>             = input<number | undefined, number | `${ number }`>(
-    undefined,
-    {
-      alias:     "tabIndexOverride",
-      transform: numberAttribute,
     },
   );
   public readonly typeInput$: InputSignal<"reset" | "submit" | undefined>                                                  = input<"reset" | "submit" | undefined>(

@@ -33,12 +33,12 @@ export class AuthenticationService {
     fromPromise<boolean>(
       PublicKeyCredential.isConditionalMediationAvailable(),
     ),
-  ) : signal<false>(false);
+  ) : signal<undefined>(undefined);
   public readonly hasWebAuthnUserVerifyingPlatformAuthenticator$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean>(
     fromPromise<boolean>(
       PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(),
     ),
-  ) : signal<false>(false);
+  ) : signal<undefined>(undefined);
   public readonly user$: Signal<User | undefined>                                             = isPlatformBrowser(this.platformId) ? toSignal<User>(
     new Observable<User | null>(
       (userObserver: Observer<User | null>): TeardownLogic => onIdTokenChanged(

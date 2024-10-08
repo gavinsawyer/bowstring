@@ -47,7 +47,7 @@
   <input #htmlInputElement
     [attr.autocomplete]="autocompleteInput$()"
     [attr.placeholder]="placeholderInput$()"
-    [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
+    [attr.tabindex]="disabledInput$() ? -1 : 0"
     [attr.type]="typeInput$()"
     (click)="$event.stopPropagation();"
     [formControl]="formControlInput$()"

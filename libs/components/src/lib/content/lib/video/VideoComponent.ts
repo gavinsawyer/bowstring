@@ -138,13 +138,6 @@ export class VideoComponent {
       alias: "src",
     },
   );
-  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`>                = input<number | undefined, number | `${ number }`>(
-    undefined,
-    {
-      alias:     "tabIndexOverride",
-      transform: numberAttribute,
-    },
-  );
   public readonly widthInput$: InputSignalWithTransform<number, number | `${ number }`>                                       = input.required<number, number | `${ number }`>(
     {
       alias:     "width",

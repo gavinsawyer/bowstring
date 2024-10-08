@@ -1,7 +1,7 @@
-import { NgTemplateOutlet }                                                                                                                                                                                  from "@angular/common";
-import { afterRender, booleanAttribute, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                                                                                      from "@angular/router";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective }                                   from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                                                 from "@angular/common";
+import { afterRender, booleanAttribute, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                                     from "@angular/router";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective }                  from "@standard/directives";
 
 
 @Component(
@@ -111,13 +111,6 @@ export class ButtonComponent {
   public readonly output: OutputEmitterRef<void>                                                                           = output<void>(
     {
       alias: "output",
-    },
-  );
-  public readonly tabIndexOverrideInput$: InputSignalWithTransform<number | undefined, number | `${ number }`>             = input<number | undefined, number | `${ number }`>(
-    undefined,
-    {
-      alias:     "tabIndexOverride",
-      transform: numberAttribute,
     },
   );
   public readonly typeInput$: InputSignal<"reset" | "submit" | undefined>                                                  = input<"reset" | "submit" | undefined>(

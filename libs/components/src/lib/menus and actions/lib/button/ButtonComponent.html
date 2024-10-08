@@ -1,21 +1,22 @@
 @if (urlInput$(); as url) {@if (url.includes("://")) {<a class="harness" #htmlAnchorElement
   [attr.href]="url"
-  [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
+  [attr.tabindex]="disabledInput$() ? -1 : 0"
   (click)="$event.stopPropagation(); output.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   target="_blank">
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </a>} @else {<a class="harness" #htmlAnchorElement
-  [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : tabIndexOverrideInput$() ?? 0"
+  [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : 0"
   (click)="$event.stopPropagation(); output.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   [routerLink]="url"
   routerLinkActive
-  #routerLinkActive="routerLinkActive">
+  #routerLinkActive="routerLinkActive"
+  [routerLinkActiveOptions]="{ exact: url === '/' }">
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </a>}} @else {<button class="harness" #htmlButtonElement
   [attr.disabled]="disabledInput$() || undefined"
-  [attr.tabindex]="disabledInput$() ? -1 : tabIndexOverrideInput$() ?? 0"
+  [attr.tabindex]="disabledInput$() ? -1 : 0"
   [attr.type]="typeInput$() || 'button'"
   (click)="$event.stopPropagation(); output.emit();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();">
