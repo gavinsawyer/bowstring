@@ -11,8 +11,7 @@
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   [routerLink]="url"
   routerLinkActive
-  #routerLinkActive="routerLinkActive"
-  [routerLinkActiveOptions]="{ exact: true }">
+  #routerLinkActive="routerLinkActive">
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </a>}} @else {<button class="harness" #htmlButtonElement
   [attr.disabled]="disabledInput$() || undefined"

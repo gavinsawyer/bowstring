@@ -1,15 +1,27 @@
-import { Component, inject }                                        from "@angular/core";
-import { ProfileService }                                           from "@standard/services";
-import { ArticleComponent, HeaderComponent, HeadingGroupComponent } from "../../../content";
-import { RouteComponent }                                           from "../../../navigation and search";
+import { Component, inject }                                       from "@angular/core";
+import { RouterOutlet }                                            from "@angular/router";
+import { AuthenticationService, ProfileService }                   from "@standard/services";
+import { HeaderComponent, HeadingGroupComponent, SymbolComponent }           from "../../../content";
+import { FlexboxContainerComponent, GridContainerComponent, LabelComponent } from "../../../layout and organization";
+import { ButtonComponent, LinkComponent }                                    from "../../../menus and actions";
+import { AsideComponent, RouteComponent }                          from "../../../navigation and search";
+import { BoxComponent }                                            from "../../../presentation";
 
 
 @Component(
   {
-    imports:     [
-      ArticleComponent,
+    imports: [
+      AsideComponent,
+      BoxComponent,
+      ButtonComponent,
+      FlexboxContainerComponent,
+      GridContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,
+      RouterOutlet,
+      SymbolComponent,
+      LinkComponent,
+      LabelComponent,
     ],
     standalone:  true,
     styleUrls:   [
@@ -21,6 +33,7 @@ import { RouteComponent }                                           from "../../
 export class AccountRouteComponent
   extends RouteComponent {
 
-  protected readonly profileService: ProfileService = inject<ProfileService>(ProfileService);
+  protected readonly authenticationService: AuthenticationService = inject<AuthenticationService>(AuthenticationService);
+  protected readonly profileService: ProfileService               = inject<ProfileService>(ProfileService);
 
 }

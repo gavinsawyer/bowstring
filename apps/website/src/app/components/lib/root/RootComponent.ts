@@ -173,34 +173,35 @@ export class RootComponent {
     ((user?: User): void => {
       if (user)
         ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
-          setDoc(
-            profileDocumentReference,
-            {
-              email: this.signupFormGroup.value.email,
-            },
-          ).then<void, void>(
-            (): void => {
-              if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
-                this.authenticationService.linkWithEmailAndPasswordCredential(
-                  this.signupFormGroup.value.email,
-                  this.signupFormGroup.value.password,
-                ).then<void, never>(
-                  (): void => {
-                    sheetComponent.openModel$.set(false);
+          if (this.signupFormGroup.value.email)
+            setDoc(
+              profileDocumentReference,
+              {
+                email: this.signupFormGroup.value.email,
+              },
+            ).then<void, void>(
+              (): void => {
+                if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
+                  this.authenticationService.linkWithEmailAndPasswordCredential(
+                    this.signupFormGroup.value.email,
+                    this.signupFormGroup.value.password,
+                  ).then<void, never>(
+                    (): void => {
+                      sheetComponent.openModel$.set(false);
 
-                    setTimeout(
-                      (): void => this.signupFormGroup.reset(),
-                      180,
-                    );
-                  },
-                  (error: unknown): never => {
-                    deleteDoc(profileDocumentReference).then();
+                      setTimeout(
+                        (): void => this.signupFormGroup.reset(),
+                        180,
+                      );
+                    },
+                    (error: unknown): never => {
+                      deleteDoc(profileDocumentReference).then();
 
-                    throw error;
-                  },
-                );
-            },
-          );
+                      throw error;
+                    },
+                  );
+              },
+            );
         })(
           doc(
             this.firestore,
@@ -213,14 +214,14 @@ export class RootComponent {
     ((user?: User): void => {
       if (user)
         ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
-          setDoc(
-            profileDocumentReference,
-            {
-              email: this.signupWithPasskeyFormGroup.value.email,
-            },
-          ).then<void, void>(
-            (): void => {
-              if (this.signupWithPasskeyFormGroup.value.email)
+          if (this.signupWithPasskeyFormGroup.value.email)
+            setDoc(
+              profileDocumentReference,
+              {
+                email: this.signupWithPasskeyFormGroup.value.email,
+              },
+            ).then<void, void>(
+              (): void => {
                 this.authenticationService.linkWithPasskey().then<void, never>(
                   (): void => {
                     sheetComponent.openModel$.set(false);
@@ -236,8 +237,8 @@ export class RootComponent {
                     throw error;
                   },
                 );
-            },
-          );
+              },
+            );
         })(
           doc(
             this.firestore,

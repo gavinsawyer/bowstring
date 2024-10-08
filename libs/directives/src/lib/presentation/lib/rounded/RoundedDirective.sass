@@ -27,14 +27,14 @@ $level: functions.get-input-reference($namespace, "level", 1)
 
   > .harness
     &:before
-      border-radius: calc($brand-roundness-factor * 1rem * pow(var(--phi), 1) / $level)
+      border-radius: calc($brand-roundness-factor * 0.875rem * pow(var(--phi), 1) / $level)
 
     &:after
-      border-radius: calc($brand-roundness-factor * 1rem / $level)
+      border-radius: calc($brand-roundness-factor * 0.875rem / $level)
       clip-path: $clip-path-source
 
     > .element
-      border-radius: calc($brand-roundness-factor * 1rem / $level)
+      border-radius: calc($brand-roundness-factor * 0.875rem / $level)
       clip-path: $clip-path-source
 
   > svg

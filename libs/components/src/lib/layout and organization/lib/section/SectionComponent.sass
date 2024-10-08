@@ -15,6 +15,7 @@
   > .harness > .element::ng-deep > *
     @include FlexboxContainerDirective.children
 
+
 @each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--section--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))

@@ -1,2 +1,14 @@
 \:host
   display: contents
+
+  > standard--flexbox-container:first-child
+    @media (min-width: 48rem)
+      --standard--flexbox-child-directive--flex-basis: 100% !important
+
+  > standard--flexbox-container:last-child
+    @media (min-width: 48rem)
+      --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
+
+    &::ng-deep > .harness > .element > router-outlet
+      display: none
+

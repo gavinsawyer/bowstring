@@ -15,11 +15,13 @@
   --standard--flexbox-container-directive--gap-row: var(--standard--main--gap-row) !important
 
   @media (min-width: 48rem)
+    --standard--flexbox-container-directive--align-content: flex-start !important
     --standard--flexbox-container-directive--flex-direction: row !important
+    --standard--flexbox-container-directive--flex-wrap: wrap !important
 
-  > .harness > .element::ng-deep
+  > .harness > .element
     > router-outlet
       display: none
 
-    > *
+    &::ng-deep > *
       @include FlexboxContainerDirective.children

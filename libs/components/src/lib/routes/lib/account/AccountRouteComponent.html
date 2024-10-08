@@ -1,11 +1,48 @@
-<standard--article>
-  <standard--heading-group>
-    <standard--header
-      alignItems="last baseline"
-      flexDirection="row"
-      justifyContent="space-between">
-      <h2 i18n="@@libs--Components--Routes--Account--Article--HeadingGroup--Header">Account</h2>
-      <h3>{{ profileService.profileDocument$()?.email }}</h3>
-    </standard--header>
-  </standard--heading-group>
-</standard--article>
+<standard--flexbox-container
+  alignItems="center"
+  flexDirection="row"
+  flexGrow="0"
+  flexShrink="0"
+  justifyContent="space-between">
+  <standard--header
+    alignItems="last baseline"
+    flexDirection="row"
+    fontSizeExponent="-2"
+    justifyContent="space-between">
+    <h2 i18n="@@libs--Components--Routes--Account--Header">Account</h2>
+  </standard--header>
+  <standard--button
+    appearance="raised"
+    (output)="authenticationService.signInAnonymously();">Sign out</standard--button>
+</standard--flexbox-container>
+<standard--aside>
+  <standard--box
+    position="sticky"
+    positionTop="var(--standard--root--padding-bottom)">
+    <standard--heading-group>
+      <standard--header fontSizeExponent="-2">
+        <h4>{{ profileService.profileDocument$()?.name }}</h4>
+        <h5>{{ profileService.profileDocument$()?.email }}</h5>
+      </standard--header>
+    </standard--heading-group>
+    <standard--flexbox-container>
+      <standard--link
+        i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title"
+        url="./payment-and-shipping">Payment and shipping</standard--link>
+      <standard--link
+        i18n="@@libs--Components--Routes--Account-PersonalInformation--Meta--Title"
+        url="./personal-information">Personal information</standard--link>
+      <standard--link
+        i18n="@@libs--Components--Routes--Account-Privacy--Meta--Title"
+        url="./privacy">Privacy</standard--link>
+      <standard--link
+        i18n="@@libs--Components--Routes--Account-Security--Meta--Title"
+        url="./security">Security</standard--link>
+    </standard--flexbox-container>
+  </standard--box>
+</standard--aside>
+<standard--flexbox-container
+  flexGrow="1"
+  flexShrink="0">
+  <router-outlet />
+</standard--flexbox-container>

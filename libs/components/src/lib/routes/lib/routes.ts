@@ -1,53 +1,53 @@
 /// <reference types="@angular/localize" />
 
-import { type Type }                      from "@angular/core";
-import { type DefaultExport, type Route } from "@angular/router";
-import { title }                          from "@standard/brand";
+import { type Type }   from "@angular/core";
+import { type Routes } from "@angular/router";
+import { title }       from "@standard/brand";
 
 
-const routes: Route[] = [
+const routes: Routes = [
   {
     data:          {
-      description: $localize`:@@libs--Components--Routes--Account--MetaDescription:...`,
+      description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./account/AccountRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => AccountRouteComponent,
+    loadChildren:  (): Promise<Routes> => import("./account/routes").then<Routes>(
+      ({ routes }: typeof import("./account/routes")): Routes => routes,
+    ),
+    loadComponent: (): Promise<Type<unknown>> => import("./account/AccountRouteComponent").then<Type<unknown>>(
+      ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> => AccountRouteComponent,
     ),
     path:          "account",
-    pathMatch:     "full",
-    title:         `${ $localize`:@@libs--Components--Routes--Account--MetaTitle:Account` } - ${ title }`,
+    title:         `${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` } - ${ title }`,
   },
   {
     data:          {
-      description: $localize`:@@libs--Components--Routes--Privacy--MetaDescription:...`,
+      description: $localize`:@@libs--Components--Routes--Privacy--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      ({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => PrivacyRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown>>(
+      ({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> => PrivacyRouteComponent,
     ),
     path:          "privacy",
-    pathMatch:     "full",
-    title:         `${ $localize`:@@libs--Components--Routes--Privacy--MetaTitle:Privacy` } - ${ title }`,
+    title:         `${ $localize`:@@libs--Components--Routes--Privacy--Meta--Title:Privacy` } - ${ title }`,
   },
   {
     data:          {
-      description: $localize`:@@libs--Components--Routes--Terms--MetaDescription:...`,
+      description: $localize`:@@libs--Components--Routes--Terms--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./terms/TermsRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      ({ TermsRouteComponent }: typeof import("./terms/TermsRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => TermsRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./terms/TermsRouteComponent").then<Type<unknown>>(
+      ({ TermsRouteComponent }: typeof import("./terms/TermsRouteComponent")): Type<unknown> => TermsRouteComponent,
     ),
-    path:          "terms",
-    pathMatch:     "full",
-    title:         `${ $localize`:@@libs--Components--Routes--Terms--MetaTitle:Terms` } - ${ title }`,
+    path:          "info",
+    title:         `${ $localize`:@@libs--Components--Routes--Terms--Meta--Title:Terms` } - ${ title }`,
   },
   {
     data:          {
-      description: $localize`:@@libs--Components--Routes--Otherwise--MetaDescription:...`,
+      description: $localize`:@@libs--Components--Routes--Otherwise--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown> | DefaultExport<Type<unknown>>> => import("./otherwise/OtherwiseRouteComponent").then<Type<unknown> | DefaultExport<Type<unknown>>>(
-      (module: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> | DefaultExport<Type<unknown>> => module.OtherwiseRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./otherwise/OtherwiseRouteComponent").then<Type<unknown>>(
+      (module: typeof import("./otherwise/OtherwiseRouteComponent")): Type<unknown> => module.OtherwiseRouteComponent,
     ),
     path:          "**",
-    title:         `${ $localize`:@@libs--Components--Routes--Otherwise--MetaTitle:Page not found` } - ${ title }`,
+    title:         `${ $localize`:@@libs--Components--Routes--Otherwise--Meta--Title:Page not found` } - ${ title }`,
   },
 ];
 

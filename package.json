@@ -1,6 +1,6 @@
 {
   "name":            "@standard/source",
-  "version":         "18.5.4",
+  "version":         "18.5.5",
   "license":         "MIT",
   "author":          {
     "name":  "Gavin Sawyer",
@@ -58,7 +58,7 @@
     "browser-sync":                           "^3.0.3",
     "compression":                            "^1.7.4",
     "firebase-functions":                     "^6.0.1",
-    "firebase-tools":                         "^13.20.2",
+    "firebase-tools":                         "^13.21.0",
     "git-describe":                           "^4.1.1",
     "nx":                                     "^20.0.0",
     "url":                                    "^0.11.4"

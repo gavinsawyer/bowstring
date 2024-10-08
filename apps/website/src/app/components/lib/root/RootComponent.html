@@ -155,16 +155,16 @@
     </standard--header>
     <standard--nav>
       <standard--link
-        i18n="@@apps--Website--Components--Routes--News--MetaTitle"
+        i18n="@@apps--Website--Components--Routes--News--Meta--Title"
         url="/news">News</standard--link>
       <standard--link
-        i18n="@@apps--Website--Components--Routes--Design--MetaTitle"
+        i18n="@@apps--Website--Components--Routes--Design--Meta--Title"
         url="/design">Design</standard--link>
       <standard--link
-        i18n="@@apps--Website--Components--Routes--Develop--MetaTitle"
+        i18n="@@apps--Website--Components--Routes--Develop--Meta--Title"
         url="/develop">Develop</standard--link>
       <standard--link
-        i18n="@@libs--Components--Routes--Account--MetaTitle"
+        i18n="@@libs--Components--Routes--Account--Meta--Title"
         url="/account">Account</standard--link>
     </standard--nav>
   </standard--flexbox-container>
@@ -185,13 +185,13 @@
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@apps--Website--Components--Routes--News--MetaTitle"
+            i18n="@@apps--Website--Components--Routes--News--Meta--Title"
             url="/news">News</standard--link>
           <standard--link
-            i18n="@@apps--Website--Components--Routes--Design--MetaTitle"
+            i18n="@@apps--Website--Components--Routes--Design--Meta--Title"
             url="/design">Design</standard--link>
           <standard--link
-            i18n="@@apps--Website--Components--Routes--Develop--MetaTitle"
+            i18n="@@apps--Website--Components--Routes--Develop--Meta--Title"
             url="/develop">Develop</standard--link>
         </standard--flexbox-container>
         @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
@@ -205,7 +205,7 @@
             (output)="signupSheetComponent.openModel$.set(true);">Create an account</standard--link>
         </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@libs--Components--Routes--Account--MetaTitle"
+            i18n="@@libs--Components--Routes--Account--Meta--Title"
             url="/account">Account</standard--link>
           <standard--link
             i18n
@@ -213,10 +213,10 @@
         </standard--flexbox-container>}
         <standard--flexbox-container alignItems="flex-start">
           <standard--link
-            i18n="@@libs--Components--Routes--Privacy--MetaTitle"
+            i18n="@@libs--Components--Routes--Privacy--Meta--Title"
             url="/privacy">Privacy</standard--link>
           <standard--link
-            i18n="@@libs--Components--Routes--Terms--MetaTitle"
+            i18n="@@libs--Components--Routes--Terms--Meta--Title"
             url="/terms">Terms</standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>
