@@ -1,10 +1,7 @@
-import { DatePipe }                                                                   from "@angular/common";
-import { Component }                                                                  from "@angular/core";
-import { ListItemDirective }                                                          from "@standard/directives";
-import { ArticleComponent, CapsuleComponent, HeaderComponent, HeadingGroupComponent } from "../../../content";
-import { FlexboxContainerComponent, LabelComponent, ListComponent, SectionComponent } from "../../../layout and organization";
-import { LinkComponent }                                                              from "../../../menus and actions";
-import { RouteComponent }                                                             from "../../../navigation and search";
+import { DatePipe }                                                                                                                                                                              from "@angular/common";
+import { Component }                                                                                                                                                                             from "@angular/core";
+import { ListItemDirective }                                                                                                                                                                     from "@standard/directives";
+import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent, ListComponent, RouteComponent, SectionComponent } from "../../../../";
 
 
 @Component(

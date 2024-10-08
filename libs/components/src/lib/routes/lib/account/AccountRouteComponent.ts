@@ -1,16 +1,12 @@
-import { Component, inject }                                       from "@angular/core";
-import { RouterOutlet }                                            from "@angular/router";
-import { AuthenticationService, ProfileService }                   from "@standard/services";
-import { HeaderComponent, HeadingGroupComponent, SymbolComponent }           from "../../../content";
-import { FlexboxContainerComponent, GridContainerComponent, LabelComponent } from "../../../layout and organization";
-import { ButtonComponent, LinkComponent }                                    from "../../../menus and actions";
-import { AsideComponent, RouteComponent }                          from "../../../navigation and search";
-import { BoxComponent }                                            from "../../../presentation";
+import { Component, inject }                                                                                                                                                                                        from "@angular/core";
+import { RouterOutlet }                                                                                                                                                                                             from "@angular/router";
+import { AuthenticationService, ProfileService }                                                                                                                                                                    from "@standard/services";
+import { AsideComponent, BoxComponent, ButtonComponent, FlexboxContainerComponent, GridContainerComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent, RouteComponent, SymbolComponent } from "../../../../";
 
 
 @Component(
   {
-    imports: [
+    imports:     [
       AsideComponent,
       BoxComponent,
       ButtonComponent,

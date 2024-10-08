@@ -1,7 +1,5 @@
-import { Component }                              from "@angular/core";
-import { HeaderComponent, HeadingGroupComponent } from "../../../../../../content";
-import { SectionComponent }                       from "../../../../../../layout and organization";
-import { RouteComponent }                         from "../../../../../../navigation and search";
+import { Component }                                                                from "@angular/core";
+import { HeaderComponent, HeadingGroupComponent, RouteComponent, SectionComponent } from "../../../../../../../";
 
 
 @Component(
