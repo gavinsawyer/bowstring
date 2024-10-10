@@ -59,33 +59,33 @@
       100%
         @include keyframes--raise-harness
 
-    @mixin keyframes--stick-harness
+    @mixin keyframes--pin-harness
       translate: 0 0 0
 
-    @mixin keyframes--unstick-harness
-      translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
+    @mixin keyframes--unpin-harness
+      translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unpinning-translation))) 0
 
-    @include keyframes--unstick-harness
+    @include keyframes--unpin-harness
 
-    @keyframes stick-harness
+    @keyframes pin-harness
       0%
-        @include keyframes--unstick-harness
+        @include keyframes--unpin-harness
 
       100%
-        @include keyframes--stick-harness
+        @include keyframes--pin-harness
 
-    @keyframes unstick-harness
+    @keyframes unpin-harness
       0%
-        @include keyframes--stick-harness
+        @include keyframes--pin-harness
 
       100%
-        @include keyframes--unstick-harness
+        @include keyframes--unpin-harness
 
     > .element::ng-deep > *
       --standard--footer--height: initial
       --standard--footer--material-opacity: initial
       --standard--footer--raising-scale: initial
-      --standard--footer--unsticking-translation: initial
+      --standard--footer--unpinning-translation: initial
 
       @include ElevatedDirective.children
       @include FlexboxContainerDirective.children
@@ -127,74 +127,74 @@
         100%
           @include keyframes--show-backdrop
 
-      @mixin keyframes--stick-backdrop
+      @mixin keyframes--pin-backdrop
         translate: 0 0 0
 
-      @mixin keyframes--unstick-backdrop
-        translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unsticking-translation))) 0
+      @mixin keyframes--unpin-backdrop
+        translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--root--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unpinning-translation))) 0
 
-      @include keyframes--unstick-backdrop
+      @include keyframes--unpin-backdrop
 
-      @keyframes stick-backdrop
+      @keyframes pin-backdrop
         0%
-          @include keyframes--unstick-backdrop
+          @include keyframes--unpin-backdrop
 
         100%
-          @include keyframes--stick-backdrop
+          @include keyframes--pin-backdrop
 
-      @keyframes unstick-backdrop
+      @keyframes unpin-backdrop
         0%
-          @include keyframes--stick-backdrop
+          @include keyframes--pin-backdrop
 
         100%
-          @include keyframes--unstick-backdrop
+          @include keyframes--unpin-backdrop
 
-  &:not(.stuckOrUnsticking)
+  &:not(.pinnedOrUnPinning)
     > .harness
       translate: 0 0 0
 
     > .backdrop:before
       translate: 0 0 0
 
-  &.stuckOrUnsticking
+  &.pinnedOrUnPinning
     --standard--container-directive--position: sticky !important
 
     > .harness
-      animation: stick-harness 360ms var(--bounce) forwards
+      animation: pin-harness 360ms var(--bounce) forwards
 
     > .backdrop:before
-      animation: stick-backdrop 360ms var(--bounce) forwards
+      animation: pin-backdrop 360ms var(--bounce) forwards
       content: ""
 
-    &:not(.stuck)
+    &:not(.pinned)
       > .harness
-        animation: unstick-harness 360ms var(--bounce) forwards
+        animation: unpin-harness 360ms var(--bounce) forwards
 
       > .backdrop:before
-        animation: unstick-backdrop 360ms var(--bounce) forwards
+        animation: unpin-backdrop 360ms var(--bounce) forwards
 
-    &.raisedOrLoweringWhenStuckOrUnsticking
+    &.raisedOrLoweringWhenPinnedOrUnPinning
       > .harness
-        animation: stick-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
+        animation: pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
 
         &:before
           animation: expand-shadow 360ms var(--bounce) forwards
 
       > .backdrop:before
-        animation: stick-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
+        animation: pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
 
-      &:not(.stuck),
-      &:not(.raisedWhenStuckOrUnsticking)
+      &:not(.pinned),
+      &:not(.raisedWhenPinnedOrUnPinning)
         > .harness
-          animation: unstick-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
+          animation: unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
 
           &:before
             animation: contract-shadow 360ms var(--bounce) forwards
 
         > .backdrop:before
-          animation: unstick-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards
+          animation: unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards
 
-  #disclosureControl
+  #pinnedControl
     @include ElevatedDirective.children
     @include FlexboxContainerDirective.children
     @include GlassDirective.children
@@ -225,7 +225,7 @@
 
       > .element
         background: none !important
-        font-size: calc(1rem * pow(var(--phi), 1))
+        font-size: calc(1rem * pow(var(--phi), 0.5))
         opacity: 1
         transition: opacity 200ms ease-in-out
 

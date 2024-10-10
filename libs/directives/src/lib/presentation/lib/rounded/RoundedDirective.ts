@@ -11,9 +11,9 @@ import { v4 as uuid }                                                           
 @Directive(
   {
     host:       {
-      "[style.--standard--rounded-directive--brand-roundness-factor]": "brandRoundnessFactor$()",
-      "[style.--standard--rounded-directive--clip-path-source]":       "clipPathSource$()",
-      "[style.--standard--rounded-directive--level-input]":            "levelInput$()",
+      "[style.--standard--rounded-directive--brand-roundness]":  "brandRoundness$()",
+      "[style.--standard--rounded-directive--clip-path-source]": "clipPathSource$()",
+      "[style.--standard--rounded-directive--level-input]":      "levelInput$()",
     },
     standalone: true,
   },
@@ -23,7 +23,7 @@ export class RoundedDirective {
   private readonly brand: Brand                     = inject<Brand>(BRAND);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly brandRoundnessFactor$: WritableSignal<number>                                       = signal<number>(this.brand.roundnessFactor);
+  protected readonly brandRoundness$: WritableSignal<number>                                             = signal<number>(this.brand.roundness);
   protected readonly clipPathSource$: Signal<`url(#standard--rounded-container--clip-path-${ string })`> = computed<`url(#standard--rounded-container--clip-path-${ string })`>(
     (): `url(#standard--rounded-container--clip-path-${ string })` => `url(#${ this.clipPathId$() })`,
   );
@@ -51,7 +51,7 @@ export class RoundedDirective {
           })(
             new ResizeObserver(
               (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
-                ((htmlElementDimensions: Dimensions): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => ((positionDividend: number): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => `M ${ positionDividend / (htmlElementDimensions.width || 1) },0 L ${ 1 - positionDividend / (htmlElementDimensions.width || 1) },0 C 1,0 1,0 1,${ positionDividend / (htmlElementDimensions.height || 1) } L 1,${ 1 - positionDividend / (htmlElementDimensions.height || 1) } C 1,1 1,1 ${ 1 - positionDividend / (htmlElementDimensions.width || 1) },1 L ${ positionDividend / (htmlElementDimensions.width || 1) },1 C 0,1 0,1 0,${ 1 - positionDividend / (htmlElementDimensions.height || 1) } L 0,${ positionDividend / (htmlElementDimensions.height || 1) } C 0,0 0,0 ${ positionDividend / (htmlElementDimensions.width || 1) },0 Z`)(this.brand.roundnessFactor * 36 / (this.levelInput$() || 1)))(
+                ((htmlElementDimensions: Dimensions): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => ((positionDividend: number): `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z` => `M ${ positionDividend / (htmlElementDimensions.width || 1) },0 L ${ 1 - positionDividend / (htmlElementDimensions.width || 1) },0 C 1,0 1,0 1,${ positionDividend / (htmlElementDimensions.height || 1) } L 1,${ 1 - positionDividend / (htmlElementDimensions.height || 1) } C 1,1 1,1 ${ 1 - positionDividend / (htmlElementDimensions.width || 1) },1 L ${ positionDividend / (htmlElementDimensions.width || 1) },1 C 0,1 0,1 0,${ 1 - positionDividend / (htmlElementDimensions.height || 1) } L 0,${ positionDividend / (htmlElementDimensions.height || 1) } C 0,0 0,0 ${ positionDividend / (htmlElementDimensions.width || 1) },0 Z`)(this.brand.roundness * 36 / (this.levelInput$() || 1)))(
                   {
                     height: resizeObserverEntries[0].target.clientHeight,
                     width:  resizeObserverEntries[0].target.clientWidth,

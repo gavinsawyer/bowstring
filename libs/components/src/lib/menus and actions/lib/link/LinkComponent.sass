@@ -1,5 +1,6 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
 
 
 \:host
@@ -54,6 +55,12 @@
 
     > .element
       opacity: 0.5
+
+\:host-context(standard--heading-group > .harness > .element > p, standard--heading-group > .harness > .element > standard--section > .harness > .element > p)
+  @include PrimaryDirective.host
+
+  > .harness > .element::ng-deep > *
+      @include PrimaryDirective.children
 
 \:host-context(standard--nav, standard--footer > .harness > .element > standard--header) > .harness > .element
   color: currentColor

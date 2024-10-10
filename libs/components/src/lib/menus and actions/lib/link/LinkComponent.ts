@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                           from "@angular/common";
 import { booleanAttribute, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                               from "@angular/router";
-import { CanvasDirective, FlexboxContainerDirective }                                                                                                 from "@standard/directives";
+import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective }                                                                               from "@standard/directives";
 
 
 @Component(
@@ -24,6 +24,9 @@ import { CanvasDirective, FlexboxContainerDirective }                           
           "gapRow",
           "justifyContent",
         ],
+      },
+      {
+        directive: PrimaryDirective,
       },
     ],
     imports:        [

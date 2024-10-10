@@ -1,5 +1,6 @@
 import { Directive, inject, input, type InputSignal, signal, type Signal } from "@angular/core";
 import { BRAND }                                                           from "@standard/injection-tokens";
+import { type Color }                                                      from "@standard/interfaces";
 import { type Brand }                                                      from "@standard/types";
 
 
@@ -22,10 +23,10 @@ export class PrimaryDirective {
 
   private readonly brand: Brand = inject<Brand>(BRAND);
 
-  protected readonly brandBackgroundDark$: Signal<string>  = signal<string>(this.brand.primaryBackgroundDark);
-  protected readonly brandBackgroundLight$: Signal<string> = signal<string>(this.brand.primaryBackgroundLight);
-  protected readonly brandForegroundDark$: Signal<string>  = signal<string>(this.brand.primaryForegroundDark);
-  protected readonly brandForegroundLight$: Signal<string> = signal<string>(this.brand.primaryForegroundLight);
+  protected readonly brandBackgroundDark$: Signal<string>  = signal<string>(((color: Color): `hsl(${ number }, ${ number }%, ${ number }%)` => `hsl(${ color.hue }, ${ color.saturation * 100 }%, ${ color.lightness * 100 }%)`)(this.brand.primaryColor));
+  protected readonly brandBackgroundLight$: Signal<string> = signal<string>(((color: Color): `hsl(${ number }, ${ number }%, ${ number }%)` => `hsl(${ color.hue }, ${ color.saturation * 120 }%, ${ color.lightness * 120 }%)`)(this.brand.primaryColor));
+  protected readonly brandForegroundDark$: Signal<string>  = signal<string>(((color: Color): `hsl(${ number }, ${ number }%, ${ number }%)` => `hsl(${ color.hue }, ${ color.saturation * 80 }%, ${ color.lightness * 144 }%)`)(this.brand.primaryColor));
+  protected readonly brandForegroundLight$: Signal<string> = signal<string>(((color: Color): `hsl(${ number }, ${ number }%, ${ number }%)` => `hsl(${ color.hue }, ${ color.saturation * 40 }%, ${ color.lightness * 72 }%)`)(this.brand.primaryColor));
 
   public readonly backgroundDarkInput$: InputSignal<string | undefined>  = input<string | undefined>(
     undefined,

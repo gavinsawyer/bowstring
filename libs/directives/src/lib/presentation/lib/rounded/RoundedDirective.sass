@@ -4,7 +4,7 @@
 
 $namespace: "rounded"
 
-$brand-roundness-factor: functions.get-value-reference($namespace, "brand-roundness-factor")
+$brand-roundness: functions.get-value-reference($namespace, "brand-roundness")
 $clip-path-source: functions.get-value-reference($namespace, "clip-path-source")
 
 $level: functions.get-input-reference($namespace, "level", 1)
@@ -17,7 +17,7 @@ $level: functions.get-input-reference($namespace, "level", 1)
 @mixin children
   @include mixins.reset-colors($namespace, ())
   @include mixins.reset-inputs($namespace, ("level"))
-  @include mixins.reset-values($namespace, ("brand-roundness-factor", "clip-path-source"))
+  @include mixins.reset-values($namespace, ("brand-roundness", "clip-path-source"))
 
 @mixin host
   @include color-scheme("light")
@@ -27,14 +27,14 @@ $level: functions.get-input-reference($namespace, "level", 1)
 
   > .harness
     &:before
-      border-radius: calc($brand-roundness-factor * 0.875rem * pow(var(--phi), 1) / $level)
+      border-radius: calc($brand-roundness * 0.875rem * pow(var(--phi), 1) / $level)
 
     &:after
-      border-radius: calc($brand-roundness-factor * 0.875rem / $level)
+      border-radius: calc($brand-roundness * 0.875rem / $level)
       clip-path: $clip-path-source
 
     > .element
-      border-radius: calc($brand-roundness-factor * 0.875rem / $level)
+      border-radius: calc($brand-roundness * 0.875rem / $level)
       clip-path: $clip-path-source
 
   > svg

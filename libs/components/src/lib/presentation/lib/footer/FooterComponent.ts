@@ -12,13 +12,13 @@ import { fromPromise }                                                          
 @Component(
   {
     host:           {
-      "[class.raisedOrLoweringWhenStuckOrUnsticking]":      "raisedOrLoweringWhenStuckOrUnsticking$()",
-      "[class.raisedWhenStuckOrUnsticking]":                "raisedWhenStuckOrUnsticking$()",
-      "[class.stuckOrUnsticking]":                          "stuckOrUnsticking$()",
-      "[class.stuck]":                                      "stuckModelWithTransform$()",
-      "[style.--standard--footer--height]":                 "height$()",
-      "[style.--standard--footer--raising-scale]":          "raisingScale$()",
-      "[style.--standard--footer--unsticking-translation]": "unstickingTranslation$()",
+      "[class.pinnedOrUnPinning]":                         "pinnedOrUnPinning$()",
+      "[class.pinned]":                                    "pinnedModelWithTransform$()",
+      "[class.raisedOrLoweringWhenPinnedOrUnPinning]":     "raisedOrLoweringWhenPinnedOrUnPinning$()",
+      "[class.raisedWhenPinnedOrUnPinning]":               "raisedWhenPinnedOrUnPinning$()",
+      "[style.--standard--footer--height]":                "height$()",
+      "[style.--standard--footer--raising-scale]":         "raisingScale$()",
+      "[style.--standard--footer--unpinning-translation]": "unpinningTranslation$()",
     },
     hostDirectives: [
       {
@@ -117,35 +117,43 @@ export class FooterComponent {
     (): number | undefined => this.dimensions$()?.width,
   );
 
-  protected readonly chevronDownSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
-    fromPromise<SymbolPaths>(
-      loadSymbolPaths("ChevronDown"),
-    ),
-  );
-  protected readonly chevronUpSymbolPaths$: Signal<SymbolPaths | undefined>   = toSignal<SymbolPaths>(
-    fromPromise<SymbolPaths>(
-      loadSymbolPaths("ChevronUp"),
-    ),
-  );
-
-
-  protected readonly height$: Signal<number | undefined> = computed<number | undefined>(
+  protected readonly height$: Signal<number | undefined>                       = computed<number | undefined>(
     (): number | undefined => this.dimensions$()?.height,
   );
-
-  public readonly stuckModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
-    (): boolean | undefined => ((stuck?: "" | boolean | `${ boolean }`): boolean | undefined => {
-      if (stuck !== undefined)
-        return stuck === "" || stuck === true || stuck === "true" || stuck !== "false" && false;
-      else
-        return undefined;
-    })(this.stuckModel$()),
+  protected readonly pinFillSymbolPaths$: Signal<SymbolPaths | undefined>      = toSignal<SymbolPaths>(
+    fromPromise<SymbolPaths>(
+      loadSymbolPaths("PinFill"),
+    ),
+  );
+  protected readonly pinSlashFillSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
+    fromPromise<SymbolPaths>(
+      loadSymbolPaths("PinSlashFill"),
+    ),
   );
 
-  protected readonly unstickingTranslation$: Signal<number | undefined>                  = isPlatformBrowser(this.platformId) ? toSignal<number>(
-    toObservable<boolean | undefined>(this.stuckModelWithTransform$).pipe<true, number>(
+  public readonly pinnedModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
+    (): boolean | undefined => ((pinned?: "" | boolean | `${ boolean }`): boolean | undefined => {
+      if (pinned !== undefined)
+        return pinned === "" || pinned === true || pinned === "true" || pinned !== "false" && false;
+      else
+        return undefined;
+    })(this.pinnedModel$()),
+  );
+
+  protected readonly pinnedOrUnPinning$: Signal<boolean | undefined>                     = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.pinnedModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (pinned?: boolean): Observable<number> => pinned ? timer(0) : timer(360),
+      ),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.pinnedModelWithTransform$(),
+      ),
+    ),
+  ) : signal<undefined>(undefined);
+  protected readonly unpinningTranslation$: Signal<number | undefined>                   = isPlatformBrowser(this.platformId) ? toSignal<number>(
+    toObservable<boolean | undefined>(this.pinnedModelWithTransform$).pipe<true, number>(
       filter<boolean | undefined, true>(
-        (stuck?: boolean): stuck is true => stuck === true,
+        (pinned?: boolean): pinned is true => pinned === true,
       ),
       switchMap<true, Observable<number>>(
         (): Observable<number> => runInInjectionContext<Observable<number>>(
@@ -173,25 +181,25 @@ export class FooterComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly raisedWhenStuckOrUnsticking$: Signal<boolean | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
-    toObservable<number | undefined>(this.unstickingTranslation$).pipe<boolean | undefined>(
+  protected readonly raisedWhenPinnedOrUnPinning$: Signal<boolean | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+    toObservable<number | undefined>(this.unpinningTranslation$).pipe<boolean | undefined>(
       map<number | undefined, boolean | undefined>(
-        (unstickingTranslation?: number): boolean | undefined => {
-          if (unstickingTranslation !== undefined)
-            return unstickingTranslation !== 0;
+        (unpinningTranslation?: number): boolean | undefined => {
+          if (unpinningTranslation !== undefined)
+            return unpinningTranslation !== 0;
           else
             return undefined;
         },
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly raisedOrLoweringWhenStuckOrUnsticking$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
-    toObservable<boolean | undefined>(this.raisedWhenStuckOrUnsticking$).pipe<boolean | undefined, boolean | undefined>(
+  protected readonly raisedOrLoweringWhenPinnedOrUnPinning$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.raisedWhenPinnedOrUnPinning$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
-        (raisedWhenStuckOrUnsticking?: boolean): Observable<number> => raisedWhenStuckOrUnsticking ? timer(0) : timer(360),
+        (raisedWhenPinnedOrUnPinning?: boolean): Observable<number> => raisedWhenPinnedOrUnPinning ? timer(0) : timer(360),
       ),
       map<boolean | undefined, boolean | undefined>(
-        (): boolean | undefined => this.raisedWhenStuckOrUnsticking$(),
+        (): boolean | undefined => this.raisedWhenPinnedOrUnPinning$(),
       ),
     ),
   ) : signal<undefined>(undefined);
@@ -206,22 +214,12 @@ export class FooterComponent {
     ),
   ) : signal<undefined>(undefined);
   protected readonly roundedContainerDirective: RoundedDirective                         = inject<RoundedDirective>(RoundedDirective);
-  protected readonly stuckOrUnsticking$: Signal<boolean | undefined>                     = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
-    toObservable<boolean | undefined>(this.stuckModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
-      delayWhen<boolean | undefined>(
-        (stuck?: boolean): Observable<number> => stuck ? timer(0) : timer(360),
-      ),
-      map<boolean | undefined, boolean | undefined>(
-        (): boolean | undefined => this.stuckModelWithTransform$(),
-      ),
-    ),
-  ) : signal<undefined>(undefined);
 
-  public readonly disclosureControlTemplateRef$: Signal<TemplateRef<never>>           = viewChild.required<TemplateRef<never>>("disclosureControlTemplate");
-  public readonly stuckModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
+  public readonly pinnedControlTemplateRef$: Signal<TemplateRef<never>>                = viewChild.required<TemplateRef<never>>("pinnedControlTemplate");
+  public readonly pinnedModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
     false,
     {
-      alias: "stuck",
+      alias: "pinned",
     },
   );
 

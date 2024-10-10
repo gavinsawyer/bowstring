@@ -1,6 +1,6 @@
 <footer class="harness" #htmlElement
   (click)="$event.stopPropagation();"
-  (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && stuckOrUnsticking$() ? stuckModel$.set(false) : true) || $event.preventDefault();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && pinnedOrUnPinning$() ? pinnedModel$.set(false) : true) || $event.preventDefault();"
   tabindex="-1">
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </footer>
@@ -19,14 +19,15 @@
 </svg>
 
 <ng-template #contentTemplate><ng-content /></ng-template>
-<ng-template #disclosureControlTemplate>
-  <div id="disclosureControl">
-    <div class="harness"
-      (click)="$event.stopPropagation(); stuckModel$.set(stuckModelWithTransform$() === false);"
+<ng-template #pinnedControlTemplate>
+  <div id="pinnedControl">
+    <button class="harness"
+      (click)="$event.stopPropagation(); pinnedModel$.set(pinnedModelWithTransform$() === false);"
       (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-      tabindex="0">
+      tabindex="0"
+      type="button">
       <div class="element">
-        @if (stuckModelWithTransform$() === false ? chevronUpSymbolPaths$() : chevronDownSymbolPaths$(); as symbolPaths) {<svg
+        @if (pinnedModelWithTransform$() === false ? pinFillSymbolPaths$() : pinSlashFillSymbolPaths$(); as symbolPaths) {<svg
           [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
           xmlns="http://www.w3.org/2000/svg">
           <g>
@@ -43,6 +44,6 @@
           </g>
         </svg>}
       </div>
-    </div>
+    </button>
   </div>
 </ng-template>
