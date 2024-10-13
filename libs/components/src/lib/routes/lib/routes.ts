@@ -11,7 +11,7 @@ const routes: Routes = [
       description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
     },
     loadChildren:  (): Promise<Routes> => import("./account/routes").then<Routes>(
-      ({ routes }: typeof import("./account/routes")): Routes => routes,
+      ({ routes: accountRoutes }: typeof import("./account/routes")): Routes => accountRoutes,
     ),
     loadComponent: (): Promise<Type<unknown>> => import("./account/AccountRouteComponent").then<Type<unknown>>(
       ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> => AccountRouteComponent,

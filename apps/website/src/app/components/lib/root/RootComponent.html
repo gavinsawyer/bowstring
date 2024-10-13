@@ -5,6 +5,20 @@
   <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
+<standard--sheet #localeSheetComponent>
+  <standard--header>
+    <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale</h6>
+  </standard--header>
+  <standard--flexbox-container>
+    @for (locale of localeIds; track locale) {<standard--button
+      [disabled]="locale === localeId"
+      level="2"
+      (output)="locale === localeId || changeLocale(locale);">
+      <standard--symbol input="Globe" />
+      <standard--label [input]="localeDisplayNames.of(locale) || locale" />
+    </standard--button>}
+  </standard--flexbox-container>
+</standard--sheet>
 <standard--sheet #signinSheetComponent>
   <standard--header>
     <h6 i18n="@@apps--Website--Components--Root--SigninSheet--Header">Sign in</h6>
@@ -50,6 +64,31 @@
         type="submit"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
     </standard--flexbox-container>
   </standard--form>
+</standard--sheet>
+<standard--sheet #signoutSheetComponent>
+  <standard--header>
+    <h6 i18n="@@apps--Website--Components--Root--SignoutSheet--Header">Are you sure?</h6>
+  </standard--header>
+  <standard--flexbox-container flexDirection="row">
+    <standard--button
+      appearance="raised"
+      level="2"
+      (output)="signoutSheetComponent.openModel$.set(false);">
+      <standard--symbol input="ArrowBackward" />
+      <standard--label
+        i18n-input
+        input="Cancel" />
+    </standard--button>
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">
+      <standard--label
+        i18n-input
+        input="Sign out" />
+    </standard--button>
+  </standard--flexbox-container>
 </standard--sheet>
 <standard--sheet #signupSheetComponent>
   <standard--header>
@@ -127,20 +166,6 @@
     </standard--flexbox-container>
   </standard--form>
 </standard--sheet>
-<standard--sheet #localeSheetComponent>
-  <standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale</h6>
-  </standard--header>
-  <standard--flexbox-container>
-    @for (locale of localeIds; track locale) {<standard--button
-      [disabled]="locale === localeId"
-      level="2"
-      (output)="locale === localeId || changeLocale(locale);">
-      <standard--symbol input="Globe" />
-      <standard--label [input]="localeDisplayNames.of(locale) || locale" />
-    </standard--button>}
-  </standard--flexbox-container>
-</standard--sheet>
 
 <ng-template #contentTemplate>
   <standard--flexbox-container
@@ -174,12 +199,9 @@
     gapRow="var(--standard--root--gap-row)">
     <standard--main />
   </standard--flexbox-container>
-  <standard--footer #footerComponent>
-    <standard--header
-      flexDirection="row"
-      justifyContent="space-between">
+  <standard--footer>
+    <standard--header>
       <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h6>
-      <ng-container *ngTemplateOutlet="footerComponent.pinnedControlTemplateRef$()" />
     </standard--header>
     <standard--section
       flexDirection="row"
@@ -212,7 +234,7 @@
             url="/account">Account</standard--link>
           <standard--link
             i18n
-            (output)="authenticationService.signInAnonymously();">Sign out</standard--link>
+            (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--link>
         </standard--flexbox-container>}
         <standard--flexbox-container alignItems="flex-start">
           <standard--link

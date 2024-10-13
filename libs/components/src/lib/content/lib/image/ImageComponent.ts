@@ -6,6 +6,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDir
 @Component(
   {
     host:           {
+      "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
     },
     hostDirectives: [
@@ -85,6 +86,12 @@ export class ImageComponent {
     undefined,
     {
       alias: "alt",
+    },
+  );
+  public readonly appearanceInput$: InputSignal<"circular" | undefined>                  = input<"circular" | undefined>(
+    undefined,
+    {
+      alias: "appearance",
     },
   );
   public readonly heightInput$: InputSignalWithTransform<number, number | `${ number }`> = input.required<number, number | `${ number }`>(

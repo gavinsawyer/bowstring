@@ -9,7 +9,7 @@
   --standard--link--gap-column: calc(1rem * pow(var(--phi), -2))
   --standard--link--gap-row: calc(1rem * pow(var(--phi), -3))
 
-  @include CanvasDirective.host(20%)
+  @include CanvasDirective.host(18%)
   @include FlexboxContainerDirective.host
 
   --standard--flexbox-container-directive--gap-column: var(--standard--link--gap-column) !important
@@ -42,8 +42,11 @@
         @include CanvasDirective.children
         @include FlexboxContainerDirective.children
 
-  &:not(.disabled) > .harness
-    @media (hover: hover)
+  &:not(.disabled)
+    > .harness
+      &:active:hover > .element
+        opacity: 0.625
+
       &:hover,
       &:focus-within
         > .element

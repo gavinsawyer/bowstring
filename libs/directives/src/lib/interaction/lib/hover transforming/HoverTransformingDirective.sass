@@ -26,13 +26,6 @@ $translation-y: functions.get-value-reference($namespace, "translation-y")
     @include color-scheme("dark")
 
   > .harness
-    @keyframes raise-harness
-      0%
-        @include keyframes--lower-harness
-
-      100%
-        @include keyframes--raise-harness
-
     @keyframes lower-harness
       0%
         @include keyframes--raise-harness
@@ -40,12 +33,47 @@ $translation-y: functions.get-value-reference($namespace, "translation-y")
       100%
         @include keyframes--lower-harness
 
+    @keyframes press-harness
+      0%
+        @include keyframes--unpress-harness
+
+      100%
+        @include keyframes--press-harness
+
+    @keyframes pressWhenRaised-harness
+      0%
+        @include keyframes--unpressWhenRaised-harness
+
+      100%
+        @include keyframes--press-harness
+
+    @keyframes raise-harness
+      0%
+        @include keyframes--lower-harness
+
+      100%
+        @include keyframes--raise-harness
+
     @keyframes transform-harness
       0%
         @include keyframes--untransform-harness
 
       100%
         @include keyframes--transform-harness
+
+    @keyframes unpress-harness
+      0%
+        @include keyframes--press-harness
+
+      100%
+        @include keyframes--unpress-harness
+
+    @keyframes unpressWhenRaised-harness
+      0%
+        @include keyframes--press-harness
+
+      100%
+        @include keyframes--unpressWhenRaised-harness
 
     @keyframes untransform-harness
       0%
@@ -55,44 +83,112 @@ $translation-y: functions.get-value-reference($namespace, "translation-y")
         @include keyframes--untransform-harness
 
   &:not(.disabled)
+    &.pressedOrUnpressing
+      > .harness
+        animation: press-harness 100ms var(--bounce) forwards
+
+        &:before
+          animation: press-shadow 100ms var(--bounce) forwards
+
+      &:not(.pressed)
+        > .harness
+          animation: unpress-harness 100ms var(--bounce) forwards
+
+          &:before
+            animation: unpress-shadow 100ms var(--bounce) forwards
+
     &.transformedOrUntransforming
       > .harness
         animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards
 
         &:before
-          animation: expand-shadow 200ms var(--bounce) forwards
+          animation: raise-shadow 200ms var(--bounce) forwards
 
       &:not(.transformed) > .harness
         animation: lower-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards
 
         &:before
-          animation: contract-shadow 200ms var(--bounce) forwards
+          animation: lower-shadow 200ms var(--bounce) forwards
+
+      &.pressedOrUnpressing
+        > .harness
+          animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 100ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 100ms var(--bounce) forwards
+
+        &:not(.pressed)
+          > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 100ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 100ms var(--bounce) forwards
 
     &.focusedOrUnfocusing
       > .harness
         animation: raise-harness 200ms var(--bounce) forwards
 
         &:before
-          animation: expand-shadow 200ms var(--bounce) forwards
+          animation: raise-shadow 200ms var(--bounce) forwards
 
       &:not(.focused) > .harness
         animation: lower-harness 200ms var(--bounce) forwards
 
         &:before
-          animation: contract-shadow 200ms var(--bounce) forwards
+          animation: lower-shadow 200ms var(--bounce) forwards
+
+      &.pressedOrUnpressing
+        > .harness
+          animation: raise-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 100ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 100ms var(--bounce) forwards
+
+        &:not(.pressed)
+          > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 100ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 100ms var(--bounce) forwards
 
       &.transformedOrUntransforming
         > .harness
           animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards
 
           &:before
-            animation: expand-shadow 200ms var(--bounce) forwards
+            animation: raise-shadow 200ms var(--bounce) forwards
 
         &:not(.transformed) > .harness
           animation: raise-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards
 
           &:before
-            animation: expand-shadow 200ms var(--bounce) forwards
+            animation: raise-shadow 200ms var(--bounce) forwards
+
+        &.pressedOrUnpressing
+          > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 100ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 100ms var(--bounce) forwards
+
+          &:not(.transformed) > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 100ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 100ms var(--bounce) forwards
+
+          &:not(.pressed)
+            > .harness
+              animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 100ms var(--bounce) forwards
+
+              &:before
+                animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 100ms var(--bounce) forwards
+
+            &:not(.transformed) > .harness
+              animation: raise-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 100ms var(--bounce) forwards
+
+              &:before
+                animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 100ms var(--bounce) forwards
 
 
 @mixin keyframes--last-transform-harness
@@ -101,11 +197,20 @@ $translation-y: functions.get-value-reference($namespace, "translation-y")
 @mixin keyframes--lower-harness
   scale: 1
 
+@mixin keyframes--press-harness
+  scale: 0.984375
+
 @mixin keyframes--raise-harness
   scale: 1.03125
 
 @mixin keyframes--transform-harness
   translate: calc(1rem * $translation-x) calc(1rem * $translation-y) 0
+
+@mixin keyframes--unpress-harness
+  scale: 1
+
+@mixin keyframes--unpressWhenRaised-harness
+  scale: 1.03125
 
 @mixin keyframes--untransform-harness
   translate: 0 0 0

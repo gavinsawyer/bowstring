@@ -27,3 +27,30 @@
 </dialog>
 
 <ng-template #contentTemplate><ng-content /></ng-template>
+<ng-template #dragControlTemplate>
+  <div id="dragControl">
+    <div class="harness"
+      (click)="$event.stopPropagation();"
+      (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+      tabindex="-1">
+      <div class="element">
+        @if (arrowUpAndDownAndArrowLeftAndRightSymbolPaths$(); as symbolPaths) {<svg
+          [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
+          xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <rect
+              [attr.height]="symbolPaths.viewBoxHeight"
+              [attr.width]="symbolPaths.viewBoxWidth"
+              opacity="0"
+              x="0"
+              y="0" />
+            @for (path of symbolPaths.paths; track path) {<path
+              [attr.d]="path.definition"
+              [attr.fill-opacity]="path.opacity"
+              fill="currentColor" />}
+          </g>
+        </svg>}
+      </div>
+    </div>
+  </div>
+</ng-template>

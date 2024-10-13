@@ -178,7 +178,7 @@
         animation: pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
 
         &:before
-          animation: expand-shadow 360ms var(--bounce) forwards
+          animation: raise-shadow 360ms var(--bounce) forwards
 
       > .backdrop:before
         animation: pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
@@ -189,7 +189,7 @@
           animation: unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
 
           &:before
-            animation: contract-shadow 360ms var(--bounce) forwards
+            animation: lower-shadow 360ms var(--bounce) forwards
 
         > .backdrop:before
           animation: unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards
@@ -200,16 +200,11 @@
     @include GlassDirective.children
     @include RoundedDirective.children
 
-    --standard--footer--gap-column: calc(1rem * pow(var(--phi), -2))
-    --standard--footer--gap-row: calc(1rem * pow(var(--phi), -3))
-
-    @include CanvasDirective.host(20%)
+    @include CanvasDirective.host(18%)
     @include FlexboxContainerDirective.host
 
     --standard--flexbox-container-directive--align-items: center !important
     --standard--flexbox-container-directive--flex-direction: row !important
-    --standard--flexbox-container-directive--gap-column: var(--standard--footer--gap-column) !important
-    --standard--flexbox-container-directive--gap-row: var(--standard--footer--gap-row) !important
     --standard--flexbox-container-directive--justify-content: center !important
 
     > .harness

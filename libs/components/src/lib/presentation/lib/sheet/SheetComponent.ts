@@ -1,9 +1,12 @@
-import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                         from "@angular/common";
-import { afterRender, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                            from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                        from "@standard/directives";
-import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                          from "body-scroll-lock";
-import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                     from "rxjs";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                           from "@angular/common";
+import { afterRender, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                              from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                          from "@standard/directives";
+import { type SymbolPaths }                                                                                                                                                                        from "@standard/interfaces";
+import loadSymbolPaths                                                                                                                                                                             from "@standard/symbol-paths";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                            from "body-scroll-lock";
+import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                                       from "rxjs";
+import { fromPromise }                                                                                                                                                                             from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
@@ -67,22 +70,25 @@ export class SheetComponent {
       effect(
         (effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
           if (this.openOrClosing$())
-            ((): void => {
-              disableBodyScroll(this.htmlDialogElementRef$().nativeElement);
+            setTimeout(
+              (): void => {
+                disableBodyScroll(this.htmlDialogElementRef$().nativeElement);
 
-              this.htmlDialogElementRef$().nativeElement.showModal();
-
-              setTimeout(
-                (): void => this.htmlDialogElementRef$().nativeElement.focus(),
-                0,
-              );
-            })();
+                this.htmlDialogElementRef$().nativeElement.showModal();
+                this.htmlDialogElementRef$().nativeElement.focus();
+              },
+              0,
+            );
           else
-            ((): void => {
-              enableBodyScroll(this.htmlDialogElementRef$().nativeElement);
+            setTimeout(
+              (): void => {
+                enableBodyScroll(this.htmlDialogElementRef$().nativeElement);
 
-              this.htmlDialogElementRef$().nativeElement.close();
-            })();
+                this.htmlDialogElementRef$().nativeElement.focus();
+                this.htmlDialogElementRef$().nativeElement.close();
+              },
+              0,
+            );
 
           effectCleanupRegisterFn(
             (): void => clearAllBodyScrollLocks(),
@@ -107,6 +113,12 @@ export class SheetComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
+  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
+    fromPromise<SymbolPaths>(
+      loadSymbolPaths("ArrowUpAndDownAndArrowLeftAndRight"),
+    ),
+  );
+
   public readonly openModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
     (): boolean | undefined => ((open?: "" | boolean | `${ boolean }`): boolean | undefined => {
       if (open !== undefined)
@@ -128,6 +140,7 @@ export class SheetComponent {
   ) : signal<undefined>(undefined);
   protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
+  public readonly dragControlTemplateRef$: Signal<TemplateRef<never>>                = viewChild.required<TemplateRef<never>>("dragControlTemplate");
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(
     false,
     {

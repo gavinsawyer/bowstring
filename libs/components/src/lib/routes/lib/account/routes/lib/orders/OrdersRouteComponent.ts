@@ -9,11 +9,11 @@ import { HeaderComponent, RouteComponent } from "../../../../../../../";
     ],
     standalone:  true,
     styleUrls:   [
-      "PaymentAndShippingRouteComponent.sass",
+      "OrdersRouteComponent.sass",
     ],
-    templateUrl: "PaymentAndShippingRouteComponent.html",
+    templateUrl: "OrdersRouteComponent.html",
   },
 )
-export class PaymentAndShippingRouteComponent
+export class OrdersRouteComponent
   extends RouteComponent {
 }

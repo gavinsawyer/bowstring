@@ -1,11 +1,11 @@
 \:host
   display: contents
 
-  > standard--flexbox-container:first-child
+  > standard--flexbox-container:first-of-type
     @media (min-width: 48rem)
       --standard--flexbox-child-directive--flex-basis: 100% !important
 
-  > standard--flexbox-container:last-child
+  > standard--flexbox-container:last-of-type
     @media (min-width: 48rem)
       --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
 

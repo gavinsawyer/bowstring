@@ -1,9 +1,8 @@
-import { FocusMonitor, type FocusOrigin }                                                                      from "@angular/cdk/a11y";
-import { isPlatformBrowser }                                                                                   from "@angular/common";
-import { computed, Directive, type ElementRef, inject, PLATFORM_ID, type Signal, signal, type WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                              from "@angular/core/rxjs-interop";
-import { PointerService }                                                                                      from "@standard/services";
-import { combineLatestWith, delayWhen, filter, map, type Observable, switchMap, timer }                        from "rxjs";
+import { DOCUMENT, isPlatformBrowser }                                                                                          from "@angular/common";
+import { computed, Directive, type ElementRef, inject, PLATFORM_ID, type Signal, signal, type WritableSignal }                  from "@angular/core";
+import { toObservable, toSignal }                                                                                               from "@angular/core/rxjs-interop";
+import { PointerService }                                                                                                       from "@standard/services";
+import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Observable, startWith, switchMap, takeUntil, timer } from "rxjs";
 
 
 @Directive(
@@ -11,6 +10,8 @@ import { combineLatestWith, delayWhen, filter, map, type Observable, switchMap, 
     host:       {
       "[class.focusedOrUnfocusing]":                                          "focusedOrUnfocusing$()",
       "[class.focused]":                                                      "focused$()",
+      "[class.pressedOrUnpressing]":                                          "pressedOrUnpressing$()",
+      "[class.pressed]":                                                      "pressed$()",
       "[class.transformedOrUntransforming]":                                  "transformedOrUntransforming$()",
       "[class.transformed]":                                                  "transformed$()",
       "[style.--standard--hover-transforming-directive--last-translation-x]": "lastTranslationX$()",
@@ -23,7 +24,7 @@ import { combineLatestWith, delayWhen, filter, map, type Observable, switchMap, 
 )
 export class HoverTransformingDirective {
 
-  private readonly focusMonitor: FocusMonitor                                     = inject<FocusMonitor>(FocusMonitor);
+  private readonly document: Document                                             = inject<Document>(DOCUMENT);
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly pointerService: PointerService                                 = inject<PointerService>(PointerService);
   private readonly translation$: Signal<{ "x": number, "y": number } | undefined> = computed<{ "x": number, "y": number } | undefined>(
@@ -52,12 +53,20 @@ export class HoverTransformingDirective {
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
       ),
       switchMap<ElementRef<HTMLElement>, Observable<boolean>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<boolean> => this.focusMonitor.monitor(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<boolean> => fromEvent<FocusEvent>(
           htmlElementRef.nativeElement,
-          true,
+          "focusin",
         ).pipe<boolean>(
-          map<FocusOrigin, boolean>(
-            (focusOrigin: FocusOrigin): boolean => !!focusOrigin,
+          switchMap<FocusEvent, Observable<boolean>>(
+            (): Observable<boolean> => fromEvent<FocusEvent>(
+              htmlElementRef.nativeElement,
+              "focusout",
+            ).pipe<false, boolean>(
+              map<FocusEvent, false>(
+                (): false => false,
+              ),
+              startWith<false, [ boolean ]>(true),
+            ),
           ),
         ),
       ),
@@ -98,6 +107,71 @@ export class HoverTransformingDirective {
   protected readonly lastTranslationY$: Signal<number | undefined>                      = computed<number | undefined>(
     (): number | undefined => this.lastTranslation$()?.y,
   );
+  protected readonly pressed$: Signal<boolean | undefined>                              = isPlatformBrowser(this.platformId) && this.document.defaultView ? ((window: Window & typeof globalThis): Signal<boolean | undefined> => toSignal<boolean>(
+    toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, boolean>(
+      filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
+        (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
+      ),
+      switchMap<ElementRef<HTMLElement>, Observable<boolean>>(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<boolean> => fromEvent<PointerEvent>(
+          htmlElementRef.nativeElement,
+          "pointerdown",
+        ).pipe<boolean>(
+          switchMap<PointerEvent, Observable<boolean>>(
+            (): Observable<boolean> => merge<[ false, false, true ]>(
+              fromEvent<PointerEvent>(
+                htmlElementRef.nativeElement,
+                "pointerup",
+              ).pipe<false>(
+                map<PointerEvent, false>(
+                  (): false => false,
+                ),
+              ),
+              fromEvent<PointerEvent>(
+                htmlElementRef.nativeElement,
+                "pointerleave",
+              ).pipe<false>(
+                map<PointerEvent, false>(
+                  (): false => false,
+                ),
+              ),
+              fromEvent<PointerEvent>(
+                htmlElementRef.nativeElement,
+                "pointerenter",
+              ).pipe<true, true>(
+                map<PointerEvent, true>(
+                  (): true => true,
+                ),
+                takeUntil<true>(
+                  fromEvent<PointerEvent>(
+                    window,
+                    "pointerup",
+                  ),
+                ),
+              ),
+            ).pipe<boolean>(
+              startWith<boolean, [ boolean ]>(true),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ))(this.document.defaultView) : signal<undefined>(undefined);
+  protected readonly pressedOrUnpressing$: Signal<boolean | undefined>                  = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.pressed$).pipe<boolean | undefined, boolean | undefined>(
+      delayWhen<boolean | undefined>(
+        (pressed?: boolean): Observable<number> => {
+          if (pressed !== undefined)
+            return pressed ? timer(0) : timer(100);
+          else
+            return timer(0);
+        },
+      ),
+      map<boolean | undefined, boolean | undefined>(
+        (): boolean | undefined => this.pressed$(),
+      ),
+    ),
+  ) : signal<undefined>(undefined);
   protected readonly translationX$: Signal<number | undefined>                          = computed<number | undefined>(
     (): number | undefined => this.translation$()?.x,
   );

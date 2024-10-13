@@ -10,6 +10,7 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
       "[class.appearance-raised]": "appearanceInput$() === 'raised'",
       "[class.appearance-symbol]": "appearanceInput$() === 'symbol'",
       "[class.disabled]":          "disabledInput$() || routerLinkActive$()?.isActive || false",
+      "[class.material-glass]":    "materialInput$() === 'glass'",
       "[class.material-inverse]":  "materialInput$() === 'inverse'",
       "[class.material-primary]":  "materialInput$() === 'primary'",
     },
@@ -82,9 +83,9 @@ export class ButtonComponent {
     );
   }
 
-  private readonly hoverTranslatingDirective: HoverTransformingDirective                 = inject<HoverTransformingDirective>(HoverTransformingDirective);
-  private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef<HTMLDivElement>>("htmlAnchorElement");
-  private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef<HTMLDivElement>>("htmlButtonElement");
+  private readonly hoverTranslatingDirective: HoverTransformingDirective                    = inject<HoverTransformingDirective>(HoverTransformingDirective);
+  private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLAnchorElement> | undefined> = viewChild<ElementRef<HTMLAnchorElement>>("htmlAnchorElement");
+  private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement>>("htmlButtonElement");
 
   protected readonly roundedContainerDirective: RoundedDirective             = inject<RoundedDirective>(RoundedDirective);
   protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
@@ -102,7 +103,7 @@ export class ButtonComponent {
       transform: booleanAttribute,
     },
   );
-  public readonly materialInput$: InputSignal<"inverse" | "primary" | undefined>                                           = input<"inverse" | "primary" | undefined>(
+  public readonly materialInput$: InputSignal<"glass" | "inverse" | "primary" | undefined>                                 = input<"glass" | "inverse" | "primary" | undefined>(
     undefined,
     {
       alias: "material",

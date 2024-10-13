@@ -1,13 +1,11 @@
-import { Component }                                                                from "@angular/core";
-import { HeaderComponent, HeadingGroupComponent, RouteComponent, SectionComponent } from "../../../../../../../";
+import { Component }                       from "@angular/core";
+import { HeaderComponent, RouteComponent } from "../../../../../../../";
 
 
 @Component(
   {
     imports:     [
       HeaderComponent,
-      HeadingGroupComponent,
-      SectionComponent,
     ],
     standalone:  true,
     styleUrls:   [

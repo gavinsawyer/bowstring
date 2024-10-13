@@ -34,23 +34,52 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
     transition: box-shadow 200ms var(--bounce)
     z-index: -1
 
-    @keyframes expand-shadow
-      0%
-        @include shadow($level)
-
-      100%
-        @include shadow($level / 1.6180339887)
-
-    @keyframes contract-shadow
+    @keyframes lower-shadow
       0%
         @include shadow($level / 1.6180339887)
 
       100%
         @include shadow($level)
 
-  &:not(.disabled) > .harness:before
-    @include shadow($level)
+    @keyframes press-shadow
+      0%
+        @include shadow($level)
+
+      100%
+        @include shadow(calc($level + 1))
+
+    @keyframes pressWhenRaised-shadow
+      0%
+        @include shadow($level / 1.6180339887)
+
+      100%
+        @include shadow(calc($level + 1))
+
+    @keyframes raise-shadow
+      0%
+        @include shadow($level)
+
+      100%
+        @include shadow($level / 1.6180339887)
+
+    @keyframes unpress-shadow
+      0%
+        @include shadow(calc($level + 1))
+
+      100%
+        @include shadow($level)
+
+    @keyframes unpressWhenRaised-shadow
+      0%
+        @include shadow(calc($level + 1))
+
+      100%
+        @include shadow($level / 1.6180339887)
+
+  &:not(.disabled)
+    > .harness:before
+      @include shadow($level)
 
 
 @mixin shadow($level)
-  box-shadow: transparentize(black, 0.6180339887) 0 calc(1rem * pow(var(--phi), 0 - $level)) calc(1rem * pow(var(--phi), 0 - $level) * pow(var(--phi), 1)) calc(-1rem * pow(var(--phi), 0 - $level) * pow(var(--phi), -1))
+  box-shadow: transparentize(black, 0.25) 0 calc(0.25rem * pow(var(--phi), 0 - $level)) calc(1rem * pow(var(--phi), 0 - $level) * pow(var(--phi), 1)) calc(-1rem * pow(var(--phi), 0 - $level) * pow(var(--phi), -1))
