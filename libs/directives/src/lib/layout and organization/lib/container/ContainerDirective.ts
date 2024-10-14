@@ -1,5 +1,7 @@
 import { Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                                   from "@angular/core";
 import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@standard/types";
+import { FlexboxChildDirective }                                                                                                                                                                                                                from "../flexbox child/FlexboxChildDirective";
+import { GridChildDirective }                                                                                                                                                                                                                   from "../grid child/GridChildDirective";
 
 
 @Directive(
@@ -24,6 +26,25 @@ import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalA
       "[style.--standard--container-directive--scroll-snap-stop-input]":  "scrollSnapStopInput$()",
       "[style.--standard--container-directive--scroll-snap-type-input]":  "scrollSnapTypeInput$()",
     },
+    hostDirectives: [
+      {
+        directive: FlexboxChildDirective,
+        inputs:    [
+          "flexBasis",
+          "flexGrow",
+          "flexShrink",
+        ],
+      },
+      {
+        directive: GridChildDirective,
+        inputs:    [
+          "gridColumnEnd",
+          "gridColumnStart",
+          "gridRowEnd",
+          "gridRowStart",
+        ],
+      },
+    ],
     standalone: true,
   },
 )

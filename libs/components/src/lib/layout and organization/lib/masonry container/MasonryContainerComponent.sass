@@ -1,0 +1,19 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/masonry container/MasonryContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--masonry-container--gap-column: 0
+  --standard--masonry-container--gap-row: 0
+
+  @include MasonryContainerDirective.host
+
+  --standard--masonry-container-directive--gap-column: var(--standard--masonry-container--gap-column) !important
+  --standard--masonry-container-directive--gap-row: var(--standard--masonry-container--gap-row) !important
+
+
+@each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--masonry-container--gap-column: var(--standard--#{ $host-context-namespace }--gap-column)
+    --standard--masonry-container--gap-row: var(--standard--#{ $host-context-namespace }--gap-row)

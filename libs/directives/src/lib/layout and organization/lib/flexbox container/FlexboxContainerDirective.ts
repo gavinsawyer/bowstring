@@ -1,7 +1,6 @@
 import { Directive, input, type InputSignal }                                                                                                                                        from "@angular/core";
 import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
 import { ContainerDirective }                                                                                                                                                        from "../container/ContainerDirective";
-import { FlexboxChildDirective }                                                                                                                                                     from "../flexbox child/FlexboxChildDirective";
 
 
 @Directive(
@@ -37,14 +36,6 @@ import { FlexboxChildDirective }                                                
           "scrollSnapAlign",
           "scrollSnapStop",
           "scrollSnapType",
-        ],
-      },
-      {
-        directive: FlexboxChildDirective,
-        inputs:    [
-          "flexBasis",
-          "flexGrow",
-          "flexShrink",
         ],
       },
     ],

@@ -1,5 +1,4 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
-@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
 
 
 \:host
@@ -8,7 +7,6 @@
   --standard--scroll-stack--current-image-index: calc(1 + var(--standard--scroll-stack--scroll-left, 0) / var(--standard--scroll-stack--width, 0))
 
   @include ContainerDirective.host
-  @include FlexboxChildDirective.host
 
   --standard--container-directive--overflow-x: scroll !important
   --standard--container-directive--scroll-snap-type: x mandatory !important
@@ -19,6 +17,7 @@
     > .element
       display: flex
       flex-direction: row
+      z-index: auto !important
 
       > div
         --standard--scroll-stack--item--relative-transformation: var(--standard--scroll-stack--item--index) - var(--standard--scroll-stack--current-image-index)
@@ -55,7 +54,6 @@
 
           &::ng-deep > *
             @include ContainerDirective.children
-            @include FlexboxChildDirective.children
 
             --standard--scroll-stack--minimum-aspect-ratio-input: initial
             --standard--scroll-stack--scroll-left: initial

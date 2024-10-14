@@ -5,6 +5,7 @@ export type * from "./lib/DistributedAlignment";
 export type * from "./lib/FlexDirection";
 export type * from "./lib/FlexPositionalAlignment";
 export type * from "./lib/FlexWrap";
+export type * from "./lib/GridAutoFlow";
 export type * from "./lib/GridPositionalAlignment";
 export type * from "./lib/Inherit";
 export type * from "./lib/InverseVariableString";

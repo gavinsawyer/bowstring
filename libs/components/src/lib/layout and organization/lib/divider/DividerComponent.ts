@@ -1,6 +1,6 @@
-import { NgTemplateOutlet }                          from "@angular/common";
-import { Component }                                 from "@angular/core";
-import { ContainerDirective, FlexboxChildDirective } from "@standard/directives";
+import { NgTemplateOutlet }   from "@angular/common";
+import { Component }          from "@angular/core";
+import { ContainerDirective } from "@standard/directives";
 
 
 @Component(
@@ -27,14 +27,6 @@ import { ContainerDirective, FlexboxChildDirective } from "@standard/directives"
           "scrollSnapAlign",
           "scrollSnapStop",
           "scrollSnapType",
-        ],
-      },
-      {
-        directive: FlexboxChildDirective,
-        inputs:    [
-          "flexBasis",
-          "flexGrow",
-          "flexShrink",
         ],
       },
     ],

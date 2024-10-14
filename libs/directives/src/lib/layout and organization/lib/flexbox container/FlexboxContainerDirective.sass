@@ -1,7 +1,6 @@
 @use "../../../../sass/functions"
 @use "../../../../sass/mixins"
 @use "../container/ContainerDirective"
-@use "../flexbox child/FlexboxChildDirective"
 
 
 $namespace: "flexbox-container"
@@ -21,7 +20,6 @@ $justify-content: functions.get-input-reference($namespace, "justify-content", n
 
 @mixin children
   @include ContainerDirective.children
-  @include FlexboxChildDirective.children
 
   @include mixins.reset-colors($namespace, ())
   @include mixins.reset-inputs($namespace, ("align-content", "align-items", "flex-direction", "flex-wrap", "gap-column", "gap-row", "justify-content", "scroll-left", "scroll-top"))
@@ -29,7 +27,6 @@ $justify-content: functions.get-input-reference($namespace, "justify-content", n
 
 @mixin host
   @include ContainerDirective.host
-  @include FlexboxChildDirective.host
 
   @include color-scheme("light")
 

@@ -1,7 +1,6 @@
 @use "../../../../sass/functions"
 @use "../../../../sass/mixins"
 @use "../container/ContainerDirective"
-@use "../flexbox child/FlexboxChildDirective"
 
 
 $namespace: "grid-container"
@@ -10,6 +9,11 @@ $align-content: functions.get-input-reference($namespace, "align-content", norma
 $align-items: functions.get-input-reference($namespace, "align-items", normal)
 $gap-column: functions.get-input-reference($namespace, "gap-column", calc(1rem * pow(var(--phi), 2)))
 $gap-row: functions.get-input-reference($namespace, "gap-row", calc(1rem * pow(var(--phi), 1)))
+$grid-auto-flow: functions.get-input-reference($namespace, "grid-auto-flow", row)
+$grid-auto-columns: functions.get-input-reference($namespace, "grid-auto-columns", none)
+$grid-auto-rows: functions.get-input-reference($namespace, "grid-auto-rows", none)
+$grid-template-columns: functions.get-input-reference($namespace, "grid-template-columns", none)
+$grid-template-rows: functions.get-input-reference($namespace, "grid-template-rows", none)
 $justify-content: functions.get-input-reference($namespace, "justify-content", normal)
 
 @function get-color($theme, $type, $shade)
@@ -19,15 +23,13 @@ $justify-content: functions.get-input-reference($namespace, "justify-content", n
 
 @mixin children
   @include ContainerDirective.children
-  @include FlexboxChildDirective.children
 
   @include mixins.reset-colors($namespace, ())
-  @include mixins.reset-inputs($namespace, ("align-content", "align-items", "flex-direction", "flex-wrap", "gap-column", "gap-row", "justify-content", "scroll-left", "scroll-top"))
+  @include mixins.reset-inputs($namespace, ("align-content", "align-items", "flex-direction", "flex-wrap", "gap-column", "gap-row", "grid-auto-flow", "grid-auto-columns", "grid-auto-rows", "grid-template-columns", "grid-template-rows", "justify-content", "scroll-left", "scroll-top"))
   @include mixins.reset-values($namespace, ("scroll-left", "scroll-top"))
 
 @mixin host
   @include ContainerDirective.host
-  @include FlexboxChildDirective.host
 
   @include color-scheme("light")
 
@@ -39,4 +41,9 @@ $justify-content: functions.get-input-reference($namespace, "justify-content", n
     align-items: $align-items
     display: grid
     gap: $gap-row $gap-column
+    grid-auto-flow: $grid-auto-flow
+    grid-auto-columns: $grid-auto-columns
+    grid-auto-rows: $grid-auto-rows
+    grid-template-columns: $grid-template-columns
+    grid-template-rows: $grid-template-rows
     justify-content: $justify-content

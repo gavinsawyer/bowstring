@@ -1,5 +1,4 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
-@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
@@ -11,7 +10,6 @@
   @include CanvasDirective.host(18%)
   @include ContainerDirective.host
   @include ElevatedDirective.host
-  @include FlexboxChildDirective.host
   @include RoundedDirective.host
 
   --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important

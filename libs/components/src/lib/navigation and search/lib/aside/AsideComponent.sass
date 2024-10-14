@@ -17,12 +17,11 @@
     --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
     --standard--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
 
-  > .harness > .element::ng-deep > *
-    @include FlexboxContainerDirective.children
+  > .harness
+    z-index: 1
 
-  @media (min-width: 48rem)
-    > .harness
-      z-index: 1
+    > .element::ng-deep > *
+      @include FlexboxContainerDirective.children
 
 
 @each $host-context-namespace in ("main", "sheet", "box")

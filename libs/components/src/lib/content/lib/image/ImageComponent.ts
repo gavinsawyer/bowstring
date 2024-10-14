@@ -1,6 +1,6 @@
 import { NgOptimizedImage, NgTemplateOutlet }                                                                                                               from "@angular/common";
 import { afterRender, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDirective, RoundedDirective }                                                  from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                                         from "@standard/directives";
 
 
 @Component(
@@ -41,14 +41,6 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, FlexboxChildDir
         inputs:    [
           "level",
           "materialOpacity",
-        ],
-      },
-      {
-        directive: FlexboxChildDirective,
-        inputs:    [
-          "flexBasis",
-          "flexGrow",
-          "flexShrink",
         ],
       },
       {

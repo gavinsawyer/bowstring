@@ -1,17 +1,21 @@
-import { Directive, input, type InputSignal }                                                                             from "@angular/core";
-import { type DistributedAlignment, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
-import { ContainerDirective }                                                                                             from "../container/ContainerDirective";
-import { FlexboxChildDirective }                                                                                          from "../flexbox child/FlexboxChildDirective";
+import { Directive, input, type InputSignal }                                                                                                from "@angular/core";
+import { type DistributedAlignment, type GridAutoFlow, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
+import { ContainerDirective }                                                                                                                from "../container/ContainerDirective";
 
 
 @Directive(
   {
     host:           {
-      "[style.--standard--grid-container-directive--align-content]":   "alignContentInput$()",
-      "[style.--standard--grid-container-directive--align-items]":     "alignItemsInput$()",
-      "[style.--standard--grid-container-directive--gap-column]":      "gapColumnInput$()",
-      "[style.--standard--grid-container-directive--gap-row]":         "gapRowInput$()",
-      "[style.--standard--grid-container-directive--justify-content]": "justifyContentInput$()",
+      "[style.--standard--grid-container-directive--align-content-input]":         "alignContentInput$()",
+      "[style.--standard--grid-container-directive--align-items-input]":           "alignItemsInput$()",
+      "[style.--standard--grid-container-directive--gap-column-input]":            "gapColumnInput$()",
+      "[style.--standard--grid-container-directive--gap-row-input]":               "gapRowInput$()",
+      "[style.--standard--grid-container-directive--grid-auto-flow-input]":        "gridAutoFlowInput$()",
+      "[style.--standard--grid-container-directive--grid-auto-columns-input]":     "gridAutoColumnsInput$()",
+      "[style.--standard--grid-container-directive--grid-auto-rows-input]":        "gridAutoRowsInput$()",
+      "[style.--standard--grid-container-directive--grid-template-columns-input]": "gridTemplateColumnsInput$()",
+      "[style.--standard--grid-container-directive--grid-template-rows-input]":    "gridTemplateRowsInput$()",
+      "[style.--standard--grid-container-directive--justify-content-input]":       "justifyContentInput$()",
     },
     hostDirectives: [
       {
@@ -35,14 +39,6 @@ import { FlexboxChildDirective }                                                
           "scrollSnapAlign",
           "scrollSnapStop",
           "scrollSnapType",
-        ],
-      },
-      {
-        directive: FlexboxChildDirective,
-        inputs:    [
-          "flexBasis",
-          "flexGrow",
-          "flexShrink",
         ],
       },
     ],
@@ -69,16 +65,46 @@ export class GridContainerDirective {
       alias: "gapColumn",
     },
   );
-  public readonly justifyContentInput$: InputSignal<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined> = input<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined>(
-    undefined,
-    {
-      alias: "justifyContent",
-    },
-  );
   public readonly gapRowInput$: InputSignal<ScalarString | Inherit | undefined>                                                   = input<ScalarString | Inherit | undefined>(
     undefined,
     {
       alias: "gapRow",
+    },
+  );
+  public readonly gridAutoFlowInput$: InputSignal<GridAutoFlow | Inherit | undefined>                                             = input<GridAutoFlow | Inherit | undefined>(
+    undefined,
+    {
+      alias: "gridAutoFlow",
+    },
+  );
+  public readonly gridAutoColumnsInput$: InputSignal<ScalarString | Inherit | undefined>                                          = input<ScalarString | Inherit | undefined>(
+    undefined,
+    {
+      alias: "gridAutoColumns",
+    },
+  );
+  public readonly gridAutoRowsInput$: InputSignal<ScalarString | Inherit | undefined>                                             = input<ScalarString | Inherit | undefined>(
+    undefined,
+    {
+      alias: "gridAutoRows",
+    },
+  );
+  public readonly gridTemplateColumnsInput$: InputSignal<string | undefined>                                                      = input<string | undefined>(
+    undefined,
+    {
+      alias: "gridTemplateColumns",
+    },
+  );
+  public readonly gridTemplateRowsInput$: InputSignal<string | undefined>                                                         = input<string | undefined>(
+    undefined,
+    {
+      alias: "gridTemplateRows",
+    },
+  );
+  public readonly justifyContentInput$: InputSignal<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined> = input<DistributedAlignment | GridPositionalAlignment | NormalAlignment | undefined>(
+    undefined,
+    {
+      alias: "justifyContent",
     },
   );
 

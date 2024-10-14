@@ -1,7 +1,7 @@
 import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                   from "@angular/common";
 import { Component, contentChildren, type ElementRef, inject, Injector, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, runInInjectionContext, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                from "@angular/core/rxjs-interop";
-import { ContainerDirective, FlexboxChildDirective, ScrollStackItemDirective }                                                                                                                                   from "@standard/directives";
+import { ContainerDirective, ScrollStackItemDirective }                                                                                                                                                          from "@standard/directives";
 import { ViewportService }                                                                                                                                                                                       from "@standard/services";
 import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }                                                                                                from "rxjs";
 
@@ -36,14 +36,6 @@ import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith
           "scrollSnapAlign",
           "scrollSnapStop",
           "scrollSnapType",
-        ],
-      },
-      {
-        directive: FlexboxChildDirective,
-        inputs:    [
-          "flexBasis",
-          "flexGrow",
-          "flexShrink",
         ],
       },
     ],

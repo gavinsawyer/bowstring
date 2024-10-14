@@ -1,5 +1,7 @@
 @use "../../../../sass/functions"
 @use "../../../../sass/mixins"
+@use "../flexbox child/FlexboxChildDirective"
+@use "../grid child/GridChildDirective"
 
 
 $namespace: "container"
@@ -29,11 +31,17 @@ $scroll-snap-type: functions.get-input-reference($namespace, "scroll-snap-type",
 @mixin color-scheme($theme)
 
 @mixin children
+  @include FlexboxChildDirective.children
+  @include GridChildDirective.children
+
   @include mixins.reset-colors($namespace, ())
   @include mixins.reset-inputs($namespace, ("align-self", "aspect-ratio", "margin-bottom", "margin-sides", "margin-top", "overflow-x", "overflow-y", "padding-bottom", "padding-sides", "padding-top", "position", "position-bottom", "position-left", "position-right", "position-top", "scroll-snap-align", "scroll-snap-stop", "scroll-snap-type"))
   @include mixins.reset-values($namespace, ())
 
 @mixin host
+  @include FlexboxChildDirective.host
+  @include GridChildDirective.host
+
   @include color-scheme("light")
 
   @media (prefers-color-scheme: dark)
@@ -51,7 +59,6 @@ $scroll-snap-type: functions.get-input-reference($namespace, "scroll-snap-type",
     right: $position-right
     scroll-snap-align: $scroll-snap-align
     top: $position-top
-    z-index: 0
     -webkit-tap-highlight-color: transparent
 
     > .element
@@ -60,3 +67,4 @@ $scroll-snap-type: functions.get-input-reference($namespace, "scroll-snap-type",
       padding: $padding-top $padding-sides $padding-bottom
       scroll-snap-stop: $scroll-snap-stop
       scroll-snap-type: $scroll-snap-type
+      z-index: 0

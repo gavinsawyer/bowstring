@@ -1,5 +1,4 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
-@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox child/FlexboxChildDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 
 
@@ -8,7 +7,6 @@
 
   @include CanvasDirective.host(60%)
   @include ContainerDirective.host
-  @include FlexboxChildDirective.host
 
   > .harness > .element
     display: flex
