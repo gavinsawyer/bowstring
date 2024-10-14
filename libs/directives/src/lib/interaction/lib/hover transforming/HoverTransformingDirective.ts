@@ -118,7 +118,7 @@ export class HoverTransformingDirective {
           "pointerdown",
         ).pipe<boolean>(
           switchMap<PointerEvent, Observable<boolean>>(
-            (): Observable<boolean> => merge<[ false, false, true ]>(
+            (): Observable<boolean> => merge<[ false, false, false, true ]>(
               fromEvent<PointerEvent>(
                 htmlElementRef.nativeElement,
                 "pointerup",
@@ -130,6 +130,14 @@ export class HoverTransformingDirective {
               fromEvent<PointerEvent>(
                 htmlElementRef.nativeElement,
                 "pointerleave",
+              ).pipe<false>(
+                map<PointerEvent, false>(
+                  (): false => false,
+                ),
+              ),
+              fromEvent<PointerEvent>(
+                window,
+                "scroll",
               ).pipe<false>(
                 map<PointerEvent, false>(
                   (): false => false,
