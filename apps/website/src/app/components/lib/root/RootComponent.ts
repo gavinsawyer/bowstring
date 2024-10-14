@@ -1,17 +1,20 @@
-import { DOCUMENT, isPlatformBrowser, Location }                                           from "@angular/common";
-import { Component, inject, LOCALE_ID, PLATFORM_ID }                                       from "@angular/core";
-import { type User }                                                                       from "@angular/fire/auth";
-import { deleteDoc, doc, type DocumentReference, Firestore, setDoc }                       from "@angular/fire/firestore";
-import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators } from "@angular/forms";
-import { type SheetComponent }                                                             from "@standard/components";
-import { CanvasDirective, FlexboxContainerDirective }                                      from "@standard/directives";
-import { BRAND, GIT_INFO, PACKAGE_VERSION }                                                from "@standard/injection-tokens";
-import { type ProfileDocument }                                                            from "@standard/interfaces";
-import { AuthenticationService, ResponsivityService }                                      from "@standard/services";
-import { type Brand }                                                                      from "@standard/types";
-import { type GitInfo }                                                                    from "git-describe";
-import { LOCALE_IDS }                                                                      from "../../../injection tokens";
-import { type LocaleId }                                                                   from "../../../types";
+import { DOCUMENT, isPlatformBrowser, Location }                                                         from "@angular/common";
+import { Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                        from "@angular/core/rxjs-interop";
+import { type User }                                                                                     from "@angular/fire/auth";
+import { deleteDoc, doc, type DocumentReference, Firestore, setDoc }                                     from "@angular/fire/firestore";
+import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }               from "@angular/forms";
+import { RouterOutlet }                                                                                  from "@angular/router";
+import { type RouteComponent, type SheetComponent }                                                      from "@standard/components";
+import { CanvasDirective, FlexboxContainerDirective }                                                    from "@standard/directives";
+import { BRAND, GIT_INFO, PACKAGE_VERSION }                                                              from "@standard/injection-tokens";
+import { type ProfileDocument }                                                                          from "@standard/interfaces";
+import { AuthenticationService, ResponsivityService }                                                    from "@standard/services";
+import { type Brand }                                                                                    from "@standard/types";
+import { type GitInfo }                                                                                  from "git-describe";
+import { map, type Observable, startWith, switchMap }                                                    from "rxjs";
+import { LOCALE_IDS }                                                                                    from "../../../injection tokens";
+import { type LocaleId }                                                                                 from "../../../types";
 
 
 @Component(
@@ -42,12 +45,70 @@ import { type LocaleId }                                                        
 )
 export class RootComponent {
 
-  private readonly document: Document               = inject<Document>(DOCUMENT);
-  private readonly firestore: Firestore             = inject<Firestore>(Firestore);
-  private readonly location: Location               = inject<Location>(Location);
-  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly document: Document                  = inject<Document>(DOCUMENT);
+  private readonly firestore: Firestore                = inject<Firestore>(Firestore);
+  private readonly injector: Injector                  = inject<Injector>(Injector);
+  private readonly location: Location                  = inject<Location>(Location);
+  private readonly platformId: NonNullable<unknown>    = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly routerOutlet$: Signal<RouterOutlet> = viewChild.required<RouterOutlet>(RouterOutlet);
 
+  protected readonly aboveTemplateRef$: Signal<TemplateRef<never> | null>                                                                                       = toSignal<TemplateRef<never> | null>(
+    toObservable<RouterOutlet>(
+      this.routerOutlet$,
+    ).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
+      switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
+        (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
+          switchMap<RouteComponent, Observable<TemplateRef<never> | undefined>>(
+            (routeComponent: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable(
+              routeComponent.aboveTemplateRef$,
+              {
+                injector: this.injector,
+              },
+            ),
+          ),
+          startWith<TemplateRef<never> | undefined, [ TemplateRef<never> | undefined ]>(
+            (routerOutlet.component as RouteComponent).aboveTemplateRef$(),
+          ),
+          map<TemplateRef<never> | undefined, TemplateRef<never> | null>(
+            (templateRef?: TemplateRef<never>): TemplateRef<never> | null => templateRef || null,
+          ),
+        ),
+      ),
+      startWith<TemplateRef<never> | null, [ null ]>(null),
+    ),
+    {
+      requireSync: true,
+    },
+  );
   protected readonly authenticationService: AuthenticationService                                                                                               = inject<AuthenticationService>(AuthenticationService);
+  protected readonly belowTemplateRef$: Signal<TemplateRef<never> | null>                                                                                       = toSignal<TemplateRef<never> | null>(
+    toObservable<RouterOutlet>(
+      this.routerOutlet$,
+    ).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
+      switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
+        (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
+          switchMap<RouteComponent, Observable<TemplateRef<never> | undefined>>(
+            (routeComponent: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable(
+              routeComponent.belowTemplateRef$,
+              {
+                injector: this.injector,
+              },
+            ),
+          ),
+          startWith<TemplateRef<never> | undefined, [ TemplateRef<never> | undefined ]>(
+            (routerOutlet.component as RouteComponent).belowTemplateRef$(),
+          ),
+          map<TemplateRef<never> | undefined, TemplateRef<never> | null>(
+            (templateRef?: TemplateRef<never>): TemplateRef<never> | null => templateRef || null,
+          ),
+        ),
+      ),
+      startWith<TemplateRef<never> | null, [ null ]>(null),
+    ),
+    {
+      requireSync: true,
+    },
+  );
   protected readonly brand: Brand                                                                                                                               = inject<Brand>(BRAND);
   protected readonly gitInfo: Partial<GitInfo>                                                                                                                  = inject<Partial<GitInfo>>(GIT_INFO);
   protected readonly localeId: LocaleId                                                                                                                         = inject<LocaleId>(LOCALE_ID);

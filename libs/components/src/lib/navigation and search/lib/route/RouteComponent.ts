@@ -1,5 +1,5 @@
-import { Component, inject, input, type InputSignal, type OnInit } from "@angular/core";
-import { Meta }                                                    from "@angular/platform-browser";
+import { Component, inject, input, type InputSignal, type OnInit, type Signal, TemplateRef, viewChild } from "@angular/core";
+import { Meta }                                                                                         from "@angular/platform-browser";
 
 
 @Component(
@@ -13,7 +13,9 @@ export class RouteComponent
 
   private readonly meta: Meta = inject<Meta>(Meta);
 
-  public readonly descriptionInput$: InputSignal<string> = input.required<string>(
+  public readonly aboveTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("aboveTemplate");
+  public readonly belowTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("belowTemplate");
+  public readonly descriptionInput$: InputSignal<string>                    = input.required<string>(
     {
       alias: "description",
     },

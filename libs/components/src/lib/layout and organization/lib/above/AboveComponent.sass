@@ -1,0 +1,18 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+
+
+\:host
+  display: contents
+
+  --standard--above--font-size-exponent: -2
+  --standard--above--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--above--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-child-directive--flex-grow: 1 !important
+  --standard--flexbox-container-directive--gap-column: var(--standard--above--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--above--gap-row) !important
+
+  > .harness > .element::ng-deep > *
+    @include FlexboxContainerDirective.children

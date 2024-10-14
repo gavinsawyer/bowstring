@@ -170,7 +170,7 @@ export class HoverTransformingDirective {
       delayWhen<boolean | undefined>(
         (pressed?: boolean): Observable<number> => {
           if (pressed !== undefined)
-            return pressed ? timer(0) : timer(100);
+            return pressed ? timer(0) : timer(50);
           else
             return timer(0);
         },

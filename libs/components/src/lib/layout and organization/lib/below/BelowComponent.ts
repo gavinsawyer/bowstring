@@ -22,13 +22,13 @@ import { FlexboxContainerDirective } from "@standard/directives";
     imports:        [
       NgTemplateOutlet,
     ],
-    selector:       "standard--main",
+    selector:       "standard--below",
     standalone:     true,
     styleUrls:      [
-      "MainComponent.sass",
+      "BelowComponent.sass",
     ],
-    templateUrl:    "MainComponent.html",
+    templateUrl:    "BelowComponent.html",
   },
 )
-export class MainComponent {
+export class BelowComponent {
 }

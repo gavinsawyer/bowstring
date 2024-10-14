@@ -6,9 +6,9 @@ import { ScrollStackItemDirective }                                             
 @Component(
   {
     imports:     [
+      BoxComponent,
       ArticleComponent,
       AsideComponent,
-      BoxComponent,
       FlexboxContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,

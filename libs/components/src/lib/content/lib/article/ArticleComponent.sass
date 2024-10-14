@@ -17,7 +17,7 @@
     @include FlexboxContainerDirective.children
 
 
-@each $host-context-namespace in ("main", "sheet", "box")
+@each $host-context-namespace in ("main", "above", "below", "sheet", "box")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--article--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
     --standard--article--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

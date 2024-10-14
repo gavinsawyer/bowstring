@@ -15,8 +15,7 @@
     material="glass"
     (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--button>}
 </standard--section>
-<standard--flexbox-container
-  flexGrow="1">
+<standard--flexbox-container flexGrow="1">
   @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--aside>
     <standard--box
       position="sticky"
@@ -67,7 +66,7 @@
 </standard--flexbox-container>
 
 <standard--sheet #signoutSheetComponent>
-  <standard--header>
+  @defer {<standard--header>
     <h6 i18n="@@libs--Components--Routes--Account--SignoutSheet--Header">Are you sure?</h6>
   </standard--header>
   <standard--section flexDirection="row">
@@ -89,5 +88,5 @@
         i18n-input
         input="Sign out" />
     </standard--button>
-  </standard--section>
+  </standard--section>}
 </standard--sheet>

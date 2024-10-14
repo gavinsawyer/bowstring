@@ -11,6 +11,7 @@
     "src/polyfills.ts"
   ],
   "include":         [
+    "src/app/components/lib/routes/**/outlet routes/index.ts",
     "../../libs/symbol paths/src/lib/**/*.ts"
   ]
 }
