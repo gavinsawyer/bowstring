@@ -12,8 +12,12 @@
   --standard--flexbox-container-directive--gap-column: var(--standard--section--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--section--gap-row) !important
 
-  > .harness > .element::ng-deep > *
-    @include FlexboxContainerDirective.children
+  > .harness > .element::ng-deep
+    > *
+      @include FlexboxContainerDirective.children
+
+    > router-outlet
+      display: none
 
 
 @each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form")

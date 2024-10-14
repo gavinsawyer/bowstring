@@ -1,7 +1,7 @@
-import { Component, inject }                                                                                                                                                                                                                                          from "@angular/core";
-import { RouterOutlet }                                                                                                                                                                                                                                               from "@angular/router";
-import { AuthenticationService, ProfileService }                                                                                                                                                                                                                      from "@standard/services";
-import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, GridContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SheetComponent, SymbolComponent } from "../../../../";
+import { Component, inject }                                                                                                                                                                                                                                    from "@angular/core";
+import { RouterOutlet }                                                                                                                                                                                                                                         from "@angular/router";
+import { AuthenticationService, ProfileService }                                                                                                                                                                                                                from "@standard/services";
+import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../";
 
 
 @Component(
@@ -10,17 +10,17 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
       AsideComponent,
       BoxComponent,
       ButtonComponent,
+      DividerComponent,
       FlexboxContainerComponent,
-      GridContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,
+      ImageComponent,
       LabelComponent,
       LinkComponent,
       RouterOutlet,
+      SectionComponent,
       SheetComponent,
       SymbolComponent,
-      ImageComponent,
-      DividerComponent,
     ],
     standalone:  true,
     styleUrls:   [

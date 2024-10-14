@@ -1,14 +1,6 @@
+@use "../../../navigation and search/lib/route/RouteComponent"
+
 \:host
   display: contents
 
-  > standard--flexbox-container:first-of-type
-    @media (min-width: 48rem)
-      --standard--flexbox-child-directive--flex-basis: 100% !important
-
-  > standard--flexbox-container:last-of-type
-    @media (min-width: 48rem)
-      --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
-
-    &::ng-deep > .harness > .element > router-outlet
-      display: none
-
+  @include RouteComponent.host

@@ -36,10 +36,3 @@ $column-width: functions.get-value-reference($namespace, "column-width")
     gap: $gap-row $gap-column
     grid-template-columns: repeat($columns, 1fr)
     margin-bottom: calc(-1 * $gap-row)
-
-    > div:first-child
-      width: $gap-column
-
-    &::ng-deep > * > .harness
-      margin-bottom: $gap-row !important
-      width: calc(1px * $column-width) !important

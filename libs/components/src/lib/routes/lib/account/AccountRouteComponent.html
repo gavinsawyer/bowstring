@@ -1,4 +1,4 @@
-<standard--flexbox-container
+<standard--section
   alignItems="center"
   flexDirection="row"
   flexShrink="0"
@@ -14,60 +14,63 @@
     appearance="raised"
     material="glass"
     (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--button>}
-</standard--flexbox-container>
-@if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--aside>
-  <standard--box
-    position="sticky"
-    positionTop="var(--standard--root--padding-bottom)">
-    <standard--flexbox-container
-      alignItems="center"
-      flexDirection="row"
-      flexWrap="wrap">
-      <standard--image
-        appearance="circular"
-        flexBasis="51px"
-        height="51"
-        level="2"
-        src="https://placehold.co/102x102"
-        width="51" />
-      <standard--heading-group>
-        <standard--header fontSizeExponent="-2">
-          <h4>{{ profileService.profileDocument$()?.name }}</h4>
-          <h5>{{ profileService.profileDocument$()?.email }}</h5>
-        </standard--header>
-      </standard--heading-group>
-    </standard--flexbox-container>
-    <standard--divider />
-    <standard--flexbox-container>
-      <standard--link
-        i18n="@@libs--Components--Routes--Account-Messages--Meta--Title"
-        url="./messages">Messages</standard--link>
-      <standard--link
-        i18n="@@libs--Components--Routes--Account-Orders--Meta--Title"
-        url="./orders">Orders</standard--link>
-      <standard--link
-        i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title"
-        url="./payment-and-shipping">Payment and shipping</standard--link>
-      <standard--link
-        i18n="@@libs--Components--Routes--Account-PersonalInformation--Meta--Title"
-        url="./personal-information">Personal information</standard--link>
-      <standard--link
-        i18n="@@libs--Components--Routes--Account-Security--Meta--Title"
-        url="./security">Security</standard--link>
-    </standard--flexbox-container>
-  </standard--box>
-</standard--aside>
+</standard--section>
 <standard--flexbox-container
-  flexGrow="1"
-  flexShrink="0">
-  <router-outlet />
-</standard--flexbox-container>}
+  flexGrow="1">
+  @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--aside>
+    <standard--box
+      position="sticky"
+      positionTop="var(--standard--root--padding-bottom)">
+      <standard--section
+        alignItems="center"
+        flexDirection="row"
+        flexWrap="wrap">
+        <standard--image
+          appearance="circular"
+          flexBasis="51px"
+          height="51"
+          level="2"
+          src="https://placehold.co/102x102"
+          width="51" />
+        <standard--heading-group>
+          <standard--header fontSizeExponent="-2">
+            <h4>{{ profileService.profileDocument$()?.name }}</h4>
+            <h5>{{ profileService.profileDocument$()?.email }}</h5>
+          </standard--header>
+        </standard--heading-group>
+      </standard--section>
+      <standard--divider />
+      <standard--section>
+        <standard--link
+          i18n="@@libs--Components--Routes--Account-Messages--Meta--Title"
+          url="./messages">Messages</standard--link>
+        <standard--link
+          i18n="@@libs--Components--Routes--Account-Orders--Meta--Title"
+          url="./orders">Orders</standard--link>
+        <standard--link
+          i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title"
+          url="./payment-and-shipping">Payment and shipping</standard--link>
+        <standard--link
+          i18n="@@libs--Components--Routes--Account-PersonalInformation--Meta--Title"
+          url="./personal-information">Personal information</standard--link>
+        <standard--link
+          i18n="@@libs--Components--Routes--Account-Security--Meta--Title"
+          url="./security">Security</standard--link>
+      </standard--section>
+    </standard--box>
+  </standard--aside>
+  <standard--section
+    flexGrow="1"
+    flexShrink="0">
+    <router-outlet />
+  </standard--section>}
+</standard--flexbox-container>
 
 <standard--sheet #signoutSheetComponent>
   <standard--header>
     <h6 i18n="@@libs--Components--Routes--Account--SignoutSheet--Header">Are you sure?</h6>
   </standard--header>
-  <standard--flexbox-container flexDirection="row">
+  <standard--section flexDirection="row">
     <standard--button
       appearance="raised"
       level="2"
@@ -86,5 +89,5 @@
         i18n-input
         input="Sign out" />
     </standard--button>
-  </standard--flexbox-container>
+  </standard--section>
 </standard--sheet>

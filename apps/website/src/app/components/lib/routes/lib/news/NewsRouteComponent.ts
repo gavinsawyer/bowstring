@@ -1,6 +1,6 @@
-import { Component, signal, type WritableSignal }                                                                                                                                  from "@angular/core";
-import { ArticleComponent, AsideComponent, BoxComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent } from "@standard/components";
-import { ScrollStackItemDirective }                                                                                                                                                from "@standard/directives";
+import { Component, signal, type WritableSignal }                                                                                                                                                    from "@angular/core";
+import { ArticleComponent, AsideComponent, BoxComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent, SectionComponent } from "@standard/components";
+import { ScrollStackItemDirective }                                                                                                                                                                  from "@standard/directives";
 
 
 @Component(
@@ -15,6 +15,7 @@ import { ScrollStackItemDirective }                                             
       ImageComponent,
       ScrollStackComponent,
       ScrollStackItemDirective,
+      SectionComponent,
     ],
     standalone:  true,
     styleUrls:   [

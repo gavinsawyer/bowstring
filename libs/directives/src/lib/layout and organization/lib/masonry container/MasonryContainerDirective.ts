@@ -1,10 +1,10 @@
-import { isPlatformBrowser }                                                                                                                                                               from "@angular/common";
-import { afterRender, Directive, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, signal, type Signal, type WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                          from "@angular/core/rxjs-interop";
-import { type Inherit, type ScalarString }                                                                                                                                                 from "@standard/types";
-import type Masonry                                                                                                                                                                        from "masonry-layout";
-import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                                from "rxjs";
-import { ContainerDirective }                                                                                                                                                              from "../container/ContainerDirective";
+import { isPlatformBrowser }                                                                                                                                                                         from "@angular/common";
+import { afterRender, computed, Directive, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, signal, type Signal, type WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                    from "@angular/core/rxjs-interop";
+import { type Inherit, type ScalarString }                                                                                                                                                           from "@standard/types";
+import type Masonry                                                                                                                                                                                  from "masonry-layout";
+import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                                          from "rxjs";
+import { ContainerDirective }                                                                                                                                                                        from "../container/ContainerDirective";
 
 
 @Directive(
@@ -47,45 +47,44 @@ export class MasonryContainerDirective {
 
   constructor() {
     afterRender(
-      (): void => ((
-        {
-          columnSizerHtmlDivElementRef,
-          innerHtmlDivElementRef,
-          gutterSizerHtmlDivElementRef,
-          masonry,
-        }: {
-          columnSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
-          gutterSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
-          innerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
-          masonry?: Masonry,
-        }): void => {
-        if (columnSizerHtmlDivElementRef && gutterSizerHtmlDivElementRef && innerHtmlDivElementRef)
-          if (masonry)
-            this.masonry$()?.layout?.();
-          else
-            this.masonry$.set(new (require("masonry-layout") as typeof Masonry)(
-              innerHtmlDivElementRef.nativeElement,
-              {
-                columnWidth:        columnSizerHtmlDivElementRef.nativeElement,
-                gutter:             gutterSizerHtmlDivElementRef.nativeElement,
-                itemSelector:       ".harness",
-                percentPosition:    true,
-                transitionDuration: 0,
-              },
-            ));
-      })(
-        {
-          columnSizerHtmlDivElementRef: this.columnSizerHtmlDivElementRef$(),
-          gutterSizerHtmlDivElementRef: this.gutterSizerHtmlDivElementRef$(),
-          innerHtmlDivElementRef:       this.innerHtmlDivElementRef$(),
-          masonry:                      this.masonry$(),
-        },
-      ),
+      (): void => this.masonry$()?.layout?.(),
     );
   }
 
-  private readonly masonry$: WritableSignal<Masonry | undefined> = signal<undefined>(undefined);
-  private readonly platformId: NonNullable<unknown>              = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly masonry$: Signal<Masonry | undefined> = computed<Masonry | undefined>(
+    (): Masonry | undefined => ((
+      {
+        columnSizerHtmlDivElementRef,
+        innerHtmlDivElementRef,
+        gutterSizerHtmlDivElementRef,
+      }: {
+        columnSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
+        gutterSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
+        innerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
+      }): Masonry | undefined => {
+      if (columnSizerHtmlDivElementRef && gutterSizerHtmlDivElementRef && innerHtmlDivElementRef)
+        return new (require("masonry-layout") as typeof Masonry)(
+          innerHtmlDivElementRef.nativeElement,
+          {
+            columnWidth:        columnSizerHtmlDivElementRef.nativeElement,
+            gutter:             gutterSizerHtmlDivElementRef.nativeElement,
+            initLayout:         false,
+            itemSelector:       ".standardMasonryChild",
+            percentPosition:    true,
+            transitionDuration: 0,
+          },
+        );
+      else
+        return undefined;
+    })(
+      {
+        columnSizerHtmlDivElementRef: this.columnSizerHtmlDivElementRef$(),
+        gutterSizerHtmlDivElementRef: this.gutterSizerHtmlDivElementRef$(),
+        innerHtmlDivElementRef:       this.innerHtmlDivElementRef$(),
+      },
+    ),
+  );
+  private readonly platformId: NonNullable<unknown>      = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   public readonly columnSizerHtmlDivElementRef$: WritableSignal<ElementRef<HTMLDivElement> | undefined> = signal<undefined>(undefined);
 

@@ -9,7 +9,7 @@
   <standard--header>
     <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale</h6>
   </standard--header>
-  <standard--flexbox-container>
+  <standard--section>
     @for (locale of localeIds; track locale) {<standard--button
       [disabled]="locale === localeId"
       level="2"
@@ -17,25 +17,23 @@
       <standard--symbol input="Globe" />
       <standard--label [input]="localeDisplayNames.of(locale) || locale" />
     </standard--button>}
-  </standard--flexbox-container>
+  </standard--section>
 </standard--sheet>
 <standard--sheet #signinSheetComponent>
   <standard--header>
     <h6 i18n="@@apps--Website--Components--Root--SigninSheet--Header">Sign in</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinSheetComponent);">
-    <standard--flexbox-container>
-      <standard--button
-        appearance="raised"
-        level="2"
-        material="inverse"
-        type="submit">
-        <standard--symbol input="PersonBadgeKeyFill" />
-        <standard--label
-          i18n-input
-          input="Use Passkey" />
-      </standard--button>
-    </standard--flexbox-container>
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      type="submit">
+      <standard--symbol input="PersonBadgeKeyFill" />
+      <standard--label
+        i18n-input
+        input="Use Passkey" />
+    </standard--button>
   </standard--form>
   <standard--divider />}
   <standard--form (output)="signinFormSubmit(signinSheetComponent);">
@@ -61,7 +59,9 @@
       <standard--button
         appearance="symbol"
         [disabled]="signinFormGroup.invalid"
-        type="submit"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+        type="submit">
+        <standard--symbol input="ArrowForwardCircleFill" />
+      </standard--button>
     </standard--flexbox-container>
   </standard--form>
 </standard--sheet>
@@ -69,7 +69,7 @@
   <standard--header>
     <h6 i18n="@@apps--Website--Components--Root--SignoutSheet--Header">Are you sure?</h6>
   </standard--header>
-  <standard--flexbox-container flexDirection="row">
+  <standard--section flexDirection="row">
     <standard--button
       appearance="raised"
       level="2"
@@ -88,35 +88,31 @@
         i18n-input
         input="Sign out" />
     </standard--button>
-  </standard--flexbox-container>
+  </standard--section>
 </standard--sheet>
 <standard--sheet #signupSheetComponent>
   <standard--header>
     <h6 i18n="@@apps--Website--Components--Root--SignupSheet--Header">Create an account</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupSheetComponent);">
-    <standard--section>
-      <standard--text-field
-        autocomplete="email"
-        [formControl]="signupWithPasskeyFormGroup.controls.email"
-        i18n-placeholder
-        level="2"
-        placeholder="Email"
-        type="email" />
-    </standard--section>
-    <standard--flexbox-container>
-      <standard--button
-        appearance="raised"
-        [disabled]="signupWithPasskeyFormGroup.invalid"
-        level="2"
-        material="inverse"
-        type="submit">
-        <standard--symbol input="PersonBadgeKeyFill" />
-        <standard--label
-          i18n-input
-          input="Use Passkey" />
-      </standard--button>
-    </standard--flexbox-container>
+    <standard--text-field
+      autocomplete="email"
+      [formControl]="signupWithPasskeyFormGroup.controls.email"
+      i18n-placeholder
+      level="2"
+      placeholder="Email"
+      type="email" />
+    <standard--button
+      appearance="raised"
+      [disabled]="signupWithPasskeyFormGroup.invalid"
+      level="2"
+      material="inverse"
+      type="submit">
+      <standard--symbol input="PersonBadgeKeyFill" />
+      <standard--label
+        i18n-input
+        input="Use Passkey" />
+    </standard--button>
   </standard--form>
   <standard--divider />}
   <standard--form (output)="signupFormSubmit(signupSheetComponent);">
@@ -162,7 +158,9 @@
       <standard--button
         appearance="symbol"
         [disabled]="signupFormGroup.invalid"
-        type="submit"><standard--symbol input="ArrowForwardCircleFill" /></standard--button>
+        type="submit">
+        <standard--symbol input="ArrowForwardCircleFill" />
+      </standard--button>
     </standard--flexbox-container>
   </standard--form>
 </standard--sheet>
@@ -180,7 +178,9 @@
       gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
       justifyContent="space-between">
       <standard--header fontSizeExponent="-3">
-        <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h1>
+        <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
+          <standard--link url="/">{{ brand.title }}</standard--link>
+        </h1>
       </standard--header>
       <standard--nav>
         <standard--link
@@ -206,7 +206,9 @@
   </standard--flexbox-container>
   <standard--footer>
     <standard--header>
-      <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h6>
+      <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
+        <standard--link url="/">{{ brand.title }}</standard--link>
+      </h6>
     </standard--header>
     <standard--section
       flexDirection="row"

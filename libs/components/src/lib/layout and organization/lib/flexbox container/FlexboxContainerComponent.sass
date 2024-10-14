@@ -18,5 +18,5 @@
 
 @each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
   \:host-context(standard--#{ $host-context-namespace })
-    --standard--flexbox-container--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
-    --standard--flexbox-container--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+    --standard--flexbox-container--gap-column: var(--standard--#{ $host-context-namespace }--gap-column)
+    --standard--flexbox-container--gap-row: var(--standard--#{ $host-context-namespace }--gap-row)

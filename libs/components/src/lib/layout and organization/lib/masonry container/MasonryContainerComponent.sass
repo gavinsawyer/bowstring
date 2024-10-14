@@ -4,6 +4,7 @@
 \:host
   display: contents
 
+  --standard--masonry-container--column-width: var(--standard--masonry-container-directive--column-width)
   --standard--masonry-container--gap-column: 0
   --standard--masonry-container--gap-row: 0
 
@@ -12,6 +13,16 @@
   --standard--masonry-container-directive--gap-column: var(--standard--masonry-container--gap-column) !important
   --standard--masonry-container-directive--gap-row: var(--standard--masonry-container--gap-row) !important
 
+  > .harness > .element
+    &::ng-deep > *
+      @include MasonryContainerDirective.children
+
+    > div:first-child
+      width: var(--standard--masonry-container--gap-column)
+
+    > div.standardMasonryChild
+      margin-bottom: var(--standard--masonry-container--gap-row)
+      width: calc(1px * var(--standard--masonry-container--column-width))
 
 @each $host-context-namespace in ("nav", "footer", "main", "aside", "sheet", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
   \:host-context(standard--#{ $host-context-namespace })

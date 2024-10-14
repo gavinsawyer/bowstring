@@ -1,6 +1,6 @@
-import { NgTemplateOutlet }                                                        from "@angular/common";
-import { afterRender, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { MasonryContainerDirective }                                               from "@standard/directives";
+import { NgTemplateOutlet }                                                                                      from "@angular/common";
+import { afterRender, Component, contentChildren, type ElementRef, inject, type Signal, TemplateRef, viewChild } from "@angular/core";
+import { MasonryChildDirective, MasonryContainerDirective }                                                      from "@standard/directives";
 
 
 @Component(
@@ -38,9 +38,15 @@ export class MasonryContainerComponent {
     );
   }
 
-  private readonly columnSizerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("columnSizerHtmlDivElement");
-  private readonly gutterSizerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("gutterSizerHtmlDivElement");
-  private readonly innerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("innerHtmlDivElement");
-  private readonly masonryContainerDirective: MasonryContainerDirective              = inject<MasonryContainerDirective>(MasonryContainerDirective);
+  protected readonly childTemplateRefs$: Signal<readonly TemplateRef<MasonryChildDirective>[]> = contentChildren<MasonryChildDirective, TemplateRef<MasonryChildDirective>>(
+    MasonryChildDirective,
+    {
+      read: TemplateRef,
+    },
+  );
+  private readonly columnSizerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>           = viewChild.required<ElementRef<HTMLDivElement>>("columnSizerHtmlDivElement");
+  private readonly gutterSizerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>           = viewChild.required<ElementRef<HTMLDivElement>>("gutterSizerHtmlDivElement");
+  private readonly innerHtmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>                 = viewChild.required<ElementRef<HTMLDivElement>>("innerHtmlDivElement");
+  private readonly masonryContainerDirective: MasonryContainerDirective                        = inject<MasonryContainerDirective>(MasonryContainerDirective);
 
 }

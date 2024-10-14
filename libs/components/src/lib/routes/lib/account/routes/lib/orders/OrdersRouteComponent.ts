@@ -1,15 +1,15 @@
-import { Component }                                                                                                            from "@angular/core";
-import { GridContainerComponent, HeaderComponent, ImageComponent, MasonryContainerComponent, RouteComponent, SectionComponent } from "../../../../../../../";
+import { Component }                                                                  from "@angular/core";
+import { MasonryChildDirective }                                                      from "@standard/directives";
+import { HeaderComponent, ImageComponent, MasonryContainerComponent, RouteComponent } from "../../../../../../../";
 
 
 @Component(
   {
-    imports: [
+    imports:     [
       HeaderComponent,
       ImageComponent,
+      MasonryChildDirective,
       MasonryContainerComponent,
-      SectionComponent,
-      GridContainerComponent,
     ],
     standalone:  true,
     styleUrls:   [
