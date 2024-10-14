@@ -48,3 +48,6 @@
     &::ng-deep > *
       @include CanvasDirective.children
       @include FlexboxContainerDirective.children
+
+    > standard--flexbox-container::ng-deep > .harness
+      flex-basis: calc(100svh - max(var(--standard--root--safe-area-inset-top), var(--standard--root--padding-top)) - max(var(--standard--root--safe-area-inset-bottom), var(--standard--root--padding-bottom))) !important

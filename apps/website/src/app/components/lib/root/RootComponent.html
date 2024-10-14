@@ -169,35 +169,40 @@
 
 <ng-template #contentTemplate>
   <standard--flexbox-container
-    alignItems="last baseline"
-    flexDirection="row"
-    flexWrap="wrap"
-    gapColumn="calc(var(--standard--root--gap-column) * pow(var(--phi), -1))"
-    gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
-    justifyContent="space-between">
-    <standard--header fontSizeExponent="-3">
-      <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h1>
-    </standard--header>
-    <standard--nav>
-      <standard--link
-        i18n="@@apps--Website--Components--Routes--News--Meta--Title"
-        url="/news">News</standard--link>
-      <standard--link
-        i18n="@@apps--Website--Components--Routes--Design--Meta--Title"
-        url="/design">Design</standard--link>
-      <standard--link
-        i18n="@@apps--Website--Components--Routes--Develop--Meta--Title"
-        url="/develop">Develop</standard--link>
-      <standard--link
-        i18n="@@libs--Components--Routes--Account--Meta--Title"
-        url="/account">Account</standard--link>
-    </standard--nav>
-  </standard--flexbox-container>
-  <standard--flexbox-container
     flexGrow="1"
     gapColumn="var(--standard--root--gap-column)"
     gapRow="var(--standard--root--gap-row)">
-    <standard--main />
+    <standard--flexbox-container
+      alignItems="last baseline"
+      flexDirection="row"
+      flexWrap="wrap"
+      gapColumn="calc(var(--standard--root--gap-column) * pow(var(--phi), -1))"
+      gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
+      justifyContent="space-between">
+      <standard--header fontSizeExponent="-3">
+        <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;"><standard--link url="/">{{ brand.title }}</standard--link></h1>
+      </standard--header>
+      <standard--nav>
+        <standard--link
+          i18n="@@apps--Website--Components--Routes--News--Meta--Title"
+          url="/news">News</standard--link>
+        <standard--link
+          i18n="@@apps--Website--Components--Routes--Design--Meta--Title"
+          url="/design">Design</standard--link>
+        <standard--link
+          i18n="@@apps--Website--Components--Routes--Develop--Meta--Title"
+          url="/develop">Develop</standard--link>
+        <standard--link
+          i18n="@@libs--Components--Routes--Account--Meta--Title"
+          url="/account">Account</standard--link>
+      </standard--nav>
+    </standard--flexbox-container>
+    <standard--flexbox-container
+      flexGrow="1"
+      gapColumn="inherit"
+      gapRow="inherit">
+      <standard--main />
+    </standard--flexbox-container>
   </standard--flexbox-container>
   <standard--footer>
     <standard--header>
