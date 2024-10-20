@@ -38,21 +38,21 @@
       appearance="raised"
       level="2"
       material="inverse"
-      (output)="shippingFormSheet.openModel$.set(true);">
+      (output)="shippingFormSheetComponent.openModel$.set(true);">
       <standard--symbol input="Pencil" />
       <standard--label
         i18n-input
         input="Edit" />
     </standard--button>} @else {<standard--header>
-      <h4>Nothing here.</h4>
-      <h5>Add a shipping address for future orders.</h5>
+      <h4 i18n>Nothing here.</h4>
+      <h5 i18n>Add a shipping address for future orders.</h5>
     </standard--header>
     <standard--divider />
     <standard--button
       appearance="raised"
       level="2"
       material="inverse"
-      (output)="shippingFormSheet.openModel$.set(true);">
+      (output)="shippingFormSheetComponent.openModel$.set(true);">
       <standard--symbol input="Plus" />
       <standard--label
         i18n-input
@@ -63,15 +63,15 @@
     flexBasis="50%"
     flexGrow="1">
     <standard--header>
-      <h4>Nothing here.</h4>
-      <h5>Add a payment method for future orders.</h5>
+      <h4 i18n>Nothing here.</h4>
+      <h5 i18n>Add a payment method for future orders.</h5>
     </standard--header>
     <standard--divider />
     <standard--button
       appearance="raised"
       level="2"
       material="inverse"
-      (output)="billingFormSheet.openModel$.set(true);">
+      (output)="billingFormSheetComponent.openModel$.set(true);">
       <standard--symbol input="Plus" />
       <standard--label
         i18n-input
@@ -80,13 +80,11 @@
   </standard--box>
 </standard--section>
 
-<standard--sheet #billingFormSheet>
+<standard--sheet #billingFormSheetComponent>
   <standard--header>
-    <h6>
-      Edit your payment method.
-    </h6>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--BillingFormSheet--Header">Edit your payment method.</h6>
   </standard--header>
-  <standard--form (output)="billingFormSubmit(shippingFormSheet);">
+  <standard--form (output)="billingFormSubmit(billingFormSheetComponent);">
     <standard--divider />
     <standard--flexbox-container
       alignItems="center"
@@ -107,13 +105,11 @@
     </standard--flexbox-container>
   </standard--form>
 </standard--sheet>
-<standard--sheet #shippingFormSheet>
+<standard--sheet #shippingFormSheetComponent>
   <standard--header>
-    <h6>
-      Edit your shipping address.
-    </h6>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--ShippingFormSheet--Header">Edit your shipping address.</h6>
   </standard--header>
-  <standard--form (output)="shippingFormSubmit(shippingFormSheet);">
+  <standard--form (output)="shippingFormSubmit(shippingFormSheetComponent);">
     <standard--section>
       <standard--flexbox-container
         alignItems="flex-end"

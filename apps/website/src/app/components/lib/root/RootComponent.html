@@ -19,11 +19,11 @@
     </standard--button>}
   </standard--section>}
 </standard--sheet>
-<standard--sheet #signinSheetComponent>
+<standard--sheet #signinFormSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SigninSheet--Header">Sign in</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SigninFormSheet--Header">Sign in</h6>
   </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinSheetComponent);">
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinFormSheetComponent);">
     <standard--button
       appearance="raised"
       level="2"
@@ -36,7 +36,7 @@
     </standard--button>
   </standard--form>
   <standard--divider />}
-  <standard--form (output)="signinFormSubmit(signinSheetComponent);">
+  <standard--form (output)="signinFormSubmit(signinFormSheetComponent);">
     <standard--section>
       <standard--text-field
         autocomplete="username"
@@ -91,11 +91,11 @@
     </standard--button>
   </standard--section>}
 </standard--sheet>
-<standard--sheet #signupSheetComponent>
+<standard--sheet #signupFormSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SignupSheet--Header">Create an account</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SignupFormSheet--Header">Create an account</h6>
   </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupSheetComponent);">
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent);">
     <standard--text-field
       autocomplete="email"
       [formControl]="signupWithPasskeyFormGroup.controls.email"
@@ -116,7 +116,7 @@
     </standard--button>
   </standard--form>
   <standard--divider />}
-  <standard--form (output)="signupFormSubmit(signupSheetComponent);">
+  <standard--form (output)="signupFormSubmit(signupFormSheetComponent);">
     <standard--section>
       <standard--text-field
         autocomplete="email"
@@ -147,12 +147,12 @@
       <standard--list type="inline">
         <standard--link
           i18n
-          (output)="signupSheetComponent.openModel$.set(false);"
+          (output)="signupFormSheetComponent.openModel$.set(false);"
           *standardListItem
           url="/privacy">privacy policy</standard--link>
         <standard--link
           i18n
-          (output)="signupSheetComponent.openModel$.set(false);"
+          (output)="signupFormSheetComponent.openModel$.set(false);"
           *standardListItem
           url="/terms">terms</standard--link>
       </standard--list>
@@ -227,13 +227,13 @@
         </standard--flexbox-container>
         @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
           <standard--link
-            [disabled]="signinSheetComponent.openModelWithTransform$()"
+            [disabled]="signinFormSheetComponent.openModelWithTransform$()"
             i18n
-            (output)="signinSheetComponent.openModel$.set(true);">Sign in</standard--link>
+            (output)="signinFormSheetComponent.openModel$.set(true);">Sign in</standard--link>
           <standard--link
-            [disabled]="signupSheetComponent.openModelWithTransform$()"
+            [disabled]="signupFormSheetComponent.openModelWithTransform$()"
             i18n
-            (output)="signupSheetComponent.openModel$.set(true);">Create an account</standard--link>
+            (output)="signupFormSheetComponent.openModel$.set(true);">Create an account</standard--link>
         </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
           <standard--link
             i18n="@@libs--Components--Routes--Account--Meta--Title"
