@@ -117,5 +117,8 @@
                 filter: invert(1) hue-rotate(180deg)
                 transform: translateZ(0)
 
+                @supports (-webkit-touch-callout: none)
+                  caret-color: white
+
             &:not(:focus-within) > div > .harness
               display: none
