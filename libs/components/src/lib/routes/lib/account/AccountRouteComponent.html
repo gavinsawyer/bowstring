@@ -16,7 +16,7 @@
     (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--button>}
 </standard--section>
 <standard--flexbox-container flexGrow="1">
-  @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--aside>
+  @if (accountService.accountDocument$(); as accountDocument) {<standard--aside>
     <standard--box
       position="sticky"
       positionTop="var(--standard--root--padding-bottom)">
@@ -33,8 +33,8 @@
           width="51" />
         <standard--heading-group>
           <standard--header fontSizeExponent="-2">
-            <h4>{{ profileService.profileDocument$()?.name }}</h4>
-            <h5>{{ profileService.profileDocument$()?.email }}</h5>
+            <h4>{{ accountDocument.name }}</h4>
+            <h5>{{ accountDocument.email }}</h5>
           </standard--header>
         </standard--heading-group>
       </standard--section>
@@ -69,6 +69,7 @@
   @defer {<standard--header>
     <h6 i18n="@@libs--Components--Routes--Account--SignoutSheet--Header">Are you sure?</h6>
   </standard--header>
+  <standard--divider></standard--divider>
   <standard--section flexDirection="row">
     <standard--button
       appearance="raised"
@@ -81,6 +82,7 @@
     </standard--button>
     <standard--button
       appearance="raised"
+      flexGrow="1"
       level="2"
       material="inverse"
       (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">

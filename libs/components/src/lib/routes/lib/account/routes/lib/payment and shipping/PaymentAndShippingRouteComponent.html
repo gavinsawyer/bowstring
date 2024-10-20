@@ -1,3 +1,249 @@
 <standard--header>
   <h3 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Header">Payment and shipping</h3>
 </standard--header>
+<standard--section>
+  <standard--box
+    flexBasis="50%"
+    flexGrow="1">
+    @if (accountService.accountDocument$()?.shipping; as shipping) {@if (shipping.name; as name) {<standard--section>
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        @if (name.prefix) {<standard--label [input]="name.prefix" />}
+        <standard--label [input]="name.first" />
+      </standard--flexbox-container>
+      <standard--label [input]="name.last" />
+    </standard--section>}
+    @if (shipping.address; as address) {<standard--section>
+      <standard--label [input]="address.line1" />
+      @if (address.line2) {<standard--label [input]="address.line2" />}
+      @if (address.line3) {<standard--label [input]="address.line3" />}
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        <standard--label [input]="address.level2" />
+        <standard--label [input]="address.level1" />
+        <standard--label [input]="address.postalCode" />
+      </standard--flexbox-container>
+      <standard--label [input]="address.country" />
+    </standard--section>}
+    @if (shipping.phone; as phone) {<standard--section
+      alignItems="flex-end"
+      flexDirection="row">
+      <standard--label [input]="phone.countryCode | standardMask:'+00'" />
+      <standard--label [input]="phone.national | standardMask:phone.countryCode === '1' ? '(000) 000-0000' : phone.countryCode === '34' ? '00 00 00 000' : undefined" />
+    </standard--section>}
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="shippingFormSheet.openModel$.set(true);">
+      <standard--symbol input="Pencil" />
+      <standard--label
+        i18n-input
+        input="Edit" />
+    </standard--button>} @else {<standard--header>
+      <h4>Nothing here.</h4>
+      <h5>Add a shipping address for future orders.</h5>
+    </standard--header>
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="shippingFormSheet.openModel$.set(true);">
+      <standard--symbol input="Plus" />
+      <standard--label
+        i18n-input
+        input="Add" />
+    </standard--button>}
+  </standard--box>
+  <standard--box
+    flexBasis="50%"
+    flexGrow="1">
+    <standard--header>
+      <h4>Nothing here.</h4>
+      <h5>Add a payment method for future orders.</h5>
+    </standard--header>
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="billingFormSheet.openModel$.set(true);">
+      <standard--symbol input="Plus" />
+      <standard--label
+        i18n-input
+        input="Add" />
+    </standard--button>
+  </standard--box>
+</standard--section>
+
+<standard--sheet #billingFormSheet>
+  <standard--header>
+    <h6>
+      Edit your payment method.
+    </h6>
+  </standard--header>
+  <standard--form (output)="billingFormSubmit(shippingFormSheet);">
+    <standard--divider />
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row"
+      justifyContent="flex-end">
+      <standard--button
+        appearance="symbol"
+        [disabled]="!shippingFormEdited$()"
+        (output)="shippingFormGroup.reset();">
+        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
+      </standard--button>
+      <standard--button
+        appearance="symbol"
+        [disabled]="!billingFormEdited$() || billingFormGroup.invalid"
+        type="submit">
+        <standard--symbol input="CheckmarkCircleFill" />
+      </standard--button>
+    </standard--flexbox-container>
+  </standard--form>
+</standard--sheet>
+<standard--sheet #shippingFormSheet>
+  <standard--header>
+    <h6>
+      Edit your shipping address.
+    </h6>
+  </standard--header>
+  <standard--form (output)="shippingFormSubmit(shippingFormSheet);">
+    <standard--section>
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        <standard--combobox
+          autocomplete="honorific-prefix"
+          explicitAutocomplete
+          [formControl]="shippingFormGroup.controls.name.controls.prefix"
+          flexBasis="calc(1rem * pow(var(--phi), 4))"
+          flexGrow="1"
+          i18n-label
+          i18n-options
+          label="Prefix"
+          level="2"
+          options="Mr.;Miss;Ms.;Mrs.;Mx.;Dr." />
+        <standard--text-field
+          autocomplete="given-name"
+          [formControl]="shippingFormGroup.controls.name.controls.first"
+          flexBasis="calc(1rem * pow(var(--phi), 5))"
+          flexGrow="1.6180339887"
+          i18n-label
+          label="First name"
+          level="2" />
+      </standard--flexbox-container>
+      <standard--text-field
+        autocomplete="family-name"
+        [formControl]="shippingFormGroup.controls.name.controls.last"
+        i18n-label
+        label="Last name"
+        level="2" />
+    </standard--section>
+    <standard--divider />
+    <standard--section>
+      <standard--combobox
+        autocomplete="shipping country"
+        [formControl]="shippingFormGroup.controls.address.controls.country"
+        i18n-label
+        i18n-options
+        label="Country"
+        level="2"
+        options="United States" />
+      <standard--text-field
+        autocomplete="shipping address-line1"
+        [formControl]="shippingFormGroup.controls.address.controls.line1"
+        i18n-label
+        label="Street address"
+        level="2" />
+      <standard--text-field
+        autocomplete="shipping address-line2"
+        [formControl]="shippingFormGroup.controls.address.controls.line2"
+        i18n-label
+        label="Apartment/unit"
+        level="2" />
+      <standard--text-field
+        autocomplete="shipping address-line3"
+        [formControl]="shippingFormGroup.controls.address.controls.line3"
+        i18n-label
+        label="Company"
+        level="2" />
+      <standard--text-field
+        autocomplete="shipping address-level2"
+        [formControl]="shippingFormGroup.controls.address.controls.level2"
+        i18n-label
+        label="City"
+        level="2" />
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        <standard--combobox
+          autocomplete="shipping address-level1"
+          [formControl]="shippingFormGroup.controls.address.controls.level1"
+          flexBasis="calc(1rem * pow(var(--phi), 5))"
+          flexGrow="1.6180339887"
+          i18n-label
+          label="State"
+          level="2"
+          options="{ 'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO', 'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC', 'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT', 'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY' }" />
+        <standard--text-field
+          autocomplete="shipping postal-code"
+          [formControl]="shippingFormGroup.controls.address.controls.postalCode"
+          flexBasis="calc(1rem * pow(var(--phi), 4))"
+          flexGrow="1"
+          i18n-label
+          label="Zip code"
+          level="2" />
+      </standard--flexbox-container>
+    </standard--section>
+    <standard--divider />
+    <standard--section
+      alignItems="flex-end"
+      flexDirection="row">
+      <standard--combobox
+        autocomplete="tel-country-code"
+        explicitAutocomplete
+        [formControl]="shippingFormGroup.controls.phone.controls.countryCode"
+        flexBasis="calc(1rem * pow(var(--phi), 4))"
+        flexGrow="1"
+        i18n-label
+        label="Country code"
+        level="2"
+        mask="+00"
+        options="{ 'USA': '1', 'ESP': '34' }" />
+      <standard--text-field
+        autocomplete="tel-national"
+        [formControl]="shippingFormGroup.controls.phone.controls.national"
+        flexBasis="calc(1rem * pow(var(--phi), 5))"
+        flexGrow="1.6180339887"
+        i18n-label
+        label="Phone number"
+        level="2"
+        [mask]="shippingFormGroup.value.phone?.countryCode === '1' ? '(000) 000-0000' : shippingFormGroup.value.phone?.countryCode === '34' ? '00 00 00 000' : undefined"
+        type="tel" />
+    </standard--section>
+    <standard--divider />
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row"
+      justifyContent="flex-end">
+      @if (accountService.accountDocument$()?.shipping; as shipping) {<standard--button
+        appearance="symbol"
+        [disabled]="!shippingFormEdited$()"
+        (output)="shippingFormGroup.reset(shipping);">
+        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
+      </standard--button>}
+      <standard--button
+        appearance="symbol"
+        [disabled]="!shippingFormEdited$() || shippingFormGroup.invalid"
+        type="submit">
+        <standard--symbol input="CheckmarkCircleFill" />
+      </standard--button>
+    </standard--flexbox-container>
+  </standard--form>
+</standard--sheet>

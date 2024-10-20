@@ -1,13 +1,15 @@
-const angularEslint  = require("@angular-eslint/eslint-plugin");
-const js             = require("@eslint/js");
+const { configs }    = require("@eslint/js");
 const { FlatCompat } = require("@eslint/eslintrc");
-const nx             = require("@nx/eslint-plugin");
+
+const angularEslintPlugin = require("@angular-eslint/eslint-plugin");
+const nxEslintPlugin      = require("@nx/eslint-plugin");
+
 
 const compat = new FlatCompat(
   {
     baseDirectory:     __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig:         js.configs.all,
+    recommendedConfig: configs.recommended,
+    allConfig:         configs.all,
   },
 );
 
@@ -29,8 +31,8 @@ module.exports = [
   },
   {
     plugins: {
-      "@angular-eslint": angularEslint,
-      "@nx":             nx,
+      "@angular-eslint": angularEslintPlugin,
+      "@nx":             nxEslintPlugin,
     },
   },
   ...compat
@@ -115,6 +117,22 @@ module.exports = [
   },
   {
     files: [
+      "apps/website/src/app/pipes/src/lib/**/*.ts",
+    ],
+    rules: {
+      "@angular-eslint/pipe-prefix": [
+        "error",
+        {
+          prefixes: [
+            "standardWebsite",
+          ],
+        },
+      ],
+    },
+  },
+
+  {
+    files: [
       "libs/components/src/lib/**/*.ts",
     ],
     rules: {
@@ -130,7 +148,7 @@ module.exports = [
   },
   {
     files: [
-      "src/lib/**/*.ts",
+      "libs/directives/src/lib/**/*.ts",
     ],
     rules: {
       "@angular-eslint/directive-selector": [
@@ -139,6 +157,21 @@ module.exports = [
           prefix: "standard",
           style:  "camelCase",
           type:   "attribute",
+        },
+      ],
+    },
+  },
+  {
+    files: [
+      "libs/pipes/src/lib/**/*.ts",
+    ],
+    rules: {
+      "@angular-eslint/pipe-prefix": [
+        "error",
+        {
+          prefixes: [
+            "standard",
+          ],
         },
       ],
     },

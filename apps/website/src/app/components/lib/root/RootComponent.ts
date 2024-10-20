@@ -2,13 +2,13 @@ import { DOCUMENT, isPlatformBrowser, Location }                                
 import { Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                        from "@angular/core/rxjs-interop";
 import { type User }                                                                                     from "@angular/fire/auth";
-import { deleteDoc, doc, type DocumentReference, Firestore, setDoc }                                     from "@angular/fire/firestore";
+import { doc, type DocumentReference, Firestore, updateDoc }                                             from "@angular/fire/firestore";
 import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }               from "@angular/forms";
 import { RouterOutlet }                                                                                  from "@angular/router";
 import { type RouteComponent, type SheetComponent }                                                      from "@standard/components";
 import { CanvasDirective, FlexboxContainerDirective }                                                    from "@standard/directives";
 import { BRAND, GIT_INFO, PACKAGE_VERSION }                                                              from "@standard/injection-tokens";
-import { type ProfileDocument }                                                                          from "@standard/interfaces";
+import { type AccountDocument }                                                                          from "@standard/interfaces";
 import { AuthenticationService, ResponsivityService }                                                    from "@standard/services";
 import { type Brand }                                                                                    from "@standard/types";
 import { type GitInfo }                                                                                  from "git-describe";
@@ -231,59 +231,62 @@ export class RootComponent {
     );
   }
   protected signupFormSubmit(sheetComponent: SheetComponent): void {
-    ((user?: User): void => {
-      if (user)
-        ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
-          if (this.signupFormGroup.value.email)
-            setDoc(
-              profileDocumentReference,
-              {
-                email: this.signupFormGroup.value.email,
-              },
-            ).then<void, void>(
-              (): void => {
-                if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
-                  this.authenticationService.linkWithEmailAndPasswordCredential(
-                    this.signupFormGroup.value.email,
-                    this.signupFormGroup.value.password,
-                  ).then<void, never>(
-                    (): void => {
-                      sheetComponent.openModel$.set(false);
+    if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
+      this.authenticationService.createUserWithEmailAndPassword(
+        this.signupFormGroup.value.email,
+        this.signupFormGroup.value.password,
+      ).then<void, never>(
+        (): void => ((user?: User): void => {
+          if (user)
+            ((accountDocumentReference: DocumentReference<AccountDocument>): void => {
+              if (this.signupFormGroup.value.email)
+                updateDoc(
+                  accountDocumentReference,
+                  {
+                    email: this.signupFormGroup.value.email,
+                  },
+                ).then<void, never>(
+                  (): void => {
+                    sheetComponent.openModel$.set(false);
 
-                      setTimeout(
-                        (): void => this.signupFormGroup.reset(),
-                        180,
-                      );
-                    },
-                    (error: unknown): never => {
-                      deleteDoc(profileDocumentReference).then();
+                    setTimeout(
+                      (): void => this.signupFormGroup.reset(),
+                      180,
+                    );
+                  },
+                  (error: unknown): never => {
+                    console.error("Something went wrong.");
 
-                      throw error;
-                    },
-                  );
-              },
+                    throw error;
+                  },
+                );
+            })(
+              doc(
+                this.firestore,
+                `/accounts/${ user.uid }`,
+              ) as DocumentReference<AccountDocument>,
             );
-        })(
-          doc(
-            this.firestore,
-            `/profiles/${ user.uid }`,
-          ) as DocumentReference<ProfileDocument>,
-        );
-    })(this.authenticationService.user$());
+        })(this.authenticationService.user$()),
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
+      );
   }
   protected signupWithPasskeyFormSubmit(sheetComponent: SheetComponent): void {
-    ((user?: User): void => {
-      if (user)
-        ((profileDocumentReference: DocumentReference<ProfileDocument>): void => {
-          if (this.signupWithPasskeyFormGroup.value.email)
-            setDoc(
-              profileDocumentReference,
-              {
-                email: this.signupWithPasskeyFormGroup.value.email,
-              },
-            ).then<void, void>(
-              (): void => {
-                this.authenticationService.linkWithPasskey().then<void, never>(
+    if (this.signupWithPasskeyFormGroup.value.email)
+      this.authenticationService.createUserWithPasskey(this.signupWithPasskeyFormGroup.value.email).then<void, never>(
+        (): void => ((user?: User): void => {
+          if (user)
+            ((accountDocumentReference: DocumentReference<AccountDocument>): void => {
+              if (this.signupWithPasskeyFormGroup.value.email)
+                updateDoc(
+                  accountDocumentReference,
+                  {
+                    email: this.signupWithPasskeyFormGroup.value.email,
+                  },
+                ).then<void, never>(
                   (): void => {
                     sheetComponent.openModel$.set(false);
 
@@ -293,20 +296,24 @@ export class RootComponent {
                     );
                   },
                   (error: unknown): never => {
-                    deleteDoc(profileDocumentReference).then();
+                    console.error("Something went wrong.");
 
                     throw error;
                   },
                 );
-              },
+            })(
+              doc(
+                this.firestore,
+                `/accounts/${ user.uid }`,
+              ) as DocumentReference<AccountDocument>,
             );
-        })(
-          doc(
-            this.firestore,
-            `/profiles/${ user.uid }`,
-          ) as DocumentReference<ProfileDocument>,
-        );
-    })(this.authenticationService.user$());
+        })(this.authenticationService.user$()),
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
+      );
   }
 
 }

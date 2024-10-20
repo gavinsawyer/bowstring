@@ -77,13 +77,13 @@ export class ButtonComponent {
   constructor() {
     afterRender(
       (): void => {
-        this.hoverTranslatingDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
+        this.hoverTransformingDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
         this.roundedContainerDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
       },
     );
   }
 
-  private readonly hoverTranslatingDirective: HoverTransformingDirective                    = inject<HoverTransformingDirective>(HoverTransformingDirective);
+  private readonly hoverTransformingDirective: HoverTransformingDirective                   = inject<HoverTransformingDirective>(HoverTransformingDirective);
   private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLAnchorElement> | undefined> = viewChild<ElementRef<HTMLAnchorElement>>("htmlAnchorElement");
   private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement>>("htmlButtonElement");
 

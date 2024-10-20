@@ -1,6 +1,6 @@
 import { Component, inject }                                                                                                                                                                                                                                    from "@angular/core";
 import { RouterOutlet }                                                                                                                                                                                                                                         from "@angular/router";
-import { AuthenticationService, ProfileService }                                                                                                                                                                                                                from "@standard/services";
+import { AuthenticationService, AccountService }                                                                                                                                                                                                                from "@standard/services";
 import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../";
 
 
@@ -32,7 +32,7 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
 export class AccountRouteComponent
   extends RouteComponent {
 
+  protected readonly accountService: AccountService               = inject<AccountService>(AccountService);
   protected readonly authenticationService: AuthenticationService = inject<AuthenticationService>(AuthenticationService);
-  protected readonly profileService: ProfileService               = inject<ProfileService>(ProfileService);
 
 }

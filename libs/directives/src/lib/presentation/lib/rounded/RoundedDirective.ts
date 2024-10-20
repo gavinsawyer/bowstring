@@ -23,9 +23,9 @@ export class RoundedDirective {
   private readonly brand: Brand                     = inject<Brand>(BRAND);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly brandRoundness$: WritableSignal<number>                                             = signal<number>(this.brand.roundness);
-  protected readonly clipPathSource$: Signal<`url(#standard--rounded-container--clip-path-${ string })`> = computed<`url(#standard--rounded-container--clip-path-${ string })`>(
-    (): `url(#standard--rounded-container--clip-path-${ string })` => `url(#${ this.clipPathId$() })`,
+  protected readonly brandRoundness$: WritableSignal<number>                                                       = signal<number>(this.brand.roundness);
+  protected readonly clipPathSource$: Signal<`url(#standard--rounded-container-directive--clip-path-${ string })`> = computed<`url(#standard--rounded-container-directive--clip-path-${ string })`>(
+    (): `url(#standard--rounded-container-directive--clip-path-${ string })` => `url(#${ this.clipPathId$() })`,
   );
 
   public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined>                                                                                                                                         = signal<undefined>(undefined);
@@ -36,7 +36,7 @@ export class RoundedDirective {
       transform: numberAttribute,
     },
   );
-  public readonly clipPathId$: Signal<`standard--rounded-container--clip-path-${ string }`>                                                                                                                                    = signal<`standard--rounded-container--clip-path-${ string }`>(`standard--rounded-container--clip-path-${ uuid() }`);
+  public readonly clipPathId$: Signal<`standard--rounded-container-directive--clip-path-${ string }`>                                                                                                                          = signal<`standard--rounded-container-directive--clip-path-${ string }`>(`standard--rounded-container-directive--clip-path-${ uuid() }`);
   public readonly pathDefinition$: Signal<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`> = isPlatformBrowser(this.platformId) ? toSignal<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`, "M 0,0 L 1,0 C 1,0 1,0 1,0 L 1,0.5 C 1,1 1,1 1,1 L 0,1 C 0,1 0,1 0,0.5 L 0,0.5 C 0,0 0,0 0,0 Z">(
     toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
       filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(

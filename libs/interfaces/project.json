@@ -4,13 +4,33 @@
   "projectType": "library",
   "sourceRoot":  "libs/interfaces/src",
   "targets":     {
-    "eslint": {
+    "eslint":  {
       "executor": "@nx/eslint:lint",
       "options":  {
         "lintFilePatterns": [
           "libs/interfaces/src/**/*.ts"
         ]
       }
+    },
+    "esbuild": {
+      "dependsOn": [
+        "eslint"
+      ],
+      "executor":  "@nx/esbuild:esbuild",
+      "options":   {
+        "main":       "libs/interfaces/src/lib/main.ts",
+        "outputPath": "dist/libs/interfaces",
+        "tsConfig":   "libs/interfaces/tsconfig.lib.json"
+      },
+      "outputs":   [
+        "{options.outputPath}"
+      ]
+    },
+    "build":   {
+      "dependsOn": [
+        "esbuild"
+      ],
+      "executor":  "nx:noop"
     }
   }
 }

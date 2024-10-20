@@ -103,7 +103,7 @@ export class SheetComponent {
       takeUntilDestroyed<KeyboardEvent>(),
     ).subscribe(
       (keyboardEvent: KeyboardEvent): void => {
-        this.containerKeydown(keyboardEvent);
+        this.keydown(keyboardEvent);
       },
     );
   }
@@ -148,7 +148,7 @@ export class SheetComponent {
     },
   );
 
-  protected containerKeydown(keyboardEvent: KeyboardEvent): true | void {
+  protected keydown(keyboardEvent: KeyboardEvent): true | void {
     if (keyboardEvent.key !== "Escape")
       keyboardEvent.stopPropagation();
 

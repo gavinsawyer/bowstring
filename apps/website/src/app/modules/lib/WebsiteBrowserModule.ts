@@ -14,7 +14,6 @@ import { AboveComponent, BelowComponent, BoxComponent, ButtonComponent, DividerC
 import { ListItemDirective }                                                                                                                                                                                                                                                                                                                                                                      from "@standard/directives";
 import { BRAND, ENVIRONMENT, GIT_INFO, PACKAGE_VERSION }                                                                                                                                                                                                                                                                                                                                          from "@standard/injection-tokens";
 import { AppCheckOptionsService }                                                                                                                                                                                                                                                                                                                                                                 from "@standard/services";
-import { NgxMaskDirective, provideEnvironmentNgxMask, provideNgxMask }                                                                                                                                                                                                                                                                                                                            from "ngx-mask";
 import project                                                                                                                                                                                                                                                                                                                                                                                    from "../../../../project.json";
 import { gitInfo }                                                                                                                                                                                                                                                                                                                                                                                from "../../../.git-info";
 import { packageVersion }                                                                                                                                                                                                                                                                                                                                                                         from "../../../.package-version";
@@ -51,7 +50,6 @@ import { LOCALE_IDS }                                                           
       ListItemDirective,
       MainComponent,
       NavComponent,
-      NgxMaskDirective,
       ReactiveFormsModule,
       RouterOutlet,
       SectionComponent,
@@ -97,7 +95,6 @@ import { LOCALE_IDS }                                                           
       provideAuth(
         (): Auth => getAuth(),
       ),
-      provideEnvironmentNgxMask(),
       provideFirebaseApp(
         (): FirebaseApp => initializeApp(environment.firebase),
       ),
@@ -107,7 +104,6 @@ import { LOCALE_IDS }                                                           
       provideFunctions(
         (): Functions => getFunctions(),
       ),
-      provideNgxMask(),
       provideRouter(
         [
           ...websiteRoutes,

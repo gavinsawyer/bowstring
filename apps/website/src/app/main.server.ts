@@ -38,11 +38,10 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
       publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ localeId }`,
       url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
     },
-  ).then<void>(
+  ).then<void, void>(
     (html: string): void => {
       response.send(html);
     },
-  ).catch<void>(
     (err): void => nextFunction(err),
   );
 }

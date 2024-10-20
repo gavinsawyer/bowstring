@@ -45,6 +45,9 @@
       "@standard/interfaces":       [
         "libs/interfaces/src/index.ts"
       ],
+      "@standard/pipes":            [
+        "libs/pipes/src/index.ts"
+      ],
       "@standard/services":         [
         "libs/services/src/index.ts"
       ],

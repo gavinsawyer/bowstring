@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                          from "@angular/common";
-import { computed, Directive, type ElementRef, inject, PLATFORM_ID, type Signal, signal, type WritableSignal }                  from "@angular/core";
+import { computed, Directive, type ElementRef, inject, Injector, PLATFORM_ID, type Signal, signal, type WritableSignal }        from "@angular/core";
 import { toObservable, toSignal }                                                                                               from "@angular/core/rxjs-interop";
 import { PointerService }                                                                                                       from "@standard/services";
 import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Observable, startWith, switchMap, takeUntil, timer } from "rxjs";
@@ -24,28 +24,46 @@ import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Obser
 )
 export class HoverTransformingDirective {
 
-  private readonly document: Document                                             = inject<Document>(DOCUMENT);
-  private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly pointerService: PointerService                                 = inject<PointerService>(PointerService);
-  private readonly translation$: Signal<{ "x": number, "y": number } | undefined> = computed<{ "x": number, "y": number } | undefined>(
-    (): { "x": number, "y": number } | undefined => ((
-      domRect?: DOMRect,
-      pointerPosition?: { "x": number, "y": number },
-    ): { "x": number, "y": number } | undefined => {
-      if (domRect && pointerPosition && pointerPosition.x >= domRect.left && pointerPosition.x <= domRect.right && pointerPosition.y >= domRect.top && pointerPosition.y <= domRect.bottom)
-        return {
-          x: ((2 * ((pointerPosition.x - domRect.left) / domRect.width)) - 1) / 8,
-          y: ((2 * ((pointerPosition.y - domRect.top) / domRect.height)) - 1) / 8,
-        };
-      else
-        return undefined;
-    })(
-      this.htmlElementRef$()?.nativeElement.getBoundingClientRect(),
-      this.pointerService.position$(),
-    ),
-  );
+  private readonly document: Document               = inject<Document>(DOCUMENT);
+  private readonly injector: Injector               = inject<Injector>(Injector);
+  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly pointerService: PointerService   = inject<PointerService>(PointerService);
 
   public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined> = signal<undefined>(undefined);
+
+  private readonly translation$: Signal<{ "x": number, "y": number } | undefined> = isPlatformBrowser(this.platformId) ? toSignal<{ "x": number, "y": number } | undefined>(
+    toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, { "x": number, "y": number } | undefined>(
+      filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
+        (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
+      ),
+      switchMap<ElementRef<HTMLElement>, Observable<{ "x": number, "y": number } | undefined>>(
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<{ "x": number, "y": number } | undefined> => toObservable<PointerEvent | undefined>(
+          this.pointerService.pointerEvent$,
+          {
+            injector: this.injector,
+          },
+        ).pipe<PointerEvent, { "x": number, "y": number } | undefined>(
+          filter<PointerEvent | undefined, PointerEvent>(
+            (pointerEvent?: PointerEvent): pointerEvent is PointerEvent => !!pointerEvent,
+          ),
+          map<PointerEvent, { "x": number, "y": number } | undefined>(
+            (pointerEvent: PointerEvent): { "x": number, "y": number } | undefined => ((domRect?: DOMRect): { "x": number, "y": number } | undefined => {
+              if (htmlElementRef.nativeElement.contains(document.elementFromPoint(
+                pointerEvent.x,
+                pointerEvent.y,
+              )) && domRect && pointerEvent.x >= domRect.left && pointerEvent.x <= domRect.right && pointerEvent.y >= domRect.top && pointerEvent.y <= domRect.bottom)
+                return {
+                  x: ((2 * ((pointerEvent.x - domRect.left) / domRect.width)) - 1) / 8,
+                  y: ((2 * ((pointerEvent.y - domRect.top) / domRect.height)) - 1) / 8,
+                };
+              else
+                return undefined;
+            })(htmlElementRef.nativeElement.getBoundingClientRect()),
+          ),
+        ),
+      ),
+    ),
+  ) : signal<undefined>(undefined);
 
   protected readonly focused$: Signal<boolean | undefined>                              = isPlatformBrowser(this.platformId) ? toSignal<boolean>(
     toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, boolean>(

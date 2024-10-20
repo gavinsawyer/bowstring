@@ -17,6 +17,6 @@
       flex: 0 0 1px
 
 
-@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
+@each $host-context-namespace in ("footer", "sheet", "box")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--container-directive--margin-sides: calc(-1 * var(--standard--#{ $host-context-namespace }--gap-column)) !important

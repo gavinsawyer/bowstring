@@ -11,8 +11,9 @@ import { filter, fromEvent, map }                               from "rxjs";
 )
 export class PointerService {
 
-  private readonly platformId: NonNullable<unknown>                = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly pointerEvent$: Signal<PointerEvent | undefined> = isPlatformBrowser(this.platformId) ? toSignal<PointerEvent>(
+  private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
+
+  public readonly pointerEvent$: Signal<PointerEvent | undefined>             = isPlatformBrowser(this.platformId) ? toSignal<PointerEvent>(
     fromEvent<PointerEvent>(
       window,
       "pointermove",
@@ -22,7 +23,6 @@ export class PointerService {
       ),
     ),
   ) : signal<undefined>(undefined);
-
   public readonly position$: Signal<{ "x": number, "y": number } | undefined> = isPlatformBrowser(this.platformId) ? toSignal<{ "x": number, "y": number }>(
     toObservable<PointerEvent | undefined>(this.pointerEvent$).pipe<PointerEvent, { "x": number, "y": number }>(
       filter<PointerEvent | undefined, PointerEvent>(

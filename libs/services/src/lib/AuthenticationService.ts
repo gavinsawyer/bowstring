@@ -4,10 +4,10 @@ import { toSignal }                                                             
 import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User } from "@angular/fire/auth";
 import { Functions }                                                                                                                                               from "@angular/fire/functions";
 import { createUserWithPasskey, FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey }                                                 from "@firebase-web-authn/browser";
-import { type ProfileDocument }                                                                                                                                    from "@standard/interfaces";
+import { type AccountDocument }                                                                                                                                    from "@standard/interfaces";
 import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                              from "rxjs";
 import { fromPromise }                                                                                                                                             from "rxjs/internal/observable/innerFrom";
-import { ProfileService }                                                                                                                                          from "./ProfileService";
+import { AccountService }                                                                                                                                          from "./AccountService";
 
 
 @Injectable(
@@ -26,7 +26,7 @@ export class AuthenticationService {
   private readonly auth: Auth                       = inject<Auth>(Auth);
   private readonly functions: Functions             = inject<Functions>(Functions);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly profileService: ProfileService   = inject<ProfileService>(ProfileService);
+  private readonly accountService: AccountService   = inject<AccountService>(AccountService);
 
   public readonly hasWebAuthn$: WritableSignal<boolean | undefined>                           = signal<undefined>(undefined);
   public readonly hasWebAuthnConditionalMediation$: Signal<boolean | undefined>               = isPlatformBrowser(this.platformId) ? toSignal<boolean>(
@@ -120,12 +120,12 @@ export class AuthenticationService {
       return Promise.reject<never>(new Error());
   }
   public linkWithPasskey(): Promise<void> {
-    return ((profileDocument?: ProfileDocument): Promise<void> => {
-      if (profileDocument)
+    return ((accountDocument?: AccountDocument): Promise<void> => {
+      if (accountDocument)
         return linkWithPasskey(
           this.auth,
           this.functions,
-          `${ profileDocument.email }`,
+          `${ accountDocument.email }`,
         ).then<void, never>(
           (): void => console.log("Success"),
           (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
@@ -136,15 +136,15 @@ export class AuthenticationService {
         );
       else
         return Promise.reject<never>(new Error());
-    })(this.profileService.profileDocument$());
+    })(this.accountService.accountDocument$());
   }
   public linkWithPasskeyBackup(): Promise<void> {
-    return ((profileDocument?: ProfileDocument): Promise<void> => {
-      if (profileDocument)
+    return ((accountDocument?: AccountDocument): Promise<void> => {
+      if (accountDocument)
         return linkWithPasskey(
           this.auth,
           this.functions,
-          `${ profileDocument.email } (Backup)`,
+          `${ accountDocument.email } (Backup)`,
           "second",
         ).then<void, never>(
           (): void => console.log("Success"),
@@ -156,7 +156,7 @@ export class AuthenticationService {
         );
       else
         return Promise.reject<never>(new Error());
-    })(this.profileService.profileDocument$());
+    })(this.accountService.accountDocument$());
   }
   public signInAnonymously(): Promise<void> {
     return signInAnonymously(

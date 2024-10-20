@@ -1,10 +1,10 @@
 \:host
   display: contents
 
-  @media (min-width: 48rem)
-    > standard--flexbox-container
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--flex-wrap: wrap !important
+@media (min-width: 48rem)
+  standard--flexbox-container#below
+    --standard--flexbox-container-directive--flex-direction: row !important
+    --standard--flexbox-container-directive--flex-wrap: wrap !important
 
-      &::ng-deep > .harness > .element > standard--section
-        --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
+    &::ng-deep > .harness > .element > standard--section
+      --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
