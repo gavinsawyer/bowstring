@@ -1,11 +1,9 @@
-/// <reference types="@angular/localize" />
-
 import { Component, computed, effect, inject, Signal }                                                                                                                                                                                          from "@angular/core";
 import { toSignal }                                                                                                                                                                                                                             from "@angular/core/rxjs-interop";
 import { type AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                 from "@angular/forms";
 import { AccountDocument }                                                                                                                                                                                                                      from "@standard/interfaces";
 import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                 from "@standard/pipes";
-import { AccountService }                                                                                                                                                                                                                       from "@standard/services";
+import { AccountService, InputService }                                                                                                                                                                                                         from "@standard/services";
 import { isEqual }                                                                                                                                                                                                                              from "lodash";
 import { startWith }                                                                                                                                                                                                                            from "rxjs";
 import { BoxComponent, ButtonComponent, ComboboxComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent, TextFieldComponent } from "../../../../../../../";
@@ -115,6 +113,7 @@ export class PaymentAndShippingRouteComponent
       requireSync: true,
     },
   );
+  protected readonly inputService: InputService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      = inject<InputService>(InputService);
   protected readonly shippingFormEdited$: Signal<boolean>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 = computed<boolean>(
     (): boolean => !isEqual(
       this.shippingFormValue$(),
@@ -132,9 +131,7 @@ export class PaymentAndShippingRouteComponent
               validators:  [
                 Validators.required,
                 ({ value }: AbstractControl): ValidationErrors => {
-                  if (![
-                    "United States",
-                  ].includes(value))
+                  if (!Object.values<string>(this.inputService.addressCountryInputComponentOptions).includes(value))
                     return {
                       "optionSelected": true,
                     };
@@ -219,14 +216,7 @@ export class PaymentAndShippingRouteComponent
             {
               validators: [
                 ({ value }: AbstractControl): ValidationErrors => {
-                  if (![
-                    "Dr.",
-                    "Miss",
-                    "Mr.",
-                    "Mrs.",
-                    "Ms.",
-                    "Mx.",
-                  ].includes(value))
+                  if (!Object.values<string>(this.inputService.namePrefixInputComponentOptions).includes(value))
                     return {
                       "optionSelected": true,
                     };
@@ -247,10 +237,7 @@ export class PaymentAndShippingRouteComponent
               validators:  [
                 Validators.required,
                 ({ value }: AbstractControl): ValidationErrors => {
-                  if (![
-                    "1",
-                    "34",
-                  ].includes(value))
+                  if (!Object.values<string>(this.inputService.phoneCountryCodeInputComponentOptions).includes(value))
                     return {
                       "optionSelected": true,
                     };

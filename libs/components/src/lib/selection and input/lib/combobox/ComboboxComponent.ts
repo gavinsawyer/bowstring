@@ -1,14 +1,15 @@
-import { KeyValuePipe, NgTemplateOutlet }                                                                                                                                                                                                            from "@angular/common";
-import { afterRender, booleanAttribute, Component, computed, DestroyRef, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                                                from "@angular/core/rxjs-interop";
-import { type ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                                              from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }                                                                                                                               from "@standard/directives";
-import { type SymbolPaths }                                                                                                                                                                                                                          from "@standard/interfaces";
-import { InsertZwnjsPipe, MaskPipe, UnmaskPipe }                                                                                                                                                                                                     from "@standard/pipes";
-import loadSymbolPaths                                                                                                                                                                                                                               from "@standard/symbol-paths";
-import { combineLatestWith, firstValueFrom }                                                                                                                                                                                                         from "rxjs";
-import { fromPromise }                                                                                                                                                                                                                               from "rxjs/internal/observable/innerFrom";
-import { v4 as uuid }                                                                                                                                                                                                                                from "uuid";
+import { KeyValuePipe, NgTemplateOutlet }                                                                                                                                                                                                  from "@angular/common";
+import { afterRender, booleanAttribute, Component, DestroyRef, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
+import { type ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                                    from "@angular/forms";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }                                                                                                                     from "@standard/directives";
+import { type SymbolPaths }                                                                                                                                                                                                                from "@standard/interfaces";
+import { InsertZwnjsPipe, MaskPipe, UnmaskPipe }                                                                                                                                                                                           from "@standard/pipes";
+import loadSymbolPaths                                                                                                                                                                                                                     from "@standard/symbol-paths";
+import { InputComponentOptions }                                                                                                                                                                                                           from "@standard/types";
+import { combineLatestWith, firstValueFrom }                                                                                                                                                                                               from "rxjs";
+import { fromPromise }                                                                                                                                                                                                                     from "rxjs/internal/observable/innerFrom";
+import { v4 as uuid }                                                                                                                                                                                                                      from "uuid";
 
 
 @Component(
@@ -52,6 +53,7 @@ import { v4 as uuid }                                                           
     imports:        [
       InsertZwnjsPipe,
       KeyValuePipe,
+      MaskPipe,
       NgTemplateOutlet,
     ],
     providers:      [
@@ -110,50 +112,6 @@ export class ComboboxComponent
 
   protected readonly inputName$: Signal<`standard--combobox--input-${ string }`>   = signal<`standard--combobox--input-${ string }`>(`standard--combobox--input-${ uuid() }`);
   protected readonly optionsId$: Signal<`standard--combobox--options-${ string }`> = signal<`standard--combobox--options-${ string }`>(`standard--combobox--options-${ uuid() }`);
-  protected readonly options$: Signal<{ [key: string]: string }>                   = computed<{ [key: string]: string }>(
-    (): { [key: string]: string } => {
-      return ((
-        {
-          mask,
-          options,
-          result,
-        }: { "mask"?: string, "options": string, "result": { [_key: string]: string } }): { [key: string]: string } => {
-        if (options.startsWith("{"))
-          ((options: { [key: string]: string }): void => Object.keys(options).forEach(
-            (option: string): void => {
-              result[option] = this.maskPipe.transform(
-                options[option],
-                mask,
-              );
-            },
-          ))(
-            JSON.parse(
-              options.replace(
-                /'/g,
-                "\"",
-              ),
-            ),
-          );
-        else
-          options.split(";").forEach(
-            (option: string): void => {
-              result[option] = this.maskPipe.transform(
-                option,
-                mask,
-              );
-            },
-          );
-
-        return result;
-      })(
-        {
-          mask:    this.maskInput$(),
-          options: this.optionsInput$(),
-          result:  {},
-        },
-      );
-    },
-  );
   protected readonly roundedContainerDirective: RoundedDirective                   = inject<RoundedDirective>(RoundedDirective);
   protected readonly xmarkCircleFillSymbolPaths$: Signal<SymbolPaths | undefined>  = toSignal<SymbolPaths>(
     fromPromise<SymbolPaths>(
@@ -192,7 +150,7 @@ export class ComboboxComponent
       alias: "mask",
     },
   );
-  public readonly optionsInput$: InputSignal<string>                                                                                   = input.required<string>(
+  public readonly optionsInput$: InputSignal<InputComponentOptions>                                                                    = input.required<InputComponentOptions>(
     {
       alias: "options",
     },
@@ -213,16 +171,7 @@ export class ComboboxComponent
   private value: string = "" as const;
 
   protected onBlur(): void {
-    if (((options: string): boolean => (options.startsWith("{") ? ((options: { [key: string]: string }): string[] => Object.values<string>(options))(JSON.parse(
-      options.replace(
-        /'/g,
-        "\"",
-      ),
-    )) : options.split(";")).includes(
-      this.value,
-    ))(
-      this.optionsInput$(),
-    ))
+    if (Object.values<string>(this.optionsInput$()).includes(this.value))
       this.onChange?.();
   }
   protected onChange?(): void

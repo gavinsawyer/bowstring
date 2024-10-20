@@ -8,6 +8,7 @@ export type * from "./lib/FlexWrap";
 export type * from "./lib/GridAutoFlow";
 export type * from "./lib/GridPositionalAlignment";
 export type * from "./lib/Inherit";
+export type * from "./lib/InputComponentOptions";
 export type * from "./lib/InverseVariableString";
 export type * from "./lib/NormalAlignment";
 export type * from "./lib/Overflow";

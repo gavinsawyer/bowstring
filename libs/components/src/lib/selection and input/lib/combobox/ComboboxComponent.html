@@ -56,7 +56,7 @@
           (input)="onInput();"
           (keydown)="$event.key === 'Escape' || $event.stopPropagation();">
         <datalist [attr.id]="optionsId$()">
-          @for (option of options$() | keyvalue; track option) {<option [attr.value]="option.value">{{ option.key }}</option>}
+          @for (option of optionsInput$() | keyvalue; track option) {<option [attr.value]="option.value | standardMask:maskInput$()">{{ option.key }}</option>}
           <option value=""></option>
         </datalist>
       </div>
