@@ -75,7 +75,7 @@ export class AuthenticationService {
       email,
       password,
     ).then<void, never>(
-      (): void => console.log("Success"),
+      (): void => void (0),
       (error: unknown): never => {
         console.error("Something went wrong.");
 
@@ -89,7 +89,7 @@ export class AuthenticationService {
       this.functions,
       name,
     ).then<void, never>(
-      (): void => console.log("Success"),
+      (): void => void (0),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.message);
 
@@ -109,7 +109,7 @@ export class AuthenticationService {
           password,
         ),
       ).then<void, never>(
-        (): void => console.log("Success"),
+        (): void => void (0),
         (error: unknown): never => {
           console.error("Something went wrong.");
 
@@ -121,13 +121,13 @@ export class AuthenticationService {
   }
   public linkWithPasskey(): Promise<void> {
     return ((accountDocument?: AccountDocument): Promise<void> => {
-      if (accountDocument)
+      if (accountDocument && accountDocument.email)
         return linkWithPasskey(
           this.auth,
           this.functions,
-          `${ accountDocument.email }`,
+          accountDocument.email,
         ).then<void, never>(
-          (): void => console.log("Success"),
+          (): void => void (0),
           (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
             console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
 
@@ -140,14 +140,14 @@ export class AuthenticationService {
   }
   public linkWithPasskeyBackup(): Promise<void> {
     return ((accountDocument?: AccountDocument): Promise<void> => {
-      if (accountDocument)
+      if (accountDocument && accountDocument.email)
         return linkWithPasskey(
           this.auth,
           this.functions,
           `${ accountDocument.email } (Backup)`,
           "second",
         ).then<void, never>(
-          (): void => console.log("Success"),
+          (): void => void (0),
           (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
             console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey backup." : firebaseWebAuthnError.message || "Something went wrong.");
 
@@ -179,7 +179,7 @@ export class AuthenticationService {
       email,
       password,
     ).then<void, never>(
-      (): void => console.log("Success"),
+      (): void => void (0),
       (error: unknown): never => {
         console.error("Something went wrong.");
 
@@ -192,7 +192,7 @@ export class AuthenticationService {
       this.auth,
       this.functions,
     ).then<void, never>(
-      (): void => console.log("Success"),
+      (): void => void (0),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You're already signed in as this user." : firebaseWebAuthnError.message || "Something went wrong.");
 
@@ -205,7 +205,7 @@ export class AuthenticationService {
       this.auth,
       this.functions,
     ).then<void, never>(
-      (): void => console.log("Success"),
+      (): void => void (0),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.message || "Something went wrong.");
 

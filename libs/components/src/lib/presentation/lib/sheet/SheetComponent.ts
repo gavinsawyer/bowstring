@@ -63,7 +63,7 @@ export class SheetComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
 
     if (isPlatformBrowser(this.platformId))
@@ -138,7 +138,7 @@ export class SheetComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly roundedDirective: RoundedDirective          = inject<RoundedDirective>(RoundedDirective);
 
   public readonly dragControlTemplateRef$: Signal<TemplateRef<never>>                = viewChild.required<TemplateRef<never>>("dragControlTemplate");
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(

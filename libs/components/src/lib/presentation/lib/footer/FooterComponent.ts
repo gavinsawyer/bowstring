@@ -68,7 +68,7 @@ export class FooterComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlElementRef$()),
+      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlElementRef$()),
     );
   }
 
@@ -213,7 +213,7 @@ export class FooterComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly roundedContainerDirective: RoundedDirective                         = inject<RoundedDirective>(RoundedDirective);
+  protected readonly roundedDirective: RoundedDirective                                  = inject<RoundedDirective>(RoundedDirective);
 
   public readonly pinnedControlTemplateRef$: Signal<TemplateRef<never>>                = viewChild.required<TemplateRef<never>>("pinnedControlTemplate");
   public readonly pinnedModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(

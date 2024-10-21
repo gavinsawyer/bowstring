@@ -91,7 +91,7 @@ export class MasonryContainerDirective {
   protected readonly columnWidth$: Signal<number | undefined> = isPlatformBrowser(this.platformId) ? toSignal<number>(
     toObservable<ElementRef<HTMLDivElement> | undefined>(this.columnSizerHtmlDivElementRef$).pipe<ElementRef<HTMLDivElement>, number>(
       filter<ElementRef<HTMLDivElement> | undefined, ElementRef<HTMLDivElement>>(
-        (columnSizerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined): columnSizerHtmlDivElementRef is ElementRef<HTMLDivElement> => !!columnSizerHtmlDivElementRef,
+        (columnSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>): columnSizerHtmlDivElementRef is ElementRef<HTMLDivElement> => !!columnSizerHtmlDivElementRef,
       ),
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
         (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(

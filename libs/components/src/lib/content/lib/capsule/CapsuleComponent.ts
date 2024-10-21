@@ -67,12 +67,12 @@ export class CapsuleComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedContainerDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedContainerDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly roundedDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
 
 }
