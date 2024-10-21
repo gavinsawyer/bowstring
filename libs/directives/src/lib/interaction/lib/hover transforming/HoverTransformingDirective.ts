@@ -1,7 +1,6 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                          from "@angular/common";
-import { computed, Directive, type ElementRef, inject, Injector, PLATFORM_ID, type Signal, signal, type WritableSignal }        from "@angular/core";
+import { computed, Directive, type ElementRef, inject, PLATFORM_ID, type Signal, signal, type WritableSignal }                  from "@angular/core";
 import { toObservable, toSignal }                                                                                               from "@angular/core/rxjs-interop";
-import { PointerService }                                                                                                       from "@standard/services";
 import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Observable, startWith, switchMap, takeUntil, timer } from "rxjs";
 
 
@@ -25,9 +24,7 @@ import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Obser
 export class HoverTransformingDirective {
 
   private readonly document: Document               = inject<Document>(DOCUMENT);
-  private readonly injector: Injector               = inject<Injector>(Injector);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly pointerService: PointerService   = inject<PointerService>(PointerService);
 
   public readonly htmlElementRef$: WritableSignal<ElementRef<HTMLElement> | undefined> = signal<undefined>(undefined);
 
@@ -37,24 +34,26 @@ export class HoverTransformingDirective {
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
       ),
       switchMap<ElementRef<HTMLElement>, Observable<{ "x": number, "y": number } | undefined>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<{ "x": number, "y": number } | undefined> => toObservable<PointerEvent | undefined>(
-          this.pointerService.pointerEvent$,
-          {
-            injector: this.injector,
-          },
+        (htmlElementRef: ElementRef<HTMLElement>): Observable<{ "x": number, "y": number } | undefined> => fromEvent<PointerEvent>(
+          window,
+          "pointermove",
         ).pipe<PointerEvent, { "x": number, "y": number } | undefined>(
-          filter<PointerEvent | undefined, PointerEvent>(
-            (pointerEvent?: PointerEvent): pointerEvent is PointerEvent => !!pointerEvent,
+          filter<PointerEvent>(
+            ({ pointerType }: PointerEvent): boolean => pointerType === "mouse",
           ),
           map<PointerEvent, { "x": number, "y": number } | undefined>(
-            (pointerEvent: PointerEvent): { "x": number, "y": number } | undefined => ((domRect?: DOMRect): { "x": number, "y": number } | undefined => {
+            (
+              {
+                x,
+                y,
+              }: PointerEvent): { "x": number, "y": number } | undefined => ((domRect?: DOMRect): { "x": number, "y": number } | undefined => {
               if (htmlElementRef.nativeElement.contains(document.elementFromPoint(
-                pointerEvent.x,
-                pointerEvent.y,
-              )) && domRect && pointerEvent.x >= domRect.left && pointerEvent.x <= domRect.right && pointerEvent.y >= domRect.top && pointerEvent.y <= domRect.bottom)
+                x,
+                y,
+              )) && domRect && x >= domRect.left && x <= domRect.right && y >= domRect.top && y <= domRect.bottom)
                 return {
-                  x: ((2 * ((pointerEvent.x - domRect.left) / domRect.width)) - 1) / 8,
-                  y: ((2 * ((pointerEvent.y - domRect.top) / domRect.height)) - 1) / 8,
+                  x: ((2 * ((x - domRect.left) / domRect.width)) - 1) / 8,
+                  y: ((2 * ((y - domRect.top) / domRect.height)) - 1) / 8,
                 };
               else
                 return undefined;
