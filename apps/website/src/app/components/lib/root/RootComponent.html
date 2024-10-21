@@ -7,7 +7,7 @@
 
 <standard--sheet #localeSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale</h6>
+    <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale.</h6>
   </standard--header>
   <standard--divider />
   <standard--section>
@@ -22,7 +22,7 @@
 </standard--sheet>
 <standard--sheet #signinFormSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SigninFormSheet--Header">Sign in</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SigninFormSheet--Header">Sign in.</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinFormSheetComponent);">
     <standard--button
@@ -95,7 +95,7 @@
 </standard--sheet>
 <standard--sheet #signupFormSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SignupFormSheet--Header">Create an account</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SignupFormSheet--Header">Create your account.</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent);">
     <standard--text-field
@@ -235,7 +235,7 @@
           <standard--link
             [disabled]="signupFormSheetComponent.openModelWithTransform$()"
             i18n
-            (output)="signupFormSheetComponent.openModel$.set(true);">Create an account</standard--link>
+            (output)="signupFormSheetComponent.openModel$.set(true);">Create your account</standard--link>
         </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
           <standard--link
             i18n="@@libs--Components--Routes--Account--Meta--Title"
