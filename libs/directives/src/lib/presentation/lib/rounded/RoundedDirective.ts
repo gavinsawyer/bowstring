@@ -5,7 +5,7 @@ import { BRAND }                                                                
 import { type Dimensions }                                                                                                                                            from "@standard/interfaces";
 import { type Brand }                                                                                                                                                 from "@standard/types";
 import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                           from "rxjs";
-import { v4 as uuid }                                                                                                                                                 from "uuid";
+import { v7 as uuidV7 }                                                                                                                                               from "uuid";
 
 
 @Directive(
@@ -36,7 +36,7 @@ export class RoundedDirective {
       transform: numberAttribute,
     },
   );
-  public readonly clipPathId$: Signal<`standard--rounded-container-directive--clip-path-${ string }`>                                                                                                                          = signal<`standard--rounded-container-directive--clip-path-${ string }`>(`standard--rounded-container-directive--clip-path-${ uuid() }`);
+  public readonly clipPathId$: Signal<`standard--rounded-container-directive--clip-path-${ string }`>                                                                                                                          = signal<`standard--rounded-container-directive--clip-path-${ string }`>(`standard--rounded-container-directive--clip-path-${ uuidV7() }`);
   public readonly pathDefinition$: Signal<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`> = isPlatformBrowser(this.platformId) ? toSignal<`M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`, "M 0,0 L 1,0 C 1,0 1,0 1,0 L 1,0.5 C 1,1 1,1 1,1 L 0,1 C 0,1 0,1 0,0.5 L 0,0.5 C 0,0 0,0 0,0 Z">(
     toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, `M ${ number },0 L ${ number },0 C 1,0 1,0 1,${ number } L 1,${ number } C 1,1 1,1 ${ number },1 L ${ number },1 C 0,1 0,1 0,${ number } L 0,${ number } C 0,0 0,0 ${ number },0 Z`>(
       filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(

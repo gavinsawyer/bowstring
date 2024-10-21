@@ -6,7 +6,7 @@ import { MaskPipe, UnmaskPipe }                                                 
 import loadSymbolPaths                                                                                                                                                                                                                       from "@standard/symbol-paths";
 import { combineLatestWith, filter, firstValueFrom }                                                                                                                                                                                         from "rxjs";
 import { fromPromise }                                                                                                                                                                                                                       from "rxjs/internal/observable/innerFrom";
-import { v4 as uuid }                                                                                                                                                                                                                        from "uuid";
+import { v7 as uuidV7 }                                                                                                                                                                                                                      from "uuid";
 
 
 const inputComponentProviders: Provider[] = [
@@ -63,7 +63,7 @@ class InputComponent
   private readonly unmaskPipe: UnmaskPipe                                     = inject<UnmaskPipe>(UnmaskPipe);
 
   protected readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>             = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
-  protected readonly inputName$: Signal<`standard--input-directive--input-${ string }`> = signal<`standard--input-directive--input-${ string }`>(`standard--input-directive--input-${ uuid() }`);
+  protected readonly inputName$: Signal<`standard--input-directive--input-${ string }`> = signal<`standard--input-directive--input-${ string }`>(`standard--input-directive--input-${ uuidV7() }`);
   protected readonly xmarkCircleFillSymbolPaths$: Signal<SymbolPaths | undefined>       = toSignal<SymbolPaths>(
     fromPromise<SymbolPaths>(
       loadSymbolPaths("XmarkCircleFill"),

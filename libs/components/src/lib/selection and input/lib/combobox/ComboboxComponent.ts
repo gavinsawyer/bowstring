@@ -4,7 +4,7 @@ import { NG_VALUE_ACCESSOR }                                                    
 import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective } from "@standard/directives";
 import { InsertZwnjsPipe, MaskPipe }                                                                                   from "@standard/pipes";
 import { type InputComponentOptions }                                                                                  from "@standard/types";
-import { v4 as uuid }                                                                                                  from "uuid";
+import { v7 as uuidV7 }                                                                                                from "uuid";
 import { InputComponent, inputComponentProviders }                                                                     from "../input/InputComponent";
 
 
@@ -84,7 +84,7 @@ export class ComboboxComponent
   protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
   protected readonly roundedDirective: RoundedDirective                     = inject<RoundedDirective>(RoundedDirective);
 
-  public readonly optionsId$: Signal<`standard--input-directive--options-${ string }`> = signal<`standard--input-directive--options-${ string }`>(`standard--input-directive--options-${ uuid() }`);
+  public readonly optionsId$: Signal<`standard--input-directive--options-${ string }`> = signal<`standard--input-directive--options-${ string }`>(`standard--input-directive--options-${ uuidV7() }`);
   public readonly optionsInput$: InputSignal<InputComponentOptions>                    = input.required<InputComponentOptions>(
     {
       alias: "options",
