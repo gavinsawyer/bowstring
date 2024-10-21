@@ -3,7 +3,7 @@
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   (ngSubmit)="output.emit();"
   tabindex="-1">
-  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </form>
 
 <ng-template #contentTemplate><ng-content /></ng-template>

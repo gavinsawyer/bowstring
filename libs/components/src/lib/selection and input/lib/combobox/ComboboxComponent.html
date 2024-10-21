@@ -2,7 +2,7 @@
   (click)="$event.stopPropagation();"
   (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
   tabindex="-1">
-  <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
 <ng-template #contentTemplate>
@@ -15,14 +15,14 @@
       (click)="$event.stopPropagation();"
       (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
       tabindex="-1">
-      <div class="element">
+      <div class="between">
         @if (htmlInputElement.value) {<div>
           <button class="harness"
             (click)="$event.stopPropagation(); htmlInputElement.focus(); htmlInputElement.value = ''; onChange?.();"
             (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
             tabindex="-1"
             type="button">
-            <div class="element">
+            <div class="between">
               @if (xmarkCircleFillSymbolPaths$(); as symbolPaths) {<svg
                 [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
                 xmlns="http://www.w3.org/2000/svg">

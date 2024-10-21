@@ -17,14 +17,7 @@
   > .harness > .between
     display: flex
 
-    > img
-      aspect-ratio: var(--standard--image--aspect-ratio)
+    > google-map
       height: auto
       max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
       width: 100%
-
-  &.appearance-circular > .harness
-    &:before,
-    > .between
-      border-radius: 50% !important
-      clip-path: none !important

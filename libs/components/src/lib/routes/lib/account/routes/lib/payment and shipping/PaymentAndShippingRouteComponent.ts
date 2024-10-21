@@ -1,12 +1,12 @@
-import { Component, computed, effect, inject, Signal }                                                                                                                                                                                          from "@angular/core";
-import { toSignal }                                                                                                                                                                                                                             from "@angular/core/rxjs-interop";
-import { type AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                 from "@angular/forms";
-import { AccountDocument }                                                                                                                                                                                                                      from "@standard/interfaces";
-import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                 from "@standard/pipes";
-import { AccountService, InputService }                                                                                                                                                                                                         from "@standard/services";
-import { isEqual }                                                                                                                                                                                                                              from "lodash";
-import { startWith }                                                                                                                                                                                                                            from "rxjs";
-import { BoxComponent, ButtonComponent, ComboboxComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent, TextFieldComponent } from "../../../../../../../";
+import { Component, computed, effect, inject, Signal }                                                                                                                                                                                                        from "@angular/core";
+import { toSignal }                                                                                                                                                                                                                                           from "@angular/core/rxjs-interop";
+import { type AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                               from "@angular/forms";
+import { AccountDocument }                                                                                                                                                                                                                                    from "@standard/interfaces";
+import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                               from "@standard/pipes";
+import { AccountService, InputService }                                                                                                                                                                                                                       from "@standard/services";
+import { isEqual }                                                                                                                                                                                                                                            from "lodash";
+import { startWith }                                                                                                                                                                                                                                          from "rxjs";
+import { BoxComponent, ButtonComponent, ComboboxComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, MapComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent, TextFieldComponent } from "../../../../../../../";
 
 
 @Component(
@@ -20,6 +20,7 @@ import { BoxComponent, ButtonComponent, ComboboxComponent, DividerComponent, Fle
       FormComponent,
       HeaderComponent,
       LabelComponent,
+      MapComponent,
       MaskPipe,
       ReactiveFormsModule,
       SectionComponent,
@@ -113,7 +114,7 @@ export class PaymentAndShippingRouteComponent
       requireSync: true,
     },
   );
-  protected readonly inputService: InputService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      = inject<InputService>(InputService);
+  protected readonly inputService: InputService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           = inject<InputService>(InputService);
   protected readonly shippingFormEdited$: Signal<boolean>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 = computed<boolean>(
     (): boolean => !isEqual(
       this.shippingFormValue$(),

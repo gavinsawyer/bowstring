@@ -47,7 +47,7 @@ export class HoverTransformingDirective {
                 x,
                 y,
               }: PointerEvent): { "x": number, "y": number } | undefined => ((domRect?: DOMRect): { "x": number, "y": number } | undefined => {
-              if (htmlElementRef.nativeElement.contains(document.elementFromPoint(
+              if (htmlElementRef.nativeElement.contains(this.document.elementFromPoint(
                 x,
                 y,
               )) && domRect && x >= domRect.left && x <= domRect.right && y >= domRect.top && y <= domRect.bottom)

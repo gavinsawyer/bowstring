@@ -12,23 +12,10 @@
   @include ElevatedDirective.host
   @include RoundedDirective.host
 
-  > .harness > .element
+  > .harness > .between
     display: flex
 
     > video
       height: auto
       max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
       width: 100%
-
-
-@mixin host-context($context-level)
-
-
-\:host-context(standard--main)
-  @include host-context(-0.5)
-
-\:host-context(standard--box, standard--footer)
-  @include host-context(-1)
-
-\:host-context(standard--header)
-  @include host-context(-2)

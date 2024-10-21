@@ -12,23 +12,23 @@
   --standard--flexbox-container-directive--gap-column: var(--standard--heading-group--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--heading-group--gap-row) !important
 
-  > .harness > .element::ng-deep
+  > .harness > .between::ng-deep
     > *
       @include FlexboxContainerDirective.children
 
     &,
-    > standard--section > .harness > .element
+    > standard--section > .harness > .between
       > p
         margin: 0
         user-select: text
 
-  &.styleFirstLetter > .harness > .element::ng-deep > p:first-of-type:first-letter
+  &.styleFirstLetter > .harness > .between::ng-deep > p:first-of-type:first-letter
     float: left
     font-size: calc(2em * pow(var(--phi), 0.375))
     line-height: calc(2em * pow(var(--phi), -2.5))
     margin: calc(2em * pow(var(--phi), -5)) calc(2em * pow(var(--phi), -10)) 0 0
 
-  &.styleFirstParagraph > .harness > .element::ng-deep > p:first-of-type
+  &.styleFirstParagraph > .harness > .between::ng-deep > p:first-of-type
     font-size: calc(1em * pow(var(--phi), 0.5))
 
 

@@ -83,7 +83,7 @@
         100%
           @include keyframes--show-backdrop
 
-    > .element
+    > .between
       font-family: var(--standard--root--font-family), sans-serif
       font-optical-sizing: auto
       font-style: normal
@@ -122,7 +122,7 @@
         --standard--flexbox-container-directive--gap-row: var(--standard--sheet--gap-row) !important
         --standard--glass-directive--material-opacity: var(--standard--sheet--material-opacity) !important
 
-        > .harness > .element
+        > .harness > .between
           user-select: none
 
           &::ng-deep > *
@@ -163,7 +163,7 @@
     > .harness
       cursor: grab
 
-      > .element
+      > .between
         background: none !important
         font-size: calc(1rem * pow(var(--phi), 0.5))
         opacity: 0.75

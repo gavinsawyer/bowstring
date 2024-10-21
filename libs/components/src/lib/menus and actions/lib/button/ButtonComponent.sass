@@ -11,52 +11,59 @@
 \:host
   display: contents
 
-  --standard--button--gap-column: calc(1rem * pow(var(--phi), -2))
-  --standard--button--gap-row: calc(1rem * pow(var(--phi), -3))
-
   @include FlexboxContainerDirective.host
 
   --standard--flexbox-container-directive--align-items: center !important
   --standard--flexbox-container-directive--flex-direction: row !important
-  --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
   --standard--flexbox-container-directive--justify-content: center !important
 
-  > .harness
-    background: none
-    border: 0
-    color: inherit
-    cursor: pointer
-    font: inherit
-    letter-spacing: inherit
-    line-height: inherit
-    padding: 0
-    user-select: none
+  > .harness > .between
+    &::ng-deep > *
+      @include FlexboxContainerDirective.children
 
-    > .element
-      font-size: calc(1rem * pow(var(--phi), 0.25))
-      opacity: 1
-      transition: opacity 200ms ease-in-out
+    > div
+      display: contents
 
-      &::ng-deep > *
-        @include FlexboxContainerDirective.children
+      --standard--button--gap-column: calc(1rem * pow(var(--phi), -2))
+      --standard--button--gap-row: calc(1rem * pow(var(--phi), -3))
+
+      @include FlexboxContainerDirective.host
+
+      --standard--flexbox-child-directive--flex-basis: 100% !important
+      --standard--flexbox-container-directive--align-items: center !important
+      --standard--flexbox-container-directive--flex-direction: row !important
+      --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
+      --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
+      --standard--flexbox-container-directive--justify-content: center !important
+
+      > .harness
+        background: none
+        border: 0
+        color: inherit
+        cursor: pointer
+        font: inherit
+        letter-spacing: inherit
+        line-height: inherit
+        padding: 0
+        user-select: none
+
+        > .between
+          font-size: calc(1rem * pow(var(--phi), 0.25))
+          opacity: 1
+          transition: opacity 200ms ease-in-out
+
+          &::ng-deep > *
+            @include FlexboxContainerDirective.children
 
   &.appearance-raised
-    --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
-    --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
-
     @include ElevatedDirective.host
     @include HoverTransformingDirective.host
     @include RoundedDirective.host
 
-    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-
     &:not(.material-glass):not(.material-inverse):not(.material-primary)
       @include CanvasDirective.host(0%)
 
-      > .harness > .element::ng-deep > *
+      > .harness > .between::ng-deep > *
         @include CanvasDirective.children
 
     &.material-glass
@@ -67,7 +74,7 @@
       --standard--elevated-directive--material-opacity: var(--standard--button--material-opacity) !important
       --standard--glass-directive--material-opacity: var(--standard--button--material-opacity) !important
 
-      > .harness > .element::ng-deep > *
+      > .harness > .between::ng-deep > *
         --standard--button--material-opacity: initial
 
         @include GlassDirective.children
@@ -75,19 +82,28 @@
     &.material-inverse
       @include InverseDirective.host(0%)
 
-      > .harness > .element::ng-deep > *
+      > .harness > .between::ng-deep > *
         @include InverseDirective.children
 
     &.material-primary
       @include PrimaryDirective.host
 
-      > .harness > .element::ng-deep > *
+      > .harness > .between::ng-deep > *
         @include PrimaryDirective.children
 
-    > .harness > .element::ng-deep > *
-      @include ElevatedDirective.children
-      @include HoverTransformingDirective.children
-      @include RoundedDirective.children
+    > .harness > .between
+      &::ng-deep > *
+        @include ElevatedDirective.children
+        @include HoverTransformingDirective.children
+        @include RoundedDirective.children
+
+      > div
+        --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
+        --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
+
+        --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+        --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+        --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
   &.appearance-symbol
     @include CanvasDirective.host(18%)
@@ -95,22 +111,24 @@
     &.material-primary
       @include PrimaryDirective.host
 
-      > .harness > .element
+      > .harness > .between
         color: var(--standard--primary-directive--colors--background) !important
 
         &::ng-deep > *
           @include PrimaryDirective.children
 
-    > .harness > .element
+    > .harness > .between
       background: none !important
-      font-size: calc(1rem * pow(var(--phi), 1))
 
       &::ng-deep > *
         @include CanvasDirective.children
+
+      > div > .harness > .between
+        font-size: calc(1rem * pow(var(--phi), 1))
 
   &.disabled > .harness
     cursor: default
     pointer-events: none
 
-    > .element
+    > .between
       opacity: 0.5

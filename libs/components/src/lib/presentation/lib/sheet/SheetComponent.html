@@ -2,15 +2,14 @@
   (click)="$event.stopPropagation(); openModel$.set(false);"
   (keydown)="keydown($event);"
   tabindex="0">
-  <div class="element">
+  <div class="between">
     <div>
       <div class="harness" #htmlDivElement
         (click)="$event.stopPropagation();"
         (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
         tabindex="-1">
-        <div class="element"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+        <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
       </div>
-
       <svg
         viewBox="0 0 1 1"
         xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +32,7 @@
       (click)="$event.stopPropagation();"
       (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
       tabindex="-1">
-      <div class="element">
+      <div class="between">
         @if (arrowUpAndDownAndArrowLeftAndRightSymbolPaths$(); as symbolPaths) {<svg
           [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
           xmlns="http://www.w3.org/2000/svg">

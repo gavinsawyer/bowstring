@@ -6,7 +6,7 @@ import { WebsiteBrowserModule }   from "./modules";
 
 ((bootstrap: () => Promise<void>): void => {
   if (document.readyState === "complete")
-    bootstrap().then(
+    bootstrap().then<void>(
       (): void => void (0),
     );
   else

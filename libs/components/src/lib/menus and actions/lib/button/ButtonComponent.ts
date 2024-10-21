@@ -77,18 +77,18 @@ export class ButtonComponent {
   constructor() {
     afterRender(
       (): void => {
-        this.hoverTransformingDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
-        this.roundedDirective.htmlElementRef$.set(this.htmlAnchorElementRef$() || this.htmlButtonElementRef$());
+        this.hoverTransformingDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+        this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
       },
     );
   }
 
-  private readonly hoverTransformingDirective: HoverTransformingDirective                   = inject<HoverTransformingDirective>(HoverTransformingDirective);
-  private readonly htmlAnchorElementRef$: Signal<ElementRef<HTMLAnchorElement> | undefined> = viewChild<ElementRef<HTMLAnchorElement>>("htmlAnchorElement");
-  private readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement>>("htmlButtonElement");
+  private readonly hoverTransformingDirective: HoverTransformingDirective             = inject<HoverTransformingDirective>(HoverTransformingDirective);
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedDirective: RoundedDirective                      = inject<RoundedDirective>(RoundedDirective);
-  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
+  protected readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement> | undefined>("htmlButtonElement");
+  protected readonly roundedDirective: RoundedDirective                                       = inject<RoundedDirective>(RoundedDirective);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined>                  = viewChild<RouterLinkActive>(RouterLinkActive);
 
   public readonly appearanceInput$: InputSignal<"raised" | "symbol" | undefined>                                           = input<"raised" | "symbol" | undefined>(
     undefined,

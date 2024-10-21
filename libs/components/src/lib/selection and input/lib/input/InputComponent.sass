@@ -7,12 +7,12 @@
 
 @mixin host
   @include FlexboxContainerDirective.host
-  @include HoverTransformingDirective.host('.harness > .element > div')
+  @include HoverTransformingDirective.host('.harness > .between > div')
 
   --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
   --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
 
-  > .harness > .element
+  > .harness > .between
     &::ng-deep > *
       @include FlexboxContainerDirective.children
 
@@ -35,7 +35,7 @@
       --standard--flexbox-container-directive--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1)) !important
       --standard--flexbox-container-directive--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1)) !important
 
-      > .harness > .element
+      > .harness > .between
         &::ng-deep > *
           @include CanvasDirective.children
           @include ElevatedDirective.children
@@ -69,7 +69,7 @@
             user-select: none
             -webkit-tap-highlight-color: transparent
 
-            > .element
+            > .between
               background: none !important
               opacity: 1
               transition: opacity 200ms ease-in-out

@@ -17,5 +17,5 @@ $font-size-exponent: functions.get-input-reference($namespace, "font-size-expone
   @include mixins.reset-values($namespace, ())
 
 @mixin host
-  > .harness > .element
+  > .harness > .between
     font-size: calc(1rem * pow(var(--phi), $font-size-exponent))

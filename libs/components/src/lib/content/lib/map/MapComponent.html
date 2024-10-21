@@ -17,4 +17,9 @@
   </clipPath>
 </svg>
 
-<ng-template #contentTemplate><ng-content /></ng-template>
+<ng-template #contentTemplate>
+  <google-map
+    [options]="options$()"
+    height="100%"
+    width="100%" />
+</ng-template>
