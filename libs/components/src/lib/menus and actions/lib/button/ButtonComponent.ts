@@ -86,7 +86,6 @@ export class ButtonComponent {
   private readonly hoverTransformingDirective: HoverTransformingDirective             = inject<HoverTransformingDirective>(HoverTransformingDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly htmlButtonElementRef$: Signal<ElementRef<HTMLButtonElement> | undefined> = viewChild<ElementRef<HTMLButtonElement> | undefined>("htmlButtonElement");
   protected readonly roundedDirective: RoundedDirective                                       = inject<RoundedDirective>(RoundedDirective);
   protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined>                  = viewChild<RouterLinkActive>(RouterLinkActive);
 

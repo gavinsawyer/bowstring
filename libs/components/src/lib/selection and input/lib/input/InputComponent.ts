@@ -44,8 +44,8 @@ class InputComponent
       combineLatestWith<ElementRef<HTMLInputElement>, [ string | undefined ]>(toObservable<string | undefined>(this.maskInput$)),
       takeUntilDestroyed<[ ElementRef<HTMLInputElement>, string | undefined ]>(this.destroyRef),
     ).subscribe(
-      ([ htmlInputElementRef, mask ]: [ ElementRef<HTMLInputElement>, string | undefined ]): void => this.renderer2.setProperty(
-        htmlInputElementRef.nativeElement,
+      ([ { nativeElement: htmlInputElement }, mask ]: [ ElementRef<HTMLInputElement>, string | undefined ]): void => this.renderer2.setProperty(
+        htmlInputElement,
         "value",
         this.maskPipe.transform(
           this.value,
@@ -118,31 +118,18 @@ class InputComponent
 
   protected onChange?(): void
   protected onInput(): void {
-    ((
-      {
-        mask,
-        htmlInputElementRef,
-      }: { mask?: string, htmlInputElementRef?: ElementRef<HTMLInputElement> }): void => {
-      if (htmlInputElementRef) {
-        this.value = this.unmaskPipe.transform(
-          htmlInputElementRef.nativeElement.value,
-          mask,
-        );
+    this.value = this.unmaskPipe.transform(
+      this.htmlInputElementRef$().nativeElement.value,
+      this.maskInput$(),
+    );
 
-        this.renderer2.setProperty(
-          htmlInputElementRef.nativeElement,
-          "value",
-          this.maskPipe.transform(
-            this.value,
-            mask,
-          ),
-        );
-      }
-    })(
-      {
-        mask:                this.maskInput$(),
-        htmlInputElementRef: this.htmlInputElementRef$(),
-      },
+    this.renderer2.setProperty(
+      this.htmlInputElementRef$().nativeElement,
+      "value",
+      this.maskPipe.transform(
+        this.value,
+        this.maskInput$(),
+      ),
     );
   }
   protected onTouched?(): void

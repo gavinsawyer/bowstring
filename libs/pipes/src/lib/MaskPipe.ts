@@ -10,39 +10,29 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class MaskPipe
   implements PipeTransform {
 
-  transform(
+  public transform(
     value?: string,
     mask?: string,
   ): string {
-    if (value && mask)
-      return ((
-        {
-          indexMask,
-          indexValue,
-          result,
-        }: { indexMask: 0, indexValue: 0, result: "" }): string => {
-        while (indexMask < mask.length && indexValue < value.length) {
-          if (mask.charAt(indexMask) === "0") {
-            if (parseInt(value.charAt(indexValue)) || parseInt(value.charAt(indexValue)) === 0)
-              result += value.charAt(indexValue);
+    return value && mask ? ((): string => {
+      let indexMask: number  = 0 as const;
+      let indexValue: number = 0 as const;
+      let result: string     = "" as const;
 
-            indexValue ++;
-          } else
-            result += mask.charAt(indexMask);
+      while (indexMask < mask.length && indexValue < value.length) {
+        if (mask.charAt(indexMask) === "0") {
+          if (parseInt(value.charAt(indexValue)) || parseInt(value.charAt(indexValue)) === 0)
+            result += value.charAt(indexValue);
 
-          indexMask ++;
-        }
+          indexValue ++;
+        } else
+          result += mask.charAt(indexMask);
 
-        return result;
-      })(
-        {
-          indexMask:  0,
-          indexValue: 0,
-          result:     "",
-        },
-      );
-    else
-      return value || "";
+        indexMask ++;
+      }
+
+      return result;
+    })() : value || "";
   }
 
 }

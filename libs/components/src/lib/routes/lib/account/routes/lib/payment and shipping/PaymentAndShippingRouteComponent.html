@@ -88,7 +88,7 @@
   <standard--header>
     <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--BillingFormSheet--Header">Edit your payment method.</h6>
   </standard--header>
-  <standard--form (output)="billingFormSubmit(billingFormSheetComponent);">
+  <standard--form (output)="billingFormSubmit(billingFormSheetComponent.openModel$);">
     <standard--divider />
     <standard--flexbox-container
       alignItems="center"
@@ -113,7 +113,7 @@
   <standard--header>
     <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--ShippingFormSheet--Header">Edit your shipping address.</h6>
   </standard--header>
-  <standard--form (output)="shippingFormSubmit(shippingFormSheetComponent);">
+  <standard--form (output)="shippingFormSubmit(shippingFormSheetComponent.openModel$);">
     <standard--section>
       <standard--flexbox-container
         alignItems="flex-end"

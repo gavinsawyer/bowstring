@@ -1,11 +1,11 @@
-import { isPlatformBrowser }                                                                            from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                         from "@angular/core";
-import { toSignal }                                                                                     from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, signInAnonymously, type User, type UserCredential }                    from "@angular/fire/auth";
-import { doc, docSnapshots, type DocumentReference, type DocumentSnapshot, Firestore, updateDoc }       from "@angular/fire/firestore";
-import { type AccountDocument }                                                                         from "@standard/interfaces";
-import { catchError, filter, map, Observable, type Observer, startWith, switchMap, type TeardownLogic } from "rxjs";
-import { fromPromise }                                                                                  from "rxjs/internal/observable/innerFrom";
+import { isPlatformBrowser }                                                                                         from "@angular/common";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                                      from "@angular/core";
+import { toSignal }                                                                                                  from "@angular/core/rxjs-interop";
+import { Auth, onIdTokenChanged, signInAnonymously, type User, type UserCredential }                                 from "@angular/fire/auth";
+import { doc, docSnapshots, type DocumentData, type DocumentReference, type DocumentSnapshot, Firestore, updateDoc } from "@angular/fire/firestore";
+import { type AccountDocument }                                                                                      from "@standard/interfaces";
+import { catchError, filter, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }              from "rxjs";
+import { fromPromise }                                                                                               from "rxjs/internal/observable/innerFrom";
 
 
 @Injectable(
@@ -31,10 +31,10 @@ export class AccountService {
         (user: User | null): user is User => !!user && !user.isAnonymous,
       ),
       switchMap<User, Observable<AccountDocument | undefined>>(
-        (user: User): Observable<AccountDocument | undefined> => docSnapshots<AccountDocument>(
+        ({ uid: userId }: User): Observable<AccountDocument | undefined> => docSnapshots<AccountDocument>(
           doc(
             this.firestore,
-            `/accounts/${ user.uid }`,
+            `/accounts/${ userId }`,
           ) as DocumentReference<AccountDocument>,
         ).pipe<AccountDocument | undefined, AccountDocument | undefined>(
           map<DocumentSnapshot<AccountDocument>, AccountDocument | undefined>(
@@ -60,7 +60,7 @@ export class AccountService {
 
   public update(accountDocument: Partial<AccountDocument>): Promise<void> {
     if (this.auth.currentUser && !this.auth.currentUser.isAnonymous)
-      return updateDoc(
+      return updateDoc<AccountDocument, DocumentData>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,

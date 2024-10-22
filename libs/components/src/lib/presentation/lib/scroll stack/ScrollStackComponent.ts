@@ -66,13 +66,13 @@ export class ScrollStackComponent {
   protected readonly scrollLeft$: Signal<number | undefined>                                     = isPlatformBrowser(this.platformId) ? toSignal<number>(
     toObservable<ElementRef<HTMLDivElement>>(this.innerHtmlDivElementRef$).pipe<number>(
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
-        (innerHtmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number> => fromEvent<Event>(
-          innerHtmlDivElementRef.nativeElement,
+        ({ nativeElement: innerHtmlDivElement }: ElementRef<HTMLDivElement>): Observable<number> => fromEvent<Event>(
+          innerHtmlDivElement,
           "scroll",
         ).pipe<Event | null, number>(
           startWith<Event, [ null ]>(null),
           map<Event | null, number>(
-            (): number => innerHtmlDivElementRef.nativeElement.scrollLeft,
+            (): number => innerHtmlDivElement.scrollLeft,
           ),
         ),
       ),
@@ -82,7 +82,7 @@ export class ScrollStackComponent {
   protected readonly viewportVerticalOffset$: Signal<number | undefined>                         = isPlatformBrowser(this.platformId) ? toSignal<number | undefined>(
     toObservable<ElementRef<HTMLDivElement>>(this.htmlDivElementRef$).pipe<number | undefined>(
       switchMap<ElementRef<HTMLDivElement>, Observable<number | undefined>>(
-        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number | undefined> => runInInjectionContext<Observable<number | undefined>>(
+        ({ nativeElement: htmlDivElement }: ElementRef<HTMLDivElement>): Observable<number | undefined> => runInInjectionContext<Observable<number | undefined>>(
           this.injector,
           (): Observable<number | undefined> => toObservable<number | undefined>(this.viewportService.height$).pipe<[ number | undefined, number | undefined, number | undefined ], number | undefined>(
             combineLatestWith<number | undefined, [ number | undefined, number | undefined ]>(
@@ -90,12 +90,11 @@ export class ScrollStackComponent {
               toObservable<number | undefined>(this.viewportService.scrollTop$),
             ),
             map<[ number | undefined, number | undefined, number | undefined ], number | undefined>(
-              ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number | undefined => ((domRect?: DOMRect): number | undefined => {
-                if (domRect !== undefined)
-                  return domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2;
-                else
-                  return undefined;
-              })(htmlDivElementRef.nativeElement.getBoundingClientRect()),
+              ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number | undefined => {
+                const domRect: DOMRect | undefined = htmlDivElement.getBoundingClientRect();
+
+                return domRect !== undefined ? domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2 : undefined;
+              },
             ),
           ),
         ),
@@ -105,16 +104,16 @@ export class ScrollStackComponent {
   protected readonly width$: Signal<number | undefined>                                          = isPlatformBrowser(this.platformId) ? toSignal<number>(
     toObservable<ElementRef<HTMLDivElement>>(this.htmlDivElementRef$).pipe<number>(
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
-        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(
-          (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-            resizeObserver.observe(htmlDivElementRef.nativeElement);
+        ({ nativeElement: htmlDivElement }: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(
+          (resizeEventObserver: Observer<number>): TeardownLogic => {
+            const resizeObserver: ResizeObserver = new ResizeObserver(
+              ([ { target: { clientWidth } } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(clientWidth),
+            );
+
+            resizeObserver.observe(htmlDivElement);
 
             return (): void => resizeObserver.disconnect();
-          })(
-            new ResizeObserver(
-              (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(resizeObserverEntries[0].target.clientWidth),
-            ),
-          ),
+          },
         ),
       ),
     ),

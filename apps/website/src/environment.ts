@@ -14,4 +14,7 @@ export const environment: Environment = {
   production:     false,
   project:        "website",
   recaptchaKeyID: "6LdUnL8nAAAAAGxCWDCrFYMIHwhXD3gg0yj30POI",
+  stripe:         {
+    apiKey: "pk_test_51QCNXBPkYnhegMwG95aQaPMDGNAMHl5r812Wnx7is2BxK6ZjGq3dQRWqoPDKv6tNYPGCoamPnMNt2TvPXi0CzGso00FG1mKmUT",
+  },
 };

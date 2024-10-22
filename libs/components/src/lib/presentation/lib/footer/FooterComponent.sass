@@ -150,14 +150,14 @@
         100%
           @include keyframes--unpin-backdrop
 
-  &:not(.pinnedOrUnPinning)
+  &:not(.pinnedOrUnpinning)
     > .harness
       translate: 0 0 0
 
     > .backdrop:before
       translate: 0 0 0
 
-  &.pinnedOrUnPinning
+  &.pinnedOrUnpinning
     --standard--container-directive--position: sticky !important
 
     > .harness
@@ -174,7 +174,7 @@
       > .backdrop:before
         animation: unpin-backdrop 360ms var(--bounce) forwards
 
-    &.raisedOrLoweringWhenPinnedOrUnPinning
+    &.raisedOrLoweringWhenPinnedOrUnpinning
       > .harness
         animation: pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
 
@@ -185,7 +185,7 @@
         animation: pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
 
       &:not(.pinned),
-      &:not(.raisedWhenPinnedOrUnPinning)
+      &:not(.raisedWhenPinnedOrUnpinning)
         > .harness
           animation: unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
 

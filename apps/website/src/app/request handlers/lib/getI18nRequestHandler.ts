@@ -9,7 +9,19 @@ function getI18nRequestHandler(getRequestHandler: (i18nRequestHandlerResponse: {
     request: express.Request,
     response: express.Response,
     nextFunction: express.NextFunction,
-  ): void => ((localeId: LocaleId): void => {
+  ): void => {
+    const localeIds: LocaleId[] = [
+      "en-US",
+      ...Object.keys(
+        project.i18n.locales,
+      ) as LocaleId[],
+    ];
+    const localeId: LocaleId    = localeIds.filter(
+      (localeId: LocaleId): boolean => localeId === request.path.split("/")[1] || localeId === request.headers.referer?.split("://")[1]?.split("/")[1],
+    )[0] || request.acceptsLanguages(
+      localeIds,
+    ) || "en-US";
+
     getRequestHandler(
       {
         localeId:   localeId,
@@ -23,20 +35,7 @@ function getI18nRequestHandler(getRequestHandler: (i18nRequestHandlerResponse: {
       response,
       nextFunction,
     );
-  })(
-    ((localeIds: LocaleId[]): LocaleId => localeIds.filter(
-      (localeId: LocaleId): boolean => localeId === request.path.split("/")[1] || localeId === request.headers.referer?.split("://")[1]?.split("/")[1],
-    )[0] || request.acceptsLanguages(
-      localeIds,
-    ) || "en-US")(
-      [
-        "en-US",
-        ...Object.keys(
-          project.i18n.locales,
-        ) as LocaleId[],
-      ],
-    ),
-  );
+  };
 }
 
 export default getI18nRequestHandler;

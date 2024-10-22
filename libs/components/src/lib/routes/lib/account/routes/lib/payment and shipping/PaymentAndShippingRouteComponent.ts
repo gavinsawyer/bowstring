@@ -3,7 +3,7 @@ import { toSignal }                                                             
 import { type AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                               from "@angular/forms";
 import { AccountDocument }                                                                                                                                                                                                                                    from "@standard/interfaces";
 import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                               from "@standard/pipes";
-import { AccountService, InputService }                                                                                                                                                                                                                       from "@standard/services";
+import { AccountService, InputService, StripeApiLoaderService }                                                                                                                                                                                               from "@standard/services";
 import { isEqual }                                                                                                                                                                                                                                            from "lodash";
 import { startWith }                                                                                                                                                                                                                                          from "rxjs";
 import { BoxComponent, ButtonComponent, ComboboxComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, MapComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent, TextFieldComponent } from "../../../../../../../";
@@ -42,13 +42,21 @@ export class PaymentAndShippingRouteComponent
   constructor() {
     super();
 
+    this.stripeApiLoaderService.load().then<void>(
+      (): void => void (0),
+    );
+
     effect(
-      (): void => ((accountDocument?: AccountDocument): void => {
+      (): void => {
+        const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
+
         if (accountDocument?.shipping)
           this.shippingFormGroup.reset(accountDocument.shipping);
-      })(this.accountService.accountDocument$()),
+      },
     );
   }
+
+  private readonly stripeApiLoaderService: StripeApiLoaderService = inject<StripeApiLoaderService>(StripeApiLoaderService);
 
   protected readonly accountService: AccountService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       = inject<AccountService>(AccountService);
   protected readonly billingFormEdited$: Signal<boolean>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  = computed<boolean>(
@@ -131,14 +139,9 @@ export class PaymentAndShippingRouteComponent
               nonNullable: true,
               validators:  [
                 Validators.required,
-                ({ value }: AbstractControl): ValidationErrors => {
-                  if (!Object.values<string>(this.inputService.addressCountryInputComponentOptions).includes(value))
-                    return {
-                      "optionSelected": true,
-                    };
-                  else
-                    return {};
-                },
+                ({ value }: AbstractControl): ValidationErrors => !Object.values<string>(this.inputService.addressCountryInputComponentOptions).includes(value) ? {
+                  "optionSelected": true,
+                } : {},
               ],
             },
           ),
@@ -216,14 +219,9 @@ export class PaymentAndShippingRouteComponent
             null,
             {
               validators: [
-                ({ value }: AbstractControl): ValidationErrors => {
-                  if (!Object.values<string>(this.inputService.namePrefixInputComponentOptions).includes(value))
-                    return {
-                      "optionSelected": true,
-                    };
-                  else
-                    return {};
-                },
+                ({ value }: AbstractControl): ValidationErrors => !Object.values<string>(this.inputService.namePrefixInputComponentOptions).includes(value) ? {
+                  "optionSelected": true,
+                } : {},
               ],
             },
           ),
@@ -237,14 +235,9 @@ export class PaymentAndShippingRouteComponent
               nonNullable: true,
               validators:  [
                 Validators.required,
-                ({ value }: AbstractControl): ValidationErrors => {
-                  if (!Object.values<string>(this.inputService.phoneCountryCodeInputComponentOptions).includes(value))
-                    return {
-                      "optionSelected": true,
-                    };
-                  else
-                    return {};
-                },
+                ({ value }: AbstractControl): ValidationErrors => !Object.values<string>(this.inputService.phoneCountryCodeInputComponentOptions).includes(value) ? {
+                  "optionSelected": true,
+                } : {},
               ],
             },
           ),
@@ -270,10 +263,10 @@ export class PaymentAndShippingRouteComponent
     },
   );
 
-  protected billingFormSubmit(sheetComponent: SheetComponent): void {
-    sheetComponent.openModel$.set(false);
+  protected billingFormSubmit(openModel$: SheetComponent["openModel$"]): void {
+    openModel$.set(false);
   }
-  protected shippingFormSubmit(sheetComponent: SheetComponent): void {
+  protected shippingFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.shippingFormGroup.value.address && this.shippingFormGroup.value.address.country && this.shippingFormGroup.value.address.level1 && this.shippingFormGroup.value.address.level2 && this.shippingFormGroup.value.address.line1 && this.shippingFormGroup.value.address.postalCode && this.shippingFormGroup.value.name && this.shippingFormGroup.value.name.first && this.shippingFormGroup.value.name.last && this.shippingFormGroup.value.phone && this.shippingFormGroup.value.phone.countryCode && this.shippingFormGroup.value.phone.national)
       this.accountService.update(
         {
@@ -301,7 +294,7 @@ export class PaymentAndShippingRouteComponent
           },
         },
       ).then<void>(
-        (): void => sheetComponent.openModel$.set(false),
+        (): void => openModel$.set(false),
       );
   }
 

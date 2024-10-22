@@ -23,7 +23,7 @@ export class PathService {
         (routerEvent: RouterEvent | NavigationStart | NavigationEnd | NavigationCancel | NavigationError | RoutesRecognized | GuardsCheckStart | GuardsCheckEnd | RouteConfigLoadStart | RouteConfigLoadEnd | ChildActivationStart | ChildActivationEnd | ActivationStart | ActivationEnd | Scroll | ResolveStart | ResolveEnd): routerEvent is NavigationEnd => routerEvent instanceof NavigationEnd,
       ),
       map<NavigationEnd, string>(
-        (navigationEnd: NavigationEnd): string => `/${ this.localeId }${ navigationEnd.url.split("?")[0] }`,
+        ({ url }: NavigationEnd): string => `/${ this.localeId }${ url.split("?")[0] }`,
       ),
     ),
     {

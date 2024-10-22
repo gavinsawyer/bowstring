@@ -10,16 +10,13 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class InsertZwnjsPipe
   implements PipeTransform {
 
-  transform(
+  public transform(
     value?: string,
   ): string {
-    if (value)
-      return value.replace(
-        /\b(\w)/g,
-        `$1&zwnj;`,
-      );
-    else
-      return "";
+    return value ? value.replace(
+      /\b(\w)/g,
+      `$1&zwnj;`,
+    ) : "";
   }
 
 }

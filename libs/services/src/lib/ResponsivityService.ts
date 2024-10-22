@@ -18,7 +18,7 @@ export class ResponsivityService {
   public readonly pastMediumBreakpoint$: Signal<boolean> = isPlatformBrowser(this.platformId) ? toSignal<boolean, boolean>(
     this.breakpointObserver.observe(`(min-width: 48rem)`).pipe<boolean>(
       map<BreakpointState, boolean>(
-        (breakpointState: BreakpointState): boolean => breakpointState.matches,
+        ({ matches }: BreakpointState): boolean => matches,
       ),
     ),
     {
@@ -28,7 +28,7 @@ export class ResponsivityService {
   public readonly pastSmallBreakpoint$: Signal<boolean>  = isPlatformBrowser(this.platformId) ? toSignal<boolean, boolean>(
     this.breakpointObserver.observe(`(min-width: 32rem)`).pipe<boolean>(
       map<BreakpointState, boolean>(
-        (breakpointState: BreakpointState): boolean => breakpointState.matches,
+        ({ matches }: BreakpointState): boolean => matches,
       ),
     ),
     {

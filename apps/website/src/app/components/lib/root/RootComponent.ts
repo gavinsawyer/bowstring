@@ -2,7 +2,7 @@ import { DOCUMENT, isPlatformBrowser, Location }                                
 import { Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                        from "@angular/core/rxjs-interop";
 import { type User }                                                                                     from "@angular/fire/auth";
-import { doc, type DocumentReference, Firestore, updateDoc }                                             from "@angular/fire/firestore";
+import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                          from "@angular/fire/firestore";
 import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }               from "@angular/forms";
 import { RouterOutlet }                                                                                  from "@angular/router";
 import { type RouteComponent, type SheetComponent }                                                      from "@standard/components";
@@ -57,8 +57,8 @@ export class RootComponent {
       switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
         (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
           switchMap<RouteComponent, Observable<TemplateRef<never> | undefined>>(
-            (routeComponent: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
-              routeComponent.aboveTemplateRef$,
+            ({ aboveTemplateRef$ }: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
+              aboveTemplateRef$,
               {
                 injector: this.injector,
               },
@@ -82,8 +82,8 @@ export class RootComponent {
       switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
         (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
           switchMap<RouteComponent, Observable<TemplateRef<never> | undefined>>(
-            (routeComponent: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
-              routeComponent.belowTemplateRef$,
+            ({ belowTemplateRef$ }: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
+              belowTemplateRef$,
               {
                 injector: this.injector,
               },
@@ -171,14 +171,9 @@ export class RootComponent {
     },
     {
       validators: [
-        ({ value }: AbstractControl): ValidationErrors => {
-          if (value.password !== value.passwordConfirmation)
-            return {
-              "passwordConfirmationMatches": true,
-            };
-          else
-            return {};
-        },
+        ({ value }: AbstractControl): ValidationErrors => value.password !== value.passwordConfirmation ? {
+          "passwordConfirmationMatches": true,
+        } : {},
       ],
     },
   );
@@ -201,14 +196,14 @@ export class RootComponent {
     if (isPlatformBrowser(this.platformId))
       this.document.location.href = `/${ localeId }${ this.location.path() }`;
   }
-  protected signinFormSubmit(sheetComponent: SheetComponent): void {
+  protected signinFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signinFormGroup.value.email && this.signinFormGroup.value.password)
       this.authenticationService.signInWithEmailAndPassword(
         this.signinFormGroup.value.email,
         this.signinFormGroup.value.password,
       ).then<void>(
         (): void => {
-          sheetComponent.openModel$.set(false);
+          openModel$.set(false);
 
           setTimeout(
             (): void => this.signinFormGroup.reset(),
@@ -217,48 +212,48 @@ export class RootComponent {
         },
       );
   }
-  protected signinWithPasskeyFormSubmit(sheetComponent: SheetComponent): void {
+  protected signinWithPasskeyFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     this.authenticationService.signInWithPasskey().then<void>(
-      (): void => sheetComponent.openModel$.set(false),
+      (): void => openModel$.set(false),
     );
   }
-  protected signupFormSubmit(sheetComponent: SheetComponent): void {
+  protected signupFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
       this.authenticationService.createUserWithEmailAndPassword(
         this.signupFormGroup.value.email,
         this.signupFormGroup.value.password,
       ).then<void, never>(
-        (): void => ((user?: User): void => {
-          if (user)
-            ((accountDocumentReference: DocumentReference<AccountDocument>): void => {
-              if (this.signupFormGroup.value.email)
-                updateDoc(
-                  accountDocumentReference,
-                  {
-                    email: this.signupFormGroup.value.email,
-                  },
-                ).then<void, never>(
-                  (): void => {
-                    sheetComponent.openModel$.set(false);
+        (): void => {
+          const user: User | undefined = this.authenticationService.user$();
 
-                    setTimeout(
-                      (): void => this.signupFormGroup.reset(),
-                      180,
-                    );
-                  },
-                  (error: unknown): never => {
-                    console.error("Something went wrong.");
+          if (user && this.signupFormGroup.value.email) {
+            const accountDocumentReference: DocumentReference<AccountDocument> = doc(
+              this.firestore,
+              `/accounts/${ user.uid }`,
+            ) as DocumentReference<AccountDocument>;
 
-                    throw error;
-                  },
+            updateDoc<AccountDocument, DocumentData>(
+              accountDocumentReference,
+              {
+                email: this.signupFormGroup.value.email,
+              },
+            ).then<void, never>(
+              (): void => {
+                openModel$.set(false);
+
+                setTimeout(
+                  (): void => this.signupFormGroup.reset(),
+                  180,
                 );
-            })(
-              doc(
-                this.firestore,
-                `/accounts/${ user.uid }`,
-              ) as DocumentReference<AccountDocument>,
+              },
+              (error: unknown): never => {
+                console.error("Something went wrong.");
+
+                throw error;
+              },
             );
-        })(this.authenticationService.user$()),
+          }
+        },
         (error: unknown): never => {
           console.error("Something went wrong.");
 
@@ -266,40 +261,40 @@ export class RootComponent {
         },
       );
   }
-  protected signupWithPasskeyFormSubmit(sheetComponent: SheetComponent): void {
+  protected signupWithPasskeyFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signupWithPasskeyFormGroup.value.email)
       this.authenticationService.createUserWithPasskey(this.signupWithPasskeyFormGroup.value.email).then<void, never>(
-        (): void => ((user?: User): void => {
-          if (user)
-            ((accountDocumentReference: DocumentReference<AccountDocument>): void => {
-              if (this.signupWithPasskeyFormGroup.value.email)
-                updateDoc(
-                  accountDocumentReference,
-                  {
-                    email: this.signupWithPasskeyFormGroup.value.email,
-                  },
-                ).then<void, never>(
-                  (): void => {
-                    sheetComponent.openModel$.set(false);
+        (): void => {
+          const user: User | undefined = this.authenticationService.user$();
 
-                    setTimeout(
-                      (): void => this.signupWithPasskeyFormGroup.reset(),
-                      180,
-                    );
-                  },
-                  (error: unknown): never => {
-                    console.error("Something went wrong.");
+          if (user && this.signupWithPasskeyFormGroup.value.email) {
+            const accountDocumentReference: DocumentReference<AccountDocument> = doc(
+              this.firestore,
+              `/accounts/${ user.uid }`,
+            ) as DocumentReference<AccountDocument>;
 
-                    throw error;
-                  },
+            updateDoc<AccountDocument, DocumentData>(
+              accountDocumentReference,
+              {
+                email: this.signupWithPasskeyFormGroup.value.email,
+              },
+            ).then<void, never>(
+              (): void => {
+                openModel$.set(false);
+
+                setTimeout(
+                  (): void => this.signupWithPasskeyFormGroup.reset(),
+                  180,
                 );
-            })(
-              doc(
-                this.firestore,
-                `/accounts/${ user.uid }`,
-              ) as DocumentReference<AccountDocument>,
+              },
+              (error: unknown): never => {
+                console.error("Something went wrong.");
+
+                throw error;
+              },
             );
-        })(this.authenticationService.user$()),
+          }
+        },
         (error: unknown): never => {
           console.error("Something went wrong.");
 

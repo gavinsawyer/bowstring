@@ -11,4 +11,7 @@ export interface Environment {
   "production": boolean,
   "project": "website",
   "recaptchaKeyID": string,
+  "stripe": {
+    "apiKey": string,
+  },
 }

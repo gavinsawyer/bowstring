@@ -1,6 +1,6 @@
 <footer class="harness" #htmlElement
   (click)="$event.stopPropagation();"
-  (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && pinnedOrUnPinning$() ? pinnedModel$.set(false) : true) || $event.preventDefault();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation(); ($event.key === 'Escape' && pinnedOrUnpinning$() ? pinnedModel$.set(false) : true) || $event.preventDefault();"
   tabindex="-1">
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </footer>

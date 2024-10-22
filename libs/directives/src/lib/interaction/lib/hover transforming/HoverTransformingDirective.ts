@@ -34,7 +34,7 @@ export class HoverTransformingDirective {
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
       ),
       switchMap<ElementRef<HTMLElement>, Observable<{ "x": number, "y": number } | undefined>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<{ "x": number, "y": number } | undefined> => fromEvent<PointerEvent>(
+        ({ nativeElement: htmlElement }: ElementRef<HTMLElement>): Observable<{ "x": number, "y": number } | undefined> => fromEvent<PointerEvent>(
           window,
           "pointermove",
         ).pipe<PointerEvent, { "x": number, "y": number } | undefined>(
@@ -46,18 +46,20 @@ export class HoverTransformingDirective {
               {
                 x,
                 y,
-              }: PointerEvent): { "x": number, "y": number } | undefined => ((domRect?: DOMRect): { "x": number, "y": number } | undefined => {
-              if (htmlElementRef.nativeElement.contains(this.document.elementFromPoint(
+              }: PointerEvent): { "x": number, "y": number } | undefined => {
+              if (htmlElement.contains(this.document.elementFromPoint(
                 x,
                 y,
-              )) && domRect && x >= domRect.left && x <= domRect.right && y >= domRect.top && y <= domRect.bottom)
-                return {
+              ))) {
+                const domRect: DOMRect | undefined = htmlElement.getBoundingClientRect();
+
+                return domRect && x >= domRect.left && x <= domRect.right && y >= domRect.top && y <= domRect.bottom ? {
                   x: ((2 * ((x - domRect.left) / domRect.width)) - 1) / 8,
                   y: ((2 * ((y - domRect.top) / domRect.height)) - 1) / 8,
-                };
-              else
+                } : undefined;
+              } else
                 return undefined;
-            })(htmlElementRef.nativeElement.getBoundingClientRect()),
+            },
           ),
         ),
       ),
@@ -70,13 +72,13 @@ export class HoverTransformingDirective {
         (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
       ),
       switchMap<ElementRef<HTMLElement>, Observable<boolean>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<boolean> => fromEvent<FocusEvent>(
-          htmlElementRef.nativeElement,
+        ({ nativeElement: htmlElement }: ElementRef<HTMLElement>): Observable<boolean> => fromEvent<FocusEvent>(
+          htmlElement,
           "focusin",
         ).pipe<boolean>(
           switchMap<FocusEvent, Observable<boolean>>(
             (): Observable<boolean> => fromEvent<FocusEvent>(
-              htmlElementRef.nativeElement,
+              htmlElement,
               "focusout",
             ).pipe<false, boolean>(
               map<FocusEvent, false>(
@@ -124,73 +126,72 @@ export class HoverTransformingDirective {
   protected readonly lastTranslationY$: Signal<number | undefined>                      = computed<number | undefined>(
     (): number | undefined => this.lastTranslation$()?.y,
   );
-  protected readonly pressed$: Signal<boolean | undefined>                              = isPlatformBrowser(this.platformId) && this.document.defaultView ? ((window: Window & typeof globalThis): Signal<boolean | undefined> => toSignal<boolean>(
-    toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, boolean>(
-      filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
-        (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
-      ),
-      switchMap<ElementRef<HTMLElement>, Observable<boolean>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<boolean> => fromEvent<PointerEvent>(
-          htmlElementRef.nativeElement,
-          "pointerdown",
-        ).pipe<boolean>(
-          switchMap<PointerEvent, Observable<boolean>>(
-            (): Observable<boolean> => merge<[ false, false, false, true ]>(
-              fromEvent<PointerEvent>(
-                htmlElementRef.nativeElement,
-                "pointerup",
-              ).pipe<false>(
-                map<PointerEvent, false>(
-                  (): false => false,
-                ),
-              ),
-              fromEvent<PointerEvent>(
-                htmlElementRef.nativeElement,
-                "pointerleave",
-              ).pipe<false>(
-                map<PointerEvent, false>(
-                  (): false => false,
-                ),
-              ),
-              fromEvent<PointerEvent>(
-                window,
-                "scroll",
-              ).pipe<false>(
-                map<PointerEvent, false>(
-                  (): false => false,
-                ),
-              ),
-              fromEvent<PointerEvent>(
-                htmlElementRef.nativeElement,
-                "pointerenter",
-              ).pipe<true, true>(
-                map<PointerEvent, true>(
-                  (): true => true,
-                ),
-                takeUntil<true>(
-                  fromEvent<PointerEvent>(
-                    window,
-                    "pointerup",
+  protected readonly pressed$: Signal<boolean | undefined>                              = isPlatformBrowser(this.platformId) && this.document.defaultView ? ((): Signal<boolean | undefined> => {
+    const window: Window & typeof globalThis = this.document.defaultView;
+
+    return toSignal<boolean>(
+      toObservable<ElementRef<HTMLElement> | undefined>(this.htmlElementRef$).pipe<ElementRef<HTMLElement>, boolean>(
+        filter<ElementRef<HTMLElement> | undefined, ElementRef<HTMLElement>>(
+          (htmlElementRef?: ElementRef<HTMLElement>): htmlElementRef is ElementRef<HTMLDivElement> => !!htmlElementRef,
+        ),
+        switchMap<ElementRef<HTMLElement>, Observable<boolean>>(
+          ({ nativeElement: htmlElement }: ElementRef<HTMLElement>): Observable<boolean> => fromEvent<PointerEvent>(
+            htmlElement,
+            "pointerdown",
+          ).pipe<boolean>(
+            switchMap<PointerEvent, Observable<boolean>>(
+              (): Observable<boolean> => merge<[ false, false, false, true ]>(
+                fromEvent<PointerEvent>(
+                  htmlElement,
+                  "pointerup",
+                ).pipe<false>(
+                  map<PointerEvent, false>(
+                    (): false => false,
                   ),
                 ),
+                fromEvent<PointerEvent>(
+                  htmlElement,
+                  "pointerleave",
+                ).pipe<false>(
+                  map<PointerEvent, false>(
+                    (): false => false,
+                  ),
+                ),
+                fromEvent<PointerEvent>(
+                  window,
+                  "scroll",
+                ).pipe<false>(
+                  map<PointerEvent, false>(
+                    (): false => false,
+                  ),
+                ),
+                fromEvent<PointerEvent>(
+                  htmlElement,
+                  "pointerenter",
+                ).pipe<true, true>(
+                  map<PointerEvent, true>(
+                    (): true => true,
+                  ),
+                  takeUntil<true>(
+                    fromEvent<PointerEvent>(
+                      window,
+                      "pointerup",
+                    ),
+                  ),
+                ),
+              ).pipe<boolean>(
+                startWith<boolean, [ boolean ]>(true),
               ),
-            ).pipe<boolean>(
-              startWith<boolean, [ boolean ]>(true),
             ),
           ),
         ),
       ),
-    ),
-  ))(this.document.defaultView) : signal<undefined>(undefined);
+    );
+  })() : signal<undefined>(undefined);
   protected readonly pressedOrUnpressing$: Signal<boolean | undefined>                  = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<boolean | undefined>(this.pressed$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
-        (pressed?: boolean): Observable<number> => {
-          if (pressed !== undefined)
-            return pressed ? timer(0) : timer(50);
-          else
-            return timer(0);
-        },
+        (pressed?: boolean): Observable<number> => pressed !== undefined ? pressed ? timer(0) : timer(50) : timer(0),
       ),
       map<boolean | undefined, boolean | undefined>(
         (): boolean | undefined => this.pressed$(),
@@ -209,12 +210,7 @@ export class HoverTransformingDirective {
         toObservable<number | undefined>(this.translationY$),
       ),
       map<[ number | undefined, number | undefined ], boolean | undefined>(
-        ([ translationX, translationY ]: [ number | undefined, number | undefined ]): boolean | undefined => {
-          if (translationX !== undefined || translationY !== undefined)
-            return translationX !== 0 || translationY !== 0;
-          else
-            return undefined;
-        },
+        ([ translationX, translationY ]: [ number | undefined, number | undefined ]): boolean | undefined => translationX !== undefined || translationY !== undefined ? translationX !== 0 || translationY !== 0 : undefined,
       ),
     ),
   ) : signal<undefined>(undefined);

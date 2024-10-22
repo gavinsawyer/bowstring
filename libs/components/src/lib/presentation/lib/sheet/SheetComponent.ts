@@ -120,12 +120,11 @@ export class SheetComponent {
   );
 
   public readonly openModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
-    (): boolean | undefined => ((open?: "" | boolean | `${ boolean }`): boolean | undefined => {
-      if (open !== undefined)
-        return open === "" || open === true || open === "true" || open !== "false" && false;
-      else
-        return undefined;
-    })(this.openModel$()),
+    (): boolean | undefined => {
+      const open: "" | boolean | `${ boolean }` | undefined = this.openModel$();
+
+      return open !== undefined ? open === "" || open === true || open === "true" || open !== "false" && false : undefined;
+    },
   );
 
   protected readonly openOrClosing$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(

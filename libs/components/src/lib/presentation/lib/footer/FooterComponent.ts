@@ -12,10 +12,10 @@ import { fromPromise }                                                          
 @Component(
   {
     host:           {
-      "[class.pinnedOrUnPinning]":                         "pinnedOrUnPinning$()",
+      "[class.pinnedOrUnpinning]":                         "pinnedOrUnpinning$()",
       "[class.pinned]":                                    "pinnedModelWithTransform$()",
-      "[class.raisedOrLoweringWhenPinnedOrUnPinning]":     "raisedOrLoweringWhenPinnedOrUnPinning$()",
-      "[class.raisedWhenPinnedOrUnPinning]":               "raisedWhenPinnedOrUnPinning$()",
+      "[class.raisedOrLoweringWhenPinnedOrUnpinning]":     "raisedOrLoweringWhenPinnedOrUnpinning$()",
+      "[class.raisedWhenPinnedOrUnpinning]":               "raisedWhenPinnedOrUnpinning$()",
       "[style.--standard--footer--height]":                "height$()",
       "[style.--standard--footer--raising-scale]":         "raisingScale$()",
       "[style.--standard--footer--unpinning-translation]": "unpinningTranslation$()",
@@ -77,36 +77,36 @@ export class FooterComponent {
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly bodyHeight$: Signal<number | undefined>                        = isPlatformBrowser(this.platformId) ? toSignal<number>(
     new Observable<number>(
-      (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
+      (resizeEventObserver: Observer<number>): TeardownLogic => {
+        const resizeObserver: ResizeObserver = new ResizeObserver(
+          ([ { target: { clientHeight } } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(clientHeight),
+        );
+
         resizeObserver.observe(this.document.body);
 
         return (): void => resizeObserver.disconnect();
-      })(
-        new ResizeObserver(
-          (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(resizeObserverEntries[0].target.clientHeight),
-        ),
-      ),
+      },
     ),
   ) : signal<undefined>(undefined);
   private readonly htmlElementRef$: Signal<ElementRef<HTMLElement>>               = viewChild.required<ElementRef<HTMLElement>>("htmlElement");
   private readonly dimensions$: Signal<Dimensions | undefined>                    = isPlatformBrowser(this.platformId) ? toSignal<Dimensions>(
     toObservable<ElementRef<HTMLElement>>(this.htmlElementRef$).pipe<Dimensions>(
       switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
-        (htmlElementRef: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
-          (resizeEventObserver: Observer<Dimensions>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-            resizeObserver.observe(htmlElementRef.nativeElement);
-
-            return (): void => resizeObserver.disconnect();
-          })(
-            new ResizeObserver(
-              (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(
+        ({ nativeElement: htmlElement }: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
+          (resizeEventObserver: Observer<Dimensions>): TeardownLogic => {
+            const resizeObserver: ResizeObserver = new ResizeObserver(
+              ([ { target: element } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(
                 {
-                  height: resizeObserverEntries[0].target.clientHeight,
-                  width:  resizeObserverEntries[0].target.clientWidth,
+                  height: element.clientHeight,
+                  width:  element.clientWidth,
                 },
               ),
-            ),
-          ),
+            );
+
+            resizeObserver.observe(htmlElement);
+
+            return (): void => resizeObserver.disconnect();
+          },
         ),
       ),
     ),
@@ -132,15 +132,14 @@ export class FooterComponent {
   );
 
   public readonly pinnedModelWithTransform$: Signal<boolean | undefined> = computed<boolean | undefined>(
-    (): boolean | undefined => ((pinned?: "" | boolean | `${ boolean }`): boolean | undefined => {
-      if (pinned !== undefined)
-        return pinned === "" || pinned === true || pinned === "true" || pinned !== "false" && false;
-      else
-        return undefined;
-    })(this.pinnedModel$()),
+    (): boolean | undefined => {
+      const pinned: "" | boolean | `${ boolean }` | undefined = this.pinnedModel$();
+
+      return pinned !== undefined ? pinned === "" || pinned === true || pinned === "true" || pinned !== "false" && false : undefined;
+    },
   );
 
-  protected readonly pinnedOrUnPinning$: Signal<boolean | undefined>                     = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+  protected readonly pinnedOrUnpinning$: Signal<boolean | undefined>                     = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<boolean | undefined>(this.pinnedModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
         (pinned?: boolean): Observable<number> => pinned ? timer(0) : timer(360),
@@ -166,11 +165,11 @@ export class FooterComponent {
               toObservable<number | undefined>(this.height$),
             ),
             map<[ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number | undefined, number | undefined ], number>(
-              ([ backdropHtmlDivElementRef, viewportHeight ]: [ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number | undefined, number | undefined ]): number => Math.round(
+              ([ { nativeElement: backdropHtmlDivElement }, viewportHeight ]: [ ElementRef<HTMLDivElement>, number | undefined, number | undefined, number | undefined, number | undefined ]): number => Math.round(
                 Math.max(
-                  backdropHtmlDivElementRef.nativeElement.getBoundingClientRect().bottom - (viewportHeight || 0) + Math.max(
+                  backdropHtmlDivElement.getBoundingClientRect().bottom - (viewportHeight || 0) + Math.max(
                     0,
-                    parseInt(backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("margin-bottom")?.toString() || "0") + parseInt(backdropHtmlDivElementRef.nativeElement.computedStyleMap().get("--standard--root--safe-area-inset-bottom")?.toString() || "0"),
+                    parseInt(backdropHtmlDivElement.computedStyleMap().get("margin-bottom")?.toString() || "0") + parseInt(backdropHtmlDivElement.computedStyleMap().get("--standard--root--safe-area-inset-bottom")?.toString() || "0"),
                   ),
                   0,
                 ),
@@ -181,7 +180,7 @@ export class FooterComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly raisedWhenPinnedOrUnPinning$: Signal<boolean | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+  protected readonly raisedWhenPinnedOrUnpinning$: Signal<boolean | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<number | undefined>(this.unpinningTranslation$).pipe<boolean | undefined>(
       map<number | undefined, boolean | undefined>(
         (unpinningTranslation?: number): boolean | undefined => {
@@ -193,13 +192,13 @@ export class FooterComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly raisedOrLoweringWhenPinnedOrUnPinning$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
-    toObservable<boolean | undefined>(this.raisedWhenPinnedOrUnPinning$).pipe<boolean | undefined, boolean | undefined>(
+  protected readonly raisedOrLoweringWhenPinnedOrUnpinning$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+    toObservable<boolean | undefined>(this.raisedWhenPinnedOrUnpinning$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
-        (raisedWhenPinnedOrUnPinning?: boolean): Observable<number> => raisedWhenPinnedOrUnPinning ? timer(0) : timer(360),
+        (raisedWhenPinnedOrUnpinning?: boolean): Observable<number> => raisedWhenPinnedOrUnpinning ? timer(0) : timer(360),
       ),
       map<boolean | undefined, boolean | undefined>(
-        (): boolean | undefined => this.raisedWhenPinnedOrUnPinning$(),
+        (): boolean | undefined => this.raisedWhenPinnedOrUnpinning$(),
       ),
     ),
   ) : signal<undefined>(undefined);

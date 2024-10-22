@@ -52,37 +52,23 @@ export class MasonryContainerDirective {
   }
 
   private readonly masonry$: Signal<Masonry | undefined> = computed<Masonry | undefined>(
-    (): Masonry | undefined => ((
-      {
-        columnSizerHtmlDivElementRef,
-        innerHtmlDivElementRef,
-        gutterSizerHtmlDivElementRef,
-      }: {
-        columnSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
-        gutterSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
-        innerHtmlDivElementRef?: ElementRef<HTMLDivElement>,
-      }): Masonry | undefined => {
-      if (columnSizerHtmlDivElementRef && gutterSizerHtmlDivElementRef && innerHtmlDivElementRef)
-        return new (require("masonry-layout") as typeof Masonry)(
-          innerHtmlDivElementRef.nativeElement,
-          {
-            columnWidth:        columnSizerHtmlDivElementRef.nativeElement,
-            gutter:             gutterSizerHtmlDivElementRef.nativeElement,
-            initLayout:         false,
-            itemSelector:       ".standardMasonryChild",
-            percentPosition:    true,
-            transitionDuration: 0,
-          },
-        );
-      else
-        return undefined;
-    })(
-      {
-        columnSizerHtmlDivElementRef: this.columnSizerHtmlDivElementRef$(),
-        gutterSizerHtmlDivElementRef: this.gutterSizerHtmlDivElementRef$(),
-        innerHtmlDivElementRef:       this.innerHtmlDivElementRef$(),
-      },
-    ),
+    (): Masonry | undefined => {
+      const columnSizerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined = this.columnSizerHtmlDivElementRef$();
+      const gutterSizerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined = this.gutterSizerHtmlDivElementRef$();
+      const innerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined       = this.innerHtmlDivElementRef$();
+
+      return columnSizerHtmlDivElementRef && gutterSizerHtmlDivElementRef && innerHtmlDivElementRef ? new (require("masonry-layout") as typeof Masonry)(
+        innerHtmlDivElementRef.nativeElement,
+        {
+          columnWidth:        columnSizerHtmlDivElementRef.nativeElement,
+          gutter:             gutterSizerHtmlDivElementRef.nativeElement,
+          initLayout:         false,
+          itemSelector:       ".standardMasonryChild",
+          percentPosition:    true,
+          transitionDuration: 0,
+        },
+      ) : undefined;
+    },
   );
   private readonly platformId: NonNullable<unknown>      = inject<NonNullable<unknown>>(PLATFORM_ID);
 
@@ -94,16 +80,16 @@ export class MasonryContainerDirective {
         (columnSizerHtmlDivElementRef?: ElementRef<HTMLDivElement>): columnSizerHtmlDivElementRef is ElementRef<HTMLDivElement> => !!columnSizerHtmlDivElementRef,
       ),
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
-        (htmlDivElementRef: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(
-          (resizeEventObserver: Observer<number>): TeardownLogic => ((resizeObserver: ResizeObserver): TeardownLogic => {
-            resizeObserver.observe(htmlDivElementRef.nativeElement);
+        ({ nativeElement: columnSizerHtmlDivElement }: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(
+          (resizeEventObserver: Observer<number>): TeardownLogic => {
+            const resizeObserver: ResizeObserver = new ResizeObserver(
+              ([ { target: { clientWidth } } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(clientWidth),
+            );
+
+            resizeObserver.observe(columnSizerHtmlDivElement);
 
             return (): void => resizeObserver.disconnect();
-          })(
-            new ResizeObserver(
-              (resizeObserverEntries: ResizeObserverEntry[]): void => resizeEventObserver.next(resizeObserverEntries[0].target.clientWidth),
-            ),
-          ),
+          },
         ),
       ),
     ),

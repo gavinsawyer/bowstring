@@ -2,7 +2,7 @@ import { NgTemplateOutlet }                                                     
 import { afterRender, Component, computed, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
 import { GoogleMap }                                                                                                  from "@angular/google-maps";
 import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                   from "@standard/directives";
-import { GoogleMapsJsApiLoaderService }                                                                               from "@standard/services";
+import { GoogleMapsApiLoaderService }                                                                                 from "@standard/services";
 
 
 @Component(
@@ -63,19 +63,21 @@ import { GoogleMapsJsApiLoaderService }                                         
 export class MapComponent {
 
   constructor() {
-    this.googleMapsJsApiLoaderService.load();
+    this.googleMapsApiLoaderService.load().then<void>(
+      (): void => void (0),
+    );
 
     afterRender(
       (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
-  private readonly defaultOptions: google.maps.MapOptions                     = {
+  private readonly defaultOptions: google.maps.MapOptions                 = {
     draggableCursor: "grab",
     draggingCursor:  "grabbing",
   };
-  private readonly googleMapsJsApiLoaderService: GoogleMapsJsApiLoaderService = inject<GoogleMapsJsApiLoaderService>(GoogleMapsJsApiLoaderService);
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>     = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly googleMapsApiLoaderService: GoogleMapsApiLoaderService = inject<GoogleMapsApiLoaderService>(GoogleMapsApiLoaderService);
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly options$: Signal<google.maps.MapOptions> = computed<google.maps.MapOptions>(
     (): google.maps.MapOptions => ({

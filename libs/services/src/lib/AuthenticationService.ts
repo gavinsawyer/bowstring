@@ -120,43 +120,43 @@ export class AuthenticationService {
       return Promise.reject<never>(new Error());
   }
   public linkWithPasskey(): Promise<void> {
-    return ((accountDocument?: AccountDocument): Promise<void> => {
-      if (accountDocument && accountDocument.email)
-        return linkWithPasskey(
-          this.auth,
-          this.functions,
-          accountDocument.email,
-        ).then<void, never>(
-          (): void => void (0),
-          (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
-            console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
+    const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
-            throw firebaseWebAuthnError;
-          },
-        );
-      else
-        return Promise.reject<never>(new Error());
-    })(this.accountService.accountDocument$());
+    if (accountDocument?.email)
+      return linkWithPasskey(
+        this.auth,
+        this.functions,
+        accountDocument.email,
+      ).then<void, never>(
+        (): void => void (0),
+        (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
+          console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
+
+          throw firebaseWebAuthnError;
+        },
+      );
+    else
+      return Promise.reject<never>(new Error());
   }
   public linkWithPasskeyBackup(): Promise<void> {
-    return ((accountDocument?: AccountDocument): Promise<void> => {
-      if (accountDocument && accountDocument.email)
-        return linkWithPasskey(
-          this.auth,
-          this.functions,
-          `${ accountDocument.email } (Backup)`,
-          "second",
-        ).then<void, never>(
-          (): void => void (0),
-          (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
-            console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey backup." : firebaseWebAuthnError.message || "Something went wrong.");
+    const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
-            throw firebaseWebAuthnError;
-          },
-        );
-      else
-        return Promise.reject<never>(new Error());
-    })(this.accountService.accountDocument$());
+    if (accountDocument?.email)
+      return linkWithPasskey(
+        this.auth,
+        this.functions,
+        `${ accountDocument.email } (Backup)`,
+        "second",
+      ).then<void, never>(
+        (): void => void (0),
+        (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
+          console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey backup." : firebaseWebAuthnError.message || "Something went wrong.");
+
+          throw firebaseWebAuthnError;
+        },
+      );
+    else
+      return Promise.reject<never>(new Error());
   }
   public signInAnonymously(): Promise<void> {
     return signInAnonymously(

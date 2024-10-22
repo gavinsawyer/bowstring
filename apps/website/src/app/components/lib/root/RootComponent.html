@@ -24,7 +24,7 @@
   @defer {<standard--header>
     <h6 i18n="@@apps--Website--Components--Root--SigninFormSheet--Header">Sign in.</h6>
   </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinFormSheetComponent);">
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinFormSheetComponent.openModel$);">
     <standard--button
       appearance="raised"
       level="2"
@@ -37,7 +37,7 @@
     </standard--button>
   </standard--form>
   <standard--divider />}
-  <standard--form (output)="signinFormSubmit(signinFormSheetComponent);">
+  <standard--form (output)="signinFormSubmit(signinFormSheetComponent.openModel$);">
     <standard--section>
       <standard--text-field
         autocomplete="username"
@@ -97,7 +97,7 @@
   @defer {<standard--header>
     <h6 i18n="@@apps--Website--Components--Root--SignupFormSheet--Header">Create your account.</h6>
   </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent);">
+  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent.openModel$);">
     <standard--text-field
       autocomplete="email"
       [formControl]="signupWithPasskeyFormGroup.controls.email"
@@ -118,7 +118,7 @@
     </standard--button>
   </standard--form>
   <standard--divider />}
-  <standard--form (output)="signupFormSubmit(signupFormSheetComponent);">
+  <standard--form (output)="signupFormSubmit(signupFormSheetComponent.openModel$);">
     <standard--section>
       <standard--text-field
         autocomplete="email"

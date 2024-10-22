@@ -15,39 +15,43 @@ export class ViewportService {
 
   private readonly document: Document                                          = inject<Document>(DOCUMENT);
   private readonly platformId: NonNullable<unknown>                            = inject<NonNullable<unknown>>(PLATFORM_ID);
-  private readonly dimensions$: Signal<Dimensions | undefined>                 = isPlatformBrowser(this.platformId) && this.document.defaultView ? ((window: Window & typeof globalThis): Signal<Dimensions | undefined> => {
-    if (window.visualViewport)
-      return toSignal<Dimensions>(
-        fromEvent<Event>(
-          window.visualViewport,
-          "resize",
-        ).pipe<Event | null, Dimensions>(
-          startWith<Event, [ null ]>(null),
-          map<Event | null, Dimensions>(
-            (): Dimensions => ({
-              height: window.innerHeight,
-              width:  window.innerWidth,
-            }),
-          ),
+  private readonly dimensions$: Signal<Dimensions | undefined>                 = isPlatformBrowser(this.platformId) && this.document.defaultView?.visualViewport ? ((): Signal<Dimensions | undefined> => {
+    const visualViewport: VisualViewport     = this.document.defaultView.visualViewport;
+    const window: Window & typeof globalThis = this.document.defaultView;
+
+    return toSignal<Dimensions>(
+      fromEvent<Event>(
+        visualViewport,
+        "resize",
+      ).pipe<Event | null, Dimensions>(
+        startWith<Event, [ null ]>(null),
+        map<Event | null, Dimensions>(
+          (): Dimensions => ({
+            height: window.innerHeight,
+            width:  window.innerWidth,
+          }),
         ),
-      );
-    else
-      return signal<undefined>(undefined);
-  })(this.document.defaultView) : signal<undefined>(undefined);
-  private readonly scrollPosition$: Signal<ViewportScrollPosition | undefined> = isPlatformBrowser(this.platformId) && this.document.defaultView ? ((window: Window & typeof globalThis): Signal<ViewportScrollPosition | undefined> => toSignal<ViewportScrollPosition>(
-    fromEvent<Event>(
-      this.document.defaultView,
-      "scroll",
-    ).pipe<Event | null, ViewportScrollPosition>(
-      startWith<Event, [ null ]>(null),
-      map<Event | null, ViewportScrollPosition>(
-        (): ViewportScrollPosition => ({
-          left: window.scrollX,
-          top:  window.scrollY,
-        }),
       ),
-    ),
-  ))(this.document.defaultView) : signal<undefined>(undefined);
+    );
+  })() : signal<undefined>(undefined);
+  private readonly scrollPosition$: Signal<ViewportScrollPosition | undefined> = isPlatformBrowser(this.platformId) && this.document.defaultView ? ((): Signal<ViewportScrollPosition | undefined> => {
+    const window: Window & typeof globalThis = this.document.defaultView;
+
+    return toSignal<ViewportScrollPosition>(
+      fromEvent<Event>(
+        window,
+        "scroll",
+      ).pipe<Event | null, ViewportScrollPosition>(
+        startWith<Event, [ null ]>(null),
+        map<Event | null, ViewportScrollPosition>(
+          (): ViewportScrollPosition => ({
+            left: window.scrollX,
+            top:  window.scrollY,
+          }),
+        ),
+      ),
+    );
+  })() : signal<undefined>(undefined);
 
   public readonly height$: Signal<number | undefined>     = computed<number | undefined>(
     (): number | undefined => this.dimensions$()?.height,
