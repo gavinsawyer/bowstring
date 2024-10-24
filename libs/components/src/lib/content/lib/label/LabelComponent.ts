@@ -1,6 +1,6 @@
-import { NgTemplateOutlet }                           from "@angular/common";
-import { Component, input, InputSignalWithTransform } from "@angular/core";
-import { ContainerDirective }                         from "@standard/directives";
+import { NgTemplateOutlet }                                from "@angular/common";
+import { Component, input, type InputSignalWithTransform } from "@angular/core";
+import { ContainerDirective }                              from "@standard/directives";
 
 
 @Component(

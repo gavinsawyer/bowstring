@@ -6,7 +6,7 @@ import { type AuthBlockingEvent, beforeUserCreated, HttpsError } from "firebase-
 
 // noinspection JSUnusedGlobalSymbols
 export const beforeUserCreatedBlockingFunction = beforeUserCreated(
-  async ({ data: { uid: userId } }: AuthBlockingEvent): Promise<object> => (getFirestore(getApp()).collection("accounts").doc(userId) as DocumentReference<AccountDocument>).set(
+  async ({ data: authUserRecord }: AuthBlockingEvent): Promise<object> => authUserRecord?.uid ? (getFirestore(getApp()).collection("accounts").doc(authUserRecord.uid) as DocumentReference<AccountDocument>).set(
     {},
     {
       merge: true,
@@ -18,8 +18,11 @@ export const beforeUserCreatedBlockingFunction = beforeUserCreated(
 
       throw new HttpsError(
         "unknown",
-        "Unknown error",
+        "Something went wrong.",
       );
     },
-  ),
+  ) : Promise.reject<never>(new HttpsError(
+    "unauthenticated",
+    "Something went wrong.",
+  )),
 );

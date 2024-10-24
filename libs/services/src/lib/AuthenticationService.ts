@@ -3,7 +3,7 @@ import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type
 import { toSignal }                                                                                                                                                from "@angular/core/rxjs-interop";
 import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User } from "@angular/fire/auth";
 import { Functions }                                                                                                                                               from "@angular/fire/functions";
-import { createUserWithPasskey, FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey }                                                 from "@firebase-web-authn/browser";
+import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey }                                            from "@firebase-web-authn/browser";
 import { type AccountDocument }                                                                                                                                    from "@standard/interfaces";
 import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                              from "rxjs";
 import { fromPromise }                                                                                                                                             from "rxjs/internal/observable/innerFrom";

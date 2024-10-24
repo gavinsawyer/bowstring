@@ -2,7 +2,8 @@ import { isPlatformBrowser }               from "@angular/common";
 import { inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { ENVIRONMENT }                     from "@standard/injection-tokens";
 import { type Environment }                from "@standard/interfaces";
-import { loadStripe, type Stripe }         from "@stripe/stripe-js";
+import { type Stripe }                     from "@stripe/stripe-js";
+import { loadStripe }                      from "@stripe/stripe-js/pure";
 
 
 @Injectable(

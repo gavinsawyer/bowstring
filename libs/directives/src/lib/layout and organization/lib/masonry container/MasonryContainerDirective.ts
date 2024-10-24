@@ -1,10 +1,10 @@
-import { isPlatformBrowser }                                                                                                                                                                         from "@angular/common";
-import { afterRender, computed, Directive, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, signal, type Signal, type WritableSignal } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                                    from "@angular/core/rxjs-interop";
-import { type Inherit, type ScalarString }                                                                                                                                                           from "@standard/types";
-import type Masonry                                                                                                                                                                                  from "masonry-layout";
-import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                                          from "rxjs";
-import { ContainerDirective }                                                                                                                                                                        from "../container/ContainerDirective";
+import { isPlatformBrowser }                                                                                                                                                                                    from "@angular/common";
+import { afterRender, computed, Directive, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, OnDestroy, PLATFORM_ID, signal, type Signal, type WritableSignal } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                               from "@angular/core/rxjs-interop";
+import { type Inherit, type ScalarString }                                                                                                                                                                      from "@standard/types";
+import type Masonry                                                                                                                                                                                             from "masonry-layout";
+import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                                                     from "rxjs";
+import { ContainerDirective }                                                                                                                                                                                   from "../container/ContainerDirective";
 
 
 @Directive(
@@ -43,7 +43,8 @@ import { ContainerDirective }                                                   
     standalone:     true,
   },
 )
-export class MasonryContainerDirective {
+export class MasonryContainerDirective
+  implements OnDestroy {
 
   constructor() {
     afterRender(
@@ -53,15 +54,15 @@ export class MasonryContainerDirective {
 
   private readonly masonry$: Signal<Masonry | undefined> = computed<Masonry | undefined>(
     (): Masonry | undefined => {
-      const columnSizerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined = this.columnSizerHtmlDivElementRef$();
-      const gutterSizerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined = this.gutterSizerHtmlDivElementRef$();
-      const innerHtmlDivElementRef: ElementRef<HTMLDivElement> | undefined       = this.innerHtmlDivElementRef$();
+      const columnSizerHtmlDivElement: HTMLDivElement | undefined = this.columnSizerHtmlDivElementRef$()?.nativeElement;
+      const gutterSizerHtmlDivElement: HTMLDivElement | undefined = this.gutterSizerHtmlDivElementRef$()?.nativeElement;
+      const innerHtmlDivElement: HTMLDivElement | undefined       = this.innerHtmlDivElementRef$()?.nativeElement;
 
-      return columnSizerHtmlDivElementRef && gutterSizerHtmlDivElementRef && innerHtmlDivElementRef ? new (require("masonry-layout") as typeof Masonry)(
-        innerHtmlDivElementRef.nativeElement,
+      return columnSizerHtmlDivElement && gutterSizerHtmlDivElement && innerHtmlDivElement ? new (require("masonry-layout"))(
+        innerHtmlDivElement,
         {
-          columnWidth:        columnSizerHtmlDivElementRef.nativeElement,
-          gutter:             gutterSizerHtmlDivElementRef.nativeElement,
+          columnWidth:        columnSizerHtmlDivElement,
+          gutter:             gutterSizerHtmlDivElement,
           initLayout:         false,
           itemSelector:       ".standardMasonryChild",
           percentPosition:    true,
@@ -116,5 +117,9 @@ export class MasonryContainerDirective {
   );
   public readonly gutterSizerHtmlDivElementRef$: WritableSignal<ElementRef<HTMLDivElement> | undefined> = signal<undefined>(undefined);
   public readonly innerHtmlDivElementRef$: WritableSignal<ElementRef<HTMLDivElement> | undefined>       = signal<undefined>(undefined);
+
+  public ngOnDestroy(): void {
+    this.masonry$()?.destroy?.();
+  }
 
 }
