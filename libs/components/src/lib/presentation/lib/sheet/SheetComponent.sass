@@ -31,7 +31,6 @@
     min-height: 100dvh
     max-width: 100dvw
     min-width: 100dvw
-    outline: 0
     overflow: scroll
     padding: 0
     visibility: collapse
@@ -122,16 +121,13 @@
         --standard--flexbox-container-directive--gap-row: var(--standard--sheet--gap-row) !important
         --standard--glass-directive--material-opacity: var(--standard--sheet--material-opacity) !important
 
-        > .harness > .between
-          user-select: none
+        > .harness > .between::ng-deep > *
+          --standard--sheet--material-opacity: initial
 
-          &::ng-deep > *
-            --standard--sheet--material-opacity: initial
-
-            @include ElevatedDirective.children
-            @include FlexboxContainerDirective.children
-            @include GlassDirective.children
-            @include RoundedDirective.children
+          @include ElevatedDirective.children
+          @include FlexboxContainerDirective.children
+          @include GlassDirective.children
+          @include RoundedDirective.children
 
   &.openOrClosing
     > .harness

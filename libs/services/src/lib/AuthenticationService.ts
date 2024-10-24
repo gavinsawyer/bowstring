@@ -4,7 +4,6 @@ import { toSignal }                                                             
 import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User } from "@angular/fire/auth";
 import { Functions }                                                                                                                                               from "@angular/fire/functions";
 import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey }                                            from "@firebase-web-authn/browser";
-import { type AccountDocument }                                                                                                                                    from "@standard/interfaces";
 import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                              from "rxjs";
 import { fromPromise }                                                                                                                                             from "rxjs/internal/observable/innerFrom";
 import { AccountService }                                                                                                                                          from "./AccountService";
@@ -101,62 +100,53 @@ export class AuthenticationService {
     email: string,
     password: string,
   ): Promise<void> {
-    if (this.auth.currentUser)
-      return linkWithCredential(
-        this.auth.currentUser,
-        EmailAuthProvider.credential(
-          email,
-          password,
-        ),
-      ).then<void, never>(
-        (): void => void (0),
-        (error: unknown): never => {
-          console.error("Something went wrong.");
+    return this.auth.currentUser ? linkWithCredential(
+      this.auth.currentUser,
+      EmailAuthProvider.credential(
+        email,
+        password,
+      ),
+    ).then<void, never>(
+      (): void => void (0),
+      (error: unknown): never => {
+        console.error("Something went wrong.");
 
-          throw error;
-        },
-      );
-    else
-      return Promise.reject<never>(new Error());
+        throw error;
+      },
+    ) : Promise.reject<never>(new Error());
   }
   public linkWithPasskey(): Promise<void> {
-    const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
+    const email: string | undefined = this.accountService.accountDocument$()?.email;
 
-    if (accountDocument?.email)
-      return linkWithPasskey(
-        this.auth,
-        this.functions,
-        accountDocument.email,
-      ).then<void, never>(
-        (): void => void (0),
-        (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
-          console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
+    return email ? linkWithPasskey(
+      this.auth,
+      this.functions,
+      email,
+    ).then<void, never>(
+      (): void => void (0),
+      (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
+        console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
 
-          throw firebaseWebAuthnError;
-        },
-      );
-    else
-      return Promise.reject<never>(new Error());
+        throw firebaseWebAuthnError;
+      },
+    ) : Promise.reject<never>(new Error());
   }
   public linkWithPasskeyBackup(): Promise<void> {
-    const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
+    const email: string | undefined = this.accountService.accountDocument$()?.email;
 
-    if (accountDocument?.email)
-      return linkWithPasskey(
-        this.auth,
-        this.functions,
-        `${ accountDocument.email } (Backup)`,
-        "second",
-      ).then<void, never>(
-        (): void => void (0),
-        (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
-          console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey backup." : firebaseWebAuthnError.message || "Something went wrong.");
+    return email ? linkWithPasskey(
+      this.auth,
+      this.functions,
+      `${ email } (Backup)`,
+      "second",
+    ).then<void, never>(
+      (): void => void (0),
+      (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
+        console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey backup." : firebaseWebAuthnError.message || "Something went wrong.");
 
-          throw firebaseWebAuthnError;
-        },
-      );
-    else
-      return Promise.reject<never>(new Error());
+        throw firebaseWebAuthnError;
+      },
+    ) : Promise.reject<never>(new Error());
   }
   public signInAnonymously(): Promise<void> {
     return signInAnonymously(

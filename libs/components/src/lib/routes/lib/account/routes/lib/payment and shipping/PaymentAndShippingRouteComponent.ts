@@ -48,10 +48,10 @@ export class PaymentAndShippingRouteComponent
 
     effect(
       (): void => {
-        const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
+        const shipping: AccountDocument["shipping"] | undefined = this.accountService.accountDocument$()?.shipping;
 
-        if (accountDocument?.shipping)
-          this.shippingFormGroup.reset(accountDocument.shipping);
+        if (shipping)
+          this.shippingFormGroup.reset(shipping);
       },
     );
   }

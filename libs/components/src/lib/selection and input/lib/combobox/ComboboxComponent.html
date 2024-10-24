@@ -1,7 +1,4 @@
-<div class="harness"
-  (click)="$event.stopPropagation();"
-  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-  tabindex="-1">
+<div class="harness">
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
@@ -20,6 +17,7 @@
           <button class="harness"
             (click)="$event.stopPropagation(); htmlInputElement.focus(); htmlInputElement.value = ''; onChange?.();"
             (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+            (pointerdown)="$event.stopPropagation();"
             tabindex="-1"
             type="button">
             <div class="between">

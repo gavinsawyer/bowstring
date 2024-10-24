@@ -17,43 +17,48 @@
   --standard--flexbox-container-directive--flex-direction: row !important
   --standard--flexbox-container-directive--justify-content: center !important
 
-  > .harness > .between
-    &::ng-deep > *
-      @include FlexboxContainerDirective.children
+  > .harness
+    cursor: default
+    user-select: none
 
-    > div
-      display: contents
+    > .between
+      &::ng-deep > *
+        @include FlexboxContainerDirective.children
 
-      --standard--button--gap-column: calc(1rem * pow(var(--phi), -2))
-      --standard--button--gap-row: calc(1rem * pow(var(--phi), -3))
+      > div
+        display: contents
 
-      @include FlexboxContainerDirective.host
+        --standard--button--gap-column: calc(1rem * pow(var(--phi), -2))
+        --standard--button--gap-row: calc(1rem * pow(var(--phi), -3))
 
-      --standard--flexbox-child-directive--flex-basis: 100% !important
-      --standard--flexbox-container-directive--align-items: center !important
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
-      --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
-      --standard--flexbox-container-directive--justify-content: center !important
+        @include FlexboxContainerDirective.host
 
-      > .harness
-        background: none
-        border: 0
-        color: inherit
-        cursor: pointer
-        font: inherit
-        letter-spacing: inherit
-        line-height: inherit
-        padding: 0
-        user-select: none
+        --standard--flexbox-child-directive--flex-basis: 100% !important
+        --standard--flexbox-container-directive--align-items: center !important
+        --standard--flexbox-container-directive--flex-direction: row !important
+        --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
+        --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
+        --standard--flexbox-container-directive--justify-content: center !important
 
-        > .between
-          font-size: calc(1rem * pow(var(--phi), 0.25))
-          opacity: 1
-          transition: opacity 200ms ease-in-out
+        > .harness
+          background: none
+          border: 0
+          color: inherit
+          cursor: pointer
+          font: inherit
+          letter-spacing: inherit
+          line-height: inherit
+          padding: 0
+          text-align: start
+          text-decoration: none
 
-          &::ng-deep > *
-            @include FlexboxContainerDirective.children
+          > .between
+            font-size: calc(1rem * pow(var(--phi), 0.25))
+            opacity: 1
+            transition: opacity 200ms ease-in-out
+
+            &::ng-deep > *
+              @include FlexboxContainerDirective.children
 
   &.appearance-raised
     @include ElevatedDirective.host
@@ -127,7 +132,6 @@
         font-size: calc(1rem * pow(var(--phi), 1))
 
   &.disabled > .harness
-    cursor: default
     pointer-events: none
 
     > .between

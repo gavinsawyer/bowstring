@@ -1,7 +1,4 @@
-<aside class="harness"
-  (click)="$event.stopPropagation();"
-  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-  tabindex="-1">
+<aside class="harness">
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </aside>
 

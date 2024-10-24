@@ -29,13 +29,10 @@
     --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 1)) !important
     --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 0)) !important
 
-  > .harness > .between
-    user-select: none
+  > .harness > .between::ng-deep > *
+    --standard--box--material-opacity: initial
 
-    &::ng-deep > *
-      --standard--box--material-opacity: initial
-
-      @include ElevatedDirective.children
-      @include FlexboxContainerDirective.children
-      @include GlassDirective.children
-      @include RoundedDirective.children
+    @include ElevatedDirective.children
+    @include FlexboxContainerDirective.children
+    @include GlassDirective.children
+    @include RoundedDirective.children

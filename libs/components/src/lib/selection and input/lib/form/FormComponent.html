@@ -1,8 +1,5 @@
 <form class="harness"
-  (click)="$event.stopPropagation();"
-  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
-  (ngSubmit)="output.emit();"
-  tabindex="-1">
+  (ngSubmit)="output.emit();">
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </form>
 

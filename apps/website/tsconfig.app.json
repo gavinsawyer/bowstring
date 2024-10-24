@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "types": [
+    "declaration": false,
+    "types":       [
       "@angular/localize"
     ]
   },
