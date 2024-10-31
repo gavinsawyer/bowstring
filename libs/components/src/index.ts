@@ -1,3 +1,5 @@
+export * from "./lib/route/RouteComponent";
+
 export * from "./lib/content";
 export * from "./lib/layout and organization";
 export * from "./lib/menus and actions";

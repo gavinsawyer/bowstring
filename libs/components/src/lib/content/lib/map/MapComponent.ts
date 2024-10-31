@@ -63,7 +63,7 @@ import { GoogleMapsApiLoaderService }                                           
 export class MapComponent {
 
   constructor() {
-    this.googleMapsApiLoaderService.load().then<void>(
+    this.googleMapsApiLoaderService.load("maps").then<void>(
       (): void => void (0),
     );
 

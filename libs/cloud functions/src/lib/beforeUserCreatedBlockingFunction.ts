@@ -21,8 +21,8 @@ export const beforeUserCreatedBlockingFunction = beforeUserCreated(
         "Something went wrong.",
       );
     },
-  ) : Promise.reject<never>(new HttpsError(
+  ) : new HttpsError(
     "unauthenticated",
     "Something went wrong.",
-  )),
+  ),
 );

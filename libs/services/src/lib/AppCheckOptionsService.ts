@@ -18,18 +18,16 @@ export class AppCheckOptionsService {
   public readonly appCheckOptions: AppCheckOptions = isPlatformBrowser(this.platformId) ? {
     isTokenAutoRefreshEnabled: true,
     provider:                  new ReCaptchaEnterpriseProvider(
-      this.environment.recaptchaKeyID,
+      this.environment.apis.recaptcha.apiKey,
     ),
   } : {
     isTokenAutoRefreshEnabled: false,
     provider:                  new CustomProvider(
       {
-        getToken: (): Promise<AppCheckToken> => Promise.resolve<AppCheckToken>(
-          {
-            token:            process.env[`APP_CHECK_TOKEN_${ this.environment.project.toUpperCase() }`] as string,
-            expireTimeMillis: Date.now(),
-          },
-        ),
+        getToken: async (): Promise<AppCheckToken> => ({
+          token:            process.env[`APP_CHECK_TOKEN_${ this.environment.app.toUpperCase() }`] as string,
+          expireTimeMillis: Date.now(),
+        }),
       },
     ),
   };

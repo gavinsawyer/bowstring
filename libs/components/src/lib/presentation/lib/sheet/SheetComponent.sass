@@ -129,6 +129,9 @@
           @include GlassDirective.children
           @include RoundedDirective.children
 
+        @media (min-width: 48rem)
+          --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6.5)) !important
+
   &.openOrClosing
     > .harness
       animation: open-sheet 180ms ease-in forwards

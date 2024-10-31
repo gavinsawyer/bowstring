@@ -1,8 +1,8 @@
+import { SymbolPath } from "./SymbolPath";
+
+
 export interface SymbolPaths {
-  "paths": {
-    "definition": string,
-    "opacity": number,
-  }[],
-  "viewBoxHeight": number,
-  "viewBoxWidth": number,
+  "paths": SymbolPath[];
+  "viewBoxHeight": number;
+  "viewBoxWidth": number;
 }

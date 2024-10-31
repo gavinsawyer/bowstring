@@ -1,3 +1,6 @@
-export * from "./lib/combobox/ComboboxComponent";
+export * from "./lib/input/InputComponent";
 export * from "./lib/form/FormComponent";
-export * from "./lib/text field/TextFieldComponent";
+export * from "./lib/stripe element/StripeElementComponent";
+
+export * from "./lib/inputs";
+export * from "./lib/stripe elements";

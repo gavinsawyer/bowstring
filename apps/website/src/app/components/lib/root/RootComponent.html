@@ -39,14 +39,14 @@
   <standard--divider />}
   <standard--form (output)="signinFormSubmit(signinFormSheetComponent.openModel$);">
     <standard--section>
-      <standard--text-field
+      <standard--text-field-input
         autocomplete="username"
         [formControl]="signinFormGroup.controls.email"
         i18n-placeholder
         level="2"
         placeholder="Email"
         type="email" />
-      <standard--text-field
+      <standard--text-field-input
         autocomplete="current-password"
         [formControl]="signinFormGroup.controls.password"
         i18n-placeholder
@@ -98,7 +98,7 @@
     <h6 i18n="@@apps--Website--Components--Root--SignupFormSheet--Header">Create your account.</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent.openModel$);">
-    <standard--text-field
+    <standard--text-field-input
       autocomplete="email"
       [formControl]="signupWithPasskeyFormGroup.controls.email"
       i18n-placeholder
@@ -120,21 +120,21 @@
   <standard--divider />}
   <standard--form (output)="signupFormSubmit(signupFormSheetComponent.openModel$);">
     <standard--section>
-      <standard--text-field
+      <standard--text-field-input
         autocomplete="email"
         [formControl]="signupFormGroup.controls.email"
         i18n-placeholder
         level="2"
         placeholder="Email"
         type="email" />
-      <standard--text-field
+      <standard--text-field-input
         autocomplete="new-password"
         [formControl]="signupFormGroup.controls.password"
         i18n-placeholder
         level="2"
         placeholder="Password"
         type="password" />
-      <standard--text-field
+      <standard--text-field-input
         autocomplete="new-password"
         [formControl]="signupFormGroup.controls.passwordConfirmation"
         i18n-placeholder

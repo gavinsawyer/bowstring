@@ -1,9 +1,12 @@
-import { NgTemplateOutlet }                                                                                            from "@angular/common";
-import { afterRender, Component, forwardRef, inject }                                                                  from "@angular/core";
+import { KeyValuePipe, NgTemplateOutlet }                                                                              from "@angular/common";
+import { afterRender, Component, forwardRef, inject, input, type InputSignal, signal, type Signal }                    from "@angular/core";
 import { NG_VALUE_ACCESSOR }                                                                                           from "@angular/forms";
 import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective } from "@standard/directives";
-import { InsertZwnjsPipe }                                                                                             from "@standard/pipes";
-import { InputComponent, inputComponentProviders }                                                                     from "../input/InputComponent";
+import { InsertZwnjsPipe, MaskPipe }                                                                                   from "@standard/pipes";
+import { type InputComponentOptions }                                                                                  from "@standard/types";
+import { v7 as uuidV7 }                                                                                                from "uuid";
+import { InputComponent }                                                                                              from "../../../input/InputComponent";
+import providers                                                                                                       from "../providers";
 
 
 @Component(
@@ -43,6 +46,8 @@ import { InputComponent, inputComponentProviders }                              
     ],
     imports:        [
       InsertZwnjsPipe,
+      KeyValuePipe,
+      MaskPipe,
       NgTemplateOutlet,
     ],
     providers:      [
@@ -50,20 +55,20 @@ import { InputComponent, inputComponentProviders }                              
         multi:       true,
         provide:     NG_VALUE_ACCESSOR,
         useExisting: forwardRef(
-          (): typeof TextFieldComponent => TextFieldComponent,
+          (): typeof ComboboxInputComponent => ComboboxInputComponent,
         ),
       },
-      ...inputComponentProviders,
+      ...providers,
     ],
-    selector:       "standard--text-field",
+    selector:       "standard--combobox-input",
     standalone:     true,
     styleUrls:      [
-      "TextFieldComponent.sass",
+      "ComboboxInputComponent.sass",
     ],
-    templateUrl:    "TextFieldComponent.html",
+    templateUrl:    "ComboboxInputComponent.html",
   },
 )
-export class TextFieldComponent
+export class ComboboxInputComponent
   extends InputComponent {
 
   constructor() {
@@ -79,5 +84,17 @@ export class TextFieldComponent
 
   protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
   protected readonly roundedDirective: RoundedDirective                     = inject<RoundedDirective>(RoundedDirective);
+
+  public readonly optionsId$: Signal<`standard--input-directive--options-${ string }`> = signal<`standard--input-directive--options-${ string }`>(`standard--input-directive--options-${ uuidV7() }`);
+  public readonly optionsInput$: InputSignal<InputComponentOptions>                    = input.required<InputComponentOptions>(
+    {
+      alias: "options",
+    },
+  );
+
+  protected onBlur(): void {
+    if (Object.values<string>(this.optionsInput$()).includes(this.value))
+      this.onChange?.();
+  }
 
 }

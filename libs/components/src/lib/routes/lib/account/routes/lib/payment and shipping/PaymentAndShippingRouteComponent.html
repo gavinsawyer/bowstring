@@ -5,44 +5,30 @@
   <standard--box
     flexBasis="50%"
     flexGrow="1">
-    @if (accountService.accountDocument$()?.shipping; as shipping) {<standard--map
-      aspectRatio="0.6180339887"
-      level="2"
-      [options]="{ disableDefaultUI: true }" />
-    @if (shipping.name; as name) {<standard--section>
-      <standard--flexbox-container
-        alignItems="flex-end"
-        flexDirection="row">
-        @if (name.prefix) {<standard--label [input]="name.prefix" />}
-        <standard--label [input]="name.first" />
-      </standard--flexbox-container>
-      <standard--label [input]="name.last" />
-    </standard--section>}
-    @if (shipping.address; as address) {<standard--section>
-      <standard--label [input]="address.line1" />
+    @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {<standard--section>
+      <standard--label [input]="stripeCustomer.name" />
+    </standard--section>
+      @if (stripeCustomer.address; as address) {<standard--section>
+      <standard--label [input]="stripeCustomer.address.line1" />
       @if (address.line2) {<standard--label [input]="address.line2" />}
-      @if (address.line3) {<standard--label [input]="address.line3" />}
       <standard--flexbox-container
         alignItems="flex-end"
         flexDirection="row">
-        <standard--label [input]="address.level2" />
-        <standard--label [input]="address.level1" />
-        <standard--label [input]="address.postalCode" />
+        <standard--label [input]="address.city" />
+        @if (address.state) {<standard--label [input]="address.state" />}
+        <standard--label [input]="address.postal_code" />
       </standard--flexbox-container>
       <standard--label [input]="address.country" />
     </standard--section>}
-    @if (shipping.phone; as phone) {<standard--section
-      alignItems="flex-end"
-      flexDirection="row">
-      <standard--label [input]="phone.countryCode | standardMask:'+00'" />
-      <standard--label [input]="phone.national | standardMask:inputService.getPhoneNationalMask(phone.countryCode)" />
-    </standard--section>}
+    <standard--section>
+      <standard--label [input]="stripeCustomer.phone" />
+    </standard--section>
     <standard--divider />
     <standard--button
       appearance="raised"
       level="2"
       material="inverse"
-      (output)="shippingFormSheetComponent.openModel$.set(true);">
+      (output)="addressStripeElementSheetComponent.openModel$.set(true);">
       <standard--symbol input="Pencil" />
       <standard--label
         i18n-input
@@ -56,7 +42,7 @@
       appearance="raised"
       level="2"
       material="inverse"
-      (output)="shippingFormSheetComponent.openModel$.set(true);">
+      (output)="addressStripeElementSheetComponent.openModel$.set(true);">
       <standard--symbol input="Plus" />
       <standard--label
         i18n-input
@@ -75,7 +61,7 @@
       appearance="raised"
       level="2"
       material="inverse"
-      (output)="billingFormSheetComponent.openModel$.set(true);">
+      (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
       <standard--symbol input="Plus" />
       <standard--label
         i18n-input
@@ -84,161 +70,46 @@
   </standard--box>
 </standard--section>
 
-<standard--sheet #billingFormSheetComponent>
+<standard--sheet #addressStripeElementSheetComponent>
   <standard--header>
-    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--BillingFormSheet--Header">Edit your payment method.</h6>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--AddressStripeElementSheet--Header">Edit your shipping address.</h6>
   </standard--header>
-  <standard--form (output)="billingFormSubmit(billingFormSheetComponent.openModel$);">
+  <standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
+    <standard--address-stripe-element #addressStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      <standard--button
+      @if (accountService.accountDocument$()?.stripeCustomer) {<standard--button
         appearance="symbol"
-        [disabled]="!shippingFormEdited$()"
-        (output)="shippingFormGroup.reset();">
+        [disabled]="!addressStripeElementComponent.edited$()"
+        (output)="addressStripeElementComponent?.reset();">
         <standard--symbol input="ArrowCounterclockwiseCircleFill" />
-      </standard--button>
+      </standard--button>}
       <standard--button
         appearance="symbol"
-        [disabled]="!billingFormEdited$() || billingFormGroup.invalid"
+        [disabled]="!addressStripeElementComponent.complete$() || !addressStripeElementComponent.edited$()"
         type="submit">
         <standard--symbol input="CheckmarkCircleFill" />
       </standard--button>
     </standard--flexbox-container>
   </standard--form>
 </standard--sheet>
-<standard--sheet #shippingFormSheetComponent>
+<standard--sheet #paymentStripeElementSheetComponent>
   <standard--header>
-    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--ShippingFormSheet--Header">Edit your shipping address.</h6>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentStripeElementSheet--Header">Edit your payment method.</h6>
   </standard--header>
-  <standard--form (output)="shippingFormSubmit(shippingFormSheetComponent.openModel$);">
-    <standard--section>
-      <standard--flexbox-container
-        alignItems="flex-end"
-        flexDirection="row">
-        <standard--combobox
-          autocomplete="honorific-prefix"
-          explicitAutocomplete
-          [formControl]="shippingFormGroup.controls.name.controls.prefix"
-          flexBasis="calc(1rem * pow(var(--phi), 4))"
-          flexGrow="1"
-          i18n-label
-          label="Prefix"
-          level="2"
-          [options]="inputService.namePrefixInputComponentOptions" />
-        <standard--text-field
-          autocomplete="given-name"
-          [formControl]="shippingFormGroup.controls.name.controls.first"
-          flexBasis="calc(1rem * pow(var(--phi), 5))"
-          flexGrow="1.6180339887"
-          i18n-label
-          label="First name"
-          level="2" />
-      </standard--flexbox-container>
-      <standard--text-field
-        autocomplete="family-name"
-        [formControl]="shippingFormGroup.controls.name.controls.last"
-        i18n-label
-        label="Last name"
-        level="2" />
-    </standard--section>
-    <standard--divider />
-    <standard--section>
-      <standard--combobox
-        autocomplete="shipping country"
-        [formControl]="shippingFormGroup.controls.address.controls.country"
-        i18n-label
-        label="Country"
-        level="2"
-        [options]="inputService.addressCountryInputComponentOptions" />
-      <standard--text-field
-        autocomplete="shipping address-line1"
-        [formControl]="shippingFormGroup.controls.address.controls.line1"
-        i18n-label
-        label="Street address"
-        level="2" />
-      <standard--text-field
-        autocomplete="shipping address-line2"
-        [formControl]="shippingFormGroup.controls.address.controls.line2"
-        i18n-label
-        label="Apartment/unit"
-        level="2" />
-      <standard--text-field
-        autocomplete="shipping address-line3"
-        [formControl]="shippingFormGroup.controls.address.controls.line3"
-        i18n-label
-        label="Company"
-        level="2" />
-      <standard--text-field
-        autocomplete="shipping address-level2"
-        [formControl]="shippingFormGroup.controls.address.controls.level2"
-        i18n-label
-        label="City"
-        level="2" />
-      <standard--flexbox-container
-        alignItems="flex-end"
-        flexDirection="row">
-        <standard--combobox
-          autocomplete="shipping address-level1"
-          [formControl]="shippingFormGroup.controls.address.controls.level1"
-          flexBasis="calc(1rem * pow(var(--phi), 5))"
-          flexGrow="1.6180339887"
-          i18n-label
-          label="State"
-          level="2"
-          [options]="inputService.addressLevel1InputComponentOptions" />
-        <standard--text-field
-          autocomplete="shipping postal-code"
-          [formControl]="shippingFormGroup.controls.address.controls.postalCode"
-          flexBasis="calc(1rem * pow(var(--phi), 4))"
-          flexGrow="1"
-          i18n-label
-          label="Zip code"
-          level="2" />
-      </standard--flexbox-container>
-    </standard--section>
-    <standard--divider />
-    <standard--section
-      alignItems="flex-end"
-      flexDirection="row">
-      <standard--combobox
-        autocomplete="tel-country-code"
-        explicitAutocomplete
-        [formControl]="shippingFormGroup.controls.phone.controls.countryCode"
-        flexBasis="calc(1rem * pow(var(--phi), 4))"
-        flexGrow="1"
-        i18n-label
-        label="Country code"
-        level="2"
-        mask="+000"
-        [options]="inputService.phoneCountryCodeInputComponentOptions" />
-      <standard--text-field
-        autocomplete="tel-national"
-        [formControl]="shippingFormGroup.controls.phone.controls.national"
-        flexBasis="calc(1rem * pow(var(--phi), 5))"
-        flexGrow="1.6180339887"
-        i18n-label
-        label="Phone number"
-        level="2"
-        [mask]="inputService.getPhoneNationalMask(shippingFormGroup.value.phone?.countryCode)"
-        type="tel" />
-    </standard--section>
+  <standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
+    <standard--payment-stripe-element #paymentStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (accountService.accountDocument$()?.shipping; as shipping) {<standard--button
-        appearance="symbol"
-        [disabled]="!shippingFormEdited$()"
-        (output)="shippingFormGroup.reset(shipping);">
-        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
-      </standard--button>}
       <standard--button
         appearance="symbol"
-        [disabled]="!shippingFormEdited$() || shippingFormGroup.invalid"
+        [disabled]="!paymentStripeElementComponent.complete$() || !paymentStripeElementComponent.edited$()"
         type="submit">
         <standard--symbol input="CheckmarkCircleFill" />
       </standard--button>

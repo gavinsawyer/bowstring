@@ -1,18 +1,14 @@
-import { booleanAttribute, Component, DestroyRef, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, type Provider, Renderer2, signal, type Signal, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                                        from "@angular/core/rxjs-interop";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                                           from "@angular/forms";
-import { type SymbolPaths }                                                                                                                                                                                                                  from "@standard/interfaces";
-import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                              from "@standard/pipes";
-import loadSymbolPaths                                                                                                                                                                                                                       from "@standard/symbol-paths";
-import { combineLatestWith, filter, firstValueFrom }                                                                                                                                                                                         from "rxjs";
-import { fromPromise }                                                                                                                                                                                                                       from "rxjs/internal/observable/innerFrom";
-import { v7 as uuidV7 }                                                                                                                                                                                                                      from "uuid";
+import { booleanAttribute, Component, DestroyRef, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                         from "@angular/core/rxjs-interop";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                            from "@angular/forms";
+import { type SymbolPaths }                                                                                                                                                                                                   from "@standard/interfaces";
+import { MaskPipe, UnmaskPipe }                                                                                                                                                                                               from "@standard/pipes";
+import loadSymbolPaths                                                                                                                                                                                                        from "@standard/symbol-paths";
+import { combineLatestWith, filter, firstValueFrom }                                                                                                                                                                          from "rxjs";
+import { fromPromise }                                                                                                                                                                                                        from "rxjs/internal/observable/innerFrom";
+import { v7 as uuidV7 }                                                                                                                                                                                                       from "uuid";
+import providers                                                                                                                                                                                                              from "../inputs/lib/providers";
 
-
-const inputComponentProviders: Provider[] = [
-  MaskPipe,
-  UnmaskPipe,
-];
 
 @Component(
   {
@@ -27,13 +23,13 @@ const inputComponentProviders: Provider[] = [
           (): typeof InputComponent => InputComponent,
         ),
       },
-      ...inputComponentProviders,
+      ...providers,
     ],
     standalone: true,
     template:   "",
   },
 )
-class InputComponent
+export class InputComponent
   implements ControlValueAccessor {
 
   constructor() {
@@ -182,8 +178,3 @@ class InputComponent
   }
 
 }
-
-export {
-  InputComponent,
-  inputComponentProviders,
-};

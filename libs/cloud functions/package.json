@@ -18,6 +18,6 @@
   "main":         "./main.js",
   "type":         "module",
   "dependencies": {
-    "firebase-functions": "^6.0.1"
+    "firebase-functions": "^6.1.0"
   }
 }

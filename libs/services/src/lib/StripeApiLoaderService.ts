@@ -17,18 +17,26 @@ export class StripeApiLoaderService {
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
 
   private stripe?: Stripe;
+  private stripePromise?: Promise<Stripe | null>;
 
   public async load(): Promise<Stripe | null> {
-    return isPlatformBrowser(this.platformId) && !this.stripe ? loadStripe(
-      this.environment.stripe.apiKey,
-    ).then<Stripe | null>(
-      (stripe: Stripe | null): Stripe | null => {
-        if (stripe)
-          this.stripe = stripe;
+    if (isPlatformBrowser(this.platformId))
+      return this.stripe || this.stripePromise || ((): Promise<Stripe | null> => {
+        this.stripePromise = loadStripe(
+          this.environment.apis.stripe.apiKey,
+        ).then<Stripe | null>(
+          (stripe: Stripe | null): Stripe | null => {
+            if (stripe)
+              this.stripe = stripe;
 
-        return stripe;
-      },
-    ) : this.stripe || null;
+            return stripe;
+          },
+        );
+
+        return this.stripePromise;
+      })();
+    else
+      return null;
   }
 
 }
