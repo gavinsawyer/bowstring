@@ -176,7 +176,8 @@
       "executor":  "@angular-devkit/build-angular:ssr-dev-server",
       "options":   {
         "browserTarget": "website:angular-browser:development",
-        "serverTarget":  "website:angular-server:development"
+        "serverTarget":  "website:angular-server:development",
+        "ssl":           true
       }
     },
     "build":                   {
@@ -237,8 +238,8 @@
       "options":  {
         "commands": [
           "rm -rf dist/apps/website",
-          "node -p \"'import { type GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfo: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.git-info.ts",
-          "node -p \"'export const packageVersion: string = \\\"' + require('./package.json').version + '\\\" as const;'\" > apps/website/src/.package-version.ts"
+          "node -p \"'import { type GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfoPartial: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.gitInfoPartial.ts",
+          "node -p \"'export const packageVersion: string = \\\"' + require('./package.json').version + '\\\" as const;'\" > apps/website/src/.packageVersion.ts"
         ]
       }
     }

@@ -58,14 +58,14 @@ export class AccountService {
     ),
   ) : signal<undefined>(undefined);
 
-  public update(accountDocument: Partial<AccountDocument>): Promise<void> {
+  public update(accountDocumentPartial: Partial<AccountDocument>): Promise<void> {
     if (this.auth.currentUser && !this.auth.currentUser.isAnonymous)
       return updateDoc<AccountDocument, DocumentData>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
         ) as DocumentReference<AccountDocument>,
-        accountDocument,
+        accountDocumentPartial,
       ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");

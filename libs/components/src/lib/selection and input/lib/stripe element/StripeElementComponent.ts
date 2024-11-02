@@ -33,6 +33,7 @@ export class StripeElementComponent {
 
   public readonly complete$: WritableSignal<boolean> = signal<false>(false);
 
-  public reset?(): void
+  public resetStripeElement?(): void
+  public submitStripeElement?(): void
 
 }

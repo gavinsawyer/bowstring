@@ -5,25 +5,23 @@
   <standard--box
     flexBasis="50%"
     flexGrow="1">
-    @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {<standard--section>
+    @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {@if (stripeCustomer.address; as address) {@if (stripeCustomer.name) {<standard--section>
       <standard--label [input]="stripeCustomer.name" />
-    </standard--section>
-      @if (stripeCustomer.address; as address) {<standard--section>
-      <standard--label [input]="stripeCustomer.address.line1" />
-      @if (address.line2) {<standard--label [input]="address.line2" />}
-      <standard--flexbox-container
-        alignItems="flex-end"
-        flexDirection="row">
-        <standard--label [input]="address.city" />
-        @if (address.state) {<standard--label [input]="address.state" />}
-        <standard--label [input]="address.postal_code" />
-      </standard--flexbox-container>
-      <standard--label [input]="address.country" />
     </standard--section>}
-    <standard--section>
+    <standard--label [input]="address.line1" />
+    @if (address.line2) {<standard--label [input]="address.line2" />}
+    <standard--flexbox-container
+      alignItems="flex-end"
+      flexDirection="row">
+      <standard--label [input]="address.city" />
+      @if (address.state) {<standard--label [input]="address.state" />}
+      <standard--label [input]="address.postal_code" />
+    </standard--flexbox-container>
+    <standard--label [input]="address.country" />
+    @if (stripeCustomer.phone) {<standard--section>
       <standard--label [input]="stripeCustomer.phone" />
     </standard--section>
-    <standard--divider />
+    <standard--divider />}
     <standard--button
       appearance="raised"
       level="2"
@@ -47,12 +45,23 @@
       <standard--label
         i18n-input
         input="Add" />
-    </standard--button>}
+    </standard--button>}}
   </standard--box>
   <standard--box
     flexBasis="50%"
     flexGrow="1">
-    <standard--header>
+    @if (accountService.accountDocument$()?.stripeCustomer?.payment_method; as paymentMethod) {<standard--label [input]="paymentMethod.type + ' payment available.'" />
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
+      <standard--symbol input="Pencil" />
+      <standard--label
+        i18n-input
+        input="Edit" />
+    </standard--button>} @else {<standard--header>
       <h4 i18n>Nothing here.</h4>
       <h5 i18n>Add a payment method for future orders.</h5>
     </standard--header>
@@ -66,7 +75,7 @@
       <standard--label
         i18n-input
         input="Add" />
-    </standard--button>
+    </standard--button>}
   </standard--box>
 </standard--section>
 
@@ -81,10 +90,10 @@
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (accountService.accountDocument$()?.stripeCustomer) {<standard--button
+      @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--button
         appearance="symbol"
         [disabled]="!addressStripeElementComponent.edited$()"
-        (output)="addressStripeElementComponent?.reset();">
+        (output)="addressStripeElementComponent?.resetStripeElement();">
         <standard--symbol input="ArrowCounterclockwiseCircleFill" />
       </standard--button>}
       <standard--button
@@ -107,6 +116,12 @@
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
+      @if (accountService.accountDocument$()?.stripeCustomer?.payment_method) {<standard--button
+        appearance="symbol"
+        [disabled]="!paymentStripeElementComponent.edited$()"
+        (output)="paymentStripeElementComponent?.resetStripeElement();">
+        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
+      </standard--button>}
       <standard--button
         appearance="symbol"
         [disabled]="!paymentStripeElementComponent.complete$() || !paymentStripeElementComponent.edited$()"

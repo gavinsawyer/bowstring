@@ -16,7 +16,8 @@ export interface AccountDocument {
       "postal_code": string;
       "state": string | null;
     } | null;
-    "name": string;
+    "id": string;
+    "name": string | null;
     "payment_method": {
       "billing_details": {
         "address": {
@@ -34,7 +35,6 @@ export interface AccountDocument {
       "id": string;
       "type": string;
     } | null;
-    "type": string | null;
-    "phone": string;
+    "phone": string | null;
   } | null;
 }

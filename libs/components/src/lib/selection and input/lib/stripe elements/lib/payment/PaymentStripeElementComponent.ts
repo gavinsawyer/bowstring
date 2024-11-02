@@ -1,16 +1,17 @@
-import { NgTemplateOutlet }                                                                           from "@angular/common";
-import { afterRender, Component, computed, effect, inject, type Signal }                              from "@angular/core";
-import { toSignal }                                                                                   from "@angular/core/rxjs-interop";
-import { FormControl, FormGroup, Validators }                                                         from "@angular/forms";
-import { ContainerDirective }                                                                         from "@standard/directives";
-import { type AccountDocument }                                                                       from "@standard/interfaces";
-import { AccountService }                                                                             from "@standard/services";
-import { type Stripe, type StripeElement, type StripeElements, type StripePaymentElementChangeEvent } from "@stripe/stripe-js";
-import { isEqual }                                                                                    from "lodash";
-import { startWith }                                                                                  from "rxjs";
-import { type SheetComponent }                                                                        from "../../../../../../";
-import { StripeElementComponent }                                                                     from "../../../stripe element/StripeElementComponent";
-import getAppearance                                                                                  from "../getAppearance";
+import { NgTemplateOutlet }                                                                                                                       from "@angular/common";
+import { afterRender, Component, computed, effect, inject, type Signal }                                                                          from "@angular/core";
+import { toSignal }                                                                                                                               from "@angular/core/rxjs-interop";
+import { Functions, httpsCallable }                                                                                                               from "@angular/fire/functions";
+import { FormControl, FormGroup }                                                                                                                 from "@angular/forms";
+import { ContainerDirective }                                                                                                                     from "@standard/directives";
+import { type AccountDocument }                                                                                                                   from "@standard/interfaces";
+import { AccountService }                                                                                                                         from "@standard/services";
+import { type PaymentMethodResult, type Stripe, type StripeElement, type StripeElements, type StripeError, type StripePaymentElementChangeEvent } from "@stripe/stripe-js";
+import { isEqual }                                                                                                                                from "lodash";
+import { startWith }                                                                                                                              from "rxjs";
+import { type SheetComponent }                                                                                                                    from "../../../../../../";
+import { StripeElementComponent }                                                                                                                 from "../../../stripe element/StripeElementComponent";
+import getAppearance                                                                                                                              from "../getAppearance";
 
 
 @Component(
@@ -91,10 +92,11 @@ export class PaymentStripeElementComponent
 
             stripeElements = stripe.elements(
               {
-                appearance: getAppearance(this.colorScheme$()),
-                currency:   "usd",
-                loader:     "never",
-                mode:       "setup",
+                appearance:            getAppearance(this.colorScheme$()),
+                currency:              "usd",
+                loader:                "never",
+                mode:                  "setup",
+                paymentMethodCreation: "manual",
               },
             );
 
@@ -126,10 +128,11 @@ export class PaymentStripeElementComponent
 
           let stripeElements: StripeElements = stripe.elements(
             {
-              appearance: getAppearance(this.colorScheme$()),
-              currency:   "usd",
-              loader:     "never",
-              mode:       "setup",
+              appearance:            getAppearance(this.colorScheme$()),
+              currency:              "usd",
+              loader:                "never",
+              mode:                  "setup",
+              paymentMethodCreation: "manual",
             },
           );
           let stripeElement: StripeElement   = stripeElements.create("payment").on(
@@ -138,7 +141,53 @@ export class PaymentStripeElementComponent
           );
           let mounted: boolean               = false as const;
 
-          this.reset = resetEffectFn;
+          this.resetStripeElement  = resetEffectFn;
+          this.submitStripeElement = (): void => {
+            stripeElements.submit().then<void, never>(
+              ({ error: stripeError }: { error?: StripeError }): void => {
+                if (stripeError) {
+                  console.error("Something went wrong.");
+
+                  throw stripeError;
+                }
+
+                stripe.createPaymentMethod(
+                  {
+                    elements: stripeElements,
+                  },
+                ).then<void, never>(
+                  (paymentMethodResult: PaymentMethodResult): void => {
+                    if (paymentMethodResult.error) {
+                      console.error("Something went wrong.");
+
+                      throw paymentMethodResult.error;
+                    }
+
+                    httpsCallable<{ "paymentMethodId": string }, null>(
+                      this.functions,
+                      "attachStripePaymentMethod",
+                    )(
+                      {
+                        paymentMethodId: paymentMethodResult.paymentMethod.id,
+                      },
+                    ).then<void, never>(
+                      (): void => void (0),
+                      (error: unknown): never => {
+                        console.error("Something went wrong.");
+
+                        throw error;
+                      },
+                    );
+                  },
+                  (error: unknown): never => {
+                    console.error("Something went wrong.");
+
+                    throw error;
+                  },
+                );
+              },
+            );
+          };
 
           effect(
             resetEffectFn,
@@ -171,86 +220,55 @@ export class PaymentStripeElementComponent
           this.formGroup.reset(
             {
               payment_method: {
+                ...accountDocument.stripeCustomer.payment_method,
                 billing_details: {
                   address: {
-                    city:        accountDocument.stripeCustomer.address?.city,
-                    country:     accountDocument.stripeCustomer.address?.country,
-                    line1:       accountDocument.stripeCustomer.address?.line1,
-                    line2:       accountDocument.stripeCustomer.address?.line2 || undefined,
-                    postal_code: accountDocument.stripeCustomer.address?.postal_code,
-                    state:       accountDocument.stripeCustomer.address?.state || undefined,
+                    ...accountDocument.stripeCustomer.address,
+                    line2: accountDocument.stripeCustomer.address?.line2 || undefined,
+                    state: accountDocument.stripeCustomer.address?.state || undefined,
                   },
                   email:   accountDocument.email,
                   name:    accountDocument.stripeCustomer.name,
                   phone:   accountDocument.stripeCustomer.phone,
                 },
               },
+              type:           accountDocument.stripeCustomer.payment_method?.type || undefined,
             },
           );
       },
     );
   }
 
-  private readonly accountService: AccountService                       = inject<AccountService>(AccountService);
-  private readonly formGroup                                            = new FormGroup(
+  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     = inject<AccountService>(AccountService);
+  private readonly formGroup: FormGroup<{ "payment_method": FormGroup<{ "billing_details": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postal_code": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>, "type": FormControl<string | null> }> = new FormGroup<{ "payment_method": FormGroup<{ "billing_details": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postal_code": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>, "type": FormControl<string | null> }>(
     {
-      payment_method: new FormGroup(
+      payment_method: new FormGroup<{ "billing_details": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postal_code": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>(
         {
-          billing_details: new FormGroup(
+          billing_details: new FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postal_code": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>(
             {
-              address: new FormGroup(
+              address: new FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postal_code": FormControl<string | null>, "state": FormControl<string | null> }>(
                 {
-                  city:        new FormControl<string | null>(
-                    null,
-                  ),
-                  country:     new FormControl<string | null>(
-                    null,
-                  ),
-                  line1:       new FormControl<string | null>(
-                    null,
-                  ),
-                  line2:       new FormControl<string | null>(
-                    null,
-                  ),
-                  postal_code: new FormControl<string | null>(
-                    null,
-                  ),
-                  state:       new FormControl<string | null>(
-                    null,
-                  ),
+                  city:        new FormControl<string | null>(null),
+                  country:     new FormControl<string | null>(null),
+                  line1:       new FormControl<string | null>(null),
+                  line2:       new FormControl<string | null>(null),
+                  postal_code: new FormControl<string | null>(null),
+                  state:       new FormControl<string | null>(null),
                 },
               ),
-              email:   new FormControl<string | null>(
-                null,
-              ),
-              name:    new FormControl<string | null>(
-                null,
-              ),
-              phone:   new FormControl<string | null>(
-                null,
-              ),
+              email:   new FormControl<string | null>(null),
+              name:    new FormControl<string | null>(null),
+              phone:   new FormControl<string | null>(null),
             },
           ),
-          id:              new FormControl<string | null>(
-            null,
-          ),
-          type:            new FormControl<string | null>(
-            null,
-          ),
+          id:              new FormControl<string | null>(null),
+          type:            new FormControl<string | null>(null),
         },
       ),
-      type:           new FormControl<string>(
-        "",
-        {
-          nonNullable: true,
-          validators:  [
-            Validators.required,
-          ],
-        },
-      ),
+      type:           new FormControl<string | null>(null),
     },
   );
-  private readonly formGroupValue$: Signal<typeof this.formGroup.value> = toSignal<typeof this.formGroup.value>(
+  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               = toSignal<typeof this.formGroup.value>(
     this.formGroup.valueChanges.pipe<typeof this.formGroup.value>(
       startWith<typeof this.formGroup.value, [ typeof this.formGroup.value ]>(this.formGroup.value),
     ),
@@ -258,31 +276,38 @@ export class PaymentStripeElementComponent
       requireSync: true,
     },
   );
+  private readonly functions: Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               = inject<Functions>(Functions);
 
   public readonly edited$: Signal<boolean> = computed<boolean>(
-    (): boolean => !isEqual(
-      this.formGroupValue$(),
-      {
-        payment_method: {
-          billing_details: {
-            address: {
-              city:        this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details.address?.city || null,
-              country:     this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details.address?.country || null,
-              line1:       this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details.address?.line1 || null,
-              line2:       this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details.address?.line2 || null,
-              postal_code: this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details.address?.postal_code || null,
-              state:       this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details.address?.state || null,
+    (): boolean => {
+      const payment_method: NonNullable<AccountDocument["stripeCustomer"]>["payment_method"] | undefined                                                  = this.accountService.accountDocument$()?.stripeCustomer?.payment_method;
+      const billing_details: NonNullable<NonNullable<AccountDocument["stripeCustomer"]>["payment_method"]>["billing_details"] | undefined                 = payment_method?.billing_details;
+      const address: NonNullable<NonNullable<NonNullable<AccountDocument["stripeCustomer"]>["payment_method"]>["billing_details"]>["address"] | undefined = billing_details?.address;
+
+      return !isEqual(
+        this.formGroupValue$(),
+        {
+          payment_method: {
+            billing_details: {
+              address: {
+                city:        address?.city || null,
+                country:     address?.country || null,
+                line1:       address?.line1 || null,
+                line2:       address?.line2 || null,
+                postal_code: address?.postal_code || null,
+                state:       address?.state || null,
+              },
+              email:   billing_details?.email || null,
+              name:    billing_details?.name || null,
+              phone:   billing_details?.phone || null,
             },
-            email:   this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details?.email || null,
-            name:    this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details?.name || null,
-            phone:   this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.billing_details?.phone || null,
+            id:              payment_method?.id || null,
+            type:            payment_method?.type || null,
           },
-          id:              this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.id || null,
-          type:            this.accountService.accountDocument$()?.stripeCustomer?.payment_method?.type || null,
+          type:           payment_method?.type || null,
         },
-        type:           this.accountService.accountDocument$()?.stripeCustomer?.type || "",
-      },
-    ),
+      );
+    },
   );
 
   public submit(openModel$: SheetComponent["openModel$"]): void {
@@ -290,38 +315,7 @@ export class PaymentStripeElementComponent
 
     setTimeout(
       (): void => {
-        if (this.formGroup.value.type) {
-          const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
-
-          if (stripeCustomer)
-            this.accountService.update(
-              {
-                stripeCustomer: {
-                  ...stripeCustomer,
-                  payment_method: this.formGroup.value.payment_method?.billing_details?.address?.city && this.formGroup.value.payment_method.billing_details.address.country && this.formGroup.value.payment_method.billing_details.address.line1 && this.formGroup.value.payment_method.billing_details.address.postal_code && this.formGroup.value.payment_method.billing_details.email && this.formGroup.value.payment_method.billing_details.name && this.formGroup.value.payment_method.billing_details.phone && this.formGroup.value.payment_method.id && this.formGroup.value.payment_method.type ? {
-                    billing_details: {
-                      address: this.formGroup.value.payment_method.billing_details.address ? {
-                        city:        this.formGroup.value.payment_method.billing_details.address.city,
-                        country:     this.formGroup.value.payment_method.billing_details.address.country,
-                        line1:       this.formGroup.value.payment_method.billing_details.address.line1,
-                        line2:       this.formGroup.value.payment_method.billing_details.address.line2 || null,
-                        postal_code: this.formGroup.value.payment_method.billing_details.address.postal_code,
-                        state:       this.formGroup.value.payment_method.billing_details.address.state || null,
-                      } : null,
-                      email:   this.formGroup.value.payment_method.billing_details.email,
-                      name:    this.formGroup.value.payment_method.billing_details.name,
-                      phone:   this.formGroup.value.payment_method.billing_details.phone,
-                    },
-                    id:              this.formGroup.value.payment_method.id,
-                    type:            this.formGroup.value.payment_method.type,
-                  } : null,
-                  type:           this.formGroup.value.type,
-                },
-              },
-            ).then<void>(
-              (): void => void (0),
-            );
-        }
+        this.submitStripeElement?.();
       },
       180,
     );

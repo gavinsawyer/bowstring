@@ -1,10 +1,18 @@
-import { onCall } from "firebase-functions/https";
+import { type CallableRequest, HttpsError, onCall } from "firebase-functions/https";
 
 
 // noinspection JSUnusedGlobalSymbols
-export const helloWorld: CallableFunction = onCall<null, string>(
+export const helloWorld: CallableFunction = onCall<null, Promise<string>>(
   {
     enforceAppCheck: true,
   },
-  (): string => "hello world",
+  async ({ auth: authData }: CallableRequest<null>): Promise<string> => {
+    if (!authData?.uid)
+      throw new HttpsError(
+        "unauthenticated",
+        "You're not signed in.",
+      );
+
+    return "hello world";
+  },
 );

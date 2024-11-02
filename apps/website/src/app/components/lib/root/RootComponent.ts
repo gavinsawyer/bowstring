@@ -1,12 +1,13 @@
 import { DOCUMENT, isPlatformBrowser, Location }                                                         from "@angular/common";
 import { Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                        from "@angular/core/rxjs-interop";
-import { doc, type DocumentData, type DocumentReference, Firestore, setDoc, updateDoc }                  from "@angular/fire/firestore";
+import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                             from "@angular/fire/firestore";
+import { Functions, httpsCallable }                                                                      from "@angular/fire/functions";
 import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }               from "@angular/forms";
 import { RouterOutlet }                                                                                  from "@angular/router";
 import { type RouteComponent, type SheetComponent }                                                      from "@standard/components";
 import { CanvasDirective, FlexboxContainerDirective }                                                    from "@standard/directives";
-import { BRAND, GIT_INFO, PACKAGE_VERSION }                                                              from "@standard/injection-tokens";
+import { BRAND, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                      from "@standard/injection-tokens";
 import { type AccountDocument }                                                                          from "@standard/interfaces";
 import { AuthenticationService, ResponsivityService }                                                    from "@standard/services";
 import { type Brand }                                                                                    from "@standard/types";
@@ -46,6 +47,7 @@ export class RootComponent {
 
   private readonly document: Document                  = inject<Document>(DOCUMENT);
   private readonly firestore: Firestore                = inject<Firestore>(Firestore);
+  private readonly functions: Functions                = inject<Functions>(Functions);
   private readonly injector: Injector                  = inject<Injector>(Injector);
   private readonly location: Location                  = inject<Location>(Location);
   private readonly platformId: NonNullable<unknown>    = inject<NonNullable<unknown>>(PLATFORM_ID);
@@ -101,7 +103,7 @@ export class RootComponent {
     },
   );
   protected readonly brand: Brand                                                                                                                               = inject<Brand>(BRAND);
-  protected readonly gitInfo: Partial<GitInfo>                                                                                                                  = inject<Partial<GitInfo>>(GIT_INFO);
+  protected readonly gitInfoPartial: Partial<GitInfo>                                                                                                           = inject<Partial<GitInfo>>(GIT_INFO_PARTIAL);
   protected readonly localeId: LocaleId                                                                                                                         = inject<LocaleId>(LOCALE_ID);
   protected readonly localeIds: LocaleId[]                                                                                                                      = inject<LocaleId[]>(LOCALE_IDS);
   protected readonly localeDisplayNames: Intl.DisplayNames                                                                                                      = new Intl.DisplayNames(
@@ -223,33 +225,12 @@ export class RootComponent {
         this.signupFormGroup.value.password,
       ).then<void, never>(
         (): void => {
-          const userId: string | undefined = this.authenticationService.user$()?.uid;
+          openModel$.set(false);
 
-          if (userId && this.signupFormGroup.value.email) {
-            updateDoc<AccountDocument, DocumentData>(
-              doc(
-                this.firestore,
-                `/accounts/${ userId }`,
-              ) as DocumentReference<AccountDocument>,
-              {
-                email: this.signupFormGroup.value.email,
-              },
-            ).then<void, never>(
-              (): void => {
-                openModel$.set(false);
-
-                setTimeout(
-                  (): void => this.signupFormGroup.reset(),
-                  180,
-                );
-              },
-              (error: unknown): never => {
-                console.error("Something went wrong.");
-
-                throw error;
-              },
-            );
-          }
+          setTimeout(
+            (): void => this.signupFormGroup.reset(),
+            180,
+          );
         },
         (error: unknown): never => {
           console.error("Something went wrong.");
@@ -274,15 +255,25 @@ export class RootComponent {
           merge: true,
         },
       ).then<void, never>(
-        (): Promise<void> => this.authenticationService.linkWithPasskey().then<void, never>(
-          (): void => {
-            openModel$.set(false);
+        (): Promise<void> => httpsCallable<null, null>(
+          this.functions,
+          "createStripeCustomer",
+        )().then<void, never>(
+          (): Promise<void> => this.authenticationService.linkWithPasskey().then<void, never>(
+            (): void => {
+              openModel$.set(false);
 
-            setTimeout(
-              (): void => this.signupWithPasskeyFormGroup.reset(),
-              180,
-            );
-          },
+              setTimeout(
+                (): void => this.signupWithPasskeyFormGroup.reset(),
+                180,
+              );
+            },
+            (error: unknown): never => {
+              console.error("Something went wrong.");
+
+              throw error;
+            },
+          ),
           (error: unknown): never => {
             console.error("Something went wrong.");
 

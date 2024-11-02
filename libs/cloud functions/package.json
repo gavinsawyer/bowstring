@@ -18,6 +18,7 @@
   "main":         "./main.js",
   "type":         "module",
   "dependencies": {
-    "firebase-functions": "^6.1.0"
+    "firebase-functions": "^6.1.0",
+    "stripe":             "^17.3.1"
   }
 }

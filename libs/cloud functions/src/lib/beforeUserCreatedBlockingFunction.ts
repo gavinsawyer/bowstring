@@ -1,28 +1,52 @@
-import { type AccountDocument }                                  from "@standard/interfaces";
-import { getApp }                                                from "firebase-admin/app";
-import { type DocumentReference, getFirestore }                  from "firebase-admin/firestore";
-import { type AuthBlockingEvent, beforeUserCreated, HttpsError } from "firebase-functions/identity";
+import { type AccountDocument }                      from "@standard/interfaces";
+import { getApp }                                    from "firebase-admin/app";
+import { type DocumentReference, getFirestore }      from "firebase-admin/firestore";
+import { HttpsError }                                from "firebase-functions/https";
+import { type AuthBlockingEvent, beforeUserCreated } from "firebase-functions/identity";
+import Stripe                                        from "stripe";
 
 
 // noinspection JSUnusedGlobalSymbols
 export const beforeUserCreatedBlockingFunction = beforeUserCreated(
-  async ({ data: authUserRecord }: AuthBlockingEvent): Promise<object> => authUserRecord?.uid ? (getFirestore(getApp()).collection("accounts").doc(authUserRecord.uid) as DocumentReference<AccountDocument>).set(
-    {},
-    {
-      merge: true,
-    },
-  ).then<object, never>(
-    (): object => ({}),
-    (error: unknown): never => {
-      console.error(error);
-
+  async ({ data: authUserRecord }: AuthBlockingEvent): Promise<object> => {
+    if (!authUserRecord?.email)
       throw new HttpsError(
-        "unknown",
-        "Something went wrong.",
+        "unauthenticated",
+        "You're not signed in.",
       );
-    },
-  ) : new HttpsError(
-    "unauthenticated",
-    "Something went wrong.",
-  ),
+
+    if (!process.env["STRIPE_API_KEY"])
+      throw new HttpsError(
+        "failed-precondition",
+        "The STRIPE_API_KEY environment variable is missing.",
+      );
+
+    return new Stripe(process.env["STRIPE_API_KEY"]).customers.create(
+      {
+        email: authUserRecord.email,
+      },
+    ).then<object, never>(
+      ({ id }: Stripe.Response<Stripe.Customer>): Promise<object> => (getFirestore(getApp()).collection("accounts").doc(authUserRecord.uid) as DocumentReference<AccountDocument>).set(
+        {
+          email:          authUserRecord.email,
+          stripeCustomer: {
+            id: id,
+          },
+        },
+        {
+          merge: true,
+        },
+      ).then<object, never>(
+        (): object => ({}),
+        (error: unknown): never => {
+          console.error(error);
+
+          throw new HttpsError(
+            "unknown",
+            "Something went wrong.",
+          );
+        },
+      ),
+    );
+  },
 );

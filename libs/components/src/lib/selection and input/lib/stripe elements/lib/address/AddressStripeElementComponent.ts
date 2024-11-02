@@ -66,7 +66,7 @@ export class AddressStripeElementComponent
             this.formGroup.setValue(
               {
                 ...stripeAddressElementChangeEvent.value,
-                phone: stripeAddressElementChangeEvent.value.phone || "",
+                phone: stripeAddressElementChangeEvent.value.phone || null,
               },
             );
           };
@@ -86,7 +86,11 @@ export class AddressStripeElementComponent
               "address",
               {
                 defaultValues: stripeCustomer ? {
-                  address: stripeCustomer.address || undefined,
+                  address: stripeCustomer.address ? {
+                    ...stripeCustomer.address,
+                    line2: stripeCustomer.address.line2 || undefined,
+                    state: stripeCustomer.address.state || undefined,
+                  } : undefined,
                   name:    stripeCustomer.name || undefined,
                   phone:   stripeCustomer.phone || undefined,
                 } : undefined,
@@ -134,7 +138,7 @@ export class AddressStripeElementComponent
           );
           let mounted: boolean               = false as const;
 
-          this.reset = resetEffectFn;
+          this.resetStripeElement = resetEffectFn;
 
           effect(
             resetEffectFn,
@@ -166,16 +170,17 @@ export class AddressStripeElementComponent
         if (stripeCustomer)
           this.formGroup.reset(
             {
-              ...stripeCustomer,
               address: stripeCustomer.address || undefined,
+              name:    stripeCustomer.name || undefined,
+              phone:   stripeCustomer.phone || undefined,
             },
           );
       },
     );
   }
 
-  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                         = inject<AccountService>(AccountService);
-  private readonly formGroup: FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string>, "name": FormControl<string> }> = new FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string>, "name": FormControl<string> }>(
+  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                                       = inject<AccountService>(AccountService);
+  private readonly formGroup: FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }> = new FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }>(
     {
       address: new FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>(
         {
@@ -206,9 +211,7 @@ export class AddressStripeElementComponent
               ],
             },
           ),
-          line2:       new FormControl<string | null>(
-            null,
-          ),
+          line2:       new FormControl<string | null>(null),
           postal_code: new FormControl<string>(
             "",
             {
@@ -218,32 +221,14 @@ export class AddressStripeElementComponent
               ],
             },
           ),
-          state:       new FormControl<string | null>(
-            null,
-          ),
+          state:       new FormControl<string | null>(null),
         },
       ),
-      name:    new FormControl<string>(
-        "",
-        {
-          nonNullable: true,
-          validators:  [
-            Validators.required,
-          ],
-        },
-      ),
-      phone:   new FormControl<string>(
-        "",
-        {
-          nonNullable: true,
-          validators:  [
-            Validators.required,
-          ],
-        },
-      ),
+      name:    new FormControl<string | null>(null),
+      phone:   new FormControl<string | null>(null),
     },
   );
-  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                   = toSignal<typeof this.formGroup.value>(
+  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                 = toSignal<typeof this.formGroup.value>(
     this.formGroup.valueChanges.pipe<typeof this.formGroup.value>(
       startWith<typeof this.formGroup.value, [ typeof this.formGroup.value ]>(this.formGroup.value),
     ),
@@ -253,21 +238,26 @@ export class AddressStripeElementComponent
   );
 
   public readonly edited$: Signal<boolean> = computed<boolean>(
-    (): boolean => !isEqual(
-      this.formGroupValue$(),
-      {
-        address: {
-          city:        this.accountService.accountDocument$()?.stripeCustomer?.address?.city || "",
-          country:     this.accountService.accountDocument$()?.stripeCustomer?.address?.country || "",
-          line1:       this.accountService.accountDocument$()?.stripeCustomer?.address?.line1 || "",
-          line2:       this.accountService.accountDocument$()?.stripeCustomer?.address?.line2 || null,
-          postal_code: this.accountService.accountDocument$()?.stripeCustomer?.address?.postal_code || "",
-          state:       this.accountService.accountDocument$()?.stripeCustomer?.address?.state || null,
+    (): boolean => {
+      const stripeCustomer: AccountDocument["stripeCustomer"] | undefined                  = this.accountService.accountDocument$()?.stripeCustomer;
+      const address: NonNullable<AccountDocument["stripeCustomer"]>["address"] | undefined = stripeCustomer?.address;
+
+      return !isEqual(
+        this.formGroupValue$(),
+        {
+          address: {
+            city:        address?.city || "",
+            country:     address?.country || "",
+            line1:       address?.line1 || "",
+            line2:       address?.line2 || null,
+            postal_code: address?.postal_code || "",
+            state:       address?.state || null,
+          },
+          name:    stripeCustomer?.name || null,
+          phone:   stripeCustomer?.phone || null,
         },
-        name:    this.accountService.accountDocument$()?.stripeCustomer?.name || "",
-        phone:   this.accountService.accountDocument$()?.stripeCustomer?.phone || "",
-      },
-    ),
+      );
+    },
   );
 
   public submit(openModel$: SheetComponent["openModel$"]): void {
@@ -275,30 +265,28 @@ export class AddressStripeElementComponent
 
     setTimeout(
       (): void => {
-        if (this.formGroup.value.address?.city && this.formGroup.value.address.country && this.formGroup.value.address.line1 && this.formGroup.value.address.postal_code && this.formGroup.value.name && this.formGroup.value.phone) {
-          const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
+        const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
 
-          if (stripeCustomer)
-            this.accountService.update(
-              {
-                stripeCustomer: {
-                  ...stripeCustomer,
-                  address: {
-                    city:        this.formGroup.value.address.city,
-                    country:     this.formGroup.value.address.country,
-                    line1:       this.formGroup.value.address.line1,
-                    line2:       this.formGroup.value.address.line2 || null,
-                    postal_code: this.formGroup.value.address.postal_code,
-                    state:       this.formGroup.value.address.state || null,
-                  },
-                  name:    this.formGroup.value.name,
-                  phone:   this.formGroup.value.phone,
-                },
+        if (stripeCustomer)
+          this.accountService.update(
+            {
+              stripeCustomer: {
+                ...stripeCustomer,
+                address: this.formGroup.value.address?.city && this.formGroup.value.address.country && this.formGroup.value.address.line1 && this.formGroup.value.address.postal_code ? {
+                  city:        this.formGroup.value.address.city,
+                  country:     this.formGroup.value.address.country,
+                  line1:       this.formGroup.value.address.line1,
+                  line2:       this.formGroup.value.address.line2 || null,
+                  postal_code: this.formGroup.value.address.postal_code,
+                  state:       this.formGroup.value.address.state || null,
+                } : null,
+                name:    this.formGroup.value.name || null,
+                phone:   this.formGroup.value.phone || null,
               },
-            ).then<void>(
-              (): void => void (0),
-            );
-        }
+            },
+          ).then<void>(
+            (): void => void (0),
+          );
       },
       180,
     );

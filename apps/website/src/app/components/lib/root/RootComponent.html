@@ -273,7 +273,7 @@
         flexWrap="wrap"
         [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
         <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2024&nbsp;}<standard--link [url]="brand.copyrightHolderUrl">{{ brand.copyrightHolder }}</standard--link></span>
-        <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfo.hash">{{ gitInfo.hash || '' }}</standard--link>&rpar;</span>
+        <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">{{ gitInfoPartial.hash || '' }}</standard--link>&rpar;</span>
       </standard--flexbox-container>
       <standard--flexbox-container
         [flexBasis]="responsivityService.pastSmallBreakpoint$() ? 'auto' : '100%'"
