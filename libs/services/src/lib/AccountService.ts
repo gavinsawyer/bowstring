@@ -1,7 +1,7 @@
 import { isPlatformBrowser }                                                                                         from "@angular/common";
 import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                                      from "@angular/core";
 import { toSignal }                                                                                                  from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, signInAnonymously, type User, type UserCredential }                                 from "@angular/fire/auth";
+import { Auth, onIdTokenChanged, signInAnonymously, type User }                                                      from "@angular/fire/auth";
 import { doc, docSnapshots, type DocumentData, type DocumentReference, type DocumentSnapshot, Firestore, updateDoc } from "@angular/fire/firestore";
 import { type AccountDocument }                                                                                      from "@standard/interfaces";
 import { catchError, filter, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }              from "rxjs";
@@ -44,10 +44,8 @@ export class AccountService {
             (error: unknown): Observable<undefined> => {
               console.error(error);
 
-              return fromPromise<UserCredential>(
-                signInAnonymously(this.auth),
-              ).pipe<undefined>(
-                map<UserCredential, undefined>(
+              return fromPromise<undefined>(
+                signInAnonymously(this.auth).then<undefined>(
                   (): undefined => undefined,
                 ),
               );
@@ -59,22 +57,22 @@ export class AccountService {
   ) : signal<undefined>(undefined);
 
   public update(accountDocumentPartial: Partial<AccountDocument>): Promise<void> {
-    if (this.auth.currentUser && !this.auth.currentUser.isAnonymous)
-      return updateDoc<AccountDocument, DocumentData>(
-        doc(
-          this.firestore,
-          `/accounts/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<AccountDocument>,
-        accountDocumentPartial,
-      ).catch<never>(
-        (error: unknown): never => {
-          console.error("Something went wrong.");
-
-          throw error;
-        },
-      );
-    else
+    if (!this.auth.currentUser || this.auth.currentUser.isAnonymous)
       return Promise.reject<never>(new Error());
+
+    return updateDoc<AccountDocument, DocumentData>(
+      doc(
+        this.firestore,
+        `/accounts/${ this.auth.currentUser.uid }`,
+      ) as DocumentReference<AccountDocument>,
+      accountDocumentPartial,
+    ).catch<never>(
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw error;
+      },
+    );
   }
 
 }

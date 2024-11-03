@@ -93,7 +93,10 @@ export class ScrollStackComponent {
               ([ viewportHeight ]: [ number | undefined, number | undefined, number | undefined ]): number | undefined => {
                 const domRect: DOMRect | undefined = htmlDivElement.getBoundingClientRect();
 
-                return domRect !== undefined ? domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2 : undefined;
+                if (domRect === undefined)
+                  return undefined;
+
+                return domRect.top + domRect.height / 2 - (viewportHeight || 0) / 2;
               },
             ),
           ),

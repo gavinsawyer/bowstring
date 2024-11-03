@@ -47,18 +47,21 @@ export class HoverTransformingDirective {
                 x,
                 y,
               }: PointerEvent): { "x": number, "y": number } | undefined => {
-              if (htmlElement.contains(this.document.elementFromPoint(
+              if (!htmlElement.contains(this.document.elementFromPoint(
                 x,
                 y,
-              ))) {
-                const domRect: DOMRect | undefined = htmlElement.getBoundingClientRect();
-
-                return domRect && x >= domRect.left && x <= domRect.right && y >= domRect.top && y <= domRect.bottom ? {
-                  x: ((2 * ((x - domRect.left) / domRect.width)) - 1) / 8,
-                  y: ((2 * ((y - domRect.top) / domRect.height)) - 1) / 8,
-                } : undefined;
-              } else
+              )))
                 return undefined;
+
+              const domRect: DOMRect | undefined = htmlElement.getBoundingClientRect();
+
+              if (!domRect || x < domRect.left || x > domRect.right || y < domRect.top || y > domRect.bottom)
+                return undefined;
+
+              return {
+                x: ((2 * ((x - domRect.left) / domRect.width)) - 1) / 8,
+                y: ((2 * ((y - domRect.top) / domRect.height)) - 1) / 8,
+              };
             },
           ),
         ),
@@ -95,10 +98,10 @@ export class HoverTransformingDirective {
     toObservable<boolean | undefined>(this.focused$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>(
         (focused?: boolean): Observable<number> => {
-          if (focused !== undefined)
-            return focused ? timer(0) : timer(200);
-          else
+          if (focused === undefined)
             return timer(0);
+
+          return focused ? timer(0) : timer(200);
         },
       ),
       map<boolean | undefined, boolean | undefined>(
@@ -112,10 +115,10 @@ export class HoverTransformingDirective {
     ).pipe<{ "x": number, "y": number }>(
       filter<{ "x": number, "y": number } | undefined, { "x": number, "y": number }>(
         (translation?: { "x": number, "y": number }): translation is { "x": number, "y": number } => {
-          if (translation !== undefined)
-            return translation.x !== 0 || translation.y !== 0;
-          else
+          if (translation === undefined)
             return false;
+
+          return translation.x !== 0 || translation.y !== 0;
         },
       ),
     ),
@@ -210,7 +213,12 @@ export class HoverTransformingDirective {
         toObservable<number | undefined>(this.translationY$),
       ),
       map<[ number | undefined, number | undefined ], boolean | undefined>(
-        ([ translationX, translationY ]: [ number | undefined, number | undefined ]): boolean | undefined => translationX !== undefined || translationY !== undefined ? translationX !== 0 || translationY !== 0 : undefined,
+        ([ translationX, translationY ]: [ number | undefined, number | undefined ]): boolean | undefined => {
+          if (translationX === undefined || translationY === undefined)
+            return undefined;
+
+          return translationX !== 0 || translationY !== 0;
+        },
       ),
     ),
   ) : signal<undefined>(undefined);

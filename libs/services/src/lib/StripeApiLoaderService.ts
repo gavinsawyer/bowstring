@@ -20,23 +20,23 @@ export class StripeApiLoaderService {
   private stripePromise?: Promise<Stripe | null>;
 
   public async load(): Promise<Stripe | null> {
-    if (isPlatformBrowser(this.platformId))
-      return this.stripe || this.stripePromise || ((): Promise<Stripe | null> => {
-        this.stripePromise = loadStripe(
-          this.environment.apis.stripe.apiKey,
-        ).then<Stripe | null>(
-          (stripe: Stripe | null): Stripe | null => {
-            if (stripe)
-              this.stripe = stripe;
-
-            return stripe;
-          },
-        );
-
-        return this.stripePromise;
-      })();
-    else
+    if (!isPlatformBrowser(this.platformId))
       return null;
+
+    return this.stripe || this.stripePromise || ((): Promise<Stripe | null> => {
+      this.stripePromise = loadStripe(
+        this.environment.apis.stripe.apiKey,
+      ).then<Stripe | null>(
+        (stripe: Stripe | null): Stripe | null => {
+          if (stripe)
+            this.stripe = stripe;
+
+          return stripe;
+        },
+      );
+
+      return this.stripePromise;
+    })();
   }
 
 }

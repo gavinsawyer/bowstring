@@ -123,7 +123,10 @@ export class SheetComponent {
     (): boolean | undefined => {
       const open: "" | boolean | `${ boolean }` | undefined = this.openModel$();
 
-      return open !== undefined ? open === "" || open === true || open === "true" || open !== "false" && false : undefined;
+      if (open === undefined)
+        return undefined;
+
+      return open === "" || open === true || open === "true" || open !== "false" && false;
     },
   );
 

@@ -135,7 +135,10 @@ export class FooterComponent {
     (): boolean | undefined => {
       const pinned: "" | boolean | `${ boolean }` | undefined = this.pinnedModel$();
 
-      return pinned !== undefined ? pinned === "" || pinned === true || pinned === "true" || pinned !== "false" && false : undefined;
+      if (pinned === undefined)
+        return undefined;
+
+      return pinned === "" || pinned === true || pinned === "true" || pinned !== "false" && false;
     },
   );
 
@@ -184,10 +187,10 @@ export class FooterComponent {
     toObservable<number | undefined>(this.unpinningTranslation$).pipe<boolean | undefined>(
       map<number | undefined, boolean | undefined>(
         (unpinningTranslation?: number): boolean | undefined => {
-          if (unpinningTranslation !== undefined)
-            return unpinningTranslation !== 0;
-          else
+          if (unpinningTranslation === undefined)
             return undefined;
+
+          return unpinningTranslation !== 0;
         },
       ),
     ),

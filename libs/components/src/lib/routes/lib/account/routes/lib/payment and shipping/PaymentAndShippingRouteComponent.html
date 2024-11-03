@@ -8,8 +8,12 @@
     @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {@if (stripeCustomer.address; as address) {@if (stripeCustomer.name) {<standard--section>
       <standard--label [input]="stripeCustomer.name" />
     </standard--section>}
-    <standard--label [input]="address.line1" />
-    @if (address.line2) {<standard--label [input]="address.line2" />}
+    <standard--flexbox-container
+      gapColumn="0"
+      gapRow="0">
+      <standard--label [input]="address.line1" />
+      @if (address.line2) {<standard--label [input]="address.line2" />}
+    </standard--flexbox-container>
     <standard--flexbox-container
       alignItems="flex-end"
       flexDirection="row">

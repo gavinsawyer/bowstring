@@ -58,7 +58,10 @@ export class MasonryContainerDirective
       const gutterSizerHtmlDivElement: HTMLDivElement | undefined = this.gutterSizerHtmlDivElementRef$()?.nativeElement;
       const innerHtmlDivElement: HTMLDivElement | undefined       = this.innerHtmlDivElementRef$()?.nativeElement;
 
-      return columnSizerHtmlDivElement && gutterSizerHtmlDivElement && innerHtmlDivElement ? new (require("masonry-layout"))(
+      if (!columnSizerHtmlDivElement || !gutterSizerHtmlDivElement || !innerHtmlDivElement)
+        return undefined;
+
+      return new (require("masonry-layout"))(
         innerHtmlDivElement,
         {
           columnWidth:        columnSizerHtmlDivElement,
@@ -68,7 +71,7 @@ export class MasonryContainerDirective
           percentPosition:    true,
           transitionDuration: 0,
         },
-      ) : undefined;
+      );
     },
   );
   private readonly platformId: NonNullable<unknown>      = inject<NonNullable<unknown>>(PLATFORM_ID);
