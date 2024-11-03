@@ -24,7 +24,7 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
         if (!process.env["STRIPE_API_KEY"])
           throw new HttpsError(
             "failed-precondition",
-            "The STRIPE_API_KEY environment variable is missing.",
+            "A value for `STRIPE_API_KEY` is missing from the environment.",
           );
 
         const accountDocument: AccountDocument | undefined = accountDocumentSnapshot.data();
@@ -32,13 +32,13 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
         if (!accountDocument)
           throw new HttpsError(
             "invalid-argument",
-            "The document associated with your account is missing.",
+            "The account document is missing.",
           );
 
         if (!accountDocument.stripeCustomer)
           throw new HttpsError(
             "invalid-argument",
-            "The stripeCustomer object is missing from the document associated with your account.",
+            "A value for `stripeCustomer` is missing from the account document.",
           );
 
         const stripeCustomer: NonNullable<AccountDocument["stripeCustomer"]> = accountDocument.stripeCustomer;
@@ -53,22 +53,22 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
             {
               stripeCustomer: {
                 ...stripeCustomer,
-                payment_method: {
-                  billing_details: {
+                paymentMethod: {
+                  billingDetails: {
                     address: paymentMethod.billing_details.address ? {
-                      city:        paymentMethod.billing_details.address.city,
-                      country:     paymentMethod.billing_details.address.country,
-                      line1:       paymentMethod.billing_details.address.line1,
-                      line2:       paymentMethod.billing_details.address.line2,
-                      postal_code: paymentMethod.billing_details.address.postal_code,
-                      state:       paymentMethod.billing_details.address.state,
+                      country:    paymentMethod.billing_details.address.country,
+                      city:       paymentMethod.billing_details.address.city,
+                      line1:      paymentMethod.billing_details.address.line1,
+                      line2:      paymentMethod.billing_details.address.line2,
+                      postalCode: paymentMethod.billing_details.address.postal_code,
+                      state:      paymentMethod.billing_details.address.state,
                     } : null,
                     email:   paymentMethod.billing_details.email,
                     name:    paymentMethod.billing_details.name,
                     phone:   paymentMethod.billing_details.phone,
                   },
-                  id:              paymentMethod.id,
-                  type:            paymentMethod.type,
+                  id:             paymentMethod.id,
+                  type:           paymentMethod.type,
                 },
               },
             },

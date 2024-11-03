@@ -15,11 +15,7 @@ express().use(
 ).get(
   "*.*",
   getI18nRequestHandler(
-    (
-      { staticRoot }: {
-        staticRoot: string,
-      },
-    ): express.RequestHandler => express.static(
+    ({ staticRoot }: { staticRoot: string }): express.RequestHandler => express.static(
       staticRoot,
       {
         maxAge: "1y",
@@ -29,11 +25,7 @@ express().use(
 ).get(
   "*",
   getI18nRequestHandler(
-    (
-      { localeId }: {
-        localeId: LocaleId,
-      },
-    ): express.RequestHandler => require(
+    ({ localeId }: { localeId: LocaleId }): express.RequestHandler => require(
       `${ process.cwd() }/dist/apps/website/server/${ localeId }/main.js`,
     )["getAppRequestHandler"](localeId),
   ),

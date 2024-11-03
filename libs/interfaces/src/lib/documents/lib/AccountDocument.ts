@@ -13,19 +13,19 @@ export interface AccountDocument {
       "country": string;
       "line1": string;
       "line2": string | null;
-      "postal_code": string;
+      "postalCode": string;
       "state": string | null;
     } | null;
     "id": string;
     "name": string | null;
-    "payment_method": {
-      "billing_details": {
+    "paymentMethod": {
+      "billingDetails": {
         "address": {
           "city": string;
           "country": string;
           "line1": string;
           "line2": string | null;
-          "postal_code": string;
+          "postalCode": string;
           "state": string | null;
         } | null;
         "email": string;

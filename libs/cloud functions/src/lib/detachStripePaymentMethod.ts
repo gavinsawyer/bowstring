@@ -6,18 +6,18 @@ import Stripe                                                          from "str
 
 
 // noinspection JSUnusedGlobalSymbols
-export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>>(
+export const detachStripePaymentMethod: CallableFunction = onCall<{ "paymentMethodId": string }, Promise<null>>(
   {
     enforceAppCheck: true,
   },
-  ({ auth: authData }: CallableRequest): Promise<null> => {
-    if (!authData?.uid)
+  async (callableRequest: CallableRequest<{ "paymentMethodId": string }>): Promise<null> => {
+    if (!callableRequest.auth?.uid)
       throw new HttpsError(
         "unauthenticated",
         "You're not signed in.",
       );
 
-    const accountDocumentReference: DocumentReference<AccountDocument> = getFirestore(getApp()).collection("accounts").doc(authData.uid) as DocumentReference<AccountDocument>;
+    const accountDocumentReference: DocumentReference<AccountDocument> = getFirestore(getApp()).collection("accounts").doc(callableRequest.auth.uid) as DocumentReference<AccountDocument>;
 
     return accountDocumentReference.get().then<null, never>(
       async (accountDocumentSnapshot: DocumentSnapshot<AccountDocument>): Promise<null> => {
@@ -35,18 +35,22 @@ export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>
             "The account document is missing.",
           );
 
-        if (accountDocument.stripeCustomer)
-          return null;
+        if (!accountDocument.stripeCustomer)
+          throw new HttpsError(
+            "invalid-argument",
+            "A value for `stripeCustomer` is missing from the account document.",
+          );
 
-        return new Stripe(process.env["STRIPE_API_KEY"]).customers.create(
-          {
-            email: accountDocument.email,
-          },
+        const stripeCustomer: NonNullable<AccountDocument["stripeCustomer"]> = accountDocument.stripeCustomer;
+
+        return new Stripe(process.env["STRIPE_API_KEY"]).paymentMethods.detach(
+          callableRequest.data.paymentMethodId,
         ).then<null, never>(
-          ({ id }: Stripe.Response<Stripe.Customer>): Promise<null> => accountDocumentReference.update(
+          (): Promise<null> => accountDocumentReference.update(
             {
               stripeCustomer: {
-                id: id,
+                ...stripeCustomer,
+                paymentMethod: null,
               },
             },
           ).then<null, never>(
@@ -70,15 +74,6 @@ export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>
               error,
             );
           },
-        );
-      },
-      (error: unknown): never => {
-        console.error("Something went wrong.");
-
-        throw new HttpsError(
-          "unknown",
-          "Something went wrong.",
-          error,
         );
       },
     );

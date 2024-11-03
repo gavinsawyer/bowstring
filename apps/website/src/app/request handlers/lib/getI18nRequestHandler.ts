@@ -4,7 +4,11 @@ import project           from "../../../../project.json";
 import { type LocaleId } from "../../types";
 
 
-function getI18nRequestHandler(getRequestHandler: (i18nRequestHandlerResponse: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler): express.RequestHandler {
+function getI18nRequestHandler(getRequestHandler: (
+  {
+    localeId,
+    staticRoot,
+  }: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler): express.RequestHandler {
   return (
     request: express.Request,
     response: express.Response,

@@ -18,7 +18,7 @@ export const beforeUserCreatedBlockingFunction = beforeUserCreated(
     if (!process.env["STRIPE_API_KEY"])
       throw new HttpsError(
         "failed-precondition",
-        "The STRIPE_API_KEY environment variable is missing.",
+        "A value for `STRIPE_API_KEY` is missing from the environment.",
       );
 
     return new Stripe(process.env["STRIPE_API_KEY"]).customers.create(

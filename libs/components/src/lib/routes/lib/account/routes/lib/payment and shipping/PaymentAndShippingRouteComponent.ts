@@ -1,4 +1,5 @@
 import { Component, inject }                                                                                                                                                                                                                                                                   from "@angular/core";
+import { GetRegionDisplayNamePipe }                                                                                                                                                                                                                                                            from "@standard/pipes";
 import { AccountService }                                                                                                                                                                                                                                                                      from "@standard/services";
 import { AddressStripeElementComponent, BoxComponent, ButtonComponent, ComboboxInputComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, PaymentStripeElementComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../../../../";
 
@@ -13,6 +14,7 @@ import { AddressStripeElementComponent, BoxComponent, ButtonComponent, ComboboxI
       DividerComponent,
       FlexboxContainerComponent,
       FormComponent,
+      GetRegionDisplayNamePipe,
       HeaderComponent,
       LabelComponent,
       PaymentStripeElementComponent,

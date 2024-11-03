@@ -12,6 +12,7 @@
   </standard--header>
   @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--button
     appearance="raised"
+    i18n
     material="glass"
     (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--button>}
 </standard--section>

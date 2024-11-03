@@ -1,16 +1,16 @@
-import { NgTemplateOutlet }                                                                           from "@angular/common";
-import { afterRender, Component, computed, effect, inject, type Signal }                              from "@angular/core";
-import { toSignal }                                                                                   from "@angular/core/rxjs-interop";
-import { FormControl, FormGroup, Validators }                                                         from "@angular/forms";
-import { ContainerDirective }                                                                         from "@standard/directives";
-import { type AccountDocument }                                                                       from "@standard/interfaces";
-import { AccountService }                                                                             from "@standard/services";
-import { type Stripe, type StripeAddressElementChangeEvent, type StripeElement, type StripeElements } from "@stripe/stripe-js";
-import { isEqual }                                                                                    from "lodash";
-import { startWith }                                                                                  from "rxjs";
-import { type SheetComponent }                                                                        from "../../../../../../";
-import { StripeElementComponent }                                                                     from "../../../stripe element/StripeElementComponent";
-import getAppearance                                                                                  from "../getAppearance";
+import { NgTemplateOutlet }                                                                                                                        from "@angular/common";
+import { afterRender, Component, computed, effect, inject, type Signal }                                                                           from "@angular/core";
+import { toSignal }                                                                                                                                from "@angular/core/rxjs-interop";
+import { Auth }                                                                                                                                    from "@angular/fire/auth";
+import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                    from "@angular/fire/firestore";
+import { FormControl, FormGroup, Validators }                                                                                                      from "@angular/forms";
+import { ContainerDirective }                                                                                                                      from "@standard/directives";
+import { type AccountDocument }                                                                                                                    from "@standard/interfaces";
+import { AccountService }                                                                                                                          from "@standard/services";
+import { type Stripe, type StripeAddressElement, type StripeAddressElementChangeEvent, type StripeElement, type StripeElements, type StripeError } from "@stripe/stripe-js";
+import { isEqual }                                                                                                                                 from "lodash";
+import { startWith }                                                                                                                               from "rxjs";
+import { StripeElementComponent }                                                                                                                  from "../../../stripe element/StripeElementComponent";
 
 
 @Component(
@@ -57,91 +57,132 @@ export class AddressStripeElementComponent
   constructor() {
     super();
 
+    this.getStripeElement  = (
+      {
+        stripeCustomer,
+        stripeElements,
+      }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements, }): StripeAddressElement => stripeElements.create(
+      "address",
+      {
+        defaultValues: stripeCustomer ? {
+          address: stripeCustomer.address ? {
+            city:        stripeCustomer.address.city,
+            country:     stripeCustomer.address.country,
+            line1:       stripeCustomer.address.line1,
+            line2:       stripeCustomer.address.line2 || undefined,
+            postal_code: stripeCustomer.address.postalCode,
+            state:       stripeCustomer.address.state || undefined,
+          } : undefined,
+          name:    stripeCustomer.name || undefined,
+          phone:   stripeCustomer.phone || undefined,
+        } : undefined,
+        fields:        {
+          phone: "always",
+        },
+        mode:          "shipping",
+        validation:    {
+          phone: {
+            required: "always",
+          },
+        },
+      },
+    ).on(
+      "change",
+      (stripeAddressElementChangeEvent: StripeAddressElementChangeEvent): void => {
+        const stripeElementValue: StripeAddressElementChangeEvent["value"] = stripeAddressElementChangeEvent.value;
+
+        this.complete$.set(stripeAddressElementChangeEvent.complete);
+
+        this.formGroup.setValue(
+          {
+            address: {
+              city:       stripeElementValue.address.city,
+              country:    stripeElementValue.address.country,
+              line1:      stripeElementValue.address.line1,
+              line2:      stripeElementValue.address.line2,
+              state:      stripeElementValue.address.state,
+              postalCode: stripeElementValue.address.postal_code,
+            },
+            name:    stripeElementValue.name,
+            phone:   stripeElementValue.phone || null,
+          },
+        );
+      },
+    );
+    this.getStripeElements = (stripe: Stripe): StripeElements => stripe.elements(this.getBaseStripeElementsOptions());
+
     this.stripeApiLoaderService.load().then<void>(
       (stripe: Stripe | null): void => {
         if (stripe) {
-          const changeEventHandler = (stripeAddressElementChangeEvent: StripeAddressElementChangeEvent): void => {
-            this.complete$.set(stripeAddressElementChangeEvent.complete);
+          let stripeElements: StripeElements = this.getStripeElements?.(stripe) as StripeElements;
+          let stripeElement: StripeElement   = this.getStripeElement?.(
+            {
+              stripeElements: stripeElements,
+            },
+          ) as StripeAddressElement;
+          let mounted: boolean               = false as const;
 
-            this.formGroup.setValue(
-              {
-                ...stripeAddressElementChangeEvent.value,
-                phone: stripeAddressElementChangeEvent.value.phone || null,
-              },
-            );
-          };
-          const resetEffectFn      = (): void => {
-            const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
-
-            stripeElements = stripe.elements(
-              {
-                appearance: getAppearance(this.colorScheme$()),
-                loader:     "never",
-              },
-            );
+          this.resetStripeElement  = (): void => {
+            stripeElements = this.getStripeElements?.(stripe) as StripeElements;
 
             stripeElement.destroy();
 
-            stripeElement = stripeElements.create(
-              "address",
+            stripeElement = this.getStripeElement?.(
               {
-                defaultValues: stripeCustomer ? {
-                  address: stripeCustomer.address ? {
-                    ...stripeCustomer.address,
-                    line2: stripeCustomer.address.line2 || undefined,
-                    state: stripeCustomer.address.state || undefined,
-                  } : undefined,
-                  name:    stripeCustomer.name || undefined,
-                  phone:   stripeCustomer.phone || undefined,
-                } : undefined,
-                fields:        {
-                  phone: "always",
-                },
-                mode:          "shipping",
-                validation:    {
-                  phone: {
-                    required: "always",
-                  },
-                },
+                stripeCustomer: this.accountService.accountDocument$()?.stripeCustomer,
+                stripeElements: stripeElements,
               },
-            ).on(
-              "change",
-              changeEventHandler,
-            );
+            ) as StripeAddressElement;
 
             if (mounted)
               stripeElement.mount(this.htmlDivElementRef$().nativeElement);
           };
+          this.submitStripeElement = (): void => {
+            stripeElements.submit().then<void, never>(
+              ({ error: stripeError }: { error?: StripeError }): void => {
+                if (stripeError) {
+                  console.error("Something went wrong.");
 
-          let stripeElements: StripeElements = stripe.elements(
-            {
-              appearance: getAppearance(this.colorScheme$()),
-              loader:     "never",
-            },
-          );
-          let stripeElement: StripeElement   = stripeElements.create(
-            "address",
-            {
-              fields:     {
-                phone: "always",
-              },
-              mode:       "shipping",
-              validation: {
-                phone: {
-                  required: "always",
-                },
-              },
-            },
-          ).on(
-            "change",
-            changeEventHandler,
-          );
-          let mounted: boolean               = false as const;
+                  throw stripeError;
+                }
 
-          this.resetStripeElement = resetEffectFn;
+                const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
+
+                if (stripeCustomer && this.auth.currentUser)
+                  updateDoc<AccountDocument, DocumentData>(
+                    doc(
+                      this.firestore,
+                      `/accounts/${ this.auth.currentUser.uid }`,
+                    ) as DocumentReference<AccountDocument>,
+                    {
+                      stripeCustomer: {
+                        ...stripeCustomer,
+                        address: this.formGroup.value.address?.city && this.formGroup.value.address.country && this.formGroup.value.address.line1 && this.formGroup.value.address.postalCode ? {
+                          city:       this.formGroup.value.address.city,
+                          country:    this.formGroup.value.address.country,
+                          line1:      this.formGroup.value.address.line1,
+                          line2:      this.formGroup.value.address.line2 || null,
+                          postalCode: this.formGroup.value.address.postalCode,
+                          state:      this.formGroup.value.address.state || null,
+                        } : null,
+                        name:    this.formGroup.value.name || null,
+                        phone:   this.formGroup.value.phone || null,
+                      },
+                    },
+                  ).then<void, never>(
+                    (): void => void (0),
+                    (error: unknown): never => {
+                      console.error("Something went wrong.");
+
+                      throw error;
+                    },
+                  );
+              },
+            );
+          };
 
           effect(
-            resetEffectFn,
+            this.resetStripeElement,
             {
               injector: this.injector,
             },
@@ -179,12 +220,14 @@ export class AddressStripeElementComponent
     );
   }
 
-  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                                       = inject<AccountService>(AccountService);
-  private readonly formGroup: FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }> = new FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }>(
+  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                                      = inject<AccountService>(AccountService);
+  private readonly auth: Auth                                                                                                                                                                                                                                                                                                                          = inject<Auth>(Auth);
+  private readonly firestore: Firestore                                                                                                                                                                                                                                                                                                                = inject<Firestore>(Firestore);
+  private readonly formGroup: FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postalCode": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }> = new FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postalCode": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }>(
     {
-      address: new FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postal_code": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>(
+      address: new FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postalCode": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>(
         {
-          city:        new FormControl<string>(
+          city:       new FormControl<string>(
             "",
             {
               nonNullable: true,
@@ -193,7 +236,7 @@ export class AddressStripeElementComponent
               ],
             },
           ),
-          country:     new FormControl<string>(
+          country:    new FormControl<string>(
             "",
             {
               nonNullable: true,
@@ -202,7 +245,7 @@ export class AddressStripeElementComponent
               ],
             },
           ),
-          line1:       new FormControl<string>(
+          line1:      new FormControl<string>(
             "",
             {
               nonNullable: true,
@@ -211,8 +254,8 @@ export class AddressStripeElementComponent
               ],
             },
           ),
-          line2:       new FormControl<string | null>(null),
-          postal_code: new FormControl<string>(
+          line2:      new FormControl<string | null>(null),
+          postalCode: new FormControl<string>(
             "",
             {
               nonNullable: true,
@@ -221,14 +264,14 @@ export class AddressStripeElementComponent
               ],
             },
           ),
-          state:       new FormControl<string | null>(null),
+          state:      new FormControl<string | null>(null),
         },
       ),
       name:    new FormControl<string | null>(null),
       phone:   new FormControl<string | null>(null),
     },
   );
-  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                 = toSignal<typeof this.formGroup.value>(
+  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                = toSignal<typeof this.formGroup.value>(
     this.formGroup.valueChanges.pipe<typeof this.formGroup.value>(
       startWith<typeof this.formGroup.value, [ typeof this.formGroup.value ]>(this.formGroup.value),
     ),
@@ -246,12 +289,12 @@ export class AddressStripeElementComponent
         this.formGroupValue$(),
         {
           address: {
-            city:        address?.city || "",
-            country:     address?.country || "",
-            line1:       address?.line1 || "",
-            line2:       address?.line2 || null,
-            postal_code: address?.postal_code || "",
-            state:       address?.state || null,
+            city:       address?.city || "",
+            country:    address?.country || "",
+            line1:      address?.line1 || "",
+            line2:      address?.line2 || null,
+            postalCode: address?.postalCode || "",
+            state:      address?.state || null,
           },
           name:    stripeCustomer?.name || null,
           phone:   stripeCustomer?.phone || null,
@@ -259,37 +302,5 @@ export class AddressStripeElementComponent
       );
     },
   );
-
-  public submit(openModel$: SheetComponent["openModel$"]): void {
-    openModel$.set(false);
-
-    setTimeout(
-      (): void => {
-        const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
-
-        if (stripeCustomer)
-          this.accountService.update(
-            {
-              stripeCustomer: {
-                ...stripeCustomer,
-                address: this.formGroup.value.address?.city && this.formGroup.value.address.country && this.formGroup.value.address.line1 && this.formGroup.value.address.postal_code ? {
-                  city:        this.formGroup.value.address.city,
-                  country:     this.formGroup.value.address.country,
-                  line1:       this.formGroup.value.address.line1,
-                  line2:       this.formGroup.value.address.line2 || null,
-                  postal_code: this.formGroup.value.address.postal_code,
-                  state:       this.formGroup.value.address.state || null,
-                } : null,
-                name:    this.formGroup.value.name || null,
-                phone:   this.formGroup.value.phone || null,
-              },
-            },
-          ).then<void>(
-            (): void => void (0),
-          );
-      },
-      180,
-    );
-  }
 
 }

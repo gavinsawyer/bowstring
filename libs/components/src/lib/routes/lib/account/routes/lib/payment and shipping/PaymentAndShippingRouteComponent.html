@@ -8,20 +8,20 @@
     @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {@if (stripeCustomer.address; as address) {@if (stripeCustomer.name) {<standard--section>
       <standard--label [input]="stripeCustomer.name" />
     </standard--section>}
-    <standard--flexbox-container
-      gapColumn="0"
-      gapRow="0">
+    <standard--section>
       <standard--label [input]="address.line1" />
       @if (address.line2) {<standard--label [input]="address.line2" />}
-    </standard--flexbox-container>
-    <standard--flexbox-container
-      alignItems="flex-end"
-      flexDirection="row">
-      <standard--label [input]="address.city" />
-      @if (address.state) {<standard--label [input]="address.state" />}
-      <standard--label [input]="address.postal_code" />
-    </standard--flexbox-container>
-    <standard--label [input]="address.country" />
+    </standard--section>
+    <standard--section>
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        <standard--label [input]="address.city" />
+        @if (address.state) {<standard--label [input]="address.state" />}
+        <standard--label [input]="address.postalCode" />
+      </standard--flexbox-container>
+      <standard--label [input]="address.country | standardGetRegionDisplayName" />
+    </standard--section>
     @if (stripeCustomer.phone) {<standard--section>
       <standard--label [input]="stripeCustomer.phone" />
     </standard--section>
@@ -54,7 +54,7 @@
   <standard--box
     flexBasis="50%"
     flexGrow="1">
-    @if (accountService.accountDocument$()?.stripeCustomer?.payment_method; as paymentMethod) {<standard--label [input]="paymentMethod.type + ' payment available.'" />
+    @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod; as paymentMethod) {<standard--label [input]="paymentMethod.type + ' payment available.'" />
     <standard--divider />
     <standard--button
       appearance="raised"
@@ -97,7 +97,7 @@
       @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--button
         appearance="symbol"
         [disabled]="!addressStripeElementComponent.edited$()"
-        (output)="addressStripeElementComponent?.resetStripeElement();">
+        (output)="addressStripeElementComponent.reset();">
         <standard--symbol input="ArrowCounterclockwiseCircleFill" />
       </standard--button>}
       <standard--button
@@ -120,10 +120,10 @@
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (accountService.accountDocument$()?.stripeCustomer?.payment_method) {<standard--button
+      @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--button
         appearance="symbol"
         [disabled]="!paymentStripeElementComponent.edited$()"
-        (output)="paymentStripeElementComponent?.resetStripeElement();">
+        (output)="paymentStripeElementComponent.reset();">
         <standard--symbol input="ArrowCounterclockwiseCircleFill" />
       </standard--button>}
       <standard--button
