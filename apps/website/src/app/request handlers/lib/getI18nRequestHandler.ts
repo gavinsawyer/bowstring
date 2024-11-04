@@ -8,7 +8,8 @@ function getI18nRequestHandler(getRequestHandler: (
   {
     localeId,
     staticRoot,
-  }: { "localeId": LocaleId, "staticRoot": string }) => express.RequestHandler): express.RequestHandler {
+  }: { "localeId": LocaleId, "staticRoot": string },
+) => express.RequestHandler): express.RequestHandler {
   return (
     request: express.Request,
     response: express.Response,

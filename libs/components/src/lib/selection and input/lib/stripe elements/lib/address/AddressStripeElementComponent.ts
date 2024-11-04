@@ -1,16 +1,16 @@
-import { NgTemplateOutlet }                                                                                                                        from "@angular/common";
-import { afterRender, Component, computed, effect, inject, type Signal }                                                                           from "@angular/core";
-import { toSignal }                                                                                                                                from "@angular/core/rxjs-interop";
-import { Auth }                                                                                                                                    from "@angular/fire/auth";
-import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                    from "@angular/fire/firestore";
-import { FormControl, FormGroup, Validators }                                                                                                      from "@angular/forms";
-import { ContainerDirective }                                                                                                                      from "@standard/directives";
-import { type AccountDocument }                                                                                                                    from "@standard/interfaces";
-import { AccountService }                                                                                                                          from "@standard/services";
-import { type Stripe, type StripeAddressElement, type StripeAddressElementChangeEvent, type StripeElement, type StripeElements, type StripeError } from "@stripe/stripe-js";
-import { isEqual }                                                                                                                                 from "lodash";
-import { startWith }                                                                                                                               from "rxjs";
-import { StripeElementComponent }                                                                                                                  from "../../../stripe element/StripeElementComponent";
+import { NgTemplateOutlet }                                                                           from "@angular/common";
+import { Component, computed, effect, inject, type Signal }                                           from "@angular/core";
+import { toSignal }                                                                                   from "@angular/core/rxjs-interop";
+import { Auth }                                                                                       from "@angular/fire/auth";
+import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                       from "@angular/fire/firestore";
+import { FormControl, FormGroup, Validators }                                                         from "@angular/forms";
+import { ContainerDirective }                                                                         from "@standard/directives";
+import { type AccountDocument }                                                                       from "@standard/interfaces";
+import { type Stripe, type StripeAddressElementChangeEvent, type StripeElement, type StripeElements } from "@stripe/stripe-js";
+import { isEqual }                                                                                    from "lodash";
+import { startWith }                                                                                  from "rxjs";
+import { type SheetComponent }                                                                        from "../../../../../presentation";
+import { StripeElementComponent }                                                                     from "../../../stripe element/StripeElementComponent";
 
 
 @Component(
@@ -61,7 +61,8 @@ export class AddressStripeElementComponent
       {
         stripeCustomer,
         stripeElements,
-      }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements, }): StripeAddressElement => stripeElements.create(
+      }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements, },
+    ): StripeElement => stripeElements.create(
       "address",
       {
         defaultValues: stripeCustomer ? {
@@ -111,98 +112,7 @@ export class AddressStripeElementComponent
     );
     this.getStripeElements = (stripe: Stripe): StripeElements => stripe.elements(this.getBaseStripeElementsOptions());
 
-    this.stripeApiLoaderService.load().then<void>(
-      (stripe: Stripe | null): void => {
-        if (stripe) {
-          let stripeElements: StripeElements = this.getStripeElements?.(stripe) as StripeElements;
-          let stripeElement: StripeElement   = this.getStripeElement?.(
-            {
-              stripeElements: stripeElements,
-            },
-          ) as StripeAddressElement;
-          let mounted: boolean               = false as const;
-
-          this.resetStripeElement  = (): void => {
-            stripeElements = this.getStripeElements?.(stripe) as StripeElements;
-
-            stripeElement.destroy();
-
-            stripeElement = this.getStripeElement?.(
-              {
-                stripeCustomer: this.accountService.accountDocument$()?.stripeCustomer,
-                stripeElements: stripeElements,
-              },
-            ) as StripeAddressElement;
-
-            if (mounted)
-              stripeElement.mount(this.htmlDivElementRef$().nativeElement);
-          };
-          this.submitStripeElement = (): void => {
-            stripeElements.submit().then<void, never>(
-              ({ error: stripeError }: { error?: StripeError }): void => {
-                if (stripeError) {
-                  console.error("Something went wrong.");
-
-                  throw stripeError;
-                }
-
-                const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
-
-                if (stripeCustomer && this.auth.currentUser)
-                  updateDoc<AccountDocument, DocumentData>(
-                    doc(
-                      this.firestore,
-                      `/accounts/${ this.auth.currentUser.uid }`,
-                    ) as DocumentReference<AccountDocument>,
-                    {
-                      stripeCustomer: {
-                        ...stripeCustomer,
-                        address: this.formGroup.value.address?.city && this.formGroup.value.address.country && this.formGroup.value.address.line1 && this.formGroup.value.address.postalCode ? {
-                          city:       this.formGroup.value.address.city,
-                          country:    this.formGroup.value.address.country,
-                          line1:      this.formGroup.value.address.line1,
-                          line2:      this.formGroup.value.address.line2 || null,
-                          postalCode: this.formGroup.value.address.postalCode,
-                          state:      this.formGroup.value.address.state || null,
-                        } : null,
-                        name:    this.formGroup.value.name || null,
-                        phone:   this.formGroup.value.phone || null,
-                      },
-                    },
-                  ).then<void, never>(
-                    (): void => void (0),
-                    (error: unknown): never => {
-                      console.error("Something went wrong.");
-
-                      throw error;
-                    },
-                  );
-              },
-            );
-          };
-
-          effect(
-            this.resetStripeElement,
-            {
-              injector: this.injector,
-            },
-          );
-
-          afterRender(
-            (): void => {
-              if (!mounted) {
-                stripeElement.mount(this.htmlDivElementRef$().nativeElement);
-
-                mounted = true;
-              }
-            },
-            {
-              injector: this.injector,
-            },
-          );
-        }
-      },
-    );
+    this.initializeStripeElement();
 
     effect(
       (): void => {
@@ -220,7 +130,6 @@ export class AddressStripeElementComponent
     );
   }
 
-  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                                      = inject<AccountService>(AccountService);
   private readonly auth: Auth                                                                                                                                                                                                                                                                                                                          = inject<Auth>(Auth);
   private readonly firestore: Firestore                                                                                                                                                                                                                                                                                                                = inject<Firestore>(Firestore);
   private readonly formGroup: FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postalCode": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }> = new FormGroup<{ "address": FormGroup<{ "country": FormControl<string>, "city": FormControl<string>, "state": FormControl<string | null>, "postalCode": FormControl<string>, "line2": FormControl<string | null>, "line1": FormControl<string> }>, "phone": FormControl<string | null>, "name": FormControl<string | null> }>(
@@ -302,5 +211,51 @@ export class AddressStripeElementComponent
       );
     },
   );
+
+  public submit(openModel$: SheetComponent["openModel$"]): void {
+    openModel$.set(false);
+
+    setTimeout(
+      (): void => {
+        if (this.submitStripeElement)
+          this.submitStripeElement().then<void>(
+            (): void => {
+              const stripeCustomer: AccountDocument["stripeCustomer"] | undefined = this.accountService.accountDocument$()?.stripeCustomer;
+
+              if (stripeCustomer && this.auth.currentUser)
+                updateDoc<AccountDocument, DocumentData>(
+                  doc(
+                    this.firestore,
+                    `/accounts/${ this.auth.currentUser.uid }`,
+                  ) as DocumentReference<AccountDocument>,
+                  {
+                    stripeCustomer: {
+                      ...stripeCustomer,
+                      address: this.formGroup.value.address?.city && this.formGroup.value.address.country && this.formGroup.value.address.line1 && this.formGroup.value.address.postalCode ? {
+                        city:       this.formGroup.value.address.city,
+                        country:    this.formGroup.value.address.country,
+                        line1:      this.formGroup.value.address.line1,
+                        line2:      this.formGroup.value.address.line2 || null,
+                        postalCode: this.formGroup.value.address.postalCode,
+                        state:      this.formGroup.value.address.state || null,
+                      } : null,
+                      name:    this.formGroup.value.name || null,
+                      phone:   this.formGroup.value.phone || null,
+                    },
+                  },
+                ).then<void, never>(
+                  (): void => void (0),
+                  (error: unknown): never => {
+                    console.error("Something went wrong.");
+
+                    throw error;
+                  },
+                );
+            },
+          );
+      },
+      180,
+    );
+  }
 
 }

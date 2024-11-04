@@ -3,11 +3,11 @@ import Stripe                                       from "stripe";
 
 
 // noinspection JSUnusedGlobalSymbols
-export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<string>>(
+export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<{ "clientSecret": string }>>(
   {
     enforceAppCheck: true,
   },
-  async (callableRequest: CallableRequest<null>): Promise<string> => {
+  async (callableRequest: CallableRequest<null>): Promise<{ clientSecret: string }> => {
     if (!callableRequest.auth?.uid)
       throw new HttpsError(
         "unauthenticated",
@@ -20,15 +20,17 @@ export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<st
         "A value for `STRIPE_API_KEY` is missing from the environment.",
       );
 
-    return new Stripe(process.env["STRIPE_API_KEY"]).setupIntents.create().then<string, never>(
-      ({ client_secret: clientSecret }: Stripe.SetupIntent): string => {
+    return new Stripe(process.env["STRIPE_API_KEY"]).setupIntents.create().then<{ clientSecret: string }, never>(
+      ({ client_secret: clientSecret }: Stripe.SetupIntent): { clientSecret: string } => {
         if (!clientSecret)
           throw new HttpsError(
             "unavailable",
             "A value for `clientSecret` is missing from the setup intent.",
           );
 
-        return clientSecret;
+        return {
+          clientSecret: clientSecret,
+        };
       },
       (error: unknown): never => {
         console.error("Something went wrong.");

@@ -87,7 +87,7 @@
   <standard--header>
     <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--AddressStripeElementSheet--Header">Edit your shipping address.</h6>
   </standard--header>
-  <standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
+  @defer {<standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
     <standard--address-stripe-element #addressStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
@@ -107,13 +107,13 @@
         <standard--symbol input="CheckmarkCircleFill" />
       </standard--button>
     </standard--flexbox-container>
-  </standard--form>
+  </standard--form>}
 </standard--sheet>
 <standard--sheet #paymentStripeElementSheetComponent>
   <standard--header>
     <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentStripeElementSheet--Header">Edit your payment method.</h6>
   </standard--header>
-  <standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
+  @defer {<standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
     <standard--payment-stripe-element #paymentStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
@@ -133,5 +133,5 @@
         <standard--symbol input="CheckmarkCircleFill" />
       </standard--button>
     </standard--flexbox-container>
-  </standard--form>
+  </standard--form>}
 </standard--sheet>

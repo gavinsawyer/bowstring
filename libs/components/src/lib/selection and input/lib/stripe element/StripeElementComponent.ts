@@ -1,12 +1,11 @@
-import { BreakpointObserver, type BreakpointState }                                                                                                         from "@angular/cdk/layout";
-import { isPlatformBrowser, NgTemplateOutlet }                                                                                                              from "@angular/common";
-import { Component, ElementRef, inject, Injector, LOCALE_ID, PLATFORM_ID, signal, type Signal, viewChild, type WritableSignal }                             from "@angular/core";
-import { toSignal }                                                                                                                                         from "@angular/core/rxjs-interop";
-import { type AccountDocument }                                                                                                                             from "@standard/interfaces";
-import { StripeApiLoaderService }                                                                                                                           from "@standard/services";
-import { type BaseStripeElementsOptions, type Stripe, type StripeAddressElement, type StripeElementLocale, type StripeElements, type StripePaymentElement } from "@stripe/stripe-js";
-import { map }                                                                                                                                              from "rxjs";
-import type { SheetComponent }                                                                                                                              from "../../../presentation";
+import { BreakpointObserver, type BreakpointState }                                                                                                  from "@angular/cdk/layout";
+import { isPlatformBrowser, NgTemplateOutlet }                                                                                                       from "@angular/common";
+import { afterRender, Component, effect, ElementRef, inject, Injector, LOCALE_ID, PLATFORM_ID, signal, type Signal, viewChild, type WritableSignal } from "@angular/core";
+import { toSignal }                                                                                                                                  from "@angular/core/rxjs-interop";
+import { type AccountDocument }                                                                                                                      from "@standard/interfaces";
+import { AccountService, StripeApiLoaderService }                                                                                                    from "@standard/services";
+import { type BaseStripeElementsOptions, type Stripe, type StripeElement, type StripeElementLocale, type StripeElements, type StripeError }          from "@stripe/stripe-js";
+import { map }                                                                                                                                       from "rxjs";
 
 
 @Component(
@@ -20,20 +19,21 @@ import type { SheetComponent }                                                  
 )
 export class StripeElementComponent {
 
-  private readonly breakpointObserver: BreakpointObserver = inject<BreakpointObserver>(BreakpointObserver);
-  private readonly platformId: NonNullable<unknown>       = inject<NonNullable<unknown>>(PLATFORM_ID);
-
-  protected readonly colorScheme$: Signal<"dark" | "light" | undefined>     = isPlatformBrowser(this.platformId) ? toSignal<"dark" | "light">(
+  private readonly breakpointObserver: BreakpointObserver                 = inject<BreakpointObserver>(BreakpointObserver);
+  private readonly platformId: NonNullable<unknown>                       = inject<NonNullable<unknown>>(PLATFORM_ID);
+  private readonly colorScheme$: Signal<"dark" | "light" | undefined>     = isPlatformBrowser(this.platformId) ? toSignal<"dark" | "light">(
     this.breakpointObserver.observe("(prefers-color-scheme: dark)").pipe<"dark" | "light">(
       map<BreakpointState, "dark" | "light">(
         ({ matches }: BreakpointState): "dark" | "light" => matches ? "dark" : "light",
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
-  protected readonly injector: Injector                                     = inject<Injector>(Injector);
-  protected readonly localeId: string                                       = inject<string>(LOCALE_ID);
-  protected readonly stripeApiLoaderService: StripeApiLoaderService         = inject<StripeApiLoaderService>(StripeApiLoaderService);
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly injector: Injector                                     = inject<Injector>(Injector);
+  private readonly localeId: string                                       = inject<string>(LOCALE_ID);
+  private readonly stripeApiLoaderService: StripeApiLoaderService         = inject<StripeApiLoaderService>(StripeApiLoaderService);
+
+  protected readonly accountService: AccountService = inject<AccountService>(AccountService);
 
   public readonly complete$: WritableSignal<boolean> = signal<false>(false);
 
@@ -136,24 +136,79 @@ export class StripeElementComponent {
     {
       stripeCustomer,
       stripeElements,
-    }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements }): StripeAddressElement | StripePaymentElement
-  protected getStripeElements?(
-    stripe: Stripe,
-  ): StripeElements
+    }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements },
+  ): StripeElement
+  protected getStripeElements?(stripe: Stripe): StripeElements
+  protected initializeStripeElement(): void {
+    this.stripeApiLoaderService.load().then<void>(
+      (stripe: Stripe | null): void => {
+        if (stripe) {
+          let stripeElements: StripeElements = this.getStripeElements?.(stripe) as StripeElements;
+          let stripeElement: StripeElement   = this.getStripeElement?.(
+            {
+              stripeElements: stripeElements,
+            },
+          ) as StripeElement;
+          let mounted: boolean               = false as const;
 
+          this.resetStripeElement  = (): void => {
+            stripeElements = this.getStripeElements?.(stripe) as StripeElements;
+
+            stripeElement.destroy();
+
+            stripeElement = this.getStripeElement?.(
+              {
+                stripeCustomer: this.accountService.accountDocument$()?.stripeCustomer,
+                stripeElements: stripeElements,
+              },
+            ) as StripeElement;
+
+            if (mounted)
+              stripeElement.mount(this.htmlDivElementRef$().nativeElement);
+          };
+          this.submitStripeElement = (): Promise<{ stripe: Stripe, stripeElements: StripeElements }> => stripeElements.submit().then<{ stripe: Stripe, stripeElements: StripeElements }, never>(
+            ({ error: stripeError }: { error?: StripeError }): { stripe: Stripe, stripeElements: StripeElements } => {
+              if (stripeError) {
+                console.error("Something went wrong.");
+
+                throw stripeError;
+              }
+
+              return {
+                stripe:         stripe,
+                stripeElements: stripeElements,
+              };
+            },
+          );
+
+          effect(
+            this.resetStripeElement,
+            {
+              injector: this.injector,
+            },
+          );
+
+          afterRender(
+            (): void => {
+              if (!mounted) {
+                stripeElement.mount(this.htmlDivElementRef$().nativeElement);
+
+                mounted = true;
+              }
+            },
+            {
+              injector: this.injector,
+            },
+          );
+        }
+      },
+    );
+  }
   protected resetStripeElement?(): void
-  protected submitStripeElement?(): void
+  protected submitStripeElement?(): Promise<{ "stripe": Stripe, "stripeElements": StripeElements }>
 
   public reset(): void {
     this.resetStripeElement?.();
-  }
-  public submit(openModel$: SheetComponent["openModel$"]): void {
-    openModel$.set(false);
-
-    setTimeout(
-      (): void => this.submitStripeElement?.(),
-      180,
-    );
   }
 
 }

@@ -1,15 +1,15 @@
-import { NgTemplateOutlet }                                                                                                                                                from "@angular/common";
-import { afterRender, Component, computed, effect, inject, type Signal }                                                                                                   from "@angular/core";
-import { toSignal }                                                                                                                                                        from "@angular/core/rxjs-interop";
-import { Functions, httpsCallable, type HttpsCallableResult }                                                                                                              from "@angular/fire/functions";
-import { FormControl, FormGroup }                                                                                                                                          from "@angular/forms";
-import { ContainerDirective }                                                                                                                                              from "@standard/directives";
-import { type AccountDocument }                                                                                                                                            from "@standard/interfaces";
-import { AccountService }                                                                                                                                                  from "@standard/services";
-import { type SetupIntentResult, type Stripe, type StripeElement, type StripeElements, type StripeError, type StripePaymentElement, type StripePaymentElementChangeEvent } from "@stripe/stripe-js";
-import { isEqual }                                                                                                                                                         from "lodash";
-import { startWith }                                                                                                                                                       from "rxjs";
-import { StripeElementComponent }                                                                                                                                          from "../../../stripe element/StripeElementComponent";
+import { NgTemplateOutlet }                                                                                                   from "@angular/common";
+import { Component, computed, effect, inject, type Signal }                                                                   from "@angular/core";
+import { toSignal }                                                                                                           from "@angular/core/rxjs-interop";
+import { Functions, httpsCallable, type HttpsCallableResult }                                                                 from "@angular/fire/functions";
+import { FormControl, FormGroup }                                                                                             from "@angular/forms";
+import { ContainerDirective }                                                                                                 from "@standard/directives";
+import { type AccountDocument }                                                                                               from "@standard/interfaces";
+import { type SetupIntentResult, type Stripe, type StripeElement, type StripeElements, type StripePaymentElementChangeEvent } from "@stripe/stripe-js";
+import { isEqual }                                                                                                            from "lodash";
+import { startWith }                                                                                                          from "rxjs";
+import { type SheetComponent }                                                                                                from "../../../../../presentation";
+import { StripeElementComponent }                                                                                             from "../../../stripe element/StripeElementComponent";
 
 
 @Component(
@@ -60,7 +60,8 @@ export class PaymentStripeElementComponent
       {
         stripeCustomer,
         stripeElements,
-      }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements, }): StripePaymentElement => stripeElements.create(
+      }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements, },
+    ): StripeElement => stripeElements.create(
       "payment",
       {
         defaultValues: stripeCustomer ? {
@@ -112,11 +113,11 @@ export class PaymentStripeElementComponent
       },
     );
 
-    httpsCallable<null, string>(
+    httpsCallable<null, { "clientSecret": string }>(
       this.functions,
       "createStripeSetupIntent",
     )().then<void, never>(
-      ({ data: clientSecret }: HttpsCallableResult<string>): void => {
+      ({ data: { clientSecret } }: HttpsCallableResult<{ clientSecret: string }>): void => {
         this.getStripeElements = (stripe: Stripe): StripeElements => stripe.elements(
           {
             ...this.getBaseStripeElementsOptions(),
@@ -124,103 +125,7 @@ export class PaymentStripeElementComponent
           },
         );
 
-        this.stripeApiLoaderService.load().then<void>(
-          (stripe: Stripe | null): void => {
-            if (stripe) {
-              let stripeElements: StripeElements = this.getStripeElements?.(stripe) as StripeElements;
-              let stripeElement: StripeElement   = this.getStripeElement?.(
-                {
-                  stripeElements: stripeElements,
-                },
-              ) as StripePaymentElement;
-              let mounted: boolean               = false as const;
-
-              this.resetStripeElement  = (): void => {
-                stripeElements = this.getStripeElements?.(stripe) as StripeElements;
-
-                stripeElement.destroy();
-
-                stripeElement = this.getStripeElement?.(
-                  {
-                    stripeCustomer: this.accountService.accountDocument$()?.stripeCustomer,
-                    stripeElements: stripeElements,
-                  },
-                ) as StripePaymentElement;
-
-                if (mounted)
-                  stripeElement.mount(this.htmlDivElementRef$().nativeElement);
-              };
-              this.submitStripeElement = (): void => {
-                stripeElements.submit().then<void, never>(
-                  ({ error: stripeError }: { error?: StripeError }): void => {
-                    if (stripeError) {
-                      console.error("Something went wrong.");
-
-                      throw stripeError;
-                    }
-
-                    stripe.confirmSetup(
-                      {
-                        elements: stripeElements,
-                        redirect: "if_required",
-                      },
-                    ).then<void, never>(
-                      (setupIntentResult: SetupIntentResult): void => {
-                        if (setupIntentResult.error) {
-                          console.error("Something went wrong.");
-
-                          throw setupIntentResult.error;
-                        }
-
-                        if (setupIntentResult.setupIntent.payment_method)
-                          httpsCallable<{ "paymentMethodId": string }, null>(
-                            this.functions,
-                            "attachStripePaymentMethod",
-                          )(
-                            {
-                              paymentMethodId: typeof setupIntentResult.setupIntent.payment_method === "string" ? setupIntentResult.setupIntent.payment_method : setupIntentResult.setupIntent.payment_method.id,
-                            },
-                          ).then<void, never>(
-                            (): void => void (0),
-                            (error: unknown): never => {
-                              console.error("Something went wrong.");
-
-                              throw error;
-                            },
-                          );
-                      },
-                      (error: unknown): never => {
-                        console.error("Something went wrong.");
-
-                        throw error;
-                      },
-                    );
-                  },
-                );
-              };
-
-              effect(
-                this.resetStripeElement,
-                {
-                  injector: this.injector,
-                },
-              );
-
-              afterRender(
-                (): void => {
-                  if (!mounted) {
-                    stripeElement.mount(this.htmlDivElementRef$().nativeElement);
-
-                    mounted = true;
-                  }
-                },
-                {
-                  injector: this.injector,
-                },
-              );
-            }
-          },
-        );
+        this.initializeStripeElement();
       },
       (error: unknown): never => {
         console.error("Something went wrong.");
@@ -256,7 +161,6 @@ export class PaymentStripeElementComponent
     );
   }
 
-  private readonly accountService: AccountService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  = inject<AccountService>(AccountService);
   private readonly formGroup: FormGroup<{ "paymentMethod": FormGroup<{ "billingDetails": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postalCode": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>, "type": FormControl<string | null> }> = new FormGroup<{ "paymentMethod": FormGroup<{ "billingDetails": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postalCode": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>, "type": FormControl<string | null> }>(
     {
       paymentMethod: new FormGroup<{ "billingDetails": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postalCode": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>(
@@ -326,5 +230,59 @@ export class PaymentStripeElementComponent
       );
     },
   );
+
+  public submit(openModel$: SheetComponent["openModel$"]): void {
+    openModel$.set(false);
+
+    setTimeout(
+      (): void => {
+        if (this.submitStripeElement)
+          this.submitStripeElement().then<void>(
+            (
+              {
+                stripe,
+                stripeElements,
+              }: { stripe: Stripe, stripeElements: StripeElements },
+            ): Promise<void> => stripe.confirmSetup(
+              {
+                elements: stripeElements,
+                redirect: "if_required",
+              },
+            ).then<void, never>(
+              (setupIntentResult: SetupIntentResult): void => {
+                if (setupIntentResult.error) {
+                  console.error("Something went wrong.");
+
+                  throw setupIntentResult.error;
+                }
+
+                if (setupIntentResult.setupIntent.payment_method)
+                  httpsCallable<{ "paymentMethodId": string }, null>(
+                    this.functions,
+                    "attachStripePaymentMethod",
+                  )(
+                    {
+                      paymentMethodId: typeof setupIntentResult.setupIntent.payment_method === "string" ? setupIntentResult.setupIntent.payment_method : setupIntentResult.setupIntent.payment_method.id,
+                    },
+                  ).then<void, never>(
+                    (): void => void (0),
+                    (error: unknown): never => {
+                      console.error("Something went wrong.");
+
+                      throw error;
+                    },
+                  );
+              },
+              (error: unknown): never => {
+                console.error("Something went wrong.");
+
+                throw error;
+              },
+            ),
+          );
+      },
+      180,
+    );
+  }
 
 }
