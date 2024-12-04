@@ -1,0 +1,68 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/materials/lib/glass/GlassDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+
+
+\:host
+  display: contents
+
+  --standard--inspector--font-size-exponent: -2
+  --standard--inspector--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
+  --standard--inspector--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-container-directive--gap-column: var(--standard--inspector--gap-column) !important
+  --standard--flexbox-container-directive--gap-row: var(--standard--inspector--gap-row) !important
+
+  @media (min-width: 48rem)
+    --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
+    --standard--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
+
+  > .harness
+    z-index: 1
+
+    > .between
+      &::ng-deep > *
+        @include FlexboxContainerDirective.children
+
+      > div
+        display: contents
+
+        --standard--inspector--gap-column: var(--standard--container-directive--padding-sides)
+        --standard--inspector--gap-row: var(--standard--container-directive--padding-bottom)
+        --standard--inspector--material-opacity: 0.6
+
+        @include ElevatedDirective.host
+        @include FlexboxContainerDirective.host
+        @include GlassDirective.host(9%)
+        @include RoundedDirective.host
+
+        --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+        --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+        --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+        --standard--container-directive--position: sticky !important
+        --standard--container-directive--position-top: var(--standard--root--padding-bottom) !important
+        --standard--elevated-directive--material-opacity: var(--standard--inspector--material-opacity) !important
+        --standard--flexbox-container-directive--gap-column: var(--standard--inspector--gap-column) !important
+        --standard--flexbox-container-directive--gap-row: var(--standard--inspector--gap-row) !important
+        --standard--glass-directive--material-opacity: var(--standard--inspector--material-opacity) !important
+
+        @media (min-width: 48rem)
+          --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 0)) !important
+          --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 1)) !important
+          --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), 0)) !important
+
+        > .harness > .between::ng-deep > *
+          --standard--inspector--material-opacity: initial
+
+          @include ElevatedDirective.children
+          @include FlexboxContainerDirective.children
+          @include GlassDirective.children
+          @include RoundedDirective.children
+
+@each $host-context-namespace in ("main", "above", "below", "sheet", "box")
+  \:host-context(standard--#{ $host-context-namespace })
+    --standard--inspector--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --standard--inspector--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

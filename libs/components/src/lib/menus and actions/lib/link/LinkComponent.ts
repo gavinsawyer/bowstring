@@ -53,6 +53,13 @@ export class LinkComponent {
       transform: booleanAttribute,
     },
   );
+  public readonly exactInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }` | undefined>    = input<boolean | undefined, "" | boolean | `${ boolean }` | undefined>(
+    undefined,
+    {
+      alias:     "exact",
+      transform: booleanAttribute,
+    },
+  );
   public readonly output: OutputEmitterRef<void>                                                                           = output<void>(
     {
       alias: "output",

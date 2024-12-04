@@ -12,7 +12,7 @@
   [routerLink]="url"
   routerLinkActive
   #routerLinkActive="routerLinkActive"
-  [routerLinkActiveOptions]="{ exact: url === '/' }">
+  [routerLinkActiveOptions]="{ exact: exactInput$() || false }">
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </a>}} @else {<button class="harness"
   [attr.disabled]="disabledInput$() || undefined"

@@ -1,10 +1,19 @@
 export interface AccountDocument {
   "email": string;
+  "phone": {
+    "countryCode": string;
+    "national": string;
+  } | null;
+  "messages": {
+    "newsletter": boolean | null;
+    "orderUpdates": boolean | null;
+    "promotions": boolean | null;
+  } | null;
   "payment": {
     "token": string;
   }[] | null;
   "profile": {
-    "birthday": Date | null;
+    "birthday": string | null;
     "name": string | null;
   } | null;
   "stripeCustomer": {

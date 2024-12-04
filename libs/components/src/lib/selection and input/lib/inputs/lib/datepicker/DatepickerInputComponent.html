@@ -1,0 +1,69 @@
+<div class="harness">
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</div>
+
+<ng-template #contentTemplate>
+  @if (labelInput$()) {<!--suppress XmlInvalidId -->
+  <label
+    [attr.for]="inputName$()"
+    [innerHTML]="explicitAutocompleteInput$() ? (labelInput$() | standardInsertZwnjs) : labelInput$()"></label>}
+  <div>
+    <div class="harness" #htmlDivElement
+      (click)="$event.stopPropagation();"
+      (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+      tabindex="-1">
+      <label class="between">
+        @if (htmlInputElement.value) {<div>
+          <button class="harness"
+            (click)="$event.stopPropagation(); htmlInputElement.focus(); htmlInputElement.value = ''; onChange?.();"
+            (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+            (pointerdown)="$event.stopPropagation();"
+            tabindex="-1"
+            type="button">
+            <div class="between">
+              @if (xmarkCircleFillSymbolPaths$(); as symbolPaths) {<svg
+                [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
+                xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <rect
+                    [attr.height]="symbolPaths.viewBoxHeight"
+                    [attr.width]="symbolPaths.viewBoxWidth"
+                    opacity="0"
+                    x="0"
+                    y="0" />
+                  @for (path of symbolPaths.paths; track path) {<path
+                    [attr.d]="path.definition"
+                    [attr.fill-opacity]="path.opacity"
+                    fill="currentColor" />}
+                </g>
+              </svg>}
+            </div>
+          </button>
+        </div>}
+        <input #htmlInputElement
+          [attr.autocomplete]="autocompleteInput$()"
+          [attr.disabled]="disabledModel$() || undefined"
+          [attr.name]="inputName$()"
+          [attr.placeholder]="placeholderInput$()"
+          [attr.tabindex]="disabledModel$() ? -1 : 0"
+          (blur)="onTouched?.();"
+          (change)="onChange?.();"
+          (click)="$event.stopPropagation();"
+          (input)="onInput();"
+          (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+          type="date">
+      </label>
+    </div>
+    <svg
+      viewBox="0 0 1 1"
+      xmlns="http://www.w3.org/2000/svg">
+      <clipPath
+        [attr.id]="roundedDirective.clipPathId$()"
+        clipPathUnits="objectBoundingBox">
+        <path
+          [attr.d]="roundedDirective.pathDefinition$()"
+          fill="transparent" />
+      </clipPath>
+    </svg>
+  </div>
+</ng-template>

@@ -6,6 +6,7 @@
 
 
 @mixin host
+  @include ElevatedDirective.host('.harness > .between > div')
   @include FlexboxContainerDirective.host
   @include HoverTransformingDirective.host('.harness > .between > div')
 
@@ -23,7 +24,6 @@
       display: contents
 
       @include CanvasDirective.host(0%)
-      @include ElevatedDirective.host
       @include FlexboxContainerDirective.host
       @include RoundedDirective.host
 
@@ -98,8 +98,9 @@
             color: black
             flex: 1 1 0
             font: inherit
-            letter-spacing: inherit
-            line-height: inherit
+            height: 18px
+            letter-spacing: -0.03444185375em
+            line-height: 1.1458980338
             outline: 0
             padding: 0
             width: 0
@@ -108,6 +109,7 @@
 
             &::placeholder
               color: hsl(0, 0%, 50%)
+              -webkit-text-fill-color: hsl(0, 0%, 50%)
 
             @media (prefers-color-scheme: dark)
               box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background-inverse) inset
@@ -119,3 +121,7 @@
 
           &:not(:focus-within) > div > .harness
             display: none
+
+  &.disabled > .harness > .between > div > .harness > .between > input
+    color: hsl(0, 0%, 50%)
+    -webkit-text-fill-color: hsl(0, 0%, 50%)

@@ -1,0 +1,17 @@
+@use "../../../route/RouteComponent"
+
+
+\:host
+  display: contents
+
+standard--flexbox-container.above::ng-deep > .harness > .between
+  @include RouteComponent.host
+
+standard--masonry-container.above
+  --standard--masonry-container-directive--columns: 2 !important
+
+  @media (min-width: 24rem)
+    --standard--masonry-container-directive--columns: 3 !important
+
+  @media (min-width: 48rem)
+    --standard--masonry-container-directive--columns: 4 !important

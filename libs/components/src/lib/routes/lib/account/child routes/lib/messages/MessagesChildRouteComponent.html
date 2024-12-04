@@ -1,0 +1,91 @@
+<standard--header>
+  <h3 i18n="@@libs--Components--Routes--Account-Messages--Header">Messages</h3>
+</standard--header>
+<standard--flexbox-container>
+  <standard--form
+    flexBasis="0"
+    flexGrow="1"
+    (output)="messagesFormSubmit();">
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row">
+      <standard--toggle [formControl]="messagesFormGroup.controls.newsletter" />
+      <standard--heading-group>
+        <standard--header>
+          <h4 i18n>Newsletter</h4>
+        </standard--header>
+        <p>
+          Receive the Bowstring Newsletter.
+        </p>
+      </standard--heading-group>
+    </standard--flexbox-container>
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row">
+      <standard--toggle [formControl]="messagesFormGroup.controls.orderUpdates" />
+      <standard--heading-group>
+        <standard--header>
+          <h4 i18n>Order updates</h4>
+        </standard--header>
+        <p>
+          Receive updates on orders from Bowstring and our delivery partners.
+        </p>
+      </standard--heading-group>
+    </standard--flexbox-container>
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row">
+      <standard--toggle [formControl]="messagesFormGroup.controls.promotions" />
+      <standard--heading-group>
+        <standard--header>
+          <h4 i18n>Promotions</h4>
+        </standard--header>
+        <p>
+          Receive info about new promotions from Bowstring.
+        </p>
+      </standard--heading-group>
+    </standard--flexbox-container>
+  </standard--form>
+  <standard--box
+    flexBasis="0"
+    flexGrow="1">
+    <standard--header>
+      <h4 i18n>Contact information</h4>
+    </standard--header>
+    <standard--form>
+      <standard--text-field-input
+        autocomplete="email"
+        [formControl]="messagesContactFormGroup.controls.email"
+        label="Email"
+        level="2"
+        placeholder="Email"
+        type="email" />
+      <standard--divider />
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        <standard--combobox-input
+          autocomplete="tel-country-code"
+          explicitAutocomplete
+          [formControl]="messagesContactFormGroup.controls.phone.controls.countryCode"
+          flexBasis="calc(1rem * pow(var(--phi), 4))"
+          flexGrow="1"
+          i18n-label
+          label="Country code"
+          level="2"
+          mask="+00"
+          [options]="inputService.phoneCountryCodeInputComponentOptions" />
+        <standard--text-field-input
+          autocomplete="tel-national"
+          [formControl]="messagesContactFormGroup.controls.phone.controls.national"
+          flexBasis="calc(1rem * pow(var(--phi), 5))"
+          flexGrow="1.6180339887"
+          i18n-label
+          label="Phone number"
+          level="2"
+          [mask]="inputService.getPhoneNationalMask(messagesContactFormGroup.value.phone?.countryCode)"
+          type="tel" />
+      </standard--flexbox-container>
+    </standard--form>
+  </standard--box>
+</standard--flexbox-container>

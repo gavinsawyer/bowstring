@@ -1,0 +1,16 @@
+@use "../../../child route/ChildRouteComponent"
+
+
+\:host
+  display: contents
+
+  @include ChildRouteComponent.host
+
+  > standard--masonry-container
+    --standard--masonry-container-directive--columns: 2 !important
+
+    @media (min-width: 24rem)
+      --standard--masonry-container-directive--columns: 3 !important
+
+    @media (min-width: 48rem)
+      --standard--masonry-container-directive--columns: 4 !important

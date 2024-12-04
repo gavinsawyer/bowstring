@@ -17,13 +17,13 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
   @include mixins.reset-inputs($namespace, ("level", "material-opacity"))
   @include mixins.reset-values($namespace, ())
 
-@mixin host
+@mixin host($child-selector: '')
   @include color-scheme("light")
 
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .harness:before
+  #{ $child-selector } > .harness:before
     content: ""
     left: 1px
     height: calc(100% - 2px)
@@ -77,7 +77,7 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
         @include shadow($level / 1.6180339887)
 
   &:not(.disabled)
-    > .harness:before
+    #{ $child-selector } > .harness:before
       @include shadow($level)
 
 

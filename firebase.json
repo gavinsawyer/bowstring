@@ -57,5 +57,8 @@
   },
   "extensions": {
     "firebase-web-authn": "./node_modules/@firebase-web-authn/extension"
+  },
+  "storage":    {
+    "rules": "storage.rules"
   }
 }

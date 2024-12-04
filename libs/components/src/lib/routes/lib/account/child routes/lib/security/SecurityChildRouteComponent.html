@@ -1,0 +1,39 @@
+<standard--header>
+  <h3 i18n="@@libs--Components--Routes--Account-Security--Header">Security</h3>
+</standard--header>
+<standard--flexbox-container>
+  <standard--box
+    flexBasis="0"
+    flexGrow="1">
+    <standard--header>
+      <h4 i18n>Passkey</h4>
+    </standard--header>
+    <standard--form>
+      <standard--text-field-input
+        autocomplete="email"
+        [formControl]="passkeyFormGroup.controls.email"
+        level="2"
+        placeholder="Email"
+        type="email"/>
+      <standard--divider />
+      <standard--button
+        appearance="raised"
+        [disabled]="passkeyFormGroup.invalid"
+        level="2"
+        material="inverse"
+        type="submit">
+        <standard--symbol input="PersonBadgeKeyFill" />
+        <standard--label
+          i18n-input
+          input="Save Passkey" />
+      </standard--button>
+    </standard--form>
+  </standard--box>
+  <standard--box
+    flexBasis="0"
+    flexGrow="1">
+    <standard--header>
+      <h4 i18n>Password</h4>
+    </standard--header>
+  </standard--box>
+</standard--flexbox-container>

@@ -179,7 +179,9 @@
       justifyContent="space-between">
       <standard--header fontSizeExponent="-3">
         <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
-          <standard--link url="/">{{ brand.title }}</standard--link>
+          <standard--link
+            exact
+            url="/">{{ brand.title }}</standard--link>
         </h1>
       </standard--header>
       <standard--nav>
@@ -208,7 +210,9 @@
   <standard--footer>
     <standard--header>
       <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
-        <standard--link url="/">{{ brand.title }}</standard--link>
+        <standard--link
+          exact
+          url="/">{{ brand.title }}</standard--link>
       </h6>
     </standard--header>
     <standard--section

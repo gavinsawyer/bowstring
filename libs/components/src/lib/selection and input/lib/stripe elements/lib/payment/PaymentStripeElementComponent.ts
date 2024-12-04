@@ -189,7 +189,7 @@ export class PaymentStripeElementComponent
       type:          new FormControl<string | null>(null),
     },
   );
-  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            = toSignal<typeof this.formGroup.value>(
+  private readonly value$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     = toSignal<typeof this.formGroup.value>(
     this.formGroup.valueChanges.pipe<typeof this.formGroup.value>(
       startWith<typeof this.formGroup.value, [ typeof this.formGroup.value ]>(this.formGroup.value),
     ),
@@ -206,7 +206,7 @@ export class PaymentStripeElementComponent
       const address: NonNullable<NonNullable<NonNullable<AccountDocument["stripeCustomer"]>["paymentMethod"]>["billingDetails"]>["address"] | undefined = billing_details?.address;
 
       return !isEqual(
-        this.formGroupValue$(),
+        this.value$(),
         {
           paymentMethod: {
             billingDetails: {

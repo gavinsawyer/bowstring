@@ -10,14 +10,27 @@ const routes: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
     },
-    loadChildren:  (): Promise<Routes> => import("./account/routes").then<Routes>(
-      ({ routes: accountRoutes }: typeof import("./account/routes")): Routes => accountRoutes,
+    loadChildren:  (): Promise<Routes> => import("./account/child routes").then<Routes>(
+      ({ childRoutes }: typeof import("./account/child routes")): Routes => childRoutes,
     ),
     loadComponent: (): Promise<Type<unknown>> => import("./account/AccountRouteComponent").then<Type<unknown>>(
       ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> => AccountRouteComponent,
     ),
     path:          "account",
     title:         `${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` } - ${ title }`,
+  },
+  {
+    data:          {
+      description: $localize`:@@libs--Components--Routes--Gallery--Meta--Description:...`,
+    },
+    loadChildren:  (): Promise<Routes> => import("./gallery/child routes").then<Routes>(
+      ({ childRoutes }: typeof import("./gallery/child routes")): Routes => childRoutes,
+    ),
+    loadComponent: (): Promise<Type<unknown>> => import("./gallery/GalleryRouteComponent").then<Type<unknown>>(
+      ({ GalleryRouteComponent }: typeof import("./gallery/GalleryRouteComponent")): Type<unknown> => GalleryRouteComponent,
+    ),
+    path:          "gallery",
+    title:         `${ $localize`:@@libs--Components--Routes--Gallery--Meta--Title:Gallery` } - ${ title }`,
   },
   {
     data:          {

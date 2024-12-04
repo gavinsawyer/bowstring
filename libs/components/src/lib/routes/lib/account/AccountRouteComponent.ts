@@ -1,6 +1,6 @@
 import { Component, inject }                                                                                                                                                                                                                                    from "@angular/core";
 import { RouterOutlet }                                                                                                                                                                                                                                         from "@angular/router";
-import { AuthenticationService, AccountService }                                                                                                                                                                                                                from "@standard/services";
+import { AccountService, AuthenticationService }                                                                                                                                                                                                                from "@standard/services";
 import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../";
 
 

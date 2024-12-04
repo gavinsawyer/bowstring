@@ -1,5 +1,6 @@
 import { NgOptimizedImage, NgTemplateOutlet }                                                                                                               from "@angular/common";
 import { afterRender, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { RouterLink }                                                                                                                                       from "@angular/router";
 import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                                         from "@standard/directives";
 
 
@@ -8,6 +9,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirectiv
     host:           {
       "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
+      "[style.--standard--image--cursor]":       "urlInput$() && 'pointer'",
     },
     hostDirectives: [
       {
@@ -53,6 +55,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirectiv
     imports:        [
       NgOptimizedImage,
       NgTemplateOutlet,
+      RouterLink,
     ],
     selector:       "standard--image",
     standalone:     true,
@@ -95,6 +98,12 @@ export class ImageComponent {
   public readonly srcInput$: InputSignal<string | URL>                                   = input.required<string | URL>(
     {
       alias: "src",
+    },
+  );
+  public readonly urlInput$: InputSignal<string | undefined>                             = input<string | undefined>(
+    undefined,
+    {
+      alias: "url",
     },
   );
   public readonly widthInput$: InputSignalWithTransform<number, number | `${ number }`>  = input.required<number, number | `${ number }`>(

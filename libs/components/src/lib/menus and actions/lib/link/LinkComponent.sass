@@ -25,16 +25,16 @@
     font: inherit
     letter-spacing: inherit
     line-height: inherit
+    opacity: 1
     padding: 0
     text-align: start
     text-decoration: none
+    transition: opacity 200ms ease-in-out
 
     > .between
       background: none !important
       display: inline-flex !important
       font-size: 1em
-      opacity: 1
-      transition: opacity 200ms ease-in-out
 
       &::ng-deep > *
         @include CanvasDirective.children
@@ -42,8 +42,8 @@
 
   &:not(.disabled)
     > .harness
-      &:active:hover > .between
-        opacity: 0.625
+      &:active:hover
+        opacity: 0.75
 
       &:hover,
       &:focus-within
@@ -51,21 +51,21 @@
           text-decoration: underline
 
   &.disabled > .harness
+    opacity: 0.5
     pointer-events: none
-
-    > .between
-      opacity: 0.5
 
 \:host-context(standard--heading-group > .harness > .between > p, standard--heading-group > .harness > .between > standard--section > .harness > .between > p)
   @include PrimaryDirective.host
 
   > .harness > .between::ng-deep > *
-      @include PrimaryDirective.children
+    @include PrimaryDirective.children
 
-\:host-context(standard--nav, standard--footer > .harness > .between > standard--header) > .harness > .between
+\:host-context(standard--nav, standard--footer > .harness > .between > standard--header) > .harness
   color: currentColor
 
 
-\:host-context(standard-website--root > .harness > .between > standard--main > .harness > .between > standard--flexbox-container > .harness > .between > standard--header) > .harness > .between
-  color: currentColor
+\:host-context(standard-website--root > .harness > .between > standard--main > .harness > .between > standard--flexbox-container > .harness > .between > standard--header) > .harness
   opacity: 1 !important
+
+  > .between
+    color: currentColor

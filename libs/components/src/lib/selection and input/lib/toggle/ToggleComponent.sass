@@ -1,0 +1,84 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+
+
+\:host
+  display: contents
+
+  @include FlexboxContainerDirective.host
+
+  --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+
+  > .harness > .between
+    &::ng-deep > *
+      @include FlexboxContainerDirective.children
+
+    > label
+      font-size: calc(1rem * pow(var(--phi), -0.5))
+
+    > div
+      display: contents
+
+      @include CanvasDirective.host(0%)
+      @include FlexboxContainerDirective.host
+      @include RoundedDirective.host
+
+      --standard--flexbox-container-directive--align-items: center !important
+      --standard--flexbox-container-directive--flex-direction: row !important
+      --standard--flexbox-container-directive--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1)) !important
+      --standard--flexbox-container-directive--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1)) !important
+
+      > .harness
+        cursor: default
+        user-select: none
+
+        > .between
+          height: calc(2px + 18px * pow(var(--phi), 0))
+          width: calc(2px + 18px * pow(var(--phi), 1))
+
+          &::ng-deep > *
+            @include CanvasDirective.children
+            @include FlexboxContainerDirective.children
+            @include RoundedDirective.children
+
+          > input
+            border: 0
+            opacity: 0
+            outline: 0
+            padding: 0
+
+            &:checked + div
+              @include PrimaryDirective.host
+
+              background-color: var(--standard--primary-directive--colors--background)
+
+              &:before
+                translate: calc(18px * pow(var(--phi), -1)) 0 0
+
+          > div
+            @include CanvasDirective.host(24%)
+
+            background-color: var(--standard--canvas-directive--colors--background)
+            border-radius: calc(10px * pow(var(--phi), 0))
+            cursor: pointer
+            height: calc(2px + 18px * pow(var(--phi), 0))
+            position: absolute
+            transition: background-color 75ms ease-in-out
+            width: calc(2px + 18px * pow(var(--phi), 1))
+
+            &:before
+              @include ElevatedDirective.shadow(4)
+
+              background-color: whitesmoke
+              border-radius: 50%
+              content: ""
+              height: calc(18px * pow(var(--phi), 0))
+              left: 1px
+              position: absolute
+              top: 1px
+              transition: translate 75ms ease-in-out
+              width: calc(18px * pow(var(--phi), 0))

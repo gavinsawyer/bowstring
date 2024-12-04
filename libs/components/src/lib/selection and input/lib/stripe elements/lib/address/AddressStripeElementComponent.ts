@@ -180,7 +180,7 @@ export class AddressStripeElementComponent
       phone:   new FormControl<string | null>(null),
     },
   );
-  private readonly formGroupValue$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                = toSignal<typeof this.formGroup.value>(
+  private readonly value$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                         = toSignal<typeof this.formGroup.value>(
     this.formGroup.valueChanges.pipe<typeof this.formGroup.value>(
       startWith<typeof this.formGroup.value, [ typeof this.formGroup.value ]>(this.formGroup.value),
     ),
@@ -195,7 +195,7 @@ export class AddressStripeElementComponent
       const address: NonNullable<AccountDocument["stripeCustomer"]>["address"] | undefined = stripeCustomer?.address;
 
       return !isEqual(
-        this.formGroupValue$(),
+        this.value$(),
         {
           address: {
             city:       address?.city || "",

@@ -1,0 +1,26 @@
+<standard--flexbox-container>
+  <standard--article
+    flexBasis="100%"
+    flexGrow="1">
+    <standard--scroll-stack [minimumAspectRatio]="3/4">
+      @for (imageSource of imageSources$(); track imageSource) {<standard--image
+        height="400"
+        *standardScrollStackItem
+        [src]="imageSource"
+        width="300" />}
+    </standard--scroll-stack>
+  </standard--article>
+</standard--flexbox-container>
+
+<ng-template #inspectorTemplate>
+  <standard--heading-group>
+    <standard--header fontSizeExponent="-1">
+      <h5 i18n="@@libs--Components--Routes--Gallery-Item--Inspector--Header">Item</h5>
+      <h6>{{ itemId$() }}</h6>
+    </standard--header>
+  </standard--heading-group>
+  <standard--divider />
+  <standard--section>
+    ...
+  </standard--section>
+</ng-template>

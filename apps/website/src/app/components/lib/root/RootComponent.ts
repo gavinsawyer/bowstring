@@ -108,7 +108,7 @@ export class RootComponent {
   protected readonly localeIds: LocaleId[]                                                                                                                      = inject<LocaleId[]>(LOCALE_IDS);
   protected readonly localeDisplayNames: Intl.DisplayNames                                                                                                      = new Intl.DisplayNames(
     [
-      this.localeId,
+      this.localeId as string,
     ],
     {
       type: "language",
@@ -195,7 +195,7 @@ export class RootComponent {
 
   protected changeLocale(localeId: LocaleId): void {
     if (isPlatformBrowser(this.platformId))
-      this.document.location.href = `/${ localeId }${ this.location.path() }`;
+      this.document.location.href = `/${ String(localeId) }${ this.location.path() }`;
   }
   protected signinFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signinFormGroup.value.email && this.signinFormGroup.value.password)

@@ -1,0 +1,137 @@
+<standard--header>
+  <h3 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Header">Payment and shipping</h3>
+</standard--header>
+<standard--flexbox-container>
+  <standard--box
+    flexBasis="0"
+    flexGrow="1">
+    @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {@if (stripeCustomer.address; as address) {@if (stripeCustomer.name) {<standard--section>
+      <standard--label [input]="stripeCustomer.name" />
+    </standard--section>}
+    <standard--section>
+      <standard--label [input]="address.line1" />
+      @if (address.line2) {<standard--label [input]="address.line2" />}
+    </standard--section>
+    <standard--section>
+      <standard--flexbox-container
+        alignItems="flex-end"
+        flexDirection="row">
+        <standard--label [input]="address.city" />
+        @if (address.state) {<standard--label [input]="address.state" />}
+        <standard--label [input]="address.postalCode" />
+      </standard--flexbox-container>
+      <standard--label [input]="address.country | standardGetRegionDisplayName" />
+    </standard--section>
+    @if (stripeCustomer.phone) {<standard--section>
+      <standard--label [input]="stripeCustomer.phone" />
+    </standard--section>
+    <standard--divider />}
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="addressStripeElementSheetComponent.openModel$.set(true);">
+      <standard--symbol input="Pencil" />
+      <standard--label
+        i18n-input
+        input="Edit" />
+    </standard--button>} @else {<standard--header>
+      <h4 i18n>Nothing here.</h4>
+      <h5 i18n>Add a shipping address for future orders.</h5>
+    </standard--header>
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="addressStripeElementSheetComponent.openModel$.set(true);">
+      <standard--symbol input="Plus" />
+      <standard--label
+        i18n-input
+        input="Add" />
+    </standard--button>}}
+  </standard--box>
+  <standard--box
+    flexBasis="0"
+    flexGrow="1">
+    @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod; as paymentMethod) {<standard--label [input]="paymentMethod.type + ' payment available.'" />
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
+      <standard--symbol input="Pencil" />
+      <standard--label
+        i18n-input
+        input="Edit" />
+    </standard--button>} @else {<standard--header>
+      <h4 i18n>Nothing here.</h4>
+      <h5 i18n>Add a payment method for future orders.</h5>
+    </standard--header>
+    <standard--divider />
+    <standard--button
+      appearance="raised"
+      level="2"
+      material="inverse"
+      (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
+      <standard--symbol input="Plus" />
+      <standard--label
+        i18n-input
+        input="Add" />
+    </standard--button>}
+  </standard--box>
+</standard--flexbox-container>
+
+<standard--sheet #addressStripeElementSheetComponent>
+  <standard--header>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--AddressStripeElementSheet--Header">Edit your shipping address.</h6>
+  </standard--header>
+  @defer {<standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
+    <standard--address-stripe-element #addressStripeElementComponent />
+    <standard--divider />
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row"
+      justifyContent="flex-end">
+      @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--button
+        appearance="symbol"
+        [disabled]="!addressStripeElementComponent.edited$()"
+        (output)="addressStripeElementComponent.reset();">
+        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
+      </standard--button>}
+      <standard--button
+        appearance="symbol"
+        [disabled]="!addressStripeElementComponent.complete$() || !addressStripeElementComponent.edited$()"
+        type="submit">
+        <standard--symbol input="CheckmarkCircleFill" />
+      </standard--button>
+    </standard--flexbox-container>
+  </standard--form>}
+</standard--sheet>
+<standard--sheet #paymentStripeElementSheetComponent>
+  <standard--header>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentStripeElementSheet--Header">Edit your payment method.</h6>
+  </standard--header>
+  @defer {<standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
+    <standard--payment-stripe-element #paymentStripeElementComponent />
+    <standard--divider />
+    <standard--flexbox-container
+      alignItems="center"
+      flexDirection="row"
+      justifyContent="flex-end">
+      @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--button
+        appearance="symbol"
+        [disabled]="!paymentStripeElementComponent.edited$()"
+        (output)="paymentStripeElementComponent.reset();">
+        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
+      </standard--button>}
+      <standard--button
+        appearance="symbol"
+        [disabled]="!paymentStripeElementComponent.complete$() || !paymentStripeElementComponent.edited$()"
+        type="submit">
+        <standard--symbol input="CheckmarkCircleFill" />
+      </standard--button>
+    </standard--flexbox-container>
+  </standard--form>}
+</standard--sheet>
