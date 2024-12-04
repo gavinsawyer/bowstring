@@ -1,5 +1,6 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../../../directives/src/lib/interaction/lib/hover transforming/HoverTransformingDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
@@ -19,7 +20,6 @@
 
     > img
       aspect-ratio: var(--standard--image--aspect-ratio)
-      cursor: var(--standard--image--cursor, default)
       height: auto
       max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
       width: 100%
@@ -29,3 +29,9 @@
     > .between
       border-radius: 50% !important
       clip-path: none !important
+
+  &.has-url
+    @include HoverTransformingDirective.host
+
+    > .harness > .between > img
+      cursor: pointer

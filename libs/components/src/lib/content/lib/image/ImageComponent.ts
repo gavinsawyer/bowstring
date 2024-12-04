@@ -1,15 +1,15 @@
 import { NgOptimizedImage, NgTemplateOutlet }                                                                                                               from "@angular/common";
 import { afterRender, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
 import { RouterLink }                                                                                                                                       from "@angular/router";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                                         from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, RoundedDirective }                                             from "@standard/directives";
 
 
 @Component(
   {
     host:           {
       "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
+      "[class.has-url]":                         "urlInput$()",
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
-      "[style.--standard--image--cursor]":       "urlInput$() && 'pointer'",
     },
     hostDirectives: [
       {
@@ -46,6 +46,9 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirectiv
         ],
       },
       {
+        directive: HoverTransformingDirective,
+      },
+      {
         directive: RoundedDirective,
         inputs:    [
           "level",
@@ -69,13 +72,17 @@ export class ImageComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => {
+        this.hoverTransformingDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+        this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+      },
     );
   }
 
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
+  protected readonly roundedDirective: RoundedDirective                     = inject<RoundedDirective>(RoundedDirective);
 
   public readonly altInput$: InputSignal<string | undefined>                             = input<string | undefined>(
     undefined,
