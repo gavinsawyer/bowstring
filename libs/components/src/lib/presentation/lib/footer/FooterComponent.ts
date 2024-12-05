@@ -2,9 +2,9 @@ import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                        
 import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
 import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                                              from "@standard/directives";
-import { type Dimensions, type SymbolPaths }                                                                                                                                                                           from "@standard/interfaces";
+import { type Dimensions, type Symbol }                                                                                                                                                                                from "@standard/interfaces";
 import { ViewportService }                                                                                                                                                                                             from "@standard/services";
-import loadSymbolPaths                                                                                                                                                                                                 from "@standard/symbol-paths";
+import loadSymbol                                                                                                                                                                                                      from "@standard/symbols";
 import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                                                  from "rxjs";
 import { fromPromise }                                                                                                                                                                                                 from "rxjs/internal/observable/innerFrom";
 
@@ -119,17 +119,17 @@ export class FooterComponent {
     (): number | undefined => this.dimensions$()?.width,
   );
 
-  protected readonly height$: Signal<number | undefined>                       = computed<number | undefined>(
+  protected readonly height$: Signal<number | undefined>                  = computed<number | undefined>(
     (): number | undefined => this.dimensions$()?.height,
   );
-  protected readonly pinFillSymbolPaths$: Signal<SymbolPaths | undefined>      = toSignal<SymbolPaths>(
-    fromPromise<SymbolPaths>(
-      loadSymbolPaths("PinFill"),
+  protected readonly pinFillSymbolPaths$: Signal<Symbol | undefined>      = toSignal<Symbol>(
+    fromPromise<Symbol>(
+      loadSymbol("PinFill"),
     ),
   );
-  protected readonly pinSlashFillSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
-    fromPromise<SymbolPaths>(
-      loadSymbolPaths("PinSlashFill"),
+  protected readonly pinSlashFillSymbolPaths$: Signal<Symbol | undefined> = toSignal<Symbol>(
+    fromPromise<Symbol>(
+      loadSymbol("PinSlashFill"),
     ),
   );
 

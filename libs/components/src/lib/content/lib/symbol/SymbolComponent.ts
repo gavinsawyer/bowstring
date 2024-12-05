@@ -2,8 +2,8 @@ import { NgTemplateOutlet }                                                     
 import { ChangeDetectionStrategy, Component, input, type InputSignal, type Signal } from "@angular/core";
 import { toObservable, toSignal }                                                   from "@angular/core/rxjs-interop";
 import { ContainerDirective }                                                       from "@standard/directives";
-import { type SymbolPaths }                                                         from "@standard/interfaces";
-import loadSymbolPaths                                                              from "@standard/symbol-paths";
+import { type Symbol }                                                              from "@standard/interfaces";
+import loadSymbol                                                                   from "@standard/symbols";
 import { type SymbolName }                                                          from "@standard/types";
 import { type Observable, switchMap }                                               from "rxjs";
 import { fromPromise }                                                              from "rxjs/internal/observable/innerFrom";
@@ -37,29 +37,31 @@ import { fromPromise }                                                          
         ],
       },
     ],
+    imports:         [
+      NgTemplateOutlet,
+    ],
     selector:        "standard--symbol",
     styleUrls:       [
       "SymbolComponent.sass",
     ],
     templateUrl:     "SymbolComponent.html",
-    imports:         [
-      NgTemplateOutlet,
-    ],
 
     standalone: true,
   },
 )
 export class SymbolComponent {
 
-  public readonly input$: InputSignal<SymbolName>               = input.required<SymbolName>(
+  public readonly input$: InputSignal<SymbolName>          = input.required<SymbolName>(
     {
       alias: "input",
     },
   );
-  public readonly symbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
-    toObservable<SymbolName>(this.input$).pipe<SymbolPaths>(
-      switchMap<SymbolName, Observable<SymbolPaths>>(
-        (symbolName: SymbolName): Observable<SymbolPaths> => fromPromise<SymbolPaths>(loadSymbolPaths(symbolName)),
+  public readonly symbolPaths$: Signal<Symbol | undefined> = toSignal<Symbol>(
+    toObservable<SymbolName>(this.input$).pipe<Symbol>(
+      switchMap<SymbolName, Observable<Symbol>>(
+        (symbolName: SymbolName): Observable<Symbol> => fromPromise<Symbol>(
+          loadSymbol(symbolName),
+        ),
       ),
     ),
   );

@@ -1,9 +1,9 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                                                  from "@angular/core/rxjs-interop";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                                                     from "@angular/forms";
-import { type SymbolPaths }                                                                                                                                                                                                                            from "@standard/interfaces";
+import { type Symbol }                                                                                                                                                                                                                                 from "@standard/interfaces";
 import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                        from "@standard/pipes";
-import loadSymbolPaths                                                                                                                                                                                                                                 from "@standard/symbol-paths";
+import loadSymbol                                                                                                                                                                                                                                      from "@standard/symbols";
 import { combineLatestWith, filter, firstValueFrom }                                                                                                                                                                                                   from "rxjs";
 import { fromPromise }                                                                                                                                                                                                                                 from "rxjs/internal/observable/innerFrom";
 import { v7 as uuidV7 }                                                                                                                                                                                                                                from "uuid";
@@ -62,9 +62,9 @@ export class InputComponent
 
   protected readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>             = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   protected readonly inputName$: Signal<`standard--input-directive--input-${ string }`> = signal<`standard--input-directive--input-${ string }`>(`standard--input-directive--input-${ uuidV7() }`);
-  protected readonly xmarkCircleFillSymbolPaths$: Signal<SymbolPaths | undefined>       = toSignal<SymbolPaths>(
-    fromPromise<SymbolPaths>(
-      loadSymbolPaths("XmarkCircleFill"),
+  protected readonly xmarkCircleFillSymbolPaths$: Signal<Symbol | undefined>            = toSignal<Symbol>(
+    fromPromise<Symbol>(
+      loadSymbol("XmarkCircleFill"),
     ),
   );
 

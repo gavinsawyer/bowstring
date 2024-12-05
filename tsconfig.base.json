@@ -51,8 +51,8 @@
       "@standard/services":         [
         "libs/services/src/index.ts"
       ],
-      "@standard/symbol-paths":     [
-        "libs/symbol paths/src/index.ts"
+      "@standard/symbols":     [
+        "libs/symbols/src/index.ts"
       ],
       "@standard/types":            [
         "libs/types/src/index.ts"

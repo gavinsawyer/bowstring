@@ -2,8 +2,8 @@ import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                        
 import { afterRender, ChangeDetectionStrategy, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
 import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                                                   from "@standard/directives";
-import { type SymbolPaths }                                                                                                                                                                                                 from "@standard/interfaces";
-import loadSymbolPaths                                                                                                                                                                                                      from "@standard/symbol-paths";
+import { type Symbol }                                                                                                                                                                                                      from "@standard/interfaces";
+import loadSymbol                                                                                                                                                                                                           from "@standard/symbols";
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                                                     from "body-scroll-lock";
 import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                                                                from "rxjs";
 import { fromPromise }                                                                                                                                                                                                      from "rxjs/internal/observable/innerFrom";
@@ -115,9 +115,9 @@ export class SheetComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbolPaths$: Signal<SymbolPaths | undefined> = toSignal<SymbolPaths>(
-    fromPromise<SymbolPaths>(
-      loadSymbolPaths("ArrowUpAndDownAndArrowLeftAndRight"),
+  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbolPaths$: Signal<Symbol | undefined> = toSignal<Symbol>(
+    fromPromise<Symbol>(
+      loadSymbol("ArrowUpAndDownAndArrowLeftAndRight"),
     ),
   );
 

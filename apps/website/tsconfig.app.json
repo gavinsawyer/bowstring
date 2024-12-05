@@ -13,6 +13,6 @@
   ],
   "include":         [
     "src/app/components/lib/routes/**/outlet routes/index.ts",
-    "../../libs/symbol paths/src/lib/**/*.ts"
+    "../../libs/symbols/src/lib/**/_*.ts"
   ]
 }

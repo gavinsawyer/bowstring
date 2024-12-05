@@ -17,7 +17,6 @@ import { LOCALE_IDS }                                                           
 import { type LocaleId }                                                                                                          from "../../../types";
 
 
-// eslint-disable-next-line
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
