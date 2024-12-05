@@ -3,7 +3,8 @@ import { Directive } from "@angular/core";
 
 @Directive(
   {
-    selector:   "[standardListItem]",
+    selector: "[standardListItem]",
+
     standalone: true,
   },
 )

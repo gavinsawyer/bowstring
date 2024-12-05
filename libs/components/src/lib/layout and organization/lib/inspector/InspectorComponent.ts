@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }                                                               from "@angular/common";
-import { afterRender, Component, type ElementRef, inject, type Signal, viewChild }        from "@angular/core";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective } from "@standard/directives";
+import { NgTemplateOutlet }                                                                                 from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                   from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ElevatedDirective,
         inputs:    [
@@ -38,15 +39,16 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--inspector",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--inspector",
+    styleUrls:       [
       "InspectorComponent.sass",
     ],
-    templateUrl:    "InspectorComponent.html",
+    templateUrl:     "InspectorComponent.html",
+
+    standalone: true,
   },
 )
 export class InspectorComponent {

@@ -1,20 +1,21 @@
-import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                   from "@angular/common";
-import { Component, contentChildren, type ElementRef, inject, Injector, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, runInInjectionContext, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                                                from "@angular/core/rxjs-interop";
-import { ContainerDirective, ScrollStackItemDirective }                                                                                                                                                          from "@standard/directives";
-import { ViewportService }                                                                                                                                                                                       from "@standard/services";
-import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }                                                                                                from "rxjs";
+import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                                            from "@angular/common";
+import { ChangeDetectionStrategy, Component, contentChildren, type ElementRef, inject, Injector, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, runInInjectionContext, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                                                         from "@angular/core/rxjs-interop";
+import { ContainerDirective, ScrollStackItemDirective }                                                                                                                                                                                   from "@standard/directives";
+import { ViewportService }                                                                                                                                                                                                                from "@standard/services";
+import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }                                                                                                                         from "rxjs";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[style.--standard--scroll-stack--minimum-aspect-ratio-input]": "minimumAspectRatioInput$()",
       "[style.--standard--scroll-stack--scroll-left]":                "scrollLeft$()",
       "[style.--standard--scroll-stack--viewport-vertical-offset]":   "viewportVerticalOffset$()",
       "[style.--standard--scroll-stack--width]":                      "width$()",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -39,15 +40,16 @@ import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--scroll-stack",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--scroll-stack",
+    styleUrls:       [
       "ScrollStackComponent.sass",
     ],
-    templateUrl:    "ScrollStackComponent.html",
+    templateUrl:     "ScrollStackComponent.html",
+
+    standalone: true,
   },
 )
 export class ScrollStackComponent {

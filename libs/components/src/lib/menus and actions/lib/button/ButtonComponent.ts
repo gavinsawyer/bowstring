@@ -1,12 +1,13 @@
-import { NgTemplateOutlet }                                                                                                                                                                 from "@angular/common";
-import { afterRender, booleanAttribute, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                                                                     from "@angular/router";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective }                  from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                                                                          from "@angular/common";
+import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                                                              from "@angular/router";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective }                                           from "@standard/directives";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[class.appearance-raised]": "appearanceInput$() === 'raised'",
       "[class.appearance-symbol]": "appearanceInput$() === 'symbol'",
       "[class.disabled]":          "disabledInput$() || routerLinkActive$()?.isActive || false",
@@ -14,7 +15,7 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
       "[class.material-inverse]":  "materialInput$() === 'inverse'",
       "[class.material-primary]":  "materialInput$() === 'primary'",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -59,17 +60,18 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
       RouterLink,
       RouterLinkActive,
     ],
-    selector:       "standard--button",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--button",
+    styleUrls:       [
       "ButtonComponent.sass",
     ],
-    templateUrl:    "ButtonComponent.html",
+    templateUrl:     "ButtonComponent.html",
+
+    standalone: true,
   },
 )
 export class ButtonComponent {
@@ -86,8 +88,8 @@ export class ButtonComponent {
   private readonly hoverTransformingDirective: HoverTransformingDirective             = inject<HoverTransformingDirective>(HoverTransformingDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedDirective: RoundedDirective                                       = inject<RoundedDirective>(RoundedDirective);
-  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined>                  = viewChild<RouterLinkActive>(RouterLinkActive);
+  protected readonly roundedDirective: RoundedDirective                      = inject<RoundedDirective>(RoundedDirective);
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
 
   public readonly appearanceInput$: InputSignal<"raised" | "symbol" | undefined>                                           = input<"raised" | "symbol" | undefined>(
     undefined,

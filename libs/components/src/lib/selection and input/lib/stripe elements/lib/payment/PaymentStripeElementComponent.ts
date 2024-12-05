@@ -1,5 +1,5 @@
 import { NgTemplateOutlet }                                                                                                   from "@angular/common";
-import { Component, computed, effect, inject, type Signal }                                                                   from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                          from "@angular/core";
 import { toSignal }                                                                                                           from "@angular/core/rxjs-interop";
 import { Functions, httpsCallable, type HttpsCallableResult }                                                                 from "@angular/fire/functions";
 import { FormControl, FormGroup }                                                                                             from "@angular/forms";
@@ -14,7 +14,8 @@ import { StripeElementComponent }                                               
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -39,15 +40,16 @@ import { StripeElementComponent }                                               
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--payment-stripe-element",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--payment-stripe-element",
+    styleUrls:       [
       "PaymentStripeElementComponent.sass",
     ],
-    templateUrl:    "PaymentStripeElementComponent.html",
+    templateUrl:     "PaymentStripeElementComponent.html",
+
+    standalone: true,
   },
 )
 export class PaymentStripeElementComponent

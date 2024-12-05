@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                           from "@angular/common";
-import { Component, inject, Injector, type Signal, type TemplateRef, viewChild }                                                                                      from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, Injector, type Signal, type TemplateRef, viewChild }                                                             from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                     from "@angular/core/rxjs-interop";
-import { RouterLink, RouterOutlet }                                                                                                                                   from "@angular/router";
+import { RouterOutlet }                                                                                                                                               from "@angular/router";
 import { MasonryChildDirective }                                                                                                                                      from "@standard/directives";
 import { map, type Observable, of, startWith, switchMap }                                                                                                             from "rxjs";
 import { FlexboxContainerComponent, HeaderComponent, ImageComponent, InspectorComponent, LinkComponent, MasonryContainerComponent, RouteComponent, SectionComponent } from "../../../../";
@@ -10,7 +10,8 @@ import { type ChildRouteComponent }                                             
 
 @Component(
   {
-    imports: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       FlexboxContainerComponent,
       HeaderComponent,
       ImageComponent,
@@ -19,15 +20,15 @@ import { type ChildRouteComponent }                                             
       MasonryChildDirective,
       MasonryContainerComponent,
       NgTemplateOutlet,
-      RouterLink,
       RouterOutlet,
       SectionComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "GalleryRouteComponent.sass",
     ],
-    templateUrl: "GalleryRouteComponent.html",
+    templateUrl:     "GalleryRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class GalleryRouteComponent

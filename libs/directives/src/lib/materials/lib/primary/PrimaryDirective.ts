@@ -6,7 +6,7 @@ import { type Brand }                                                      from 
 
 @Directive(
   {
-    host:       {
+    host: {
       "[style.--standard--primary-directive--background-dark-input]":  "backgroundDarkInput$()",
       "[style.--standard--primary-directive--background-light-input]": "backgroundLightInput$()",
       "[style.--standard--primary-directive--brand-background-dark]":  "brandBackgroundDark$()",
@@ -16,6 +16,7 @@ import { type Brand }                                                      from 
       "[style.--standard--primary-directive--foreground-dark-input]":  "foregroundDarkInput$()",
       "[style.--standard--primary-directive--foreground-light-input]": "foregroundLightInput$()",
     },
+
     standalone: true,
   },
 )

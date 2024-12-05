@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, type Signal }                                                                                                                                   from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                                          from "@angular/core";
 import { takeUntilDestroyed, toSignal }                                                                                                                                                       from "@angular/core/rxjs-interop";
 import { Auth }                                                                                                                                                                               from "@angular/fire/auth";
 import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                                                               from "@angular/fire/firestore";
@@ -13,7 +13,8 @@ import { ChildRouteComponent }                                                  
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       BoxComponent,
       ComboboxInputComponent,
       DividerComponent,
@@ -25,11 +26,12 @@ import { ChildRouteComponent }                                                  
       TextFieldInputComponent,
       ToggleComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "MessagesChildRouteComponent.sass",
     ],
-    templateUrl: "MessagesChildRouteComponent.html",
+    templateUrl:     "MessagesChildRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class MessagesChildRouteComponent

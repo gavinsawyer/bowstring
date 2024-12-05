@@ -1,15 +1,16 @@
-import { NgTemplateOutlet }                                                                                                                           from "@angular/common";
-import { booleanAttribute, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                               from "@angular/router";
-import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective }                                                                               from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                                    from "@angular/common";
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
+import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective }                                                                                                        from "@standard/directives";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[class.disabled]": "disabledInput$() || routerLinkActive$()?.isActive || false",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -29,17 +30,18 @@ import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective }         
         directive: PrimaryDirective,
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
       RouterLink,
       RouterLinkActive,
     ],
-    selector:       "standard--link",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--link",
+    styleUrls:       [
       "LinkComponent.sass",
     ],
-    templateUrl:    "LinkComponent.html",
+    templateUrl:     "LinkComponent.html",
+
+    standalone: true,
   },
 )
 export class LinkComponent {

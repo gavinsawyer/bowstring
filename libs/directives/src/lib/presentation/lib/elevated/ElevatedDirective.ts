@@ -3,10 +3,11 @@ import { Directive, input, type InputSignalWithTransform, numberAttribute } from
 
 @Directive(
   {
-    host:       {
+    host: {
       "[style.--standard--elevated-directive--level-input]":            "levelInput$()",
       "[style.--standard--elevated-directive--material-opacity-input]": "materialOpacityInput$()",
     },
+
     standalone: true,
   },
 )

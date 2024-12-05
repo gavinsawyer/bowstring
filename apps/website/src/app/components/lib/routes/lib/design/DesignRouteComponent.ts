@@ -1,11 +1,12 @@
-import { Component, signal, type WritableSignal }                                                                                                                                                    from "@angular/core";
+import { ChangeDetectionStrategy, Component, signal, type WritableSignal }                                                                                                                           from "@angular/core";
 import { ArticleComponent, AsideComponent, BoxComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent, SectionComponent } from "@standard/components";
 import { ScrollStackItemDirective }                                                                                                                                                                  from "@standard/directives";
 
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       ArticleComponent,
       AsideComponent,
       BoxComponent,
@@ -17,11 +18,12 @@ import { ScrollStackItemDirective }                                             
       ScrollStackItemDirective,
       SectionComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "DesignRouteComponent.sass",
     ],
-    templateUrl: "DesignRouteComponent.html",
+    templateUrl:     "DesignRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class DesignRouteComponent

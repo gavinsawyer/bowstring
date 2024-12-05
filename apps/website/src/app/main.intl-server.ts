@@ -1,5 +1,6 @@
-import compression               from "compression";
-import express                   from "express";
+import compression = require("compression");
+import express = require("express");
+
 import { getI18nRequestHandler } from "./request handlers";
 import { type LocaleId }         from "./types";
 
@@ -26,7 +27,7 @@ express().use(
   "*",
   getI18nRequestHandler(
     ({ localeId }: { localeId: LocaleId }): express.RequestHandler => require(
-      `${ process.cwd() }/dist/apps/website/server/${ localeId }/main.js`,
+      `${ process.cwd() }/dist/apps/website/server/${ String(localeId) }/main.js`,
     )["getAppRequestHandler"](localeId),
   ),
 ).listen(

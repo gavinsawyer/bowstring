@@ -1,4 +1,4 @@
-import { Component, inject }                                                                                                                                                                                                                                    from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject }                                                                                                                                                                                                           from "@angular/core";
 import { RouterOutlet }                                                                                                                                                                                                                                         from "@angular/router";
 import { AccountService, AuthenticationService }                                                                                                                                                                                                                from "@standard/services";
 import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../";
@@ -6,7 +6,8 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       AsideComponent,
       BoxComponent,
       ButtonComponent,
@@ -22,11 +23,12 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
       SheetComponent,
       SymbolComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "AccountRouteComponent.sass",
     ],
-    templateUrl: "AccountRouteComponent.html",
+    templateUrl:     "AccountRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class AccountRouteComponent

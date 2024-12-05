@@ -1,5 +1,5 @@
 import { NgTemplateOutlet }                                                                                            from "@angular/common";
-import { afterRender, Component, forwardRef, inject }                                                                  from "@angular/core";
+import { afterRender, ChangeDetectionStrategy, Component, forwardRef, inject }                                         from "@angular/core";
 import { NG_VALUE_ACCESSOR }                                                                                           from "@angular/forms";
 import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective } from "@standard/directives";
 import { InsertZwnjsPipe }                                                                                             from "@standard/pipes";
@@ -9,7 +9,8 @@ import providers                                                                
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -42,11 +43,11 @@ import providers                                                                
         ],
       },
     ],
-    imports:        [
+    imports:         [
       InsertZwnjsPipe,
       NgTemplateOutlet,
     ],
-    providers:      [
+    providers:       [
       {
         multi:       true,
         provide:     NG_VALUE_ACCESSOR,
@@ -56,12 +57,13 @@ import providers                                                                
       },
       ...providers,
     ],
-    selector:       "standard--datepicker-input",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--datepicker-input",
+    styleUrls:       [
       "DatepickerInputComponent.sass",
     ],
-    templateUrl:    "DatepickerInputComponent.html",
+    templateUrl:     "DatepickerInputComponent.html",
+
+    standalone: true,
   },
 )
 export class DatepickerInputComponent

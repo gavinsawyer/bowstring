@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }                                from "@angular/common";
-import { Component, input, type InputSignalWithTransform } from "@angular/core";
-import { ContainerDirective }                              from "@standard/directives";
+import { NgTemplateOutlet }                                                         from "@angular/common";
+import { ChangeDetectionStrategy, Component, input, type InputSignalWithTransform } from "@angular/core";
+import { ContainerDirective }                                                       from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -30,15 +31,16 @@ import { ContainerDirective }                              from "@standard/direc
         ],
       },
     ],
-    selector:       "standard--label",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--label",
+    styleUrls:       [
       "LabelComponent.sass",
     ],
-    templateUrl:    "LabelComponent.html",
-    imports:        [
+    templateUrl:     "LabelComponent.html",
+    imports:         [
       NgTemplateOutlet,
     ],
+
+    standalone: true,
   },
 )
 export class LabelComponent {

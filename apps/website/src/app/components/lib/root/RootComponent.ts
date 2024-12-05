@@ -1,25 +1,27 @@
-import { DOCUMENT, isPlatformBrowser, Location }                                                         from "@angular/common";
-import { Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                        from "@angular/core/rxjs-interop";
-import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                             from "@angular/fire/firestore";
-import { Functions, httpsCallable }                                                                      from "@angular/fire/functions";
-import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }               from "@angular/forms";
-import { RouterOutlet }                                                                                  from "@angular/router";
-import { type RouteComponent, type SheetComponent }                                                      from "@standard/components";
-import { CanvasDirective, FlexboxContainerDirective }                                                    from "@standard/directives";
-import { BRAND, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                      from "@standard/injection-tokens";
-import { type AccountDocument }                                                                          from "@standard/interfaces";
-import { AuthenticationService, ResponsivityService }                                                    from "@standard/services";
-import { type Brand }                                                                                    from "@standard/types";
-import { type GitInfo }                                                                                  from "git-describe";
-import { map, type Observable, startWith, switchMap }                                                    from "rxjs";
-import { LOCALE_IDS }                                                                                    from "../../../injection tokens";
-import { type LocaleId }                                                                                 from "../../../types";
+import { DOCUMENT, isPlatformBrowser, Location }                                                                                  from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                 from "@angular/core/rxjs-interop";
+import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                      from "@angular/fire/firestore";
+import { Functions, httpsCallable }                                                                                               from "@angular/fire/functions";
+import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }                                        from "@angular/forms";
+import { RouterOutlet }                                                                                                           from "@angular/router";
+import { type RouteComponent, type SheetComponent }                                                                               from "@standard/components";
+import { CanvasDirective, FlexboxContainerDirective }                                                                             from "@standard/directives";
+import { BRAND, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                                               from "@standard/injection-tokens";
+import { type AccountDocument }                                                                                                   from "@standard/interfaces";
+import { AuthenticationService, ResponsivityService }                                                                             from "@standard/services";
+import { type Brand }                                                                                                             from "@standard/types";
+import { type GitInfo }                                                                                                           from "git-describe";
+import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
+import { LOCALE_IDS }                                                                                                             from "../../../injection tokens";
+import { type LocaleId }                                                                                                          from "../../../types";
 
 
+// eslint-disable-next-line
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -36,11 +38,12 @@ import { type LocaleId }                                                        
         ],
       },
     ],
-    selector:       "standard-website--root",
-    styleUrls:      [
+    selector:        "standard-website--root",
+    standalone:      false,
+    styleUrls:       [
       "RootComponent.sass",
     ],
-    templateUrl:    "RootComponent.html",
+    templateUrl:     "RootComponent.html",
   },
 )
 export class RootComponent {

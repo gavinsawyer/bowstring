@@ -1,20 +1,19 @@
-import { BreakpointObserver, type BreakpointState }                                                                                                  from "@angular/cdk/layout";
-import { isPlatformBrowser, NgTemplateOutlet }                                                                                                       from "@angular/common";
-import { afterRender, Component, effect, ElementRef, inject, Injector, LOCALE_ID, PLATFORM_ID, signal, type Signal, viewChild, type WritableSignal } from "@angular/core";
-import { toSignal }                                                                                                                                  from "@angular/core/rxjs-interop";
-import { type AccountDocument }                                                                                                                      from "@standard/interfaces";
-import { AccountService, StripeApiLoaderService }                                                                                                    from "@standard/services";
-import { type BaseStripeElementsOptions, type Stripe, type StripeElement, type StripeElementLocale, type StripeElements, type StripeError }          from "@stripe/stripe-js";
-import { map }                                                                                                                                       from "rxjs";
+import { BreakpointObserver, type BreakpointState }                                                                                                                           from "@angular/cdk/layout";
+import { isPlatformBrowser }                                                                                                                                                  from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, effect, ElementRef, inject, Injector, LOCALE_ID, PLATFORM_ID, signal, type Signal, viewChild, type WritableSignal } from "@angular/core";
+import { toSignal }                                                                                                                                                           from "@angular/core/rxjs-interop";
+import { type AccountDocument }                                                                                                                                               from "@standard/interfaces";
+import { AccountService, StripeApiLoaderService }                                                                                                                             from "@standard/services";
+import { type BaseStripeElementsOptions, type Stripe, type StripeElement, type StripeElementLocale, type StripeElements, type StripeError }                                   from "@stripe/stripe-js";
+import { map }                                                                                                                                                                from "rxjs";
 
 
 @Component(
   {
-    imports:    [
-      NgTemplateOutlet,
-    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template:        "",
+
     standalone: true,
-    template:   "",
   },
 )
 export class StripeElementComponent {

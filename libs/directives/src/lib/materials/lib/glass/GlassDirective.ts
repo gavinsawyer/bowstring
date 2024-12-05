@@ -3,9 +3,10 @@ import { Directive, input, type InputSignalWithTransform, numberAttribute } from
 
 @Directive(
   {
-    host:       {
+    host: {
       "[style.--standard--glass-directive--material-opacity-input]": "materialOpacityInput$()",
     },
+
     standalone: true,
   },
 )

@@ -3,7 +3,8 @@ import { Directive } from "@angular/core";
 
 @Directive(
   {
-    selector:   "[standardMasonryChild]",
+    selector: "[standardMasonryChild]",
+
     standalone: true,
   },
 )

@@ -1,17 +1,18 @@
-import { NgOptimizedImage, NgTemplateOutlet }                                                                                                               from "@angular/common";
-import { afterRender, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { RouterLink }                                                                                                                                       from "@angular/router";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, RoundedDirective }                                             from "@standard/directives";
+import { NgOptimizedImage, NgTemplateOutlet }                                                                                                                                        from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { RouterLink }                                                                                                                                                                from "@angular/router";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, RoundedDirective }                                                                      from "@standard/directives";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
       "[class.has-url]":                         "urlInput$()",
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -55,17 +56,18 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgOptimizedImage,
       NgTemplateOutlet,
       RouterLink,
     ],
-    selector:       "standard--image",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--image",
+    styleUrls:       [
       "ImageComponent.sass",
     ],
-    templateUrl:    "ImageComponent.html",
+    templateUrl:     "ImageComponent.html",
+
+    standalone: true,
   },
 )
 export class ImageComponent {

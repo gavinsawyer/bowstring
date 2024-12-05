@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }                                                                                      from "@angular/common";
-import { afterRender, Component, contentChildren, type ElementRef, inject, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { MasonryChildDirective, MasonryContainerDirective }                                                      from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                               from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, contentChildren, type ElementRef, inject, type Signal, TemplateRef, viewChild } from "@angular/core";
+import { MasonryChildDirective, MasonryContainerDirective }                                                                               from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: MasonryContainerDirective,
         inputs:    [
@@ -15,15 +16,16 @@ import { MasonryChildDirective, MasonryContainerDirective }                     
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--masonry-container",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--masonry-container",
+    styleUrls:       [
       "MasonryContainerComponent.sass",
     ],
-    templateUrl:    "MasonryContainerComponent.html",
+    templateUrl:     "MasonryContainerComponent.html",
+
+    standalone: true,
   },
 )
 export class MasonryContainerComponent {

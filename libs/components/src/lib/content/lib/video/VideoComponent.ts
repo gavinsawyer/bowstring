@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }                                                                                                                                                   from "@angular/common";
-import { afterRender, booleanAttribute, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                                                           from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                                                            from "@angular/common";
+import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                                                                                    from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -46,15 +47,16 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirectiv
         ],
       },
     ],
-    selector:       "standard--video",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--video",
+    styleUrls:       [
       "VideoComponent.sass",
     ],
-    templateUrl:    "VideoComponent.html",
-    imports:        [
+    templateUrl:     "VideoComponent.html",
+    imports:         [
       NgTemplateOutlet,
     ],
+
+    standalone: true,
   },
 )
 export class VideoComponent {

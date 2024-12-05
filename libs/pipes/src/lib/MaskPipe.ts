@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe(
   {
-    name:       "standardMask",
+    name: "standardMask",
+
     standalone: true,
   },
 )

@@ -23,26 +23,29 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
       providers:                 [
         {
           provide:  APP_BASE_HREF,
-          useValue: `/${ localeId }`,
+          useValue: `/${ String(localeId) }`,
         },
         {
           provide:  LOCALE_ID,
           useValue: localeId,
         },
       ],
-
     },
   ).render(
     {
-      documentFilePath: `${ process.cwd() }/dist/apps/website/browser/${ localeId }/${ existsSync(`${ process.cwd() }/dist/apps/website/browser/${ localeId }/index.original.html`) ? "index.original.html" : "index.html" }`,
-      publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ localeId }`,
+      documentFilePath: `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }/${ existsSync(`${ process.cwd() }/dist/apps/website/browser/${ localeId }/index.original.html`) ? "index.original.html" : "index.html" }`,
+      publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }`,
       url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
     },
   ).then<void, void>(
     (html: string): void => {
       response.send(html);
     },
-    (err): void => nextFunction(err),
+    (error: unknown): never => {
+      nextFunction(error);
+
+      throw error;
+    },
   );
 }
 

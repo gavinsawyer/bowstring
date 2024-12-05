@@ -1,23 +1,24 @@
-import { Component }                                                                             from "@angular/core";
-import { MasonryChildDirective }                                                                 from "@standard/directives";
-import { FlexboxContainerComponent, HeaderComponent, ImageComponent, MasonryContainerComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                   from "../../../child route/ChildRouteComponent";
+import { ChangeDetectionStrategy, Component }                         from "@angular/core";
+import { MasonryChildDirective }                                      from "@standard/directives";
+import { HeaderComponent, ImageComponent, MasonryContainerComponent } from "../../../../../../../";
+import { ChildRouteComponent }                                        from "../../../child route/ChildRouteComponent";
 
 
 @Component(
   {
-    imports: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       HeaderComponent,
       ImageComponent,
       MasonryChildDirective,
       MasonryContainerComponent,
-      FlexboxContainerComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "OrdersChildRouteComponent.sass",
     ],
-    templateUrl: "OrdersChildRouteComponent.html",
+    templateUrl:     "OrdersChildRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class OrdersChildRouteComponent

@@ -1,23 +1,24 @@
-import { isPlatformServer }                                                         from "@angular/common";
-import { Component, inject, type OnInit, PLATFORM_ID }                              from "@angular/core";
-import { RESPONSE }                                                                 from "@standard/injection-tokens";
-import { PathService }                                                              from "@standard/services";
-import { type Response }                                                            from "express";
-import { ArticleComponent, HeaderComponent, HeadingGroupComponent, RouteComponent } from "../../../../";
+import { isPlatformServer }                                                     from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, type OnInit, PLATFORM_ID } from "@angular/core";
+import { RESPONSE }                                                             from "@standard/injection-tokens";
+import { PathService }                                                          from "@standard/services";
+import { type Response }                                                        from "express";
+import { HeaderComponent, HeadingGroupComponent, RouteComponent }               from "../../../../";
 
 
 @Component(
   {
-    imports:     [
-      ArticleComponent,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       HeaderComponent,
       HeadingGroupComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "OtherwiseRouteComponent.sass",
     ],
-    templateUrl: "OtherwiseRouteComponent.html",
+    templateUrl:     "OtherwiseRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class OtherwiseRouteComponent

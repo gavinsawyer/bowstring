@@ -1,4 +1,4 @@
-import { Component, input, type InputSignal, signal, type WritableSignal }                                                                                               from "@angular/core";
+import { ChangeDetectionStrategy, Component, input, type InputSignal, signal, type WritableSignal }                                                                      from "@angular/core";
 import { ReactiveFormsModule }                                                                                                                                           from "@angular/forms";
 import { ScrollStackItemDirective }                                                                                                                                      from "@standard/directives";
 import { ArticleComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, ScrollStackComponent, SectionComponent } from "../../../../../../../";
@@ -7,7 +7,8 @@ import { ChildRouteComponent }                                                  
 
 @Component(
   {
-    imports: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       ArticleComponent,
       DividerComponent,
       FlexboxContainerComponent,
@@ -19,11 +20,12 @@ import { ChildRouteComponent }                                                  
       ScrollStackItemDirective,
       SectionComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "ItemChildRouteComponent.sass",
     ],
-    templateUrl: "ItemChildRouteComponent.html",
+    templateUrl:     "ItemChildRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class ItemChildRouteComponent

@@ -9,11 +9,12 @@ import { v7 as uuidV7 }                                                         
 
 @Directive(
   {
-    host:       {
+    host: {
       "[style.--standard--rounded-directive--brand-roundness]":  "brandRoundness$()",
       "[style.--standard--rounded-directive--clip-path-source]": "clipPathSource$()",
       "[style.--standard--rounded-directive--level-input]":      "levelInput$()",
     },
+
     standalone: true,
   },
 )

@@ -1,11 +1,12 @@
 import { DatePipe }                                                                                                                                                from "@angular/common";
-import { Component }                                                                                                                                               from "@angular/core";
+import { ChangeDetectionStrategy, Component }                                                                                                                      from "@angular/core";
 import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, RouteComponent, SectionComponent } from "../../../../";
 
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       ArticleComponent,
       CapsuleComponent,
       DatePipe,
@@ -15,11 +16,12 @@ import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderCo
       LabelComponent,
       SectionComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "TermsRouteComponent.sass",
     ],
-    templateUrl: "TermsRouteComponent.html",
+    templateUrl:     "TermsRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class TermsRouteComponent

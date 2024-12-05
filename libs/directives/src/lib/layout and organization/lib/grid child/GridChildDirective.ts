@@ -3,12 +3,13 @@ import { Directive, input, type InputSignal } from "@angular/core";
 
 @Directive(
   {
-    host:       {
+    host: {
       "[style.--standard--grid-child-directive--grid-column-end-input]":   "gridColumnEndInput$()",
       "[style.--standard--grid-child-directive--grid-column-start-input]": "gridColumnStartInput$()",
       "[style.--standard--grid-child-directive--grid-row-end-input]":      "gridRowEndInput$()",
       "[style.--standard--grid-child-directive--grid-row-start-input]":    "gridRowStartInput$()",
     },
+
     standalone: true,
   },
 )

@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }          from "@angular/common";
-import { Component }                 from "@angular/core";
-import { FlexboxContainerDirective } from "@standard/directives";
+import { NgTemplateOutlet }                   from "@angular/common";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { FlexboxContainerDirective }          from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: FlexboxContainerDirective,
         inputs:    [
@@ -19,15 +20,16 @@ import { FlexboxContainerDirective } from "@standard/directives";
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--below",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--below",
+    styleUrls:       [
       "BelowComponent.sass",
     ],
-    templateUrl:    "BelowComponent.html",
+    templateUrl:     "BelowComponent.html",
+
+    standalone: true,
   },
 )
 export class BelowComponent {

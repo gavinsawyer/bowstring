@@ -4,11 +4,12 @@ import { type Auto, type Inherit, type ScalarString }                           
 
 @Directive(
   {
-    host:       {
+    host: {
       "[style.--standard--flexbox-child-directive--flex-basis-input]":  "flexBasisInput$()",
       "[style.--standard--flexbox-child-directive--flex-grow-input]":   "flexGrowInput$()",
       "[style.--standard--flexbox-child-directive--flex-shrink-input]": "flexShrinkInput$()",
     },
+
     standalone: true,
   },
 )

@@ -1,19 +1,21 @@
-import { NgTemplateOutlet }                                                              from "@angular/common";
-import { Component, contentChildren, input, type InputSignal, type Signal, TemplateRef } from "@angular/core";
-import { ListItemDirective }                                                             from "@standard/directives";
+import { NgTemplateOutlet }                                                                                       from "@angular/common";
+import { ChangeDetectionStrategy, Component, contentChildren, input, type InputSignal, type Signal, TemplateRef } from "@angular/core";
+import { ListItemDirective }                                                                                      from "@standard/directives";
 
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:    "standard--list",
-    standalone:  true,
-    styleUrls:   [
+    selector:        "standard--list",
+    styleUrls:       [
       "ListComponent.sass",
     ],
-    templateUrl: "ListComponent.html",
+    templateUrl:     "ListComponent.html",
+
+    standalone: true,
   },
 )
 export class ListComponent {

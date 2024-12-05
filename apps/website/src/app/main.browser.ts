@@ -12,7 +12,7 @@ function bootstrap(): Promise<void> {
 
       throw error;
     },
-  )
+  );
 }
 
 if (document.readyState === "complete")

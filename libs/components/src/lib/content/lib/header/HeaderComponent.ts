@@ -1,11 +1,12 @@
 import { NgTemplateOutlet }                               from "@angular/common";
-import { Component }                                      from "@angular/core";
+import { ChangeDetectionStrategy, Component }             from "@angular/core";
 import { FlexboxContainerDirective, TypographyDirective } from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: FlexboxContainerDirective,
         inputs:    [
@@ -25,15 +26,16 @@ import { FlexboxContainerDirective, TypographyDirective } from "@standard/direct
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--header",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--header",
+    styleUrls:       [
       "HeaderComponent.sass",
     ],
-    templateUrl:    "HeaderComponent.html",
+    templateUrl:     "HeaderComponent.html",
+
+    standalone: true,
   },
 )
 export class HeaderComponent {

@@ -1,17 +1,18 @@
-import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                      from "@angular/common";
-import { afterRender, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                             from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                     from "@standard/directives";
-import { type Dimensions, type SymbolPaths }                                                                                                                                                  from "@standard/interfaces";
-import { ViewportService }                                                                                                                                                                    from "@standard/services";
-import loadSymbolPaths                                                                                                                                                                        from "@standard/symbol-paths";
-import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                         from "rxjs";
-import { fromPromise }                                                                                                                                                                        from "rxjs/internal/observable/innerFrom";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                               from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                                              from "@standard/directives";
+import { type Dimensions, type SymbolPaths }                                                                                                                                                                           from "@standard/interfaces";
+import { ViewportService }                                                                                                                                                                                             from "@standard/services";
+import loadSymbolPaths                                                                                                                                                                                                 from "@standard/symbol-paths";
+import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                                                  from "rxjs";
+import { fromPromise }                                                                                                                                                                                                 from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[class.pinnedOrUnpinning]":                         "pinnedOrUnpinning$()",
       "[class.pinned]":                                    "pinnedModelWithTransform$()",
       "[class.raisedOrLoweringWhenPinnedOrUnpinning]":     "raisedOrLoweringWhenPinnedOrUnpinning$()",
@@ -20,7 +21,7 @@ import { fromPromise }                                                          
       "[style.--standard--footer--raising-scale]":         "raisingScale$()",
       "[style.--standard--footer--unpinning-translation]": "unpinningTranslation$()",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: ElevatedDirective,
         inputs:    [
@@ -53,15 +54,16 @@ import { fromPromise }                                                          
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--footer",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--footer",
+    styleUrls:       [
       "FooterComponent.sass",
     ],
-    templateUrl:    "FooterComponent.html",
+    templateUrl:     "FooterComponent.html",
+
+    standalone: true,
   },
 )
 export class FooterComponent {

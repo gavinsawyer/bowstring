@@ -1,15 +1,16 @@
-import { NgTemplateOutlet }                                                                                                                                      from "@angular/common";
-import { Component, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
-import { toObservable }                                                                                                                                          from "@angular/core/rxjs-interop";
-import { NG_VALUE_ACCESSOR }                                                                                                                                     from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective }                                                                       from "@standard/directives";
-import { firstValueFrom }                                                                                                                                        from "rxjs";
-import { v7 as uuidV7 }                                                                                                                                          from "uuid";
+import { NgTemplateOutlet }                                                                                                                                                               from "@angular/common";
+import { ChangeDetectionStrategy, Component, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
+import { toObservable }                                                                                                                                                                   from "@angular/core/rxjs-interop";
+import { NG_VALUE_ACCESSOR }                                                                                                                                                              from "@angular/forms";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective }                                                                                                from "@standard/directives";
+import { firstValueFrom }                                                                                                                                                                 from "rxjs";
+import { v7 as uuidV7 }                                                                                                                                                                   from "uuid";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -36,10 +37,10 @@ import { v7 as uuidV7 }                                                         
         directive: PrimaryDirective,
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    providers:      [
+    providers:       [
       {
         multi:       true,
         provide:     NG_VALUE_ACCESSOR,
@@ -48,12 +49,13 @@ import { v7 as uuidV7 }                                                         
         ),
       },
     ],
-    selector:       "standard--toggle",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--toggle",
+    styleUrls:       [
       "ToggleComponent.sass",
     ],
-    templateUrl:    "ToggleComponent.html",
+    templateUrl:     "ToggleComponent.html",
+
+    standalone: true,
   },
 )
 export class ToggleComponent {

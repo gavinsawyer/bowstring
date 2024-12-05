@@ -1,9 +1,9 @@
-import { Component, computed, effect, inject, type Signal }                                                                                                                               from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                                      from "@angular/core";
 import { toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
 import { Auth }                                                                                                                                                                           from "@angular/fire/auth";
 import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                                                           from "@angular/fire/firestore";
 import { FormControl, FormGroup, ReactiveFormsModule }                                                                                                                                    from "@angular/forms";
-import type { AccountDocument }                                                                                                                                                           from "@standard/interfaces";
+import { type AccountDocument }                                                                                                                                                           from "@standard/interfaces";
 import { AccountService }                                                                                                                                                                 from "@standard/services";
 import { isEqual }                                                                                                                                                                        from "lodash";
 import { startWith }                                                                                                                                                                      from "rxjs";
@@ -13,7 +13,8 @@ import { ChildRouteComponent }                                                  
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       BoxComponent,
       ButtonComponent,
       DatepickerInputComponent,
@@ -25,11 +26,12 @@ import { ChildRouteComponent }                                                  
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "PersonalInformationChildRouteComponent.sass",
     ],
-    templateUrl: "PersonalInformationChildRouteComponent.html",
+    templateUrl:     "PersonalInformationChildRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class PersonalInformationChildRouteComponent

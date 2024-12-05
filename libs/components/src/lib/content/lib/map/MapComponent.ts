@@ -1,13 +1,14 @@
-import { NgTemplateOutlet }                                                                                           from "@angular/common";
-import { afterRender, Component, computed, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
-import { GoogleMap }                                                                                                  from "@angular/google-maps";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                   from "@standard/directives";
-import { GoogleMapsApiLoaderService }                                                                                 from "@standard/services";
+import { NgTemplateOutlet }                                                                                                                    from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
+import { GoogleMap }                                                                                                                           from "@angular/google-maps";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                            from "@standard/directives";
+import { GoogleMapsApiLoaderService }                                                                                                          from "@standard/services";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -48,16 +49,17 @@ import { GoogleMapsApiLoaderService }                                           
         ],
       },
     ],
-    imports:        [
+    imports:         [
       GoogleMap,
       NgTemplateOutlet,
     ],
-    selector:       "standard--map",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--map",
+    styleUrls:       [
       "MapComponent.sass",
     ],
-    templateUrl:    "MapComponent.html",
+    templateUrl:     "MapComponent.html",
+
+    standalone: true,
   },
 )
 export class MapComponent {

@@ -1,5 +1,5 @@
 import { NgTemplateOutlet }                                                                           from "@angular/common";
-import { Component, computed, effect, inject, type Signal }                                           from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                  from "@angular/core";
 import { toSignal }                                                                                   from "@angular/core/rxjs-interop";
 import { Auth }                                                                                       from "@angular/fire/auth";
 import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                       from "@angular/fire/firestore";
@@ -15,7 +15,8 @@ import { StripeElementComponent }                                               
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -40,15 +41,16 @@ import { StripeElementComponent }                                               
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--address-stripe-element",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--address-stripe-element",
+    styleUrls:       [
       "AddressStripeElementComponent.sass",
     ],
-    templateUrl:    "AddressStripeElementComponent.html",
+    templateUrl:     "AddressStripeElementComponent.html",
+
+    standalone: true,
   },
 )
 export class AddressStripeElementComponent

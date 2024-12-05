@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }                                                          from "@angular/common";
-import { afterRender, Component, type ElementRef, inject, type Signal, viewChild }   from "@angular/core";
-import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective } from "@standard/directives";
+import { NgTemplateOutlet }                                                                                 from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
+import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective }                        from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -52,15 +53,16 @@ import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirecti
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--capsule",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--capsule",
+    styleUrls:       [
       "CapsuleComponent.sass",
     ],
-    templateUrl:    "CapsuleComponent.html",
+    templateUrl:     "CapsuleComponent.html",
+
+    standalone: true,
   },
 )
 export class CapsuleComponent {

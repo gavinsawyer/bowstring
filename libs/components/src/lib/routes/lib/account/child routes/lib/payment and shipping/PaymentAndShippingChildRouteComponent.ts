@@ -1,4 +1,4 @@
-import { Component, inject }                                                                                                                                                                                                                           from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject }                                                                                                                                                                                                  from "@angular/core";
 import { GetRegionDisplayNamePipe }                                                                                                                                                                                                                    from "@standard/pipes";
 import { AccountService }                                                                                                                                                                                                                              from "@standard/services";
 import { AddressStripeElementComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, PaymentStripeElementComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../../../../";
@@ -7,7 +7,8 @@ import { ChildRouteComponent }                                                  
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       AddressStripeElementComponent,
       BoxComponent,
       ButtonComponent,
@@ -22,11 +23,12 @@ import { ChildRouteComponent }                                                  
       SheetComponent,
       SymbolComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "PaymentAndShippingChildRouteComponent.sass",
     ],
-    templateUrl: "PaymentAndShippingChildRouteComponent.html",
+    templateUrl:     "PaymentAndShippingChildRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class PaymentAndShippingChildRouteComponent

@@ -3,7 +3,8 @@ import { Directive } from "@angular/core";
 
 @Directive(
   {
-    selector:   "[standardScrollStackItem]",
+    selector: "[standardScrollStackItem]",
+
     standalone: true,
   },
 )

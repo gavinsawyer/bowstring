@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }                                                               from "@angular/common";
-import { afterRender, Component, type ElementRef, inject, type Signal, viewChild }        from "@angular/core";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective } from "@standard/directives";
+import { NgTemplateOutlet }                                                                                 from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                   from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ElevatedDirective,
         inputs:    [
@@ -38,15 +39,16 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--box",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--box",
+    styleUrls:       [
       "BoxComponent.sass",
     ],
-    templateUrl:    "BoxComponent.html",
+    templateUrl:     "BoxComponent.html",
+
+    standalone: true,
   },
 )
 export class BoxComponent {

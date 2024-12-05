@@ -1,21 +1,22 @@
-import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                           from "@angular/common";
-import { afterRender, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild } from "@angular/core";
-import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                              from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                          from "@standard/directives";
-import { type SymbolPaths }                                                                                                                                                                        from "@standard/interfaces";
-import loadSymbolPaths                                                                                                                                                                             from "@standard/symbol-paths";
-import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                            from "body-scroll-lock";
-import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                                       from "rxjs";
-import { fromPromise }                                                                                                                                                                             from "rxjs/internal/observable/innerFrom";
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                    from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild } from "@angular/core";
+import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                                                   from "@standard/directives";
+import { type SymbolPaths }                                                                                                                                                                                                 from "@standard/interfaces";
+import loadSymbolPaths                                                                                                                                                                                                      from "@standard/symbol-paths";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                                                     from "body-scroll-lock";
+import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                                                                from "rxjs";
+import { fromPromise }                                                                                                                                                                                                      from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[class.openOrClosing]": "openOrClosing$()",
       "[class.open]":          "openModelWithTransform$()",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: ElevatedDirective,
         inputs:    [
@@ -48,15 +49,16 @@ import { fromPromise }                                                          
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--sheet",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--sheet",
+    styleUrls:       [
       "SheetComponent.sass",
     ],
-    templateUrl:    "SheetComponent.html",
+    templateUrl:     "SheetComponent.html",
+
+    standalone: true,
   },
 )
 export class SheetComponent {

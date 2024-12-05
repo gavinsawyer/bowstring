@@ -1,17 +1,18 @@
-import { NgTemplateOutlet }                                from "@angular/common";
-import { Component, input, type InputSignal, type Signal } from "@angular/core";
-import { toObservable, toSignal }                          from "@angular/core/rxjs-interop";
-import { ContainerDirective }                              from "@standard/directives";
-import { type SymbolPaths }                                from "@standard/interfaces";
-import loadSymbolPaths                                     from "@standard/symbol-paths";
-import { type SymbolName }                                 from "@standard/types";
-import { type Observable, switchMap }                      from "rxjs";
-import { fromPromise }                                     from "rxjs/internal/observable/innerFrom";
+import { NgTemplateOutlet }                                                         from "@angular/common";
+import { ChangeDetectionStrategy, Component, input, type InputSignal, type Signal } from "@angular/core";
+import { toObservable, toSignal }                                                   from "@angular/core/rxjs-interop";
+import { ContainerDirective }                                                       from "@standard/directives";
+import { type SymbolPaths }                                                         from "@standard/interfaces";
+import loadSymbolPaths                                                              from "@standard/symbol-paths";
+import { type SymbolName }                                                          from "@standard/types";
+import { type Observable, switchMap }                                               from "rxjs";
+import { fromPromise }                                                              from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -36,15 +37,16 @@ import { fromPromise }                                     from "rxjs/internal/o
         ],
       },
     ],
-    selector:       "standard--symbol",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--symbol",
+    styleUrls:       [
       "SymbolComponent.sass",
     ],
-    templateUrl:    "SymbolComponent.html",
-    imports:        [
+    templateUrl:     "SymbolComponent.html",
+    imports:         [
       NgTemplateOutlet,
     ],
+
+    standalone: true,
   },
 )
 export class SymbolComponent {

@@ -1,17 +1,18 @@
-import { KeyValuePipe, NgTemplateOutlet }                                                                              from "@angular/common";
-import { afterRender, Component, forwardRef, inject, input, type InputSignal, signal, type Signal }                    from "@angular/core";
-import { NG_VALUE_ACCESSOR }                                                                                           from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective } from "@standard/directives";
-import { InsertZwnjsPipe, MaskPipe }                                                                                   from "@standard/pipes";
-import { type InputComponentOptions }                                                                                  from "@standard/types";
-import { v7 as uuidV7 }                                                                                                from "uuid";
-import { InputComponent }                                                                                              from "../../../input/InputComponent";
-import providers                                                                                                       from "../providers";
+import { KeyValuePipe, NgTemplateOutlet }                                                                                    from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, forwardRef, inject, input, type InputSignal, signal, type Signal } from "@angular/core";
+import { NG_VALUE_ACCESSOR }                                                                                                 from "@angular/forms";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective }       from "@standard/directives";
+import { InsertZwnjsPipe, MaskPipe }                                                                                         from "@standard/pipes";
+import { type InputComponentOptions }                                                                                        from "@standard/types";
+import { v7 as uuidV7 }                                                                                                      from "uuid";
+import { InputComponent }                                                                                                    from "../../../input/InputComponent";
+import providers                                                                                                             from "../providers";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: CanvasDirective,
       },
@@ -44,13 +45,13 @@ import providers                                                                
         ],
       },
     ],
-    imports:        [
+    imports:         [
       InsertZwnjsPipe,
       KeyValuePipe,
       MaskPipe,
       NgTemplateOutlet,
     ],
-    providers:      [
+    providers:       [
       {
         multi:       true,
         provide:     NG_VALUE_ACCESSOR,
@@ -60,12 +61,13 @@ import providers                                                                
       },
       ...providers,
     ],
-    selector:       "standard--combobox-input",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--combobox-input",
+    styleUrls:       [
       "ComboboxInputComponent.sass",
     ],
-    templateUrl:    "ComboboxInputComponent.html",
+    templateUrl:     "ComboboxInputComponent.html",
+
+    standalone: true,
   },
 )
 export class ComboboxInputComponent

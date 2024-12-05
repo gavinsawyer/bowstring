@@ -1,11 +1,12 @@
-import { NgTemplateOutlet }   from "@angular/common";
-import { Component }          from "@angular/core";
-import { ContainerDirective } from "@standard/directives";
+import { NgTemplateOutlet }                   from "@angular/common";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ContainerDirective }                 from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: ContainerDirective,
         inputs:    [
@@ -30,15 +31,16 @@ import { ContainerDirective } from "@standard/directives";
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--divider",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--divider",
+    styleUrls:       [
       "DividerComponent.sass",
     ],
-    templateUrl:    "DividerComponent.html",
+    templateUrl:     "DividerComponent.html",
+
+    standalone: true,
   },
 )
 export class DividerComponent {

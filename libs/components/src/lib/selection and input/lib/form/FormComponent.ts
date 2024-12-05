@@ -1,12 +1,13 @@
-import { NgTemplateOutlet }                         from "@angular/common";
-import { Component, output, type OutputEmitterRef } from "@angular/core";
-import { FormsModule }                              from "@angular/forms";
-import { FlexboxContainerDirective }                from "@standard/directives";
+import { NgTemplateOutlet }                                                  from "@angular/common";
+import { ChangeDetectionStrategy, Component, output, type OutputEmitterRef } from "@angular/core";
+import { FormsModule }                                                       from "@angular/forms";
+import { FlexboxContainerDirective }                                         from "@standard/directives";
 
 
 @Component(
   {
-    hostDirectives: [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives:  [
       {
         directive: FlexboxContainerDirective,
         inputs:    [
@@ -20,16 +21,17 @@ import { FlexboxContainerDirective }                from "@standard/directives";
         ],
       },
     ],
-    imports:        [
+    imports:         [
       FormsModule,
       NgTemplateOutlet,
     ],
-    selector:       "standard--form",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--form",
+    styleUrls:       [
       "FormComponent.sass",
     ],
-    templateUrl:    "FormComponent.html",
+    templateUrl:     "FormComponent.html",
+
+    standalone: true,
   },
 )
 export class FormComponent {

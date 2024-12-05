@@ -1,15 +1,16 @@
-import { NgTemplateOutlet }                                                  from "@angular/common";
-import { booleanAttribute, Component, input, type InputSignalWithTransform } from "@angular/core";
-import { FlexboxContainerDirective }                                         from "@standard/directives";
+import { NgTemplateOutlet }                                                                           from "@angular/common";
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignalWithTransform } from "@angular/core";
+import { FlexboxContainerDirective }                                                                  from "@standard/directives";
 
 
 @Component(
   {
-    host:           {
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
       "[class.styleFirstLetter]":    "styleFirstLetter$()",
       "[class.styleFirstParagraph]": "styleFirstParagraph$()",
     },
-    hostDirectives: [
+    hostDirectives:  [
       {
         directive: FlexboxContainerDirective,
         inputs:    [
@@ -23,15 +24,16 @@ import { FlexboxContainerDirective }                                         fro
         ],
       },
     ],
-    imports:        [
+    imports:         [
       NgTemplateOutlet,
     ],
-    selector:       "standard--heading-group",
-    standalone:     true,
-    styleUrls:      [
+    selector:        "standard--heading-group",
+    styleUrls:       [
       "HeadingGroupComponent.sass",
     ],
-    templateUrl:    "HeadingGroupComponent.html",
+    templateUrl:     "HeadingGroupComponent.html",
+
+    standalone: true,
   },
 )
 export class HeadingGroupComponent {

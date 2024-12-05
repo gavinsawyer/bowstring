@@ -42,7 +42,8 @@ import { ContainerDirective }                                                   
         ],
       },
     ],
-    standalone:     true,
+
+    standalone: true,
   },
 )
 export class GridContainerDirective {

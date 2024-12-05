@@ -7,11 +7,11 @@
 standard--flexbox-container.above::ng-deep > .harness > .between
   @include RouteComponent.host
 
-standard--masonry-container.above
+standard--section.above::ng-deep > .harness > .between > standard--masonry-container
   --standard--masonry-container-directive--columns: 2 !important
-
-  @media (min-width: 24rem)
-    --standard--masonry-container-directive--columns: 3 !important
 
   @media (min-width: 48rem)
     --standard--masonry-container-directive--columns: 4 !important
+
+  @media (min-width: 72rem)
+    --standard--masonry-container-directive--columns: 6 !important

@@ -1,4 +1,4 @@
-import { Component, effect, inject }                                                                                                                                            from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, inject }                                                                                                                   from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators }                                                                                                              from "@angular/forms";
 import { type AccountDocument }                                                                                                                                                 from "@standard/interfaces";
 import { AccountService }                                                                                                                                                       from "@standard/services";
@@ -8,7 +8,8 @@ import { ChildRouteComponent }                                                  
 
 @Component(
   {
-    imports:     [
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports:         [
       BoxComponent,
       ButtonComponent,
       DividerComponent,
@@ -20,11 +21,12 @@ import { ChildRouteComponent }                                                  
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    standalone:  true,
-    styleUrls:   [
+    styleUrls:       [
       "SecurityChildRouteComponent.sass",
     ],
-    templateUrl: "SecurityChildRouteComponent.html",
+    templateUrl:     "SecurityChildRouteComponent.html",
+
+    standalone: true,
   },
 )
 export class SecurityChildRouteComponent

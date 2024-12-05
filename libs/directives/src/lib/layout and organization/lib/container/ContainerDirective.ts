@@ -6,7 +6,7 @@ import { GridChildDirective }                                                   
 
 @Directive(
   {
-    host:       {
+    host:           {
       "[style.--standard--container-directive--align-self-input]":        "alignSelfInput$()",
       "[style.--standard--container-directive--aspect-ratio-input]":      "aspectRatioInput$()",
       "[style.--standard--container-directive--margin-bottom-input]":     "marginBottomInput$()",
@@ -45,6 +45,7 @@ import { GridChildDirective }                                                   
         ],
       },
     ],
+
     standalone: true,
   },
 )

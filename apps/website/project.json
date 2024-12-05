@@ -128,9 +128,14 @@
       "executor":             "@angular-devkit/build-angular:prerender",
       "options":              {
         "routes": [
-          "/",
+          "/gallery",
           "/privacy",
-          "/terms"
+          "/terms",
+
+          "/",
+          "/design",
+          "/develop",
+          "/news"
         ]
       },
       "outputs":              [

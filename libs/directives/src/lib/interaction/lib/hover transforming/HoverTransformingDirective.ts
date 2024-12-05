@@ -6,7 +6,7 @@ import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Obser
 
 @Directive(
   {
-    host:       {
+    host: {
       "[class.focusedOrUnfocusing]":                                          "focusedOrUnfocusing$()",
       "[class.focused]":                                                      "focused$()",
       "[class.pressedOrUnpressing]":                                          "pressedOrUnpressing$()",
@@ -18,6 +18,7 @@ import { combineLatestWith, delayWhen, filter, fromEvent, map, merge, type Obser
       "[style.--standard--hover-transforming-directive--translation-x]":      "translationX$()",
       "[style.--standard--hover-transforming-directive--translation-y]":      "translationY$()",
     },
+
     standalone: true,
   },
 )
