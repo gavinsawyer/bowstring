@@ -100,7 +100,7 @@ $translation-y: functions.get-value-reference($namespace, "translation-y")
     &.transformedOrUntransforming
       #{ $child-selector } > .harness
         animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards
-        z-index: 1
+        z-index: 2
 
         &:before
           animation: raise-shadow 200ms var(--bounce) forwards
@@ -129,7 +129,7 @@ $translation-y: functions.get-value-reference($namespace, "translation-y")
     &.focusedOrUnfocusing
       #{ $child-selector } > .harness
         animation: raise-harness 200ms var(--bounce) forwards
-        z-index: 1
+        z-index: 2
 
         &:before
           animation: raise-shadow 200ms var(--bounce) forwards

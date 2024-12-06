@@ -1,3 +1,4 @@
+@use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
 @use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
@@ -54,31 +55,52 @@
             &:checked + div
               @include PrimaryDirective.host
 
-              background-color: var(--standard--primary-directive--colors--background)
-
-              &:before
-                translate: calc(18px * pow(var(--phi), -1)) 0 0
+              > .harness > .between
+                &:before,
+                &::ng-deep > standard--symbol > .harness
+                  translate: calc(18px * pow(var(--phi), -1)) 0 0
 
           > div
+            display: contents
+
             @include CanvasDirective.host(24%)
+            @include ContainerDirective.host
 
-            background-color: var(--standard--canvas-directive--colors--background)
-            border-radius: calc(10px * pow(var(--phi), 0))
-            cursor: pointer
-            height: calc(2px + 18px * pow(var(--phi), 0))
-            position: absolute
-            transition: background-color 75ms ease-in-out
-            width: calc(2px + 18px * pow(var(--phi), 1))
+            --standard--container-directive--position: absolute !important
 
-            &:before
-              @include ElevatedDirective.shadow(4)
+            > .harness > .between
+              border-radius: calc(10px * pow(var(--phi), 0))
+              cursor: pointer
+              height: calc(2px + 18px * pow(var(--phi), 0))
+              transition: background-color 75ms ease-in-out
+              width: calc(2px + 18px * pow(var(--phi), 1))
 
-              background-color: whitesmoke
-              border-radius: 50%
-              content: ""
-              height: calc(18px * pow(var(--phi), 0))
-              left: 1px
-              position: absolute
-              top: 1px
-              transition: translate 75ms ease-in-out
-              width: calc(18px * pow(var(--phi), 0))
+              &::ng-deep > *
+                @include CanvasDirective.children
+                @include ContainerDirective.children
+
+              &:before
+                @include ElevatedDirective.shadow(4)
+
+                background-color: whitesmoke
+                border-radius: 50%
+                content: ""
+                height: calc(18px * pow(var(--phi), 0))
+                left: 1px
+                position: absolute
+                top: 1px
+                transition: translate 75ms ease-in-out
+                width: calc(18px * pow(var(--phi), 0))
+
+              &::ng-deep > standard--symbol
+                --standard--container-directive--position: absolute !important
+                --standard--container-directive--position-left: 1.5px !important
+                --standard--container-directive--position-top: 1px !important
+
+                > .harness
+                  height: calc(18px * pow(var(--phi), 0))
+                  transition: translate 75ms ease-in-out
+                  width: calc(18px * pow(var(--phi), 0))
+
+                  > .between
+                    font-size: 0.75em

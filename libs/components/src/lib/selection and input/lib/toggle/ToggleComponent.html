@@ -23,7 +23,11 @@
           (input)="onInput();"
           (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
           type="checkbox">
-        <div></div>
+        <div>
+          <div class="harness">
+            <div class="between"><ng-content /></div>
+          </div>
+        </div>
       </label>
     </div>
   </div>
