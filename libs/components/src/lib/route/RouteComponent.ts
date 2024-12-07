@@ -15,9 +15,10 @@ export class RouteComponent
 
   private readonly meta: Meta = inject<Meta>(Meta);
 
-  public readonly aboveTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("aboveTemplate");
-  public readonly belowTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("belowTemplate");
-  public readonly descriptionInput$: InputSignal<string>                    = input.required<string>(
+  public readonly aboveTemplateRef$: Signal<TemplateRef<never> | undefined>  = viewChild<TemplateRef<never>>("aboveTemplate");
+  public readonly bannerTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("bannerTemplate");
+  public readonly belowTemplateRef$: Signal<TemplateRef<never> | undefined>  = viewChild<TemplateRef<never>>("belowTemplate");
+  public readonly descriptionInput$: InputSignal<string>                     = input.required<string>(
     {
       alias: "description",
     },

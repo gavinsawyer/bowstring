@@ -1,6 +1,7 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
 @use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
+@use "../../../../../../directives/src/lib/materials/lib/inverse/InverseDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
@@ -80,9 +81,10 @@
                 @include ContainerDirective.children
 
               &:before
+                @include CanvasDirective.host(6%)
                 @include ElevatedDirective.shadow(4)
 
-                background-color: whitesmoke
+                background-color: var(--standard--canvas-directive--colors--background)
                 border-radius: 50%
                 content: ""
                 height: calc(18px * pow(var(--phi), 0))
@@ -92,10 +94,15 @@
                 transition: translate 75ms ease-in-out
                 width: calc(18px * pow(var(--phi), 0))
 
+                @media (prefers-color-scheme: dark)
+                  background-color: var(--standard--canvas-directive--colors--background-inverse)
+
               &::ng-deep > standard--symbol
+                @include CanvasDirective.host(6%)
+
                 --standard--container-directive--position: absolute !important
                 --standard--container-directive--position-left: 1.5px !important
-                --standard--container-directive--position-top: 1px !important
+                --standard--container-directive--position-top: 1.5px !important
 
                 > .harness
                   height: calc(18px * pow(var(--phi), 0))
@@ -103,4 +110,8 @@
                   width: calc(18px * pow(var(--phi), 0))
 
                   > .between
+                    background: transparent !important
                     font-size: 0.75em
+
+                    @media (prefers-color-scheme: dark)
+                      color: var(--standard--canvas-directive--colors--foreground-inverse) !important

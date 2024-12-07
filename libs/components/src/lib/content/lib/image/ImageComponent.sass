@@ -28,7 +28,9 @@
     &:before,
     > .between
       border-radius: 50% !important
-      clip-path: none !important
+
+    > .between
+      clip-path: circle() !important
 
   &.has-url
     @include HoverTransformingDirective.host

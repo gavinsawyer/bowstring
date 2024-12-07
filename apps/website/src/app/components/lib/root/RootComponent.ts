@@ -80,6 +80,30 @@ export class RootComponent {
     },
   );
   protected readonly authenticationService: AuthenticationService                                                                                               = inject<AuthenticationService>(AuthenticationService);
+  protected readonly bannerTemplateRef$: Signal<TemplateRef<never> | null>                                                                                      = toSignal<TemplateRef<never> | null>(
+    toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
+      switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
+        (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
+          switchMap<RouteComponent, Observable<TemplateRef<never> | undefined>>(
+            ({ bannerTemplateRef$ }: RouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
+              bannerTemplateRef$,
+              {
+                injector: this.injector,
+              },
+            ),
+          ),
+          startWith<TemplateRef<never> | undefined, [ TemplateRef<never> | undefined ]>((routerOutlet.component as RouteComponent).bannerTemplateRef$()),
+          map<TemplateRef<never> | undefined, TemplateRef<never> | null>(
+            (templateRef?: TemplateRef<never>): TemplateRef<never> | null => templateRef || null,
+          ),
+        ),
+      ),
+      startWith<TemplateRef<never> | null, [ null ]>(null),
+    ),
+    {
+      requireSync: true,
+    },
+  );
   protected readonly belowTemplateRef$: Signal<TemplateRef<never> | null>                                                                                       = toSignal<TemplateRef<never> | null>(
     toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
       switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(

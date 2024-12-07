@@ -15,12 +15,12 @@ export class ChildRouteComponent
 
   private readonly meta: Meta = inject<Meta>(Meta);
 
-  public readonly inspectorTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("inspectorTemplate");
   public readonly descriptionInput$: InputSignal<string>                        = input.required<string>(
     {
       alias: "description",
     },
   );
+  public readonly inspectorTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("inspectorTemplate");
 
   public ngOnInit(): void {
     this.meta.updateTag(

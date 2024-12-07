@@ -44,6 +44,10 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
     @include color-scheme("dark", $shade)
 
   > .harness
+    > .between
+      background: $background
+      color: $foreground
+
     &:after
       backdrop-filter: blur(calc(1rem * pow(var(--phi), $material-opacity))) saturate(calc(1 + max(-0.5, var(--color-scheme-dark) - var(--color-scheme-light)) * pow($material-opacity, 2))) brightness(calc(1 + pow($material-opacity, 2)))
       background: $pseudobetween-background
@@ -54,7 +58,3 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
       top: -0.75px
       width: calc(100% + 1.5px)
       z-index: 0
-
-    > .between
-      background: $background
-      color: $foreground

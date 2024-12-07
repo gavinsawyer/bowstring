@@ -25,7 +25,7 @@
           type="checkbox">
         <div>
           <div class="harness">
-            <div class="between"><ng-content /></div>
+            <div class="between"><ng-container *ngTemplateOutlet="symbolTemplateRef$() || null" /></div>
           </div>
         </div>
       </label>

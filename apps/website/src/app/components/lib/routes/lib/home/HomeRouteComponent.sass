@@ -1,8 +1,11 @@
 \:host
   display: contents
 
-standard--flexbox-container#below::ng-deep > .harness > .between > standard--box > .harness > .between > standard--heading-group > .harness > .between
-  max-width: 24rem
+standard--flexbox-container#below::ng-deep > .harness > .between
+  &,
+  > standard--flexbox-container > .harness > .between > standard--aside > .harness > .between
+    > standard--box > .harness > .between > standard--heading-group > .harness > .between
+      max-width: 24rem
 
 @media (min-width: 48rem)
   standard--flexbox-container#below::ng-deep > .harness > .between

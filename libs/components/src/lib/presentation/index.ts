@@ -1,3 +1,4 @@
+export * from "./lib/banner/BannerComponent";
 export * from "./lib/box/BoxComponent";
 export * from "./lib/footer/FooterComponent";
 export * from "./lib/scroll stack/ScrollStackComponent";

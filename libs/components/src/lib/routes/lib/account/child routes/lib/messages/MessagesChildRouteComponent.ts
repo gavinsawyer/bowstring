@@ -6,9 +6,9 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validatio
 import { type AccountDocument }                                                                                                                                                               from "@standard/interfaces";
 import { AccountService, InputService }                                                                                                                                                       from "@standard/services";
 import { isEqual }                                                                                                                                                                            from "lodash";
-import { map, startWith }                                                                                                                                                                                      from "rxjs";
-import { BoxComponent, ComboboxInputComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, SymbolComponent, TextFieldInputComponent, ToggleComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                                                                 from "../../../child route/ChildRouteComponent";
+import { map, startWith }                                                                                                                                                                     from "rxjs";
+import { BoxComponent, ComboboxInputComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, TextFieldInputComponent, ToggleComponent } from "../../../../../../../";
+import { ChildRouteComponent }                                                                                                                                                                from "../../../child route/ChildRouteComponent";
 
 
 @Component(
@@ -25,7 +25,6 @@ import { ChildRouteComponent }                                                  
       ReactiveFormsModule,
       TextFieldInputComponent,
       ToggleComponent,
-      SymbolComponent,
     ],
     styleUrls:       [
       "MessagesChildRouteComponent.sass",
