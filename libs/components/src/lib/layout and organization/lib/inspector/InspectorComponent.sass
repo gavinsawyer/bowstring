@@ -21,7 +21,7 @@
     --standard--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
 
   > .harness
-    z-index: 2
+    z-index: 3
 
     > .between
       &::ng-deep > *
@@ -61,6 +61,7 @@
           @include FlexboxContainerDirective.children
           @include GlassDirective.children
           @include RoundedDirective.children
+
 
 @each $host-context-namespace in ("main", "above", "below", "sheet", "box")
   \:host-context(standard--#{ $host-context-namespace })

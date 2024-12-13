@@ -20,7 +20,7 @@
       display: none
 
 
-@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "box", "article", "form")
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--section--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
     --standard--section--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

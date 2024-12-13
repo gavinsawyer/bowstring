@@ -5,7 +5,7 @@ import { RouterOutlet }                                                         
 import { MasonryChildDirective }                                                                                                                                      from "@standard/directives";
 import { map, type Observable, of, startWith, switchMap }                                                                                                             from "rxjs";
 import { FlexboxContainerComponent, HeaderComponent, ImageComponent, InspectorComponent, LinkComponent, MasonryContainerComponent, RouteComponent, SectionComponent } from "../../../../";
-import { type ChildRouteComponent }                                                                                                                                   from "./child route/ChildRouteComponent";
+import { type ChildRouteComponent }                                                                                                                                   from "./child/ChildRouteComponent";
 
 
 @Component(

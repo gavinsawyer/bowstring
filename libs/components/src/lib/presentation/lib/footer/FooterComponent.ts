@@ -186,9 +186,14 @@ export class FooterComponent {
     ),
   ) : signal<undefined>(undefined);
   protected readonly raisedWhenPinnedOrUnpinning$: Signal<boolean | undefined>           = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
-    toObservable<number | undefined>(this.unpinningTranslation$).pipe<boolean | undefined>(
+    toObservable<number | undefined>(this.unpinningTranslation$).pipe<number | undefined, boolean | undefined>(
+      delayWhen<number | undefined>(
+        (unpinningTranslation?: number): Observable<number> => unpinningTranslation !== 0 ? timer(0) : timer(120),
+      ),
       map<number | undefined, boolean | undefined>(
-        (unpinningTranslation?: number): boolean | undefined => {
+        (): boolean | undefined => {
+          const unpinningTranslation: number | undefined = this.unpinningTranslation$();
+
           if (unpinningTranslation === undefined)
             return undefined;
 

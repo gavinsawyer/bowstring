@@ -12,6 +12,7 @@
   --standard--footer--gap-column: var(--standard--container-directive--padding-sides)
   --standard--footer--gap-row: var(--standard--container-directive--padding-bottom)
   --standard--footer--material-opacity: 0.6
+  --standard--footer--position-bottom: max(var(--standard--root--safe-area-inset-bottom), var(--standard--root--gap-row))
 
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
@@ -21,7 +22,7 @@
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
   --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-  --standard--container-directive--position-bottom: max(var(--standard--root--safe-area-inset-bottom), var(--standard--root--padding-bottom)) !important
+  --standard--container-directive--position-bottom: var(--standard--footer--position-bottom) !important
   --standard--container-directive--position-top: 0 !important
   --standard--elevated-directive--material-opacity: var(--standard--footer--material-opacity) !important
   --standard--flexbox-container-directive--gap-column: var(--standard--footer--gap-column) !important
@@ -35,7 +36,7 @@
 
   > .harness
     transform-origin: bottom
-    z-index: 4
+    z-index: 1
 
     @mixin keyframes--lower-harness
       scale: 1
@@ -96,13 +97,13 @@
     display: grid
     grid-auto-rows: 1fr
     margin-bottom: calc(-1 * var(--standard--root--gap-row))
-    z-index: 3
+    z-index: 0
 
     &:before
-      bottom: calc(-1 * var(--standard--container-directive--position-bottom))
-      height: calc(1px * var(--standard--footer--height) + 4 * var(--standard--container-directive--position-bottom))
+      bottom: calc(-1 * var(--standard--footer--position-bottom))
+      height: calc(1px * var(--standard--footer--height) + 4 * var(--standard--footer--position-bottom))
       left: 0
-      mask-image: linear-gradient(to bottom, transparent, red calc(0px + 1.5 * var(--standard--container-directive--position-bottom)), red calc(1px * var(--standard--footer--height) + 3 * var(--standard--container-directive--position-bottom)), transparent calc(1px * var(--standard--footer--height) + 4 * var(--standard--container-directive--position-bottom)))
+      mask-image: linear-gradient(to bottom, transparent, red calc(0px + 1.5 * var(--standard--footer--position-bottom)), red calc(1px * var(--standard--footer--height) + 3 * var(--standard--footer--position-bottom)), transparent calc(1px * var(--standard--footer--height) + 4 * var(--standard--footer--position-bottom)))
       position: fixed
       width: 100vw
 
@@ -177,58 +178,149 @@
     &.raisedOrLoweringWhenPinnedOrUnpinning
       > .harness
         animation: pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
+        z-index: 2
 
         &:before
           animation: raise-shadow 360ms var(--bounce) forwards
 
-      > .backdrop:before
-        animation: pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
+      > .backdrop
+        z-index: 1
+
+        &:before
+          animation: pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
 
       &:not(.pinned),
       &:not(.raisedWhenPinnedOrUnpinning)
         > .harness
           animation: unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
+          z-index: 1
 
           &:before
             animation: lower-shadow 360ms var(--bounce) forwards
 
-        > .backdrop:before
-          animation: unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards
+        > .backdrop
+          z-index: 0
 
-  #pinnedControl
-    @include ElevatedDirective.children
-    @include FlexboxContainerDirective.children
-    @include GlassDirective.children
-    @include RoundedDirective.children
+          &:before
+            animation: unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards
 
-    @include CanvasDirective.host(18%)
-    @include FlexboxContainerDirective.host
+div#pinnedControl::ng-deep
+  @include ElevatedDirective.children
+  @include FlexboxContainerDirective.children
+  @include GlassDirective.children
+  @include RoundedDirective.children
 
-    --standard--flexbox-container-directive--align-items: center !important
-    --standard--flexbox-container-directive--flex-direction: row !important
-    --standard--flexbox-container-directive--justify-content: center !important
+  @include CanvasDirective.host(18%)
+  @include FlexboxContainerDirective.host
 
+  --standard--flexbox-container-directive--align-items: center !important
+  --standard--flexbox-container-directive--flex-direction: row !important
+  --standard--flexbox-container-directive--justify-content: center !important
+
+  > .harness
+    background: none
+    border: 0
+    color: inherit
+    cursor: pointer
+    font: inherit
+    letter-spacing: inherit
+    line-height: inherit
+    padding: 0
+    text-align: start
+    text-decoration: none
+
+    > .between
+      background: none !important
+      font-size: calc(1rem * pow(var(--phi), 0.5))
+      opacity: 1
+      transition: opacity 200ms ease-in-out
+
+      > svg
+        display: grid
+        height: 1em
+        max-width: 1em
+        overflow: visible
+        transform: translateZ(0)
+
+\:host-context(standard--main)
+  --standard--footer--position-bottom: max(var(--standard--root--safe-area-inset-bottom), var(--standard--main--gap-row))
+
+  > .harness
+    @mixin keyframes-main--pin-harness
+      translate: 0 0 0
+
+    @mixin keyframes-main--unpin-harness
+      translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--main--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unpinning-translation))) 0
+
+    @include keyframes-main--unpin-harness
+
+    @keyframes main--pin-harness
+      0%
+        @include keyframes-main--unpin-harness
+
+      100%
+        @include keyframes-main--pin-harness
+
+    @keyframes main--unpin-harness
+      0%
+        @include keyframes-main--pin-harness
+
+      100%
+        @include keyframes-main--unpin-harness
+
+  > .backdrop
+    margin-bottom: calc(-1 * var(--standard--main--gap-row))
+
+    &:before
+      bottom: calc(-1 * var(--standard--main--gap-row))
+
+      @mixin keyframes-main--pin-backdrop
+        translate: 0 0 0
+
+      @mixin keyframes-main--unpin-backdrop
+        translate: 0 calc(min(1px * var(--standard--footer--height) + 2 * var(--standard--main--gap-row) + var(--standard--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--standard--footer--unpinning-translation))) 0
+
+      @include keyframes-main--unpin-backdrop
+
+      @keyframes main--pin-backdrop
+        0%
+          @include keyframes-main--unpin-backdrop
+
+        100%
+          @include keyframes-main--pin-backdrop
+
+      @keyframes main--unpin-backdrop
+        0%
+          @include keyframes-main--pin-backdrop
+
+        100%
+          @include keyframes-main--unpin-backdrop
+
+  &.pinnedOrUnpinning
     > .harness
-      background: none
-      border: 0
-      color: inherit
-      cursor: pointer
-      font: inherit
-      letter-spacing: inherit
-      line-height: inherit
-      padding: 0
-      text-align: start
-      text-decoration: none
+      animation: main--pin-harness 360ms var(--bounce) forwards
 
-      > .between
-        background: none !important
-        font-size: calc(1rem * pow(var(--phi), 0.5))
-        opacity: 1
-        transition: opacity 200ms ease-in-out
+    > .backdrop:before
+      animation: main--pin-backdrop 360ms var(--bounce) forwards
 
-        > svg
-          display: grid
-          height: 1em
-          max-width: 1em
-          overflow: visible
-          transform: translateZ(0)
+    &:not(.pinned)
+      > .harness
+        animation: main--unpin-harness 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: main--unpin-backdrop 360ms var(--bounce) forwards
+
+    &.raisedOrLoweringWhenPinnedOrUnpinning
+      > .harness
+        animation: main--pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: main--pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
+
+      &:not(.pinned),
+      &:not(.raisedWhenPinnedOrUnpinning)
+        > .harness
+          animation: main--unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
+
+        > .backdrop:before
+          animation: main--unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards

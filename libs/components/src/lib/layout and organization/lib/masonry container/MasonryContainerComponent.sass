@@ -24,7 +24,8 @@
       margin-bottom: var(--standard--masonry-container--gap-row)
       width: calc(1px * var(--standard--masonry-container--column-width))
 
-@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
+
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--masonry-container--gap-column: var(--standard--#{ $host-context-namespace }--gap-column)
     --standard--masonry-container--gap-row: var(--standard--#{ $host-context-namespace }--gap-row)

@@ -1,0 +1,129 @@
+<ng-template #aboveTemplate>
+  <standard--section
+    alignItems="center"
+    flexDirection="row"
+    flexShrink="0">
+    <standard--header
+      alignItems="last baseline"
+      flexDirection="row"
+      fontSizeExponent="-2"
+      justifyContent="space-between">
+      <h2>
+        <standard--link
+          exact
+          i18n="@@libs--Components--Routes--Shop--Header"
+          url="/shop">Shop</standard--link>
+      </h2>
+    </standard--header>
+  </standard--section>
+  <standard--flexbox-container
+    flexBasis="100%"
+    flexGrow="1"
+    gapColumn="0"
+    gapRow="0">
+    <standard--flexbox-container class="above">
+      <standard--flexbox-container flexGrow="1">
+        <standard--section
+          flexGrow="1"
+          flexShrink="0">
+          <router-outlet />
+        </standard--section>
+        @if (routerOutlet$()?.isActivated && inspectorTemplateRef$(); as inspectorTemplateRef) {<standard--inspector>
+          <ng-container *ngTemplateOutlet="inspectorTemplateRef" />
+        </standard--inspector>}
+      </standard--flexbox-container>
+    </standard--flexbox-container>
+    @if (!routerOutlet$()?.isActivated) {<standard--section class="above">
+      <standard--flexbox-container flexDirection="row">
+        <standard--image
+          appearance="transparent"
+          height="1200"
+          src="https://cdn.meideinthe.cloud/entirestudios.com/content/4-uniform/16-rice/es-uniform-banner-rice-2.webp"
+          width="1759"/>
+      </standard--flexbox-container>
+      <standard--masonry-container>
+        <standard--image
+          height="275"
+          src="https://placehold.co/200x275"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="250"
+          src="https://placehold.co/200x250"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="350"
+          src="https://placehold.co/200x350"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="325"
+          src="https://placehold.co/200x325"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="300"
+          src="https://placehold.co/200x300"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="250"
+          src="https://placehold.co/200x250"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="275"
+          src="https://placehold.co/200x275"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="250"
+          src="https://placehold.co/200x250"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="200"
+          src="https://placehold.co/200x200"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+        <standard--image
+          height="175"
+          src="https://placehold.co/200x175"
+          *standardMasonryChild
+          url="./e"
+          width="200"/>
+      </standard--masonry-container>
+    </standard--section>}
+  </standard--flexbox-container>
+  @if (routerOutlet$()?.isActivated) {<standard--box>
+    <standard--header fontSizeExponent="-1">
+      <h6 i18n>You may also like</h6>
+    </standard--header>
+  </standard--box>}
+  <standard--footer #footerComponent
+    flexDirection="row"
+    justifyContent="space-between"
+    pinned>
+    <standard--heading-group>
+      <standard--header fontSizeExponent="-1">
+        <h6 i18n="libs--Components--Routes--Shop--Footer--Header">Shopping bag</h6>
+      </standard--header>
+      <p>Your bag is empty.</p>
+    </standard--heading-group>
+    <ng-container *ngTemplateOutlet="footerComponent.pinnedControlTemplateRef$()" />
+  </standard--footer>
+</ng-template>
+
+<ng-template #bannerTemplate>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet dignissimos molestias nisi quae quasi quis sed, voluptatum!
+</ng-template>

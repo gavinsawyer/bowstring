@@ -4,7 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR }                              
 import { type Symbol }                                                                                                                                                                                                                                 from "@standard/interfaces";
 import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                        from "@standard/pipes";
 import loadSymbol                                                                                                                                                                                                                                      from "@standard/symbols";
-import { combineLatestWith, filter, firstValueFrom }                                                                                                                                                                                                   from "rxjs";
+import { combineLatestWith, firstValueFrom }                                                                                                                                                                                                           from "rxjs";
 import { fromPromise }                                                                                                                                                                                                                                 from "rxjs/internal/observable/innerFrom";
 import { v7 as uuidV7 }                                                                                                                                                                                                                                from "uuid";
 import providers                                                                                                                                                                                                                                       from "../inputs/lib/providers";
@@ -35,10 +35,7 @@ export class InputComponent
   implements ControlValueAccessor {
 
   constructor() {
-    toObservable<ElementRef<HTMLInputElement> | undefined>(this.htmlInputElementRef$).pipe<ElementRef<HTMLInputElement>, [ ElementRef<HTMLInputElement>, string | undefined ], [ ElementRef<HTMLInputElement>, string | undefined ]>(
-      filter<ElementRef<HTMLInputElement> | undefined, ElementRef<HTMLInputElement>>(
-        (htmlInputElementRef?: ElementRef<HTMLInputElement>): htmlInputElementRef is ElementRef<HTMLInputElement> => !!htmlInputElementRef,
-      ),
+    toObservable<ElementRef<HTMLInputElement>>(this.htmlInputElementRef$).pipe<[ ElementRef<HTMLInputElement>, string | undefined ], [ ElementRef<HTMLInputElement>, string | undefined ]>(
       combineLatestWith<ElementRef<HTMLInputElement>, [ string | undefined ]>(toObservable<string | undefined>(this.maskInput$)),
       takeUntilDestroyed<[ ElementRef<HTMLInputElement>, string | undefined ]>(this.destroyRef),
     ).subscribe(

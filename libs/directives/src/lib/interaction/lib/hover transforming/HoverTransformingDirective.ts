@@ -144,31 +144,7 @@ export class HoverTransformingDirective {
             "pointerdown",
           ).pipe<boolean>(
             switchMap<PointerEvent, Observable<boolean>>(
-              (): Observable<boolean> => merge<[ false, false, false, true ]>(
-                fromEvent<PointerEvent>(
-                  htmlElement,
-                  "pointerup",
-                ).pipe<false>(
-                  map<PointerEvent, false>(
-                    (): false => false,
-                  ),
-                ),
-                fromEvent<PointerEvent>(
-                  htmlElement,
-                  "pointerleave",
-                ).pipe<false>(
-                  map<PointerEvent, false>(
-                    (): false => false,
-                  ),
-                ),
-                fromEvent<PointerEvent>(
-                  window,
-                  "scroll",
-                ).pipe<false>(
-                  map<PointerEvent, false>(
-                    (): false => false,
-                  ),
-                ),
+              (): Observable<boolean> => merge<[ true, false, false, false ]>(
                 fromEvent<PointerEvent>(
                   htmlElement,
                   "pointerenter",
@@ -181,6 +157,30 @@ export class HoverTransformingDirective {
                       window,
                       "pointerup",
                     ),
+                  ),
+                ),
+                fromEvent<PointerEvent>(
+                  htmlElement,
+                  "pointerleave",
+                ).pipe<false>(
+                  map<PointerEvent, false>(
+                    (): false => false,
+                  ),
+                ),
+                fromEvent<PointerEvent>(
+                  htmlElement,
+                  "pointerup",
+                ).pipe<false>(
+                  map<PointerEvent, false>(
+                    (): false => false,
+                  ),
+                ),
+                fromEvent<PointerEvent>(
+                  window,
+                  "scroll",
+                ).pipe<false>(
+                  map<PointerEvent, false>(
+                    (): false => false,
                   ),
                 ),
               ).pipe<boolean>(

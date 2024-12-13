@@ -9,6 +9,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
       "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
+      "[class.appearance-transparent]":          "appearanceInput$() === 'transparent'",
       "[class.has-url]":                         "urlInput$()",
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
     },
@@ -92,7 +93,7 @@ export class ImageComponent {
       alias: "alt",
     },
   );
-  public readonly appearanceInput$: InputSignal<"circular" | undefined>                  = input<"circular" | undefined>(
+  public readonly appearanceInput$: InputSignal<"circular" | "transparent" | undefined>  = input<"circular" | "transparent" | undefined>(
     undefined,
     {
       alias: "appearance",

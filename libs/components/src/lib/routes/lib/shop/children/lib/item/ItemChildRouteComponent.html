@@ -1,0 +1,82 @@
+<standard--flexbox-container
+  flexGrow="1"
+  gapColumn="0"
+  gapRow="0">
+  <standard--aside />
+  <standard--article
+    flexGrow="1"
+    flexShrink="0">
+    <standard--flexbox-container flexDirection="row">
+      <standard--image
+        appearance="transparent"
+        height="796"
+        src="https://www.aesop.com/u1nb1km7t5q7/4jB4FQ4t70q06gMmTWsUmr/84eac2ee1d375ae72953c3fc70fcb3b1/Aesop-Skin-Blue-Chamomile-Facial-Hydrating-Masque-60mL-Hybris-Large-782x796px.png"
+        width="782" />
+    </standard--flexbox-container>
+  </standard--article>
+</standard--flexbox-container>
+<standard--flexbox-container>
+  <standard--article
+    flexGrow="1"
+    flexShrink="0">
+    <standard--masonry-container columns="2">
+      <standard--image
+        height="1800"
+        src="https://www.aesop.com/u1nb1km7t5q7/4UisdOgOeTz1xFoYnRjdgw/e70ab98fd44a4d0e20ed527e88f86600/Moroccan-Neroli-Post-Shave-Lotion-1440x1800.jpg"
+        *standardMasonryChild
+        width="1440" />
+      <standard--image
+        height="1500"
+        src="https://www.aesop.com/u1nb1km7t5q7/2XpD3DUMlGcfbDzGJrsD6k/95e5e6d4f83d2fe05098e5b0791c5e50/Aesop-Skin-Blue-Chamomile-Facial-Hydrating-Masque-Hybris-Secondary-Texture-50-50-Desktop-1440x1500px.jpg"
+        *standardMasonryChild
+        width="1440" />
+    </standard--masonry-container>
+  </standard--article>
+</standard--flexbox-container>
+
+<ng-template #inspectorTemplate>
+  <standard--heading-group>
+    <standard--header>
+      <h4>Blue Chamomile Facial Hydrating Masque</h4>
+      <h5><standard--link>skin</standard--link>&nbsp;&bull;&nbsp;<standard--link>treat&nbsp;&amp;&nbsp;masque</standard--link></h5>
+    </standard--header>
+    <p><b i18n>Size</b><br />2.0oz</p>
+    <p>US$60</p>
+  </standard--heading-group>
+  <standard--button
+    appearance="raised"
+    level="2"
+    material="primary">
+    <standard--symbol input="BagFillBadgePlus" />
+    <standard--label
+      i18n-input
+      input="Add to bag" />
+  </standard--button>
+  <standard--button>
+    <standard--symbol input="BoltFill" />
+    <standard--label
+      i18n-input
+      input="Buy instantly" />
+  </standard--button>
+  <standard--divider />
+  <standard--section>
+    <standard--heading-group>
+      <p><b>Suited to</b><br />Dry or dehydrated skin, frequent travellers</p>
+      <p><b>Skin feel</b><br />Hydrated, cool and refreshed with a dewy, transparent finish</p>
+      <p><b>Key ingredients</b><br />Niacinamide (Vitamin B₃), Sodium Carrageenan, Bisabolol</p>
+    </standard--heading-group>
+  </standard--section>
+  <standard--flexbox-container
+    alignContent="center"
+    flexDirection="row"
+    flexWrap="wrap">
+    <standard--link>
+      <standard--symbol input="BookmarkSlashFill" />
+      <standard--label input="Remove from collection" />
+    </standard--link>
+    <standard--link>
+      <standard--symbol input="SquareAndArrowUpFill" />
+      <standard--label input="Share" />
+    </standard--link>
+  </standard--flexbox-container>
+</ng-template>

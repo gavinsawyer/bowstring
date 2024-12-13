@@ -8,10 +8,7 @@
 \:host
   display: contents
 
-  @include CanvasDirective.host(18%)
   @include ContainerDirective.host
-  @include ElevatedDirective.host
-  @include RoundedDirective.host
 
   --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
 
@@ -24,6 +21,11 @@
       max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
       width: 100%
 
+  &:not(.appearance-transparent)
+    @include CanvasDirective.host(18%)
+    @include ElevatedDirective.host
+    @include RoundedDirective.host
+
   &.appearance-circular > .harness
     &:before,
     > .between
@@ -31,6 +33,9 @@
 
     > .between
       clip-path: circle() !important
+
+  &.appearance-transparent > svg
+    display: none
 
   &.has-url
     @include HoverTransformingDirective.host

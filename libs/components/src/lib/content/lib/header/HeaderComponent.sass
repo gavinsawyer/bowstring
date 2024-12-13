@@ -57,7 +57,7 @@
         font-size: calc(1em * pow(var(--phi), 1))
 
 
-@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "box", "article", "form", "section", "heading-group")
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group")
   \:host-context(standard--#{ $host-context-namespace })
     --standard--header--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
     --standard--header--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
