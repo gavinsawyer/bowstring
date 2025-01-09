@@ -17,16 +17,11 @@ export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>
         "You're not signed in.",
       );
 
-    const accountDocumentReference: DocumentReference<AccountDocument> = getFirestore(getApp()).collection("accounts").doc(authData.uid) as DocumentReference<AccountDocument>;
+    const userId: string                                               = authData.uid;
+    const accountDocumentReference: DocumentReference<AccountDocument> = getFirestore(getApp()).collection("accounts").doc(userId) as DocumentReference<AccountDocument>;
 
     return accountDocumentReference.get().then<null, never>(
       async (accountDocumentSnapshot: DocumentSnapshot<AccountDocument>): Promise<null> => {
-        if (!process.env["STRIPE_API_KEY"])
-          throw new HttpsError(
-            "failed-precondition",
-            "A value for `STRIPE_API_KEY` is missing from the environment.",
-          );
-
         const accountDocument: AccountDocument | undefined = accountDocumentSnapshot.data();
 
         if (!accountDocument)
@@ -38,6 +33,12 @@ export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>
         if (accountDocument.stripeCustomer)
           return null;
 
+        if (!process.env["STRIPE_API_KEY"])
+          throw new HttpsError(
+            "failed-precondition",
+            "A value for `STRIPE_API_KEY` is missing from the environment.",
+          );
+
         return new Stripe(process.env["STRIPE_API_KEY"]).customers.create(
           {
             email: accountDocument.email,
@@ -46,7 +47,7 @@ export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>
           ({ id }: Stripe.Response<Stripe.Customer>): Promise<null> => accountDocumentReference.update(
             {
               stripeCustomer: {
-                id: id,
+                id,
               },
             },
           ).then<null, never>(

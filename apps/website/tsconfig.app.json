@@ -9,6 +9,7 @@
   "files":           [
     "src/app/main.browser.ts",
     "src/app/main.server.ts",
+    "src/environment.prod.ts",
     "src/polyfills.ts"
   ],
   "include":         [

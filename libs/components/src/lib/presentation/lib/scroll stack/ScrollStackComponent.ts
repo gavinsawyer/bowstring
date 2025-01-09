@@ -110,9 +110,9 @@ export class ScrollStackComponent {
     toObservable<ElementRef<HTMLDivElement>>(this.htmlDivElementRef$).pipe<number>(
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
         ({ nativeElement: htmlDivElement }: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(
-          (resizeEventObserver: Observer<number>): TeardownLogic => {
+          (widthObserver: Observer<number>): TeardownLogic => {
             const resizeObserver: ResizeObserver = new ResizeObserver(
-              ([ { target: { clientWidth } } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(clientWidth),
+              ([ { target: { clientWidth } } ]: ResizeObserverEntry[]): void => widthObserver.next(clientWidth),
             );
 
             resizeObserver.observe(htmlDivElement);

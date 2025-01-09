@@ -4,6 +4,7 @@ import { type FirebaseApp, initializeApp, provideFirebaseApp }                  
 import { type AppCheck, initializeAppCheck, provideAppCheck }                                                                                                                                                                                                                                                                                                                                                           from "@angular/fire/app-check";
 import { type Auth, getAuth, provideAuth }                                                                                                                                                                                                                                                                                                                                                                              from "@angular/fire/auth";
 import { AngularFirestoreModule }                                                                                                                                                                                                                                                                                                                                                                                       from "@angular/fire/compat/firestore";
+import { type Database, getDatabase, provideDatabase }                                                                                                                                                                                                                                                                                                                                                                  from "@angular/fire/database";
 import { type Firestore, getFirestore, provideFirestore }                                                                                                                                                                                                                                                                                                                                                               from "@angular/fire/firestore";
 import { type Functions, getFunctions, provideFunctions }                                                                                                                                                                                                                                                                                                                                                               from "@angular/fire/functions";
 import { ReactiveFormsModule }                                                                                                                                                                                                                                                                                                                                                                                          from "@angular/forms";
@@ -97,6 +98,9 @@ import { LOCALE_IDS }                                                           
       ),
       provideAuth(
         (): Auth => getAuth(),
+      ),
+      provideDatabase(
+        (): Database => getDatabase(),
       ),
       provideFirebaseApp(
         (): FirebaseApp => initializeApp(environment.apis.firebase),

@@ -8,13 +8,13 @@ import { AccountService }                                                       
 import { isEqual }                                                                                                                                                                        from "lodash";
 import { startWith }                                                                                                                                                                      from "rxjs";
 import { BoxComponent, ButtonComponent, DatepickerInputComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, SymbolComponent, TextFieldInputComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                                            from "../../../child/ChildRouteComponent";
+import { AccountChildRouteComponent }                                                                                                                                                     from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports:     [
       BoxComponent,
       ButtonComponent,
       DatepickerInputComponent,
@@ -26,16 +26,16 @@ import { ChildRouteComponent }                                                  
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    styleUrls:       [
-      "PersonalInformationChildRouteComponent.sass",
+    styleUrls:   [
+      "PersonalInformationAccountChildRouteComponent.sass",
     ],
-    templateUrl:     "PersonalInformationChildRouteComponent.html",
+    templateUrl: "PersonalInformationAccountChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class PersonalInformationChildRouteComponent
-  extends ChildRouteComponent {
+export class PersonalInformationAccountChildRouteComponent
+  extends AccountChildRouteComponent {
 
   constructor() {
     super();

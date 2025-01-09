@@ -8,13 +8,13 @@ import { AccountService, InputService }                                         
 import { isEqual }                                                                                                                                                                            from "lodash";
 import { map, startWith }                                                                                                                                                                     from "rxjs";
 import { BoxComponent, ComboboxInputComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, TextFieldInputComponent, ToggleComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                                                from "../../../child/ChildRouteComponent";
+import { AccountChildRouteComponent }                                                                                                                                                         from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports:     [
       BoxComponent,
       ComboboxInputComponent,
       DividerComponent,
@@ -26,16 +26,16 @@ import { ChildRouteComponent }                                                  
       TextFieldInputComponent,
       ToggleComponent,
     ],
-    styleUrls:       [
-      "MessagesChildRouteComponent.sass",
+    styleUrls:   [
+      "MessagesAccountChildRouteComponent.sass",
     ],
-    templateUrl:     "MessagesChildRouteComponent.html",
+    templateUrl: "MessagesAccountChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class MessagesChildRouteComponent
-  extends ChildRouteComponent {
+export class MessagesAccountChildRouteComponent
+  extends AccountChildRouteComponent {
 
   constructor() {
     super();

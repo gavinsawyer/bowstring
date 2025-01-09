@@ -4,32 +4,25 @@
 
 $namespace: "primary"
 
-$primary: hsl(34, 29%, 54%)
-
 $background: functions.get-color-reference($namespace, "background")
 $foreground: functions.get-color-reference($namespace, "foreground")
 
-$brand-background-dark: functions.get-value-reference($namespace, "brand-background-dark")
-$brand-background-light: functions.get-value-reference($namespace, "brand-background-light")
-$brand-foreground-dark: functions.get-value-reference($namespace, "brand-foreground-dark")
-$brand-foreground-light: functions.get-value-reference($namespace, "brand-foreground-light")
-
-$background-dark: functions.get-input-reference($namespace, "background-dark", $brand-background-dark)
-$background-light: functions.get-input-reference($namespace, "background-light", $brand-background-light)
-$foreground-dark: functions.get-input-reference($namespace, "foreground-dark", $brand-foreground-dark)
-$foreground-light: functions.get-input-reference($namespace, "foreground-light", $brand-foreground-light)
+$brand-primary-background-dark: functions.get-value-reference($namespace, "brand-primary-background-dark")
+$brand-primary-background-light: functions.get-value-reference($namespace, "brand-primary-background-light")
+$brand-primary-foreground-dark: functions.get-value-reference($namespace, "brand-primary-foreground-dark")
+$brand-primary-foreground-light: functions.get-value-reference($namespace, "brand-primary-foreground-light")
 
 @function get-color($theme, $type)
   @if ($theme == "light")
     @if ($type == "background")
-      @return $background-light
+      @return $brand-primary-background-light
     @else if ($type == "foreground")
-      @return $foreground-light
+      @return $brand-primary-foreground-light
   @else if ($theme == "dark")
     @if ($type == "background")
-      @return $background-dark
+      @return $brand-primary-background-dark
     @else if ($type == "foreground")
-      @return $foreground-dark
+      @return $brand-primary-foreground-dark
 
 
 @mixin color-scheme($theme)
@@ -38,8 +31,8 @@ $foreground-light: functions.get-input-reference($namespace, "foreground-light",
 
 @mixin children
   @include mixins.reset-colors($namespace, ("background", "foreground"))
-  @include mixins.reset-inputs($namespace, ("background-dark", "background-light", "foreground-dark", "foreground-light"))
-  @include mixins.reset-values($namespace, ("brand-background-dark", "brand-background-light", "brand-foreground-dark", "brand-foreground-light"))
+  @include mixins.reset-inputs($namespace, ())
+  @include mixins.reset-values($namespace, ("brand-primary-background-dark", "brand-primary-background-light", "brand-primary-foreground-dark", "brand-primary-foreground-light"))
 
 @mixin host
   @include color-scheme("light")

@@ -21,12 +21,6 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
 
     return accountDocumentReference.get().then<null, never>(
       async (accountDocumentSnapshot: DocumentSnapshot<AccountDocument>): Promise<null> => {
-        if (!process.env["STRIPE_API_KEY"])
-          throw new HttpsError(
-            "failed-precondition",
-            "A value for `STRIPE_API_KEY` is missing from the environment.",
-          );
-
         const accountDocument: AccountDocument | undefined = accountDocumentSnapshot.data();
 
         if (!accountDocument)
@@ -35,40 +29,68 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
             "The account document is missing.",
           );
 
-        if (!accountDocument.stripeCustomer)
+        const stripeCustomer: AccountDocument["stripeCustomer"] = accountDocument.stripeCustomer;
+
+        if (!stripeCustomer)
           throw new HttpsError(
             "invalid-argument",
             "A value for `stripeCustomer` is missing from the account document.",
           );
 
-        const stripeCustomer: NonNullable<AccountDocument["stripeCustomer"]> = accountDocument.stripeCustomer;
+        if (!process.env["STRIPE_API_KEY"])
+          throw new HttpsError(
+            "failed-precondition",
+            "A value for `STRIPE_API_KEY` is missing from the environment.",
+          );
 
         return new Stripe(process.env["STRIPE_API_KEY"]).paymentMethods.attach(
           callableRequest.data.paymentMethodId,
           {
-            customer: accountDocument.stripeCustomer.id,
+            customer: stripeCustomer.id,
           },
         ).then<null, never>(
-          (paymentMethod: Stripe.PaymentMethod): Promise<null> => accountDocumentReference.update(
+          (
+            {
+              billing_details: billingDetails,
+              id,
+              type,
+            }: Stripe.PaymentMethod,
+          ): Promise<null> => accountDocumentReference.update(
             {
               stripeCustomer: {
                 ...stripeCustomer,
                 paymentMethod: {
-                  billingDetails: {
-                    address: paymentMethod.billing_details.address ? {
-                      country:    paymentMethod.billing_details.address.country,
-                      city:       paymentMethod.billing_details.address.city,
-                      line1:      paymentMethod.billing_details.address.line1,
-                      line2:      paymentMethod.billing_details.address.line2,
-                      postalCode: paymentMethod.billing_details.address.postal_code,
-                      state:      paymentMethod.billing_details.address.state,
-                    } : null,
-                    email:   paymentMethod.billing_details.email,
-                    name:    paymentMethod.billing_details.name,
-                    phone:   paymentMethod.billing_details.phone,
-                  },
-                  id:             paymentMethod.id,
-                  type:           paymentMethod.type,
+                  billingDetails: ((
+                    {
+                      address,
+                      email,
+                      name,
+                      phone,
+                    }: Stripe.PaymentMethod["billing_details"],
+                  ): { address: { country: string | null, city: string | null, line1: string | null, line2: string | null, postalCode: string | null, state: string | null } | null, email: string | null, name: string | null, phone: string | null } => ({
+                    address: address && ((
+                      {
+                        country,
+                        city,
+                        line1,
+                        line2,
+                        postal_code: postalCode,
+                        state,
+                      }: Stripe.Address,
+                    ): { country: string | null, city: string | null, line1: string | null, line2: string | null, postalCode: string | null, state: string | null } => ({
+                      country,
+                      city,
+                      line1,
+                      line2,
+                      postalCode,
+                      state,
+                    }))(address),
+                    email,
+                    name,
+                    phone,
+                  }))(billingDetails),
+                  id,
+                  type,
                 },
               },
             },

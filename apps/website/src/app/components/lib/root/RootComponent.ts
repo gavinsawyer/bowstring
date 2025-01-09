@@ -9,7 +9,7 @@ import { type RouteComponent, type SheetComponent }                             
 import { CanvasDirective, FlexboxContainerDirective }                                                                             from "@standard/directives";
 import { BRAND, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                                               from "@standard/injection-tokens";
 import { type AccountDocument }                                                                                                   from "@standard/interfaces";
-import { AuthenticationService, ResponsivityService }                                                                             from "@standard/services";
+import { AuthenticationService, ConnectivityService, ResponsivityService }                                                        from "@standard/services";
 import { type Brand }                                                                                                             from "@standard/types";
 import { type GitInfo }                                                                                                           from "git-describe";
 import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
@@ -17,6 +17,7 @@ import { LOCALE_IDS }                                                           
 import { type LocaleId }                                                                                                          from "../../../types";
 
 
+// eslint-disable-next-line @angular-eslint/prefer-standalone
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -129,6 +130,7 @@ export class RootComponent {
     },
   );
   protected readonly brand: Brand                                                                                                                               = inject<Brand>(BRAND);
+  protected readonly connectivityService: ConnectivityService                                                                                                   = inject<ConnectivityService>(ConnectivityService);
   protected readonly gitInfoPartial: Partial<GitInfo>                                                                                                           = inject<Partial<GitInfo>>(GIT_INFO_PARTIAL);
   protected readonly localeId: LocaleId                                                                                                                         = inject<LocaleId>(LOCALE_ID);
   protected readonly localeIds: LocaleId[]                                                                                                                      = inject<LocaleId[]>(LOCALE_IDS);
@@ -313,6 +315,20 @@ export class RootComponent {
         },
       );
     }
+  }
+
+  protected twilio(): void {
+    httpsCallable(
+      this.functions,
+      "helloWorld",
+    )().then<void, never>(
+      (): void => console.log("!!!"),
+      (error: unknown): never => {
+        console.error(error);
+
+        throw error;
+      },
+    )
   }
 
 }

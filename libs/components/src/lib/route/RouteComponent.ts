@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, input, type InputSignal, type OnInit, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { Meta }                                                                                                                  from "@angular/platform-browser";
+import { ChangeDetectionStrategy, Component, inject, input, type InputSignal, type OnInit, type Signal, type TemplateRef, viewChild } from "@angular/core";
+import { Meta }                                                                                                                       from "@angular/platform-browser";
 
 
 @Component(

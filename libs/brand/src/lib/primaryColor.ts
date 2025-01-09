@@ -1,8 +1,5 @@
-import { type Color } from "@standard/interfaces";
+import { ultramarine } from "@standard/colors";
+import { type Color }  from "@standard/interfaces";
 
 
-export const primaryColor: Color = {
-  hue:        130,
-  lightness:  0.53,
-  saturation: 0.17,
-};
+export const primaryColor: Color = ultramarine;

@@ -86,9 +86,9 @@ export class MasonryContainerDirective
       ),
       switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
         ({ nativeElement: columnSizerHtmlDivElement }: ElementRef<HTMLDivElement>): Observable<number> => new Observable<number>(
-          (resizeEventObserver: Observer<number>): TeardownLogic => {
+          (columnWidthObserver: Observer<number>): TeardownLogic => {
             const resizeObserver: ResizeObserver = new ResizeObserver(
-              ([ { target: { clientWidth } } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(clientWidth),
+              ([ { target: { clientWidth } } ]: ResizeObserverEntry[]): void => columnWidthObserver.next(clientWidth),
             );
 
             resizeObserver.observe(columnSizerHtmlDivElement);

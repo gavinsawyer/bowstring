@@ -10,8 +10,6 @@
 
   @include ContainerDirective.host
 
-  --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
-
   > .harness > .between
     display: flex
 
@@ -26,6 +24,8 @@
     @include ElevatedDirective.host
     @include RoundedDirective.host
 
+    --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
+
   &.appearance-circular > .harness
     &:before,
     > .between
@@ -34,8 +34,13 @@
     > .between
       clip-path: circle() !important
 
-  &.appearance-transparent > svg
-    display: none
+  &.appearance-transparent
+    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+
+    > svg
+      display: none
 
   &.has-url
     @include HoverTransformingDirective.host

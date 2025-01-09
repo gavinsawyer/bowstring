@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject }                           
 import { GetRegionDisplayNamePipe }                                                                                                                                                                                                                    from "@standard/pipes";
 import { AccountService }                                                                                                                                                                                                                              from "@standard/services";
 import { AddressStripeElementComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, PaymentStripeElementComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                                                                                                         from "../../../child/ChildRouteComponent";
+import { AccountChildRouteComponent }                                                                                                                                                                                                                  from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports:     [
       AddressStripeElementComponent,
       BoxComponent,
       ButtonComponent,
@@ -23,16 +23,16 @@ import { ChildRouteComponent }                                                  
       SheetComponent,
       SymbolComponent,
     ],
-    styleUrls:       [
-      "PaymentAndShippingChildRouteComponent.sass",
+    styleUrls:   [
+      "PaymentAndShippingAccountChildRouteComponent.sass",
     ],
-    templateUrl:     "PaymentAndShippingChildRouteComponent.html",
+    templateUrl: "PaymentAndShippingAccountChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class PaymentAndShippingChildRouteComponent
-  extends ChildRouteComponent {
+export class PaymentAndShippingAccountChildRouteComponent
+  extends AccountChildRouteComponent {
 
   protected readonly accountService: AccountService = inject<AccountService>(AccountService);
 

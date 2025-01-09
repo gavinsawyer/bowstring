@@ -97,7 +97,6 @@
     display: grid
     grid-auto-rows: 1fr
     margin-bottom: calc(-1 * var(--standard--root--gap-row))
-    z-index: 0
 
     &:before
       bottom: calc(-1 * var(--standard--footer--position-bottom))
@@ -193,13 +192,11 @@
       &:not(.raisedWhenPinnedOrUnpinning)
         > .harness
           animation: unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
-          z-index: 1
 
           &:before
             animation: lower-shadow 360ms var(--bounce) forwards
 
         > .backdrop
-          z-index: 0
 
           &:before
             animation: unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards

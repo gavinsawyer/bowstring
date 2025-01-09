@@ -21,12 +21,6 @@ export const detachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
 
     return accountDocumentReference.get().then<null, never>(
       async (accountDocumentSnapshot: DocumentSnapshot<AccountDocument>): Promise<null> => {
-        if (!process.env["STRIPE_API_KEY"])
-          throw new HttpsError(
-            "failed-precondition",
-            "A value for `STRIPE_API_KEY` is missing from the environment.",
-          );
-
         const accountDocument: AccountDocument | undefined = accountDocumentSnapshot.data();
 
         if (!accountDocument)
@@ -35,13 +29,19 @@ export const detachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
             "The account document is missing.",
           );
 
-        if (!accountDocument.stripeCustomer)
+        const stripeCustomer: AccountDocument["stripeCustomer"] = accountDocument.stripeCustomer;
+
+        if (!stripeCustomer)
           throw new HttpsError(
             "invalid-argument",
             "A value for `stripeCustomer` is missing from the account document.",
           );
 
-        const stripeCustomer: NonNullable<AccountDocument["stripeCustomer"]> = accountDocument.stripeCustomer;
+        if (!process.env["STRIPE_API_KEY"])
+          throw new HttpsError(
+            "failed-precondition",
+            "A value for `STRIPE_API_KEY` is missing from the environment.",
+          );
 
         return new Stripe(process.env["STRIPE_API_KEY"]).paymentMethods.detach(
           callableRequest.data.paymentMethodId,

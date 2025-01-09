@@ -5,7 +5,7 @@ import { RouterOutlet }                                                         
 import { MasonryChildDirective }                                                                                                                                      from "@standard/directives";
 import { map, type Observable, of, startWith, switchMap }                                                                                                             from "rxjs";
 import { FlexboxContainerComponent, HeaderComponent, ImageComponent, InspectorComponent, LinkComponent, MasonryContainerComponent, RouteComponent, SectionComponent } from "../../../../";
-import { type ChildRouteComponent }                                                                                                                                   from "./child/ChildRouteComponent";
+import { type GalleryChildRouteComponent }                                                                                                                            from "./child/GalleryChildRouteComponent";
 
 
 @Component(
@@ -41,15 +41,15 @@ export class GalleryRouteComponent
     toObservable<RouterOutlet | undefined>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
       switchMap<RouterOutlet | undefined, Observable<TemplateRef<never> | null>>(
         (routerOutlet?: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet ? routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
-          switchMap<ChildRouteComponent, Observable<TemplateRef<never> | undefined>>(
-            ({ inspectorTemplateRef$ }: ChildRouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
+          switchMap<GalleryChildRouteComponent, Observable<TemplateRef<never> | undefined>>(
+            ({ inspectorTemplateRef$ }: GalleryChildRouteComponent): Observable<TemplateRef<never> | undefined> => toObservable<TemplateRef<never> | undefined>(
               inspectorTemplateRef$,
               {
                 injector: this.injector,
               },
             ),
           ),
-          startWith<TemplateRef<never> | undefined, [ TemplateRef<never> | undefined ]>(routerOutlet?.isActivated ? (routerOutlet.component as ChildRouteComponent).inspectorTemplateRef$() : undefined),
+          startWith<TemplateRef<never> | undefined, [ TemplateRef<never> | undefined ]>(routerOutlet?.isActivated ? (routerOutlet.component as GalleryChildRouteComponent).inspectorTemplateRef$() : undefined),
           map<TemplateRef<never> | undefined, TemplateRef<never> | null>(
             (templateRef?: TemplateRef<never>): TemplateRef<never> | null => templateRef || null,
           ),

@@ -3,13 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators }              
 import { type AccountDocument }                                                                                                                                                 from "@standard/interfaces";
 import { AccountService }                                                                                                                                                       from "@standard/services";
 import { BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, SymbolComponent, TextFieldInputComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                                  from "../../../child/ChildRouteComponent";
+import { AccountChildRouteComponent }                                                                                                                                           from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports:     [
       BoxComponent,
       ButtonComponent,
       DividerComponent,
@@ -21,16 +21,16 @@ import { ChildRouteComponent }                                                  
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    styleUrls:       [
-      "SecurityChildRouteComponent.sass",
+    styleUrls:   [
+      "SecurityAccountChildRouteComponent.sass",
     ],
-    templateUrl:     "SecurityChildRouteComponent.html",
+    templateUrl: "SecurityAccountChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class SecurityChildRouteComponent
-  extends ChildRouteComponent {
+export class SecurityAccountChildRouteComponent
+  extends AccountChildRouteComponent {
 
   constructor() {
     super();

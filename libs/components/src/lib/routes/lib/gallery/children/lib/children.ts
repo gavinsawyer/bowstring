@@ -10,8 +10,8 @@ const children: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Gallery-Item--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./item/ItemChildRouteComponent").then<Type<unknown>>(
-      ({ ItemChildRouteComponent }: typeof import("./item/ItemChildRouteComponent")): Type<unknown> => ItemChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./item/ItemGalleryChildRouteComponent").then<Type<unknown>>(
+      ({ ItemGalleryChildRouteComponent }: typeof import("./item/ItemGalleryChildRouteComponent")): Type<unknown> => ItemGalleryChildRouteComponent,
     ),
     path:          ":itemId",
     title:         `${ $localize`:@@libs--Components--Routes--Gallery-Item--Meta--Title:Item` } - ${ title } ${ $localize`:@@libs--Components--Routes--Gallery--Meta--Title:Gallery` }`,

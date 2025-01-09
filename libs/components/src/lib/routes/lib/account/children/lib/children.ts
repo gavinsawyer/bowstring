@@ -11,8 +11,8 @@ const children: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Messages--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./messages/MessagesChildRouteComponent").then<Type<unknown>>(
-      ({ MessagesChildRouteComponent }: typeof import("./messages/MessagesChildRouteComponent")): Type<unknown> => MessagesChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./messages/MessagesAccountChildRouteComponent").then<Type<unknown>>(
+      ({ MessagesAccountChildRouteComponent }: typeof import("./messages/MessagesAccountChildRouteComponent")): Type<unknown> => MessagesAccountChildRouteComponent,
     ),
     path:          "messages",
     title:         `${ $localize`:@@libs--Components--Routes--Account-Messages--Meta--Title:Messages` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
@@ -21,8 +21,8 @@ const children: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Orders--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./orders/OrdersChildRouteComponent").then<Type<unknown>>(
-      ({ OrdersChildRouteComponent }: typeof import("./orders/OrdersChildRouteComponent")): Type<unknown> => OrdersChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./orders/OrdersAccountChildRouteComponent").then<Type<unknown>>(
+      ({ OrdersAccountChildRouteComponent }: typeof import("./orders/OrdersAccountChildRouteComponent")): Type<unknown> => OrdersAccountChildRouteComponent,
     ),
     path:          "orders",
     title:         `${ $localize`:@@libs--Components--Routes--Account-Orders--Meta--Title:Orders` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
@@ -31,8 +31,8 @@ const children: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./payment and shipping/PaymentAndShippingChildRouteComponent").then<Type<unknown>>(
-      ({ PaymentAndShippingChildRouteComponent }: typeof import("./payment and shipping/PaymentAndShippingChildRouteComponent")): Type<unknown> => PaymentAndShippingChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./payment and shipping/PaymentAndShippingAccountChildRouteComponent").then<Type<unknown>>(
+      ({ PaymentAndShippingAccountChildRouteComponent }: typeof import("./payment and shipping/PaymentAndShippingAccountChildRouteComponent")): Type<unknown> => PaymentAndShippingAccountChildRouteComponent,
     ),
     path:          "payment-and-shipping",
     title:         `${ $localize`:@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title:Payment and shipping` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
@@ -41,8 +41,8 @@ const children: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-PersonalInformation--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./personal information/PersonalInformationChildRouteComponent").then<Type<unknown>>(
-      ({ PersonalInformationChildRouteComponent }: typeof import("./personal information/PersonalInformationChildRouteComponent")): Type<unknown> => PersonalInformationChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./personal information/PersonalInformationAccountChildRouteComponent").then<Type<unknown>>(
+      ({ PersonalInformationAccountChildRouteComponent }: typeof import("./personal information/PersonalInformationAccountChildRouteComponent")): Type<unknown> => PersonalInformationAccountChildRouteComponent,
     ),
     path:          "personal-information",
     title:         `${ $localize`:@@libs--Components--Routes--Account-PersonalInformation--Meta--Title:Personal information` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
@@ -51,8 +51,8 @@ const children: Routes = [
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Security--Meta--Description:...`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./security/SecurityChildRouteComponent").then<Type<unknown>>(
-      ({ SecurityChildRouteComponent }: typeof import("./security/SecurityChildRouteComponent")): Type<unknown> => SecurityChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./security/SecurityAccountChildRouteComponent").then<Type<unknown>>(
+      ({ SecurityAccountChildRouteComponent }: typeof import("./security/SecurityAccountChildRouteComponent")): Type<unknown> => SecurityAccountChildRouteComponent,
     ),
     path:          "security",
     title:         `${ $localize`:@@libs--Components--Routes--Account-Security--Meta--Title:Security` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,

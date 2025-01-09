@@ -37,7 +37,7 @@ function getAppRequestHandler(localeId: LocaleId): express.RequestHandler {
       publicPath:       `${ process.cwd() }/dist/apps/website/browser/${ String(localeId) }`,
       url:              `${ request.protocol }://${ request.headers.host }${ request.originalUrl }`,
     },
-  ).then<void, void>(
+  ).then<void, never>(
     (html: string): void => {
       response.send(html);
     },

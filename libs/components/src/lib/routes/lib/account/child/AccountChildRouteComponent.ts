@@ -10,7 +10,7 @@ import { Meta }                                                                 
     standalone: true,
   },
 )
-export class ChildRouteComponent
+export class AccountChildRouteComponent
   implements OnInit {
 
   private readonly meta: Meta = inject<Meta>(Meta);

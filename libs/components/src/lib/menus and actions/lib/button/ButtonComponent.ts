@@ -1,19 +1,21 @@
 import { NgTemplateOutlet }                                                                                                                                                                                          from "@angular/common";
 import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                                                              from "@angular/router";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective }                                           from "@standard/directives";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective, SecondaryDirective, WarningDirective }     from "@standard/directives";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.appearance-raised]": "appearanceInput$() === 'raised'",
-      "[class.appearance-symbol]": "appearanceInput$() === 'symbol'",
-      "[class.disabled]":          "disabledInput$() || routerLinkActive$()?.isActive || false",
-      "[class.material-glass]":    "materialInput$() === 'glass'",
-      "[class.material-inverse]":  "materialInput$() === 'inverse'",
-      "[class.material-primary]":  "materialInput$() === 'primary'",
+      "[class.appearance-raised]":  "appearanceInput$() === 'raised'",
+      "[class.appearance-symbol]":  "appearanceInput$() === 'symbol'",
+      "[class.disabled]":           "disabledInput$() || routerLinkActive$()?.isActive || false",
+      "[class.material-glass]":     "materialInput$() === 'glass'",
+      "[class.material-inverse]":   "materialInput$() === 'inverse'",
+      "[class.material-primary]":   "materialInput$() === 'primary'",
+      "[class.material-secondary]": "materialInput$() === 'secondary'",
+      "[class.material-warning]":   "materialInput$() === 'warning'",
     },
     hostDirectives:  [
       {
@@ -58,6 +60,12 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
         inputs:    [
           "level",
         ],
+      },
+      {
+        directive: SecondaryDirective,
+      },
+      {
+        directive: WarningDirective,
       },
     ],
     imports:         [
@@ -104,7 +112,7 @@ export class ButtonComponent {
       transform: booleanAttribute,
     },
   );
-  public readonly materialInput$: InputSignal<"glass" | "inverse" | "primary" | undefined>                                 = input<"glass" | "inverse" | "primary" | undefined>(
+  public readonly materialInput$: InputSignal<"glass" | "inverse" | "primary" | "secondary" | "warning" | undefined>       = input<"glass" | "inverse" | "primary" | "secondary" | "warning" | undefined>(
     undefined,
     {
       alias: "material",

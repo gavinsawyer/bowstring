@@ -279,17 +279,32 @@
     <standard--section
       flexDirection="row"
       flexWrap="wrap"
+      [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
+      <standard--link
+        [material]="connectivityService.connected$() ? undefined : 'warning'"
+        (output)="twilio();">
+        <standard--symbol [input]="connectivityService.connected$() ? 'Network' : 'NetworkSlash'" />
+        @if (connectivityService.connected$()) {<standard--label
+          i18n-input
+          input="Connected" />} @else {<standard--label
+          i18n-input
+          input="Disconnected" />}
+      </standard--link>
+    </standard--section>
+    <standard--section
+      flexDirection="row"
+      flexWrap="wrap"
       justifyContent="center">
       <standard--flexbox-container
         flexDirection="row"
-        [flexGrow]="responsivityService.pastMediumBreakpoint$() ? 1 : 0"
+        flexGrow="1"
         flexWrap="wrap"
         [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
         <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2024&nbsp;}<standard--link [url]="brand.copyrightHolderUrl">{{ brand.copyrightHolder }}</standard--link></span>
         <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">{{ gitInfoPartial.hash || '' }}</standard--link>&rpar;</span>
       </standard--flexbox-container>
       <standard--flexbox-container
-        [flexBasis]="responsivityService.pastSmallBreakpoint$() ? 'auto' : '100%'"
+        [flexBasis]="responsivityService.pastMediumBreakpoint$() ? 'auto' : '100%'"
         flexDirection="row"
         justifyContent="center">
         <standard--link
@@ -297,6 +312,10 @@
           (output)="localeSheetComponent.openModel$.set(true);">
           <standard--symbol input="Globe" />
           <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
+        </standard--link>
+        <standard--link>
+          <standard--symbol input="Dollarsign" />
+          <standard--label input="USD" />
         </standard--link>
       </standard--flexbox-container>
     </standard--section>

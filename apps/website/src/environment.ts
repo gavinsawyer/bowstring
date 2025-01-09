@@ -8,10 +8,11 @@ export const environment: Environment = {
       apiKey:            "AIzaSyBRD3zmnjKjPnPyzgDwGsmX5CEpj42WIRY",
       appId:             "1:343836520956:web:c2aed087ae5be2fce84279",
       authDomain:        "standard-3eac7.firebaseapp.com",
+      databaseURL:       "https://standard-3eac7-default-rtdb.firebaseio.com",
       measurementId:     "G-LWGLZPSZ8W",
       messagingSenderId: "343836520956",
       projectId:         "standard-3eac7",
-      storageBucket:     "standard-3eac7.appspot.com",
+      storageBucket:     "standard-3eac7.firebasestorage.app",
     },
     recaptcha: {
       apiKey: "6LdUnL8nAAAAAGxCWDCrFYMIHwhXD3gg0yj30POI",

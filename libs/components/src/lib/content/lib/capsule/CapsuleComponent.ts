@@ -1,11 +1,17 @@
-import { NgTemplateOutlet }                                                                                 from "@angular/common";
-import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective }                        from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                          from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
+import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective, SecondaryDirective }                             from "@standard/directives";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host:            {
+      "[class.material-glass]":     "materialInput$() === 'glass'",
+      "[class.material-inverse]":   "materialInput$() === 'inverse'",
+      "[class.material-primary]":   "materialInput$() === 'primary'",
+      "[class.material-secondary]": "materialInput$() === 'secondary'",
+    },
     hostDirectives:  [
       {
         directive: ContainerDirective,
@@ -39,18 +45,15 @@ import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirecti
       },
       {
         directive: PrimaryDirective,
-        inputs:    [
-          "backgroundDark",
-          "backgroundLight",
-          "foregroundDark",
-          "foregroundLight",
-        ],
       },
       {
         directive: RoundedDirective,
         inputs:    [
           "level",
         ],
+      },
+      {
+        directive: SecondaryDirective,
       },
     ],
     imports:         [
@@ -76,5 +79,12 @@ export class CapsuleComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly roundedDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+
+  public readonly materialInput$: InputSignal<"glass" | "inverse" | "primary" | "secondary" | undefined> = input<"glass" | "inverse" | "primary" | "secondary" | undefined>(
+    undefined,
+    {
+      alias: "material",
+    },
+  );
 
 }

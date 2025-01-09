@@ -30,7 +30,7 @@ export const beforeUserCreatedBlockingFunction = beforeUserCreated(
         {
           email:          authUserRecord.email,
           stripeCustomer: {
-            id: id,
+            id,
           },
         },
         {

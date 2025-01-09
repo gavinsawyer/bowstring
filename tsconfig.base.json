@@ -33,6 +33,9 @@
       "@standard/cloud-functions":  [
         "libs/cloud functions/src/index.ts"
       ],
+      "@standard/colors":           [
+        "libs/colors/src/index.ts"
+      ],
       "@standard/components":       [
         "libs/components/src/index.ts"
       ],
@@ -51,7 +54,7 @@
       "@standard/services":         [
         "libs/services/src/index.ts"
       ],
-      "@standard/symbols":     [
+      "@standard/symbols":          [
         "libs/symbols/src/index.ts"
       ],
       "@standard/types":            [

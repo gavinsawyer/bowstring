@@ -2,7 +2,7 @@ import { BreakpointObserver, type BreakpointState }             from "@angular/c
 import { isPlatformBrowser }                                    from "@angular/common";
 import { inject, Injectable, PLATFORM_ID, signal, type Signal } from "@angular/core";
 import { toSignal }                                             from "@angular/core/rxjs-interop";
-import { map }                                                  from "rxjs";
+import { map, startWith }                                       from "rxjs";
 
 
 @Injectable(
@@ -15,25 +15,27 @@ export class ResponsivityService {
   private readonly breakpointObserver: BreakpointObserver = inject<BreakpointObserver>(BreakpointObserver);
   private readonly platformId: NonNullable<unknown>       = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  public readonly pastMediumBreakpoint$: Signal<boolean> = isPlatformBrowser(this.platformId) ? toSignal<boolean, boolean>(
-    this.breakpointObserver.observe(`(min-width: 48rem)`).pipe<boolean>(
+  public readonly pastMediumBreakpoint$: Signal<boolean> = isPlatformBrowser(this.platformId) ? toSignal<boolean>(
+    this.breakpointObserver.observe(`(min-width: 48rem)`).pipe<boolean, boolean>(
       map<BreakpointState, boolean>(
         ({ matches }: BreakpointState): boolean => matches,
       ),
+      startWith<boolean, [ boolean ]>(this.breakpointObserver.isMatched(`(min-width: 48rem)`)),
     ),
     {
-      initialValue: this.breakpointObserver.isMatched(`(min-width: 48rem)`),
+      requireSync: true,
     },
   ) : signal<boolean>(this.breakpointObserver.isMatched(`(min-width: 48rem)`));
-  public readonly pastSmallBreakpoint$: Signal<boolean>  = isPlatformBrowser(this.platformId) ? toSignal<boolean, boolean>(
-    this.breakpointObserver.observe(`(min-width: 32rem)`).pipe<boolean>(
+  public readonly pastSmallBreakpoint$: Signal<boolean>  = isPlatformBrowser(this.platformId) ? toSignal<boolean>(
+    this.breakpointObserver.observe(`(min-width: 32rem)`).pipe<boolean, boolean>(
       map<BreakpointState, boolean>(
         ({ matches }: BreakpointState): boolean => matches,
       ),
+      startWith<boolean, [ boolean ]>(this.breakpointObserver.isMatched(`(min-width: 32rem)`)),
     ),
     {
-      initialValue: this.breakpointObserver.isMatched(`(min-width: 32rem)`),
+      requireSync: true,
     },
-  ) : signal<boolean>(this.breakpointObserver.isMatched(`(min-width: 48rem)`));
+  ) : signal<boolean>(this.breakpointObserver.isMatched(`(min-width: 32rem)`));
 
 }

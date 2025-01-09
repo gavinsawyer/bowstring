@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, input, type InputSignal }          
 import { ReactiveFormsModule }                                                                                                                                                                                                                                 from "@angular/forms";
 import { MasonryChildDirective }                                                                                                                                                                                                                               from "@standard/directives";
 import { ArticleComponent, AsideComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, MasonryContainerComponent, SectionComponent, SymbolComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                                                                                                                 from "../../../child/ChildRouteComponent";
+import { ShopChildRouteComponent }                                                                                                                                                                                                                             from "../../../child/ShopChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports:     [
       ArticleComponent,
       AsideComponent,
       ButtonComponent,
@@ -25,16 +25,16 @@ import { ChildRouteComponent }                                                  
       SectionComponent,
       SymbolComponent,
     ],
-    styleUrls:       [
-      "ItemChildRouteComponent.sass",
+    styleUrls:   [
+      "ItemShopChildRouteComponent.sass",
     ],
-    templateUrl:     "ItemChildRouteComponent.html",
+    templateUrl: "ItemShopChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class ItemChildRouteComponent
-  extends ChildRouteComponent {
+export class ItemShopChildRouteComponent
+  extends ShopChildRouteComponent {
 
   protected readonly itemId$: InputSignal<string> = input.required<string>(
     {

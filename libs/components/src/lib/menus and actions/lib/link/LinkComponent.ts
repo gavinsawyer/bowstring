@@ -1,14 +1,17 @@
 import { NgTemplateOutlet }                                                                                                                                                    from "@angular/common";
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
-import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective }                                                                                                        from "@standard/directives";
+import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective, SecondaryDirective, WarningDirective }                                                                  from "@standard/directives";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.disabled]": "disabledInput$() || routerLinkActive$()?.isActive || false",
+      "[class.disabled]":           "disabledInput$() || routerLinkActive$()?.isActive || false",
+      "[class.material-primary]":   "materialInput$() === 'primary'",
+      "[class.material-secondary]": "materialInput$() === 'secondary'",
+      "[class.material-warning]":   "materialInput$() === 'warning'",
     },
     hostDirectives:  [
       {
@@ -28,6 +31,12 @@ import { CanvasDirective, FlexboxContainerDirective, PrimaryDirective }         
       },
       {
         directive: PrimaryDirective,
+      },
+      {
+        directive: SecondaryDirective,
+      },
+      {
+        directive: WarningDirective,
       },
     ],
     imports:         [
@@ -60,6 +69,12 @@ export class LinkComponent {
     {
       alias:     "exact",
       transform: booleanAttribute,
+    },
+  );
+  public readonly materialInput$: InputSignal<"primary" | "secondary" | "warning" | undefined>                             = input<"primary" | "secondary" | "warning" | undefined>(
+    undefined,
+    {
+      alias: "material",
     },
   );
   public readonly output: OutputEmitterRef<void>                                                                           = output<void>(

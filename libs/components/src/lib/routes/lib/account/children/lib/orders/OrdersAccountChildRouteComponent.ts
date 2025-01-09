@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component }                         from "@angular/core";
 import { MasonryChildDirective }                                      from "@standard/directives";
 import { HeaderComponent, ImageComponent, MasonryContainerComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                        from "../../../child/ChildRouteComponent";
+import { AccountChildRouteComponent }                                 from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
@@ -14,13 +14,13 @@ import { ChildRouteComponent }                                        from "../.
       MasonryContainerComponent,
     ],
     styleUrls:       [
-      "OrdersChildRouteComponent.sass",
+      "OrdersAccountChildRouteComponent.sass",
     ],
-    templateUrl:     "OrdersChildRouteComponent.html",
+    templateUrl:     "OrdersAccountChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class OrdersChildRouteComponent
-  extends ChildRouteComponent {
+export class OrdersAccountChildRouteComponent
+  extends AccountChildRouteComponent {
 }

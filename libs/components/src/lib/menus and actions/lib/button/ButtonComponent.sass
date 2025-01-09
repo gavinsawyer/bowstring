@@ -4,6 +4,8 @@
 @use "../../../../../../directives/src/lib/materials/lib/glass/GlassDirective"
 @use "../../../../../../directives/src/lib/materials/lib/inverse/InverseDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
+@use "../../../../../../directives/src/lib/materials/lib/secondary/SecondaryDirective"
+@use "../../../../../../directives/src/lib/materials/lib/warning/WarningDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
 
@@ -60,12 +62,49 @@
             &::ng-deep > *
               @include FlexboxContainerDirective.children
 
+  &:not(.appearance-raised)
+    &:not(.material-primary):not(.material-secondary):not(.material-warning)
+      @include CanvasDirective.host(18%)
+
+      > .harness > .between::ng-deep > *
+        @include CanvasDirective.children
+
+    &.material-primary
+      @include PrimaryDirective.host
+
+      > .harness > .between
+        color: var(--standard--primary-directive--colors--background) !important
+
+        &::ng-deep > *
+          @include PrimaryDirective.children
+
+    &.material-secondary
+      @include SecondaryDirective.host
+
+      > .harness > .between
+        color: var(--standard--secondary-directive--colors--background) !important
+
+        &::ng-deep > *
+          @include SecondaryDirective.children
+
+    &.material-warning
+      @include WarningDirective.host
+
+      > .harness > .between
+        color: var(--standard--warning-directive--colors--background) !important
+
+        &::ng-deep > *
+          @include WarningDirective.children
+
+    > .harness > .between
+      background: none !important
+
   &.appearance-raised
     @include ElevatedDirective.host
     @include HoverTransformingDirective.host
     @include RoundedDirective.host
 
-    &:not(.material-glass):not(.material-inverse):not(.material-primary)
+    &:not(.material-glass):not(.material-inverse):not(.material-primary):not(.material-secondary):not(.material-warning)
       @include CanvasDirective.host(0%)
 
       > .harness > .between::ng-deep > *
@@ -96,6 +135,18 @@
       > .harness > .between::ng-deep > *
         @include PrimaryDirective.children
 
+    &.material-secondary
+      @include SecondaryDirective.host
+
+      > .harness > .between::ng-deep > *
+        @include SecondaryDirective.children
+
+    &.material-warning
+      @include WarningDirective.host
+
+      > .harness > .between::ng-deep > *
+        @include WarningDirective.children
+
     > .harness > .between
       &::ng-deep > *
         @include ElevatedDirective.children
@@ -110,26 +161,8 @@
         --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
         --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
-  &.appearance-symbol
-    @include CanvasDirective.host(18%)
-
-    &.material-primary
-      @include PrimaryDirective.host
-
-      > .harness > .between
-        color: var(--standard--primary-directive--colors--background) !important
-
-        &::ng-deep > *
-          @include PrimaryDirective.children
-
-    > .harness > .between
-      background: none !important
-
-      &::ng-deep > *
-        @include CanvasDirective.children
-
-      > div > .harness > .between
-        font-size: calc(1rem * pow(var(--phi), 1))
+  &.appearance-symbol > .harness > .between > div > .harness > .between
+    font-size: calc(1rem * pow(var(--phi), 1))
 
   &.disabled > .harness
     pointer-events: none

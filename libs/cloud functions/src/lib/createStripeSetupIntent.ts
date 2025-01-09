@@ -29,7 +29,7 @@ export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<{ 
           );
 
         return {
-          clientSecret: clientSecret,
+          clientSecret,
         };
       },
       (error: unknown): never => {

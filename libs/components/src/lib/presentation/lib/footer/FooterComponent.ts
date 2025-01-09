@@ -79,9 +79,9 @@ export class FooterComponent {
   private readonly platformId: NonNullable<unknown>                               = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly bodyHeight$: Signal<number | undefined>                        = isPlatformBrowser(this.platformId) ? toSignal<number>(
     new Observable<number>(
-      (resizeEventObserver: Observer<number>): TeardownLogic => {
+      (bodyHeightObserver: Observer<number>): TeardownLogic => {
         const resizeObserver: ResizeObserver = new ResizeObserver(
-          ([ { target: { clientHeight } } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(clientHeight),
+          ([ { target: { clientHeight } } ]: ResizeObserverEntry[]): void => bodyHeightObserver.next(clientHeight),
         );
 
         resizeObserver.observe(this.document.body);
@@ -95,9 +95,9 @@ export class FooterComponent {
     toObservable<ElementRef<HTMLElement>>(this.htmlElementRef$).pipe<Dimensions>(
       switchMap<ElementRef<HTMLElement>, Observable<Dimensions>>(
         ({ nativeElement: htmlElement }: ElementRef<HTMLElement>): Observable<Dimensions> => new Observable<Dimensions>(
-          (resizeEventObserver: Observer<Dimensions>): TeardownLogic => {
+          (dimensionsObserver: Observer<Dimensions>): TeardownLogic => {
             const resizeObserver: ResizeObserver = new ResizeObserver(
-              ([ { target: element } ]: ResizeObserverEntry[]): void => resizeEventObserver.next(
+              ([ { target: element } ]: ResizeObserverEntry[]): void => dimensionsObserver.next(
                 {
                   height: element.clientHeight,
                   width:  element.clientWidth,

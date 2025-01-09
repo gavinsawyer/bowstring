@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, input, type InputSignal, signal, ty
 import { ReactiveFormsModule }                                                                                                                                           from "@angular/forms";
 import { ScrollStackItemDirective }                                                                                                                                      from "@standard/directives";
 import { ArticleComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, ScrollStackComponent, SectionComponent } from "../../../../../../../";
-import { ChildRouteComponent }                                                                                                                                           from "../../../child/ChildRouteComponent";
+import { GalleryChildRouteComponent }                                                                                                                                    from "../../../child/GalleryChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports:     [
       ArticleComponent,
       DividerComponent,
       FlexboxContainerComponent,
@@ -20,16 +20,16 @@ import { ChildRouteComponent }                                                  
       ScrollStackItemDirective,
       SectionComponent,
     ],
-    styleUrls:       [
-      "ItemChildRouteComponent.sass",
+    styleUrls:   [
+      "ItemGalleryChildRouteComponent.sass",
     ],
-    templateUrl:     "ItemChildRouteComponent.html",
+    templateUrl: "ItemGalleryChildRouteComponent.html",
 
     standalone: true,
   },
 )
-export class ItemChildRouteComponent
-  extends ChildRouteComponent {
+export class ItemGalleryChildRouteComponent
+  extends GalleryChildRouteComponent {
 
   protected readonly imageSources$: WritableSignal<string[]> = signal<string[]>(
     [

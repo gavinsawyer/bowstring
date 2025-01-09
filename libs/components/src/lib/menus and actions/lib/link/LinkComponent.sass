@@ -1,6 +1,8 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
+@use "../../../../../../directives/src/lib/materials/lib/secondary/SecondaryDirective"
+@use "../../../../../../directives/src/lib/materials/lib/warning/WarningDirective"
 
 
 \:host
@@ -9,7 +11,6 @@
   --standard--link--gap-column: calc(1rem * pow(var(--phi), -2))
   --standard--link--gap-row: calc(1rem * pow(var(--phi), -3))
 
-  @include CanvasDirective.host(18%)
   @include FlexboxContainerDirective.host
 
   --standard--flexbox-container-directive--gap-column: var(--standard--link--gap-column) !important
@@ -36,8 +37,40 @@
       display: inline-flex !important
 
       &::ng-deep > *
-        @include CanvasDirective.children
         @include FlexboxContainerDirective.children
+
+  &:not(.material-primary):not(.material-secondary):not(.material-warning)
+    @include CanvasDirective.host(18%)
+
+    > .harness > .between::ng-deep > *
+      @include CanvasDirective.children
+
+  &.material-primary
+    @include PrimaryDirective.host
+
+    > .harness > .between
+      color: var(--standard--primary-directive--colors--background) !important
+
+      &::ng-deep > *
+        @include PrimaryDirective.children
+
+  &.material-secondary
+    @include SecondaryDirective.host
+
+    > .harness > .between
+      color: var(--standard--secondary-directive--colors--background) !important
+
+      &::ng-deep > *
+        @include SecondaryDirective.children
+
+  &.material-warning
+    @include WarningDirective.host
+
+    > .harness > .between
+      color: var(--standard--warning-directive--colors--background) !important
+
+      &::ng-deep > *
+        @include WarningDirective.children
 
   &:not(.disabled)
     > .harness
@@ -53,15 +86,9 @@
     opacity: 0.5
     pointer-events: none
 
-\:host-context(standard--heading-group > .harness > .between > p, standard--heading-group > .harness > .between > standard--section > .harness > .between > p)
-  @include PrimaryDirective.host
-
-  > .harness > .between::ng-deep > *
-    @include PrimaryDirective.children
 
 \:host-context(standard--nav, standard--footer > .harness > .between > standard--header) > .harness
   color: currentColor
-
 
 \:host-context(standard-website--root > .harness > .between > standard--main > .harness > .between > standard--flexbox-container > .harness > .between > standard--header) > .harness
   opacity: 1 !important

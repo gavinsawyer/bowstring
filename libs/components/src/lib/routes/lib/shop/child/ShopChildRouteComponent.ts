@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, input, type InputSignal, type OnInit, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { Meta }                                                                                                                  from "@angular/platform-browser";
+import { ChangeDetectionStrategy, Component, inject, input, type InputSignal, type OnInit, type Signal, type TemplateRef, viewChild } from "@angular/core";
+import { Meta }                                                                                                                       from "@angular/platform-browser";
 
 
 @Component(
@@ -10,7 +10,7 @@ import { Meta }                                                                 
     standalone: true,
   },
 )
-export class ChildRouteComponent
+export class ShopChildRouteComponent
   implements OnInit {
 
   private readonly meta: Meta = inject<Meta>(Meta);
