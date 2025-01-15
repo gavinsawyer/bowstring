@@ -1,9 +1,5 @@
 export interface AccountDocument {
-  "email": string;
-  "phone": {
-    "countryCode": string;
-    "national": string;
-  } | null;
+  "email": string | null;
   "messages": {
     "newsletter": boolean | null;
     "orderUpdates": boolean | null;
@@ -12,9 +8,18 @@ export interface AccountDocument {
   "payment": {
     "token": string;
   }[] | null;
+  "phone": {
+    "countryCode": string;
+    "national": string;
+  } | null;
   "profile": {
     "birthday": string | null;
     "name": string | null;
+  } | null;
+  "security": {
+    "passkey": boolean | null;
+    "passkeyBackup": boolean | null;
+    "password": boolean | null;
   } | null;
   "stripeCustomer": {
     "address": {

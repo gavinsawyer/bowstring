@@ -6,7 +6,7 @@ $namespace: "glass"
 
 $background: functions.get-color-reference($namespace, "background")
 $foreground: functions.get-color-reference($namespace, "foreground")
-$pseudobetween-background: functions.get-color-reference($namespace, "pseudobetween-background")
+$pseudoelement-background: functions.get-color-reference($namespace, "pseudoelement-background")
 
 $material-opacity: functions.get-input-reference($namespace, "material-opacity", 0.8)
 
@@ -16,24 +16,24 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
       @return transparentize(darken(hsl(0, 0%, 100% - $shade), 0%), 0.5)
     @else if ($type == "foreground")
       @return transparentize(darken(hsl(0, 0%, 20%  - $shade), 6.25%), 0.125)
-    @else if ($type == "pseudobetween-background")
-      @return transparentize(darken(hsl(0, 0%, 100% - $shade), 12.5%), 0.4)
+    @else if ($type == "pseudoelement-background")
+      @return transparentize(darken(hsl(0, 0%, 100% - $shade), 12.5%), 0.375)
   @else if ($theme == "dark")
     @if ($type == "background")
       @return transparentize(lighten(hsl(0, 0%, 0%  + $shade), 0%), 0.5)
     @else if ($type == "foreground")
       @return transparentize(lighten(hsl(0, 0%, 80% + $shade), 6.25%), 0.125)
-    @else if ($type == "pseudobetween-background")
-      @return transparentize(lighten(hsl(0, 0%, 0%  + $shade), 12.5%), 0.4)
+    @else if ($type == "pseudoelement-background")
+      @return transparentize(lighten(hsl(0, 0%, 0%  + $shade), 12.5%), 0.375)
 
 
 @mixin color-scheme($theme, $shade)
   --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
   --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
-  --standard--#{ $namespace }-directive--colors--pseudobetween-background: #{ get-color($theme, "pseudobetween-background", $shade) }
+  --standard--#{ $namespace }-directive--colors--pseudoelement-background: #{ get-color($theme, "pseudoelement-background", $shade) }
 
 @mixin children
-  @include mixins.reset-colors($namespace, ("background", "foreground", "pseudobetween-background"))
+  @include mixins.reset-colors($namespace, ("background", "foreground", "pseudoelement-background"))
   @include mixins.reset-inputs($namespace, ("material-opacity"))
   @include mixins.reset-values($namespace, ())
 
@@ -50,7 +50,7 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
 
     &:after
       backdrop-filter: blur(calc(1rem * pow(var(--phi), $material-opacity))) saturate(calc(1 + max(-0.5, var(--color-scheme-dark) - var(--color-scheme-light)) * pow($material-opacity, 2))) brightness(calc(1 + pow($material-opacity, 2)))
-      background: $pseudobetween-background
+      background: $pseudoelement-background
       content: ""
       height: calc(100% + 1.5px)
       left: -0.75px

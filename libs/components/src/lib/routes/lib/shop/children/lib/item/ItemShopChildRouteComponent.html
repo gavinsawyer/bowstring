@@ -39,14 +39,18 @@
   <standard--heading-group>
     <standard--header>
       <h4>Blue Chamomile Facial Hydrating Masque</h4>
-      <h5><standard--link>skin</standard--link>&nbsp;&bull;&nbsp;<standard--link>treat&nbsp;&amp;&nbsp;masque</standard--link></h5>
+      <h5><standard--link inline>skin</standard--link>&nbsp;&bull;&nbsp;<standard--link inline>treat&nbsp;&amp;&nbsp;masque</standard--link></h5>
     </standard--header>
-    <p><b i18n>Size</b>&nbsp;&lpar;<standard--link>
+    <p><b i18n>Size</b>&nbsp;&lpar;<standard--link inline>
       <standard--label
         i18n-input
         input="See guide" />
-    </standard--link>&rpar;<br />2.0oz</p>
-    <p>US&dollar;60</p>
+    </standard--link>&rpar;<br />2.0oz
+    <p><standard--symbol
+      inline
+      [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<standard--label
+      inline
+      [input]="(60 * currencyService.exchangeRate$() | currency:currencyService.userCurrency$() === 'BTC' ? undefined : currencyService.userCurrency$():'':currencyService.userCurrency$() === 'BTC' ? '1.0-8' : undefined) || ''"/></p>
   </standard--heading-group>
   <standard--button
     appearance="raised"

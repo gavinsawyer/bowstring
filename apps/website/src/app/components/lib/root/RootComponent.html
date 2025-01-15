@@ -5,6 +5,21 @@
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
+<standard--sheet #currencySheetComponent>
+  @defer {<standard--header>
+    <h6 i18n="@@apps--Website--Components--Root--CurrencySheet--Header">Select your currency.</h6>
+  </standard--header>
+  <standard--divider />
+  <standard--section>
+    @for (currency of currencyKeys; track currency) {<standard--button
+      [disabled]="currency === currencyService.userCurrency$()"
+      level="2"
+      (output)="currencyService.userCurrency$.set(currency); currencySheetComponent.openModel$.set(false);">
+      <standard--symbol [input]="currencies[currency].symbolName" />
+      <standard--label [input]="currency + ' (' + currencies[currency].name + ')'" />
+    </standard--button>}
+  </standard--section>}
+</standard--sheet>
 <standard--sheet #localeSheetComponent>
   @defer {<standard--header>
     <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale.</h6>
@@ -33,22 +48,28 @@
       <standard--symbol input="PersonBadgeKeyFill" />
       <standard--label
         i18n-input
-        input="Use Passkey" />
+        input="Use passkey" />
     </standard--button>
+    <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
+      inline
+      input="PersonBadgeKeyFill" />&nbsp;<standard--label
+      inline
+      i18n-input
+      input="Use passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
   </standard--form>
   <standard--divider />}
-  <standard--form (output)="signinFormSubmit(signinFormSheetComponent.openModel$);">
+  <standard--form (output)="signinWithPasswordFormSubmit(signinFormSheetComponent.openModel$);">
     <standard--section>
       <standard--text-field-input
         autocomplete="username"
-        [formControl]="signinFormGroup.controls.email"
+        [formControl]="signinWithPasswordFormGroup.controls.email"
         i18n-placeholder
         level="2"
         placeholder="Email"
         type="email" />
       <standard--text-field-input
         autocomplete="current-password"
-        [formControl]="signinFormGroup.controls.password"
+        [formControl]="signinWithPasswordFormGroup.controls.password"
         i18n-placeholder
         level="2"
         placeholder="Password"
@@ -59,7 +80,7 @@
       justifyContent="flex-end">
       <standard--button
         appearance="symbol"
-        [disabled]="signinFormGroup.invalid"
+        [disabled]="signinWithPasswordFormGroup.invalid"
         type="submit">
         <standard--symbol input="ArrowForwardCircleFill" />
       </standard--button>
@@ -68,7 +89,7 @@
 </standard--sheet>
 <standard--sheet #signoutSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SignoutSheet--Header">Are you sure?</h6>
+    <h6 i18n="@@apps--Website--Components--Root--SignoutSheet--Header">Sign out?</h6>
   </standard--header>
   <standard--divider />
   <standard--section flexDirection="row">
@@ -89,7 +110,7 @@
       (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">
       <standard--label
         i18n-input
-        input="Sign out" />
+        input="Yes, sign out" />
     </standard--button>
   </standard--section>}
 </standard--sheet>
@@ -114,29 +135,35 @@
       <standard--symbol input="PersonBadgeKeyFill" />
       <standard--label
         i18n-input
-        input="Use Passkey" />
+        input="Save passkey" />
     </standard--button>
+    <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
+      inline
+      input="PersonBadgeKeyFill" />&nbsp;<standard--label
+      inline
+      i18n-input
+      input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
   </standard--form>
   <standard--divider />}
-  <standard--form (output)="signupFormSubmit(signupFormSheetComponent.openModel$);">
+  <standard--form (output)="signupWithPasswordFormSubmit(signupFormSheetComponent.openModel$);">
     <standard--section>
       <standard--text-field-input
         autocomplete="email"
-        [formControl]="signupFormGroup.controls.email"
+        [formControl]="signupWithPasswordFormGroup.controls.email"
         i18n-placeholder
         level="2"
         placeholder="Email"
         type="email" />
       <standard--text-field-input
         autocomplete="new-password"
-        [formControl]="signupFormGroup.controls.password"
+        [formControl]="signupWithPasswordFormGroup.controls.password"
         i18n-placeholder
         level="2"
         placeholder="Password"
         type="password" />
       <standard--text-field-input
         autocomplete="new-password"
-        [formControl]="signupFormGroup.controls.passwordConfirmation"
+        [formControl]="signupWithPasswordFormGroup.controls.passwordConfirmation"
         i18n-placeholder
         level="2"
         placeholder="Confirm password"
@@ -160,7 +187,7 @@
       </standard--list>
       <standard--button
         appearance="symbol"
-        [disabled]="signupFormGroup.invalid"
+        [disabled]="signupWithPasswordFormGroup.invalid"
         type="submit">
         <standard--symbol input="ArrowForwardCircleFill" />
       </standard--button>
@@ -188,6 +215,9 @@
         </h1>
       </standard--header>
       <standard--nav>
+        <standard--link
+          i18n="@@libs--Components--Routes--Gallery--Meta--Title"
+          url="/gallery">Gallery</standard--link>
         <standard--link
           i18n="@@libs--Components--Routes--Shop--Meta--Title"
           url="/shop">Shop</standard--link>
@@ -281,8 +311,8 @@
       flexWrap="wrap"
       [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
       <standard--link
-        [material]="connectivityService.connected$() ? undefined : 'warning'"
-        (output)="twilio();">
+        disabled
+        [material]="connectivityService.connected$() ? undefined : 'warning'">
         <standard--symbol [input]="connectivityService.connected$() ? 'Network' : 'NetworkSlash'" />
         @if (connectivityService.connected$()) {<standard--label
           i18n-input
@@ -300,8 +330,12 @@
         flexGrow="1"
         flexWrap="wrap"
         [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
-        <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2024&nbsp;}<standard--link [url]="brand.copyrightHolderUrl">{{ brand.copyrightHolder }}</standard--link></span>
-        <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">{{ gitInfoPartial.hash || '' }}</standard--link>&rpar;</span>
+        <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2025&nbsp;}<standard--link
+          inline
+          [url]="brand.copyrightHolderUrl">{{ brand.copyrightHolder }}</standard--link></span>
+        <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
+          inline
+          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">{{ gitInfoPartial.hash || '' }}</standard--link>&rpar;</span>
       </standard--flexbox-container>
       <standard--flexbox-container
         [flexBasis]="responsivityService.pastMediumBreakpoint$() ? 'auto' : '100%'"
@@ -313,9 +347,11 @@
           <standard--symbol input="Globe" />
           <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
         </standard--link>
-        <standard--link>
-          <standard--symbol input="Dollarsign" />
-          <standard--label input="USD" />
+        <standard--link
+          [disabled]="currencySheetComponent.openModelWithTransform$()"
+          (output)="currencySheetComponent.openModel$.set(true);">
+          <standard--symbol [input]="currencies[currencyService.userCurrency$()].symbolName" />
+          <standard--label [input]="currencyService.userCurrency$()" />
         </standard--link>
       </standard--flexbox-container>
     </standard--section>

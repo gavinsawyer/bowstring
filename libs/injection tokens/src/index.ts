@@ -1,4 +1,5 @@
 export * from "./lib/BRAND";
+export * from "./lib/CURRENCIES";
 export * from "./lib/ENVIRONMENT";
 export * from "./lib/GIT_INFO_PARTIAL";
 export * from "./lib/ORIGIN";

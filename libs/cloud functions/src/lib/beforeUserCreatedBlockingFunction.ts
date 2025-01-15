@@ -15,6 +15,8 @@ export const beforeUserCreatedBlockingFunction = beforeUserCreated(
         "You're not signed in.",
       );
 
+    const email = authUserRecord.email;
+
     if (!process.env["STRIPE_API_KEY"])
       throw new HttpsError(
         "failed-precondition",
@@ -23,12 +25,15 @@ export const beforeUserCreatedBlockingFunction = beforeUserCreated(
 
     return new Stripe(process.env["STRIPE_API_KEY"]).customers.create(
       {
-        email: authUserRecord.email,
+        email: email,
       },
     ).then<object, never>(
       ({ id }: Stripe.Response<Stripe.Customer>): Promise<object> => (getFirestore(getApp()).collection("accounts").doc(authUserRecord.uid) as DocumentReference<AccountDocument>).set(
         {
-          email:          authUserRecord.email,
+          email:          email,
+          security:       {
+            password: true,
+          },
           stripeCustomer: {
             id,
           },

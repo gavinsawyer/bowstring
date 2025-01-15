@@ -15,6 +15,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirectiv
         inputs:    [
           "alignSelf",
           "aspectRatio",
+          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

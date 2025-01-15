@@ -1,0 +1,16 @@
+{
+  "name":        "currencies",
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot":  "libs/currencies/src",
+  "targets":     {
+    "eslint": {
+      "executor": "@nx/eslint:lint",
+      "options":  {
+        "lintFilePatterns": [
+          "libs/currencies/src/**/*.ts"
+        ]
+      }
+    }
+  }
+}

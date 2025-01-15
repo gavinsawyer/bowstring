@@ -3,6 +3,10 @@
   "$schema":     "../../node_modules/nx/schemas/project-schema.json",
   "i18n":        {
     "locales":      {
+      "en-UK": {
+        "baseHref":    "/en-UK/",
+        "translation": "apps/website/src/locales/messages.en-UK.json"
+      },
       "es-ES": {
         "baseHref":    "/es-ES/",
         "translation": "apps/website/src/locales/messages.es-ES.json"

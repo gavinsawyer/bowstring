@@ -17,6 +17,7 @@ import { GoogleMapsApiLoaderService }                                           
         inputs:    [
           "alignSelf",
           "aspectRatio",
+          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

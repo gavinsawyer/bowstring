@@ -1,4 +1,4 @@
-import { Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                                   from "@angular/core";
+import { booleanAttribute, Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                 from "@angular/core";
 import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@standard/types";
 import { FlexboxChildDirective }                                                                                                                                                                                                                from "../flexbox child/FlexboxChildDirective";
 import { GridChildDirective }                                                                                                                                                                                                                   from "../grid child/GridChildDirective";
@@ -7,6 +7,7 @@ import { GridChildDirective }                                                   
 @Directive(
   {
     host:           {
+      "[class.inline]":                                                   "inlineInput$()",
       "[style.--standard--container-directive--align-self-input]":        "alignSelfInput$()",
       "[style.--standard--container-directive--aspect-ratio-input]":      "aspectRatioInput$()",
       "[style.--standard--container-directive--margin-bottom-input]":     "marginBottomInput$()",
@@ -62,6 +63,13 @@ export class ContainerDirective {
     {
       alias:     "aspectRatio",
       transform: numberAttribute,
+    },
+  );
+  public readonly inlineInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }` | undefined>                                   = input<boolean | undefined, "" | boolean | `${ boolean }` | undefined>(
+    undefined,
+    {
+      alias:     "inline",
+      transform: booleanAttribute,
     },
   );
   public readonly marginBottomInput$: InputSignal<ScalarString | Inherit | undefined>                                                                      = input<ScalarString | Inherit | undefined>(

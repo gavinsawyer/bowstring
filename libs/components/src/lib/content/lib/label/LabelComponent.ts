@@ -12,6 +12,7 @@ import { ContainerDirective }                                                   
         inputs:    [
           "alignSelf",
           "aspectRatio",
+          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

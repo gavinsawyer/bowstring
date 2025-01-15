@@ -30,6 +30,12 @@ export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>
             "The account document is missing.",
           );
 
+        if (!accountDocument.email)
+          throw new HttpsError(
+            "invalid-argument",
+            "A value for `email` is missing from the account document.",
+          );
+
         if (accountDocument.stripeCustomer)
           return null;
 

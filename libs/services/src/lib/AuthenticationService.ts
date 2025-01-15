@@ -1,12 +1,14 @@
-import { isPlatformBrowser }                                                                                                                                       from "@angular/common";
-import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                  from "@angular/core";
-import { toSignal }                                                                                                                                                from "@angular/core/rxjs-interop";
-import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User } from "@angular/fire/auth";
-import { Functions }                                                                                                                                               from "@angular/fire/functions";
-import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, verifyUserWithPasskey }                                            from "@firebase-web-authn/browser";
-import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                              from "rxjs";
-import { fromPromise }                                                                                                                                             from "rxjs/internal/observable/innerFrom";
-import { AccountService }                                                                                                                                          from "./AccountService";
+import { isPlatformBrowser }                                                                                                                                                                                             from "@angular/common";
+import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                                                                        from "@angular/core";
+import { toSignal }                                                                                                                                                                                                      from "@angular/core/rxjs-interop";
+import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, reauthenticateWithCredential, signInAnonymously, signInWithEmailAndPassword, unlink, updatePassword, type User } from "@angular/fire/auth";
+import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                                                                                                             from "@angular/fire/firestore";
+import { Functions }                                                                                                                                                                                                     from "@angular/fire/functions";
+import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, unlinkPasskey, verifyUserWithPasskey }                                                                                   from "@firebase-web-authn/browser";
+import { type AccountDocument }                                                                                                                                                                                          from "@standard/interfaces";
+import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                                                                                    from "rxjs";
+import { fromPromise }                                                                                                                                                                                                   from "rxjs/internal/observable/innerFrom";
+import { AccountService }                                                                                                                                                                                                from "./AccountService";
 
 
 @Injectable(
@@ -23,6 +25,7 @@ export class AuthenticationService {
   }
 
   private readonly auth: Auth                       = inject<Auth>(Auth);
+  private readonly firestore: Firestore             = inject<Firestore>(Firestore);
   private readonly functions: Functions             = inject<Functions>(Functions);
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly accountService: AccountService   = inject<AccountService>(AccountService);
@@ -100,14 +103,29 @@ export class AuthenticationService {
     email: string,
     password: string,
   ): Promise<void> {
-    return this.auth.currentUser ? linkWithCredential(
-      this.auth.currentUser,
+    const user: User | null = this.auth.currentUser;
+
+    return user ? linkWithCredential(
+      user,
       EmailAuthProvider.credential(
         email,
         password,
       ),
     ).then<void, never>(
-      (): void => void (0),
+      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+        doc(
+          this.firestore,
+          `/accounts/${ user.uid }`,
+        ) as DocumentReference<AccountDocument>,
+        {
+          security: {
+            password: true,
+          },
+        },
+        {
+          merge: true,
+        },
+      ),
       (error: unknown): never => {
         console.error("Something went wrong.");
 
@@ -116,14 +134,28 @@ export class AuthenticationService {
     ) : Promise.reject<never>(new Error());
   }
   public linkWithPasskey(): Promise<void> {
-    const email: string | undefined = this.accountService.accountDocument$()?.email;
+    const email: string | undefined = this.accountService.accountDocument$()?.email || undefined;
+    const user: User | null         = this.auth.currentUser;
 
-    return email ? linkWithPasskey(
+    return (email && user) ? linkWithPasskey(
       this.auth,
       this.functions,
       email,
     ).then<void, never>(
-      (): void => void (0),
+      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+        doc(
+          this.firestore,
+          `/accounts/${ user.uid }`,
+        ) as DocumentReference<AccountDocument>,
+        {
+          security: {
+            passkey: true,
+          },
+        },
+        {
+          merge: true,
+        },
+      ),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
 
@@ -132,15 +164,29 @@ export class AuthenticationService {
     ) : Promise.reject<never>(new Error());
   }
   public linkWithPasskeyBackup(): Promise<void> {
-    const email: string | undefined = this.accountService.accountDocument$()?.email;
+    const email: string | undefined = this.accountService.accountDocument$()?.email || undefined;
+    const user: User | null         = this.auth.currentUser;
 
-    return email ? linkWithPasskey(
+    return (email && user) ? linkWithPasskey(
       this.auth,
       this.functions,
       `${ email } (Backup)`,
       "second",
     ).then<void, never>(
-      (): void => void (0),
+      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+        doc(
+          this.firestore,
+          `/accounts/${ user.uid }`,
+        ) as DocumentReference<AccountDocument>,
+        {
+          security: {
+            passkeyBackup: true,
+          },
+        },
+        {
+          merge: true,
+        },
+      ),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You already have a passkey backup." : firebaseWebAuthnError.message || "Something went wrong.");
 
@@ -189,6 +235,122 @@ export class AuthenticationService {
         throw firebaseWebAuthnError;
       },
     );
+  }
+  public unlinkPasskey(): Promise<void> {
+    const user: User | null = this.auth.currentUser;
+
+    return user ? unlinkPasskey(
+      this.auth,
+      this.functions,
+    ).then<void, never>(
+      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+        doc(
+          this.firestore,
+          `/accounts/${ user.uid }`,
+        ) as DocumentReference<AccountDocument>,
+        {
+          security: {
+            passkey: false,
+          },
+        },
+        {
+          merge: true,
+        },
+      ),
+      (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
+        console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You do not have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
+
+        throw firebaseWebAuthnError;
+      },
+    ) : Promise.reject<never>(new Error());
+  }
+  public unlinkPasskeyBackup(): Promise<void> {
+    const user: User | null = this.auth.currentUser;
+
+    return user ? unlinkPasskey(
+      this.auth,
+      this.functions,
+      "second",
+    ).then<void, never>(
+      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+        doc(
+          this.firestore,
+          `/accounts/${ user.uid }`,
+        ) as DocumentReference<AccountDocument>,
+        {
+          security: {
+            passkeyBackup: false,
+          },
+        },
+        {
+          merge: true,
+        },
+      ),
+      (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
+        console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You do not have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
+
+        throw firebaseWebAuthnError;
+      },
+    ) : Promise.reject<never>(new Error());
+  }
+  public unlinkPassword(): Promise<void> {
+    const user: User | null = this.auth.currentUser;
+
+    return user ? unlink(
+      user,
+      "password",
+    ).then<void, never>(
+      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+        doc(
+          this.firestore,
+          `/accounts/${ user.uid }`,
+        ) as DocumentReference<AccountDocument>,
+        {
+          security: {
+            password: false,
+          },
+        },
+        {
+          merge: true,
+        },
+      ),
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw error;
+      },
+    ) : Promise.reject<never>(new Error());
+  }
+  public updateEmailAndPasswordCredential(
+    passwordCurrent: string,
+    passwordNew: string,
+  ): Promise<void> {
+    const email: string | undefined = this.accountService.accountDocument$()?.email || undefined;
+    const user: User | null         = this.auth.currentUser;
+
+    return (email && user) ? reauthenticateWithCredential(
+      user,
+      EmailAuthProvider.credential(
+        email,
+        passwordCurrent,
+      ),
+    ).then<void, never>(
+      (): Promise<void> => updatePassword(
+        user,
+        passwordNew,
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
+      ),
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw error;
+      },
+    ) : Promise.reject<never>(new Error());
   }
   public verifyUserWithPasskey(): Promise<void> {
     return verifyUserWithPasskey(

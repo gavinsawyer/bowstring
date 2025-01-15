@@ -1,6 +1,7 @@
 export type * from "./lib/Auto";
 export type * from "./lib/BaselineAlignment";
 export type * from "./lib/Brand";
+export type * from "./lib/Currencies";
 export type * from "./lib/DistributedAlignment";
 export type * from "./lib/FlexDirection";
 export type * from "./lib/FlexPositionalAlignment";

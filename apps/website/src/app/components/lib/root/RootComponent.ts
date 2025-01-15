@@ -7,10 +7,10 @@ import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Va
 import { RouterOutlet }                                                                                                           from "@angular/router";
 import { type RouteComponent, type SheetComponent }                                                                               from "@standard/components";
 import { CanvasDirective, FlexboxContainerDirective }                                                                             from "@standard/directives";
-import { BRAND, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                                               from "@standard/injection-tokens";
+import { BRAND, CURRENCIES, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                                   from "@standard/injection-tokens";
 import { type AccountDocument }                                                                                                   from "@standard/interfaces";
-import { AuthenticationService, ConnectivityService, ResponsivityService }                                                        from "@standard/services";
-import { type Brand }                                                                                                             from "@standard/types";
+import { AuthenticationService, ConnectivityService, CurrencyService, ResponsivityService }                                       from "@standard/services";
+import { type Brand, type Currencies }                                                                                            from "@standard/types";
 import { type GitInfo }                                                                                                           from "git-describe";
 import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
 import { LOCALE_IDS }                                                                                                             from "../../../injection tokens";
@@ -56,7 +56,7 @@ export class RootComponent {
   private readonly platformId: NonNullable<unknown>    = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly routerOutlet$: Signal<RouterOutlet> = viewChild.required<RouterOutlet>(RouterOutlet);
 
-  protected readonly aboveTemplateRef$: Signal<TemplateRef<never> | null>                                                                                       = toSignal<TemplateRef<never> | null>(
+  protected readonly aboveTemplateRef$: Signal<TemplateRef<never> | null>                                                                                                   = toSignal<TemplateRef<never> | null>(
     toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
       switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
         (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
@@ -80,8 +80,8 @@ export class RootComponent {
       requireSync: true,
     },
   );
-  protected readonly authenticationService: AuthenticationService                                                                                               = inject<AuthenticationService>(AuthenticationService);
-  protected readonly bannerTemplateRef$: Signal<TemplateRef<never> | null>                                                                                      = toSignal<TemplateRef<never> | null>(
+  protected readonly authenticationService: AuthenticationService                                                                                                           = inject<AuthenticationService>(AuthenticationService);
+  protected readonly bannerTemplateRef$: Signal<TemplateRef<never> | null>                                                                                                  = toSignal<TemplateRef<never> | null>(
     toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
       switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
         (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
@@ -105,7 +105,7 @@ export class RootComponent {
       requireSync: true,
     },
   );
-  protected readonly belowTemplateRef$: Signal<TemplateRef<never> | null>                                                                                       = toSignal<TemplateRef<never> | null>(
+  protected readonly belowTemplateRef$: Signal<TemplateRef<never> | null>                                                                                                   = toSignal<TemplateRef<never> | null>(
     toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
       switchMap<RouterOutlet, Observable<TemplateRef<never> | null>>(
         (routerOutlet: RouterOutlet): Observable<TemplateRef<never> | null> => routerOutlet.activateEvents.asObservable().pipe<TemplateRef<never> | undefined, TemplateRef<never> | undefined, TemplateRef<never> | null>(
@@ -129,12 +129,15 @@ export class RootComponent {
       requireSync: true,
     },
   );
-  protected readonly brand: Brand                                                                                                                               = inject<Brand>(BRAND);
-  protected readonly connectivityService: ConnectivityService                                                                                                   = inject<ConnectivityService>(ConnectivityService);
-  protected readonly gitInfoPartial: Partial<GitInfo>                                                                                                           = inject<Partial<GitInfo>>(GIT_INFO_PARTIAL);
-  protected readonly localeId: LocaleId                                                                                                                         = inject<LocaleId>(LOCALE_ID);
-  protected readonly localeIds: LocaleId[]                                                                                                                      = inject<LocaleId[]>(LOCALE_IDS);
-  protected readonly localeDisplayNames: Intl.DisplayNames                                                                                                      = new Intl.DisplayNames(
+  protected readonly brand: Brand                                                                                                                                           = inject<Brand>(BRAND);
+  protected readonly connectivityService: ConnectivityService                                                                                                               = inject<ConnectivityService>(ConnectivityService);
+  protected readonly currencies: Currencies                                                                                                                                 = inject<Currencies>(CURRENCIES);
+  protected readonly currencyKeys: (keyof typeof this.currencies)[]                                                                                                         = Object.keys(this.currencies) as (keyof typeof this.currencies)[];
+  protected readonly currencyService: CurrencyService                                                                                                                       = inject<CurrencyService>(CurrencyService);
+  protected readonly gitInfoPartial: Partial<GitInfo>                                                                                                                       = inject<Partial<GitInfo>>(GIT_INFO_PARTIAL);
+  protected readonly localeId: LocaleId                                                                                                                                     = inject<LocaleId>(LOCALE_ID);
+  protected readonly localeIds: LocaleId[]                                                                                                                                  = inject<LocaleId[]>(LOCALE_IDS);
+  protected readonly localeDisplayNames: Intl.DisplayNames                                                                                                                  = new Intl.DisplayNames(
     [
       this.localeId as string,
     ],
@@ -142,9 +145,9 @@ export class RootComponent {
       type: "language",
     },
   );
-  protected readonly packageVersion: string                                                                                                                     = inject<string>(PACKAGE_VERSION);
-  protected readonly responsivityService: ResponsivityService                                                                                                   = inject<ResponsivityService>(ResponsivityService);
-  protected readonly signinFormGroup: FormGroup<{ "email": FormControl<string>, "password": FormControl<string> }>                                              = new FormGroup<{ "email": FormControl<string>, "password": FormControl<string> }>(
+  protected readonly packageVersion: string                                                                                                                                 = inject<string>(PACKAGE_VERSION);
+  protected readonly responsivityService: ResponsivityService                                                                                                               = inject<ResponsivityService>(ResponsivityService);
+  protected readonly signinWithPasswordFormGroup: FormGroup<{ "email": FormControl<string>, "password": FormControl<string> }>                                              = new FormGroup<{ "email": FormControl<string>, "password": FormControl<string> }>(
     {
       email:    new FormControl<string>(
         "",
@@ -167,7 +170,21 @@ export class RootComponent {
       ),
     },
   );
-  protected readonly signupFormGroup: FormGroup<{ "email": FormControl<string>, "password": FormControl<string>, "passwordConfirmation": FormControl<string> }> = new FormGroup<{ "email": FormControl<string>, "password": FormControl<string>, "passwordConfirmation": FormControl<string> }>(
+  protected readonly signupWithPasskeyFormGroup: FormGroup<{ "email": FormControl<string> }>                                                                                = new FormGroup<{ "email": FormControl<string> }>(
+    {
+      email: new FormControl<string>(
+        "",
+        {
+          nonNullable: true,
+          validators:  [
+            Validators.email,
+            Validators.required,
+          ],
+        },
+      ),
+    },
+  );
+  protected readonly signupWithPasswordFormGroup: FormGroup<{ "email": FormControl<string>, "password": FormControl<string>, "passwordConfirmation": FormControl<string> }> = new FormGroup<{ "email": FormControl<string>, "password": FormControl<string>, "passwordConfirmation": FormControl<string> }>(
     {
       email:                new FormControl<string>(
         "",
@@ -206,36 +223,22 @@ export class RootComponent {
       ],
     },
   );
-  protected readonly signupWithPasskeyFormGroup: FormGroup<{ "email": FormControl<string> }>                                                                    = new FormGroup<{ "email": FormControl<string> }>(
-    {
-      email: new FormControl<string>(
-        "",
-        {
-          nonNullable: true,
-          validators:  [
-            Validators.email,
-            Validators.required,
-          ],
-        },
-      ),
-    },
-  );
 
   protected changeLocale(localeId: LocaleId): void {
     if (isPlatformBrowser(this.platformId))
       this.document.location.href = `/${ String(localeId) }${ this.location.path() }`;
   }
-  protected signinFormSubmit(openModel$: SheetComponent["openModel$"]): void {
-    if (this.signinFormGroup.value.email && this.signinFormGroup.value.password)
+  protected signinWithPasswordFormSubmit(openModel$: SheetComponent["openModel$"]): void {
+    if (this.signinWithPasswordFormGroup.value.email && this.signinWithPasswordFormGroup.value.password)
       this.authenticationService.signInWithEmailAndPassword(
-        this.signinFormGroup.value.email,
-        this.signinFormGroup.value.password,
+        this.signinWithPasswordFormGroup.value.email,
+        this.signinWithPasswordFormGroup.value.password,
       ).then<void>(
         (): void => {
           openModel$.set(false);
 
           setTimeout(
-            (): void => this.signinFormGroup.reset(),
+            (): void => this.signinWithPasswordFormGroup.reset(),
             180,
           );
         },
@@ -246,17 +249,17 @@ export class RootComponent {
       (): void => openModel$.set(false),
     );
   }
-  protected signupFormSubmit(openModel$: SheetComponent["openModel$"]): void {
-    if (this.signupFormGroup.value.email && this.signupFormGroup.value.password)
+  protected signupWithPasswordFormSubmit(openModel$: SheetComponent["openModel$"]): void {
+    if (this.signupWithPasswordFormGroup.value.email && this.signupWithPasswordFormGroup.value.password)
       this.authenticationService.createUserWithEmailAndPassword(
-        this.signupFormGroup.value.email,
-        this.signupFormGroup.value.password,
+        this.signupWithPasswordFormGroup.value.email,
+        this.signupWithPasswordFormGroup.value.password,
       ).then<void, never>(
         (): void => {
           openModel$.set(false);
 
           setTimeout(
-            (): void => this.signupFormGroup.reset(),
+            (): void => this.signupWithPasswordFormGroup.reset(),
             180,
           );
         },
@@ -271,13 +274,18 @@ export class RootComponent {
     const userId: string | undefined = this.authenticationService.user$()?.uid;
 
     if (userId && this.signupWithPasskeyFormGroup.value.email) {
+      const email: string = this.signupWithPasskeyFormGroup.value.email;
+
       setDoc<AccountDocument, DocumentData>(
         doc(
           this.firestore,
           `/accounts/${ userId }`,
         ) as DocumentReference<AccountDocument>,
         {
-          email: this.signupWithPasskeyFormGroup.value.email,
+          email,
+          security: {
+            passkey: true,
+          },
         },
         {
           merge: true,
@@ -287,7 +295,7 @@ export class RootComponent {
           this.functions,
           "createStripeCustomer",
         )().then<void, never>(
-          (): Promise<void> => this.authenticationService.linkWithPasskey().then<void, never>(
+          (): Promise<void> => this.authenticationService.createUserWithPasskey(email).then<void, never>(
             (): void => {
               openModel$.set(false);
 
@@ -315,20 +323,6 @@ export class RootComponent {
         },
       );
     }
-  }
-
-  protected twilio(): void {
-    httpsCallable(
-      this.functions,
-      "helloWorld",
-    )().then<void, never>(
-      (): void => console.log("!!!"),
-      (error: unknown): never => {
-        console.error(error);
-
-        throw error;
-      },
-    )
   }
 
 }

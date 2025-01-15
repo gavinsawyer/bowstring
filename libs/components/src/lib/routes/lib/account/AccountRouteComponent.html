@@ -68,7 +68,7 @@
 
 <standard--sheet #signoutSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@libs--Components--Routes--Account--SignoutSheet--Header">Are you sure?</h6>
+    <h6 i18n="@@libs--Components--Routes--Account--SignoutSheet--Header">Sign out?</h6>
   </standard--header>
   <standard--divider />
   <standard--section flexDirection="row">
@@ -89,7 +89,7 @@
       (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">
       <standard--label
         i18n-input
-        input="Sign out" />
+        input="Yes, sign out" />
     </standard--button>
   </standard--section>}
 </standard--sheet>

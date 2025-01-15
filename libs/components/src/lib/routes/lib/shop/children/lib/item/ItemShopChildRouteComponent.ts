@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component, input, type InputSignal }                                                                                                                                                                                         from "@angular/core";
+import { CurrencyPipe }                                                                                                                                                                                                                                        from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, input, type InputSignal }                                                                                                                                                                                 from "@angular/core";
 import { ReactiveFormsModule }                                                                                                                                                                                                                                 from "@angular/forms";
 import { MasonryChildDirective }                                                                                                                                                                                                                               from "@standard/directives";
+import { CURRENCIES }                                                                                                                                                                                                                                          from "@standard/injection-tokens";
+import { CurrencyService }                                                                                                                                                                                                                                     from "@standard/services";
+import { type Currencies }                                                                                                                                                                                                                                     from "@standard/types";
 import { ArticleComponent, AsideComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, MasonryContainerComponent, SectionComponent, SymbolComponent } from "../../../../../../../";
 import { ShopChildRouteComponent }                                                                                                                                                                                                                             from "../../../child/ShopChildRouteComponent";
 
@@ -8,7 +12,7 @@ import { ShopChildRouteComponent }                                              
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:     [
+    imports:         [
       ArticleComponent,
       AsideComponent,
       ButtonComponent,
@@ -24,11 +28,12 @@ import { ShopChildRouteComponent }                                              
       ReactiveFormsModule,
       SectionComponent,
       SymbolComponent,
+      CurrencyPipe,
     ],
-    styleUrls:   [
+    styleUrls:       [
       "ItemShopChildRouteComponent.sass",
     ],
-    templateUrl: "ItemShopChildRouteComponent.html",
+    templateUrl:     "ItemShopChildRouteComponent.html",
 
     standalone: true,
   },
@@ -36,7 +41,9 @@ import { ShopChildRouteComponent }                                              
 export class ItemShopChildRouteComponent
   extends ShopChildRouteComponent {
 
-  protected readonly itemId$: InputSignal<string> = input.required<string>(
+  protected readonly currencies: Currencies           = inject<Currencies>(CURRENCIES);
+  protected readonly currencyService: CurrencyService = inject<CurrencyService>(CurrencyService);
+  protected readonly itemId$: InputSignal<string>     = input.required<string>(
     {
       alias: "itemId",
     },

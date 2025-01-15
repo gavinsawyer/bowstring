@@ -1,30 +1,36 @@
-import { ChangeDetectionStrategy, Component, effect, inject }                                                                                                                   from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators }                                                                                                              from "@angular/forms";
-import { type AccountDocument }                                                                                                                                                 from "@standard/interfaces";
-import { AccountService }                                                                                                                                                       from "@standard/services";
-import { BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, LabelComponent, SymbolComponent, TextFieldInputComponent } from "../../../../../../../";
-import { AccountChildRouteComponent }                                                                                                                                           from "../../../child/AccountChildRouteComponent";
+import { ChangeDetectionStrategy, Component, effect, inject }                                                                                                                                                                                                             from "@angular/core";
+import { Auth }                                                                                                                                                                                                                                                           from "@angular/fire/auth";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators }                                                                                                                                                                                                        from "@angular/forms";
+import { type AccountDocument }                                                                                                                                                                                                                                           from "@standard/interfaces";
+import { AccountService, AuthenticationService }                                                                                                                                                                                                                          from "@standard/services";
+import { BoxComponent, ButtonComponent, CaptionComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent, SectionComponent, SheetComponent, SymbolComponent, TextFieldInputComponent } from "../../../../../../../";
+import { AccountChildRouteComponent }                                                                                                                                                                                                                                     from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:     [
+    imports:         [
       BoxComponent,
       ButtonComponent,
+      CaptionComponent,
       DividerComponent,
       FlexboxContainerComponent,
       FormComponent,
       HeaderComponent,
+      HeadingGroupComponent,
       LabelComponent,
+      LinkComponent,
       ReactiveFormsModule,
+      SectionComponent,
+      SheetComponent,
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    styleUrls:   [
+    styleUrls:       [
       "SecurityAccountChildRouteComponent.sass",
     ],
-    templateUrl: "SecurityAccountChildRouteComponent.html",
+    templateUrl:     "SecurityAccountChildRouteComponent.html",
 
     standalone: true,
   },
@@ -35,7 +41,8 @@ export class SecurityAccountChildRouteComponent
   constructor() {
     super();
 
-    this.passkeyFormGroup.disable();
+    this.passkeyFormGroup.controls.email.disable();
+    this.passwordFormGroup.controls.email.disable();
 
     effect(
       (): void => {
@@ -44,7 +51,12 @@ export class SecurityAccountChildRouteComponent
         if (accountDocument) {
           this.passkeyFormGroup.reset(
             {
-              email: accountDocument.email,
+              email: accountDocument.email || undefined,
+            },
+          );
+          this.passwordFormGroup.reset(
+            {
+              email: accountDocument.email || undefined,
             },
           );
         }
@@ -52,8 +64,10 @@ export class SecurityAccountChildRouteComponent
     );
   }
 
-  protected readonly accountService: AccountService                                = inject<AccountService>(AccountService);
-  protected readonly passkeyFormGroup: FormGroup<{ "email": FormControl<string> }> = new FormGroup<{ "email": FormControl<string> }>(
+  protected readonly accountService: AccountService                                                                                                             = inject<AccountService>(AccountService);
+  protected readonly auth: Auth                                                                                                                                 = inject<Auth>(Auth);
+  protected readonly authenticationService: AuthenticationService                                                                                               = inject<AuthenticationService>(AuthenticationService);
+  protected readonly passkeyFormGroup: FormGroup<{ "email": FormControl<string> }>                                                                              = new FormGroup<{ "email": FormControl<string> }>(
     {
       email: new FormControl<string>(
         "",
@@ -67,5 +81,55 @@ export class SecurityAccountChildRouteComponent
       ),
     },
   );
+  protected readonly passwordFormGroup: FormGroup<{ "email": FormControl<string>, "passwordCurrent": FormControl<string>, "passwordNew": FormControl<string> }> = new FormGroup<{ "email": FormControl<string>, "passwordCurrent": FormControl<string>, "passwordNew": FormControl<string> }>(
+    {
+      email:           new FormControl<string>(
+        "",
+        {
+          nonNullable: true,
+          validators:  [
+            Validators.email,
+            Validators.required,
+          ],
+        },
+      ),
+      passwordCurrent: new FormControl<string>(
+        "",
+        {
+          nonNullable: true,
+        },
+      ),
+      passwordNew:     new FormControl<string>(
+        "",
+        {
+          nonNullable: true,
+          validators:  [
+            Validators.required,
+          ],
+        },
+      ),
+    },
+  );
+
+  protected passkeyFormGroupSubmit(): void {
+    if (this.passkeyFormGroup.controls.email.value)
+      this.authenticationService.linkWithPasskey().then<void>(
+        (): void => void (0),
+      );
+  }
+  protected passwordFormGroupSubmit(): void {
+    if (this.auth.currentUser && this.passwordFormGroup.controls.email.value && this.passwordFormGroup.value.passwordNew) {
+      if (this.passwordFormGroup.value.passwordCurrent)
+        this.authenticationService.updateEmailAndPasswordCredential(
+          this.passwordFormGroup.value.passwordCurrent,
+          this.passwordFormGroup.value.passwordNew,
+        );
+      else
+        this.authenticationService.linkWithEmailAndPasswordCredential(
+          this.passwordFormGroup.controls.email.value,
+          this.passwordFormGroup.value.passwordNew,
+        );
+    }
+  }
 
 }

@@ -8,7 +8,7 @@ import { AccountChildRouteComponent }                                           
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:     [
+    imports:         [
       AddressStripeElementComponent,
       BoxComponent,
       ButtonComponent,
@@ -23,10 +23,10 @@ import { AccountChildRouteComponent }                                           
       SheetComponent,
       SymbolComponent,
     ],
-    styleUrls:   [
+    styleUrls:       [
       "PaymentAndShippingAccountChildRouteComponent.sass",
     ],
-    templateUrl: "PaymentAndShippingAccountChildRouteComponent.html",
+    templateUrl:     "PaymentAndShippingAccountChildRouteComponent.html",
 
     standalone: true,
   },

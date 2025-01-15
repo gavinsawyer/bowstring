@@ -7,8 +7,13 @@
     flexGrow="1">
     <standard--header>
       <h4 i18n>Passkey</h4>
+      <h5 i18n>@if (accountService.accountDocument$()?.security?.passkey) {<standard--symbol
+        inline
+        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A passkey is saved to your account.} @else {<standard--symbol
+        inline
+        input="ShieldLefthalfFilledSlash" />&nbsp;No passkey saved.}</h5>
     </standard--header>
-    <standard--form>
+    <standard--form (output)="passkeyFormGroupSubmit();">
       <standard--text-field-input
         autocomplete="email"
         [formControl]="passkeyFormGroup.controls.email"
@@ -18,15 +23,29 @@
       <standard--divider />
       <standard--button
         appearance="raised"
-        [disabled]="passkeyFormGroup.invalid"
+        [disabled]="passkeyFormGroup.invalid || accountService.accountDocument$()?.security?.passkey || undefined"
         level="2"
         material="inverse"
         type="submit">
         <standard--symbol input="PersonBadgeKeyFill" />
         <standard--label
           i18n-input
-          input="Save Passkey" />
+          input="Save passkey" />
       </standard--button>
+      <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
+        inline
+        input="PersonBadgeKeyFill" />&nbsp;<standard--label
+        inline
+        i18n-input
+        input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
+      @if (accountService.accountDocument$()?.security?.passkey && accountService.accountDocument$()?.security?.password || undefined) {<standard--caption><standard--link
+        inline
+        (output)="unlinkPasskeySheetComponent.openModel$.set(true);">
+        <standard--symbol input="TrashFill" />
+        <standard--label
+          i18n-input
+          input="Remove passkey" />
+      </standard--link></standard--caption>}
     </standard--form>
   </standard--box>
   <standard--box
@@ -34,6 +53,123 @@
     flexGrow="1">
     <standard--header>
       <h4 i18n>Password</h4>
+      <h5 i18n>@if (accountService.accountDocument$()?.security?.password) {<standard--symbol
+        inline
+        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A password is saved to your account.} @else {<standard--symbol
+        inline
+        input="ShieldLefthalfFilledSlash" />&nbsp;No password saved.}</h5>
     </standard--header>
+    <standard--form (output)="passwordFormGroupSubmit();">
+      <standard--text-field-input
+        autocomplete="email"
+        [formControl]="passwordFormGroup.controls.email"
+        level="2"
+        placeholder="Email"
+        type="email"/>
+      @if (accountService.accountDocument$()?.security?.password) {<standard--text-field-input
+        autocomplete="current-password"
+        [formControl]="passwordFormGroup.controls.passwordCurrent"
+        i18n-placeholder
+        level="2"
+        placeholder="Current password"
+        type="password"/>}
+      @if (accountService.accountDocument$()?.security?.password) {<standard--text-field-input
+        autocomplete="new-password"
+        [formControl]="passwordFormGroup.controls.passwordNew"
+        i18n-placeholder
+        level="2"
+        placeholder="New password"
+        type="password"/>} @else {<standard--text-field-input
+        autocomplete="new-password"
+        [formControl]="passwordFormGroup.controls.passwordNew"
+        i18n-placeholder
+        level="2"
+        placeholder="Password"
+        type="password"/>}
+      <standard--divider />
+      <standard--button
+        appearance="raised"
+        [disabled]="passwordFormGroup.invalid"
+        level="2"
+        material="inverse"
+        type="submit">
+        <standard--symbol input="EllipsisRectangleFill" />
+        @if (accountService.accountDocument$()?.security?.password) {<standard--label
+          i18n-input
+          input="Update password" />} @else {<standard--label
+          i18n-input
+          input="Save password" />}
+      </standard--button>
+      @if (accountService.accountDocument$()?.security?.password && accountService.accountDocument$()?.security?.passkey || undefined) {<standard--caption><standard--link
+        inline
+        (output)="unlinkPasswordSheetComponent.openModel$.set(true);">
+        <standard--symbol input="TrashFill" />
+        <standard--label
+          i18n-input
+          input="Remove password" />
+      </standard--link></standard--caption>}
+    </standard--form>
   </standard--box>
 </standard--flexbox-container>
+
+<standard--sheet #unlinkPasskeySheetComponent>
+  @defer {<standard--heading-group>
+    <standard--header>
+      <h6 i18n="@@libs--Components--Routes--Account-Security--UnlinkPasskeySheet--Header">Remove passkey?</h6>
+    </standard--header>
+    <p i18n="@@libs--Components--Routes--Account-Security--UnlinkPasskeySheet--Paragraph_1">You will still be able to sign in using the password saved to your account.</p>
+    <p i18n="@@libs--Components--Routes--Account-Security--UnlinkPasskeySheet--Paragraph_2">The passkey will continue to appear as an option in your browser until it is also deleted from your devices.</p>
+  </standard--heading-group>
+    <standard--divider />
+    <standard--section flexDirection="row">
+      <standard--button
+        appearance="raised"
+        level="2"
+        (output)="unlinkPasskeySheetComponent.openModel$.set(false);">
+        <standard--symbol input="ArrowBackward" />
+        <standard--label
+          i18n-input
+          input="Cancel" />
+      </standard--button>
+      <standard--button
+        appearance="raised"
+        flexGrow="1"
+        level="2"
+        material="warning"
+        (output)="authenticationService.unlinkPasskey(); unlinkPasskeySheetComponent.openModel$.set(false);">
+        <standard--label
+          i18n-input
+          input="Yes, remove" />
+      </standard--button>
+    </standard--section>}
+</standard--sheet>
+<standard--sheet #unlinkPasswordSheetComponent>
+  @defer {<standard--heading-group>
+    <standard--header>
+      <h6 i18n="@@libs--Components--Routes--Account-Security--UnlinkPasswordSheet--Header">Remove password?</h6>
+    </standard--header>
+    <p i18n="@@libs--Components--Routes--Account-Security--UnlinkPasswordSheet--Paragraph">You will still be able to sign in using the passkey saved to your account.</p>
+  </standard--heading-group>
+  <standard--divider />
+  <standard--section flexDirection="row">
+    <standard--button
+      appearance="raised"
+      level="2"
+      (output)="unlinkPasswordSheetComponent.openModel$.set(false);">
+      <standard--symbol input="ArrowBackward" />
+      <standard--label
+        i18n-input
+        input="Cancel" />
+    </standard--button>
+    <standard--button
+      appearance="raised"
+      flexGrow="1"
+      level="2"
+      material="warning"
+      (output)="authenticationService.unlinkPassword(); unlinkPasswordSheetComponent.openModel$.set(false);">
+      <standard--label
+        i18n-input
+        input="Yes, remove" />
+    </standard--button>
+  </standard--section>}
+</standard--sheet>

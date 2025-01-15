@@ -2,6 +2,7 @@ export * from "./lib/AccountService";
 export * from "./lib/AppCheckOptionsService";
 export * from "./lib/AuthenticationService";
 export * from "./lib/ConnectivityService";
+export * from "./lib/CurrencyService";
 export * from "./lib/GoogleMapsApiLoaderService";
 export * from "./lib/InputService";
 export * from "./lib/PathService";

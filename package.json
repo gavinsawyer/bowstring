@@ -1,6 +1,6 @@
 {
   "name":            "@standard/source",
-  "version":         "18.16.0",
+  "version":         "18.17.0",
   "license":         "MIT",
   "author":          {
     "name":  "Gavin Sawyer",
@@ -38,8 +38,8 @@
     "masonry-layout":                    "^4.2.2",
     "rxjs":                              "^7.8.1",
     "stripe":                            "^17.5.0",
-    "twilio":                            "^5.4.1",
-    "uuid":                              "^11.0.4",
+    "twilio":                            "^5.4.2",
+    "uuid":                              "^11.0.5",
     "zone.js":                           "^0.14.10"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "@angular/language-service":              "^18.2.13",
     "@angular/ssr":                           "^18.2.12",
     "@eslint/eslintrc":                       "^3.2.0",
-    "@eslint/js":                             "^9.17.0",
+    "@eslint/js":                             "^9.18.0",
     "@firebase-web-authn/extension":          "^10.4.2",
     "@nx/angular":                            "^20.3.1",
     "@nx/esbuild":                            "^20.3.1",
@@ -62,13 +62,13 @@
     "@types/google.maps":                     "^3.58.1",
     "@types/lodash":                          "^4.17.14",
     "@types/masonry-layout":                  "^4.2.8",
-    "@typescript-eslint/eslint-plugin":       "^8.19.1",
+    "@typescript-eslint/eslint-plugin":       "^8.20.0",
     "browser-sync":                           "^3.0.3",
     "compression":                            "^1.7.5",
     "firebase-functions":                     "^6.2.0",
     "firebase-tools":                         "^13.29.1",
     "git-describe":                           "^4.1.1",
-    "nx":                                     "^20.2.2",
+    "nx":                                     "^20.3.1",
     "url":                                    "^0.11.4"
   }
 }

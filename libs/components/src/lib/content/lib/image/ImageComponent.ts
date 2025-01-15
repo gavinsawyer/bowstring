@@ -22,6 +22,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
         inputs:    [
           "alignSelf",
           "aspectRatio",
+          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

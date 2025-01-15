@@ -14,7 +14,7 @@ import { AccountChildRouteComponent }                                           
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:     [
+    imports:         [
       BoxComponent,
       ComboboxInputComponent,
       DividerComponent,
@@ -26,10 +26,10 @@ import { AccountChildRouteComponent }                                           
       TextFieldInputComponent,
       ToggleComponent,
     ],
-    styleUrls:   [
+    styleUrls:       [
       "MessagesAccountChildRouteComponent.sass",
     ],
-    templateUrl: "MessagesAccountChildRouteComponent.html",
+    templateUrl:     "MessagesAccountChildRouteComponent.html",
 
     standalone: true,
   },
@@ -66,7 +66,7 @@ export class MessagesAccountChildRouteComponent
         if (accountDocument) {
           this.messagesContactFormGroup.reset(
             {
-              email: accountDocument.email,
+              email: accountDocument.email || undefined,
               phone: accountDocument.phone || {
                 countryCode: "",
                 national:    "",
@@ -85,11 +85,11 @@ export class MessagesAccountChildRouteComponent
     );
   }
 
-  protected readonly accountService: AccountService          = inject<AccountService>(AccountService);
-  protected readonly auth: Auth                              = inject<Auth>(Auth);
-  protected readonly firestore: Firestore                    = inject<Firestore>(Firestore);
-  protected readonly inputService: InputService              = inject<InputService>(InputService);
-  protected readonly messagesContactEdited$: Signal<boolean> = computed<boolean>(
+  protected readonly accountService: AccountService                                                                                                                                     = inject<AccountService>(AccountService);
+  protected readonly auth: Auth                                                                                                                                                         = inject<Auth>(Auth);
+  protected readonly firestore: Firestore                                                                                                                                               = inject<Firestore>(Firestore);
+  protected readonly inputService: InputService                                                                                                                                         = inject<InputService>(InputService);
+  protected readonly messagesContactEdited$: Signal<boolean>                                                                                                                            = computed<boolean>(
     (): boolean => {
       const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
@@ -105,9 +105,9 @@ export class MessagesAccountChildRouteComponent
       );
     },
   );
-  protected readonly messagesContactFormGroup                = new FormGroup(
+  protected readonly messagesContactFormGroup: FormGroup<{ "email": FormControl<string>, "phone": FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }> }> = new FormGroup<{ "email": FormControl<string>, "phone": FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }> }>(
     {
-      "email": new FormControl<string>(
+      email: new FormControl<string>(
         "",
         {
           nonNullable: true,
@@ -117,7 +117,7 @@ export class MessagesAccountChildRouteComponent
           ],
         },
       ),
-      "phone": new FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }>(
+      phone: new FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }>(
         {
           countryCode: new FormControl<string>(
             "",
@@ -149,7 +149,7 @@ export class MessagesAccountChildRouteComponent
       ),
     },
   );
-  protected readonly messagesEdited$: Signal<boolean>        = computed<boolean>(
+  protected readonly messagesEdited$: Signal<boolean>                                                                                                                                   = computed<boolean>(
     (): boolean => {
       const messages: AccountDocument["messages"] | undefined = this.accountService.accountDocument$()?.messages;
 
@@ -163,7 +163,7 @@ export class MessagesAccountChildRouteComponent
       );
     },
   );
-  protected readonly messagesFormGroup                       = new FormGroup(
+  protected readonly messagesFormGroup                                                                                                                                                  = new FormGroup(
     {
       "newsletter":   new FormControl<boolean | null>(null),
       "orderUpdates": new FormControl<boolean | null>(null),
@@ -176,7 +176,7 @@ export class MessagesAccountChildRouteComponent
       startWith<typeof this.messagesContactFormGroup.value, [ typeof this.messagesContactFormGroup.value ]>(this.messagesContactFormGroup.value),
       map<typeof this.messagesContactFormGroup.value, typeof this.messagesContactFormGroup.value>(
         (messagesContactValue: typeof this.messagesContactFormGroup.value): typeof this.messagesContactFormGroup.value => ({
-          email: this.accountService.accountDocument$()?.email,
+          email: this.accountService.accountDocument$()?.email || undefined,
           ...messagesContactValue,
         }),
       ),

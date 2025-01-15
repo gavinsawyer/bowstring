@@ -22,6 +22,7 @@ import { StripeElementComponent }                                               
         inputs:    [
           "alignSelf",
           "aspectRatio",
+          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

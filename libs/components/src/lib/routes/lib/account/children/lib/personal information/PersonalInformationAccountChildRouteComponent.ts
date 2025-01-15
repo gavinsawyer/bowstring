@@ -14,7 +14,7 @@ import { AccountChildRouteComponent }                                           
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:     [
+    imports:         [
       BoxComponent,
       ButtonComponent,
       DatepickerInputComponent,
@@ -26,10 +26,10 @@ import { AccountChildRouteComponent }                                           
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    styleUrls:   [
+    styleUrls:       [
       "PersonalInformationAccountChildRouteComponent.sass",
     ],
-    templateUrl: "PersonalInformationAccountChildRouteComponent.html",
+    templateUrl:     "PersonalInformationAccountChildRouteComponent.html",
 
     standalone: true,
   },
