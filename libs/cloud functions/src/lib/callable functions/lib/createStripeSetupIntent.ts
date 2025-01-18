@@ -1,26 +1,30 @@
 import { type CallableRequest, HttpsError, onCall } from "firebase-functions/https";
 import Stripe                                       from "stripe";
+import { Stripe_API_Key }                           from "../../secrets";
 
 
 // noinspection JSUnusedGlobalSymbols
 export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<{ "clientSecret": string }>>(
   {
     enforceAppCheck: true,
+    secrets:         [
+      Stripe_API_Key,
+    ],
   },
-  async (callableRequest: CallableRequest<null>): Promise<{ clientSecret: string }> => {
-    if (!callableRequest.auth?.uid)
+  async ({ auth: authData }: CallableRequest<null>): Promise<{ clientSecret: string }> => {
+    if (!authData?.uid)
       throw new HttpsError(
         "unauthenticated",
         "You're not signed in.",
       );
 
-    if (!process.env["STRIPE_API_KEY"])
-      throw new HttpsError(
-        "failed-precondition",
-        "A value for `STRIPE_API_KEY` is missing from the environment.",
-      );
-
-    return new Stripe(process.env["STRIPE_API_KEY"]).setupIntents.create().then<{ clientSecret: string }, never>(
+    return new Stripe(Stripe_API_Key.value()).setupIntents.create(
+      {
+        payment_method_types: [
+          "card",
+        ],
+      },
+    ).then<{ clientSecret: string }, never>(
       ({ client_secret: clientSecret }: Stripe.SetupIntent): { clientSecret: string } => {
         if (!clientSecret)
           throw new HttpsError(

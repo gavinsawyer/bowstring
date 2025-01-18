@@ -3,14 +3,18 @@ import { getApp }                                                      from "fir
 import { type DocumentReference, type DocumentSnapshot, getFirestore } from "firebase-admin/firestore";
 import { type CallableRequest, HttpsError, onCall }                    from "firebase-functions/https";
 import Stripe                                                          from "stripe";
+import { Stripe_API_Key }                                              from "../../secrets";
 
 
 // noinspection JSUnusedGlobalSymbols
-export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMethodId": string }, Promise<null>>(
+export const detachStripePaymentMethod: CallableFunction = onCall<null, Promise<null>>(
   {
     enforceAppCheck: true,
+    secrets:         [
+      Stripe_API_Key,
+    ],
   },
-  async (callableRequest: CallableRequest<{ "paymentMethodId": string }>): Promise<null> => {
+  async (callableRequest: CallableRequest<null>): Promise<null> => {
     if (!callableRequest.auth?.uid)
       throw new HttpsError(
         "unauthenticated",
@@ -37,61 +41,17 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
             "A value for `stripeCustomer` is missing from the account document.",
           );
 
-        if (!process.env["STRIPE_API_KEY"])
-          throw new HttpsError(
-            "failed-precondition",
-            "A value for `STRIPE_API_KEY` is missing from the environment.",
-          );
+        if (!stripeCustomer.paymentMethod?.id)
+          return null;
 
-        return new Stripe(process.env["STRIPE_API_KEY"]).paymentMethods.attach(
-          callableRequest.data.paymentMethodId,
-          {
-            customer: stripeCustomer.id,
-          },
+        return new Stripe(Stripe_API_Key.value()).paymentMethods.detach(
+          stripeCustomer.paymentMethod.id,
         ).then<null, never>(
-          (
-            {
-              billing_details: billingDetails,
-              id,
-              type,
-            }: Stripe.PaymentMethod,
-          ): Promise<null> => accountDocumentReference.update(
+          (): Promise<null> => accountDocumentReference.update(
             {
               stripeCustomer: {
                 ...stripeCustomer,
-                paymentMethod: {
-                  billingDetails: ((
-                    {
-                      address,
-                      email,
-                      name,
-                      phone,
-                    }: Stripe.PaymentMethod["billing_details"],
-                  ): { address: { country: string | null, city: string | null, line1: string | null, line2: string | null, postalCode: string | null, state: string | null } | null, email: string | null, name: string | null, phone: string | null } => ({
-                    address: address && ((
-                      {
-                        country,
-                        city,
-                        line1,
-                        line2,
-                        postal_code: postalCode,
-                        state,
-                      }: Stripe.Address,
-                    ): { country: string | null, city: string | null, line1: string | null, line2: string | null, postalCode: string | null, state: string | null } => ({
-                      country,
-                      city,
-                      line1,
-                      line2,
-                      postalCode,
-                      state,
-                    }))(address),
-                    email,
-                    name,
-                    phone,
-                  }))(billingDetails),
-                  id,
-                  type,
-                },
+                paymentMethod: null,
               },
             },
           ).then<null, never>(
@@ -115,6 +75,15 @@ export const attachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
               error,
             );
           },
+        );
+      },
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw new HttpsError(
+          "unknown",
+          "Something went wrong.",
+          error,
         );
       },
     );

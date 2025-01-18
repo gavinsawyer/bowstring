@@ -19,7 +19,7 @@ function getI18nRequestHandler(getRequestHandler: (
       "en-US",
       ...Object.keys(
         project.i18n.locales,
-      ) as LocaleId[],
+      ) as Exclude<LocaleId, "en-US">[],
     ];
     const localeId: LocaleId    = localeIds.filter(
       (localeId: LocaleId): boolean => localeId === request.path.split("/")[1] || localeId === request.headers.referer?.split("://")[1]?.split("/")[1],

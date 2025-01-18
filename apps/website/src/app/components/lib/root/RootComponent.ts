@@ -15,9 +15,9 @@ import { type GitInfo }                                                         
 import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
 import { LOCALE_IDS }                                                                                                             from "../../../injection tokens";
 import { type LocaleId }                                                                                                          from "../../../types";
+import { User } from "@angular/fire/auth";
 
 
-// eslint-disable-next-line @angular-eslint/prefer-standalone
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -225,8 +225,9 @@ export class RootComponent {
   );
 
   protected changeLocale(localeId: LocaleId): void {
-    if (isPlatformBrowser(this.platformId))
-      this.document.location.href = `/${ String(localeId) }${ this.location.path() }`;
+    if (isPlatformBrowser(this.platformId)) {
+      this.document.location.href = `${ this.document.location.origin }/${ String(localeId) }${ this.location.path() }`;
+    }
   }
   protected signinWithPasswordFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signinWithPasswordFormGroup.value.email && this.signinWithPasswordFormGroup.value.password)
@@ -271,15 +272,15 @@ export class RootComponent {
       );
   }
   protected signupWithPasskeyFormSubmit(openModel$: SheetComponent["openModel$"]): void {
-    const userId: string | undefined = this.authenticationService.user$()?.uid;
+    const user: User | undefined = this.authenticationService.user$();
 
-    if (userId && this.signupWithPasskeyFormGroup.value.email) {
+    if (user && this.signupWithPasskeyFormGroup.value.email) {
       const email: string = this.signupWithPasskeyFormGroup.value.email;
 
       setDoc<AccountDocument, DocumentData>(
         doc(
           this.firestore,
-          `/accounts/${ userId }`,
+          `/accounts/${ user.uid }`,
         ) as DocumentReference<AccountDocument>,
         {
           email,

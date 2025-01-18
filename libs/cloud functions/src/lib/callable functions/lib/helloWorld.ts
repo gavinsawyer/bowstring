@@ -13,10 +13,8 @@ export const helloWorld: CallableFunction = onCall<null, Promise<{ "helloWorld":
         "You're not signed in.",
       );
 
-    const userId: string = authData.uid;
-
     return {
-      helloWorld: userId,
+      helloWorld: authData.uid,
     };
   },
 );

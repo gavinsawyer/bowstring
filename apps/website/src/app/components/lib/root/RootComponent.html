@@ -6,9 +6,12 @@
 </div>
 
 <standard--sheet #currencySheetComponent>
-  @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--CurrencySheet--Header">Select your currency.</h6>
-  </standard--header>
+  @defer {<standard--heading-group>
+    <standard--header>
+      <h6 i18n="@@apps--Website--Components--Root--Sheets--Currency--Header">Select your currency.</h6>
+    </standard--header>
+    <p i18n="@@apps--Website--Components--Root--Sheets--Currency--Paragraph">View prices with a live exchange rate from {{ brand.currency }}&nbsp;&lpar;{{ currencies[brand.currency].name }}&rpar;.</p>
+  </standard--heading-group>
   <standard--divider />
   <standard--section>
     @for (currency of currencyKeys; track currency) {<standard--button
@@ -22,7 +25,7 @@
 </standard--sheet>
 <standard--sheet #localeSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--LocaleSheet--Header">Select your locale.</h6>
+    <h6 i18n="@@apps--Website--Components--Root--Sheets--Locale--Header">Select your locale.</h6>
   </standard--header>
   <standard--divider />
   <standard--section>
@@ -37,7 +40,7 @@
 </standard--sheet>
 <standard--sheet #signinFormSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SigninFormSheet--Header">Sign in.</h6>
+    <h6 i18n="@@apps--Website--Components--Root--Sheets--SigninForm--Header">Sign in.</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinFormSheetComponent.openModel$);">
     <standard--button
@@ -89,7 +92,7 @@
 </standard--sheet>
 <standard--sheet #signoutSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SignoutSheet--Header">Sign out?</h6>
+    <h6 i18n="@@apps--Website--Components--Root--Sheets--Signout--Header">Sign out?</h6>
   </standard--header>
   <standard--divider />
   <standard--section flexDirection="row">
@@ -116,7 +119,7 @@
 </standard--sheet>
 <standard--sheet #signupFormSheetComponent>
   @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--SignupFormSheet--Header">Create your account.</h6>
+    <h6 i18n="@@apps--Website--Components--Root--Sheets--SignupForm--Header">Create your account.</h6>
   </standard--header>
   @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent.openModel$);">
     <standard--text-field-input

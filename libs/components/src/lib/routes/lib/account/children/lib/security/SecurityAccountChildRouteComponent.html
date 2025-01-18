@@ -6,12 +6,12 @@
     flexBasis="0"
     flexGrow="1">
     <standard--header>
-      <h4 i18n>Passkey</h4>
-      <h5 i18n>@if (accountService.accountDocument$()?.security?.passkey) {<standard--symbol
+      <h4 i18n="@@libs--Components--Routes--Account-Security--Passkey--Header">Passkey</h4>
+      <h5>@if (accountService.accountDocument$()?.security?.passkey) {<span i18n="@@libs--Components--Routes--Account-Security--Passkey--Subheader_1"><standard--symbol
         inline
-        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A passkey is saved to your account.} @else {<standard--symbol
+        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A passkey is saved to your account.</span>} @else {<span i18n="@@libs--Components--Routes--Account-Security--Passkey--Subheader_2"><standard--symbol
         inline
-        input="ShieldLefthalfFilledSlash" />&nbsp;No passkey saved.}</h5>
+        input="ShieldLefthalfFilledSlash" />&nbsp;No passkey saved.</span>}</h5>
     </standard--header>
     <standard--form (output)="passkeyFormGroupSubmit();">
       <standard--text-field-input
@@ -52,12 +52,12 @@
     flexBasis="0"
     flexGrow="1">
     <standard--header>
-      <h4 i18n>Password</h4>
-      <h5 i18n>@if (accountService.accountDocument$()?.security?.password) {<standard--symbol
+      <h4 i18n="@@libs--Components--Routes--Account-Security--Password--Header">Password</h4>
+      <h5>@if (accountService.accountDocument$()?.security?.password) {<span i18n="@@libs--Components--Routes--Account-Security--Password--Subheader_1"><standard--symbol
         inline
-        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A password is saved to your account.} @else {<standard--symbol
+        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A password is saved to your account.</span>} @else {<span i18n="@@libs--Components--Routes--Account-Security--Password--Subheader_2"><standard--symbol
         inline
-        input="ShieldLefthalfFilledSlash" />&nbsp;No password saved.}</h5>
+        input="ShieldLefthalfFilledSlash" />&nbsp;No password saved.</span>}</h5>
     </standard--header>
     <standard--form (output)="passwordFormGroupSubmit();">
       <standard--text-field-input
@@ -115,10 +115,10 @@
 <standard--sheet #unlinkPasskeySheetComponent>
   @defer {<standard--heading-group>
     <standard--header>
-      <h6 i18n="@@libs--Components--Routes--Account-Security--UnlinkPasskeySheet--Header">Remove passkey?</h6>
+      <h6 i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Header">Remove passkey?</h6>
     </standard--header>
-    <p i18n="@@libs--Components--Routes--Account-Security--UnlinkPasskeySheet--Paragraph_1">You will still be able to sign in using the password saved to your account.</p>
-    <p i18n="@@libs--Components--Routes--Account-Security--UnlinkPasskeySheet--Paragraph_2">The passkey will continue to appear as an option in your browser until it is also deleted from your devices.</p>
+    <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Paragraph_1">You will still be able to sign in using the password saved to your account.</p>
+    <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Paragraph_2">The passkey will continue to appear as an option in your browser until it is also deleted from your devices.</p>
   </standard--heading-group>
     <standard--divider />
     <standard--section flexDirection="row">
@@ -146,9 +146,9 @@
 <standard--sheet #unlinkPasswordSheetComponent>
   @defer {<standard--heading-group>
     <standard--header>
-      <h6 i18n="@@libs--Components--Routes--Account-Security--UnlinkPasswordSheet--Header">Remove password?</h6>
+      <h6 i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPassword--Header">Remove password?</h6>
     </standard--header>
-    <p i18n="@@libs--Components--Routes--Account-Security--UnlinkPasswordSheet--Paragraph">You will still be able to sign in using the passkey saved to your account.</p>
+    <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPassword--Paragraph">You will still be able to sign in using the passkey saved to your account.</p>
   </standard--heading-group>
   <standard--divider />
   <standard--section flexDirection="row">

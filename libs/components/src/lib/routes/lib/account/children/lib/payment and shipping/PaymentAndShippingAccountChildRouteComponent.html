@@ -5,6 +5,16 @@
   <standard--box
     flexBasis="0"
     flexGrow="1">
+    <standard--header>
+      <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Header">Shipping address</h4>
+      <h5>@if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--label
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Subheader_1"
+        inline
+        input="An address is saved to your account." />} @else {<standard--label
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Subheader_2"
+        inline
+        input="Add an address for future orders." />}</h5>
+    </standard--header>
     @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {@if (stripeCustomer.address; as address) {@if (stripeCustomer.name) {<standard--section>
       <standard--label [input]="stripeCustomer.name" />
     </standard--section>}
@@ -24,70 +34,83 @@
     </standard--section>
     @if (stripeCustomer.phone) {<standard--section>
       <standard--label [input]="stripeCustomer.phone" />
-    </standard--section>
-    <standard--divider />}
-    <standard--button
-      appearance="raised"
-      level="2"
-      material="inverse"
-      (output)="addressStripeElementSheetComponent.openModel$.set(true);">
-      <standard--symbol input="Pencil" />
-      <standard--label
-        i18n-input
-        input="Edit" />
-    </standard--button>} @else {<standard--header>
-      <h4 i18n>Nothing here.</h4>
-      <h5 i18n>Add a shipping address for future orders.</h5>
-    </standard--header>
+    </standard--section>}}}
     <standard--divider />
-    <standard--button
-      appearance="raised"
-      level="2"
-      material="inverse"
-      (output)="addressStripeElementSheetComponent.openModel$.set(true);">
-      <standard--symbol input="Plus" />
-      <standard--label
-        i18n-input
-        input="Add" />
-    </standard--button>}}
+    <standard--section>
+      <standard--button
+        appearance="raised"
+        level="2"
+        material="inverse"
+        (output)="addressStripeElementSheetComponent.openModel$.set(true);">
+        @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--symbol input="Pencil" />
+        <standard--label
+          i18n-input
+          input="Edit" />} @else {<standard--symbol input="Plus" />
+        <standard--label
+          i18n-input
+          input="Add" />}
+      </standard--button>
+      @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--caption><standard--link
+        inline
+        (output)="removeAddressSheetComponent.openModel$.set(true);">
+        <standard--symbol input="TrashFill" />
+        <standard--label
+          i18n-input
+          input="Remove address" />
+      </standard--link></standard--caption>}
+    </standard--section>
   </standard--box>
   <standard--box
     flexBasis="0"
     flexGrow="1">
-    @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod; as paymentMethod) {<standard--label [input]="paymentMethod.type + ' payment available.'" />
-    <standard--divider />
-    <standard--button
-      appearance="raised"
-      level="2"
-      material="inverse"
-      (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
-      <standard--symbol input="Pencil" />
-      <standard--label
-        i18n-input
-        input="Edit" />
-    </standard--button>} @else {<standard--header>
-      <h4 i18n>Nothing here.</h4>
-      <h5 i18n>Add a payment method for future orders.</h5>
+    <standard--header>
+      <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethod--Header">Payment method</h4>
+      <h5>@if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--label
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethod--Subheader_1"
+        inline
+        input="A card is saved to your account." />} @else {<standard--label
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethod--Subheader_2"
+        inline
+        input="Add a card for future orders."/>}</h5>
     </standard--header>
     <standard--divider />
-    <standard--button
-      appearance="raised"
-      level="2"
-      material="inverse"
-      (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
-      <standard--symbol input="Plus" />
-      <standard--label
-        i18n-input
-        input="Add" />
-    </standard--button>}
+    <standard--section>
+      <standard--button
+        appearance="raised"
+        level="2"
+        material="inverse"
+        (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
+        @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--symbol input="Pencil" />
+          <standard--label
+            i18n-input
+            input="Edit" />} @else {<standard--symbol input="Plus" />
+          <standard--label
+            i18n-input
+            input="Add" />}
+      </standard--button>
+      @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--caption><standard--link
+        inline
+        (output)="removePaymentMethodSheetComponent.openModel$.set(true);">
+        <standard--symbol input="TrashFill" />
+        <standard--label
+          i18n-input
+          input="Remove card" />
+      </standard--link></standard--caption>}
+    </standard--section>
   </standard--box>
 </standard--flexbox-container>
 
 <standard--sheet #addressStripeElementSheetComponent>
-  <standard--header>
-    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--AddressStripeElementSheet--Header">Edit your shipping address.</h6>
+  @defer {<standard--header>
+    <h6>@if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--label
+      i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--AddressStripeElement--Header_1"
+      inline
+      input="Edit your shipping address." />} @else {<standard--label
+      i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--AddressStripeElement--Header_2"
+      inline
+      input="Add your shipping address." />}</h6>
   </standard--header>
-  @defer {<standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
+  <standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
     <standard--address-stripe-element #addressStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
@@ -110,10 +133,16 @@
   </standard--form>}
 </standard--sheet>
 <standard--sheet #paymentStripeElementSheetComponent>
-  <standard--header>
-    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentStripeElementSheet--Header">Edit your payment method.</h6>
+  @defer {<standard--header>
+    <h6>@if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--label
+      i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--PaymentStripeElement--Header_1"
+      inline
+      input="Edit your payment method." />} @else {<standard--label
+      i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--PaymentStripeElement--Header_2"
+      inline
+      input="Add your payment method." />}</h6>
   </standard--header>
-  @defer {<standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
+  <standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
     <standard--payment-stripe-element #paymentStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
@@ -134,4 +163,62 @@
       </standard--button>
     </standard--flexbox-container>
   </standard--form>}
+</standard--sheet>
+<standard--sheet #removeAddressSheetComponent>
+  @defer {<standard--heading-group>
+    <standard--header>
+      <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--RemoveAddress--Header">Remove address?</h6>
+    </standard--header>
+  </standard--heading-group>
+  <standard--divider />
+  <standard--section flexDirection="row">
+    <standard--button
+      appearance="raised"
+      level="2"
+      (output)="removeAddressSheetComponent.openModel$.set(false);">
+      <standard--symbol input="ArrowBackward" />
+      <standard--label
+        i18n-input
+        input="Cancel" />
+    </standard--button>
+    <standard--button
+      appearance="raised"
+      flexGrow="1"
+      level="2"
+      material="warning"
+      (output)="removeAddress(); removeAddressSheetComponent.openModel$.set(false);">
+      <standard--label
+        i18n-input
+        input="Yes, remove" />
+    </standard--button>
+  </standard--section>}
+</standard--sheet>
+<standard--sheet #removePaymentMethodSheetComponent>
+  @defer {<standard--heading-group>
+    <standard--header>
+      <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--RemovePaymentMethod--Header">Remove card?</h6>
+    </standard--header>
+  </standard--heading-group>
+  <standard--divider />
+  <standard--section flexDirection="row">
+    <standard--button
+      appearance="raised"
+      level="2"
+      (output)="removePaymentMethodSheetComponent.openModel$.set(false);">
+      <standard--symbol input="ArrowBackward" />
+      <standard--label
+        i18n-input
+        input="Cancel" />
+    </standard--button>
+    <standard--button
+      appearance="raised"
+      flexGrow="1"
+      level="2"
+      material="warning"
+      (output)="removePaymentMethod(); removePaymentMethodSheetComponent.openModel$.set(false);">
+      <standard--label
+        i18n-input
+        input="Yes, remove" />
+    </standard--button>
+  </standard--section>}
 </standard--sheet>

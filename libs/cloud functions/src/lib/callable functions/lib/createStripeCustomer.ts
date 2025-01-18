@@ -3,21 +3,25 @@ import { getApp }                                                      from "fir
 import { type DocumentReference, type DocumentSnapshot, getFirestore } from "firebase-admin/firestore";
 import { type CallableRequest, HttpsError, onCall }                    from "firebase-functions/https";
 import Stripe                                                          from "stripe";
+import { Stripe_API_Key }                                              from "../../secrets";
 
 
 // noinspection JSUnusedGlobalSymbols
-export const detachStripePaymentMethod: CallableFunction = onCall<{ "paymentMethodId": string }, Promise<null>>(
+export const createStripeCustomer: CallableFunction = onCall<null, Promise<null>>(
   {
     enforceAppCheck: true,
+    secrets:         [
+      Stripe_API_Key,
+    ],
   },
-  async (callableRequest: CallableRequest<{ "paymentMethodId": string }>): Promise<null> => {
-    if (!callableRequest.auth?.uid)
+  async ({ auth: authData }: CallableRequest): Promise<null> => {
+    if (!authData?.uid)
       throw new HttpsError(
         "unauthenticated",
         "You're not signed in.",
       );
 
-    const accountDocumentReference: DocumentReference<AccountDocument> = getFirestore(getApp()).collection("accounts").doc(callableRequest.auth.uid) as DocumentReference<AccountDocument>;
+    const accountDocumentReference: DocumentReference<AccountDocument> = getFirestore(getApp()).collection("accounts").doc(authData.uid) as DocumentReference<AccountDocument>;
 
     return accountDocumentReference.get().then<null, never>(
       async (accountDocumentSnapshot: DocumentSnapshot<AccountDocument>): Promise<null> => {
@@ -29,28 +33,24 @@ export const detachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
             "The account document is missing.",
           );
 
-        const stripeCustomer: AccountDocument["stripeCustomer"] = accountDocument.stripeCustomer;
-
-        if (!stripeCustomer)
+        if (!accountDocument.email)
           throw new HttpsError(
             "invalid-argument",
-            "A value for `stripeCustomer` is missing from the account document.",
+            "A value for `email` is missing from the account document.",
           );
 
-        if (!process.env["STRIPE_API_KEY"])
-          throw new HttpsError(
-            "failed-precondition",
-            "A value for `STRIPE_API_KEY` is missing from the environment.",
-          );
+        if (accountDocument.stripeCustomer)
+          return null;
 
-        return new Stripe(process.env["STRIPE_API_KEY"]).paymentMethods.detach(
-          callableRequest.data.paymentMethodId,
+        return new Stripe(Stripe_API_Key.value()).customers.create(
+          {
+            email: accountDocument.email,
+          },
         ).then<null, never>(
-          (): Promise<null> => accountDocumentReference.update(
+          ({ id }: Stripe.Response<Stripe.Customer>): Promise<null> => accountDocumentReference.update(
             {
               stripeCustomer: {
-                ...stripeCustomer,
-                paymentMethod: null,
+                id,
               },
             },
           ).then<null, never>(
@@ -74,6 +74,15 @@ export const detachStripePaymentMethod: CallableFunction = onCall<{ "paymentMeth
               error,
             );
           },
+        );
+      },
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw new HttpsError(
+          "unknown",
+          "Something went wrong.",
+          error,
         );
       },
     );
