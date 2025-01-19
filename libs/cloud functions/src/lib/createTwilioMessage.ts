@@ -1,6 +1,6 @@
 import { type CallableRequest, HttpsError, onCall }                            from "firebase-functions/https";
 import getTwilio, { type Twilio }                                              from "twilio";
-import { Twilio_Account_SID, Twilio_Auth_Token, Twilio_Messaging_Service_SID } from "../../secrets";
+import { Twilio_Account_SID, Twilio_Auth_Token, Twilio_Messaging_Service_SID } from "./secrets";
 
 
 // noinspection JSUnusedGlobalSymbols

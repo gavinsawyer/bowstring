@@ -1,6 +1,6 @@
 {
   "name":            "@standard/source",
-  "version":         "18.18.0",
+  "version":         "18.18.1",
   "license":         "MIT",
   "author":          {
     "name":  "Gavin Sawyer",
@@ -58,12 +58,14 @@
     "@nx/esbuild":                            "20",
     "@nx/eslint-plugin":                      "20",
     "@types/body-scroll-lock":                "3",
+    "@types/coinbase-commerce-node":          "1",
     "@types/compression":                     "1",
     "@types/google.maps":                     "3",
     "@types/lodash":                          "4",
     "@types/masonry-layout":                  "4",
     "@typescript-eslint/eslint-plugin":       "8",
     "browser-sync":                           "3",
+    "coinbase-commerce-node":                 "1",
     "compression":                            "1",
     "firebase-functions":                     "6",
     "firebase-tools":                         "13",

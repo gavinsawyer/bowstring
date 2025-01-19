@@ -1,6 +1,6 @@
 import { type CallableRequest, HttpsError, onCall } from "firebase-functions/https";
 import Stripe                                       from "stripe";
-import { Stripe_API_Key }                           from "../../secrets";
+import { Stripe_API_Key }                           from "./secrets";
 
 
 // noinspection JSUnusedGlobalSymbols

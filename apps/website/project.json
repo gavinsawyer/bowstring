@@ -132,8 +132,10 @@
       "executor":             "@angular-devkit/build-angular:prerender",
       "options":              {
         "routes": [
+          "/account",
           "/gallery",
           "/privacy",
+          "/shop",
           "/terms",
 
           "/",

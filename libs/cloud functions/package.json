@@ -18,8 +18,9 @@
   "main":         "./main.js",
   "type":         "module",
   "dependencies": {
-    "firebase-functions": "^6.2.0",
-    "stripe":             "^17.5.0",
-    "twilio":             "^5.4.2"
+    "coinbase-commerce-node": "1",
+    "firebase-functions":     "6",
+    "stripe":                 "17",
+    "twilio":                 "5"
   }
 }

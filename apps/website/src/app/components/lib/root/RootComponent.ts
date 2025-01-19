@@ -1,21 +1,21 @@
-import { DOCUMENT, isPlatformBrowser, Location }                                                                                  from "@angular/common";
+import { DOCUMENT, isPlatformBrowser }                                                                                            from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                 from "@angular/core/rxjs-interop";
+import { type User }                                                                                                              from "@angular/fire/auth";
 import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                      from "@angular/fire/firestore";
 import { Functions, httpsCallable }                                                                                               from "@angular/fire/functions";
 import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }                                        from "@angular/forms";
 import { RouterOutlet }                                                                                                           from "@angular/router";
 import { type RouteComponent, type SheetComponent }                                                                               from "@standard/components";
 import { CanvasDirective, FlexboxContainerDirective }                                                                             from "@standard/directives";
-import { BRAND, CURRENCIES, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                                   from "@standard/injection-tokens";
-import { type AccountDocument }                                                                                                   from "@standard/interfaces";
+import { BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                      from "@standard/injection-tokens";
+import { type AccountDocument, type Environment }                                                                                 from "@standard/interfaces";
 import { AuthenticationService, ConnectivityService, CurrencyService, ResponsivityService }                                       from "@standard/services";
 import { type Brand, type Currencies }                                                                                            from "@standard/types";
 import { type GitInfo }                                                                                                           from "git-describe";
 import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
-import { LOCALE_IDS }                                                                                                             from "../../../injection tokens";
-import { type LocaleId }                                                                                                          from "../../../types";
-import { User } from "@angular/fire/auth";
+import { CLOUD_REGION, LOCALE_IDS }                                                                                               from "../../../injection tokens";
+import { type CloudRegion, type LocaleId }                                                                                        from "../../../types";
 
 
 @Component(
@@ -48,11 +48,12 @@ import { User } from "@angular/fire/auth";
 )
 export class RootComponent {
 
+  private readonly cloudRegion: CloudRegion            = inject<CloudRegion>(CLOUD_REGION);
   private readonly document: Document                  = inject<Document>(DOCUMENT);
+  private readonly environment: Environment            = inject<Environment>(ENVIRONMENT);
   private readonly firestore: Firestore                = inject<Firestore>(Firestore);
   private readonly functions: Functions                = inject<Functions>(Functions);
   private readonly injector: Injector                  = inject<Injector>(Injector);
-  private readonly location: Location                  = inject<Location>(Location);
   private readonly platformId: NonNullable<unknown>    = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly routerOutlet$: Signal<RouterOutlet> = viewChild.required<RouterOutlet>(RouterOutlet);
 
@@ -225,9 +226,8 @@ export class RootComponent {
   );
 
   protected changeLocale(localeId: LocaleId): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.document.location.href = `${ this.document.location.origin }/${ String(localeId) }${ this.location.path() }`;
-    }
+    if (isPlatformBrowser(this.platformId))
+      this.document.location.href = `https://${ this.cloudRegion }-${ this.environment.apis.firebase.projectId }.cloudfunctions.net/redirect?url=${ encodeURI(`${ this.document.location.origin }/${ String(localeId) }/${ this.document.location.pathname.split("/").slice(2).join("/") }`) }`;
   }
   protected signinWithPasswordFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signinWithPasswordFormGroup.value.email && this.signinWithPasswordFormGroup.value.password)
