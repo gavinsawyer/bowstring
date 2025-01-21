@@ -6,10 +6,10 @@ import { type User }                                                            
 import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                      from "@angular/fire/firestore";
 import { Functions, httpsCallable }                                                                                               from "@angular/fire/functions";
 import { type AbstractControl, FormControl, FormGroup, type ValidationErrors, Validators }                                        from "@angular/forms";
-import { RouterOutlet }                                                                                                           from "@angular/router";
+import { RouterOutlet, type Routes }                                                                                              from "@angular/router";
 import { type RouteComponent, type SheetComponent }                                                                               from "@standard/components";
 import { CanvasDirective, FlexboxContainerDirective }                                                                             from "@standard/directives";
-import { BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                      from "@standard/injection-tokens";
+import { APP_ROUTES, BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION, STANDARD_ROUTES }                         from "@standard/injection-tokens";
 import { type AccountDocument, type Environment }                                                                                 from "@standard/interfaces";
 import { AuthenticationService, ConnectivityService, CurrencyService, ResponsivityService }                                       from "@standard/services";
 import { type Brand, type Currencies }                                                                                            from "@standard/types";
@@ -82,6 +82,7 @@ export class RootComponent {
       requireSync: true,
     },
   );
+  protected readonly appRoutes: Routes                                                                                                                                      = inject<Routes>(APP_ROUTES);
   protected readonly authenticationService: AuthenticationService                                                                                                           = inject<AuthenticationService>(AuthenticationService);
   protected readonly bannerTemplateRef$: Signal<TemplateRef<never> | null>                                                                                                  = toSignal<TemplateRef<never> | null>(
     toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<never> | null, TemplateRef<never> | null>(
@@ -225,6 +226,7 @@ export class RootComponent {
       ],
     },
   );
+  protected readonly standardRoutes: Routes                                                                                                                                 = inject<Routes>(STANDARD_ROUTES);
 
   protected changeLocale(localeId: LocaleId): void {
     if (isPlatformBrowser(this.platformId))

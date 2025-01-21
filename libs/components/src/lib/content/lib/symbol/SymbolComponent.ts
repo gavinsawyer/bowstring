@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                          from "@angular/common";
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignal, type InputSignalWithTransform, type Signal } from "@angular/core";
 import { toObservable, toSignal }                                                                                                    from "@angular/core/rxjs-interop";
-import { ContainerDirective }                                                                                                        from "@standard/directives";
+import { ContainerDirective, InlinableDirective }                                                                                    from "@standard/directives";
 import { type Symbol }                                                                                                               from "@standard/interfaces";
 import loadSymbol                                                                                                                    from "@standard/symbols";
 import { type SymbolName }                                                                                                           from "@standard/types";
@@ -21,7 +21,6 @@ import { fromPromise }                                                          
         inputs:    [
           "alignSelf",
           "aspectRatio",
-          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",
@@ -38,6 +37,12 @@ import { fromPromise }                                                          
           "scrollSnapAlign",
           "scrollSnapStop",
           "scrollSnapType",
+        ],
+      },
+      {
+        directive: InlinableDirective,
+        inputs:    [
+          "inline",
         ],
       },
     ],

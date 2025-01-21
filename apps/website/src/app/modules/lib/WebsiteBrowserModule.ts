@@ -14,14 +14,15 @@ import { provideRouter, RouterOutlet, withComponentInputBinding, withEnabledBloc
 import * as brand                                                                                                                                                                                                                                                                                                                                                                                                                         from "@standard/brand";
 import { AboveComponent, BannerComponent, BelowComponent, BoxComponent, ButtonComponent, CaptionComponent, DividerComponent, FlexboxContainerComponent, FooterComponent, FormComponent, GridContainerComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent, ListComponent, MainComponent, NavComponent, routes as standardRoutes, SectionComponent, SheetComponent, SymbolComponent, TextFieldInputComponent } from "@standard/components";
 import * as currencies                                                                                                                                                                                                                                                                                                                                                                                                                    from "@standard/currencies";
-import { ListItemDirective }                                                                                                                                                                                                                                                                                                                                                                                                              from "@standard/directives";
-import { BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION }                                                                                                                                                                                                                                                                                                                                                              from "@standard/injection-tokens";
+import { LinkSymbolDirective, ListItemDirective }                                                                                                                                                                                                                                                                                                                                                                                         from "@standard/directives";
+import { APP_ROUTES, BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION, STANDARD_ROUTES }                                                                                                                                                                                                                                                                                                                                 from "@standard/injection-tokens";
+import { FindRouteByPathPipe }                                                                                                                                                                                                                                                                                                                                                                                                            from "@standard/pipes";
 import { AppCheckOptionsService }                                                                                                                                                                                                                                                                                                                                                                                                         from "@standard/services";
 import project                                                                                                                                                                                                                                                                                                                                                                                                                            from "../../../../project.json";
 import { gitInfoPartial }                                                                                                                                                                                                                                                                                                                                                                                                                 from "../../../.gitInfoPartial";
 import { packageVersion }                                                                                                                                                                                                                                                                                                                                                                                                                 from "../../../.packageVersion";
 import { environment }                                                                                                                                                                                                                                                                                                                                                                                                                    from "../../../environment";
-import { RootComponent, routes as websiteRoutes }                                                                                                                                                                                                                                                                                                                                                                                         from "../../components";
+import { RootComponent, routes as appRoutes }                                                                                                                                                                                                                                                                                                                                                                                             from "../../components";
 import { LOCALE_IDS }                                                                                                                                                                                                                                                                                                                                                                                                                     from "../../injection tokens";
 
 
@@ -43,6 +44,7 @@ import { LOCALE_IDS }                                                           
       ButtonComponent,
       CaptionComponent,
       DividerComponent,
+      FindRouteByPathPipe,
       FlexboxContainerComponent,
       FooterComponent,
       FormComponent,
@@ -52,6 +54,7 @@ import { LOCALE_IDS }                                                           
       HeadingGroupComponent,
       LabelComponent,
       LinkComponent,
+      LinkSymbolDirective,
       ListComponent,
       ListItemDirective,
       MainComponent,
@@ -64,6 +67,10 @@ import { LOCALE_IDS }                                                           
       TextFieldInputComponent,
     ],
     providers:    [
+      {
+        provide:  APP_ROUTES,
+        useValue: appRoutes,
+      },
       {
         provide:  BRAND,
         useValue: brand,
@@ -93,6 +100,10 @@ import { LOCALE_IDS }                                                           
         provide:  PACKAGE_VERSION,
         useValue: packageVersion,
       },
+      {
+        provide:  STANDARD_ROUTES,
+        useValue: standardRoutes,
+      },
       provideAnalytics(
         (): Analytics => getAnalytics(),
       ),
@@ -119,7 +130,7 @@ import { LOCALE_IDS }                                                           
       ),
       provideRouter(
         [
-          ...websiteRoutes,
+          ...appRoutes,
           ...standardRoutes,
         ],
         withComponentInputBinding(),

@@ -1,8 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject }                                                                                                                                                                                                           from "@angular/core";
-import { RouterOutlet }                                                                                                                                                                                                                                         from "@angular/router";
+import { ChangeDetectionStrategy, Component, inject, InjectionToken }                                                                                                                                                                                           from "@angular/core";
+import { RouterOutlet, type Routes }                                                                                                                                                                                                                            from "@angular/router";
+import { FindRouteByPathPipe }                                                                                                                                                                                                                                  from "@standard/pipes";
 import { AccountService, AuthenticationService }                                                                                                                                                                                                                from "@standard/services";
 import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../";
+import { accountRoutes }                                                                                                                                                                                                                                        from "./children";
 
+
+const ACCOUNT_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("ACCOUNT_ROUTES");
 
 @Component(
   {
@@ -12,6 +16,7 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
       BoxComponent,
       ButtonComponent,
       DividerComponent,
+      FindRouteByPathPipe,
       FlexboxContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,
@@ -22,6 +27,12 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
       SectionComponent,
       SheetComponent,
       SymbolComponent,
+    ],
+    providers:       [
+      {
+        provide:  ACCOUNT_ROUTES,
+        useValue: accountRoutes,
+      },
     ],
     styleUrls:       [
       "AccountRouteComponent.sass",
@@ -34,6 +45,7 @@ import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, Flexbo
 export class AccountRouteComponent
   extends RouteComponent {
 
+  protected readonly accountRoutes: Routes                        = inject<Routes>(ACCOUNT_ROUTES);
   protected readonly accountService: AccountService               = inject<AccountService>(AccountService);
   protected readonly authenticationService: AuthenticationService = inject<AuthenticationService>(AuthenticationService);
 

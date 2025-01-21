@@ -8,11 +8,11 @@
     flexDirection="row"
     fontSizeExponent="-2"
     justifyContent="space-between">
-    <h2><standard--link
+    <h2>@if (accountRoutes | standardFindRouteByPath:''; as route) {<standard--link
       exact
-      i18n="@@libs--Components--Routes--Account--Header"
       inline
-      url="/account">Account</standard--link></h2>
+      [input]="route.data?.['title']"
+      [url]="'./' + route.path" />}</h2>
   </standard--header>
   @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--button
     appearance="raised"
@@ -45,22 +45,14 @@
       </standard--section>
       <standard--divider />
       <standard--section>
-        @if (accountService.accountDocument$()) {<standard--link
-          i18n="@@libs--Components--Routes--Account-Messages--Meta--Title"
-          url="./messages">Messages</standard--link>
+        @if (accountService.accountDocument$()) {@for (route of accountRoutes.slice(1); track route) {<standard--link
+          [input]="route.data?.['title']"
+          [url]="'./' + route.path" />}} @else {<standard--link
+          i18n-input
+          input="Sign in" />
         <standard--link
-          i18n="@@libs--Components--Routes--Account-Orders--Meta--Title"
-          url="./orders">Orders</standard--link>
-        <standard--link
-          i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title"
-          url="./payment-and-shipping">Payment and shipping</standard--link>
-        <standard--link
-          i18n="@@libs--Components--Routes--Account-PersonalInformation--Meta--Title"
-          url="./personal-information">Personal information</standard--link>
-        <standard--link
-          i18n="@@libs--Components--Routes--Account-Security--Meta--Title"
-          url="./security">Security</standard--link>} @else {<standard--link i18n>Sign in</standard--link>
-        <standard--link i18n>Create your account</standard--link>}
+          i18n-input
+          input="Create your account" />}
       </standard--section>
     </standard--box>
   </standard--aside>

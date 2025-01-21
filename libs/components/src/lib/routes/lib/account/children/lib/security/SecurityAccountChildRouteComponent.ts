@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject }                                                                                                                                                                                                             from "@angular/core";
 import { Auth }                                                                                                                                                                                                                                                           from "@angular/fire/auth";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators }                                                                                                                                                                                                        from "@angular/forms";
+import { LinkSymbolDirective }                                                                                                                                                                                                                                            from "@standard/directives";
 import { type AccountDocument }                                                                                                                                                                                                                                           from "@standard/interfaces";
 import { AccountService, AuthenticationService }                                                                                                                                                                                                                          from "@standard/services";
 import { BoxComponent, ButtonComponent, CaptionComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent, SectionComponent, SheetComponent, SymbolComponent, TextFieldInputComponent } from "../../../../../../../";
@@ -10,7 +11,7 @@ import { AccountChildRouteComponent }                                           
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports: [
       BoxComponent,
       ButtonComponent,
       CaptionComponent,
@@ -21,6 +22,7 @@ import { AccountChildRouteComponent }                                           
       HeadingGroupComponent,
       LabelComponent,
       LinkComponent,
+      LinkSymbolDirective,
       ReactiveFormsModule,
       SectionComponent,
       SheetComponent,

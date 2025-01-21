@@ -1,16 +1,21 @@
 import { NgTemplateOutlet }                                                                                                                                        from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, Injector, type Signal, type TemplateRef, viewChild }                                                          from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, Injector, type Signal, type TemplateRef, viewChild }                                          from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                  from "@angular/core/rxjs-interop";
-import { RouterOutlet }                                                                                                                                            from "@angular/router";
+import { RouterOutlet, type Routes }                                                                                                                               from "@angular/router";
+import { FindRouteByPathPipe }                                                                                                                                     from "@standard/pipes";
 import { map, type Observable, of, startWith, switchMap }                                                                                                          from "rxjs";
 import { FlexboxContainerComponent, FooterComponent, HeaderComponent, HeadingGroupComponent, InspectorComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
 import { type ShopChildRouteComponent }                                                                                                                            from "./child/ShopChildRouteComponent";
+import { shopRoutes }                                                                                                                                              from "./children";
 
+
+const SHOP_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("SHOP_ROUTES");
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports:         [
+      FindRouteByPathPipe,
       FlexboxContainerComponent,
       FooterComponent,
       HeaderComponent,
@@ -20,6 +25,12 @@ import { type ShopChildRouteComponent }                                         
       NgTemplateOutlet,
       RouterOutlet,
       SectionComponent,
+    ],
+    providers:       [
+      {
+        provide:  SHOP_ROUTES,
+        useValue: shopRoutes,
+      },
     ],
     styleUrls:       [
       "ShopRouteComponent.sass",
@@ -59,5 +70,6 @@ export class ShopRouteComponent
       requireSync: true,
     },
   );
+  protected readonly shopRoutes: Routes                                       = inject<Routes>(SHOP_ROUTES);
 
 }

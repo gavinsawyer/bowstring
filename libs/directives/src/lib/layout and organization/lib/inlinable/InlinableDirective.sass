@@ -1,0 +1,24 @@
+@use "../../../../sass/functions"
+@use "../../../../sass/mixins"
+
+
+$namespace: "inlinable"
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include mixins.reset-colors($namespace, ())
+  @include mixins.reset-inputs($namespace, ())
+  @include mixins.reset-values($namespace, ())
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  &.inline > .harness
+    display: inline-grid

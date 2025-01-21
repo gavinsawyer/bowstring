@@ -1,4 +1,5 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/inlinable/InlinableDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
 @use "../../../../../../directives/src/lib/materials/lib/secondary/SecondaryDirective"
@@ -12,6 +13,7 @@
   --standard--link--gap-row: calc(1rem * pow(var(--phi), -3))
 
   @include FlexboxContainerDirective.host
+  @include InlinableDirective.host
 
   --standard--flexbox-container-directive--gap-column: var(--standard--link--gap-column) !important
   --standard--flexbox-container-directive--gap-row: var(--standard--link--gap-row) !important
@@ -34,14 +36,8 @@
     > .between
       background: none !important
 
-      &::ng-deep > *
-        @include FlexboxContainerDirective.children
-
   &:not(.material-primary):not(.material-secondary):not(.material-warning)
     @include CanvasDirective.host(18%)
-
-    > .harness > .between::ng-deep > *
-      @include CanvasDirective.children
 
   &.material-primary
     @include PrimaryDirective.host
@@ -49,26 +45,17 @@
     > .harness > .between
       color: var(--standard--primary-directive--colors--background) !important
 
-      &::ng-deep > *
-        @include PrimaryDirective.children
-
   &.material-secondary
     @include SecondaryDirective.host
 
     > .harness > .between
       color: var(--standard--secondary-directive--colors--background) !important
 
-      &::ng-deep > *
-        @include SecondaryDirective.children
-
   &.material-warning
     @include WarningDirective.host
 
     > .harness > .between
       color: var(--standard--warning-directive--colors--background) !important
-
-      &::ng-deep > *
-        @include WarningDirective.children
 
   &:not(.disabled)
     > .harness

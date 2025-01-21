@@ -1,10 +1,12 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../directives/src/lib/layout and organization/lib/inlinable/InlinableDirective"
 
 
 \:host
   display: contents
 
   @include FlexboxContainerDirective.host
+  @include InlinableDirective.host
 
   --standard--flexbox-container-directive--align-items: center !important
   --standard--flexbox-container-directive--justify-content: center !important

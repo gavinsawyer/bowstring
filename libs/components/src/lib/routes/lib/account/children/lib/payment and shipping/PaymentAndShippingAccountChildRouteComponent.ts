@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject }                           
 import { Auth }                                                                                                                                                                                                                                                                                                from "@angular/fire/auth";
 import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                                                                                                                                                                                from "@angular/fire/firestore";
 import { Functions, httpsCallable }                                                                                                                                                                                                                                                                            from "@angular/fire/functions";
+import { LinkSymbolDirective }                                                                                                                                                                                                                                                                                 from "@standard/directives";
 import { type AccountDocument }                                                                                                                                                                                                                                                                                from "@standard/interfaces";
 import { GetRegionDisplayNamePipe }                                                                                                                                                                                                                                                                            from "@standard/pipes";
 import { AccountService }                                                                                                                                                                                                                                                                                      from "@standard/services";
@@ -12,7 +13,7 @@ import { AccountChildRouteComponent }                                           
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports: [
       AddressStripeElementComponent,
       BoxComponent,
       ButtonComponent,
@@ -25,6 +26,7 @@ import { AccountChildRouteComponent }                                           
       HeadingGroupComponent,
       LabelComponent,
       LinkComponent,
+      LinkSymbolDirective,
       PaymentStripeElementComponent,
       SectionComponent,
       SheetComponent,

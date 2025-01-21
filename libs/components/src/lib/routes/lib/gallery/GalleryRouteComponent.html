@@ -8,12 +8,11 @@
       flexDirection="row"
       fontSizeExponent="-2"
       justifyContent="space-between">
-      <h2>
-        <standard--link
-          exact
-          i18n="@@libs--Components--Routes--Gallery--Header"
-          url="/gallery">Gallery</standard--link>
-      </h2>
+      <h2>@if (galleryRoutes | standardFindRouteByPath:''; as route) {<standard--link
+        exact
+        inline
+        [input]="route.data?.['title']"
+        [url]="'./' + route.path" />}</h2>
     </standard--header>
   </standard--section>
   <standard--flexbox-container

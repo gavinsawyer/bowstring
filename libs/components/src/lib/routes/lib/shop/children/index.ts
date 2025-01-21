@@ -1,5 +1,5 @@
-import children from "./lib/children";
+import shopRoutes from "./lib/shopRoutes";
 
 export {
-  children,
+  shopRoutes,
 };

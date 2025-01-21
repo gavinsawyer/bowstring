@@ -8,11 +8,11 @@
       flexDirection="row"
       fontSizeExponent="-2"
       justifyContent="space-between">
-      <h2><standard--link
+      <h2>@if (shopRoutes | standardFindRouteByPath:''; as route) {<standard--link
         exact
-        i18n="@@libs--Components--Routes--Shop--Header"
         inline
-        url="/shop">Shop</standard--link></h2>
+        [input]="route.data?.['title']"
+        [url]="'./' + route.path" />}</h2>
     </standard--header>
   </standard--section>
   <standard--flexbox-container

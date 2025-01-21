@@ -21,7 +21,6 @@ import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith
         inputs:    [
           "alignSelf",
           "aspectRatio",
-          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

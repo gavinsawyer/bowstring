@@ -1,6 +1,6 @@
-import children from "./lib/children";
+import accountRoutes from "./lib/accountRoutes";
 
 
 export {
-  children,
+  accountRoutes,
 };

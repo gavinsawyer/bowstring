@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                         from "@angular/common";
 import { ChangeDetectionStrategy, Component, input, type InputSignalWithTransform } from "@angular/core";
-import { ContainerDirective }                                                       from "@standard/directives";
+import { ContainerDirective, InlinableDirective }                                   from "@standard/directives";
 
 
 @Component(
@@ -12,7 +12,6 @@ import { ContainerDirective }                                                   
         inputs:    [
           "alignSelf",
           "aspectRatio",
-          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",
@@ -29,6 +28,12 @@ import { ContainerDirective }                                                   
           "scrollSnapAlign",
           "scrollSnapStop",
           "scrollSnapType",
+        ],
+      },
+      {
+        directive: InlinableDirective,
+        inputs:    [
+          "inline",
         ],
       },
     ],

@@ -56,8 +56,8 @@
     <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
       inline
       input="PersonBadgeKeyFill" />&nbsp;<standard--label
-      inline
       i18n-input
+      inline
       input="Use passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
   </standard--form>
   <standard--divider />}
@@ -143,8 +143,8 @@
     <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
       inline
       input="PersonBadgeKeyFill" />&nbsp;<standard--label
-      inline
       i18n-input
+      inline
       input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
   </standard--form>
   <standard--divider />}
@@ -178,17 +178,19 @@
       justifyContent="space-between">
       <standard--list type="inline">
         <standard--link
-          i18n
+          i18n-input
           inline
+          input="privacy policy"
           (output)="signupFormSheetComponent.openModel$.set(false);"
           *standardListItem
-          url="/privacy">privacy policy</standard--link>
+          url="/privacy" />
         <standard--link
-          i18n
+          i18n-input
           inline
+          input="terms"
           (output)="signupFormSheetComponent.openModel$.set(false);"
           *standardListItem
-          url="/terms">terms</standard--link>
+          url="/terms" />
       </standard--list>
       <standard--button
         appearance="symbol"
@@ -216,28 +218,20 @@
         <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
           <standard--link
             exact
-            url="/">{{ brand.title }}</standard--link>
+            [input]="brand.title"
+            url="/" />
         </h1>
       </standard--header>
       <standard--nav>
-        <standard--link
-          i18n="@@libs--Components--Routes--Gallery--Meta--Title"
-          url="/gallery">Gallery</standard--link>
-        <standard--link
-          i18n="@@libs--Components--Routes--Shop--Meta--Title"
-          url="/shop">Shop</standard--link>
-        <standard--link
-          i18n="@@apps--Website--Components--Routes--News--Meta--Title"
-          url="/news">News</standard--link>
-        <standard--link
-          i18n="@@apps--Website--Components--Routes--Design--Meta--Title"
-          url="/design">Design</standard--link>
-        <standard--link
-          i18n="@@apps--Website--Components--Routes--Develop--Meta--Title"
-          url="/develop">Develop</standard--link>
-        <standard--link
-          i18n="@@libs--Components--Routes--Account--Meta--Title"
-          url="/account">Account</standard--link>
+        @for (route of standardRoutes.slice(0, -4); track route) {<standard--link
+          [input]="route.data?.['title']"
+          [url]="'/' + route.path" />}
+        @for (route of appRoutes.slice(1); track route) {<standard--link
+          [input]="route.data?.['title']"
+          [url]="'/' + route.path" />}
+        @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link
+          [input]="route.data?.['title']"
+          [url]="'/' + route.path" />}
       </standard--nav>
     </standard--flexbox-container>
     <router-outlet />
@@ -252,8 +246,9 @@
     <standard--header>
       <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
         <standard--link
+          [input]="brand.title"
           exact
-          url="/">{{ brand.title }}</standard--link>
+          url="/" />
       </h6>
     </standard--header>
     <standard--section
@@ -262,50 +257,48 @@
       justifyContent="space-between">
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
-          <standard--link
-            i18n="@@libs--Components--Routes--Shop--Meta--Title"
-            url="/shop">Shop</standard--link>
-          <standard--link
-            i18n="@@apps--Website--Components--Routes--News--Meta--Title"
-            url="/news">News</standard--link>
-          <standard--link
-            i18n="@@apps--Website--Components--Routes--Design--Meta--Title"
-            url="/design">Design</standard--link>
-          <standard--link
-            i18n="@@apps--Website--Components--Routes--Develop--Meta--Title"
-            url="/develop">Develop</standard--link>
+          @for (route of standardRoutes.slice(0, -4); track route) {<standard--link
+            [input]="route.data?.['title']"
+            [url]="'/' + route.path" />}
+          @for (route of appRoutes.slice(1); track route) {<standard--link
+            [input]="route.data?.['title']"
+            [url]="'/' + route.path" />}
         </standard--flexbox-container>
         @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
           <standard--link
             [disabled]="signinFormSheetComponent.openModelWithTransform$()"
-            i18n
-            (output)="signinFormSheetComponent.openModel$.set(true);">Sign in</standard--link>
+            i18n-input
+            input="Sign in"
+            (output)="signinFormSheetComponent.openModel$.set(true);" />
           <standard--link
             [disabled]="signupFormSheetComponent.openModelWithTransform$()"
-            i18n
-            (output)="signupFormSheetComponent.openModel$.set(true);">Create your account</standard--link>
+            i18n-input
+            input="Create your account"
+            (output)="signupFormSheetComponent.openModel$.set(true);" />
         </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
+          @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link
+            [input]="route.data?.['title']"
+            [url]="'/' + route.path" />}
           <standard--link
-            i18n="@@libs--Components--Routes--Account--Meta--Title"
-            url="/account">Account</standard--link>
-          <standard--link
-            i18n
-            (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--link>
+            i18n-input
+            input="Sign out"
+            (output)="signoutSheetComponent.openModel$.set(true);" />
         </standard--flexbox-container>}
         <standard--flexbox-container alignItems="flex-start">
-          <standard--link
-            i18n="@@libs--Components--Routes--Privacy--Meta--Title"
-            url="/privacy">Privacy</standard--link>
-          <standard--link
-            i18n="@@libs--Components--Routes--Terms--Meta--Title"
-            url="/terms">Terms</standard--link>
+          @if (standardRoutes | standardFindRouteByPath:'privacy'; as route) {<standard--link
+            [input]="route.data?.['title']"
+            [url]="'/' + route.path" />}
+          @if (standardRoutes | standardFindRouteByPath:'terms'; as route) {<standard--link
+            [input]="route.data?.['title']"
+            [url]="'/' + route.path" />}
         </standard--flexbox-container>
       </standard--flexbox-container>
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
-          <standard--link>
-            <standard--symbol input="ArrowUpForwardAppFill" />
-            <standard--label input="Instagram" />
+          <standard--link input="Instagram">
+            <standard--symbol
+              input="ArrowUpForwardAppFill"
+              *standardLinkSymbol />
           </standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>
@@ -315,16 +308,22 @@
       flexDirection="row"
       flexWrap="wrap"
       [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
-      <standard--link
+      @if (connectivityService.connected$()) {<standard--link
         disabled
-        [material]="connectivityService.connected$() ? undefined : 'warning'">
-        <standard--symbol [input]="connectivityService.connected$() ? 'Network' : 'NetworkSlash'" />
-        @if (connectivityService.connected$()) {<standard--label
-          i18n-input
-          input="Connected" />} @else {<standard--label
-          i18n-input
-          input="Disconnected" />}
-      </standard--link>
+        i18n-input
+        input="Connected">
+        <standard--symbol
+          input="Network"
+          *standardLinkSymbol />
+      </standard--link>} @else {<standard--link
+        disabled
+        i18n-input
+        input="Disconnected"
+        material="warning">
+        <standard--symbol
+          input="NetworkSlash"
+          *standardLinkSymbol />
+      </standard--link>}
     </standard--section>
     <standard--section
       flexDirection="row"
@@ -337,10 +336,12 @@
         [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
         <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2025&nbsp;}<standard--link
           inline
-          [url]="brand.copyrightHolderUrl">{{ brand.copyrightHolder }}</standard--link></span>
+          [input]="brand.copyrightHolder"
+          [url]="brand.copyrightHolderUrl" /></span>
         <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
           inline
-          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">{{ gitInfoPartial.hash || '' }}</standard--link>&rpar;</span>
+          [input]="gitInfoPartial.hash || ''"
+          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash" />&rpar;</span>
       </standard--flexbox-container>
       <standard--flexbox-container
         [flexBasis]="responsivityService.pastMediumBreakpoint$() ? 'auto' : '100%'"
@@ -348,15 +349,19 @@
         justifyContent="center">
         <standard--link
           [disabled]="localeSheetComponent.openModelWithTransform$()"
+          [input]="localeDisplayNames.of(localeId) || localeId"
           (output)="localeSheetComponent.openModel$.set(true);">
-          <standard--symbol input="Globe" />
-          <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
+          <standard--symbol
+            input="Globe"
+            *standardLinkSymbol />
         </standard--link>
         <standard--link
           [disabled]="currencySheetComponent.openModelWithTransform$()"
+          [input]="currencyService.userCurrency$()"
           (output)="currencySheetComponent.openModel$.set(true);">
-          <standard--symbol [input]="currencies[currencyService.userCurrency$()].symbolName" />
-          <standard--label [input]="currencyService.userCurrency$()" />
+          <standard--symbol
+            [input]="currencies[currencyService.userCurrency$()].symbolName"
+            *standardLinkSymbol />
         </standard--link>
       </standard--flexbox-container>
     </standard--section>

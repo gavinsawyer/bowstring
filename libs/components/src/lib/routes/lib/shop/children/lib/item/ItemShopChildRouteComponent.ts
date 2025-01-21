@@ -1,8 +1,8 @@
 import { CurrencyPipe }                                                                                                                                                                                                                                        from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal }                                                                                                                                                                                 from "@angular/core";
-import { ReactiveFormsModule }                                                                                                                                                                                                                                 from "@angular/forms";
-import { MasonryChildDirective }                                                                                                                                                                                                                               from "@standard/directives";
-import { CURRENCIES }                                                                                                                                                                                                                                          from "@standard/injection-tokens";
+import { ReactiveFormsModule }                        from "@angular/forms";
+import { LinkSymbolDirective, MasonryChildDirective } from "@standard/directives";
+import { CURRENCIES }                                 from "@standard/injection-tokens";
 import { CurrencyService }                                                                                                                                                                                                                                     from "@standard/services";
 import { type Currencies }                                                                                                                                                                                                                                     from "@standard/types";
 import { ArticleComponent, AsideComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, MasonryContainerComponent, SectionComponent, SymbolComponent } from "../../../../../../../";
@@ -12,7 +12,7 @@ import { ShopChildRouteComponent }                                              
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports:         [
+    imports: [
       ArticleComponent,
       AsideComponent,
       ButtonComponent,
@@ -24,6 +24,7 @@ import { ShopChildRouteComponent }                                              
       ImageComponent,
       LabelComponent,
       LinkComponent,
+      LinkSymbolDirective,
       MasonryChildDirective,
       MasonryContainerComponent,
       ReactiveFormsModule,

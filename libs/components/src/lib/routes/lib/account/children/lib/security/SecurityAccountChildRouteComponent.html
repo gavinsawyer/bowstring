@@ -35,16 +35,17 @@
       <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
         inline
         input="PersonBadgeKeyFill" />&nbsp;<standard--label
-        inline
         i18n-input
+        inline
         input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
       @if (accountService.accountDocument$()?.security?.passkey && accountService.accountDocument$()?.security?.password || undefined) {<standard--caption><standard--link
+        i18n-input
         inline
+        input="Remove passkey"
         (output)="unlinkPasskeySheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
-          i18n-input
-          input="Remove passkey" />
+        <standard--symbol
+          input="TrashFill"
+          *standardLinkSymbol />
       </standard--link></standard--caption>}
     </standard--form>
   </standard--box>
@@ -101,12 +102,13 @@
           input="Save password" />}
       </standard--button>
       @if (accountService.accountDocument$()?.security?.password && accountService.accountDocument$()?.security?.passkey || undefined) {<standard--caption><standard--link
+        i18n-input
         inline
+        input="Remove password"
         (output)="unlinkPasswordSheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
-          i18n-input
-          input="Remove password" />
+        <standard--symbol
+          input="TrashFill"
+          *standardLinkSymbol />
       </standard--link></standard--caption>}
     </standard--form>
   </standard--box>

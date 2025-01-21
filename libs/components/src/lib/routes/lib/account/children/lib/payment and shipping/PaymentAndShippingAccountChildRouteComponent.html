@@ -51,12 +51,13 @@
           input="Add" />}
       </standard--button>
       @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--caption><standard--link
+        i18n-input
         inline
+        input="Remove address"
         (output)="removeAddressSheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
-          i18n-input
-          input="Remove address" />
+        <standard--symbol
+          input="TrashFill"
+          *standardLinkSymbol />
       </standard--link></standard--caption>}
     </standard--section>
   </standard--box>
@@ -89,12 +90,13 @@
             input="Add" />}
       </standard--button>
       @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--caption><standard--link
+        i18n-input
         inline
+        input="Remove card"
         (output)="removePaymentMethodSheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
-          i18n-input
-          input="Remove card" />
+        <standard--symbol
+          input="TrashFill"
+          *standardLinkSymbol />
       </standard--link></standard--caption>}
     </standard--section>
   </standard--box>

@@ -1,6 +1,8 @@
 import { isPlatformServer }                                                       from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, type OnInit, PLATFORM_ID }   from "@angular/core";
-import { RESPONSE }                                                               from "@standard/injection-tokens";
+import { Routes }                                                                 from "@angular/router";
+import { RESPONSE, STANDARD_ROUTES }                                              from "@standard/injection-tokens";
+import { FindRouteByPathPipe }                                                    from "@standard/pipes";
 import { PathService }                                                            from "@standard/services";
 import { type Response }                                                          from "express";
 import { HeaderComponent, HeadingGroupComponent, LabelComponent, RouteComponent } from "../../../../";
@@ -10,6 +12,7 @@ import { HeaderComponent, HeadingGroupComponent, LabelComponent, RouteComponent 
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports:         [
+      FindRouteByPathPipe,
       HeaderComponent,
       HeadingGroupComponent,
       LabelComponent,
@@ -35,6 +38,7 @@ export class OtherwiseRouteComponent
   );
 
   protected readonly pathService: PathService = inject<PathService>(PathService);
+  protected readonly standardRoutes: Routes   = inject<Routes>(STANDARD_ROUTES);
 
   public override ngOnInit(): void {
     super.ngOnInit();

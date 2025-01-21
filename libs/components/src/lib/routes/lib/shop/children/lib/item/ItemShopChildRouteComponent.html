@@ -39,13 +39,16 @@
   <standard--heading-group>
     <standard--header>
       <h4>Blue Chamomile Facial Hydrating Masque</h4>
-      <h5><standard--link inline>skin</standard--link>&nbsp;&bull;&nbsp;<standard--link inline>treat&nbsp;&amp;&nbsp;masque</standard--link></h5>
+      <h5><standard--link
+        inline
+        input="skin" />&nbsp;&bull;&nbsp;<standard--link
+        inline
+        input="treat & masque" /></h5>
     </standard--header>
-    <p><b i18n>Size</b>&nbsp;&lpar;<standard--link inline>
-      <standard--label
-        i18n-input
-        input="See guide" />
-    </standard--link>&rpar;<br />2.0oz
+    <p><b i18n>Size</b>&nbsp;&lpar;<standard--link
+      i18n-input
+      inline
+      input="See guide" />&rpar;<br />2.0oz</p>
     <p><standard--symbol
       inline
       [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<standard--label
@@ -79,17 +82,17 @@
     alignContent="center"
     flexDirection="row"
     flexWrap="wrap">
-    <standard--link>
+    <standard--link input="Remove from collection">
       <standard--symbol
         fixedWidth
-        input="BookmarkSlashFill" />
-      <standard--label input="Remove from collection" />
+        input="BookmarkSlashFill"
+        *standardLinkSymbol />
     </standard--link>
-    <standard--link>
+    <standard--link input="Share">
       <standard--symbol
         fixedWidth
-        input="SquareAndArrowUpFill" />
-      <standard--label input="Share" />
+        input="SquareAndArrowUpFill"
+        *standardLinkSymbol />
     </standard--link>
   </standard--flexbox-container>
 </ng-template>

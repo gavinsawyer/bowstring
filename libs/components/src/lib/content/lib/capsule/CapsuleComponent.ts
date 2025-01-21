@@ -18,7 +18,6 @@ import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirecti
         inputs:    [
           "alignSelf",
           "aspectRatio",
-          "inline",
           "marginBottom",
           "marginSides",
           "marginTop",

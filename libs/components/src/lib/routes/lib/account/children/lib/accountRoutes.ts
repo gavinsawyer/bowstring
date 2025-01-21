@@ -1,72 +1,91 @@
 /// <reference types="@angular/localize" />
 
-import { type Type }   from "@angular/core";
-import { type Routes } from "@angular/router";
-import { title }       from "@standard/brand";
+import { type Type }                                       from "@angular/core";
+import { type ActivatedRouteSnapshot, Route, type Routes } from "@angular/router";
+import { title as brandTitle }                             from "@standard/brand";
+import { routes }                                          from "../../../../";
 
 
-const children: Routes = [
+const parentRoute: Route | undefined  = routes.find<Route>(
+  (route: Route): route is Route => route.path === "account",
+);
+const description: string | undefined = parentRoute?.data?.["description"];
+const title: string | undefined       = parentRoute?.data?.["title"];
+
+if (!description)
+  throw new Error("Missing route description");
+
+if (!title)
+  throw new Error("Missing route title");
+
+const accountRoutes: Routes = [
   {
     data:          {
-      description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
+      description,
+      title,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./home/HomeAccountChildRouteComponent").then<Type<unknown>>(
       ({ HomeAccountChildRouteComponent }: typeof import("./home/HomeAccountChildRouteComponent")): Type<unknown> => HomeAccountChildRouteComponent,
     ),
     path:          "",
     pathMatch:     "full",
-    title:         `${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` } - ${ title }`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle }`,
   },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Messages--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Account-Messages--Meta--Title:Messages`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./messages/MessagesAccountChildRouteComponent").then<Type<unknown>>(
       ({ MessagesAccountChildRouteComponent }: typeof import("./messages/MessagesAccountChildRouteComponent")): Type<unknown> => MessagesAccountChildRouteComponent,
     ),
     path:          "messages",
-    title:         `${ $localize`:@@libs--Components--Routes--Account-Messages--Meta--Title:Messages` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Orders--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Account-Orders--Meta--Title:Orders`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./orders/OrdersAccountChildRouteComponent").then<Type<unknown>>(
       ({ OrdersAccountChildRouteComponent }: typeof import("./orders/OrdersAccountChildRouteComponent")): Type<unknown> => OrdersAccountChildRouteComponent,
     ),
     path:          "orders",
-    title:         `${ $localize`:@@libs--Components--Routes--Account-Orders--Meta--Title:Orders` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title:Payment and shipping`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./payment and shipping/PaymentAndShippingAccountChildRouteComponent").then<Type<unknown>>(
       ({ PaymentAndShippingAccountChildRouteComponent }: typeof import("./payment and shipping/PaymentAndShippingAccountChildRouteComponent")): Type<unknown> => PaymentAndShippingAccountChildRouteComponent,
     ),
     path:          "payment-and-shipping",
-    title:         `${ $localize`:@@libs--Components--Routes--Account-PaymentAndShipping--Meta--Title:Payment and shipping` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-PersonalInformation--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Account-PersonalInformation--Meta--Title:Personal information`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./personal information/PersonalInformationAccountChildRouteComponent").then<Type<unknown>>(
       ({ PersonalInformationAccountChildRouteComponent }: typeof import("./personal information/PersonalInformationAccountChildRouteComponent")): Type<unknown> => PersonalInformationAccountChildRouteComponent,
     ),
     path:          "personal-information",
-    title:         `${ $localize`:@@libs--Components--Routes--Account-PersonalInformation--Meta--Title:Personal information` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Security--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Account-Security--Meta--Title:Security`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./security/SecurityAccountChildRouteComponent").then<Type<unknown>>(
       ({ SecurityAccountChildRouteComponent }: typeof import("./security/SecurityAccountChildRouteComponent")): Type<unknown> => SecurityAccountChildRouteComponent,
     ),
     path:          "security",
-    title:         `${ $localize`:@@libs--Components--Routes--Account-Security--Meta--Title:Security` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
 ];
 
-export default children;
+export default accountRoutes;

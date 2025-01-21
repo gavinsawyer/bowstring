@@ -1,5 +1,5 @@
-import children from "./lib/children";
+import galleryRoutes from "./lib/galleryRoutes";
 
 export {
-  children,
+  galleryRoutes,
 };
