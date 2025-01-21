@@ -10,7 +10,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
     host:            {
       "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
       "[class.appearance-transparent]":          "appearanceInput$() === 'transparent'",
-      "[class.has-url]":                         "urlInput$()",
+      "[class.hasUrlInput]":                     "urlInput$()",
       "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
     },
     hostDirectives:  [

@@ -8,6 +8,17 @@ import { description, title } from "@standard/brand";
 const routes: Routes = [
   {
     data:          {
+      description: description,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./home/HomeRouteComponent").then<Type<unknown>>(
+      ({ HomeRouteComponent }: typeof import("./home/HomeRouteComponent")): Type<unknown> => HomeRouteComponent,
+    ),
+    path:          "",
+    pathMatch:     "full",
+    title:         title,
+  },
+  {
+    data:          {
       description: $localize`:@@apps--Website--Components--Routes--Design--Meta--Description:...`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./design/DesignRouteComponent").then<Type<unknown>>(
@@ -36,16 +47,6 @@ const routes: Routes = [
     path:          "news",
     title:         `${ $localize`:@@apps--Website--Components--Routes--News--Meta--Title:News` } - ${ title }`,
   },
-  {
-    data:          {
-      description: description,
-    },
-    loadComponent: (): Promise<Type<unknown>> => import("./home/HomeRouteComponent").then<Type<unknown>>(
-      ({ HomeRouteComponent }: typeof import("./home/HomeRouteComponent")): Type<unknown> => HomeRouteComponent,
-    ),
-    path:          "",
-    pathMatch:     "full",
-    title:         title,
-  },
 ];
+
 export default routes;

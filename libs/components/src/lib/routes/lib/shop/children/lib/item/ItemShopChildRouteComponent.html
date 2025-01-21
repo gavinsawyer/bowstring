@@ -50,7 +50,7 @@
       inline
       [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<standard--label
       inline
-      [input]="(60 * currencyService.exchangeRate$() | currency:currencyService.userCurrency$() === 'BTC' ? undefined : currencyService.userCurrency$():'':currencyService.userCurrency$() === 'BTC' ? '1.0-8' : undefined) || ''"/></p>
+      [input]="(60 * currencyService.exchangeRate$() | currency:currencyService.userCurrency$() === 'BTC' ? undefined : currencyService.userCurrency$():'':currencyService.userCurrency$() === 'BTC' ? '1.0-8' : undefined) || ''" /></p>
   </standard--heading-group>
   <standard--button
     appearance="raised"
@@ -80,11 +80,15 @@
     flexDirection="row"
     flexWrap="wrap">
     <standard--link>
-      <standard--symbol input="BookmarkSlashFill" />
+      <standard--symbol
+        fixedWidth
+        input="BookmarkSlashFill" />
       <standard--label input="Remove from collection" />
     </standard--link>
     <standard--link>
-      <standard--symbol input="SquareAndArrowUpFill" />
+      <standard--symbol
+        fixedWidth
+        input="SquareAndArrowUpFill" />
       <standard--label input="Share" />
     </standard--link>
   </standard--flexbox-container>

@@ -1,6 +1,7 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                            from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, Injector, LOCALE_ID, PLATFORM_ID, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                 from "@angular/core/rxjs-interop";
+import { AppCheck, type AppCheckTokenResult, getLimitedUseToken }                                                                 from "@angular/fire/app-check";
 import { type User }                                                                                                              from "@angular/fire/auth";
 import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                      from "@angular/fire/firestore";
 import { Functions, httpsCallable }                                                                                               from "@angular/fire/functions";
@@ -14,8 +15,8 @@ import { AuthenticationService, ConnectivityService, CurrencyService, Responsivi
 import { type Brand, type Currencies }                                                                                            from "@standard/types";
 import { type GitInfo }                                                                                                           from "git-describe";
 import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
-import { CLOUD_REGION, LOCALE_IDS }                                                                                               from "../../../injection tokens";
-import { type CloudRegion, type LocaleId }                                                                                        from "../../../types";
+import { LOCALE_IDS }                                                                                                             from "../../../injection tokens";
+import { type LocaleId }                                                                                                          from "../../../types";
 
 
 @Component(
@@ -48,7 +49,7 @@ import { type CloudRegion, type LocaleId }                                      
 )
 export class RootComponent {
 
-  private readonly cloudRegion: CloudRegion            = inject<CloudRegion>(CLOUD_REGION);
+  private readonly appCheck: AppCheck                  = inject<AppCheck>(AppCheck);
   private readonly document: Document                  = inject<Document>(DOCUMENT);
   private readonly environment: Environment            = inject<Environment>(ENVIRONMENT);
   private readonly firestore: Firestore                = inject<Firestore>(Firestore);
@@ -227,7 +228,16 @@ export class RootComponent {
 
   protected changeLocale(localeId: LocaleId): void {
     if (isPlatformBrowser(this.platformId))
-      this.document.location.href = `https://${ this.cloudRegion }-${ this.environment.apis.firebase.projectId }.cloudfunctions.net/redirect?url=${ encodeURI(`${ this.document.location.origin }/${ String(localeId) }/${ this.document.location.pathname.split("/").slice(2).join("/") }`) }`;
+      getLimitedUseToken(this.appCheck).then<void, never>(
+        ({ token }: AppCheckTokenResult): void => {
+          this.document.location.href = `https://us-central1-${ this.environment.apis.firebase.projectId }.cloudfunctions.net/redirect?appCheckToken=${ encodeURI(token) }&url=${ encodeURI(`${ this.document.location.origin }/${ String(localeId) }/${ this.document.location.pathname.split("/").slice(2).join("/") }`) }`;
+        },
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
+      );
   }
   protected signinWithPasswordFormSubmit(openModel$: SheetComponent["openModel$"]): void {
     if (this.signinWithPasswordFormGroup.value.email && this.signinWithPasswordFormGroup.value.password)

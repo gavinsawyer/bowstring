@@ -13,7 +13,7 @@ export const createTwilioMessage: CallableFunction = onCall<null, Promise<{ "mes
       Twilio_Messaging_Service_SID,
     ],
   },
-  async ({ auth: authData }: CallableRequest<null>): Promise<{ messageId: string }> => {
+  async ({ auth: authData }: CallableRequest<null>): Promise<{ "messageId": string }> => {
     if (!authData?.uid)
       throw new HttpsError(
         "unauthenticated",

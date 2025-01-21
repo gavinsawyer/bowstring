@@ -1,12 +1,22 @@
 /// <reference types="@angular/localize" />
 
-import { inject, type Type } from "@angular/core";
-import { Auth }              from "@angular/fire/auth";
-import { type Routes }       from "@angular/router";
-import { title }             from "@standard/brand";
+import { type Type }   from "@angular/core";
+import { type Routes } from "@angular/router";
+import { title }       from "@standard/brand";
 
 
 const children: Routes = [
+  {
+    data:          {
+      description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./home/HomeAccountChildRouteComponent").then<Type<unknown>>(
+      ({ HomeAccountChildRouteComponent }: typeof import("./home/HomeAccountChildRouteComponent")): Type<unknown> => HomeAccountChildRouteComponent,
+    ),
+    path:          "",
+    pathMatch:     "full",
+    title:         `${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` } - ${ title }`,
+  },
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Account-Messages--Meta--Description:...`,
@@ -56,15 +66,6 @@ const children: Routes = [
     ),
     path:          "security",
     title:         `${ $localize`:@@libs--Components--Routes--Account-Security--Meta--Title:Security` } - ${ title } ${ $localize`:@@libs--Components--Routes--Account--Meta--Title:Account` }`,
-  },
-  {
-    path:       "",
-    pathMatch:  "full",
-    redirectTo: (): string => {
-      const auth: Auth = inject<Auth>(Auth);
-
-      return auth.currentUser && !auth.currentUser.isAnonymous ? "messages" : "";
-    },
   },
 ];
 

@@ -14,7 +14,7 @@ export const helloWorld: CallableFunction = onCall<null, Promise<{ "helloWorld":
       );
 
     return {
-      helloWorld: authData.uid,
+      "helloWorld": authData.uid,
     };
   },
 );

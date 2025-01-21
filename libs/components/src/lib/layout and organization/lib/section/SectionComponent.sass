@@ -24,3 +24,6 @@
   \:host-context(standard--#{ $host-context-namespace })
     --standard--section--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
     --standard--section--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+
+\:host-context(standard--heading-group) > .harness > .between::ng-deep > p
+  margin: 0

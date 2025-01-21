@@ -1,27 +1,22 @@
-import { NgTemplateOutlet }                                                                                                                                                                                                 from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, Injector, type Signal, type TemplateRef, viewChild }                                                                                                                   from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                                                           from "@angular/core/rxjs-interop";
-import { RouterOutlet }                                                                                                                                                                                                     from "@angular/router";
-import { MasonryChildDirective }                                                                                                                                                                                            from "@standard/directives";
-import { map, type Observable, of, startWith, switchMap }                                                                                                                                                                   from "rxjs";
-import { BoxComponent, FlexboxContainerComponent, FooterComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, InspectorComponent, LinkComponent, MasonryContainerComponent, RouteComponent, SectionComponent } from "../../../../";
-import { type ShopChildRouteComponent }                                                                                                                                                                                     from "./child/ShopChildRouteComponent";
+import { NgTemplateOutlet }                                                                                                                                        from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, Injector, type Signal, type TemplateRef, viewChild }                                                          from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                  from "@angular/core/rxjs-interop";
+import { RouterOutlet }                                                                                                                                            from "@angular/router";
+import { map, type Observable, of, startWith, switchMap }                                                                                                          from "rxjs";
+import { FlexboxContainerComponent, FooterComponent, HeaderComponent, HeadingGroupComponent, InspectorComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
+import { type ShopChildRouteComponent }                                                                                                                            from "./child/ShopChildRouteComponent";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports:         [
-      BoxComponent,
       FlexboxContainerComponent,
       FooterComponent,
       HeaderComponent,
       HeadingGroupComponent,
-      ImageComponent,
       InspectorComponent,
       LinkComponent,
-      MasonryChildDirective,
-      MasonryContainerComponent,
       NgTemplateOutlet,
       RouterOutlet,
       SectionComponent,

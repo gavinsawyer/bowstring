@@ -22,7 +22,7 @@ import { gitInfoPartial }                                                       
 import { packageVersion }                                                                                                                                                                                                                                                                                                                                                                                                                 from "../../../.packageVersion";
 import { environment }                                                                                                                                                                                                                                                                                                                                                                                                                    from "../../../environment";
 import { RootComponent, routes as websiteRoutes }                                                                                                                                                                                                                                                                                                                                                                                         from "../../components";
-import { CLOUD_REGION, LOCALE_IDS }                                                                                                                                                                                                                                                                                                                                                                                                       from "../../injection tokens";
+import { LOCALE_IDS }                                                                                                                                                                                                                                                                                                                                                                                                                     from "../../injection tokens";
 
 
 @NgModule(
@@ -71,10 +71,6 @@ import { CLOUD_REGION, LOCALE_IDS }                                             
       {
         provide:  CURRENCIES,
         useValue: currencies,
-      },
-      {
-        provide:  CLOUD_REGION,
-        useValue: project.targets["angular-firebase-deploy"]["options"]["region"],
       },
       {
         provide:  ENVIRONMENT,

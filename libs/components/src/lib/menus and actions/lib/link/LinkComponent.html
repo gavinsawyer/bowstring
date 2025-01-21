@@ -3,24 +3,18 @@
   [attr.tabindex]="disabledInput$() ? -1 : 0"
   (click)="$event.stopPropagation(); output.emit();"
   (keydown)="($event.key === 'Escape' || $event.key !== 'Enter') || $event.stopPropagation(); $event.key !== 'Enter' || output.emit();"
-  target="_blank">
-  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
-</a>} @else {<a class="harness"
+  target="_blank"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></a>} @else {<a class="harness"
   [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : 0"
   (click)="$event.stopPropagation(); output.emit();"
   (keydown)="($event.key === 'Escape' || $event.key !== 'Enter') || $event.stopPropagation(); $event.key !== 'Enter' || output.emit();"
   [routerLink]="url"
   routerLinkActive
   #routerLinkActive="routerLinkActive"
-  [routerLinkActiveOptions]="{ exact: exactInput$() || false }">
-  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
-</a>}} @else {<button class="harness"
+  [routerLinkActiveOptions]="{ exact: exactInput$() || false }"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></a>}} @else {<button class="harness"
   [attr.disabled]="disabledInput$() || undefined"
   [attr.tabindex]="disabledInput$() ? -1 : 0"
   [attr.type]="typeInput$() || 'button'"
   (click)="$event.stopPropagation(); output.emit();"
-  (keydown)="($event.key === 'Escape' || $event.key !== 'Enter') || $event.stopPropagation(); $event.key !== 'Enter' || output.emit();">
-  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
-</button>}
+  (keydown)="($event.key === 'Escape' || $event.key !== 'Enter') || $event.stopPropagation(); $event.key !== 'Enter' || output.emit();"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></button>}
 
 <ng-template #contentTemplate><ng-content /></ng-template>

@@ -19,7 +19,7 @@
         [formControl]="passkeyFormGroup.controls.email"
         level="2"
         placeholder="Email"
-        type="email"/>
+        type="email" />
       <standard--divider />
       <standard--button
         appearance="raised"
@@ -65,27 +65,27 @@
         [formControl]="passwordFormGroup.controls.email"
         level="2"
         placeholder="Email"
-        type="email"/>
+        type="email" />
       @if (accountService.accountDocument$()?.security?.password) {<standard--text-field-input
         autocomplete="current-password"
         [formControl]="passwordFormGroup.controls.passwordCurrent"
         i18n-placeholder
         level="2"
         placeholder="Current password"
-        type="password"/>}
+        type="password" />}
       @if (accountService.accountDocument$()?.security?.password) {<standard--text-field-input
         autocomplete="new-password"
         [formControl]="passwordFormGroup.controls.passwordNew"
         i18n-placeholder
         level="2"
         placeholder="New password"
-        type="password"/>} @else {<standard--text-field-input
+        type="password" />} @else {<standard--text-field-input
         autocomplete="new-password"
         [formControl]="passwordFormGroup.controls.passwordNew"
         i18n-placeholder
         level="2"
         placeholder="Password"
-        type="password"/>}
+        type="password" />}
       <standard--divider />
       <standard--button
         appearance="raised"

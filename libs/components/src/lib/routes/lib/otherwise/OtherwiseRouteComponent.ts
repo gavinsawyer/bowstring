@@ -1,9 +1,9 @@
-import { isPlatformServer }                                                     from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, type OnInit, PLATFORM_ID } from "@angular/core";
-import { RESPONSE }                                                             from "@standard/injection-tokens";
-import { PathService }                                                          from "@standard/services";
-import { type Response }                                                        from "express";
-import { HeaderComponent, HeadingGroupComponent, RouteComponent }               from "../../../../";
+import { isPlatformServer }                                                       from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, type OnInit, PLATFORM_ID }   from "@angular/core";
+import { RESPONSE }                                                               from "@standard/injection-tokens";
+import { PathService }                                                            from "@standard/services";
+import { type Response }                                                          from "express";
+import { HeaderComponent, HeadingGroupComponent, LabelComponent, RouteComponent } from "../../../../";
 
 
 @Component(
@@ -12,6 +12,7 @@ import { HeaderComponent, HeadingGroupComponent, RouteComponent }               
     imports:         [
       HeaderComponent,
       HeadingGroupComponent,
+      LabelComponent,
     ],
     styleUrls:       [
       "OtherwiseRouteComponent.sass",

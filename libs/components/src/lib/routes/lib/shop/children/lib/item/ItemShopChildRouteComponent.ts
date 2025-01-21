@@ -16,6 +16,7 @@ import { ShopChildRouteComponent }                                              
       ArticleComponent,
       AsideComponent,
       ButtonComponent,
+      CurrencyPipe,
       DividerComponent,
       FlexboxContainerComponent,
       HeaderComponent,
@@ -28,7 +29,6 @@ import { ShopChildRouteComponent }                                              
       ReactiveFormsModule,
       SectionComponent,
       SymbolComponent,
-      CurrencyPipe,
     ],
     styleUrls:       [
       "ItemShopChildRouteComponent.sass",

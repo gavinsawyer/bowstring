@@ -8,7 +8,11 @@
     flexDirection="row"
     fontSizeExponent="-2"
     justifyContent="space-between">
-    <h2 i18n="@@libs--Components--Routes--Account--Header">Account</h2>
+    <h2><standard--link
+      exact
+      i18n="@@libs--Components--Routes--Account--Header"
+      inline
+      url="/account">Account</standard--link></h2>
   </standard--header>
   @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--button
     appearance="raised"
@@ -17,7 +21,7 @@
     (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--button>}
 </standard--section>
 <standard--flexbox-container flexGrow="1">
-  @if (accountService.accountDocument$(); as accountDocument) {<standard--aside>
+  <standard--aside>
     <standard--box
       position="sticky"
       positionTop="var(--standard--root--padding-bottom)">
@@ -25,7 +29,7 @@
         alignItems="center"
         flexDirection="row"
         flexWrap="wrap">
-        <standard--image
+        @if (accountService.accountDocument$(); as accountDocument) {<standard--image
           appearance="circular"
           flexBasis="33px"
           height="33"
@@ -37,11 +41,11 @@
             <h5>{{ accountDocument.profile?.name }}</h5>
             <h6>{{ accountDocument.email }}</h6>
           </standard--header>
-        </standard--heading-group>
+        </standard--heading-group>} @else {You're not signed in.}
       </standard--section>
       <standard--divider />
       <standard--section>
-        <standard--link
+        @if (accountService.accountDocument$()) {<standard--link
           i18n="@@libs--Components--Routes--Account-Messages--Meta--Title"
           url="./messages">Messages</standard--link>
         <standard--link
@@ -55,7 +59,8 @@
           url="./personal-information">Personal information</standard--link>
         <standard--link
           i18n="@@libs--Components--Routes--Account-Security--Meta--Title"
-          url="./security">Security</standard--link>
+          url="./security">Security</standard--link>} @else {<standard--link i18n>Sign in</standard--link>
+        <standard--link i18n>Create your account</standard--link>}
       </standard--section>
     </standard--box>
   </standard--aside>
@@ -63,7 +68,7 @@
     flexGrow="1"
     flexShrink="0">
     <router-outlet />
-  </standard--section>}
+  </standard--section>
 </standard--flexbox-container>
 
 <standard--sheet #signoutSheetComponent>

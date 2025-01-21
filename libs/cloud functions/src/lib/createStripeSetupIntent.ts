@@ -11,7 +11,7 @@ export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<{ 
       Stripe_API_Key,
     ],
   },
-  async ({ auth: authData }: CallableRequest<null>): Promise<{ clientSecret: string }> => {
+  async ({ auth: authData }: CallableRequest<null>): Promise<{ "clientSecret": string }> => {
     if (!authData?.uid)
       throw new HttpsError(
         "unauthenticated",
@@ -24,8 +24,8 @@ export const createStripeSetupIntent: CallableFunction = onCall<null, Promise<{ 
           "card",
         ],
       },
-    ).then<{ clientSecret: string }, never>(
-      ({ client_secret: clientSecret }: Stripe.SetupIntent): { clientSecret: string } => {
+    ).then<{ "clientSecret": string }, never>(
+      ({ client_secret: clientSecret }: Stripe.SetupIntent): { "clientSecret": string } => {
         if (!clientSecret)
           throw new HttpsError(
             "unavailable",

@@ -200,16 +200,16 @@ export class AddressStripeElementComponent
       return !isEqual(
         this.value$(),
         {
-          address: {
-            city:       address?.city || "",
-            country:    address?.country || "",
-            line1:      address?.line1 || "",
-            line2:      address?.line2 || null,
-            postalCode: address?.postalCode || "",
-            state:      address?.state || null,
+          "address": {
+            "city":       address?.city || "",
+            "country":    address?.country || "",
+            "line1":      address?.line1 || "",
+            "line2":      address?.line2 || null,
+            "postalCode": address?.postalCode || "",
+            "state":      address?.state || null,
           },
-          name:    stripeCustomer?.name || null,
-          phone:   stripeCustomer?.phone || null,
+          "name":    stripeCustomer?.name || null,
+          "phone":   stripeCustomer?.phone || null,
         },
       );
     },

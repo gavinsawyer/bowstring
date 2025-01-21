@@ -7,9 +7,9 @@ import { ScrollStackItemDirective }                                             
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports:         [
-      BoxComponent,
       ArticleComponent,
       AsideComponent,
+      BoxComponent,
       FlexboxContainerComponent,
       HeaderComponent,
       HeadingGroupComponent,

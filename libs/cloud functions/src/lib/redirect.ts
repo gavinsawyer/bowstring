@@ -1,4 +1,6 @@
-import { HttpsFunction, onRequest, type Request } from "firebase-functions/https";
+import { getApp }                                      from "firebase-admin/app";
+import { getAppCheck }                                 from "firebase-admin/app-check";
+import { type HttpsFunction, onRequest, type Request } from "firebase-functions/https";
 
 
 // noinspection JSUnusedGlobalSymbols
@@ -10,5 +12,17 @@ export const redirect: HttpsFunction = onRequest(
   async (
     request: Request,
     response: NonNullable<Request["res"]>,
-  ): Promise<void> => response.redirect(`${ request.query["url"] }`),
+  ): Promise<void> => getAppCheck(getApp()).verifyToken(
+    `${ request.query["appCheckToken"] }`,
+    {
+      consume: true,
+    },
+  ).then<void, never>(
+    (): void => response.redirect(`${ request.query["url"] }`),
+    (error: unknown): never => {
+      response.status(500).send(error).end();
+
+      throw new Error("Something went wrong.");
+    },
+  ),
 );

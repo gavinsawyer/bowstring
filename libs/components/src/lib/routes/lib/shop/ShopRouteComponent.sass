@@ -4,14 +4,5 @@
 \:host
   display: contents
 
-standard--flexbox-container.above::ng-deep > .harness > .between
+standard--flexbox-container#above::ng-deep > .harness > .between
   @include RouteComponent.host
-
-standard--section.above::ng-deep > .harness > .between > standard--masonry-container
-  --standard--masonry-container-directive--columns: 2 !important
-
-  @media (min-width: 48rem)
-    --standard--masonry-container-directive--columns: 4 !important
-
-  @media (min-width: 72rem)
-    --standard--masonry-container-directive--columns: 6 !important
