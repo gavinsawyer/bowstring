@@ -2,7 +2,7 @@ import { type Symbol } from "@standard/interfaces";
 
 
 // noinspection JSUnusedGlobalSymbols
-export const _SharedwithyouCircleSlash: Symbol = {
+export const _SharedwithyouSlash: Symbol = {
   paths:         [
     {
       definition: "M7.25391 20.2354L7.25391 23.3174C7.25391 24.7002 6.55078 25.4151 5.13281 25.4151L2.12109 25.4151C0.714844 25.4151 0 24.7119 0 23.3174L0 20.2354C0 18.8526 0.714844 18.1494 2.12109 18.1494L5.13281 18.1494C6.55078 18.1494 7.25391 18.8526 7.25391 20.2354Z",
