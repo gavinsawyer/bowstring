@@ -95,9 +95,12 @@
     <h6 i18n="@@apps--Website--Components--Root--Sheets--Signout--Header">Sign out?</h6>
   </standard--header>
   <standard--divider />
-  <standard--section flexDirection="row">
+  <standard--section
+    flexDirection="row"
+    flexWrap="wrap-reverse">
     <standard--button
       appearance="raised"
+      flexGrow="1"
       level="2"
       (output)="signoutSheetComponent.openModel$.set(false);">
       <standard--symbol input="ArrowBackward" />
@@ -107,7 +110,7 @@
     </standard--button>
     <standard--button
       appearance="raised"
-      flexGrow="1"
+      flexGrow="999"
       level="2"
       material="inverse"
       (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">

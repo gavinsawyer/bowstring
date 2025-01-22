@@ -173,9 +173,12 @@
     </standard--header>
   </standard--heading-group>
   <standard--divider />
-  <standard--section flexDirection="row">
+  <standard--section
+    flexDirection="row"
+    flexWrap="wrap-reverse">
     <standard--button
       appearance="raised"
+      flexGrow="1"
       level="2"
       (output)="removeAddressSheetComponent.openModel$.set(false);">
       <standard--symbol input="ArrowBackward" />
@@ -185,7 +188,7 @@
     </standard--button>
     <standard--button
       appearance="raised"
-      flexGrow="1"
+      flexGrow="999"
       level="2"
       material="warning"
       (output)="removeAddress(); removeAddressSheetComponent.openModel$.set(false);">
@@ -202,9 +205,12 @@
     </standard--header>
   </standard--heading-group>
   <standard--divider />
-  <standard--section flexDirection="row">
+  <standard--section
+    flexDirection="row"
+    flexWrap="wrap-reverse">
     <standard--button
       appearance="raised"
+      flexGrow="1"
       level="2"
       (output)="removePaymentMethodSheetComponent.openModel$.set(false);">
       <standard--symbol input="ArrowBackward" />
@@ -214,7 +220,7 @@
     </standard--button>
     <standard--button
       appearance="raised"
-      flexGrow="1"
+      flexGrow="999"
       level="2"
       material="warning"
       (output)="removePaymentMethod(); removePaymentMethodSheetComponent.openModel$.set(false);">

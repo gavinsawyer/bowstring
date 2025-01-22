@@ -123,9 +123,12 @@
     <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Paragraph_2">The passkey will continue to appear as an option in your browser until it is also deleted from your devices.</p>
   </standard--heading-group>
     <standard--divider />
-    <standard--section flexDirection="row">
+    <standard--section
+      flexDirection="row"
+      flexWrap="wrap-reverse">
       <standard--button
         appearance="raised"
+        flexGrow="1"
         level="2"
         (output)="unlinkPasskeySheetComponent.openModel$.set(false);">
         <standard--symbol input="ArrowBackward" />
@@ -135,7 +138,7 @@
       </standard--button>
       <standard--button
         appearance="raised"
-        flexGrow="1"
+        flexGrow="999"
         level="2"
         material="warning"
         (output)="authenticationService.unlinkPasskey(); unlinkPasskeySheetComponent.openModel$.set(false);">
@@ -153,9 +156,12 @@
     <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPassword--Paragraph">You will still be able to sign in using the passkey saved to your account.</p>
   </standard--heading-group>
   <standard--divider />
-  <standard--section flexDirection="row">
+  <standard--section
+    flexDirection="row"
+    flexWrap="wrap-reverse">
     <standard--button
       appearance="raised"
+      flexGrow="1"
       level="2"
       (output)="unlinkPasswordSheetComponent.openModel$.set(false);">
       <standard--symbol input="ArrowBackward" />
@@ -165,7 +171,7 @@
     </standard--button>
     <standard--button
       appearance="raised"
-      flexGrow="1"
+      flexGrow="999"
       level="2"
       material="warning"
       (output)="authenticationService.unlinkPassword(); unlinkPasswordSheetComponent.openModel$.set(false);">

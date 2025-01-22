@@ -45,10 +45,15 @@
         inline
         input="treat & masque" /></h5>
     </standard--header>
-    <p><b i18n>Size</b>&nbsp;&lpar;<standard--link
+    <p><b><standard--label
       i18n-input
       inline
-      input="See guide" />&rpar;<br />2.0oz</p>
+      input="Size" /></b>&nbsp;&lpar;<standard--link
+      i18n-input
+      inline
+      input="See guide" />&rpar;<br /><standard--label
+      inline
+      [input]="(2 | number:'1.1-3') + 'oz'" /></p>
     <p><standard--symbol
       inline
       [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<standard--label

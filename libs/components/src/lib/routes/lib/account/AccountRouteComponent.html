@@ -16,9 +16,10 @@
   </standard--header>
   @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--button
     appearance="raised"
-    i18n
     material="glass"
-    (output)="signoutSheetComponent.openModel$.set(true);">Sign out</standard--button>}
+    (output)="signoutSheetComponent.openModel$.set(true);"><standard--label
+    i18n-input
+    input="Sign out" /></standard--button>}
 </standard--section>
 <standard--flexbox-container flexGrow="1">
   <standard--aside>
@@ -68,9 +69,12 @@
     <h6 i18n="@@libs--Components--Routes--Account--Sheets--Signout--Header">Sign out?</h6>
   </standard--header>
   <standard--divider />
-  <standard--section flexDirection="row">
+  <standard--section
+    flexDirection="row"
+    flexWrap="wrap-reverse">
     <standard--button
       appearance="raised"
+      flexGrow="1"
       level="2"
       (output)="signoutSheetComponent.openModel$.set(false);">
       <standard--symbol input="ArrowBackward" />
@@ -80,7 +84,7 @@
     </standard--button>
     <standard--button
       appearance="raised"
-      flexGrow="1"
+      flexGrow="999"
       level="2"
       material="inverse"
       (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">
