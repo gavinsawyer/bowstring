@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                                                                          from "@angular/common";
 import { ChangeDetectionStrategy, Component, contentChild, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, model, type ModelSignal, Renderer2, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
 import { toObservable }                                                                                                                                                                                              from "@angular/core/rxjs-interop";
-import { NG_VALUE_ACCESSOR }                                                                                                                                                                                         from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                   from "@angular/forms";
 import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective, ToggleSymbolDirective }                                                                                                    from "@standard/directives";
 import { firstValueFrom }                                                                                                                                                                                            from "rxjs";
 import { v7 as uuidV7 }                                                                                                                                                                                              from "uuid";
@@ -50,21 +50,20 @@ import { v7 as uuidV7 }                                                         
       },
     ],
     selector:        "standard--toggle",
-    styleUrls:       [
-      "ToggleComponent.sass",
-    ],
+    styleUrl:        "ToggleComponent.sass",
     templateUrl:     "ToggleComponent.html",
 
     standalone: true,
   },
 )
-export class ToggleComponent {
+export class ToggleComponent
+  implements ControlValueAccessor {
 
   private readonly htmlInputElementRef$: Signal<ElementRef<HTMLInputElement>> = viewChild.required<ElementRef<HTMLInputElement>>("htmlInputElement");
   private readonly injector: Injector                                         = inject<Injector>(Injector);
   private readonly renderer2: Renderer2                                       = inject<Renderer2>(Renderer2);
 
-  protected readonly inputName$: Signal<`standard--input-directive--input-${ string }`>         = signal<`standard--input-directive--input-${ string }`>(`standard--input-directive--input-${ uuidV7() }`);
+  protected readonly inputName$: Signal<`standard--toggle--input-${ string }`>                  = signal<`standard--toggle--input-${ string }`>(`standard--toggle--input-${ uuidV7() }`);
   protected readonly symbolTemplateRef$: Signal<TemplateRef<ToggleSymbolDirective> | undefined> = contentChild<ToggleSymbolDirective, TemplateRef<ToggleSymbolDirective>>(
     ToggleSymbolDirective,
     {

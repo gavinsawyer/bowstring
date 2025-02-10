@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                                                                                                            from "@angular/common";
 import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                                                                                    from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDirective }                                                                                                                from "@standard/directives";
 
 
 @Component(
@@ -41,16 +41,14 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirectiv
         ],
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
       },
     ],
     selector:        "standard--video",
-    styleUrls:       [
-      "VideoComponent.sass",
-    ],
+    styleUrl:        "VideoComponent.sass",
     templateUrl:     "VideoComponent.html",
     imports:         [
       NgTemplateOutlet,
@@ -63,14 +61,14 @@ export class VideoComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>     = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly htmlVideoElementRef$: Signal<ElementRef<HTMLVideoElement>> = viewChild.required<ElementRef<HTMLVideoElement>>("htmlVideoElement");
 
-  protected readonly roundedDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly autoplayInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }`>                = input<boolean | undefined, "" | boolean | `${ boolean }`>(
     undefined,

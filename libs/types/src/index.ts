@@ -1,6 +1,7 @@
 export type * from "./lib/Auto";
 export type * from "./lib/BaselineAlignment";
 export type * from "./lib/Brand";
+export type * from "./lib/Config";
 export type * from "./lib/Currencies";
 export type * from "./lib/DistributedAlignment";
 export type * from "./lib/FlexDirection";
@@ -9,7 +10,6 @@ export type * from "./lib/FlexWrap";
 export type * from "./lib/GridAutoFlow";
 export type * from "./lib/GridPositionalAlignment";
 export type * from "./lib/Inherit";
-export type * from "./lib/InputComponentOptions";
 export type * from "./lib/InverseVariableString";
 export type * from "./lib/NormalAlignment";
 export type * from "./lib/Overflow";

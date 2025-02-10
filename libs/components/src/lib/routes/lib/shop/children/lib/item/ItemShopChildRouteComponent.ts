@@ -1,7 +1,7 @@
 import { CurrencyPipe, DecimalPipe }                                                                                                                                                                                                                           from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal }                                                                                                                                                                                 from "@angular/core";
 import { ReactiveFormsModule }                                                                                                                                                                                                                                 from "@angular/forms";
-import { LinkSymbolDirective, MasonryChildDirective }                                                                                                                                                                                                          from "@standard/directives";
+import { MasonryChildDirective }                                                                                                                                                                                                                               from "@standard/directives";
 import { CURRENCIES }                                                                                                                                                                                                                                          from "@standard/injection-tokens";
 import { CurrencyService }                                                                                                                                                                                                                                     from "@standard/services";
 import { type Currencies }                                                                                                                                                                                                                                     from "@standard/types";
@@ -25,16 +25,13 @@ import { ShopChildRouteComponent }                                              
       ImageComponent,
       LabelComponent,
       LinkComponent,
-      LinkSymbolDirective,
       MasonryChildDirective,
       MasonryContainerComponent,
       ReactiveFormsModule,
       SectionComponent,
       SymbolComponent,
     ],
-    styleUrls:       [
-      "ItemShopChildRouteComponent.sass",
-    ],
+    styleUrl:        "ItemShopChildRouteComponent.sass",
     templateUrl:     "ItemShopChildRouteComponent.html",
 
     standalone: true,

@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                                                                          from "@angular/common";
 import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                                                              from "@angular/router";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, RoundedDirective, SecondaryDirective, WarningDirective }     from "@standard/directives";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, SecondaryDirective, WarningDirective, WellRoundedDirective } from "@standard/directives";
 
 
 @Component(
@@ -56,16 +56,16 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
         directive: PrimaryDirective,
       },
       {
-        directive: RoundedDirective,
-        inputs:    [
-          "level",
-        ],
-      },
-      {
         directive: SecondaryDirective,
       },
       {
         directive: WarningDirective,
+      },
+      {
+        directive: WellRoundedDirective,
+        inputs:    [
+          "level",
+        ],
       },
     ],
     imports:         [
@@ -74,9 +74,7 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
       RouterLinkActive,
     ],
     selector:        "standard--button",
-    styleUrls:       [
-      "ButtonComponent.sass",
-    ],
+    styleUrl:        "ButtonComponent.sass",
     templateUrl:     "ButtonComponent.html",
 
     standalone: true,
@@ -88,7 +86,7 @@ export class ButtonComponent {
     afterRender(
       (): void => {
         this.hoverTransformingDirective.htmlElementRef$.set(this.htmlDivElementRef$());
-        this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+        this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
       },
     );
   }
@@ -96,8 +94,8 @@ export class ButtonComponent {
   private readonly hoverTransformingDirective: HoverTransformingDirective             = inject<HoverTransformingDirective>(HoverTransformingDirective);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedDirective: RoundedDirective                      = inject<RoundedDirective>(RoundedDirective);
   protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
+  protected readonly wellRoundedDirective: WellRoundedDirective              = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly appearanceInput$: InputSignal<"raised" | "symbol" | undefined>                                           = input<"raised" | "symbol" | undefined>(
     undefined,

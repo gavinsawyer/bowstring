@@ -20,9 +20,7 @@ import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderCo
       ListItemDirective,
       SectionComponent,
     ],
-    styleUrls:       [
-      "PrivacyRouteComponent.sass",
-    ],
+    styleUrl:        "PrivacyRouteComponent.sass",
     templateUrl:     "PrivacyRouteComponent.html",
 
     standalone: true,

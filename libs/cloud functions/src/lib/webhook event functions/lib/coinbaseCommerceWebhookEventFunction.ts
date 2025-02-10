@@ -37,7 +37,7 @@ export const coinbaseCommerceWebhookEventFunction: HttpsFunction = onRequest(
                 CoinbaseCommerce_Webhook_Shared_Secret.value(),
               ),
             );
-          } catch(error: unknown) {
+          } catch (error: unknown) {
             reject(error);
           }
         },

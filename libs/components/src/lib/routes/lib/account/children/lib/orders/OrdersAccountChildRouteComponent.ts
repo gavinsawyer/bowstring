@@ -13,9 +13,7 @@ import { AccountChildRouteComponent }                                 from "../.
       MasonryChildDirective,
       MasonryContainerComponent,
     ],
-    styleUrls:       [
-      "OrdersAccountChildRouteComponent.sass",
-    ],
+    styleUrl:        "OrdersAccountChildRouteComponent.sass",
     templateUrl:     "OrdersAccountChildRouteComponent.html",
 
     standalone: true,

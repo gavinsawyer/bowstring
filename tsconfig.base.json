@@ -39,6 +39,9 @@
       "@standard/components":       [
         "libs/components/src/index.ts"
       ],
+      "@standard/config":           [
+        "libs/config/src/index.ts"
+      ],
       "@standard/currencies":       [
         "libs/currencies/src/index.ts"
       ],

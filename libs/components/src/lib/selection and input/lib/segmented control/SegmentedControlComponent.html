@@ -1,0 +1,59 @@
+<div class="harness"
+  (click)="$event.stopPropagation();"
+  (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+  tabindex="-1">
+  <div class="between">
+    @if (labelInput$()) {<!--suppress XmlInvalidId -->
+      <label
+        [attr.for]="inputName$()"
+        [innerHTML]="labelInput$()"></label>}
+    <div>
+      <div class="harness" #htmlDivElement>
+        <label class="between">
+          <select #htmlSelectElement
+            [attr.name]="inputName$()"
+            (blur)="onTouched?.();"
+            (change)="onChange?.();"
+            (click)="$event.stopPropagation();"
+            disabled
+            (input)="onInput();"
+            (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
+            tabindex="-1">
+            @for (option of options$(); track $index) {<option [value]="option.valueInput$()">{{ option.valueInput$() }}</option>}
+          </select>
+          <div standardWellRoundedDirective #pickerWellRoundedDirective="wellRoundedDirective"
+            [level]="(wellRoundedDirective.levelInput$() || 1) * 1.125">
+            <div class="harness" #pickerHtmlDivElement><div class="between"></div></div>
+
+            <svg
+              viewBox="0 0 1 1"
+              xmlns="http://www.w3.org/2000/svg">
+              <clipPath
+                [attr.id]="pickerWellRoundedDirective.clipPathId$()"
+                clipPathUnits="objectBoundingBox">
+                <path
+                  [attr.d]="pickerWellRoundedDirective.pathDefinition$()"
+                  fill="transparent" />
+              </clipPath>
+            </svg>
+          </div>
+          <ng-container *ngTemplateOutlet="contentTemplate" />
+        </label>
+      </div>
+
+      <svg
+        viewBox="0 0 1 1"
+        xmlns="http://www.w3.org/2000/svg">
+        <clipPath
+          [attr.id]="wellRoundedDirective.clipPathId$()"
+          clipPathUnits="objectBoundingBox">
+          <path
+            [attr.d]="wellRoundedDirective.pathDefinition$()"
+            fill="transparent" />
+        </clipPath>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<ng-template #contentTemplate><ng-content /></ng-template>

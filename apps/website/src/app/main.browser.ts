@@ -1,5 +1,3 @@
-/// <reference types="@angular/localize" />
-
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { WebsiteBrowserModule }   from "./modules";
 
@@ -16,8 +14,12 @@ function bootstrap(): Promise<void> {
 }
 
 if (document.readyState === "complete")
-  bootstrap().then<void>(
-    (): void => void (0),
+  bootstrap().catch<never>(
+    (error: unknown): never => {
+      console.error("Something went wrong.");
+
+      throw error;
+    },
   );
 else
   document.addEventListener<"DOMContentLoaded">(

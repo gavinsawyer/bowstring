@@ -1,7 +1,7 @@
 @use "../../../../../../directives/src/lib/layout and organization/lib/container/ContainerDirective"
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
-@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/well rounded/WellRoundedDirective"
 
 
 \:host
@@ -10,7 +10,7 @@
   @include CanvasDirective.host(18%)
   @include ContainerDirective.host
   @include ElevatedDirective.host
-  @include RoundedDirective.host
+  @include WellRoundedDirective.host
 
   --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
 

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, InjectionToken }                                                                                                                                                                                           from "@angular/core";
-import { RouterOutlet, type Routes }                                                                                                                                                                                                                            from "@angular/router";
-import { FindRouteByPathPipe }                                                                                                                                                                                                                                  from "@standard/pipes";
-import { AccountService, AuthenticationService }                                                                                                                                                                                                                from "@standard/services";
-import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SymbolComponent } from "../../../../";
-import { accountRoutes }                                                                                                                                                                                                                                        from "./children";
+import { ChangeDetectionStrategy, Component, inject, InjectionToken }                                                                                                                                                                                                                              from "@angular/core";
+import { RouterOutlet, type Routes }                                                                                                                                                                                                                                                               from "@angular/router";
+import { FindRouteByPathPipe }                                                                                                                                                                                                                                                                     from "@standard/pipes";
+import { AccountService, AuthenticationService }                                                                                                                                                                                                                                                   from "@standard/services";
+import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent, SheetComponent, SigninComponent, SignoutComponent, SignupComponent } from "../../../../";
+import { accountRoutes }                                                                                                                                                                                                                                                                           from "./children";
 
 
 const ACCOUNT_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("ACCOUNT_ROUTES");
@@ -26,7 +26,9 @@ const ACCOUNT_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("ACCOU
       RouterOutlet,
       SectionComponent,
       SheetComponent,
-      SymbolComponent,
+      SigninComponent,
+      SignoutComponent,
+      SignupComponent,
     ],
     providers:       [
       {
@@ -34,9 +36,7 @@ const ACCOUNT_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("ACCOU
         useValue: accountRoutes,
       },
     ],
-    styleUrls:       [
-      "AccountRouteComponent.sass",
-    ],
+    styleUrl:        "AccountRouteComponent.sass",
     templateUrl:     "AccountRouteComponent.html",
 
     standalone: true,

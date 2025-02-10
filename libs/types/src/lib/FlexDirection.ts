@@ -1,1 +1,5 @@
-export type FlexDirection = "column" | "column-reverse" | "row" | "row-reverse";
+export type FlexDirection =
+  | "column"
+  | "column-reverse"
+  | "row"
+  | "row-reverse";

@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                               from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                                              from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }                                                                                                                          from "@standard/directives";
 import { type Dimensions, type Symbol }                                                                                                                                                                                from "@standard/interfaces";
 import { ViewportService }                                                                                                                                                                                             from "@standard/services";
 import loadSymbol                                                                                                                                                                                                      from "@standard/symbols";
@@ -48,7 +48,7 @@ import { fromPromise }                                                          
         ],
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
@@ -58,9 +58,7 @@ import { fromPromise }                                                          
       NgTemplateOutlet,
     ],
     selector:        "standard--footer",
-    styleUrls:       [
-      "FooterComponent.sass",
-    ],
+    styleUrl:        "FooterComponent.sass",
     templateUrl:     "FooterComponent.html",
 
     standalone: true,
@@ -70,7 +68,7 @@ export class FooterComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlElementRef$()),
+      (): void => this.wellRoundedDirective.htmlElementRef$.set(this.htmlElementRef$()),
     );
   }
 
@@ -119,15 +117,15 @@ export class FooterComponent {
     (): number | undefined => this.dimensions$()?.width,
   );
 
-  protected readonly height$: Signal<number | undefined>                  = computed<number | undefined>(
+  protected readonly height$: Signal<number | undefined>             = computed<number | undefined>(
     (): number | undefined => this.dimensions$()?.height,
   );
-  protected readonly pinFillSymbolPaths$: Signal<Symbol | undefined>      = toSignal<Symbol>(
+  protected readonly pinFillSymbol$: Signal<Symbol | undefined>      = toSignal<Symbol>(
     fromPromise<Symbol>(
       loadSymbol("PinFill"),
     ),
   );
-  protected readonly pinSlashFillSymbolPaths$: Signal<Symbol | undefined> = toSignal<Symbol>(
+  protected readonly pinSlashFillSymbol$: Signal<Symbol | undefined> = toSignal<Symbol>(
     fromPromise<Symbol>(
       loadSymbol("PinSlashFill"),
     ),
@@ -222,7 +220,7 @@ export class FooterComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly roundedDirective: RoundedDirective                                  = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective                          = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly pinnedControlTemplateRef$: Signal<TemplateRef<never>>                = viewChild.required<TemplateRef<never>>("pinnedControlTemplate");
   public readonly pinnedModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(

@@ -15,9 +15,7 @@ import { ShopChildRouteComponent }                                              
       MasonryContainerComponent,
       ReactiveFormsModule,
     ],
-    styleUrls:       [
-      "HomeShopChildRouteComponent.sass",
-    ],
+    styleUrl:        "HomeShopChildRouteComponent.sass",
     templateUrl:     "HomeShopChildRouteComponent.html",
 
     standalone: true,

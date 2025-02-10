@@ -1,7 +1,7 @@
-import { NgTemplateOutlet }                                                                                                                                                                               from "@angular/common";
-import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { RouterLink, RouterLinkActive }                                                                                                                                                                   from "@angular/router";
-import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, LinkSymbolDirective, PrimaryDirective, SecondaryDirective, WarningDirective }                                                    from "@standard/directives";
+import { NgTemplateOutlet }                                                                                                                                                    from "@angular/common";
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
+import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
+import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, PrimaryDirective, SecondaryDirective, WarningDirective }                                              from "@standard/directives";
 
 
 @Component(
@@ -51,9 +51,7 @@ import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, LinkSym
       RouterLinkActive,
     ],
     selector:        "standard--link",
-    styleUrls:       [
-      "LinkComponent.sass",
-    ],
+    styleUrl:        "LinkComponent.sass",
     templateUrl:     "LinkComponent.html",
 
     standalone: true,
@@ -61,13 +59,7 @@ import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, LinkSym
 )
 export class LinkComponent {
 
-  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined>                  = viewChild<RouterLinkActive>(RouterLinkActive);
-  protected readonly symbolTemplateRef$: Signal<TemplateRef<LinkSymbolDirective> | undefined> = contentChild<LinkSymbolDirective, TemplateRef<LinkSymbolDirective>>(
-    LinkSymbolDirective,
-    {
-      read: TemplateRef,
-    },
-  );
+  protected readonly routerLinkActive$: Signal<RouterLinkActive | undefined> = viewChild<RouterLinkActive>(RouterLinkActive);
 
   public readonly disabledInput$: InputSignalWithTransform<boolean | undefined, "" | boolean | `${ boolean }` | undefined> = input<boolean | undefined, "" | boolean | `${ boolean }` | undefined>(
     undefined,
@@ -81,11 +73,6 @@ export class LinkComponent {
     {
       alias:     "exact",
       transform: booleanAttribute,
-    },
-  );
-  public readonly input$: InputSignalWithTransform<string, string>                                                         = input.required<string>(
-    {
-      alias: "input",
     },
   );
   public readonly materialInput$: InputSignal<"primary" | "secondary" | "warning" | undefined>                             = input<"primary" | "secondary" | "warning" | undefined>(

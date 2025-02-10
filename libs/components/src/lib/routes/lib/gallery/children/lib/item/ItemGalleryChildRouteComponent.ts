@@ -8,7 +8,7 @@ import { GalleryChildRouteComponent }                                           
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
+    imports:         [
       ArticleComponent,
       DividerComponent,
       FlexboxContainerComponent,
@@ -20,9 +20,7 @@ import { GalleryChildRouteComponent }                                           
       ScrollStackItemDirective,
       SectionComponent,
     ],
-    styleUrls:       [
-      "ItemGalleryChildRouteComponent.sass",
-    ],
+    styleUrl:        "ItemGalleryChildRouteComponent.sass",
     templateUrl:     "ItemGalleryChildRouteComponent.html",
 
     standalone: true,

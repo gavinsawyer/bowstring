@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, input, type InputSignal } from "@angular/core";
-import { ReactiveFormsModule }                                         from "@angular/forms";
-import { HeaderComponent, HeadingGroupComponent, LinkComponent }       from "../../../../../../../";
-import { ShopChildRouteComponent }                                     from "../../../child/ShopChildRouteComponent";
+import { ChangeDetectionStrategy, Component, input, type InputSignal }           from "@angular/core";
+import { ReactiveFormsModule }                                                   from "@angular/forms";
+import { HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent } from "../../../../../../../";
+import { ShopChildRouteComponent }                                               from "../../../child/ShopChildRouteComponent";
 
 
 @Component(
@@ -12,10 +12,9 @@ import { ShopChildRouteComponent }                                     from "../
       HeadingGroupComponent,
       LinkComponent,
       ReactiveFormsModule,
+      LabelComponent,
     ],
-    styleUrls:       [
-      "CategoryShopChildRouteComponent.sass",
-    ],
+    styleUrl:        "CategoryShopChildRouteComponent.sass",
     templateUrl:     "CategoryShopChildRouteComponent.html",
 
     standalone: true,

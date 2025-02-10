@@ -1,1 +1,6 @@
-export type FlexPositionalAlignment = "center" | "flex-start" | "flex-end" | "left" | "right";
+export type FlexPositionalAlignment =
+  | "center"
+  | "flex-start"
+  | "flex-end"
+  | "left"
+  | "right";

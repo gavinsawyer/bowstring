@@ -2,7 +2,8 @@
   "compilerOptions": {
     "declaration": false,
     "types":       [
-      "@angular/localize"
+      "@angular/localize",
+      "@types/musickit-js"
     ]
   },
   "extends":         "../../tsconfig.base.json",

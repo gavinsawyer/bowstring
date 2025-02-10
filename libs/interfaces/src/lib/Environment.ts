@@ -1,22 +1,25 @@
 export interface Environment {
-  "app": "website",
+  "app": "website";
   "apis": {
+    "appleMusic": {
+      "developerToken": string;
+    };
     "firebase": {
-      "apiKey": string,
-      "appId": string,
-      "authDomain": string,
-      "databaseURL"?: string,
-      "measurementId"?: string,
-      "messagingSenderId": string,
-      "projectId": string,
+      "apiKey": string;
+      "appId": string;
+      "authDomain": string;
+      "databaseURL"?: string;
+      "measurementId"?: string;
+      "messagingSenderId": string;
+      "projectId": string;
       "storageBucket": string
-    },
+    };
     "recaptcha": {
-      "apiKey": string,
-    },
+      "siteKey": string;
+    };
     "stripe": {
-      "apiKey": string,
-    },
-  },
-  "production": boolean,
+      "publishableKey": string;
+    };
+  };
+  "production": boolean;
 }

@@ -5,5 +5,5 @@
 <ng-template #contentTemplate>
   <div #gutterSizerHtmlDivElement></div>
   <div #columnSizerHtmlDivElement></div>
-  @for (childTemplateRef of childTemplateRefs$(); track childTemplateRef) {<div class="standardMasonryChild"><ng-container *ngTemplateOutlet="childTemplateRef" /></div>}
+  @for (childTemplateRef of childTemplateRefs$(); track $index) {<div class="standardMasonryChild"><ng-container *ngTemplateOutlet="childTemplateRef" /></div>}
 </ng-template>

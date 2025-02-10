@@ -1,2 +1,4 @@
-export type ScrollSnapStop = "always" | "normal";
+export type ScrollSnapStop =
+  | "always"
+  | "normal";
 

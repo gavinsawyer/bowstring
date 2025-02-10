@@ -27,9 +27,7 @@ import { CanvasDirective, FlexboxContainerDirective } from "@standard/directives
       NgTemplateOutlet,
     ],
     selector:        "standard--banner",
-    styleUrls:       [
-      "BannerComponent.sass",
-    ],
+    styleUrl:        "BannerComponent.sass",
     templateUrl:     "BannerComponent.html",
 
     standalone: true,

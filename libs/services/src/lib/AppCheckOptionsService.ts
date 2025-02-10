@@ -18,7 +18,7 @@ export class AppCheckOptionsService {
   public readonly appCheckOptions: AppCheckOptions = isPlatformBrowser(this.platformId) ? {
     isTokenAutoRefreshEnabled: true,
     provider:                  new ReCaptchaEnterpriseProvider(
-      this.environment.apis.recaptcha.apiKey,
+      this.environment.apis.recaptcha.siteKey,
     ),
   } : {
     isTokenAutoRefreshEnabled: false,

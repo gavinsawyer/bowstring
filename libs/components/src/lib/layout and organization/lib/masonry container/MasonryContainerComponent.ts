@@ -20,9 +20,7 @@ import { MasonryChildDirective, MasonryContainerDirective }                     
       NgTemplateOutlet,
     ],
     selector:        "standard--masonry-container",
-    styleUrls:       [
-      "MasonryContainerComponent.sass",
-    ],
+    styleUrl:        "MasonryContainerComponent.sass",
     templateUrl:     "MasonryContainerComponent.html",
 
     standalone: true,

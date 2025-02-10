@@ -16,9 +16,7 @@ import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderCo
       LabelComponent,
       SectionComponent,
     ],
-    styleUrls:       [
-      "TermsRouteComponent.sass",
-    ],
+    styleUrl:        "TermsRouteComponent.sass",
     templateUrl:     "TermsRouteComponent.html",
 
     standalone: true,

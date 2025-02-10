@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                 from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                   from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }               from "@standard/directives";
 
 
 @Component(
@@ -33,7 +33,7 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
         ],
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
@@ -43,9 +43,7 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDi
       NgTemplateOutlet,
     ],
     selector:        "standard--inspector",
-    styleUrls:       [
-      "InspectorComponent.sass",
-    ],
+    styleUrl:        "InspectorComponent.sass",
     templateUrl:     "InspectorComponent.html",
 
     standalone: true,
@@ -55,12 +53,12 @@ export class InspectorComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective = inject<WellRoundedDirective>(WellRoundedDirective);
 
 }

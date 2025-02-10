@@ -44,9 +44,7 @@ import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith
       NgTemplateOutlet,
     ],
     selector:        "standard--scroll-stack",
-    styleUrls:       [
-      "ScrollStackComponent.sass",
-    ],
+    styleUrl:        "ScrollStackComponent.sass",
     templateUrl:     "ScrollStackComponent.html",
 
     standalone: true,

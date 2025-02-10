@@ -50,9 +50,7 @@ import { fromPromise }                                                          
       NgTemplateOutlet,
     ],
     selector:        "standard--symbol",
-    styleUrls:       [
-      "SymbolComponent.sass",
-    ],
+    styleUrl:        "SymbolComponent.sass",
     templateUrl:     "SymbolComponent.html",
 
     standalone: true,
@@ -72,7 +70,7 @@ export class SymbolComponent {
       alias: "input",
     },
   );
-  public readonly symbolPaths$: Signal<Symbol | undefined>                                                                   = toSignal<Symbol>(
+  public readonly symbol$: Signal<Symbol | undefined>                                                                        = toSignal<Symbol>(
     toObservable<SymbolName>(this.input$).pipe<Symbol>(
       switchMap<SymbolName, Observable<Symbol>>(
         (symbolName: SymbolName): Observable<Symbol> => fromPromise<Symbol>(

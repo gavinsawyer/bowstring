@@ -4,7 +4,7 @@
 @use "../../../../../../directives/src/lib/materials/lib/inverse/InverseDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
-@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/well rounded/WellRoundedDirective"
 
 
 \:host
@@ -16,18 +16,17 @@
   --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
 
   > .harness > .between
+    font-size: calc(1rem * pow(var(--phi), -0.5))
+
     &::ng-deep > *
       @include FlexboxContainerDirective.children
-
-    > label
-      font-size: calc(1rem * pow(var(--phi), -0.5))
 
     > div
       display: contents
 
       @include CanvasDirective.host(0%)
       @include FlexboxContainerDirective.host
-      @include RoundedDirective.host
+      @include WellRoundedDirective.host
 
       --standard--flexbox-container-directive--align-items: center !important
       --standard--flexbox-container-directive--flex-direction: row !important
@@ -39,13 +38,14 @@
         user-select: none
 
         > .between
-          height: calc(2px + 18px * pow(var(--phi), 0))
-          width: calc(2px + 18px * pow(var(--phi), 1))
+          background: transparent !important
+          height: calc(18px * pow(var(--phi), 0) + 2px)
+          width: calc(18px * pow(var(--phi), 1) + 2px)
 
           &::ng-deep > *
             @include CanvasDirective.children
             @include FlexboxContainerDirective.children
-            @include RoundedDirective.children
+            @include WellRoundedDirective.children
 
           > input
             border: 0
@@ -56,10 +56,7 @@
             &:checked + div
               @include PrimaryDirective.host
 
-              > .harness > .between
-                &:before,
-                &::ng-deep > standard--symbol > .harness
-                  translate: calc(18px * pow(var(--phi), -1)) 0 0
+              --standard--toggle--translation-x: calc(18px * pow(var(--phi), -1))
 
           > div
             display: contents
@@ -72,9 +69,9 @@
             > .harness > .between
               border-radius: calc(10px * pow(var(--phi), 0))
               cursor: pointer
-              height: calc(2px + 18px * pow(var(--phi), 0))
+              height: calc(18px * pow(var(--phi), 0) + 2px)
               transition: background-color 75ms ease-in-out
-              width: calc(2px + 18px * pow(var(--phi), 1))
+              width: calc(18px * pow(var(--phi), 1) + 2px)
 
               &::ng-deep > *
                 @include CanvasDirective.children
@@ -92,26 +89,31 @@
                 position: absolute
                 top: 1px
                 transition: translate 75ms ease-in-out
+                translate: var(--standard--toggle--translation-x, 0px) 0 0
                 width: calc(18px * pow(var(--phi), 0))
 
                 @media (prefers-color-scheme: dark)
                   background-color: var(--standard--canvas-directive--colors--background-inverse)
 
-              &::ng-deep > standard--symbol
-                @include CanvasDirective.host(6%)
+              &::ng-deep > div
+                aspect-ratio: 1
+                font-size: 0.8em
+                height: 100%
+                position: relative
 
-                --standard--container-directive--position: absolute !important
-                --standard--container-directive--position-left: 1.5px !important
-                --standard--container-directive--position-top: 1.5px !important
+                > standard--symbol
+                  @include CanvasDirective.host(6%)
 
-                > .harness
-                  height: calc(18px * pow(var(--phi), 0))
-                  transition: translate 75ms ease-in-out
-                  width: calc(18px * pow(var(--phi), 0))
+                  --standard--container-directive--position: absolute !important
+                  --standard--container-directive--position-left: 50% !important
+                  --standard--container-directive--position-top: 50% !important
 
-                  > .between
-                    background: transparent !important
-                    font-size: 0.75em
+                  > .harness
+                    transition: translate 75ms ease-in-out
+                    translate: calc(var(--standard--toggle--translation-x, 0px) - 50% + 1px) -50% 0
 
-                    @media (prefers-color-scheme: dark)
-                      color: var(--standard--canvas-directive--colors--foreground-inverse) !important
+                    > .between
+                      background: transparent !important
+
+                      @media (prefers-color-scheme: dark)
+                        color: var(--standard--canvas-directive--colors--foreground-inverse) !important

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                                      from "@angular/core";
 import { toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
 import { Auth }                                                                                                                                                                           from "@angular/fire/auth";
-import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                                                           from "@angular/fire/firestore";
+import { doc, type DocumentReference, Firestore, updateDoc }                                                                                                                              from "@angular/fire/firestore";
 import { FormControl, FormGroup, ReactiveFormsModule }                                                                                                                                    from "@angular/forms";
 import { type AccountDocument }                                                                                                                                                           from "@standard/interfaces";
 import { AccountService }                                                                                                                                                                 from "@standard/services";
@@ -26,9 +26,7 @@ import { AccountChildRouteComponent }                                           
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    styleUrls:       [
-      "PersonalInformationAccountChildRouteComponent.sass",
-    ],
+    styleUrl:        "PersonalInformationAccountChildRouteComponent.sass",
     templateUrl:     "PersonalInformationAccountChildRouteComponent.html",
 
     standalone: true,
@@ -42,7 +40,7 @@ export class PersonalInformationAccountChildRouteComponent
 
     effect(
       (): void => {
-        const profile: AccountDocument["profile"] | undefined = this.accountService.accountDocument$()?.profile;
+        const profile: AccountDocument["profile"] = this.accountService.accountDocument$()?.profile;
 
         if (profile) {
           this.birthdayFormGroup.reset(
@@ -66,12 +64,12 @@ export class PersonalInformationAccountChildRouteComponent
   protected readonly accountService: AccountService                                           = inject<AccountService>(AccountService);
   protected readonly birthdayEdited$: Signal<boolean>                                         = computed<boolean>(
     (): boolean => {
-      const profile: AccountDocument["profile"] | undefined = this.accountService.accountDocument$()?.profile;
+      const profile: AccountDocument["profile"] = this.accountService.accountDocument$()?.profile;
 
       return !isEqual(
         this.birthdayValue$(),
         {
-          birthday: profile?.birthday || null,
+          "birthday": profile?.birthday || null,
         },
       );
     },
@@ -83,12 +81,12 @@ export class PersonalInformationAccountChildRouteComponent
   );
   protected readonly nameEdited$: Signal<boolean>                                             = computed<boolean>(
     (): boolean => {
-      const profile: AccountDocument["profile"] | undefined = this.accountService.accountDocument$()?.profile;
+      const profile: AccountDocument["profile"] = this.accountService.accountDocument$()?.profile;
 
       return !isEqual(
         this.nameValue$(),
         {
-          name: profile?.name || null,
+          "name": profile?.name || null,
         },
       );
     },
@@ -118,19 +116,15 @@ export class PersonalInformationAccountChildRouteComponent
 
   protected birthdayFormSubmit(): void {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, DocumentData>(
+      updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          profile: {
-            ...this.accountService.accountDocument$()?.profile,
-            birthday: this.birthdayFormGroup.value.birthday,
-          },
+          "profile.birthday": this.birthdayFormGroup.value.birthday || undefined,
         },
-      ).then<void, never>(
-        (): void => void (0),
+      ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");
 
@@ -140,19 +134,15 @@ export class PersonalInformationAccountChildRouteComponent
   }
   protected nameFormSubmit(): void {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, DocumentData>(
+      updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          profile: {
-            ...this.accountService.accountDocument$()?.profile,
-            name: this.nameFormGroup.value.name,
-          },
+          "profile.name": this.nameFormGroup.value.name || undefined,
         },
-      ).then<void, never>(
-        (): void => void (0),
+      ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");
 

@@ -1,10 +1,10 @@
-import { NgTemplateOutlet }                                                                                            from "@angular/common";
-import { afterRender, ChangeDetectionStrategy, Component, forwardRef, inject }                                         from "@angular/core";
-import { NG_VALUE_ACCESSOR }                                                                                           from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, RoundedDirective } from "@standard/directives";
-import { InsertZwnjsPipe }                                                                                             from "@standard/pipes";
-import { InputComponent }                                                                                              from "../../../input/InputComponent";
-import providers                                                                                                       from "../providers";
+import { NgTemplateOutlet }                                                                                                from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, forwardRef, inject }                                             from "@angular/core";
+import { NG_VALUE_ACCESSOR }                                                                                               from "@angular/forms";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, WellRoundedDirective } from "@standard/directives";
+import { InsertZwnjsPipe }                                                                                                 from "@standard/pipes";
+import { InputComponent }                                                                                                  from "../../../input/InputComponent";
+import providers                                                                                                           from "../providers";
 
 
 @Component(
@@ -37,7 +37,7 @@ import providers                                                                
         directive: HoverTransformingDirective,
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
@@ -58,9 +58,7 @@ import providers                                                                
       ...providers,
     ],
     selector:        "standard--text-field-input",
-    styleUrls:       [
-      "TextFieldInputComponent.sass",
-    ],
+    styleUrl:        "TextFieldInputComponent.sass",
     templateUrl:     "TextFieldInputComponent.html",
 
     standalone: true,
@@ -75,12 +73,12 @@ export class TextFieldInputComponent
     afterRender(
       (): void => {
         this.hoverTransformingDirective.htmlElementRef$.set(this.htmlDivElementRef$());
-        this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+        this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
       },
     );
   }
 
   protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
-  protected readonly roundedDirective: RoundedDirective                     = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective             = inject<WellRoundedDirective>(WellRoundedDirective);
 
 }

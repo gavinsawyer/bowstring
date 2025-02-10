@@ -8,7 +8,7 @@
     [attr.for]="inputName$()"
     [innerHTML]="labelInput$()"></label>}
   <div>
-    <div class="harness" #htmlDivElement
+    <div class="harness"
       (click)="$event.stopPropagation();"
       (keydown)="$event.key === 'Escape' || $event.stopPropagation();"
       tabindex="-1">
@@ -25,7 +25,7 @@
           type="checkbox">
         <div>
           <div class="harness">
-            <div class="between"><ng-container *ngTemplateOutlet="symbolTemplateRef$() || null" /></div>
+            <div class="between">@if (symbolTemplateRef$(); as symbolTemplateRef) {<div><ng-container *ngTemplateOutlet="symbolTemplateRef" /></div>}</div>
           </div>
         </div>
       </label>

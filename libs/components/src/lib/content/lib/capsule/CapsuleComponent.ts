@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                                          from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirective, SecondaryDirective }                             from "@standard/directives";
+import { ContainerDirective, ElevatedDirective, PrimaryDirective, SecondaryDirective, WellRoundedDirective }                         from "@standard/directives";
 
 
 @Component(
@@ -47,22 +47,20 @@ import { ContainerDirective, ElevatedDirective, PrimaryDirective, RoundedDirecti
         directive: PrimaryDirective,
       },
       {
-        directive: RoundedDirective,
+        directive: SecondaryDirective,
+      },
+      {
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
-      },
-      {
-        directive: SecondaryDirective,
       },
     ],
     imports:         [
       NgTemplateOutlet,
     ],
     selector:        "standard--capsule",
-    styleUrls:       [
-      "CapsuleComponent.sass",
-    ],
+    styleUrl:        "CapsuleComponent.sass",
     templateUrl:     "CapsuleComponent.html",
 
     standalone: true,
@@ -72,13 +70,13 @@ export class CapsuleComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly roundedDirective: RoundedDirective = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly materialInput$: InputSignal<"glass" | "inverse" | "primary" | "secondary" | undefined> = input<"glass" | "inverse" | "primary" | "secondary" | undefined>(
     undefined,

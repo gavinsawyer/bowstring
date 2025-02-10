@@ -25,7 +25,7 @@ export class StripeApiLoaderService {
 
     return this.stripe || this.stripePromise || ((): Promise<Stripe | null> => {
       this.stripePromise = loadStripe(
-        this.environment.apis.stripe.apiKey,
+        this.environment.apis.stripe.publishableKey,
       ).then<Stripe | null>(
         (stripe: Stripe | null): Stripe | null => {
           if (stripe)

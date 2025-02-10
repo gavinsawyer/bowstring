@@ -59,7 +59,7 @@ export class InputComponent
 
   protected readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>             = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   protected readonly inputName$: Signal<`standard--input-directive--input-${ string }`> = signal<`standard--input-directive--input-${ string }`>(`standard--input-directive--input-${ uuidV7() }`);
-  protected readonly xmarkCircleFillSymbolPaths$: Signal<Symbol | undefined>            = toSignal<Symbol>(
+  protected readonly xmarkCircleFillSymbol$: Signal<Symbol | undefined>                 = toSignal<Symbol>(
     fromPromise<Symbol>(
       loadSymbol("XmarkCircleFill"),
     ),

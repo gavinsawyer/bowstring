@@ -2,7 +2,7 @@
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/interaction/lib/hover transforming/HoverTransformingDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
-@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/well rounded/WellRoundedDirective"
 
 
 \:host
@@ -22,7 +22,7 @@
   &:not(.appearance-transparent)
     @include CanvasDirective.host(18%)
     @include ElevatedDirective.host
-    @include RoundedDirective.host
+    @include WellRoundedDirective.host
 
     --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
 

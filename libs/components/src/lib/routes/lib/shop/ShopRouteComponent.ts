@@ -1,12 +1,12 @@
-import { NgTemplateOutlet }                                                                                                                                        from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, InjectionToken, Injector, type Signal, type TemplateRef, viewChild }                                          from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                  from "@angular/core/rxjs-interop";
-import { RouterOutlet, type Routes }                                                                                                                               from "@angular/router";
-import { FindRouteByPathPipe }                                                                                                                                     from "@standard/pipes";
-import { map, type Observable, of, startWith, switchMap }                                                                                                          from "rxjs";
-import { FlexboxContainerComponent, FooterComponent, HeaderComponent, HeadingGroupComponent, InspectorComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
-import { type ShopChildRouteComponent }                                                                                                                            from "./child/ShopChildRouteComponent";
-import { shopRoutes }                                                                                                                                              from "./children";
+import { NgTemplateOutlet }                                                                                                                                                        from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, Injector, type Signal, type TemplateRef, viewChild }                                                          from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                  from "@angular/core/rxjs-interop";
+import { RouterOutlet, type Routes }                                                                                                                                               from "@angular/router";
+import { FindRouteByPathPipe }                                                                                                                                                     from "@standard/pipes";
+import { map, type Observable, of, startWith, switchMap }                                                                                                                          from "rxjs";
+import { FlexboxContainerComponent, FooterComponent, HeaderComponent, HeadingGroupComponent, InspectorComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
+import { type ShopChildRouteComponent }                                                                                                                                            from "./child/ShopChildRouteComponent";
+import { shopRoutes }                                                                                                                                                              from "./children";
 
 
 const SHOP_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("SHOP_ROUTES");
@@ -21,6 +21,7 @@ const SHOP_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("SHOP_ROU
       HeaderComponent,
       HeadingGroupComponent,
       InspectorComponent,
+      LabelComponent,
       LinkComponent,
       NgTemplateOutlet,
       RouterOutlet,
@@ -32,9 +33,7 @@ const SHOP_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("SHOP_ROU
         useValue: shopRoutes,
       },
     ],
-    styleUrls:       [
-      "ShopRouteComponent.sass",
-    ],
+    styleUrl:        "ShopRouteComponent.sass",
     templateUrl:     "ShopRouteComponent.html",
 
     standalone: true,

@@ -1,1 +1,5 @@
-export type ScrollSnapAlign = "center" | "end" | "none" | "start";
+export type ScrollSnapAlign =
+  | "center"
+  | "end"
+  | "none"
+  | "start";

@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                    from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
 import { GoogleMap }                                                                                                                           from "@angular/google-maps";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, RoundedDirective }                                                            from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDirective }                                                        from "@standard/directives";
 import { GoogleMapsApiLoaderService }                                                                                                          from "@standard/services";
 
 
@@ -43,7 +43,7 @@ import { GoogleMapsApiLoaderService }                                           
         ],
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
@@ -54,9 +54,7 @@ import { GoogleMapsApiLoaderService }                                           
       NgTemplateOutlet,
     ],
     selector:        "standard--map",
-    styleUrls:       [
-      "MapComponent.sass",
-    ],
+    styleUrl:        "MapComponent.sass",
     templateUrl:     "MapComponent.html",
 
     standalone: true,
@@ -65,12 +63,16 @@ import { GoogleMapsApiLoaderService }                                           
 export class MapComponent {
 
   constructor() {
-    this.googleMapsApiLoaderService.load("maps").then<void>(
-      (): void => void (0),
+    this.googleMapsApiLoaderService.load("maps").catch<never>(
+      (error: unknown): never => {
+        console.error("Something went wrong.");
+
+        throw error;
+      },
     );
 
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
   }
 
@@ -81,13 +83,13 @@ export class MapComponent {
   private readonly googleMapsApiLoaderService: GoogleMapsApiLoaderService = inject<GoogleMapsApiLoaderService>(GoogleMapsApiLoaderService);
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
-  protected readonly options$: Signal<google.maps.MapOptions> = computed<google.maps.MapOptions>(
+  protected readonly options$: Signal<google.maps.MapOptions>   = computed<google.maps.MapOptions>(
     (): google.maps.MapOptions => ({
       ...this.defaultOptions,
       ...this.optionsInput$(),
     }),
   );
-  protected readonly roundedDirective: RoundedDirective       = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly optionsInput$: InputSignal<google.maps.MapOptions | undefined> = input<google.maps.MapOptions | undefined>(
     undefined,

@@ -29,6 +29,7 @@ const accountRoutes: Routes = [
     ),
     path:          "",
     pathMatch:     "full",
+    redirectTo:    "messages",
     title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle }`,
   },
   {
@@ -84,6 +85,17 @@ const accountRoutes: Routes = [
       ({ SecurityAccountChildRouteComponent }: typeof import("./security/SecurityAccountChildRouteComponent")): Type<unknown> => SecurityAccountChildRouteComponent,
     ),
     path:          "security",
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
+  },
+  {
+    data:          {
+      description: $localize`:@@libs--Components--Routes--Account-ConnectedApps--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Account-ConnectedApps--Meta--Title:Connected apps`,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./connected apps/ConnectedAppsAccountChildRouteComponent").then<Type<unknown>>(
+      ({ ConnectedAppsAccountChildRouteComponent }: typeof import("./connected apps/ConnectedAppsAccountChildRouteComponent")): Type<unknown> => ConnectedAppsAccountChildRouteComponent,
+    ),
+    path:          "connected-apps",
     title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
 ];

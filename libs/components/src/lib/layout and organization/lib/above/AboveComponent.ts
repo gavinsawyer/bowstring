@@ -24,9 +24,7 @@ import { FlexboxContainerDirective }          from "@standard/directives";
       NgTemplateOutlet,
     ],
     selector:        "standard--above",
-    styleUrls:       [
-      "AboveComponent.sass",
-    ],
+    styleUrl:        "AboveComponent.sass",
     templateUrl:     "AboveComponent.html",
 
     standalone: true,

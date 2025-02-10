@@ -16,9 +16,9 @@ export class FindRouteByPathPipe
     value?: Routes,
     path?: string,
   ): Route | undefined {
-    return value ? value.find<Route>(
+    return value && value.find<Route>(
       (route: Route): route is Route => route.path === path,
-    ) || value[0] : undefined;
+    ) || undefined;
   }
 
 }

@@ -1,11 +1,10 @@
-import { isPlatformBrowser }                                                                            from "@angular/common";
-import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                         from "@angular/core";
-import { toSignal }                                                                                     from "@angular/core/rxjs-interop";
-import { Auth, onIdTokenChanged, signInAnonymously, type User }                                         from "@angular/fire/auth";
-import { doc, docSnapshots, type DocumentReference, type DocumentSnapshot, Firestore }                  from "@angular/fire/firestore";
-import { type AccountDocument }                                                                         from "@standard/interfaces";
-import { catchError, filter, map, Observable, type Observer, startWith, switchMap, type TeardownLogic } from "rxjs";
-import { fromPromise }                                                                                  from "rxjs/internal/observable/innerFrom";
+import { isPlatformBrowser }                                                            from "@angular/common";
+import { inject, Injectable, PLATFORM_ID, signal, type Signal }                         from "@angular/core";
+import { toSignal }                                                                     from "@angular/core/rxjs-interop";
+import { Auth, onIdTokenChanged, type User }                                            from "@angular/fire/auth";
+import { doc, docSnapshots, type DocumentReference, type DocumentSnapshot, Firestore }  from "@angular/fire/firestore";
+import { type AccountDocument }                                                         from "@standard/interfaces";
+import { map, Observable, type Observer, of, startWith, switchMap, type TeardownLogic } from "rxjs";
 
 
 @Injectable(
@@ -23,36 +22,23 @@ export class AccountService {
     new Observable<User | null>(
       (userObserver: Observer<User | null>): TeardownLogic => onIdTokenChanged(
         this.auth,
-        (user: User | null) => userObserver.next(user),
+        (user: User | null): void => userObserver.next(user),
       ),
-    ).pipe<User | null, User, AccountDocument | undefined>(
+    ).pipe<User | null, AccountDocument | undefined, AccountDocument | undefined>(
       startWith<User | null, [ User | null ]>(this.auth.currentUser),
-      filter<User | null, User>(
-        (user: User | null): user is User => !!user && !user.isAnonymous,
-      ),
-      switchMap<User, Observable<AccountDocument | undefined>>(
-        ({ uid: userId }: User): Observable<AccountDocument | undefined> => docSnapshots<AccountDocument>(
+      switchMap<User | null, Observable<AccountDocument | undefined>>(
+        (user: User | null): Observable<AccountDocument | undefined> => user && !user.isAnonymous ? docSnapshots<AccountDocument>(
           doc(
             this.firestore,
-            `/accounts/${ userId }`,
-          ) as DocumentReference<AccountDocument>,
-        ).pipe<AccountDocument | undefined, AccountDocument | undefined>(
+            `/accounts/${ user.uid }`,
+          ) as DocumentReference<AccountDocument, AccountDocument>,
+        ).pipe<AccountDocument | undefined>(
           map<DocumentSnapshot<AccountDocument>, AccountDocument | undefined>(
             (accountDocumentSnapshot: DocumentSnapshot<AccountDocument>): AccountDocument | undefined => accountDocumentSnapshot.data(),
           ),
-          catchError<AccountDocument | undefined, Observable<undefined>>(
-            (error: unknown): Observable<undefined> => {
-              console.error(error);
-
-              return fromPromise<undefined>(
-                signInAnonymously(this.auth).then<undefined>(
-                  (): undefined => undefined,
-                ),
-              );
-            },
-          ),
-        ),
+        ) : of<undefined>(undefined),
       ),
+      startWith<AccountDocument | undefined, [ undefined ]>(undefined),
     ),
   ) : signal<undefined>(undefined);
 

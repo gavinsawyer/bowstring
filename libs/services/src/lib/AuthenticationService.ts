@@ -1,14 +1,14 @@
-import { isPlatformBrowser }                                                                                                                                                                                             from "@angular/common";
-import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                                                                        from "@angular/core";
-import { toSignal }                                                                                                                                                                                                      from "@angular/core/rxjs-interop";
-import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, reauthenticateWithCredential, signInAnonymously, signInWithEmailAndPassword, unlink, updatePassword, type User } from "@angular/fire/auth";
-import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                                                                                                             from "@angular/fire/firestore";
-import { Functions }                                                                                                                                                                                                     from "@angular/fire/functions";
-import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, unlinkPasskey, verifyUserWithPasskey }                                                                                   from "@firebase-web-authn/browser";
-import { type AccountDocument }                                                                                                                                                                                          from "@standard/interfaces";
-import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                                                                                    from "rxjs";
-import { fromPromise }                                                                                                                                                                                                   from "rxjs/internal/observable/innerFrom";
-import { AccountService }                                                                                                                                                                                                from "./AccountService";
+import { isPlatformBrowser }                                                                                                                                                                                                             from "@angular/common";
+import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                                                                                        from "@angular/core";
+import { toSignal }                                                                                                                                                                                                                      from "@angular/core/rxjs-interop";
+import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, reauthenticateWithCredential, signInAnonymously, signInWithEmailAndPassword, unlink, updatePassword, type User, UserCredential } from "@angular/fire/auth";
+import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                                                                                                                             from "@angular/fire/firestore";
+import { Functions }                                                                                                                                                                                                                     from "@angular/fire/functions";
+import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, unlinkPasskey, verifyUserWithPasskey }                                                                                                   from "@firebase-web-authn/browser";
+import { type AccountDocument }                                                                                                                                                                                                          from "@standard/interfaces";
+import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                                                                                                    from "rxjs";
+import { fromPromise }                                                                                                                                                                                                                   from "rxjs/internal/observable/innerFrom";
+import { AccountService }                                                                                                                                                                                                                from "./AccountService";
 
 
 @Injectable(
@@ -68,16 +68,15 @@ export class AuthenticationService {
     ),
   ) : signal<undefined>(undefined);
 
-  public createUserWithEmailAndPassword(
+  public async createUserWithEmailAndPassword(
     email: string,
     password: string,
-  ): Promise<void> {
+  ): Promise<UserCredential> {
     return createUserWithEmailAndPassword(
       this.auth,
       email,
       password,
-    ).then<void, never>(
-      (): void => void (0),
+    ).catch<never>(
       (error: unknown): never => {
         console.error("Something went wrong.");
 
@@ -85,13 +84,12 @@ export class AuthenticationService {
       },
     );
   }
-  public createUserWithPasskey(name: string): Promise<void> {
+  public async createUserWithPasskey(name: string): Promise<UserCredential> {
     return createUserWithPasskey(
       this.auth,
       this.functions,
       name,
-    ).then<void, never>(
-      (): void => void (0),
+    ).catch<never>(
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.message);
 
@@ -116,7 +114,7 @@ export class AuthenticationService {
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
           security: {
             password: true,
@@ -134,7 +132,7 @@ export class AuthenticationService {
     ) : Promise.reject<never>(new Error());
   }
   public linkWithPasskey(): Promise<void> {
-    const email: string | undefined = this.accountService.accountDocument$()?.email || undefined;
+    const email: string | undefined = this.accountService.accountDocument$()?.email;
     const user: User | null         = this.auth.currentUser;
 
     return (email && user) ? linkWithPasskey(
@@ -146,7 +144,7 @@ export class AuthenticationService {
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
           security: {
             passkey: true,
@@ -164,7 +162,7 @@ export class AuthenticationService {
     ) : Promise.reject<never>(new Error());
   }
   public linkWithPasskeyBackup(): Promise<void> {
-    const email: string | undefined = this.accountService.accountDocument$()?.email || undefined;
+    const email: string | undefined = this.accountService.accountDocument$()?.email;
     const user: User | null         = this.auth.currentUser;
 
     return (email && user) ? linkWithPasskey(
@@ -177,7 +175,7 @@ export class AuthenticationService {
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
           security: {
             passkeyBackup: true,
@@ -247,7 +245,7 @@ export class AuthenticationService {
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
           security: {
             passkey: false,
@@ -276,7 +274,7 @@ export class AuthenticationService {
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
           security: {
             passkeyBackup: false,
@@ -304,7 +302,7 @@ export class AuthenticationService {
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
           security: {
             password: false,
@@ -325,7 +323,7 @@ export class AuthenticationService {
     passwordCurrent: string,
     passwordNew: string,
   ): Promise<void> {
-    const email: string | undefined = this.accountService.accountDocument$()?.email || undefined;
+    const email: string | undefined = this.accountService.accountDocument$()?.email;
     const user: User | null         = this.auth.currentUser;
 
     return (email && user) ? reauthenticateWithCredential(

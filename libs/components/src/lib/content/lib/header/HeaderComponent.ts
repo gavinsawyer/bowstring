@@ -30,9 +30,7 @@ import { FlexboxContainerDirective, TypographyDirective } from "@standard/direct
       NgTemplateOutlet,
     ],
     selector:        "standard--header",
-    styleUrls:       [
-      "HeaderComponent.sass",
-    ],
+    styleUrl:        "HeaderComponent.sass",
     templateUrl:     "HeaderComponent.html",
 
     standalone: true,

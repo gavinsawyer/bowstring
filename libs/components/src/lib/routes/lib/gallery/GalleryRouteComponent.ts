@@ -1,12 +1,12 @@
-import { NgTemplateOutlet }                                                                                                from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, InjectionToken, Injector, type Signal, type TemplateRef, viewChild }  from "@angular/core";
-import { toObservable, toSignal }                                                                                          from "@angular/core/rxjs-interop";
-import { RouterOutlet, type Routes }                                                                                       from "@angular/router";
-import { FindRouteByPathPipe }                                                                                             from "@standard/pipes";
-import { map, type Observable, of, startWith, switchMap }                                                                  from "rxjs";
-import { FlexboxContainerComponent, HeaderComponent, InspectorComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
-import { type GalleryChildRouteComponent }                                                                                 from "./child/GalleryChildRouteComponent";
-import { galleryRoutes }                                                                                                   from "./children";
+import { NgTemplateOutlet }                                                                                                                from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, Injector, type Signal, type TemplateRef, viewChild }                  from "@angular/core";
+import { toObservable, toSignal }                                                                                                          from "@angular/core/rxjs-interop";
+import { RouterOutlet, type Routes }                                                                                                       from "@angular/router";
+import { FindRouteByPathPipe }                                                                                                             from "@standard/pipes";
+import { map, type Observable, of, startWith, switchMap }                                                                                  from "rxjs";
+import { FlexboxContainerComponent, HeaderComponent, InspectorComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
+import { type GalleryChildRouteComponent }                                                                                                 from "./child/GalleryChildRouteComponent";
+import { galleryRoutes }                                                                                                                   from "./children";
 
 
 const GALLERY_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("GALLERY_ROUTES");
@@ -23,6 +23,7 @@ const GALLERY_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("GALLE
       NgTemplateOutlet,
       RouterOutlet,
       SectionComponent,
+      LabelComponent,
     ],
     providers:       [
       {
@@ -30,9 +31,7 @@ const GALLERY_ROUTES: InjectionToken<Routes> = new InjectionToken<Routes>("GALLE
         useValue: galleryRoutes,
       },
     ],
-    styleUrls:       [
-      "GalleryRouteComponent.sass",
-    ],
+    styleUrl:        "GalleryRouteComponent.sass",
     templateUrl:     "GalleryRouteComponent.html",
 
     standalone: true,

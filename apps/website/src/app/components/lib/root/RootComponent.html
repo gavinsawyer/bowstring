@@ -14,7 +14,7 @@
   </standard--heading-group>
   <standard--divider />
   <standard--section>
-    @for (currency of currencyKeys; track currency) {<standard--button
+    @for (currency of currencyKeys; track $index) {<standard--button
       [disabled]="currency === currencyService.userCurrency$()"
       level="2"
       (output)="currencyService.userCurrency$.set(currency); currencySheetComponent.openModel$.set(false);">
@@ -29,7 +29,7 @@
   </standard--header>
   <standard--divider />
   <standard--section>
-    @for (locale of localeIds; track locale) {<standard--button
+    @for (locale of localeIds; track $index) {<standard--button
       [disabled]="locale === localeId"
       level="2"
       (output)="locale === localeId || changeLocale(locale);">
@@ -38,171 +38,14 @@
     </standard--button>}
   </standard--section>}
 </standard--sheet>
-<standard--sheet #signinFormSheetComponent>
-  @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--Sheets--SigninForm--Header">Sign in.</h6>
-  </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(signinFormSheetComponent.openModel$);">
-    <standard--button
-      appearance="raised"
-      level="2"
-      material="inverse"
-      type="submit">
-      <standard--symbol input="PersonBadgeKeyFill" />
-      <standard--label
-        i18n-input
-        input="Use passkey" />
-    </standard--button>
-    <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
-      inline
-      input="PersonBadgeKeyFill" />&nbsp;<standard--label
-      i18n-input
-      inline
-      input="Use passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
-  </standard--form>
-  <standard--divider />}
-  <standard--form (output)="signinWithPasswordFormSubmit(signinFormSheetComponent.openModel$);">
-    <standard--section>
-      <standard--text-field-input
-        autocomplete="username"
-        [formControl]="signinWithPasswordFormGroup.controls.email"
-        i18n-placeholder
-        level="2"
-        placeholder="Email"
-        type="email" />
-      <standard--text-field-input
-        autocomplete="current-password"
-        [formControl]="signinWithPasswordFormGroup.controls.password"
-        i18n-placeholder
-        level="2"
-        placeholder="Password"
-        type="password" />
-    </standard--section>
-    <standard--flexbox-container
-      flexDirection="row"
-      justifyContent="flex-end">
-      <standard--button
-        appearance="symbol"
-        [disabled]="signinWithPasswordFormGroup.invalid"
-        type="submit">
-        <standard--symbol input="ArrowForwardCircleFill" />
-      </standard--button>
-    </standard--flexbox-container>
-  </standard--form>}
+<standard--sheet #signinSheetComponent>
+  @defer {<standard--signin [sheetComponent]="signinSheetComponent" />}
 </standard--sheet>
 <standard--sheet #signoutSheetComponent>
-  @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--Sheets--Signout--Header">Sign out?</h6>
-  </standard--header>
-  <standard--divider />
-  <standard--section
-    flexDirection="row"
-    flexWrap="wrap-reverse">
-    <standard--button
-      appearance="raised"
-      flexGrow="1"
-      level="2"
-      (output)="signoutSheetComponent.openModel$.set(false);">
-      <standard--symbol input="ArrowBackward" />
-      <standard--label
-        i18n-input
-        input="Cancel" />
-    </standard--button>
-    <standard--button
-      appearance="raised"
-      flexGrow="999"
-      level="2"
-      material="inverse"
-      (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">
-      <standard--label
-        i18n-input
-        input="Yes, sign out" />
-    </standard--button>
-  </standard--section>}
+  @defer {<standard--signout [sheetComponent]="signoutSheetComponent" />}
 </standard--sheet>
-<standard--sheet #signupFormSheetComponent>
-  @defer {<standard--header>
-    <h6 i18n="@@apps--Website--Components--Root--Sheets--SignupForm--Header">Create your account.</h6>
-  </standard--header>
-  @if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(signupFormSheetComponent.openModel$);">
-    <standard--text-field-input
-      autocomplete="email"
-      [formControl]="signupWithPasskeyFormGroup.controls.email"
-      i18n-placeholder
-      level="2"
-      placeholder="Email"
-      type="email" />
-    <standard--button
-      appearance="raised"
-      [disabled]="signupWithPasskeyFormGroup.invalid"
-      level="2"
-      material="inverse"
-      type="submit">
-      <standard--symbol input="PersonBadgeKeyFill" />
-      <standard--label
-        i18n-input
-        input="Save passkey" />
-    </standard--button>
-    <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
-      inline
-      input="PersonBadgeKeyFill" />&nbsp;<standard--label
-      i18n-input
-      inline
-      input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
-  </standard--form>
-  <standard--divider />}
-  <standard--form (output)="signupWithPasswordFormSubmit(signupFormSheetComponent.openModel$);">
-    <standard--section>
-      <standard--text-field-input
-        autocomplete="email"
-        [formControl]="signupWithPasswordFormGroup.controls.email"
-        i18n-placeholder
-        level="2"
-        placeholder="Email"
-        type="email" />
-      <standard--text-field-input
-        autocomplete="new-password"
-        [formControl]="signupWithPasswordFormGroup.controls.password"
-        i18n-placeholder
-        level="2"
-        placeholder="Password"
-        type="password" />
-      <standard--text-field-input
-        autocomplete="new-password"
-        [formControl]="signupWithPasswordFormGroup.controls.passwordConfirmation"
-        i18n-placeholder
-        level="2"
-        placeholder="Confirm password"
-        type="password" />
-    </standard--section>
-    <standard--flexbox-container
-      alignItems="center"
-      flexDirection="row"
-      justifyContent="space-between">
-      <standard--list type="inline">
-        <standard--link
-          i18n-input
-          inline
-          input="privacy policy"
-          (output)="signupFormSheetComponent.openModel$.set(false);"
-          *standardListItem
-          url="/privacy" />
-        <standard--link
-          i18n-input
-          inline
-          input="terms"
-          (output)="signupFormSheetComponent.openModel$.set(false);"
-          *standardListItem
-          url="/terms" />
-      </standard--list>
-      <standard--button
-        appearance="symbol"
-        [disabled]="signupWithPasswordFormGroup.invalid"
-        type="submit">
-        <standard--symbol input="ArrowForwardCircleFill" />
-      </standard--button>
-    </standard--flexbox-container>
-  </standard--form>}
+<standard--sheet #signupSheetComponent>
+  @defer {<standard--signup [sheetComponent]="signupSheetComponent" />}
 </standard--sheet>
 
 <ng-template #contentTemplate>
@@ -221,20 +64,24 @@
         <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
           <standard--link
             exact
-            [input]="brand.title"
-            url="/" />
+            url="/">
+            <standard--label [input]="brand.title" />
+          </standard--link>
         </h1>
       </standard--header>
       <standard--nav>
-        @for (route of standardRoutes.slice(0, -4); track route) {<standard--link
-          [input]="route.data?.['title']"
-          [url]="'/' + route.path" />}
-        @for (route of appRoutes.slice(1); track route) {<standard--link
-          [input]="route.data?.['title']"
-          [url]="'/' + route.path" />}
-        @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link
-          [input]="route.data?.['title']"
-          [url]="'/' + route.path" />}
+        @if (standardRoutes | standardFindRouteByPath:'gallery'; as route) {<standard--link [url]="'/' + route.path">
+          <standard--label [input]="route.data?.['title']" />
+        </standard--link>}
+        @if (standardRoutes | standardFindRouteByPath:'shop'; as route) {<standard--link [url]="'/' + route.path">
+          <standard--label [input]="route.data?.['title']" />
+        </standard--link>}
+        @for (route of appRoutes.slice(1); track $index) {<standard--link [url]="'/' + route.path">
+          <standard--label [input]="route.data?.['title']" />
+        </standard--link>}
+        @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link [url]="'/' + route.path">
+          <standard--label [input]="route.data?.['title']" />
+        </standard--link>}
       </standard--nav>
     </standard--flexbox-container>
     <router-outlet />
@@ -249,9 +96,10 @@
     <standard--header>
       <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
         <standard--link
-          [input]="brand.title"
           exact
-          url="/" />
+          url="/">
+          <standard--label [input]="brand.title" />
+        </standard--link>
       </h6>
     </standard--header>
     <standard--section
@@ -260,48 +108,55 @@
       justifyContent="space-between">
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
-          @for (route of standardRoutes.slice(0, -4); track route) {<standard--link
-            [input]="route.data?.['title']"
-            [url]="'/' + route.path" />}
-          @for (route of appRoutes.slice(1); track route) {<standard--link
-            [input]="route.data?.['title']"
-            [url]="'/' + route.path" />}
+          @if (standardRoutes | standardFindRouteByPath:'gallery'; as route) {<standard--link [url]="'/' + route.path">
+            <standard--label [input]="route.data?.['title']" />
+          </standard--link>}
+          @if (standardRoutes | standardFindRouteByPath:'shop'; as route) {<standard--link [url]="'/' + route.path">
+            <standard--label [input]="route.data?.['title']" />
+          </standard--link>}
+          @for (route of appRoutes.slice(1); track $index) {<standard--link [url]="'/' + route.path">
+            <standard--label [input]="route.data?.['title']" />
+          </standard--link>}
         </standard--flexbox-container>
         @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
           <standard--link
-            [disabled]="signinFormSheetComponent.openModelWithTransform$()"
-            i18n-input
-            input="Sign in"
-            (output)="signinFormSheetComponent.openModel$.set(true);" />
+            [disabled]="signinSheetComponent.openModelWithTransform$()"
+            (output)="signinSheetComponent.openModel$.set(true);">
+            <standard--label
+              i18n-input
+              input="Sign in" />
+          </standard--link>
           <standard--link
-            [disabled]="signupFormSheetComponent.openModelWithTransform$()"
-            i18n-input
-            input="Create your account"
-            (output)="signupFormSheetComponent.openModel$.set(true);" />
+            [disabled]="signupSheetComponent.openModelWithTransform$()"
+            (output)="signupSheetComponent.openModel$.set(true);">
+            <standard--label
+              i18n-input
+              input="Create your account" />
+          </standard--link>
         </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
-          @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link
-            [input]="route.data?.['title']"
-            [url]="'/' + route.path" />}
-          <standard--link
-            i18n-input
-            input="Sign out"
-            (output)="signoutSheetComponent.openModel$.set(true);" />
+          @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link [url]="'/' + route.path">
+            <standard--label [input]="route.data?.['title']" />
+          </standard--link>}
+          <standard--link (output)="signoutSheetComponent.openModel$.set(true);">
+            <standard--label
+              i18n-input
+              input="Sign out" />
+          </standard--link>
         </standard--flexbox-container>}
         <standard--flexbox-container alignItems="flex-start">
-          @if (standardRoutes | standardFindRouteByPath:'privacy'; as route) {<standard--link
-            [input]="route.data?.['title']"
-            [url]="'/' + route.path" />}
-          @if (standardRoutes | standardFindRouteByPath:'terms'; as route) {<standard--link
-            [input]="route.data?.['title']"
-            [url]="'/' + route.path" />}
+          @if (standardRoutes | standardFindRouteByPath:'privacy'; as route) {<standard--link [url]="'/' + route.path">
+            <standard--label [input]="route.data?.['title']" />
+          </standard--link>}
+          @if (standardRoutes | standardFindRouteByPath:'terms'; as route) {<standard--link [url]="'/' + route.path">
+            <standard--label [input]="route.data?.['title']" />
+          </standard--link>}
         </standard--flexbox-container>
       </standard--flexbox-container>
       <standard--flexbox-container flexDirection="row">
         <standard--flexbox-container alignItems="flex-start">
-          <standard--link input="Instagram">
-            <standard--symbol
-              input="ArrowUpForwardAppFill"
-              *standardLinkSymbol />
+          <standard--link>
+            <standard--symbol input="ArrowUpForwardAppFill" />
+            <standard--label input="Instagram" />
           </standard--link>
         </standard--flexbox-container>
       </standard--flexbox-container>
@@ -311,22 +166,16 @@
       flexDirection="row"
       flexWrap="wrap"
       [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
-      @if (connectivityService.connected$()) {<standard--link
-        disabled
-        i18n-input
-        input="Connected">
-        <standard--symbol
-          input="Network"
-          *standardLinkSymbol />
-      </standard--link>} @else {<standard--link
-        disabled
-        i18n-input
-        input="Disconnected"
-        material="warning">
-        <standard--symbol
-          input="NetworkSlash"
-          *standardLinkSymbol />
-      </standard--link>}
+      <standard--link
+        disabled>
+        @if (connectivityService.connected$()) {<standard--symbol input="Network" />
+        <standard--label
+          i18n-input
+          input="Connected" />} @else {<standard--symbol input="NetworkSlash" />
+        <standard--label
+          i18n-input
+          input="Disconnected" />}
+      </standard--link>
     </standard--section>
     <standard--section
       flexDirection="row"
@@ -339,12 +188,14 @@
         [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
         <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2025&nbsp;}<standard--link
           inline
-          [input]="brand.copyrightHolder"
-          [url]="brand.copyrightHolderUrl" /></span>
+          [url]="brand.copyrightHolderUrl">
+          <standard--label [input]="brand.copyrightHolder" />
+        </standard--link></span>
         <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
           inline
-          [input]="gitInfoPartial.hash || ''"
-          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash" />&rpar;</span>
+          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">
+          <standard--label [input]="gitInfoPartial.hash || ''" />
+        </standard--link>&rpar;</span>
       </standard--flexbox-container>
       <standard--flexbox-container
         [flexBasis]="responsivityService.pastMediumBreakpoint$() ? 'auto' : '100%'"
@@ -352,20 +203,16 @@
         justifyContent="center">
         <standard--link
           [disabled]="localeSheetComponent.openModelWithTransform$()"
-          [input]="localeDisplayNames.of(localeId) || localeId"
           (output)="localeSheetComponent.openModel$.set(true);">
-          <standard--symbol
-            input="Globe"
-            *standardLinkSymbol />
+          <standard--symbol input="Globe" />
+          <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
         </standard--link>
-        <standard--link
+        @if (standardRoutes | standardFindRouteByPath:'shop') {<standard--link
           [disabled]="currencySheetComponent.openModelWithTransform$()"
-          [input]="currencyService.userCurrency$()"
           (output)="currencySheetComponent.openModel$.set(true);">
-          <standard--symbol
-            [input]="currencies[currencyService.userCurrency$()].symbolName"
-            *standardLinkSymbol />
-        </standard--link>
+          <standard--symbol [input]="currencies[currencyService.userCurrency$()].symbolName" />
+          <standard--label [input]="currencyService.userCurrency$()"/>
+        </standard--link>}
       </standard--flexbox-container>
     </standard--section>
   </standard--footer>

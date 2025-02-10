@@ -11,8 +11,9 @@
       <h2>@if (galleryRoutes | standardFindRouteByPath:''; as route) {<standard--link
         exact
         inline
-        [input]="route.data?.['title']"
-        [url]="'./' + route.path" />}</h2>
+        [url]="'./' + route.path">
+        <standard--label [input]="route.data?.['title']" />
+      </standard--link>}</h2>
     </standard--header>
   </standard--section>
   <standard--flexbox-container

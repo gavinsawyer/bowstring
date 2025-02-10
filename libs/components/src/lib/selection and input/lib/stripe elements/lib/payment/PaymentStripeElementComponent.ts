@@ -1,15 +1,14 @@
-import { NgTemplateOutlet }                                                                                                   from "@angular/common";
-import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                          from "@angular/core";
-import { toSignal }                                                                                                           from "@angular/core/rxjs-interop";
-import { Functions, httpsCallable, type HttpsCallableResult }                                                                 from "@angular/fire/functions";
-import { FormControl, FormGroup }                                                                                             from "@angular/forms";
-import { ContainerDirective }                                                                                                 from "@standard/directives";
-import { type AccountDocument }                                                                                               from "@standard/interfaces";
-import { type SetupIntentResult, type Stripe, type StripeElement, type StripeElements, type StripePaymentElementChangeEvent } from "@stripe/stripe-js";
-import { isEqual }                                                                                                            from "lodash";
-import { startWith }                                                                                                          from "rxjs";
-import { type SheetComponent }                                                                                                from "../../../../../presentation";
-import { StripeElementComponent }                                                                                             from "../../../stripe element/StripeElementComponent";
+import { NgTemplateOutlet }                                                                                                                                                             from "@angular/common";
+import { ChangeDetectionStrategy, Component, effect, inject }                                                                                                                           from "@angular/core";
+import { Auth }                                                                                                                                                                         from "@angular/fire/auth";
+import { addDoc, collection, type CollectionReference, Firestore, getDocs, query, type QueryDocumentSnapshot, type QuerySnapshot, serverTimestamp, where, writeBatch, type WriteBatch } from "@angular/fire/firestore";
+import { FormControl, FormGroup }                                                                                                                                                       from "@angular/forms";
+import { ContainerDirective }                                                                                                                                                           from "@standard/directives";
+import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripeSetupIntentDocument }                                                                                from "@standard/interfaces";
+import { StripeSetupIntentsService }                                                                                                                                                    from "@standard/services";
+import { type DefaultValuesOption, type SetupIntentResult, type Stripe, type StripeElement, type StripeElements, type StripePaymentElementChangeEvent }                                 from "@stripe/stripe-js";
+import { type SheetComponent }                                                                                                                                                          from "../../../../../presentation";
+import { StripeElementComponent }                                                                                                                                                       from "../../../stripe element/StripeElementComponent";
 
 
 @Component(
@@ -44,9 +43,7 @@ import { StripeElementComponent }                                               
       NgTemplateOutlet,
     ],
     selector:        "standard--payment-stripe-element",
-    styleUrls:       [
-      "PaymentStripeElementComponent.sass",
-    ],
+    styleUrl:        "PaymentStripeElementComponent.sass",
     templateUrl:     "PaymentStripeElementComponent.html",
 
     standalone: true,
@@ -60,109 +57,185 @@ export class PaymentStripeElementComponent
 
     this.getStripeElement = (
       {
-        stripeCustomer,
+        stripeCustomerDocument,
         stripeElements,
-      }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements, },
+      }: { "stripeCustomerDocument"?: StripeCustomerDocument, "stripeElements": StripeElements },
     ): StripeElement => stripeElements.create(
       "payment",
       {
-        defaultValues: stripeCustomer ? {
-          billingDetails: {
-            address: stripeCustomer.address ? {
-              city:        stripeCustomer.address.city,
-              country:     stripeCustomer.address.country,
-              line1:       stripeCustomer.address.line1,
-              line2:       stripeCustomer.address.line2 || undefined,
-              postal_code: stripeCustomer.address.postalCode,
-              state:       stripeCustomer.address.state || undefined,
-            } : undefined,
-            name:    stripeCustomer.name || undefined,
-            phone:   stripeCustomer.phone || undefined,
-          },
-        } : undefined,
+        defaultValues: {
+          billingDetails: stripeCustomerDocument && ((
+            {
+              address,
+              name,
+              phone,
+            }: StripeCustomerDocument,
+          ): DefaultValuesOption["billingDetails"] => ({
+            address: address && ((
+              {
+                city,
+                country,
+                line1,
+                line2,
+                postalCode,
+                state,
+              }: Exclude<StripeCustomerDocument["address"], undefined>,
+            ): Exclude<DefaultValuesOption["billingDetails"], undefined>["address"] => ({
+              city,
+              country,
+              line1,
+              line2,
+              postal_code: postalCode,
+              state,
+            }))(address),
+            name,
+            phone,
+          }))(stripeCustomerDocument),
+        },
       },
     ).on(
       "change",
-      (stripePaymentElementChangeEvent: StripePaymentElementChangeEvent): void => {
-        const stripeElementValue: StripePaymentElementChangeEvent["value"]                                                                                                 = stripePaymentElementChangeEvent.value;
-        const stripeElementValuePaymentMethod: StripePaymentElementChangeEvent["value"]["payment_method"]                                                                  = stripeElementValue.payment_method;
-        const stripeElementValuePaymentMethodBillingDetails: Exclude<StripePaymentElementChangeEvent["value"]["payment_method"], undefined>["billing_details"] | undefined = stripeElementValue.payment_method?.billing_details;
-
-        this.complete$.set(stripePaymentElementChangeEvent.complete);
+      (
+        {
+          complete,
+          value,
+        }: StripePaymentElementChangeEvent,
+      ): void => {
+        this.complete$.set(complete);
 
         this.formGroup.setValue(
           {
             paymentMethod: {
               billingDetails: {
                 address: {
-                  city:       stripeElementValuePaymentMethodBillingDetails?.address.city || null,
-                  country:    stripeElementValuePaymentMethodBillingDetails?.address.country || null,
-                  line1:      stripeElementValuePaymentMethodBillingDetails?.address.line1 || null,
-                  line2:      stripeElementValuePaymentMethodBillingDetails?.address.line2 || null,
-                  postalCode: stripeElementValuePaymentMethodBillingDetails?.address.postal_code || null,
-                  state:      stripeElementValuePaymentMethodBillingDetails?.address.state || null,
+                  city:       value.payment_method?.billing_details?.address.city || null,
+                  country:    value.payment_method?.billing_details?.address.country || null,
+                  line1:      value.payment_method?.billing_details?.address.line1 || null,
+                  line2:      value.payment_method?.billing_details?.address.line2 || null,
+                  postalCode: value.payment_method?.billing_details?.address.postal_code || null,
+                  state:      value.payment_method?.billing_details?.address.state || null,
                 },
-                email:   stripeElementValuePaymentMethodBillingDetails?.email || null,
-                name:    stripeElementValuePaymentMethodBillingDetails?.name || null,
-                phone:   stripeElementValuePaymentMethodBillingDetails?.phone || null,
+                email:   value.payment_method?.billing_details?.email || null,
+                name:    value.payment_method?.billing_details?.name || null,
+                phone:   value.payment_method?.billing_details?.phone || null,
               },
-              id:             stripeElementValuePaymentMethod?.id || null,
-              type:           stripeElementValuePaymentMethod?.type || null,
+              id:             value.payment_method?.id || null,
+              type:           value.payment_method?.type || null,
             },
-            type:          stripeElementValue.type,
+            type:          value.type,
           },
         );
-      },
-    );
-
-    httpsCallable<null, { "clientSecret": string }>(
-      this.functions,
-      "createStripeSetupIntent",
-    )().then<void, never>(
-      ({ data: { clientSecret } }: HttpsCallableResult<{ clientSecret: string }>): void => {
-        this.getStripeElements = (stripe: Stripe): StripeElements => stripe.elements(
-          {
-            ...this.getBaseStripeElementsOptions(),
-            clientSecret: clientSecret,
-          },
-        );
-
-        this.initializeStripeElement();
-      },
-      (error: unknown): never => {
-        console.error("Something went wrong.");
-
-        throw error;
       },
     );
 
     effect(
       (): void => {
-        const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
+        const stripeSetupIntentDocuments: StripeSetupIntentDocument[] | undefined = this.stripeSetupIntentsService.stripeSetupIntentDocuments$();
 
-        if (accountDocument?.stripeCustomer)
-          this.formGroup.reset(
-            {
-              paymentMethod: {
-                ...accountDocument.stripeCustomer.paymentMethod,
-                billingDetails: {
-                  address: {
-                    ...accountDocument.stripeCustomer.address,
-                    line2: accountDocument.stripeCustomer.address?.line2 || undefined,
-                    state: accountDocument.stripeCustomer.address?.state || undefined,
-                  },
-                  email:   accountDocument.email,
-                  name:    accountDocument.stripeCustomer.name,
-                  phone:   accountDocument.stripeCustomer.phone,
-                },
+        if (stripeSetupIntentDocuments && stripeSetupIntentDocuments?.length === 0) {
+          const userId: string | undefined = this.auth.currentUser?.uid;
+
+          if (userId)
+            addDoc<StripeSetupIntentDocument, StripeSetupIntentDocument>(
+              collection(
+                this.firestore,
+                "stripeSetupIntents",
+              ) as CollectionReference<StripeSetupIntentDocument, StripeSetupIntentDocument>,
+              {
+                userId,
               },
-              type:          accountDocument.stripeCustomer.paymentMethod?.type || undefined,
-            },
-          );
+            ).catch<never>(
+              (error: unknown): never => {
+                console.error("Something went wrong.");
+
+                throw error;
+              },
+            );
+        } else {
+          const stripeSetupIntentDocument: StripeSetupIntentDocument | undefined = stripeSetupIntentDocuments?.[0];
+          const stripeSetupIntentClientSecret: string | undefined                = stripeSetupIntentDocument?.clientSecret;
+          const stripeSetupIntentId: string | undefined                          = stripeSetupIntentDocument?.id;
+
+          if (stripeSetupIntentDocument && stripeSetupIntentClientSecret && stripeSetupIntentId) {
+            this.getStripeElements = (stripe: Stripe): StripeElements | undefined => {
+              if (this.failedClientSecrets?.includes(stripeSetupIntentClientSecret))
+                return undefined;
+
+              try {
+                return stripe.elements(
+                  {
+                    ...this.getBaseStripeElementsOptions(),
+                    clientSecret: stripeSetupIntentClientSecret,
+                  },
+                );
+              } catch {
+                console.error("Something went wrong.");
+
+                const removeSetupIntentMethodWriteBatch: WriteBatch = writeBatch(this.firestore);
+                const userId: string | undefined                    = this.auth.currentUser?.uid;
+
+                if (userId)
+                  getDocs<StripeSetupIntentDocument, StripeSetupIntentDocument>(
+                    query<StripeSetupIntentDocument, StripeSetupIntentDocument>(
+                      collection(
+                        this.firestore,
+                        "stripeSetupIntents",
+                      ) as CollectionReference<StripeSetupIntentDocument, StripeSetupIntentDocument>,
+                      where(
+                        "userId",
+                        "==",
+                        userId,
+                      ),
+                      where(
+                        "id",
+                        "==",
+                        stripeSetupIntentId,
+                      ),
+                    ),
+                  ).then<void, never>(
+                    (stripeSetupIntentDocumentsQuerySnapshot: QuerySnapshot<StripeSetupIntentDocument, StripeSetupIntentDocument>): void => {
+                      stripeSetupIntentDocumentsQuerySnapshot.forEach(
+                        ({ ref: stripeSetupIntentDocumentReference }: QueryDocumentSnapshot<StripeSetupIntentDocument, StripeSetupIntentDocument>): void => removeSetupIntentMethodWriteBatch.update<StripeSetupIntentDocument, StripeSetupIntentDocument>(
+                          stripeSetupIntentDocumentReference,
+                          {
+                            asyncDeleted: serverTimestamp(),
+                          },
+                        ) && void (0),
+                      );
+
+                      removeSetupIntentMethodWriteBatch.commit().catch<never>(
+                        (error: unknown): never => {
+                          console.error("Something went wrong.");
+
+                          throw error;
+                        },
+                      );
+                    },
+                    (error: unknown): never => {
+                      console.error("Something went wrong.");
+
+                      throw error;
+                    },
+                  );
+
+                this.failedClientSecrets = [
+                  ...(this.failedClientSecrets ? [ ...this.failedClientSecrets ] : []),
+                  stripeSetupIntentClientSecret,
+                ];
+
+                return undefined;
+              }
+            };
+
+            this.initializeStripeElement();
+          }
+        }
       },
     );
   }
 
+  private readonly auth: Auth                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      = inject<Auth>(Auth);
+  private readonly firestore: Firestore                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            = inject<Firestore>(Firestore);
   private readonly formGroup: FormGroup<{ "paymentMethod": FormGroup<{ "billingDetails": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postalCode": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>, "type": FormControl<string | null> }> = new FormGroup<{ "paymentMethod": FormGroup<{ "billingDetails": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postalCode": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>, "type": FormControl<string | null> }>(
     {
       paymentMethod: new FormGroup<{ "billingDetails": FormGroup<{ "address": FormGroup<{ "city": FormControl<string | null>, "country": FormControl<string | null>, "line1": FormControl<string | null>, "line2": FormControl<string | null>, "postalCode": FormControl<string | null>, "state": FormControl<string | null> }>, "email": FormControl<string | null>, "name": FormControl<string | null>, "phone": FormControl<string | null> }>, "id": FormControl<string | null>, "type": FormControl<string | null> }>(
@@ -191,96 +264,65 @@ export class PaymentStripeElementComponent
       type:          new FormControl<string | null>(null),
     },
   );
-  private readonly value$: Signal<typeof this.formGroup.value>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     = toSignal<typeof this.formGroup.value>(
-    this.formGroup.valueChanges.pipe<typeof this.formGroup.value>(
-      startWith<typeof this.formGroup.value, [ typeof this.formGroup.value ]>(this.formGroup.value),
-    ),
-    {
-      requireSync: true,
-    },
-  );
-  private readonly functions: Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            = inject<Functions>(Functions);
 
-  public readonly edited$: Signal<boolean> = computed<boolean>(
-    (): boolean => {
-      const payment_method: NonNullable<AccountDocument["stripeCustomer"]>["paymentMethod"] | undefined                                                 = this.accountService.accountDocument$()?.stripeCustomer?.paymentMethod;
-      const billing_details: NonNullable<NonNullable<AccountDocument["stripeCustomer"]>["paymentMethod"]>["billingDetails"] | undefined                 = payment_method?.billingDetails;
-      const address: NonNullable<NonNullable<NonNullable<AccountDocument["stripeCustomer"]>["paymentMethod"]>["billingDetails"]>["address"] | undefined = billing_details?.address;
+  protected readonly stripeSetupIntentsService: StripeSetupIntentsService = inject<StripeSetupIntentsService>(StripeSetupIntentsService);
 
-      return !isEqual(
-        this.value$(),
-        {
-          paymentMethod: {
-            billingDetails: {
-              address: {
-                city:        address?.city || null,
-                country:     address?.country || null,
-                line1:       address?.line1 || null,
-                line2:       address?.line2 || null,
-                postal_code: address?.postalCode || null,
-                state:       address?.state || null,
-              },
-              email:   billing_details?.email || null,
-              name:    billing_details?.name || null,
-              phone:   billing_details?.phone || null,
-            },
-            id:             payment_method?.id || null,
-            type:           payment_method?.type || null,
-          },
-          type:          payment_method?.type || null,
-        },
-      );
-    },
-  );
+  private failedClientSecrets?: string[];
 
   public submit(openModel$: SheetComponent["openModel$"]): void {
     openModel$.set(false);
 
     setTimeout(
       (): void => {
-        if (this.submitStripeElement)
-          this.submitStripeElement().then<void>(
+        const userId: string | undefined = this.auth.currentUser?.uid;
+
+        if (userId)
+          this.submitStripeElement?.().then<void>(
             (
-              {
-                stripe,
-                stripeElements,
-              }: { stripe: Stripe, stripeElements: StripeElements },
-            ): Promise<void> => stripe.confirmSetup(
-              {
-                elements: stripeElements,
-                redirect: "if_required",
-              },
-            ).then<void, never>(
-              (setupIntentResult: SetupIntentResult): void => {
-                if (setupIntentResult.error) {
+              submitStripeElementResponse?: { stripe: Stripe, stripeElements: StripeElements },
+            ): void => {
+              if (!submitStripeElementResponse)
+                return void (0);
+
+              const stripe: Stripe                 = submitStripeElementResponse.stripe;
+              const stripeElements: StripeElements = submitStripeElementResponse.stripeElements;
+
+              stripe?.confirmSetup(
+                {
+                  elements: stripeElements,
+                  redirect: "if_required",
+                },
+              ).then<void, never>(
+                ({ setupIntent }: SetupIntentResult): void => {
+                  const paymentMethodId: string | undefined  = typeof setupIntent?.payment_method === "string" ? setupIntent.payment_method : setupIntent?.payment_method?.id;
+                  const stripeCustomerId: string | undefined = this.stripeCustomersService.stripeCustomerDocument$()?.id || undefined;
+
+                  if (paymentMethodId && stripeCustomerId)
+                    addDoc<StripePaymentMethodDocument, StripePaymentMethodDocument>(
+                      collection(
+                        this.firestore,
+                        "stripePaymentMethods",
+                      ) as CollectionReference<StripePaymentMethodDocument, StripePaymentMethodDocument>,
+                      {
+                        customer: stripeCustomerId,
+                        id:       paymentMethodId,
+                        userId,
+                      },
+                    ).catch<never>(
+                      (error: unknown): never => {
+                        console.error("Something went wrong.");
+
+                        throw error;
+                      },
+                    );
+                },
+                (error: unknown): never => {
                   console.error("Something went wrong.");
 
-                  throw setupIntentResult.error;
-                }
-
-                if (setupIntentResult.setupIntent.payment_method)
-                  httpsCallable<{ "paymentMethodId": string }, null>(
-                    this.functions,
-                    "attachStripePaymentMethod",
-                  )(
-                    {
-                      paymentMethodId: typeof setupIntentResult.setupIntent.payment_method === "string" ? setupIntentResult.setupIntent.payment_method : setupIntentResult.setupIntent.payment_method.id,
-                    },
-                  ).then<void, never>(
-                    (): void => void (0),
-                    (error: unknown): never => {
-                      console.error("Something went wrong.");
-
-                      throw error;
-                    },
-                  );
-              },
-              (error: unknown): never => {
-                console.error("Something went wrong.");
-
-                throw error;
-              },
-            ),
+                  throw error;
+                },
+              );
+            },
           );
       },
       180,

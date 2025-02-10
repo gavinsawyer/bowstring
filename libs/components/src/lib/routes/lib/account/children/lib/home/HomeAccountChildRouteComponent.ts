@@ -10,9 +10,7 @@ import { AccountChildRouteComponent }                 from "../../../child/Accou
     imports:         [
       ReactiveFormsModule,
     ],
-    styleUrls:       [
-      "HomeAccountChildRouteComponent.sass",
-    ],
+    styleUrl:        "HomeAccountChildRouteComponent.sass",
     templateUrl:     "HomeAccountChildRouteComponent.html",
 
     standalone: true,

@@ -3,7 +3,7 @@
     flexBasis="100%"
     flexGrow="1">
     <standard--scroll-stack [minimumAspectRatio]="3/4">
-      @for (imageSource of imageSources$(); track imageSource) {<standard--image
+      @for (imageSource of imageSources$(); track $index) {<standard--image
         height="400"
         *standardScrollStackItem
         [src]="imageSource"

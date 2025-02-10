@@ -17,9 +17,7 @@ import { HeaderComponent, HeadingGroupComponent, LabelComponent, RouteComponent 
       HeadingGroupComponent,
       LabelComponent,
     ],
-    styleUrls:       [
-      "OtherwiseRouteComponent.sass",
-    ],
+    styleUrl:        "OtherwiseRouteComponent.sass",
     templateUrl:     "OtherwiseRouteComponent.html",
 
     standalone: true,

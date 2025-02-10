@@ -18,9 +18,7 @@ import { ScrollStackItemDirective }                                             
       ScrollStackItemDirective,
       SectionComponent,
     ],
-    styleUrls:       [
-      "DevelopRouteComponent.sass",
-    ],
+    styleUrl:        "DevelopRouteComponent.sass",
     templateUrl:     "DevelopRouteComponent.html",
 
     standalone: true,

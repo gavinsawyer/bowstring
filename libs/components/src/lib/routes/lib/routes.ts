@@ -3,51 +3,58 @@
 import { type Type }                                from "@angular/core";
 import { type ActivatedRouteSnapshot, type Routes } from "@angular/router";
 import { title }                                    from "@standard/brand";
+import * as config                                  from "@standard/config";
 
 
 const routes: Routes = [
-  {
-    data:          {
-      description: $localize`:@@libs--Components--Routes--Gallery--Meta--Description:...`,
-      title:       $localize`:@@libs--Components--Routes--Gallery--Meta--Title:Gallery`,
+  ...(config.account.enabled ? [
+    {
+      data:          {
+        description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
+        title:       $localize`:@@libs--Components--Routes--Account--Meta--Title:Account`,
+      },
+      loadChildren:  (): Promise<Routes> => import("./account/children").then<Routes>(
+        ({ accountRoutes }: typeof import("./account/children")): Routes => accountRoutes,
+      ),
+      loadComponent: (): Promise<Type<unknown>> => import("./account/AccountRouteComponent").then<Type<unknown>>(
+        ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> => AccountRouteComponent,
+      ),
+      path:          "account",
+      title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ title }`,
     },
-    loadChildren:  (): Promise<Routes> => import("./gallery/children").then<Routes>(
-      ({ galleryRoutes }: typeof import("./gallery/children")): Routes => galleryRoutes,
-    ),
-    loadComponent: (): Promise<Type<unknown>> => import("./gallery/GalleryRouteComponent").then<Type<unknown>>(
-      ({ GalleryRouteComponent }: typeof import("./gallery/GalleryRouteComponent")): Type<unknown> => GalleryRouteComponent,
-    ),
-    path:          "gallery",
-    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ title }`,
-  },
-  {
-    data:          {
-      description: $localize`:@@libs--Components--Routes--Shop--Meta--Description:...`,
-      title:       $localize`:@@libs--Components--Routes--Shop--Meta--Title:Shop`,
+  ] : []),
+  ...(config.gallery.enabled ? [
+    {
+      data:          {
+        description: $localize`:@@libs--Components--Routes--Gallery--Meta--Description:...`,
+        title:       $localize`:@@libs--Components--Routes--Gallery--Meta--Title:Gallery`,
+      },
+      loadChildren:  (): Promise<Routes> => import("./gallery/children").then<Routes>(
+        ({ galleryRoutes }: typeof import("./gallery/children")): Routes => galleryRoutes,
+      ),
+      loadComponent: (): Promise<Type<unknown>> => import("./gallery/GalleryRouteComponent").then<Type<unknown>>(
+        ({ GalleryRouteComponent }: typeof import("./gallery/GalleryRouteComponent")): Type<unknown> => GalleryRouteComponent,
+      ),
+      path:          "gallery",
+      title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ title }`,
     },
-    loadChildren:  (): Promise<Routes> => import("./shop/children").then<Routes>(
-      ({ shopRoutes }: typeof import("./shop/children")): Routes => shopRoutes,
-    ),
-    loadComponent: (): Promise<Type<unknown>> => import("./shop/ShopRouteComponent").then<Type<unknown>>(
-      ({ ShopRouteComponent }: typeof import("./shop/ShopRouteComponent")): Type<unknown> => ShopRouteComponent,
-    ),
-    path:          "shop",
-    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ title }`,
-  },
-  {
-    data:          {
-      description: $localize`:@@libs--Components--Routes--Account--Meta--Description:...`,
-      title:       $localize`:@@libs--Components--Routes--Account--Meta--Title:Account`,
+  ] : []),
+  ...(config.shop.enabled ? [
+    {
+      data:          {
+        description: $localize`:@@libs--Components--Routes--Shop--Meta--Description:...`,
+        title:       $localize`:@@libs--Components--Routes--Shop--Meta--Title:Shop`,
+      },
+      loadChildren:  (): Promise<Routes> => import("./shop/children").then<Routes>(
+        ({ shopRoutes }: typeof import("./shop/children")): Routes => shopRoutes,
+      ),
+      loadComponent: (): Promise<Type<unknown>> => import("./shop/ShopRouteComponent").then<Type<unknown>>(
+        ({ ShopRouteComponent }: typeof import("./shop/ShopRouteComponent")): Type<unknown> => ShopRouteComponent,
+      ),
+      path:          "shop",
+      title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ title }`,
     },
-    loadChildren:  (): Promise<Routes> => import("./account/children").then<Routes>(
-      ({ accountRoutes }: typeof import("./account/children")): Routes => accountRoutes,
-    ),
-    loadComponent: (): Promise<Type<unknown>> => import("./account/AccountRouteComponent").then<Type<unknown>>(
-      ({ AccountRouteComponent }: typeof import("./account/AccountRouteComponent")): Type<unknown> => AccountRouteComponent,
-    ),
-    path:          "account",
-    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ title }`,
-  },
+  ] : []),
   {
     data:          {
       description: $localize`:@@libs--Components--Routes--Privacy--Meta--Description:...`,

@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                    from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, RoundedDirective }                                                                                                                                   from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }                                                                                                                               from "@standard/directives";
 import { type Symbol }                                                                                                                                                                                                      from "@standard/interfaces";
 import loadSymbol                                                                                                                                                                                                           from "@standard/symbols";
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                                                     from "body-scroll-lock";
@@ -43,7 +43,7 @@ import { fromPromise }                                                          
         ],
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
@@ -53,9 +53,7 @@ import { fromPromise }                                                          
       NgTemplateOutlet,
     ],
     selector:        "standard--sheet",
-    styleUrls:       [
-      "SheetComponent.sass",
-    ],
+    styleUrl:        "SheetComponent.sass",
     templateUrl:     "SheetComponent.html",
 
     standalone: true,
@@ -65,7 +63,7 @@ export class SheetComponent {
 
   constructor() {
     afterRender(
-      (): void => this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
+      (): void => this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$()),
     );
 
     if (isPlatformBrowser(this.platformId))
@@ -115,7 +113,7 @@ export class SheetComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>       = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
 
-  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbolPaths$: Signal<Symbol | undefined> = toSignal<Symbol>(
+  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbol$: Signal<Symbol | undefined> = toSignal<Symbol>(
     fromPromise<Symbol>(
       loadSymbol("ArrowUpAndDownAndArrowLeftAndRight"),
     ),
@@ -142,7 +140,7 @@ export class SheetComponent {
       ),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly roundedDirective: RoundedDirective          = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective  = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly dragControlTemplateRef$: Signal<TemplateRef<never>>                = viewChild.required<TemplateRef<never>>("dragControlTemplate");
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }` | undefined> = model<"" | boolean | `${ boolean }` | undefined>(

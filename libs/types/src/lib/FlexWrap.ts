@@ -1,1 +1,4 @@
-export type FlexWrap = "nowrap" | "wrap" | "wrap-reverse";
+export type FlexWrap =
+  | "nowrap"
+  | "wrap"
+  | "wrap-reverse";

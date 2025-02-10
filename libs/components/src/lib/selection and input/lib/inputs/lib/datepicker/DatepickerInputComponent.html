@@ -21,17 +21,17 @@
             tabindex="-1"
             type="button">
             <div class="between">
-              @if (xmarkCircleFillSymbolPaths$(); as symbolPaths) {<svg
-                [attr.viewBox]="'0 0 ' + symbolPaths.viewBoxWidth + ' ' + symbolPaths.viewBoxHeight + ''"
+              @if (xmarkCircleFillSymbol$(); as symbol) {<svg
+                [attr.viewBox]="'0 0 ' + symbol.viewBoxWidth + ' ' + symbol.viewBoxHeight + ''"
                 xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <rect
-                    [attr.height]="symbolPaths.viewBoxHeight"
-                    [attr.width]="symbolPaths.viewBoxWidth"
+                    [attr.height]="symbol.viewBoxHeight"
+                    [attr.width]="symbol.viewBoxWidth"
                     opacity="0"
                     x="0"
                     y="0" />
-                  @for (path of symbolPaths.paths; track path) {<path
+                  @for (path of symbol.paths; track $index) {<path
                     [attr.d]="path.definition"
                     [attr.fill-opacity]="path.opacity"
                     fill="currentColor" />}
@@ -54,14 +54,15 @@
           type="date">
       </label>
     </div>
+
     <svg
       viewBox="0 0 1 1"
       xmlns="http://www.w3.org/2000/svg">
       <clipPath
-        [attr.id]="roundedDirective.clipPathId$()"
+        [attr.id]="wellRoundedDirective.clipPathId$()"
         clipPathUnits="objectBoundingBox">
         <path
-          [attr.d]="roundedDirective.pathDefinition$()"
+          [attr.d]="wellRoundedDirective.pathDefinition$()"
           fill="transparent" />
       </clipPath>
     </svg>

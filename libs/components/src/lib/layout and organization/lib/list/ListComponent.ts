@@ -10,9 +10,7 @@ import { ListItemDirective }                                                    
       NgTemplateOutlet,
     ],
     selector:        "standard--list",
-    styleUrls:       [
-      "ListComponent.sass",
-    ],
+    styleUrl:        "ListComponent.sass",
     templateUrl:     "ListComponent.html",
 
     standalone: true,

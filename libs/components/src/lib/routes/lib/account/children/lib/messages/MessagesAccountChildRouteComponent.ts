@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                                          from "@angular/core";
-import { takeUntilDestroyed, toSignal }                                                                                                                                                       from "@angular/core/rxjs-interop";
-import { Auth }                                                                                                                                                                               from "@angular/fire/auth";
-import { doc, type DocumentData, type DocumentReference, Firestore, updateDoc }                                                                                                               from "@angular/fire/firestore";
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators }                                                                                         from "@angular/forms";
-import { type AccountDocument }                                                                                                                                                               from "@standard/interfaces";
-import { AccountService, InputService }                                                                                                                                                       from "@standard/services";
-import { isEqual }                                                                                                                                                                            from "lodash";
-import { map, startWith }                                                                                                                                                                     from "rxjs";
-import { BoxComponent, ComboboxInputComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, TextFieldInputComponent, ToggleComponent } from "../../../../../../../";
-import { AccountChildRouteComponent }                                                                                                                                                         from "../../../child/AccountChildRouteComponent";
+import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                                                                        from "@angular/core";
+import { takeUntilDestroyed, toSignal }                                                                                                                                                                                     from "@angular/core/rxjs-interop";
+import { Auth }                                                                                                                                                                                                             from "@angular/fire/auth";
+import { deleteField, doc, type DocumentReference, Firestore, updateDoc }                                                                                                                                                   from "@angular/fire/firestore";
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators }                                                                                                                       from "@angular/forms";
+import { type AccountDocument }                                                                                                                                                                                             from "@standard/interfaces";
+import { AccountService }                                                                                                                                                                                                   from "@standard/services";
+import { isEqual }                                                                                                                                                                                                          from "lodash";
+import { map, startWith }                                                                                                                                                                                                   from "rxjs";
+import { BoxComponent, ComboboxInputComponent, ComboboxInputOptionComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, HeadingGroupComponent, TextFieldInputComponent, ToggleComponent } from "../../../../../../../";
+import { AccountChildRouteComponent }                                                                                                                                                                                       from "../../../child/AccountChildRouteComponent";
 
 
 @Component(
@@ -17,6 +17,7 @@ import { AccountChildRouteComponent }                                           
     imports:         [
       BoxComponent,
       ComboboxInputComponent,
+      ComboboxInputOptionComponent,
       DividerComponent,
       FlexboxContainerComponent,
       FormComponent,
@@ -26,9 +27,7 @@ import { AccountChildRouteComponent }                                           
       TextFieldInputComponent,
       ToggleComponent,
     ],
-    styleUrls:       [
-      "MessagesAccountChildRouteComponent.sass",
-    ],
+    styleUrl:        "MessagesAccountChildRouteComponent.sass",
     templateUrl:     "MessagesAccountChildRouteComponent.html",
 
     standalone: true,
@@ -40,22 +39,22 @@ export class MessagesAccountChildRouteComponent
   constructor() {
     super();
 
-    this.messagesContactFormGroup.controls.email.disable();
+    this.accountDocumentFormGroup.controls.email.disable();
 
-    this.messagesContactFormGroup.valueChanges.pipe<typeof this.messagesContactFormGroup.value>(
-      takeUntilDestroyed<typeof this.messagesContactFormGroup.value>(),
+    this.accountDocumentFormGroup.valueChanges.pipe<typeof this.accountDocumentFormGroup.value>(
+      takeUntilDestroyed<typeof this.accountDocumentFormGroup.value>(),
     ).subscribe(
       (): void => {
-        if (this.messagesContactEdited$())
-          this.messagesContactFormSubmit();
+        if (this.accountDocumentEdited$())
+          this.accountDocumentFormSubmit();
       },
     );
-    this.messagesFormGroup.valueChanges.pipe<typeof this.messagesFormGroup.value>(
-      takeUntilDestroyed<typeof this.messagesFormGroup.value>(),
+    this.accountDocumentMessagesFormGroup.valueChanges.pipe<typeof this.accountDocumentMessagesFormGroup.value>(
+      takeUntilDestroyed<typeof this.accountDocumentMessagesFormGroup.value>(),
     ).subscribe(
       (): void => {
-        if (this.messagesEdited$())
-          this.messagesFormSubmit();
+        if (this.accountDocumentMessagesEdited$())
+          this.accountDocumentMessagesFormSubmit();
       },
     );
 
@@ -63,49 +62,86 @@ export class MessagesAccountChildRouteComponent
       (): void => {
         const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
-        if (accountDocument) {
-          this.messagesContactFormGroup.reset(
+        this.accountDocumentFormGroup.reset(
+          accountDocument && ((
             {
-              email: accountDocument.email || undefined,
-              phone: accountDocument.phone || {
-                countryCode: "",
-                national:    "",
-              },
-            },
-          );
-          this.messagesFormGroup.reset(
+              email,
+              phone,
+            }: AccountDocument,
+          ): typeof this.accountDocumentFormGroup.value => ({
+            ...(email ? { email } : {}),
+            ...(phone ? {
+              phone: ((
+                {
+                  countryCode,
+                  national,
+                }: Exclude<AccountDocument["phone"], undefined>,
+              ): Exclude<typeof this.accountDocumentFormGroup.value.phone, undefined> => ({
+                countryCode,
+                national,
+              }))(phone),
+            } : {}),
+          }))(accountDocument),
+        );
+        this.accountDocumentMessagesFormGroup.reset(
+          accountDocument && ((
             {
-              newsletter:   accountDocument.messages?.newsletter || null,
-              orderUpdates: accountDocument.messages?.orderUpdates || null,
-              promotions:   accountDocument.messages?.promotions || null,
-            },
-          );
-        }
+              messages,
+            }: AccountDocument,
+          ): typeof this.accountDocumentMessagesFormGroup.value => ({
+            ...(messages ? ((
+              {
+                newsletter,
+                orderUpdates,
+                promotions,
+              }: Exclude<AccountDocument["messages"], undefined>,
+            ): typeof this.accountDocumentMessagesFormGroup.value => ({
+              newsletter,
+              orderUpdates,
+              promotions,
+            }))(messages) : {}),
+          }))(accountDocument),
+        );
       },
     );
   }
 
-  protected readonly accountService: AccountService                                                                                                                                     = inject<AccountService>(AccountService);
-  protected readonly auth: Auth                                                                                                                                                         = inject<Auth>(Auth);
-  protected readonly firestore: Firestore                                                                                                                                               = inject<Firestore>(Firestore);
-  protected readonly inputService: InputService                                                                                                                                         = inject<InputService>(InputService);
-  protected readonly messagesContactEdited$: Signal<boolean>                                                                                                                            = computed<boolean>(
+
+  protected readonly accountDocumentEdited$: Signal<boolean>                                                                                                                                      = computed<boolean>(
     (): boolean => {
       const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
       return !isEqual(
-        this.messagesContactValue$(),
+        this.accountDocumentFormValue$(),
         {
-          email: accountDocument?.email || "",
-          phone: accountDocument?.phone || {
-            countryCode: "",
-            national:    "",
+          "email": accountDocument?.email || "",
+          "phone": {
+            "countryCode": accountDocument?.phone?.countryCode || "",
+            "national":    accountDocument?.phone?.national || "",
           },
         },
       );
     },
   );
-  protected readonly messagesContactFormGroup: FormGroup<{ "email": FormControl<string>, "phone": FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }> }> = new FormGroup<{ "email": FormControl<string>, "phone": FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }> }>(
+  protected readonly phoneCountryCodeOptions: { label: string, value: string }[]                                                                                                                  = [
+    {
+      label: "US",
+      value: "1",
+    },
+    {
+      label: "GB",
+      value: "44",
+    },
+    {
+      label: "ES",
+      value: "34",
+    },
+    {
+      label: "FR",
+      value: "33",
+    },
+  ];
+  protected readonly accountDocumentFormGroup: FormGroup<{ "email": FormControl<string>, "phone": FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }> }>           = new FormGroup<{ "email": FormControl<string>, "phone": FormGroup<{ "countryCode": FormControl<string>, "national": FormControl<string> }> }>(
     {
       email: new FormControl<string>(
         "",
@@ -126,7 +162,11 @@ export class MessagesAccountChildRouteComponent
               validators:  [
                 Validators.required,
                 ({ value }: AbstractControl): ValidationErrors => {
-                  if (!Object.values<keyof typeof this.inputService.phoneCountryCodeInputComponentOptions>(this.inputService.phoneCountryCodeInputComponentOptions).includes(value))
+                  const phoneCountryCodeOptionValues: string[] = this.phoneCountryCodeOptions.map<string>(
+                    ({ value }: { value: string }): string => value,
+                  );
+
+                  if (phoneCountryCodeOptionValues.includes(value))
                     return {
                       "optionSelected": true,
                     };
@@ -149,34 +189,37 @@ export class MessagesAccountChildRouteComponent
       ),
     },
   );
-  protected readonly messagesEdited$: Signal<boolean>                                                                                                                                   = computed<boolean>(
+  protected readonly accountDocumentMessagesEdited$: Signal<boolean>                                                                                                                              = computed<boolean>(
     (): boolean => {
-      const messages: AccountDocument["messages"] | undefined = this.accountService.accountDocument$()?.messages;
+      const messages: AccountDocument["messages"] = this.accountService.accountDocument$()?.messages;
 
       return !isEqual(
-        this.messagesValue$(),
+        this.accountDocumentMessagesFormValue$(),
         {
-          newsletter:   messages?.newsletter || null,
-          orderUpdates: messages?.orderUpdates || null,
-          promotions:   messages?.promotions || null,
+          "newsletter":   messages?.newsletter || null,
+          "orderUpdates": messages?.orderUpdates || null,
+          "promotions":   messages?.promotions || null,
         },
       );
     },
   );
-  protected readonly messagesFormGroup                                                                                                                                                  = new FormGroup(
+  protected readonly accountDocumentMessagesFormGroup: FormGroup<{ newsletter: FormControl<boolean | null>, orderUpdates: FormControl<boolean | null>, promotions: FormControl<boolean | null> }> = new FormGroup(
     {
       "newsletter":   new FormControl<boolean | null>(null),
       "orderUpdates": new FormControl<boolean | null>(null),
       "promotions":   new FormControl<boolean | null>(null),
     },
   );
+  protected readonly accountService: AccountService                                                                                                                                               = inject<AccountService>(AccountService);
+  protected readonly auth: Auth                                                                                                                                                                   = inject<Auth>(Auth);
+  protected readonly firestore: Firestore                                                                                                                                                         = inject<Firestore>(Firestore);
 
-  private readonly messagesContactValue$: Signal<typeof this.messagesContactFormGroup.value> = toSignal<typeof this.messagesContactFormGroup.value>(
-    this.messagesContactFormGroup.valueChanges.pipe<typeof this.messagesContactFormGroup.value, typeof this.messagesContactFormGroup.value>(
-      startWith<typeof this.messagesContactFormGroup.value, [ typeof this.messagesContactFormGroup.value ]>(this.messagesContactFormGroup.value),
-      map<typeof this.messagesContactFormGroup.value, typeof this.messagesContactFormGroup.value>(
-        (messagesContactValue: typeof this.messagesContactFormGroup.value): typeof this.messagesContactFormGroup.value => ({
-          email: this.accountService.accountDocument$()?.email || undefined,
+  private readonly accountDocumentFormValue$: Signal<typeof this.accountDocumentFormGroup.value>                 = toSignal<typeof this.accountDocumentFormGroup.value>(
+    this.accountDocumentFormGroup.valueChanges.pipe<typeof this.accountDocumentFormGroup.value, typeof this.accountDocumentFormGroup.value>(
+      startWith<typeof this.accountDocumentFormGroup.value, [ typeof this.accountDocumentFormGroup.value ]>(this.accountDocumentFormGroup.value),
+      map<typeof this.accountDocumentFormGroup.value, typeof this.accountDocumentFormGroup.value>(
+        (messagesContactValue: typeof this.accountDocumentFormGroup.value): typeof this.accountDocumentFormGroup.value => ({
+          email: this.accountService.accountDocument$()?.email,
           ...messagesContactValue,
         }),
       ),
@@ -185,27 +228,34 @@ export class MessagesAccountChildRouteComponent
       requireSync: true,
     },
   );
-  private readonly messagesValue$: Signal<typeof this.messagesFormGroup.value>               = toSignal<typeof this.messagesFormGroup.value>(
-    this.messagesFormGroup.valueChanges.pipe<typeof this.messagesFormGroup.value>(
-      startWith<typeof this.messagesFormGroup.value, [ typeof this.messagesFormGroup.value ]>(this.messagesFormGroup.value),
+  private readonly accountDocumentMessagesFormValue$: Signal<typeof this.accountDocumentMessagesFormGroup.value> = toSignal<typeof this.accountDocumentMessagesFormGroup.value>(
+    this.accountDocumentMessagesFormGroup.valueChanges.pipe<typeof this.accountDocumentMessagesFormGroup.value>(
+      startWith<typeof this.accountDocumentMessagesFormGroup.value, [ typeof this.accountDocumentMessagesFormGroup.value ]>(this.accountDocumentMessagesFormGroup.value),
     ),
     {
       requireSync: true,
     },
   );
 
-  protected messagesContactFormSubmit(): void {
+  protected accountDocumentFormSubmit(): void {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, DocumentData>(
+      updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          phone: this.messagesContactFormGroup.value.phone,
+          phone: this.accountDocumentFormGroup.value.phone ? ((
+            {
+              countryCode,
+              national,
+            }: Exclude<typeof this.accountDocumentFormGroup.value.phone, undefined>,
+          ): Exclude<AccountDocument["phone"], undefined> => ({
+            countryCode: countryCode || "",
+            national:    national || "",
+          }))(this.accountDocumentFormGroup.value.phone) : deleteField(),
         },
-      ).then<void, never>(
-        (): void => void (0),
+      ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");
 
@@ -213,18 +263,27 @@ export class MessagesAccountChildRouteComponent
         },
       );
   }
-  protected messagesFormSubmit(): void {
+  protected accountDocumentMessagesFormSubmit(): void {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, DocumentData>(
+      updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<AccountDocument>,
+        ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          messages: this.messagesFormGroup.value,
+          messages: this.accountDocumentMessagesFormGroup.value && typeof this.accountDocumentMessagesFormGroup.value.newsletter === "boolean" || typeof this.accountDocumentMessagesFormGroup.value.orderUpdates === "boolean" || typeof this.accountDocumentMessagesFormGroup.value.promotions === "boolean" ? ((
+            {
+              newsletter,
+              orderUpdates,
+              promotions,
+            }: typeof this.accountDocumentMessagesFormGroup.value,
+          ): Exclude<AccountDocument["messages"], undefined> => ({
+            ...(typeof newsletter === "boolean" ? { newsletter } : {}),
+            ...(typeof orderUpdates === "boolean" ? { orderUpdates } : {}),
+            ...(typeof promotions === "boolean" ? { promotions } : {}),
+          }))(this.accountDocumentMessagesFormGroup.value) : deleteField(),
         },
-      ).then<void, never>(
-        (): void => void (0),
+      ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");
 

@@ -28,9 +28,7 @@ import { FlexboxContainerDirective }                                            
       NgTemplateOutlet,
     ],
     selector:        "standard--heading-group",
-    styleUrls:       [
-      "HeadingGroupComponent.sass",
-    ],
+    styleUrl:        "HeadingGroupComponent.sass",
     templateUrl:     "HeadingGroupComponent.html",
 
     standalone: true,

@@ -35,9 +35,7 @@ import { ContainerDirective }                 from "@standard/directives";
       NgTemplateOutlet,
     ],
     selector:        "standard--divider",
-    styleUrls:       [
-      "DividerComponent.sass",
-    ],
+    styleUrl:        "DividerComponent.sass",
     templateUrl:     "DividerComponent.html",
 
     standalone: true,

@@ -1,1 +1,4 @@
-export type GridPositionalAlignment = "end" | "center" | "start";
+export type GridPositionalAlignment =
+  | "end"
+  | "center"
+  | "start";

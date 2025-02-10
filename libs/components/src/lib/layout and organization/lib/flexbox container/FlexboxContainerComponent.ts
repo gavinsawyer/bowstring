@@ -24,9 +24,7 @@ import { FlexboxContainerDirective }          from "@standard/directives";
       NgTemplateOutlet,
     ],
     selector:        "standard--flexbox-container",
-    styleUrls:       [
-      "FlexboxContainerComponent.sass",
-    ],
+    styleUrl:        "FlexboxContainerComponent.sass",
     templateUrl:     "FlexboxContainerComponent.html",
 
     standalone: true,

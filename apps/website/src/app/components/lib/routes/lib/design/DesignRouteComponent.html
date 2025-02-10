@@ -7,7 +7,6 @@
     Design
   </standard--box>
 </ng-template>
-
 <ng-template #belowTemplate>
   <standard--flexbox-container id="below">
     <standard--aside>
@@ -27,7 +26,7 @@
       flexShrink="0">
       <standard--article>
         <standard--scroll-stack minimumAspectRatio="0.75">
-          @for (imageSource of imageSources$(); track imageSource) {<standard--image
+          @for (imageSource of imageSources$(); track $index) {<standard--image
             height="400"
             *standardScrollStackItem
             [src]="imageSource"

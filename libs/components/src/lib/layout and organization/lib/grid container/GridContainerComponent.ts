@@ -27,9 +27,7 @@ import { GridContainerDirective }             from "@standard/directives";
       NgTemplateOutlet,
     ],
     selector:        "standard--grid-container",
-    styleUrls:       [
-      "GridContainerComponent.sass",
-    ],
+    styleUrl:        "GridContainerComponent.sass",
     templateUrl:     "GridContainerComponent.html",
 
     standalone: true,

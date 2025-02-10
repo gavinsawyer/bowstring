@@ -1,7 +1,7 @@
 import { NgOptimizedImage, NgTemplateOutlet }                                                                                                                                        from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
 import { RouterLink }                                                                                                                                                                from "@angular/router";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, RoundedDirective }                                                                      from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, WellRoundedDirective }                                                                  from "@standard/directives";
 
 
 @Component(
@@ -51,7 +51,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
         directive: HoverTransformingDirective,
       },
       {
-        directive: RoundedDirective,
+        directive: WellRoundedDirective,
         inputs:    [
           "level",
         ],
@@ -63,9 +63,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
       RouterLink,
     ],
     selector:        "standard--image",
-    styleUrls:       [
-      "ImageComponent.sass",
-    ],
+    styleUrl:        "ImageComponent.sass",
     templateUrl:     "ImageComponent.html",
 
     standalone: true,
@@ -77,7 +75,7 @@ export class ImageComponent {
     afterRender(
       (): void => {
         this.hoverTransformingDirective.htmlElementRef$.set(this.htmlDivElementRef$());
-        this.roundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
+        this.wellRoundedDirective.htmlElementRef$.set(this.htmlDivElementRef$());
       },
     );
   }
@@ -85,7 +83,7 @@ export class ImageComponent {
   private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
 
   protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
-  protected readonly roundedDirective: RoundedDirective                     = inject<RoundedDirective>(RoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective             = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly altInput$: InputSignal<string | undefined>                             = input<string | undefined>(
     undefined,

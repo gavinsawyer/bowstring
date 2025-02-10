@@ -15,9 +15,7 @@ import { GalleryChildRouteComponent }                 from "../../../child/Galle
       MasonryContainerComponent,
       ReactiveFormsModule,
     ],
-    styleUrls:       [
-      "HomeGalleryChildRouteComponent.sass",
-    ],
+    styleUrl:        "HomeGalleryChildRouteComponent.sass",
     templateUrl:     "HomeGalleryChildRouteComponent.html",
 
     standalone: true,

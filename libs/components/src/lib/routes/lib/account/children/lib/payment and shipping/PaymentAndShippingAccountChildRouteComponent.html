@@ -7,7 +7,7 @@
     flexGrow="1">
     <standard--header>
       <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Header">Shipping address</h4>
-      <h5>@if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--label
+      <h5>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Subheader_1"
         inline
         input="An address is saved to your account." />} @else {<standard--label
@@ -15,25 +15,25 @@
         inline
         input="Add an address for future orders." />}</h5>
     </standard--header>
-    @if (accountService.accountDocument$()?.stripeCustomer; as stripeCustomer) {@if (stripeCustomer.address; as address) {@if (stripeCustomer.name) {<standard--section>
-      <standard--label [input]="stripeCustomer.name" />
+    @if (stripeCustomersService.stripeCustomerDocument$()?.shipping; as shipping) {@if (shipping.address; as address) {@if (shipping.name) {<standard--section>
+      <standard--label [input]="shipping.name" />
     </standard--section>}
-    <standard--section>
+    @if (address.line1) {<standard--section>
       <standard--label [input]="address.line1" />
       @if (address.line2) {<standard--label [input]="address.line2" />}
-    </standard--section>
-    <standard--section>
+    </standard--section>}
+    @if (address.city) {<standard--section>
       <standard--flexbox-container
         alignItems="flex-end"
         flexDirection="row">
         <standard--label [input]="address.city" />
         @if (address.state) {<standard--label [input]="address.state" />}
-        <standard--label [input]="address.postalCode" />
+        @if (address.postalCode) {<standard--label [input]="address.postalCode" />}
       </standard--flexbox-container>
-      <standard--label [input]="address.country | standardGetRegionDisplayName" />
-    </standard--section>
-    @if (stripeCustomer.phone) {<standard--section>
-      <standard--label [input]="stripeCustomer.phone" />
+      @if (address.country) {<standard--label [input]="address.country | standardGetRegionDisplayName" />}
+    </standard--section>}
+    @if (shipping.phone) {<standard--section>
+      <standard--label [input]="shipping.phone" />
     </standard--section>}}}
     <standard--divider />
     <standard--section>
@@ -42,7 +42,7 @@
         level="2"
         material="inverse"
         (output)="addressStripeElementSheetComponent.openModel$.set(true);">
-        @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--symbol input="Pencil" />
+        @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--symbol input="Pencil" />
         <standard--label
           i18n-input
           input="Edit" />} @else {<standard--symbol input="Plus" />
@@ -50,14 +50,13 @@
           i18n-input
           input="Add" />}
       </standard--button>
-      @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--caption><standard--link
-        i18n-input
+      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--caption><standard--link
         inline
-        input="Remove address"
         (output)="removeAddressSheetComponent.openModel$.set(true);">
-        <standard--symbol
-          input="TrashFill"
-          *standardLinkSymbol />
+        <standard--symbol input="TrashFill" />
+        <standard--label
+          i18n-input
+          input="Remove address" />
       </standard--link></standard--caption>}
     </standard--section>
   </standard--box>
@@ -65,15 +64,113 @@
     flexBasis="0"
     flexGrow="1">
     <standard--header>
-      <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethod--Header">Payment method</h4>
-      <h5>@if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--label
-        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethod--Subheader_1"
+      <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Header">Payment methods</h4>
+      <h5>@if (stripePaymentMethodsService.stripePaymentMethodDocuments$()?.length; as length) {@if (length === 1) {<standard--label
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_1"
         inline
         input="A card is saved to your account." />} @else {<standard--label
-        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethod--Subheader_2"
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_2"
         inline
-        input="Add a card for future orders." />}</h5>
+        input="More than one card is saved to your account." />}} @else {<standard--label
+        i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_3"
+        inline
+        input="Add a payment method for future orders." />}</h5>
     </standard--header>
+    @for (stripePaymentMethodDocument of stripePaymentMethodsService.stripePaymentMethodDocuments$(); track $index) {<standard--section>
+      @if (stripePaymentMethodDocument.created && !stripePaymentMethodDocument.asyncDeleted) {@if (stripePaymentMethodDocument.card) {<standard--label
+        inline
+        [input]="stripePaymentMethodDocument.card.displayBrand + ' ending in ' + stripePaymentMethodDocument.card.last4" />}} @else {<span><standard--label
+        i18n-input
+        inline
+        input="working" /><standard--label
+          inline
+          [input]="ellipsesService.ellipses$()" /></span>}
+      <standard--caption><standard--list type="inline"><standard--link
+        inline
+        (output)="removePaymentMethodSheetComponent.openModel$.set(true);"
+        *standardListItem>
+        <standard--symbol input="TrashFill" />
+        <standard--label
+          i18n-input
+          input="Remove card" />
+      </standard--link><standard--link
+        [disabled]="stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod"
+        inline
+        (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(true);"
+        *standardListItem>
+        <standard--symbol input="BoltFill" />
+        @if (stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod) {<standard--label
+          i18n-input
+          input="Default" />} @else {<standard--label
+          i18n-input
+          input="Make default" />}
+      </standard--link></standard--list></standard--caption>
+
+      <standard--sheet #makePaymentMethodDefaultSheetComponent>
+        @defer {<standard--heading-group>
+          <standard--header>
+            <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--MakePaymentMethodDefault--Header">Make card default?</h6>
+          </standard--header>
+        </standard--heading-group>
+          <standard--divider />
+          <standard--section
+            flexDirection="row"
+            flexWrap="wrap-reverse">
+            <standard--button
+              appearance="raised"
+              flexGrow="1"
+              level="2"
+              (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(false);">
+              <standard--symbol input="ArrowBackward" />
+              <standard--label
+                i18n-input
+                input="Cancel" />
+            </standard--button>
+            <standard--button
+              appearance="raised"
+              flexGrow="999"
+              level="2"
+              material="inverse"
+              (output)="makePaymentMethodDefault(stripePaymentMethodDocument.id); makePaymentMethodDefaultSheetComponent.openModel$.set(false);">
+              <standard--label
+                i18n-input
+                input="Yes, make default" />
+            </standard--button>
+          </standard--section>}
+      </standard--sheet>
+      <standard--sheet #removePaymentMethodSheetComponent>
+        @defer {<standard--heading-group>
+          <standard--header>
+            <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--RemovePaymentMethod--Header">Remove card?</h6>
+          </standard--header>
+        </standard--heading-group>
+          <standard--divider />
+          <standard--section
+            flexDirection="row"
+            flexWrap="wrap-reverse">
+            <standard--button
+              appearance="raised"
+              flexGrow="1"
+              level="2"
+              (output)="removePaymentMethodSheetComponent.openModel$.set(false);">
+              <standard--symbol input="ArrowBackward" />
+              <standard--label
+                i18n-input
+                input="Cancel" />
+            </standard--button>
+            <standard--button
+              appearance="raised"
+              flexGrow="999"
+              level="2"
+              material="warning"
+              (output)="removeStripePaymentMethod(stripePaymentMethodDocument.id); removePaymentMethodSheetComponent.openModel$.set(false);">
+              <standard--label
+                i18n-input
+                input="Yes, remove" />
+            </standard--button>
+          </standard--section>}
+      </standard--sheet>
+    </standard--section>}
     <standard--divider />
     <standard--section>
       <standard--button
@@ -81,30 +178,18 @@
         level="2"
         material="inverse"
         (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
-        @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--symbol input="Pencil" />
-          <standard--label
-            i18n-input
-            input="Edit" />} @else {<standard--symbol input="Plus" />
-          <standard--label
-            i18n-input
-            input="Add" />}
+        <standard--symbol input="Plus" />
+        <standard--label
+          i18n-input
+          input="Add" />
       </standard--button>
-      @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--caption><standard--link
-        i18n-input
-        inline
-        input="Remove card"
-        (output)="removePaymentMethodSheetComponent.openModel$.set(true);">
-        <standard--symbol
-          input="TrashFill"
-          *standardLinkSymbol />
-      </standard--link></standard--caption>}
     </standard--section>
   </standard--box>
 </standard--flexbox-container>
 
 <standard--sheet #addressStripeElementSheetComponent>
   @defer {<standard--header>
-    <h6>@if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--label
+    <h6>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--label
       i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--AddressStripeElement--Header_1"
       inline
       input="Edit your shipping address." />} @else {<standard--label
@@ -119,7 +204,7 @@
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (accountService.accountDocument$()?.stripeCustomer?.address) {<standard--button
+      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--button
         appearance="symbol"
         [disabled]="!addressStripeElementComponent.edited$()"
         (output)="addressStripeElementComponent.reset();">
@@ -136,30 +221,35 @@
 </standard--sheet>
 <standard--sheet #paymentStripeElementSheetComponent>
   @defer {<standard--header>
-    <h6>@if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--label
-      i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--PaymentStripeElement--Header_1"
-      inline
-      input="Edit your payment method." />} @else {<standard--label
-      i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--PaymentStripeElement--Header_2"
-      inline
-      input="Add your payment method." />}</h6>
+    <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--PaymentStripeElement--Header">Add a payment method.</h6>
   </standard--header>
   <standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
+    <standard--segmented-control
+      i18n-label
+      label="Payment method"
+      level="2">
+      <standard--segmented-control-option
+        i18n
+        value="card">Card</standard--segmented-control-option>
+      <standard--segmented-control-option
+        disabled
+        i18n
+        value="cash">Cash</standard--segmented-control-option>
+      <standard--segmented-control-option
+        disabled
+        i18n
+        value="crypto">Crypto</standard--segmented-control-option>
+    </standard--segmented-control>
+    <standard--divider />
     <standard--payment-stripe-element #paymentStripeElementComponent />
     <standard--divider />
     <standard--flexbox-container
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (accountService.accountDocument$()?.stripeCustomer?.paymentMethod) {<standard--button
-        appearance="symbol"
-        [disabled]="!paymentStripeElementComponent.edited$()"
-        (output)="paymentStripeElementComponent.reset();">
-        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
-      </standard--button>}
       <standard--button
         appearance="symbol"
-        [disabled]="!paymentStripeElementComponent.complete$() || !paymentStripeElementComponent.edited$()"
+        [disabled]="!paymentStripeElementComponent.complete$()"
         type="submit">
         <standard--symbol input="CheckmarkCircleFill" />
       </standard--button>
@@ -192,38 +282,6 @@
       level="2"
       material="warning"
       (output)="removeAddress(); removeAddressSheetComponent.openModel$.set(false);">
-      <standard--label
-        i18n-input
-        input="Yes, remove" />
-    </standard--button>
-  </standard--section>}
-</standard--sheet>
-<standard--sheet #removePaymentMethodSheetComponent>
-  @defer {<standard--heading-group>
-    <standard--header>
-      <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--RemovePaymentMethod--Header">Remove card?</h6>
-    </standard--header>
-  </standard--heading-group>
-  <standard--divider />
-  <standard--section
-    flexDirection="row"
-    flexWrap="wrap-reverse">
-    <standard--button
-      appearance="raised"
-      flexGrow="1"
-      level="2"
-      (output)="removePaymentMethodSheetComponent.openModel$.set(false);">
-      <standard--symbol input="ArrowBackward" />
-      <standard--label
-        i18n-input
-        input="Cancel" />
-    </standard--button>
-    <standard--button
-      appearance="raised"
-      flexGrow="999"
-      level="2"
-      material="warning"
-      (output)="removePaymentMethod(); removePaymentMethodSheetComponent.openModel$.set(false);">
       <standard--label
         i18n-input
         input="Yes, remove" />

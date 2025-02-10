@@ -11,8 +11,9 @@
       <h2>@if (shopRoutes | standardFindRouteByPath:''; as route) {<standard--link
         exact
         inline
-        [input]="route.data?.['title']"
-        [url]="'./' + route.path" />}</h2>
+        [url]="'./' + route.path">
+        <standard--label [input]="route.data?.['title']" />
+      </standard--link>}</h2>
     </standard--header>
   </standard--section>
   <standard--flexbox-container
@@ -46,7 +47,6 @@
     <ng-container *ngTemplateOutlet="footerComponent.pinnedControlTemplateRef$()" />
   </standard--footer>
 </ng-template>
-
 <ng-template #bannerTemplate>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet dignissimos molestias nisi quae quasi quis sed, voluptatum!
 </ng-template>

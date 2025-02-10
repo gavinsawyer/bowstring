@@ -35,9 +35,7 @@ import { ContainerDirective }                 from "@standard/directives";
       NgTemplateOutlet,
     ],
     selector:        "standard--caption",
-    styleUrls:       [
-      "CaptionComponent.sass",
-    ],
+    styleUrl:        "CaptionComponent.sass",
     templateUrl:     "CaptionComponent.html",
 
     standalone: true,

@@ -1,9 +1,11 @@
+// noinspection ES6RedundantNestingInTemplateLiteral
+
 import { BreakpointObserver, type BreakpointState }                                                                                                                                from "@angular/cdk/layout";
 import { isPlatformBrowser }                                                                                                                                                       from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, effect, type ElementRef, inject, Injector, LOCALE_ID, PLATFORM_ID, signal, type Signal, viewChild, type WritableSignal } from "@angular/core";
 import { toSignal }                                                                                                                                                                from "@angular/core/rxjs-interop";
-import { type AccountDocument }                                                                                                                                                    from "@standard/interfaces";
-import { AccountService, StripeApiLoaderService }                                                                                                                                  from "@standard/services";
+import { type StripeCustomerDocument }                                                                                                                                             from "@standard/interfaces";
+import { StripeApiLoaderService, StripeCustomersService }                                                                                                                          from "@standard/services";
 import { type BaseStripeElementsOptions, type Stripe, type StripeElement, type StripeElementLocale, type StripeElements, type StripeError }                                        from "@stripe/stripe-js";
 import { map }                                                                                                                                                                     from "rxjs";
 
@@ -32,7 +34,7 @@ export class StripeElementComponent {
   private readonly localeId: string                                       = inject<string>(LOCALE_ID);
   private readonly stripeApiLoaderService: StripeApiLoaderService         = inject<StripeApiLoaderService>(StripeApiLoaderService);
 
-  protected readonly accountService: AccountService = inject<AccountService>(AccountService);
+  protected readonly stripeCustomersService: StripeCustomersService = inject<StripeCustomersService>(StripeCustomersService);
 
   public readonly complete$: WritableSignal<boolean> = signal<false>(false);
 
@@ -133,47 +135,47 @@ export class StripeElementComponent {
   }
   protected getStripeElement?(
     {
-      stripeCustomer,
+      stripeCustomerDocument,
       stripeElements,
-    }: { "stripeCustomer"?: AccountDocument["stripeCustomer"], "stripeElements": StripeElements },
+    }: { "stripeCustomerDocument"?: StripeCustomerDocument, "stripeElements": StripeElements },
   ): StripeElement
-  protected getStripeElements?(stripe: Stripe): StripeElements
+  protected getStripeElements?(stripe: Stripe): StripeElements | undefined
   protected initializeStripeElement(): void {
     this.stripeApiLoaderService.load().then<void>(
       (stripe: Stripe | null): void => {
         if (stripe) {
-          let stripeElements: StripeElements = this.getStripeElements?.(stripe) as StripeElements;
-          let stripeElement: StripeElement   = this.getStripeElement?.(
+          let stripeElements: StripeElements | undefined = this.getStripeElements?.(stripe);
+          let stripeElement: StripeElement | undefined   = stripeElements && this.getStripeElement?.(
             {
               stripeElements: stripeElements,
             },
-          ) as StripeElement;
-          let mounted: boolean               = false as const;
+          );
+          let mounted: boolean                           = false as const;
 
           this.resetStripeElement  = (): void => {
-            stripeElements = this.getStripeElements?.(stripe) as StripeElements;
+            stripeElements = this.getStripeElements?.(stripe);
 
-            stripeElement.destroy();
+            stripeElement?.destroy();
 
-            stripeElement = this.getStripeElement?.(
+            stripeElement = stripeElements && this.getStripeElement?.(
               {
-                stripeCustomer: this.accountService.accountDocument$()?.stripeCustomer,
-                stripeElements: stripeElements,
+                stripeCustomerDocument: this.stripeCustomersService.stripeCustomerDocument$(),
+                stripeElements:         stripeElements,
               },
-            ) as StripeElement;
+            );
 
             if (mounted)
-              stripeElement.mount(this.htmlDivElementRef$().nativeElement);
+              stripeElement?.mount(this.htmlDivElementRef$().nativeElement);
           };
-          this.submitStripeElement = (): Promise<{ stripe: Stripe, stripeElements: StripeElements }> => stripeElements.submit().then<{ stripe: Stripe, stripeElements: StripeElements }, never>(
-            ({ error: stripeError }: { error?: StripeError }): { stripe: Stripe, stripeElements: StripeElements } => {
+          this.submitStripeElement = async (): Promise<{ stripe: Stripe, stripeElements: StripeElements } | undefined> => stripeElements?.submit().then<{ stripe: Stripe, stripeElements: StripeElements } | undefined, never>(
+            ({ error: stripeError }: { error?: StripeError }): { stripe: Stripe, stripeElements: StripeElements } | undefined => {
               if (stripeError) {
                 console.error("Something went wrong.");
 
                 throw stripeError;
               }
 
-              return {
+              return stripeElements && {
                 stripe:         stripe,
                 stripeElements: stripeElements,
               };
@@ -189,7 +191,7 @@ export class StripeElementComponent {
 
           afterRender(
             (): void => {
-              if (!mounted) {
+              if (stripeElement && !mounted) {
                 stripeElement.mount(this.htmlDivElementRef$().nativeElement);
 
                 mounted = true;
@@ -204,7 +206,7 @@ export class StripeElementComponent {
     );
   }
   protected resetStripeElement?(): void
-  protected submitStripeElement?(): Promise<{ "stripe": Stripe, "stripeElements": StripeElements }>
+  protected submitStripeElement?(): Promise<{ "stripe": Stripe, "stripeElements": StripeElements } | undefined>
 
   public reset(): void {
     this.resetStripeElement?.();

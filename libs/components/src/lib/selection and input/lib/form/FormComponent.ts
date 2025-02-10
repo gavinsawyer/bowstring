@@ -26,9 +26,7 @@ import { FlexboxContainerDirective }                                         fro
       NgTemplateOutlet,
     ],
     selector:        "standard--form",
-    styleUrls:       [
-      "FormComponent.sass",
-    ],
+    styleUrl:        "FormComponent.sass",
     templateUrl:     "FormComponent.html",
 
     standalone: true,

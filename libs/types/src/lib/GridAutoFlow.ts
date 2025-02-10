@@ -1,1 +1,4 @@
-export type GridAutoFlow = "column" | "row" | `${ "column" | "row" } dense`;
+export type GridAutoFlow =
+  | "column"
+  | "row"
+  | `${ "column" | "row" } dense`;

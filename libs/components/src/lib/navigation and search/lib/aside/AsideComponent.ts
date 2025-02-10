@@ -24,9 +24,7 @@ import { FlexboxContainerDirective }          from "@standard/directives";
       NgTemplateOutlet,
     ],
     selector:        "standard--aside",
-    styleUrls:       [
-      "AsideComponent.sass",
-    ],
+    styleUrl:        "AsideComponent.sass",
     templateUrl:     "AsideComponent.html",
 
     standalone: true,

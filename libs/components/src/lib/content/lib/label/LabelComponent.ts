@@ -1,6 +1,6 @@
-import { NgTemplateOutlet }                                                         from "@angular/common";
-import { ChangeDetectionStrategy, Component, input, type InputSignalWithTransform } from "@angular/core";
-import { ContainerDirective, InlinableDirective }                                   from "@standard/directives";
+import { NgTemplateOutlet }                                            from "@angular/common";
+import { ChangeDetectionStrategy, Component, input, type InputSignal } from "@angular/core";
+import { ContainerDirective, InlinableDirective }                      from "@standard/directives";
 
 
 @Component(
@@ -38,9 +38,7 @@ import { ContainerDirective, InlinableDirective }                               
       },
     ],
     selector:        "standard--label",
-    styleUrls:       [
-      "LabelComponent.sass",
-    ],
+    styleUrl:        "LabelComponent.sass",
     templateUrl:     "LabelComponent.html",
     imports:         [
       NgTemplateOutlet,
@@ -51,7 +49,7 @@ import { ContainerDirective, InlinableDirective }                               
 )
 export class LabelComponent {
 
-  public readonly input$: InputSignalWithTransform<string, string> = input.required<string>(
+  public readonly input$: InputSignal<string> = input.required<string>(
     {
       alias: "input",
     },

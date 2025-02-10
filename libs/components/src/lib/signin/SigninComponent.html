@@ -1,0 +1,51 @@
+<standard--header>
+  <h6 i18n="@@libs--Components--Signin--Header">Sign in.</h6>
+</standard--header>
+@if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signinWithPasskeyFormSubmit(sheetComponentInput$().openModel$);">
+  <standard--button
+    appearance="raised"
+    level="2"
+    material="inverse"
+    type="submit">
+    <standard--symbol input="PersonBadgeKeyFill" />
+    <standard--label
+      i18n-input
+      input="Use passkey" />
+  </standard--button>
+  <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
+    inline
+    input="PersonBadgeKeyFill" />&nbsp;<standard--label
+    i18n-input
+    inline
+    input="Use passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
+</standard--form>
+<standard--divider />}
+<standard--form (output)="signinWithPasswordFormSubmit(sheetComponentInput$().openModel$);">
+  <standard--section>
+    <standard--text-field-input
+      autofocus
+      autocomplete="username"
+      [formControl]="signinWithPasswordFormGroup.controls.email"
+      i18n-placeholder
+      level="2"
+      placeholder="Email"
+      type="email" />
+    <standard--text-field-input
+      autocomplete="current-password"
+      [formControl]="signinWithPasswordFormGroup.controls.password"
+      i18n-placeholder
+      level="2"
+      placeholder="Password"
+      type="password" />
+  </standard--section>
+  <standard--flexbox-container
+    flexDirection="row"
+    justifyContent="flex-end">
+    <standard--button
+      appearance="symbol"
+      [disabled]="signinWithPasswordFormGroup.invalid"
+      type="submit">
+      <standard--symbol input="ArrowForwardCircleFill" />
+    </standard--button>
+  </standard--flexbox-container>
+</standard--form>

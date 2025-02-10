@@ -11,8 +11,9 @@
     <h2>@if (accountRoutes | standardFindRouteByPath:''; as route) {<standard--link
       exact
       inline
-      [input]="route.data?.['title']"
-      [url]="'./' + route.path" />}</h2>
+      [url]="'./' + route.path">
+      <standard--label [input]="route.data?.['title']" />
+    </standard--link>}</h2>
   </standard--header>
   @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--button
     appearance="raised"
@@ -46,51 +47,39 @@
       </standard--section>
       <standard--divider />
       <standard--section>
-        @if (accountService.accountDocument$()) {@for (route of accountRoutes.slice(1); track route) {<standard--link
-          [input]="route.data?.['title']"
-          [url]="'./' + route.path" />}} @else {<standard--link
-          i18n-input
-          input="Sign in" />
+        @if (accountService.accountDocument$()) {@for (route of accountRoutes.slice(1); track $index) {<standard--link
+          [url]="'./' + route.path">
+          <standard--label [input]="route.data?.['title']" />
+        </standard--link>}} @else {<standard--link
+          [disabled]="signinSheetComponent.openModelWithTransform$()"
+          (output)="signinSheetComponent.openModel$.set(true);">
+          <standard--label
+            i18n-input
+            input="Sign in" />
+        </standard--link>
         <standard--link
-          i18n-input
-          input="Create your account" />}
+          [disabled]="signupSheetComponent.openModelWithTransform$()"
+          (output)="signupSheetComponent.openModel$.set(true);">
+          <standard--label
+            i18n-input
+            input="Create your account" />
+        </standard--link>}
       </standard--section>
     </standard--box>
   </standard--aside>
   <standard--section
     flexGrow="1"
     flexShrink="0">
-    <router-outlet />
+    @if (accountService.accountDocument$()) {<router-outlet />}
   </standard--section>
 </standard--flexbox-container>
 
+<standard--sheet #signinSheetComponent>
+  @defer {<standard--signin [sheetComponent]="signinSheetComponent" />}
+</standard--sheet>
 <standard--sheet #signoutSheetComponent>
-  @defer {<standard--header>
-    <h6 i18n="@@libs--Components--Routes--Account--Sheets--Signout--Header">Sign out?</h6>
-  </standard--header>
-  <standard--divider />
-  <standard--section
-    flexDirection="row"
-    flexWrap="wrap-reverse">
-    <standard--button
-      appearance="raised"
-      flexGrow="1"
-      level="2"
-      (output)="signoutSheetComponent.openModel$.set(false);">
-      <standard--symbol input="ArrowBackward" />
-      <standard--label
-        i18n-input
-        input="Cancel" />
-    </standard--button>
-    <standard--button
-      appearance="raised"
-      flexGrow="999"
-      level="2"
-      material="inverse"
-      (output)="authenticationService.signInAnonymously(); signoutSheetComponent.openModel$.set(false);">
-      <standard--label
-        i18n-input
-        input="Yes, sign out" />
-    </standard--button>
-  </standard--section>}
+  @defer {<standard--signout [sheetComponent]="signoutSheetComponent" />}
+</standard--sheet>
+<standard--sheet #signupSheetComponent>
+  @defer {<standard--signup [sheetComponent]="signupSheetComponent" />}
 </standard--sheet>

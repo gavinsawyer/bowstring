@@ -5,7 +5,7 @@
 @use "../../../../../../directives/src/lib/materials/lib/inverse/InverseDirective"
 @use "../../../../../../directives/src/lib/materials/lib/primary/PrimaryDirective"
 @use "../../../../../../directives/src/lib/materials/lib/secondary/SecondaryDirective"
-@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/well rounded/WellRoundedDirective"
 
 
 \:host
@@ -17,7 +17,7 @@
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
   @include PrimaryDirective.host
-  @include RoundedDirective.host
+  @include WellRoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
@@ -40,7 +40,7 @@
         @include ElevatedDirective.children
         @include FlexboxContainerDirective.children
         @include PrimaryDirective.children
-        @include RoundedDirective.children
+        @include WellRoundedDirective.children
 
   &:not(.material-glass):not(.material-inverse):not(.material-primary):not(.material-secondary)
     @include CanvasDirective.host(0%)

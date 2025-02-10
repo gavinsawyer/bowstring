@@ -4,8 +4,8 @@
 
 <ng-template #contentTemplate>
   @switch (typeInput$()) {
-    @case ("inline") {<span>@for (itemTemplateRef of itemTemplateRefs$(); track itemTemplateRef) {<span><ng-container *ngTemplateOutlet="itemTemplateRef" /></span>}</span>}
-    @case ("ordered") {<ol>@for (itemTemplateRef of itemTemplateRefs$(); track itemTemplateRef) {<li><ng-container *ngTemplateOutlet="itemTemplateRef" /></li>}</ol>}
-    @case ("unordered") {<ul>@for (itemTemplateRef of itemTemplateRefs$(); track itemTemplateRef) {<li><ng-container *ngTemplateOutlet="itemTemplateRef" /></li>}</ul>}
+    @case ("inline") {<span>@for (itemTemplateRef of itemTemplateRefs$(); track $index) {<span><ng-container *ngTemplateOutlet="itemTemplateRef" /></span>}</span>}
+    @case ("ordered") {<ol>@for (itemTemplateRef of itemTemplateRefs$(); track $index) {<li><ng-container *ngTemplateOutlet="itemTemplateRef" /></li>}</ol>}
+    @case ("unordered") {<ul>@for (itemTemplateRef of itemTemplateRefs$(); track $index) {<li><ng-container *ngTemplateOutlet="itemTemplateRef" /></li>}</ul>}
   }
 </ng-template>

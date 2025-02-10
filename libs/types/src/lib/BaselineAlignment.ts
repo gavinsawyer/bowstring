@@ -1,1 +1,4 @@
-export type BaselineAlignment = "baseline" | "first baseline" | "last baseline";
+export type BaselineAlignment =
+  | "baseline"
+  | "first baseline"
+  | "last baseline";

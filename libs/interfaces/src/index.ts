@@ -3,4 +3,5 @@ export type * from "./lib/Dimensions";
 export type * from "./lib/Environment";
 export type * from "./lib/Symbol";
 
+export type * from "./lib/control value accessors";
 export type * from "./lib/documents";

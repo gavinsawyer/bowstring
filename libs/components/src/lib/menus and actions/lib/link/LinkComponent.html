@@ -17,4 +17,4 @@
   (click)="$event.stopPropagation(); output.emit();"
   (keydown)="($event.key === 'Escape' || $event.key !== 'Enter') || $event.stopPropagation(); $event.key !== 'Enter' || output.emit();"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></button>}
 
-<ng-template #contentTemplate><ng-container *ngTemplateOutlet="symbolTemplateRef$() || null" />{{ input$() }}</ng-template>
+<ng-template #contentTemplate><ng-content /></ng-template>

@@ -2,7 +2,7 @@
 @use "../../../../../../directives/src/lib/materials/lib/canvas/CanvasDirective"
 @use "../../../../../../directives/src/lib/materials/lib/glass/GlassDirective"
 @use "../../../../../../directives/src/lib/presentation/lib/elevated/ElevatedDirective"
-@use "../../../../../../directives/src/lib/presentation/lib/rounded/RoundedDirective"
+@use "../../../../../../directives/src/lib/presentation/lib/well rounded/WellRoundedDirective"
 
 
 \:host
@@ -17,7 +17,7 @@
   @include ElevatedDirective.host
   @include FlexboxContainerDirective.host
   @include GlassDirective.host(6%)
-  @include RoundedDirective.host
+  @include WellRoundedDirective.host
 
   --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
   --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
@@ -91,7 +91,7 @@
       @include ElevatedDirective.children
       @include FlexboxContainerDirective.children
       @include GlassDirective.children
-      @include RoundedDirective.children
+      @include WellRoundedDirective.children
 
   > .backdrop
     display: grid
@@ -205,7 +205,7 @@ div#pinnedControl::ng-deep
   @include ElevatedDirective.children
   @include FlexboxContainerDirective.children
   @include GlassDirective.children
-  @include RoundedDirective.children
+  @include WellRoundedDirective.children
 
   @include CanvasDirective.host(18%)
   @include FlexboxContainerDirective.host
