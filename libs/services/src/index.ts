@@ -11,5 +11,7 @@ export * from "./lib/ResponsivityService";
 export * from "./lib/StripeApiLoaderService";
 export * from "./lib/StripeCustomersService";
 export * from "./lib/StripePaymentMethodsService";
+export * from "./lib/StripePricesService";
+export * from "./lib/StripeProductsService";
 export * from "./lib/StripeSetupIntentsService";
 export * from "./lib/ViewportService";

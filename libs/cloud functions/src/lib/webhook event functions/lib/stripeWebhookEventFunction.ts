@@ -1,12 +1,35 @@
-import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripeSetupIntentDocument }                                                         from "@standard/interfaces";
+import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripePriceDocument, type StripeProductDocument, type StripeSetupIntentDocument }   from "@standard/interfaces";
 import { getApp }                                                                                                                                                from "firebase-admin/app";
 import { type CollectionReference, type DocumentReference, FieldValue, type Firestore, getFirestore, type PartialWithFieldValue, type QuerySnapshot, Timestamp } from "firebase-admin/firestore";
-import { HttpsError, type HttpsFunction, onRequest, type Request }                                                                                               from "firebase-functions/https";
+import { type HttpsFunction, onRequest, type Request }                                                                                                           from "firebase-functions/https";
 import Stripe                                                                                                                                                    from "stripe";
 import { Stripe_API_Key, Stripe_Webhook_Shared_Secret }                                                                                                          from "../../secrets";
 
 
-function getStripeCustomerDocumentPartialWithFieldValue(
+function toDocumentPartial<K extends string | number | symbol, T>(
+  valueAsObject: { [key in K]: T | null | undefined },
+): { [key in keyof typeof valueAsObject]: T extends { "object": string, "id": string } ? string : T } | object;
+function toDocumentPartial<K extends string | number | symbol, T>(
+  valueAsObject: { [key in K]: T | null | undefined },
+  withFieldValue?: boolean,
+): { [key in keyof typeof valueAsObject]: T extends { "object": string, "id": string } ? string : T | FieldValue } | object;
+function toDocumentPartial<K extends string | number | symbol, T>(
+  valueAsObject: { [key in K]: T | null | undefined },
+  withFieldValue?: boolean,
+): { [key in keyof typeof valueAsObject]: T extends { "object": string, "id": string } ? string : T | FieldValue } | object {
+  const value: T | null | undefined = Object.values<T | null | undefined>(valueAsObject)[0];
+
+  return (typeof value === "boolean" || typeof value === "number" || value) && (!Array.isArray(value) || value.length) && (typeof value !== "object" || Object.keys(value).length) || withFieldValue ? {
+    [Object.keys(valueAsObject)[0]]: (typeof value === "boolean" || typeof value === "number" || value) && (!Array.isArray(value) || value.length) && (typeof value !== "object" || Object.keys(value).length) ? (typeof value === "object" && "id" in value && "object" in value) ? value.id as string : value : FieldValue.delete(),
+  } : {};
+}
+
+function getStripeCustomerDocumentPartial(stripeCustomer: Stripe.Customer): Partial<StripeCustomerDocument>;
+function getStripeCustomerDocumentPartial(
+  stripeCustomer: Stripe.Customer,
+  withFieldValue?: boolean,
+): PartialWithFieldValue<StripeCustomerDocument>;
+function getStripeCustomerDocumentPartial(
   {
     address,
     balance,
@@ -26,71 +49,12 @@ function getStripeCustomerDocumentPartialWithFieldValue(
     tax_exempt: taxExempt,
     test_clock: testClock,
   }: Stripe.Customer,
-): PartialWithFieldValue<StripeCustomerDocument> {
+  withFieldValue?: boolean,
+): Partial<StripeCustomerDocument> | PartialWithFieldValue<StripeCustomerDocument> {
   return {
-    address:             address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? ((
+    ...toDocumentPartial(
       {
-        city,
-        country,
-        line1,
-        line2,
-        postal_code: postalCode,
-        state,
-      }: Stripe.Address,
-    ): Exclude<StripeCustomerDocument["address"], undefined> => ({
-      ...(city ? { city } : {}),
-      ...(country ? { country } : {}),
-      ...(line1 ? { line1 } : {}),
-      ...(line2 ? { line2 } : {}),
-      ...(postalCode ? { postalCode } : {}),
-      ...(state ? { state } : {}),
-    }))(address) : FieldValue.delete(),
-    balance,
-    created:             Timestamp.fromMillis(created * 1000),
-    defaultSource:       typeof defaultSource === "string" ? defaultSource : defaultSource?.id || FieldValue.delete(),
-    description:         description !== "" && description || FieldValue.delete(),
-    email:               email !== "" && email || FieldValue.delete(),
-    id,
-    invoicePrefix:       invoicePrefix !== "" && invoicePrefix || FieldValue.delete(),
-    invoiceSettings:     invoiceSettings.custom_fields?.length || invoiceSettings.default_payment_method || invoiceSettings.footer || (invoiceSettings.rendering_options && (invoiceSettings.rendering_options.amount_tax_display || invoiceSettings.rendering_options.template)) ? ((
-      {
-        custom_fields:          customFields,
-        default_payment_method: defaultPaymentMethod,
-        footer,
-        rendering_options: renderingOptions,
-      }: Stripe.Customer.InvoiceSettings,
-    ): Exclude<StripeCustomerDocument["invoiceSettings"], undefined> => ({
-      ...(customFields?.length ? { customFields } : {}),
-      ...(defaultPaymentMethod ? {
-        defaultPaymentMethod: typeof defaultPaymentMethod === "string" ? defaultPaymentMethod : defaultPaymentMethod.id,
-      } : {}),
-      ...(footer ? { footer } : {}),
-      ...(renderingOptions && (renderingOptions.amount_tax_display || renderingOptions.template) ? {
-        renderingOptions: ((
-          {
-            amount_tax_display: amountTaxDisplay,
-            template,
-          }: Stripe.Customer.InvoiceSettings.RenderingOptions,
-        ): Exclude<Exclude<StripeCustomerDocument["invoiceSettings"], undefined>["renderingOptions"], undefined> => ({
-          ...(amountTaxDisplay === "exclude_tax" || amountTaxDisplay === "include_inclusive_tax" ? { amountTaxDisplay } : {}),
-          ...(template ? { template } : {}),
-        }))(renderingOptions),
-      } : {}),
-    }))(invoiceSettings) : FieldValue.delete(),
-    livemode,
-    name:                name !== "" && name || FieldValue.delete(),
-    nextInvoiceSequence: nextInvoiceSequence || FieldValue.delete(),
-    phone:               phone !== "" && phone || FieldValue.delete(),
-    preferredLocales:    preferredLocales?.length ? preferredLocales : FieldValue.delete(),
-    shipping:            shipping && ((shipping.address && (shipping.address.city || shipping.address.country || shipping.address.line1 || shipping.address.line2 || shipping.address.postal_code || shipping.address.state)) || shipping.name || shipping.phone) ? ((
-      {
-        address,
-        name,
-        phone,
-      }: Stripe.Customer.Shipping,
-    ): Exclude<StripeCustomerDocument["shipping"], undefined> => ({
-      ...(address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? {
-        address: ((
+        address: address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? ((
           {
             city,
             country,
@@ -99,23 +63,561 @@ function getStripeCustomerDocumentPartialWithFieldValue(
             postal_code: postalCode,
             state,
           }: Stripe.Address,
-        ): Exclude<Exclude<StripeCustomerDocument["shipping"], undefined>["address"], undefined> => ({
-          ...(city ? { city } : {}),
-          ...(country ? { country } : {}),
-          ...(line1 ? { line1 } : {}),
-          ...(line2 ? { line2 } : {}),
-          ...(postalCode ? { postalCode } : {}),
-          ...(state ? { state } : {}),
-        }))(address),
-      } : {}),
-      ...(name ? { name } : {}),
-      ...(phone ? { phone } : {}),
-    }))(shipping) : FieldValue.delete(),
-    taxExempt:           taxExempt || FieldValue.delete(),
-    testClock:           typeof testClock === "string" ? testClock : testClock?.id || FieldValue.delete(),
+        ): Exclude<StripeCustomerDocument["address"], undefined> => ({
+          ...toDocumentPartial({ city }),
+          ...toDocumentPartial({ country }),
+          ...toDocumentPartial({ line1 }),
+          ...toDocumentPartial({ line2 }),
+          ...toDocumentPartial({ postalCode }),
+          ...toDocumentPartial({ state }),
+        }))(address) : undefined,
+      },
+      withFieldValue,
+    ),
+    balance,
+    created: Timestamp.fromMillis(created * 1000),
+    ...toDocumentPartial(
+      { defaultSource },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { description },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { email },
+      withFieldValue,
+    ),
+    id,
+    ...toDocumentPartial(
+      { invoicePrefix },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        invoiceSettings: invoiceSettings.custom_fields?.length || invoiceSettings.default_payment_method || invoiceSettings.footer || (invoiceSettings.rendering_options && (invoiceSettings.rendering_options.amount_tax_display || invoiceSettings.rendering_options.template)) ? ((
+          {
+            custom_fields:          customFields,
+            default_payment_method: defaultPaymentMethod,
+            footer,
+            rendering_options: renderingOptions,
+          }: Stripe.Customer.InvoiceSettings,
+        ): Exclude<StripeCustomerDocument["invoiceSettings"], undefined> => ({
+          ...toDocumentPartial({ customFields }),
+          ...toDocumentPartial({ defaultPaymentMethod }),
+          ...toDocumentPartial({ footer }),
+          ...(renderingOptions && (renderingOptions.amount_tax_display || renderingOptions.template) ? {
+            renderingOptions: ((
+              {
+                amount_tax_display: amountTaxDisplay,
+                template,
+              }: Stripe.Customer.InvoiceSettings.RenderingOptions,
+            ): Exclude<Exclude<StripeCustomerDocument["invoiceSettings"], undefined>["renderingOptions"], undefined> => ({
+              ...toDocumentPartial<"amountTaxDisplay", "exclude_tax" | "include_inclusive_tax">({ amountTaxDisplay: amountTaxDisplay === "exclude_tax" || amountTaxDisplay === "include_inclusive_tax" ? amountTaxDisplay : undefined }),
+              ...toDocumentPartial({ template }),
+            }))(renderingOptions),
+          } : {}),
+        }))(invoiceSettings) : undefined,
+      },
+      withFieldValue,
+    ),
+    livemode,
+    ...toDocumentPartial(
+      { name },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { nextInvoiceSequence },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { phone },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { preferredLocales },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        shipping: shipping && ((shipping.address && (shipping.address.city || shipping.address.country || shipping.address.line1 || shipping.address.line2 || shipping.address.postal_code || shipping.address.state)) || shipping.name || shipping.phone) ? ((
+          {
+            address,
+            name,
+            phone,
+          }: Stripe.Customer.Shipping,
+        ): Exclude<StripeCustomerDocument["shipping"], undefined> => ({
+          ...toDocumentPartial(
+            {
+              address: address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? ((
+                {
+                  city,
+                  country,
+                  line1,
+                  line2,
+                  postal_code: postalCode,
+                  state,
+                }: Stripe.Address,
+              ): Exclude<Exclude<StripeCustomerDocument["shipping"], undefined>["address"], undefined> => ({
+                ...toDocumentPartial({ city }),
+                ...toDocumentPartial({ country }),
+                ...toDocumentPartial({ line1 }),
+                ...toDocumentPartial({ line2 }),
+                ...toDocumentPartial({ postalCode }),
+                ...toDocumentPartial({ state }),
+              }))(address) : undefined,
+            },
+          ),
+          ...toDocumentPartial({ name }),
+          ...toDocumentPartial({ phone }),
+        }))(shipping) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { taxExempt },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { testClock },
+      withFieldValue,
+    ),
   };
 }
-function getStripeSetupIntentDocumentPartialWithFieldValue(
+function getStripePaymentMethodDocumentPartial(
+  stripePaymentMethod: Stripe.PaymentMethod,
+  userId: string,
+): Partial<StripePaymentMethodDocument>;
+function getStripePaymentMethodDocumentPartial(
+  stripePaymentMethod: Stripe.PaymentMethod,
+  userId: string,
+  withFieldValue?: boolean,
+): PartialWithFieldValue<StripePaymentMethodDocument>;
+function getStripePaymentMethodDocumentPartial(
+  {
+    allow_redisplay: allowRedisplay,
+    billing_details: billingDetails,
+    card,
+    created,
+    customer,
+    id,
+    livemode,
+    type,
+  }: Stripe.PaymentMethod,
+  userId: string,
+  withFieldValue?: boolean,
+): PartialWithFieldValue<StripePaymentMethodDocument> {
+  return {
+    ...toDocumentPartial(
+      { allowRedisplay },
+      withFieldValue,
+    ),
+    billingDetails: ((
+      {
+        address,
+        email,
+        name,
+        phone,
+      }: Stripe.PaymentMethod.BillingDetails,
+    ): Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"] => ({
+      ...toDocumentPartial(
+        {
+          address: address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? ((
+            {
+              city,
+              country,
+              line1,
+              line2,
+              postal_code: postalCode,
+              state,
+            }: Stripe.Address,
+          ): Exclude<Exclude<StripeCustomerDocument["shipping"], undefined>["address"], undefined> => ({
+            ...toDocumentPartial({ city }),
+            ...toDocumentPartial({ country }),
+            ...toDocumentPartial({ line1 }),
+            ...toDocumentPartial({ line2 }),
+            ...toDocumentPartial({ postalCode }),
+            ...toDocumentPartial({ state }),
+          }))(address) : undefined,
+        },
+      ),
+      ...toDocumentPartial({ email }),
+      ...toDocumentPartial({ name }),
+      ...toDocumentPartial({ phone }),
+    }))(billingDetails),
+    ...toDocumentPartial(
+      {
+        card: card ? ((
+          {
+            brand,
+            checks,
+            country,
+            description,
+            display_brand: displayBrand,
+            exp_month:     expiryMonth,
+            exp_year:      expiryYear,
+            fingerprint,
+            funding,
+            last4,
+            regulated_status:     regulatedStatus,
+            three_d_secure_usage: threeDSecureUsage,
+            wallet,
+          }: Stripe.PaymentMethod.Card,
+        ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined> => ({
+          brand,
+          ...toDocumentPartial(
+            {
+              checks: checks && (checks.address_line1_check || checks.address_postal_code_check || checks.cvc_check) ? ((
+                {
+                  address_line1_check:       addressLine1Check,
+                  address_postal_code_check: addressPostalCodeCheck,
+                  cvc_check:                 cvcCheck,
+                }: Stripe.PaymentMethod.Card.Checks,
+              ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["checks"], undefined> => ({
+                ...toDocumentPartial({ addressLine1Check }),
+                ...toDocumentPartial({ addressPostalCodeCheck }),
+                ...toDocumentPartial({ cvcCheck }),
+              }))(checks) : undefined,
+            },
+          ),
+          ...toDocumentPartial({ country }),
+          ...toDocumentPartial({ description }),
+          ...toDocumentPartial({ displayBrand }),
+          expiryMonth,
+          expiryYear,
+          ...toDocumentPartial({ fingerprint }),
+          funding,
+          last4,
+          ...toDocumentPartial({ regulatedStatus }),
+          ...toDocumentPartial(
+            {
+              threeDSecureUsage: threeDSecureUsage ? ((
+                {
+                  supported,
+                }: Stripe.PaymentMethod.Card.ThreeDSecureUsage,
+              ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["threeDSecureUsage"], undefined> => ({
+                supported,
+              }))(threeDSecureUsage) : undefined,
+            },
+          ),
+          ...toDocumentPartial(
+            {
+              wallet: wallet ? ((
+                {
+                  dynamic_last4: dynamicLast4,
+                  type,
+                }: Stripe.PaymentMethod.Card.Wallet,
+              ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["wallet"], undefined> => ({
+                ...toDocumentPartial({ dynamicLast4 }),
+                type,
+              }))(wallet) : undefined,
+            },
+          ),
+        }))(card) : undefined,
+      },
+      withFieldValue,
+    ),
+    created: Timestamp.fromMillis(created * 1000),
+    ...toDocumentPartial(
+      { customer },
+      withFieldValue,
+    ),
+    id,
+    livemode,
+    type,
+    userId,
+  };
+}
+function getStripePriceDocumentPartial(stripePrice: Stripe.Price): Partial<StripePriceDocument>;
+function getStripePriceDocumentPartial(
+  stripePrice: Stripe.Price,
+  withFieldValue?: boolean,
+): PartialWithFieldValue<StripePriceDocument>;
+function getStripePriceDocumentPartial(
+  {
+    active,
+    billing_scheme: billingScheme,
+    created,
+    currency,
+    currency_options:   currencyOptions,
+    custom_unit_amount: customUnitAmount,
+    id,
+    livemode,
+    lookup_key: lookupKey,
+    nickname,
+    product,
+    recurring,
+    tax_behavior: taxBehavior,
+    tiers,
+    tiers_mode:         tiersMode,
+    transform_quantity: transformQuantity,
+    type,
+    unit_amount:         unitAmount,
+    unit_amount_decimal: unitAmountDecimal,
+  }: Stripe.Price,
+  withFieldValue?: boolean,
+): Partial<StripePriceDocument> | PartialWithFieldValue<StripePriceDocument> {
+  return {
+    active,
+    billingScheme,
+    created: Timestamp.fromMillis(created * 1000),
+    currency,
+    ...toDocumentPartial(
+      {
+        currencyOptions: currencyOptions ? Object.fromEntries<Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"]>(Object.entries<Stripe.Price.CurrencyOptions>(currencyOptions).map<[ string, Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"] ]>(
+          (
+            [
+              key,
+              currencyOptions,
+            ]: [ string, Stripe.Price.CurrencyOptions ],
+          ): [ string, Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"] ] => [
+            key,
+            ((
+              {
+                custom_unit_amount: customUnitAmount,
+                tax_behavior:       taxBehavior,
+                tiers,
+                unit_amount:         unitAmount,
+                unit_amount_decimal: unitAmountDecimal,
+              }: Stripe.Price.CurrencyOptions,
+            ): Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"] => ({
+              ...toDocumentPartial(
+                {
+                  customUnitAmount: customUnitAmount && (customUnitAmount.maximum || customUnitAmount.minimum || customUnitAmount.preset) ? ((
+                    {
+                      maximum,
+                      minimum,
+                      preset,
+                    }: Stripe.Price.CustomUnitAmount,
+                  ): Exclude<Exclude<Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"], undefined>["customUnitAmount"], undefined> => ({
+                    ...toDocumentPartial({ maximum }),
+                    ...toDocumentPartial({ minimum }),
+                    ...toDocumentPartial({ preset }),
+                  }))(customUnitAmount) : undefined,
+                },
+              ),
+              ...toDocumentPartial({ taxBehavior }),
+              ...(tiers?.length ? {
+                tiers: tiers.map<Exclude<Exclude<Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"], undefined>["tiers"], undefined>[number]>(
+                  (
+                    {
+                      flat_amount:         flatAmount,
+                      flat_amount_decimal: flatAmountDecimal,
+                      unit_amount:         unitAmount,
+                      unit_amount_decimal: unitAmountDecimal,
+                      up_to:               upTo,
+                    }: Stripe.Price.Tier,
+                  ): Exclude<Exclude<Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"], undefined>["tiers"], undefined>[number] => ({
+                    ...toDocumentPartial({ flatAmount }),
+                    ...toDocumentPartial({ flatAmountDecimal }),
+                    ...toDocumentPartial({ unitAmount }),
+                    ...toDocumentPartial({ unitAmountDecimal }),
+                    ...toDocumentPartial({ upTo }),
+                  }),
+                ),
+              } : {}),
+              ...toDocumentPartial({ unitAmount }),
+              ...toDocumentPartial({ unitAmountDecimal }),
+            }))(currencyOptions),
+          ],
+        )) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        customUnitAmount: customUnitAmount && (customUnitAmount.maximum || customUnitAmount.minimum || customUnitAmount.preset) ? ((
+          {
+            maximum,
+            minimum,
+            preset,
+          }: Stripe.Price.CustomUnitAmount,
+        ): Exclude<StripePriceDocument["customUnitAmount"], undefined> => ({
+          ...toDocumentPartial({ maximum }),
+          ...toDocumentPartial({ minimum }),
+          ...toDocumentPartial({ preset }),
+        }))(customUnitAmount) : undefined,
+      },
+      withFieldValue,
+    ),
+    id,
+    livemode,
+    ...toDocumentPartial(
+      { lookupKey },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { nickname },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { product },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        recurring: recurring ? ((
+          {
+            aggregate_usage: aggregateUsage,
+            interval,
+            interval_count: intervalCount,
+            meter,
+            trial_period_days: trialPeriodDays,
+            usage_type:        usageType,
+          }: Stripe.Price.Recurring,
+        ): Exclude<StripePriceDocument["recurring"], undefined> => ({
+          ...toDocumentPartial({ aggregateUsage }),
+          interval,
+          intervalCount,
+          ...toDocumentPartial({ meter }),
+          ...toDocumentPartial({ trialPeriodDays }),
+          usageType,
+        }))(recurring) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { taxBehavior },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        tiers: tiers?.length ? tiers.map<Exclude<Exclude<Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"], undefined>["tiers"], undefined>[number]>(
+          (
+            {
+              flat_amount:         flatAmount,
+              flat_amount_decimal: flatAmountDecimal,
+              unit_amount:         unitAmount,
+              unit_amount_decimal: unitAmountDecimal,
+              up_to:               upTo,
+            }: Stripe.Price.Tier,
+          ): Exclude<Exclude<Exclude<StripePriceDocument["currencyOptions"], undefined>["eur" | "gbp" | "usd"], undefined>["tiers"], undefined>[number] => ({
+            ...toDocumentPartial({ flatAmount }),
+            ...toDocumentPartial({ flatAmountDecimal }),
+            ...toDocumentPartial({ unitAmount }),
+            ...toDocumentPartial({ unitAmountDecimal }),
+            ...toDocumentPartial({ upTo }),
+          }),
+        ) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { tiersMode },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        transformQuantity: transformQuantity ? ((
+          {
+            divide_by: divideBy,
+            round,
+          }: Stripe.Price.TransformQuantity,
+        ): Exclude<StripePriceDocument["transformQuantity"], undefined> => ({
+          divideBy,
+          round,
+        }))(transformQuantity) : undefined,
+      },
+      withFieldValue,
+    ),
+    type,
+    ...toDocumentPartial(
+      { unitAmount },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { unitAmountDecimal },
+      withFieldValue,
+    ),
+  };
+}
+function getStripeProductDocumentPartial(stripeProduct: Stripe.Product): Partial<StripeProductDocument>;
+function getStripeProductDocumentPartial(
+  stripeProduct: Stripe.Product,
+  withFieldValue?: boolean,
+): PartialWithFieldValue<StripeProductDocument>;
+function getStripeProductDocumentPartial(
+  {
+    active,
+    created,
+    default_price: defaultPrice,
+    description,
+    id,
+    images,
+    livemode,
+    marketing_features: marketingFeatures,
+    name,
+    package_dimensions: packageDimensions,
+    shippable,
+    statement_descriptor: statementDescriptor,
+    tax_code:             taxCode,
+    type,
+    unit_label: unitLabel,
+    updated,
+    url,
+  }: Stripe.Product,
+  withFieldValue?: boolean,
+): Partial<StripeProductDocument> | PartialWithFieldValue<StripeProductDocument> {
+  return {
+    active,
+    created: Timestamp.fromMillis(created * 1000),
+    ...toDocumentPartial(
+      { defaultPrice },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { description },
+      withFieldValue,
+    ),
+    id,
+    ...toDocumentPartial(
+      { images },
+      withFieldValue,
+    ),
+    livemode,
+    ...toDocumentPartial(
+      { marketingFeatures },
+      withFieldValue,
+    ),
+    name,
+    ...toDocumentPartial(
+      { packageDimensions },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { shippable },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { statementDescriptor },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { taxCode },
+      withFieldValue,
+    ),
+    type,
+    ...toDocumentPartial(
+      { unitLabel },
+      withFieldValue,
+    ),
+    updated: updated ? Timestamp.fromMillis(updated * 1000) : FieldValue.delete(),
+    ...toDocumentPartial(
+      { url },
+      withFieldValue,
+    ),
+  };
+}
+function getStripeSetupIntentDocumentPartial(
+  stripeSetupIntent: Stripe.SetupIntent,
+  userId: string,
+): Partial<StripeSetupIntentDocument>;
+function getStripeSetupIntentDocumentPartial(
+  stripeSetupIntent: Stripe.SetupIntent,
+  userId: string,
+  withFieldValue?: boolean,
+): PartialWithFieldValue<StripeSetupIntentDocument>;
+function getStripeSetupIntentDocumentPartial(
   {
     attach_to_self:            attachToSelf,
     automatic_payment_methods: automaticPaymentMethods,
@@ -140,402 +642,370 @@ function getStripeSetupIntentDocumentPartialWithFieldValue(
     usage,
   }: Stripe.SetupIntent,
   userId: string,
-): PartialWithFieldValue<StripeSetupIntentDocument> {
+  withFieldValue?: boolean,
+): Partial<StripeSetupIntentDocument> | PartialWithFieldValue<StripeSetupIntentDocument> {
   return {
-    attachToSelf:                      typeof attachToSelf === "boolean" ? attachToSelf : FieldValue.delete(),
-    automaticPaymentMethods:           automaticPaymentMethods && (automaticPaymentMethods.allow_redirects || automaticPaymentMethods.enabled) ? ((
+    ...toDocumentPartial(
+      { attachToSelf },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
       {
-        allow_redirects: allowRedirects,
-        enabled,
-      }: Stripe.SetupIntent.AutomaticPaymentMethods,
-    ): Exclude<StripeSetupIntentDocument["automaticPaymentMethods"], undefined> => ({
-      ...(allowRedirects ? { allowRedirects } : {}),
-      ...(typeof enabled === "boolean" ? { enabled } : {}),
-    }))(automaticPaymentMethods) : FieldValue.delete(),
-    cancellationReason:                cancellationReason || FieldValue.delete(),
-    clientSecret:                      clientSecret !== "" && clientSecret || FieldValue.delete(),
-    created:                           Timestamp.fromMillis(created * 1000),
-    customer:                          typeof customer === "string" ? customer : customer?.id || FieldValue.delete(),
-    description:                       description !== "" && description || FieldValue.delete(),
-    flowDirections:                    flowDirections?.length ? flowDirections : FieldValue.delete(),
+        automaticPaymentMethods: automaticPaymentMethods && (automaticPaymentMethods.allow_redirects || automaticPaymentMethods.enabled) ? ((
+          {
+            allow_redirects: allowRedirects,
+            enabled,
+          }: Stripe.SetupIntent.AutomaticPaymentMethods,
+        ): Exclude<StripeSetupIntentDocument["automaticPaymentMethods"], undefined> => ({
+          ...toDocumentPartial({ allowRedirects }),
+          ...toDocumentPartial({ enabled }),
+        }))(automaticPaymentMethods) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { cancellationReason },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { clientSecret },
+      withFieldValue,
+    ),
+    created: Timestamp.fromMillis(created * 1000),
+    ...toDocumentPartial(
+      { customer },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { description },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { flowDirections },
+      withFieldValue,
+    ),
     id,
-    lastSetupError:                    lastSetupError ? ((
+    ...toDocumentPartial(
       {
-        advice_code: adviceCode,
-        code,
-        decline_code: declineCode,
-        doc_url:      docUrl,
-        message,
-        network_advice_code:  networkAdviceCode,
-        network_decline_code: networkDeclineCode,
-        param,
-        payment_method:      paymentMethod,
-        payment_method_type: paymentMethodType,
-        type,
-      }: Stripe.SetupIntent.LastSetupError,
-    ): Exclude<StripeSetupIntentDocument["lastSetupError"], undefined> => ({
-      ...(adviceCode ? { adviceCode } : {}),
-      ...(code ? { code } : {}),
-      ...(declineCode ? { declineCode } : {}),
-      ...(docUrl ? { docUrl } : {}),
-      ...(message ? { message } : {}),
-      ...(networkAdviceCode ? { networkAdviceCode } : {}),
-      ...(networkDeclineCode ? { networkDeclineCode } : {}),
-      ...(param ? { param } : {}),
-      ...(paymentMethod ? {
-        paymentMethod: ((
+        lastSetupError: lastSetupError ? ((
           {
-            allow_redisplay: allowRedisplay,
-            billing_details: billingDetails,
-            card,
-            created,
-            customer,
-            id,
-            livemode,
+            advice_code: adviceCode,
+            code,
+            decline_code: declineCode,
+            doc_url:      docUrl,
+            message,
+            network_advice_code:  networkAdviceCode,
+            network_decline_code: networkDeclineCode,
+            param,
+            payment_method:      paymentMethod,
+            payment_method_type: paymentMethodType,
             type,
-          }: Stripe.PaymentMethod,
-        ): Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined> => ({
-          allowRedisplay,
-          billingDetails: ((
-            {
-              address,
-              email,
-              name,
-              phone,
-            }: Stripe.PaymentMethod.BillingDetails,
-          ): Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"] => ({
-            ...(address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? {
-              address: ((
-                {
-                  city,
-                  country,
-                  line1,
-                  line2,
-                  postal_code: postalCode,
-                  state,
-                }: Stripe.Address,
-              ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"]["address"], undefined> => ({
-                ...(city ? { city } : {}),
-                ...(country ? { country } : {}),
-                ...(line1 ? { line1 } : {}),
-                ...(line2 ? { line2 } : {}),
-                ...(postalCode ? { postalCode } : {}),
-                ...(state ? { state } : {}),
-              }))(address),
-            } : {}),
-            ...(email ? { email } : {}),
-            ...(name ? { name } : {}),
-            ...(phone ? { phone } : {}),
-          }))(billingDetails),
-          card:           card && ((
-            {
-              brand,
-              checks,
-              country,
-              description,
-              display_brand: displayBrand,
-              exp_month:     expiryMonth,
-              exp_year:      expiryYear,
-              fingerprint,
-              funding,
-              last4,
-              regulated_status:     regulatedStatus,
-              three_d_secure_usage: threeDSecureUsage,
-              wallet,
-            }: Stripe.PaymentMethod.Card,
-          ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined> => ({
-            brand,
-            ...(checks && (checks.address_line1_check || checks.address_postal_code_check || checks.cvc_check) ? {
-              checks: ((
-                {
-                  address_line1_check:       addressLine1Check,
-                  address_postal_code_check: addressPostalCodeCheck,
-                  cvc_check:                 cvcCheck,
-                }: Stripe.PaymentMethod.Card.Checks,
-              ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["checks"], undefined> => ({
-                ...(addressLine1Check ? { addressLine1Check } : {}),
-                ...(addressPostalCodeCheck ? { addressPostalCodeCheck } : {}),
-                ...(cvcCheck ? { cvcCheck } : {}),
-              }))(checks),
-            } : {}),
-            ...(country ? { country } : {}),
-            ...(description ? { description } : {}),
-            ...(displayBrand ? { displayBrand } : {}),
-            expiryMonth,
-            expiryYear,
-            ...(fingerprint ? { fingerprint } : {}),
-            funding,
-            last4,
-            ...(regulatedStatus ? { regulatedStatus } : {}),
-            ...(threeDSecureUsage ? {
-              threeDSecureUsage: ((
-                {
-                  supported,
-                }: Stripe.PaymentMethod.Card.ThreeDSecureUsage,
-              ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["threeDSecureUsage"], undefined> => ({
-                supported,
-              }))(threeDSecureUsage),
-            } : {}),
-            ...(wallet ? {
-              wallet: ((
-                {
-                  dynamic_last4: dynamicLast4,
-                  type,
-                }: Stripe.PaymentMethod.Card.Wallet,
-              ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["wallet"], undefined> => ({
-                ...(dynamicLast4 ? { dynamicLast4 } : {}),
-                type,
-              }))(wallet),
-            } : {}),
-          }))(card),
-          created:        Timestamp.fromMillis(created * 1000),
-          ...(customer ? {
-            customer: typeof customer === "string" ? customer : customer.id,
-          } : {}),
-          id,
-          livemode,
-          type,
-        }))(paymentMethod),
-      } : {}),
-      paymentMethodType,
-      type,
-    }))(lastSetupError) : FieldValue.delete(),
-    latestAttempt:                     typeof latestAttempt === "string" ? latestAttempt : latestAttempt?.id || FieldValue.delete(),
-    livemode,
-    mandate:                           typeof mandate === "string" ? mandate : mandate?.id || FieldValue.delete(),
-    nextAction:                        nextAction ? ((
-      {
-        cashapp_handle_redirect_or_display_qr_code: cashappHandleRedirectOrDisplayQrCode,
-        redirect_to_url:                            redirectToUrl,
-        type,
-        use_stripe_sdk:            useStripeSdk,
-        verify_with_microdeposits: verifyWithMicrodeposits,
-      }: Stripe.SetupIntent.NextAction,
-    ): Exclude<StripeSetupIntentDocument["nextAction"], undefined> => ({
-      ...(cashappHandleRedirectOrDisplayQrCode ? {
-        cashappHandleRedirectOrDisplayQrCode: ((
-          {
-            hosted_instructions_url: hostedInstructionsUrl,
-            mobile_auth_url:         mobileAuthUrl,
-            qr_code:                 qrCode,
-          }: Stripe.SetupIntent.NextAction.CashappHandleRedirectOrDisplayQrCode,
-        ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["cashappHandleRedirectOrDisplayQrCode"], undefined> => ({
-          hostedInstructionsUrl,
-          mobileAuthUrl,
-          qrCode: ((
-            {
-              expires_at:    expiresAt,
-              image_url_png: imageUrlPng,
-              image_url_svg: imageUrlSvg,
-            }: Stripe.SetupIntent.NextAction.CashappHandleRedirectOrDisplayQrCode.QrCode,
-          ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["cashappHandleRedirectOrDisplayQrCode"], undefined>["qrCode"] => ({
-            expiresAt: Timestamp.fromMillis(expiresAt * 1000),
-            imageUrlPng,
-            imageUrlSvg,
-          }))(qrCode),
-        }))(cashappHandleRedirectOrDisplayQrCode),
-      } : {}),
-      ...(redirectToUrl && (redirectToUrl.return_url || redirectToUrl.url) ? {
-        redirectToUrl: ((
-          {
-            return_url: returnUrl,
-            url,
-          }: Stripe.SetupIntent.NextAction.RedirectToUrl,
-        ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["redirectToUrl"], undefined> => ({
-          ...(returnUrl ? { returnUrl } : {}),
-          ...(url ? { url } : {}),
-        }))(redirectToUrl),
-      } : {}),
-      type,
-      useStripeSdk,
-      ...(verifyWithMicrodeposits ? {
-        verifyWithMicrodeposits: ((
-          {
-            arrival_date:            arrivalDate,
-            hosted_verification_url: hostedVerificationUrl,
-            microdeposit_type:       microdepositType,
-          }: Stripe.SetupIntent.NextAction.VerifyWithMicrodeposits,
-        ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["verifyWithMicrodeposits"], undefined> => ({
-          arrivalDate: Timestamp.fromMillis(arrivalDate * 1000),
-          hostedVerificationUrl,
-          ...(microdepositType ? { microdepositType } : {}),
-        }))(verifyWithMicrodeposits),
-      } : {}),
-    }))(nextAction) : FieldValue.delete(),
-    paymentMethod:                     typeof paymentMethod === "string" ? paymentMethod : paymentMethod?.id || FieldValue.delete(),
-    paymentMethodConfigurationDetails: paymentMethodConfigurationDetails ? ((
-      {
-        id,
-        parent,
-      }: Stripe.SetupIntent.PaymentMethodConfigurationDetails,
-    ): Exclude<StripeSetupIntentDocument["paymentMethodConfigurationDetails"], undefined> => ({
-      id,
-      ...(parent ? { parent } : {}),
-    }))(paymentMethodConfigurationDetails) : FieldValue.delete(),
-    paymentMethodOptions:              paymentMethodOptions ? ((
-      {
-        card,
-      }: Stripe.SetupIntent.PaymentMethodOptions,
-    ): Exclude<StripeSetupIntentDocument["paymentMethodOptions"], undefined> => ({
-      ...(card ? {
-        card: ((
-          {
-            mandate_options: mandateOptions,
-            network,
-            request_three_d_secure: requestThreeDSecure,
-          }: Stripe.SetupIntent.PaymentMethodOptions.Card,
-        ): Exclude<Exclude<StripeSetupIntentDocument["paymentMethodOptions"], undefined>["card"], undefined> => ({
-          ...(mandateOptions ? {
-            mandateOptions: ((
+          }: Stripe.SetupIntent.LastSetupError,
+        ): Exclude<StripeSetupIntentDocument["lastSetupError"], undefined> => ({
+          ...toDocumentPartial({ adviceCode }),
+          ...toDocumentPartial({ code }),
+          ...toDocumentPartial({ declineCode }),
+          ...toDocumentPartial({ docUrl }),
+          ...toDocumentPartial({ message }),
+          ...toDocumentPartial({ networkAdviceCode }),
+          ...toDocumentPartial({ networkDeclineCode }),
+          ...toDocumentPartial({ param }),
+          ...(paymentMethod ? {
+            paymentMethod: ((
               {
-                amount,
-                amount_type: amountType,
-                currency,
-                description,
-                end_date: endDate,
-                interval,
-                interval_count: intervalCount,
-                reference,
-                start_date:      startDate,
-                supported_types: supportedTypes,
-              }: Stripe.SetupIntent.PaymentMethodOptions.Card.MandateOptions,
-            ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["paymentMethodOptions"], undefined>["card"], undefined>["mandateOptions"], undefined> => ({
-              ...(description ? { description } : {}),
-              amount,
-              amountType,
-              currency,
-              ...(endDate ? { endDate: Timestamp.fromMillis(endDate * 1000) } : {}),
-              interval,
-              ...(intervalCount ? { intervalCount } : {}),
-              reference,
-              startDate: Timestamp.fromMillis(startDate * 1000),
-              ...(supportedTypes ? { supportedTypes } : {}),
-            }))(mandateOptions),
+                allow_redisplay: allowRedisplay,
+                billing_details: billingDetails,
+                card,
+                created,
+                customer,
+                id,
+                livemode,
+                type,
+              }: Stripe.PaymentMethod,
+            ): Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined> => ({
+              allowRedisplay,
+              billingDetails: ((
+                {
+                  address,
+                  email,
+                  name,
+                  phone,
+                }: Stripe.PaymentMethod.BillingDetails,
+              ): Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"] => ({
+                ...(address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? {
+                  address: ((
+                    {
+                      city,
+                      country,
+                      line1,
+                      line2,
+                      postal_code: postalCode,
+                      state,
+                    }: Stripe.Address,
+                  ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"]["address"], undefined> => ({
+                    ...toDocumentPartial({ city }),
+                    ...toDocumentPartial({ country }),
+                    ...toDocumentPartial({ line1 }),
+                    ...toDocumentPartial({ line2 }),
+                    ...toDocumentPartial({ postalCode }),
+                    ...toDocumentPartial({ state }),
+                  }))(address),
+                } : {}),
+                ...toDocumentPartial({ email }),
+                ...toDocumentPartial({ name }),
+                ...toDocumentPartial({ phone }),
+              }))(billingDetails),
+              ...toDocumentPartial(
+                {
+                  card: card ? ((
+                    {
+                      brand,
+                      checks,
+                      country,
+                      description,
+                      display_brand: displayBrand,
+                      exp_month:     expiryMonth,
+                      exp_year:      expiryYear,
+                      fingerprint,
+                      funding,
+                      last4,
+                      regulated_status:     regulatedStatus,
+                      three_d_secure_usage: threeDSecureUsage,
+                      wallet,
+                    }: Stripe.PaymentMethod.Card,
+                  ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined> => ({
+                    brand,
+                    ...toDocumentPartial(
+                      {
+                        checks: checks && (checks.address_line1_check || checks.address_postal_code_check || checks.cvc_check) ? ((
+                          {
+                            address_line1_check:       addressLine1Check,
+                            address_postal_code_check: addressPostalCodeCheck,
+                            cvc_check:                 cvcCheck,
+                          }: Stripe.PaymentMethod.Card.Checks,
+                        ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["checks"], undefined> => ({
+                          ...toDocumentPartial({ addressLine1Check }),
+                          ...toDocumentPartial({ addressPostalCodeCheck }),
+                          ...toDocumentPartial({ cvcCheck }),
+                        }))(checks) : undefined,
+                      },
+                    ),
+                    ...toDocumentPartial({ country }),
+                    ...toDocumentPartial({ description }),
+                    ...toDocumentPartial({ displayBrand }),
+                    expiryMonth,
+                    expiryYear,
+                    ...toDocumentPartial({ fingerprint }),
+                    funding,
+                    last4,
+                    ...toDocumentPartial({ regulatedStatus }),
+                    ...toDocumentPartial(
+                      {
+                        threeDSecureUsage: threeDSecureUsage ? ((
+                          {
+                            supported,
+                          }: Stripe.PaymentMethod.Card.ThreeDSecureUsage,
+                        ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["threeDSecureUsage"], undefined> => ({
+                          supported,
+                        }))(threeDSecureUsage) : undefined,
+                      },
+                    ),
+                    ...toDocumentPartial(
+                      {
+                        wallet: wallet ? ((
+                          {
+                            dynamic_last4: dynamicLast4,
+                            type,
+                          }: Stripe.PaymentMethod.Card.Wallet,
+                        ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["wallet"], undefined> => ({
+                          ...toDocumentPartial({ dynamicLast4 }),
+                          type,
+                        }))(wallet) : undefined,
+                      },
+                    ),
+                  }))(card) : undefined,
+                },
+              ),
+              created: Timestamp.fromMillis(created * 1000),
+              ...toDocumentPartial({ customer }),
+              id,
+              livemode,
+              type,
+            }))(paymentMethod),
           } : {}),
-          ...(network ? { network } : {}),
-          ...(requestThreeDSecure ? { requestThreeDSecure } : {}),
-        }))(card),
-      } : {}),
-    }))(paymentMethodOptions) : FieldValue.delete(),
-    paymentMethodTypes:                paymentMethodTypes?.length ? paymentMethodTypes : FieldValue.delete(),
-    singleUseMandate:                  typeof singleUseMandate === "string" ? singleUseMandate : singleUseMandate?.id || FieldValue.delete(),
-    status:                            status || FieldValue.delete(),
-    usage:                             usage !== "" && usage || FieldValue.delete(),
-    userId,
-  };
-}
-function getStripePaymentMethodDocumentPartialWithFieldValue(
-  {
-    allow_redisplay: allowRedisplay,
-    billing_details: billingDetails,
-    card,
-    created,
-    customer,
-    id,
-    livemode,
-    type,
-  }: Stripe.PaymentMethod,
-  userId: string,
-): PartialWithFieldValue<StripePaymentMethodDocument> {
-  return {
-    allowRedisplay: allowRedisplay || FieldValue.delete(),
-    billingDetails: ((
-      {
-        address,
-        email,
-        name,
-        phone,
-      }: Stripe.PaymentMethod.BillingDetails,
-    ): Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"] => ({
-      ...(address && (address.city || address.country || address.line1 || address.line2 || address.postal_code || address.state) ? {
-        address: ((
-          {
-            city,
-            country,
-            line1,
-            line2,
-            postal_code: postalCode,
-            state,
-          }: Stripe.Address,
-        ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["billingDetails"]["address"], undefined> => ({
-          ...(city ? { city } : {}),
-          ...(country ? { country } : {}),
-          ...(line1 ? { line1 } : {}),
-          ...(line2 ? { line2 } : {}),
-          ...(postalCode ? { postalCode } : {}),
-          ...(state ? { state } : {}),
-        }))(address),
-      } : {}),
-      ...(email ? { email } : {}),
-      ...(name ? { name } : {}),
-      ...(phone ? { phone } : {}),
-    }))(billingDetails),
-    card:           card ? ((
-      {
-        brand,
-        checks,
-        country,
-        description,
-        display_brand: displayBrand,
-        exp_month:     expiryMonth,
-        exp_year:      expiryYear,
-        fingerprint,
-        funding,
-        last4,
-        regulated_status:     regulatedStatus,
-        three_d_secure_usage: threeDSecureUsage,
-        wallet,
-      }: Stripe.PaymentMethod.Card,
-    ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined> => ({
-      brand,
-      ...(checks && (checks.address_line1_check || checks.address_postal_code_check || checks.cvc_check) ? {
-        checks: ((
-          {
-            address_line1_check:       addressLine1Check,
-            address_postal_code_check: addressPostalCodeCheck,
-            cvc_check:                 cvcCheck,
-          }: Stripe.PaymentMethod.Card.Checks,
-        ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["checks"], undefined> => ({
-          ...(addressLine1Check ? { addressLine1Check } : {}),
-          ...(addressPostalCodeCheck ? { addressPostalCodeCheck } : {}),
-          ...(cvcCheck ? { cvcCheck } : {}),
-        }))(checks),
-      } : {}),
-      ...(country ? { country } : {}),
-      ...(description ? { description } : {}),
-      ...(displayBrand ? { displayBrand } : {}),
-      expiryMonth,
-      expiryYear,
-      ...(fingerprint ? { fingerprint } : {}),
-      funding,
-      last4,
-      ...(regulatedStatus ? { regulatedStatus } : {}),
-      ...(threeDSecureUsage ? {
-        threeDSecureUsage: ((
-          {
-            supported,
-          }: Stripe.PaymentMethod.Card.ThreeDSecureUsage,
-        ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["threeDSecureUsage"], undefined> => ({
-          supported,
-        }))(threeDSecureUsage),
-      } : {}),
-      ...(wallet ? {
-        wallet: ((
-          {
-            dynamic_last4: dynamicLast4,
-            type,
-          }: Stripe.PaymentMethod.Card.Wallet,
-        ): Exclude<Exclude<Exclude<Exclude<StripeSetupIntentDocument["lastSetupError"], undefined>["paymentMethod"], undefined>["card"], undefined>["wallet"], undefined> => ({
-          ...(dynamicLast4 ? { dynamicLast4 } : {}),
+          paymentMethodType,
           type,
-        }))(wallet),
-      } : {}),
-    }))(card) : FieldValue.delete(),
-    created:        Timestamp.fromMillis(created * 1000),
-    customer:       typeof customer === "string" ? customer : customer?.id || FieldValue.delete(),
-    id,
+        }))(lastSetupError) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { latestAttempt },
+      withFieldValue,
+    ),
     livemode,
-    type,
+    ...toDocumentPartial(
+      { mandate },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        nextAction: nextAction ? ((
+          {
+            cashapp_handle_redirect_or_display_qr_code: cashappHandleRedirectOrDisplayQrCode,
+            redirect_to_url:                            redirectToUrl,
+            type,
+            use_stripe_sdk:            useStripeSdk,
+            verify_with_microdeposits: verifyWithMicrodeposits,
+          }: Stripe.SetupIntent.NextAction,
+        ): Exclude<StripeSetupIntentDocument["nextAction"], undefined> => ({
+          ...toDocumentPartial(
+            {
+              cashappHandleRedirectOrDisplayQrCode: cashappHandleRedirectOrDisplayQrCode ? ((
+                {
+                  hosted_instructions_url: hostedInstructionsUrl,
+                  mobile_auth_url:         mobileAuthUrl,
+                  qr_code:                 qrCode,
+                }: Stripe.SetupIntent.NextAction.CashappHandleRedirectOrDisplayQrCode,
+              ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["cashappHandleRedirectOrDisplayQrCode"], undefined> => ({
+                hostedInstructionsUrl,
+                mobileAuthUrl,
+                qrCode: ((
+                  {
+                    expires_at:    expiresAt,
+                    image_url_png: imageUrlPng,
+                    image_url_svg: imageUrlSvg,
+                  }: Stripe.SetupIntent.NextAction.CashappHandleRedirectOrDisplayQrCode.QrCode,
+                ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["cashappHandleRedirectOrDisplayQrCode"], undefined>["qrCode"] => ({
+                  expiresAt: Timestamp.fromMillis(expiresAt * 1000),
+                  imageUrlPng,
+                  imageUrlSvg,
+                }))(qrCode),
+              }))(cashappHandleRedirectOrDisplayQrCode) : undefined,
+            },
+          ),
+          ...toDocumentPartial(
+            {
+              redirectToUrl: redirectToUrl && (redirectToUrl.return_url || redirectToUrl.url) ? ((
+                {
+                  return_url: returnUrl,
+                  url,
+                }: Stripe.SetupIntent.NextAction.RedirectToUrl,
+              ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["redirectToUrl"], undefined> => ({
+                ...toDocumentPartial({ returnUrl }),
+                ...toDocumentPartial({ url }),
+              }))(redirectToUrl) : undefined,
+            },
+          ),
+          type,
+          useStripeSdk,
+          ...toDocumentPartial(
+            {
+              verifyWithMicrodeposits: verifyWithMicrodeposits ? ((
+                {
+                  arrival_date:            arrivalDate,
+                  hosted_verification_url: hostedVerificationUrl,
+                  microdeposit_type:       microdepositType,
+                }: Stripe.SetupIntent.NextAction.VerifyWithMicrodeposits,
+              ): Exclude<Exclude<StripeSetupIntentDocument["nextAction"], undefined>["verifyWithMicrodeposits"], undefined> => ({
+                arrivalDate: Timestamp.fromMillis(arrivalDate * 1000),
+                hostedVerificationUrl,
+                ...toDocumentPartial({ microdepositType }),
+              }))(verifyWithMicrodeposits) : undefined,
+            },
+          ),
+        }))(nextAction) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { paymentMethod },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        paymentMethodConfigurationDetails: paymentMethodConfigurationDetails ? ((
+          {
+            id,
+            parent,
+          }: Stripe.SetupIntent.PaymentMethodConfigurationDetails,
+        ): Exclude<StripeSetupIntentDocument["paymentMethodConfigurationDetails"], undefined> => ({
+          id,
+          ...toDocumentPartial({ parent }),
+        }))(paymentMethodConfigurationDetails) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      {
+        paymentMethodOptions: paymentMethodOptions ? ((
+          {
+            card,
+          }: Stripe.SetupIntent.PaymentMethodOptions,
+        ): Exclude<StripeSetupIntentDocument["paymentMethodOptions"], undefined> => ({
+          ...toDocumentPartial(
+            {
+              card: card ? ((
+                {
+                  mandate_options: mandateOptions,
+                  network,
+                  request_three_d_secure: requestThreeDSecure,
+                }: Stripe.SetupIntent.PaymentMethodOptions.Card,
+              ): Exclude<Exclude<StripeSetupIntentDocument["paymentMethodOptions"], undefined>["card"], undefined> => ({
+                ...toDocumentPartial(
+                  {
+                    mandateOptions: mandateOptions ? ((
+                      {
+                        amount,
+                        amount_type: amountType,
+                        currency,
+                        description,
+                        end_date: endDate,
+                        interval,
+                        interval_count: intervalCount,
+                        reference,
+                        start_date:      startDate,
+                        supported_types: supportedTypes,
+                      }: Stripe.SetupIntent.PaymentMethodOptions.Card.MandateOptions,
+                    ): Exclude<Exclude<Exclude<StripeSetupIntentDocument["paymentMethodOptions"], undefined>["card"], undefined>["mandateOptions"], undefined> => ({
+                      ...toDocumentPartial({ description }),
+                      amount,
+                      amountType,
+                      currency,
+                      ...toDocumentPartial({ endDate: endDate ? Timestamp.fromMillis(endDate * 1000) : undefined }),
+                      interval,
+                      ...toDocumentPartial({ intervalCount }),
+                      reference,
+                      startDate: Timestamp.fromMillis(startDate * 1000),
+                      ...toDocumentPartial({ supportedTypes }),
+                    }))(mandateOptions) : undefined,
+                  },
+                ),
+                ...toDocumentPartial({ network }),
+                ...toDocumentPartial({ requestThreeDSecure }),
+              }))(card) : undefined,
+            },
+          ),
+        }))(paymentMethodOptions) : undefined,
+      },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { paymentMethodTypes },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { singleUseMandate },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { status },
+      withFieldValue,
+    ),
+    ...toDocumentPartial(
+      { usage },
+      withFieldValue,
+    ),
     userId,
   };
 }
@@ -743,26 +1213,51 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
             return response.sendStatus(200).end() && void (0);
-          case "customer.created":
-            if (!event.data.object.metadata["documentId"])
-              return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
+          case "customer.created": {
+            const collectionReference: CollectionReference<StripeCustomerDocument, StripeCustomerDocument> = firestore.collection("stripeCustomers") as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>;
 
-            return (firestore.collection("stripeCustomers").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>).set(
-              getStripeCustomerDocumentPartialWithFieldValue(event.data.object),
+            if (!event.data.object.metadata["documentId"]) {
+              return collectionReference.add(getStripeCustomerDocumentPartial(event.data.object)).then<void, never>(
+                (stripeCustomerDocumentReference: DocumentReference<StripeCustomerDocument, StripeProductDocument>): Promise<void> => stripe.customers.update(
+                  event.data.object.id,
+                  {
+                    metadata: {
+                      documentId: stripeCustomerDocumentReference.id,
+                    },
+                  },
+                ).then<void, never>(
+                  (): void => response.sendStatus(200).end() && void (0),
+                  (error: unknown): never => {
+                    response.status(500).send("Something went wrong").end();
+
+                    throw error;
+                  },
+                ),
+                (error: unknown): never => {
+                  response.status(500).send("Something went wrong").end();
+
+                  throw error;
+                },
+              );
+            }
+
+            return collectionReference.doc(event.data.object.metadata["documentId"]).set(
+              getStripeCustomerDocumentPartial(
+                event.data.object,
+                true,
+              ),
               {
                 merge: true,
               },
             ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
+          }
           case "customer.deleted":
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
@@ -770,12 +1265,9 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             return (firestore.collection("stripeCustomers").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>).delete().then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "customer.discount.created":
@@ -884,15 +1376,17 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
-            return (firestore.collection("stripeCustomers").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>).update(getStripeCustomerDocumentPartialWithFieldValue(event.data.object)).then<void, never>(
+            return (firestore.collection("stripeCustomers").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>).update(
+              getStripeCustomerDocumentPartial(
+                event.data.object,
+                true,
+              ),
+            ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "customer_cash_balance_transaction.created":
@@ -1177,12 +1671,12 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               "==",
               event.data.object.id,
             ).get().then<void, never>(
-              (stripePaymentMethodDocumentQuerySnapshot: QuerySnapshot<StripePaymentMethodDocument, StripePaymentMethodDocument>): void => {
+              async (stripePaymentMethodDocumentQuerySnapshot: QuerySnapshot<StripePaymentMethodDocument, StripePaymentMethodDocument>): Promise<void> => {
                 if (!stripePaymentMethodDocumentQuerySnapshot.docs.length)
                   return response.status(400).send("The stripe payment method document is missing.").end() && void (0);
 
-                stripe.paymentMethods.update(
-                  stripePaymentMethodDocumentQuerySnapshot.docs[0].data().id,
+                return stripe.paymentMethods.update(
+                  event.data.object.id,
                   {
                     metadata: {
                       documentId: stripePaymentMethodDocumentQuerySnapshot.docs[0].id,
@@ -1192,16 +1686,16 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
                 ).then<void, never>(
                   (): void => response.sendStatus(200).end() && void (0),
                   (error: unknown): never => {
-                    response.status(500).send(error).end();
+                    response.status(500).send("Something went wrong").end();
 
-                    throw new Error("Something went wrong.");
+                    throw error;
                   },
                 );
               },
               (error: unknown): never => {
-                response.status(500).send(error).end();
+                response.status(500).send("Something went wrong").end();
 
-                throw new Error("Something went wrong.");
+                throw error;
               },
             );
           case "payment_method.automatically_updated":
@@ -1215,19 +1709,17 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
 
             return (firestore.collection("stripePaymentMethods").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripePaymentMethodDocument, StripePaymentMethodDocument>).update(
-              getStripePaymentMethodDocumentPartialWithFieldValue(
+              getStripePaymentMethodDocumentPartial(
                 event.data.object,
                 event.data.object.metadata["userId"],
+                true,
               ),
             ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "payment_method.detached":
@@ -1240,12 +1732,9 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             return (firestore.collection("stripePaymentMethods").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripePaymentMethodDocument, StripePaymentMethodDocument>).delete().then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "payment_method.updated":
@@ -1259,19 +1748,17 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
 
             return (firestore.collection("stripePaymentMethods").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripePaymentMethodDocument, StripePaymentMethodDocument>).update(
-              getStripePaymentMethodDocumentPartialWithFieldValue(
+              getStripePaymentMethodDocumentPartial(
                 event.data.object,
                 event.data.object.metadata["userId"],
+                true,
               ),
             ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "payout.canceled":
@@ -1370,36 +1857,154 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
             return response.sendStatus(200).end() && void (0);
-          case "price.created":
-            if (!event.data.object.metadata["documentId"])
-              return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
+          case "price.created": {
+            const collectionReference: CollectionReference<StripePriceDocument, StripePriceDocument> = firestore.collection("stripePrices") as CollectionReference<StripePriceDocument, StripePriceDocument>;
 
-            return response.sendStatus(200).end() && void (0);
+            if (!event.data.object.metadata["documentId"]) {
+              return collectionReference.add(getStripePriceDocumentPartial(event.data.object)).then<void, never>(
+                (stripePriceDocumentReference: DocumentReference<StripePriceDocument, StripePriceDocument>): Promise<void> => stripe.prices.update(
+                  event.data.object.id,
+                  {
+                    metadata: {
+                      documentId: stripePriceDocumentReference.id,
+                    },
+                  },
+                ).then<void, never>(
+                  (): void => response.sendStatus(200).end() && void (0),
+                  (error: unknown): never => {
+                    response.status(500).send("Something went wrong").end();
+
+                    throw error;
+                  },
+                ),
+                (error: unknown): never => {
+                  response.status(500).send("Something went wrong").end();
+
+                  throw error;
+                },
+              );
+            }
+
+            return collectionReference.doc(event.data.object.metadata["documentId"]).set(
+              getStripePriceDocumentPartial(
+                event.data.object,
+                true,
+              ),
+              {
+                merge: true,
+              },
+            ).then<void, never>(
+              (): void => response.sendStatus(200).end() && void (0),
+              (error: unknown): never => {
+                response.status(500).send("Something went wrong").end();
+
+                throw error;
+              },
+            );
+          }
           case "price.deleted":
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
-            return response.sendStatus(200).end() && void (0);
+            return (firestore.collection("stripePrices").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripePriceDocument, StripePriceDocument>).delete().then<void, never>(
+              (): void => response.sendStatus(200).end() && void (0),
+              (error: unknown): never => {
+                response.status(500).send("Something went wrong").end();
+
+                throw error;
+              },
+            );
           case "price.updated":
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
-            return response.sendStatus(200).end() && void (0);
-          case "product.created":
-            if (!event.data.object.metadata["documentId"])
-              return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
+            return (firestore.collection("stripePrices").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripePriceDocument, StripePriceDocument>).update(
+              getStripePriceDocumentPartial(
+                event.data.object,
+                true,
+              ),
+            ).then<void, never>(
+              (): void => response.sendStatus(200).end() && void (0),
+              (error: unknown): never => {
+                response.status(500).send("Something went wrong").end();
 
-            return response.sendStatus(200).end() && void (0);
+                throw error;
+              },
+            );
+          case "product.created": {
+            const collectionReference: CollectionReference<StripeProductDocument, StripeProductDocument> = firestore.collection("stripeProducts") as CollectionReference<StripeProductDocument, StripeProductDocument>;
+
+            if (!event.data.object.metadata["documentId"]) {
+              return collectionReference.add(getStripeProductDocumentPartial(event.data.object)).then<void, never>(
+                (stripeProductDocumentReference: DocumentReference<StripeProductDocument, StripeProductDocument>): Promise<void> => stripe.products.update(
+                  event.data.object.id,
+                  {
+                    metadata: {
+                      documentId: stripeProductDocumentReference.id,
+                    },
+                  },
+                ).then<void, never>(
+                  (): void => response.sendStatus(200).end() && void (0),
+                  (error: unknown): never => {
+                    response.status(500).send("Something went wrong").end();
+
+                    throw error;
+                  },
+                ),
+                (error: unknown): never => {
+                  response.status(500).send("Something went wrong").end();
+
+                  throw error;
+                },
+              );
+            }
+
+            return collectionReference.doc(event.data.object.metadata["documentId"]).set(
+              getStripeProductDocumentPartial(
+                event.data.object,
+                true,
+              ),
+              {
+                merge: true,
+              },
+            ).then<void, never>(
+              (): void => response.sendStatus(200).end() && void (0),
+              (error: unknown): never => {
+                response.status(500).send("Something went wrong").end();
+
+                throw error;
+              },
+            );
+          }
           case "product.deleted":
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
-            return response.sendStatus(200).end() && void (0);
+            return (firestore.collection("stripeProducts").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeProductDocument, StripeProductDocument>).delete().then<void, never>(
+              (): void => response.sendStatus(200).end() && void (0),
+              (error: unknown): never => {
+                response.status(500).send("Something went wrong").end();
+
+                throw error;
+              },
+            );
           case "product.updated":
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
-            return response.sendStatus(200).end() && void (0);
+            return (firestore.collection("stripeProducts").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeProductDocument, StripeProductDocument>).update(
+              getStripeProductDocumentPartial(
+                event.data.object,
+                true,
+              ),
+            ).then<void, never>(
+              (): void => response.sendStatus(200).end() && void (0),
+              (error: unknown): never => {
+                response.status(500).send("Something went wrong").end();
+
+                throw error;
+              },
+            );
           case "promotion_code.created":
             if (!event.data.object.metadata)
               return response.status(400).send("A value for `metadata` is missing from the object.").end() && void (0);
@@ -1484,12 +2089,9 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             return (firestore.collection("stripeSetupIntents").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeSetupIntentDocument, StripeSetupIntentDocument>).delete().then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "setup_intent.created":
@@ -1503,9 +2105,10 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
 
             return (firestore.collection("stripeSetupIntents").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeSetupIntentDocument, StripeSetupIntentDocument>).set(
-              getStripeSetupIntentDocumentPartialWithFieldValue(
+              getStripeSetupIntentDocumentPartial(
                 event.data.object,
                 event.data.object.metadata["userId"],
+                true,
               ),
               {
                 merge: true,
@@ -1513,12 +2116,9 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "setup_intent.requires_action":
@@ -1532,19 +2132,17 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
 
             return (firestore.collection("stripeSetupIntents").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeSetupIntentDocument, StripeSetupIntentDocument>).update(
-              getStripeSetupIntentDocumentPartialWithFieldValue(
+              getStripeSetupIntentDocumentPartial(
                 event.data.object,
                 event.data.object.metadata["userId"],
+                true,
               ),
             ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "setup_intent.setup_failed":
@@ -1558,19 +2156,17 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
               return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
 
             return (firestore.collection("stripeSetupIntents").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeSetupIntentDocument, StripeSetupIntentDocument>).update(
-              getStripeSetupIntentDocumentPartialWithFieldValue(
+              getStripeSetupIntentDocumentPartial(
                 event.data.object,
                 event.data.object.metadata["userId"],
+                true,
               ),
             ).then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "setup_intent.succeeded":
@@ -1583,12 +2179,9 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             return (firestore.collection("stripeSetupIntents").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeSetupIntentDocument, StripeSetupIntentDocument>).delete().then<void, never>(
               (): void => response.sendStatus(200).end() && void (0),
               (error: unknown): never => {
-                console.error(error);
+                response.status(500).send("Something went wrong").end();
 
-                throw new HttpsError(
-                  "unknown",
-                  "Something went wrong.",
-                );
+                throw error;
               },
             );
           case "sigma.scheduled_query_run.created":
