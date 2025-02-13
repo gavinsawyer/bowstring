@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject }               from "@angular/core";
 import { ReactiveFormsModule }                                      from "@angular/forms";
-import { MusicKitInstanceLoaderService }                            from "@standard/services";
+import { MusicKitInstanceLoaderService }                            from "@bowstring/services";
 import { BoxComponent, FlexboxContainerComponent, HeaderComponent } from "../../../../../../../";
 import { AccountChildRouteComponent }                               from "../../../child/AccountChildRouteComponent";
 

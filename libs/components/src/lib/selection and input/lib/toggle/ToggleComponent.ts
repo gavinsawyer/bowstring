@@ -2,7 +2,7 @@ import { NgTemplateOutlet }                                                     
 import { ChangeDetectionStrategy, Component, contentChild, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, model, type ModelSignal, Renderer2, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
 import { toObservable }                                                                                                                                                                                              from "@angular/core/rxjs-interop";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                   from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective, ToggleSymbolDirective }                                                                                                    from "@standard/directives";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective, ToggleSymbolDirective }                                                                                                    from "@bowstring/directives";
 import { firstValueFrom }                                                                                                                                                                                            from "rxjs";
 import { v7 as uuidV7 }                                                                                                                                                                                              from "uuid";
 
@@ -49,7 +49,7 @@ import { v7 as uuidV7 }                                                         
         ),
       },
     ],
-    selector:        "standard--toggle",
+    selector:        "bowstring--toggle",
     styleUrl:        "ToggleComponent.sass",
     templateUrl:     "ToggleComponent.html",
 
@@ -63,7 +63,7 @@ export class ToggleComponent
   private readonly injector: Injector                                         = inject<Injector>(Injector);
   private readonly renderer2: Renderer2                                       = inject<Renderer2>(Renderer2);
 
-  protected readonly inputName$: Signal<`standard--toggle--input-${ string }`>                  = signal<`standard--toggle--input-${ string }`>(`standard--toggle--input-${ uuidV7() }`);
+  protected readonly inputName$: Signal<`bowstring--toggle--input-${ string }`>                  = signal<`bowstring--toggle--input-${ string }`>(`bowstring--toggle--input-${ uuidV7() }`);
   protected readonly symbolTemplateRef$: Signal<TemplateRef<ToggleSymbolDirective> | undefined> = contentChild<ToggleSymbolDirective, TemplateRef<ToggleSymbolDirective>>(
     ToggleSymbolDirective,
     {

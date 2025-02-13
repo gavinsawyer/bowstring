@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                       from "@angular/common";
 import { ChangeDetectionStrategy, Component, contentChildren, input, type InputSignal, type Signal, TemplateRef } from "@angular/core";
-import { ListItemDirective }                                                                                      from "@standard/directives";
+import { ListItemDirective }                                                                                      from "@bowstring/directives";
 
 
 @Component(
@@ -9,7 +9,7 @@ import { ListItemDirective }                                                    
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--list",
+    selector:        "bowstring--list",
     styleUrl:        "ListComponent.sass",
     templateUrl:     "ListComponent.html",
 

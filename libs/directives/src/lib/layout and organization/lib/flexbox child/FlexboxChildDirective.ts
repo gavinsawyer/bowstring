@@ -1,13 +1,13 @@
 import { Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute } from "@angular/core";
-import { type Auto, type Inherit, type ScalarString }                                         from "@standard/types";
+import { type Auto, type Inherit, type ScalarString }                                         from "@bowstring/types";
 
 
 @Directive(
   {
     host: {
-      "[style.--standard--flexbox-child-directive--flex-basis-input]":  "flexBasisInput$()",
-      "[style.--standard--flexbox-child-directive--flex-grow-input]":   "flexGrowInput$()",
-      "[style.--standard--flexbox-child-directive--flex-shrink-input]": "flexShrinkInput$()",
+      "[style.--bowstring--flexbox-child-directive--flex-basis-input]":  "flexBasisInput$()",
+      "[style.--bowstring--flexbox-child-directive--flex-grow-input]":   "flexGrowInput$()",
+      "[style.--bowstring--flexbox-child-directive--flex-shrink-input]": "flexShrinkInput$()",
     },
 
     standalone: true,

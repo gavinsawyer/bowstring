@@ -1,4 +1,4 @@
-import type * as config from "@standard/config";
+import type * as config from "@bowstring/config";
 
 
 export type Config = typeof config;

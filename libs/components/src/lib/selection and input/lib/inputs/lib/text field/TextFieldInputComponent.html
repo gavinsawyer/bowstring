@@ -6,7 +6,7 @@
   @if (labelInput$()) {<!--suppress XmlInvalidId -->
   <label
     [attr.for]="inputName$()"
-    [innerHTML]="explicitAutocompleteInput$() ? (labelInput$() | standardInsertZwnjs) : labelInput$()"></label>}
+    [innerHTML]="explicitAutocompleteInput$() ? (labelInput$() | bowstringInsertZwnjs) : labelInput$()"></label>}
   <div>
     <div class="harness" #htmlDivElement
       (click)="$event.stopPropagation();"

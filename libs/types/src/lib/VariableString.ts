@@ -1,1 +1,1 @@
-export type VariableString = `var(--standard--${ string }--${ string })`;
+export type VariableString = `var(--bowstring--${ string }--${ string })`;

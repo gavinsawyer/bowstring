@@ -4,8 +4,8 @@ import { BreakpointObserver, type BreakpointState }                             
 import { isPlatformBrowser }                                                                                                                                                       from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, effect, type ElementRef, inject, Injector, LOCALE_ID, PLATFORM_ID, signal, type Signal, viewChild, type WritableSignal } from "@angular/core";
 import { toSignal }                                                                                                                                                                from "@angular/core/rxjs-interop";
-import { type StripeCustomerDocument }                                                                                                                                             from "@standard/interfaces";
-import { StripeApiLoaderService, StripeCustomersService }                                                                                                                          from "@standard/services";
+import { type StripeCustomerDocument }                                                                                                                                             from "@bowstring/interfaces";
+import { StripeApiLoaderService, StripeCustomersService }                                                                                                                          from "@bowstring/services";
 import { type BaseStripeElementsOptions, type Stripe, type StripeElement, type StripeElementLocale, type StripeElements, type StripeError }                                        from "@stripe/stripe-js";
 import { map }                                                                                                                                                                     from "rxjs";
 

@@ -1,8 +1,8 @@
 import { DOCUMENT, isPlatformBrowser }                                  from "@angular/common";
 import { HttpClient }                                                   from "@angular/common/http";
 import { inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2 } from "@angular/core";
-import { ENVIRONMENT }                                                  from "@standard/injection-tokens";
-import { type Environment }                                             from "@standard/interfaces";
+import { ENVIRONMENT }                                                  from "@bowstring/injection-tokens";
+import { type Environment }                                             from "@bowstring/interfaces";
 import { take }                                                         from "rxjs";
 
 

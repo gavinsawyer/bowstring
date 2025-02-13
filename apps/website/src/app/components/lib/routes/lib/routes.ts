@@ -2,7 +2,7 @@
 
 import { type Type }                                from "@angular/core";
 import { type ActivatedRouteSnapshot, type Routes } from "@angular/router";
-import { description, title }                       from "@standard/brand";
+import { description, title }                       from "@bowstring/brand";
 
 
 const routes: Routes = [

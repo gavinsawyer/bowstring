@@ -12,12 +12,12 @@
   @include ElevatedDirective.host
   @include WellRoundedDirective.host
 
-  --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
+  --bowstring--container-directive--aspect-ratio: var(--bowstring--image--aspect-ratio) !important
 
   > .harness > .between
     display: flex
 
     > google-map
       height: auto
-      max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
+      max-width: calc(100% - 2 * var(--bowstring--container-directive--margin-sides-input, 0px) - 2 * var(--bowstring--container-directive--padding-sides-input, 0px))
       width: 100%

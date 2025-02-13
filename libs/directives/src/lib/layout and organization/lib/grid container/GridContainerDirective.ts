@@ -1,21 +1,21 @@
 import { Directive, input, type InputSignal }                                                                                                from "@angular/core";
-import { type DistributedAlignment, type GridAutoFlow, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
+import { type DistributedAlignment, type GridAutoFlow, type GridPositionalAlignment, type Inherit, type NormalAlignment, type ScalarString } from "@bowstring/types";
 import { ContainerDirective }                                                                                                                from "../container/ContainerDirective";
 
 
 @Directive(
   {
     host:           {
-      "[style.--standard--grid-container-directive--align-content-input]":         "alignContentInput$()",
-      "[style.--standard--grid-container-directive--align-items-input]":           "alignItemsInput$()",
-      "[style.--standard--grid-container-directive--gap-column-input]":            "gapColumnInput$()",
-      "[style.--standard--grid-container-directive--gap-row-input]":               "gapRowInput$()",
-      "[style.--standard--grid-container-directive--grid-auto-flow-input]":        "gridAutoFlowInput$()",
-      "[style.--standard--grid-container-directive--grid-auto-columns-input]":     "gridAutoColumnsInput$()",
-      "[style.--standard--grid-container-directive--grid-auto-rows-input]":        "gridAutoRowsInput$()",
-      "[style.--standard--grid-container-directive--grid-template-columns-input]": "gridTemplateColumnsInput$()",
-      "[style.--standard--grid-container-directive--grid-template-rows-input]":    "gridTemplateRowsInput$()",
-      "[style.--standard--grid-container-directive--justify-content-input]":       "justifyContentInput$()",
+      "[style.--bowstring--grid-container-directive--align-content-input]":         "alignContentInput$()",
+      "[style.--bowstring--grid-container-directive--align-items-input]":           "alignItemsInput$()",
+      "[style.--bowstring--grid-container-directive--gap-column-input]":            "gapColumnInput$()",
+      "[style.--bowstring--grid-container-directive--gap-row-input]":               "gapRowInput$()",
+      "[style.--bowstring--grid-container-directive--grid-auto-flow-input]":        "gridAutoFlowInput$()",
+      "[style.--bowstring--grid-container-directive--grid-auto-columns-input]":     "gridAutoColumnsInput$()",
+      "[style.--bowstring--grid-container-directive--grid-auto-rows-input]":        "gridAutoRowsInput$()",
+      "[style.--bowstring--grid-container-directive--grid-template-columns-input]": "gridTemplateColumnsInput$()",
+      "[style.--bowstring--grid-container-directive--grid-template-rows-input]":    "gridTemplateRowsInput$()",
+      "[style.--bowstring--grid-container-directive--justify-content-input]":       "justifyContentInput$()",
     },
     hostDirectives: [
       {

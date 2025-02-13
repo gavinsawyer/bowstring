@@ -1,28 +1,28 @@
-<standard--header>
+<bowstring--header>
   <h6 i18n="@@libs--Components--Signout--Header">Sign out?</h6>
-</standard--header>
-<standard--divider />
-<standard--section
+</bowstring--header>
+<bowstring--divider />
+<bowstring--section
   flexDirection="row"
   flexWrap="wrap-reverse">
-  <standard--button
+  <bowstring--button
     appearance="raised"
     flexGrow="1"
     level="2"
     (output)="sheetComponentInput$().openModel$.set(false);">
-    <standard--symbol input="ArrowBackward" />
-    <standard--label
+    <bowstring--symbol input="ArrowBackward" />
+    <bowstring--label
       i18n-input
       input="Cancel" />
-  </standard--button>
-  <standard--button
+  </bowstring--button>
+  <bowstring--button
     appearance="raised"
     flexGrow="999"
     level="2"
     material="inverse"
     (output)="authenticationService.signInAnonymously(); sheetComponentInput$().openModel$.set(false);">
-    <standard--label
+    <bowstring--label
       i18n-input
       input="Yes, sign out" />
-  </standard--button>
-</standard--section>
+  </bowstring--button>
+</bowstring--section>

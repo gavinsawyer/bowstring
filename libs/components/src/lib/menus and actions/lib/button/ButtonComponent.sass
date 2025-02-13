@@ -15,9 +15,9 @@
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-container-directive--align-items: center !important
-  --standard--flexbox-container-directive--flex-direction: row !important
-  --standard--flexbox-container-directive--justify-content: center !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
 
   > .harness
     cursor: default
@@ -30,17 +30,17 @@
       > div
         display: contents
 
-        --standard--button--gap-column: calc(1rem * pow(var(--phi), -2))
-        --standard--button--gap-row: calc(1rem * pow(var(--phi), -3))
+        --bowstring--button--gap-column: calc(1rem * pow(var(--phi), -2))
+        --bowstring--button--gap-row: calc(1rem * pow(var(--phi), -3))
 
         @include FlexboxContainerDirective.host
 
-        --standard--flexbox-child-directive--flex-basis: 100% !important
-        --standard--flexbox-container-directive--align-items: center !important
-        --standard--flexbox-container-directive--flex-direction: row !important
-        --standard--flexbox-container-directive--gap-column: var(--standard--button--gap-column) !important
-        --standard--flexbox-container-directive--gap-row: var(--standard--button--gap-row) !important
-        --standard--flexbox-container-directive--justify-content: center !important
+        --bowstring--flexbox-child-directive--flex-basis: 100% !important
+        --bowstring--flexbox-container-directive--align-items: center !important
+        --bowstring--flexbox-container-directive--flex-direction: row !important
+        --bowstring--flexbox-container-directive--gap-column: var(--bowstring--button--gap-column) !important
+        --bowstring--flexbox-container-directive--gap-row: var(--bowstring--button--gap-row) !important
+        --bowstring--flexbox-container-directive--justify-content: center !important
 
         > .harness
           background: none
@@ -73,7 +73,7 @@
       @include PrimaryDirective.host
 
       > .harness > .between
-        color: var(--standard--primary-directive--colors--background) !important
+        color: var(--bowstring--primary-directive--colors--background) !important
 
         &::ng-deep > *
           @include PrimaryDirective.children
@@ -82,7 +82,7 @@
       @include SecondaryDirective.host
 
       > .harness > .between
-        color: var(--standard--secondary-directive--colors--background) !important
+        color: var(--bowstring--secondary-directive--colors--background) !important
 
         &::ng-deep > *
           @include SecondaryDirective.children
@@ -91,7 +91,7 @@
       @include WarningDirective.host
 
       > .harness > .between
-        color: var(--standard--warning-directive--colors--background) !important
+        color: var(--bowstring--warning-directive--colors--background) !important
 
         &::ng-deep > *
           @include WarningDirective.children
@@ -111,15 +111,15 @@
         @include CanvasDirective.children
 
     &.material-glass
-      --standard--button--material-opacity: 0.625
+      --bowstring--button--material-opacity: 0.625
 
       @include GlassDirective.host(12%)
 
-      --standard--elevated-directive--material-opacity: var(--standard--button--material-opacity) !important
-      --standard--glass-directive--material-opacity: var(--standard--button--material-opacity) !important
+      --bowstring--elevated-directive--material-opacity: var(--bowstring--button--material-opacity) !important
+      --bowstring--glass-directive--material-opacity: var(--bowstring--button--material-opacity) !important
 
       > .harness > .between::ng-deep > *
-        --standard--button--material-opacity: initial
+        --bowstring--button--material-opacity: initial
 
         @include GlassDirective.children
 
@@ -154,12 +154,12 @@
         @include WellRoundedDirective.children
 
       > div
-        --standard--button--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1))
-        --standard--button--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1))
+        --bowstring--button--gap-column: calc(var(--bowstring--container-directive--padding-sides) * pow(var(--phi), -1))
+        --bowstring--button--gap-row: calc(var(--bowstring--container-directive--padding-bottom) * pow(var(--phi), -1))
 
-        --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-        --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-        --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+        --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+        --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+        --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
   &.appearance-symbol > .harness > .between > div > .harness > .between
     font-size: calc(1rem * pow(var(--phi), 1))

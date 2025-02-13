@@ -1,37 +1,37 @@
 <ng-template #aboveTemplate>
-  <standard--section
+  <bowstring--section
     alignItems="center"
     flexDirection="row"
     flexShrink="0">
-    <standard--header
+    <bowstring--header
       alignItems="last baseline"
       flexDirection="row"
       fontSizeExponent="-2"
       justifyContent="space-between">
-      <h2>@if (galleryRoutes | standardFindRouteByPath:''; as route) {<standard--link
+      <h2>@if (galleryRoutes | bowstringFindRouteByPath:''; as route) {<bowstring--link
         exact
         inline
         [url]="'./' + route.path">
-        <standard--label [input]="route.data?.['title']" />
-      </standard--link>}</h2>
-    </standard--header>
-  </standard--section>
-  <standard--flexbox-container
+        <bowstring--label [input]="route.data?.['title']" />
+      </bowstring--link>}</h2>
+    </bowstring--header>
+  </bowstring--section>
+  <bowstring--flexbox-container
     flexBasis="100%"
     flexGrow="1"
     gapColumn="0"
     gapRow="0">
-    <standard--flexbox-container class="above">
-      <standard--flexbox-container flexGrow="1">
-        <standard--section
+    <bowstring--flexbox-container class="above">
+      <bowstring--flexbox-container flexGrow="1">
+        <bowstring--section
           flexGrow="1"
           flexShrink="0">
           <router-outlet />
-        </standard--section>
-        @if (routerOutlet$()?.isActivated && inspectorTemplateRef$(); as inspectorTemplateRef) {<standard--inspector>
+        </bowstring--section>
+        @if (routerOutlet$()?.isActivated && inspectorTemplateRef$(); as inspectorTemplateRef) {<bowstring--inspector>
           <ng-container *ngTemplateOutlet="inspectorTemplateRef" />
-        </standard--inspector>}
-      </standard--flexbox-container>
-    </standard--flexbox-container>
-  </standard--flexbox-container>
+        </bowstring--inspector>}
+      </bowstring--flexbox-container>
+    </bowstring--flexbox-container>
+  </bowstring--flexbox-container>
 </ng-template>

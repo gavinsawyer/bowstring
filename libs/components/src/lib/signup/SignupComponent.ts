@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, input, type InputSignal }  
 import { UserCredential }                                                                                       from "@angular/fire/auth";
 import { doc, type DocumentReference, Firestore, setDoc }                                                       from "@angular/fire/firestore";
 import { type AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators } from "@angular/forms";
-import { type AccountDocument, type StripeCustomerDocument }                                                    from "@standard/interfaces";
-import { AuthenticationService }                                                                                from "@standard/services";
+import { type AccountDocument, type StripeCustomerDocument }                                                    from "@bowstring/interfaces";
+import { AuthenticationService }                                                                                from "@bowstring/services";
 import { CaptionComponent, HeaderComponent, LabelComponent, SymbolComponent }                                   from "../content";
 import { DividerComponent, FlexboxContainerComponent, ListComponent, SectionComponent }                         from "../layout and organization";
 import { ButtonComponent, LinkComponent }                                                                       from "../menus and actions";
@@ -29,7 +29,7 @@ import { FormComponent, TextFieldInputComponent }                               
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    selector:        "standard--signup",
+    selector:        "bowstring--signup",
     styleUrl:        "SignupComponent.sass",
     templateUrl:     "SignupComponent.html",
 

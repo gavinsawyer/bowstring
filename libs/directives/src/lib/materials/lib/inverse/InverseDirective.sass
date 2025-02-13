@@ -21,8 +21,8 @@ $foreground: functions.get-color-reference($namespace, "foreground")
 
 
 @mixin color-scheme($theme, $shade)
-  --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
-  --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
+  --bowstring--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
+  --bowstring--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
 
 @mixin children
   @include mixins.reset-colors($namespace, ("background", "foreground"))

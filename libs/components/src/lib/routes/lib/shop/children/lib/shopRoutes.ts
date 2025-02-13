@@ -2,7 +2,7 @@
 
 import { type Type }                                                                             from "@angular/core";
 import { type ActivatedRouteSnapshot, Route, type Routes, type UrlMatchResult, type UrlSegment } from "@angular/router";
-import { title as brandTitle }                                                                   from "@standard/brand";
+import { title as brandTitle }                                                                   from "@bowstring/brand";
 import { routes }                                                                                from "../../../../";
 
 

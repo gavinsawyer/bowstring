@@ -3,9 +3,9 @@ import { ChangeDetectionStrategy, Component, effect, inject }                   
 import { Auth }                                                                                                                                                                         from "@angular/fire/auth";
 import { addDoc, collection, type CollectionReference, Firestore, getDocs, query, type QueryDocumentSnapshot, type QuerySnapshot, serverTimestamp, where, writeBatch, type WriteBatch } from "@angular/fire/firestore";
 import { FormControl, FormGroup }                                                                                                                                                       from "@angular/forms";
-import { ContainerDirective }                                                                                                                                                           from "@standard/directives";
-import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripeSetupIntentDocument }                                                                                from "@standard/interfaces";
-import { StripeSetupIntentsService }                                                                                                                                                    from "@standard/services";
+import { ContainerDirective }                                                                                                                                                           from "@bowstring/directives";
+import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripeSetupIntentDocument }                                                                                from "@bowstring/interfaces";
+import { StripeSetupIntentsService }                                                                                                                                                    from "@bowstring/services";
 import { type DefaultValuesOption, type SetupIntentResult, type Stripe, type StripeElement, type StripeElements, type StripePaymentElementChangeEvent }                                 from "@stripe/stripe-js";
 import { type SheetComponent }                                                                                                                                                          from "../../../../../presentation";
 import { StripeElementComponent }                                                                                                                                                       from "../../../stripe element/StripeElementComponent";
@@ -42,7 +42,7 @@ import { StripeElementComponent }                                               
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--payment-stripe-element",
+    selector:        "bowstring--payment-stripe-element",
     styleUrl:        "PaymentStripeElementComponent.sass",
     templateUrl:     "PaymentStripeElementComponent.html",
 

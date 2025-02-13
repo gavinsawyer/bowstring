@@ -4,19 +4,19 @@
 \:host
   display: contents
 
-  --standard--flexbox-container--gap-column: 0
-  --standard--flexbox-container--gap-row: 0
+  --bowstring--flexbox-container--gap-column: 0
+  --bowstring--flexbox-container--gap-row: 0
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-container-directive--gap-column: var(--standard--flexbox-container--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--flexbox-container--gap-row) !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--flexbox-container--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--flexbox-container--gap-row) !important
 
   > .harness > .between::ng-deep > *
     @include FlexboxContainerDirective.children
 
 
 @each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
-  \:host-context(standard--#{ $host-context-namespace })
-    --standard--flexbox-container--gap-column: var(--standard--#{ $host-context-namespace }--gap-column)
-    --standard--flexbox-container--gap-row: var(--standard--#{ $host-context-namespace }--gap-row)
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--flexbox-container--gap-column: var(--bowstring--#{ $host-context-namespace }--gap-column)
+    --bowstring--flexbox-container--gap-row: var(--bowstring--#{ $host-context-namespace }--gap-row)

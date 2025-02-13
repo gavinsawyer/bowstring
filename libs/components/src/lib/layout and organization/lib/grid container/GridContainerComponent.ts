@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                   from "@angular/common";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { GridContainerDirective }             from "@standard/directives";
+import { GridContainerDirective }             from "@bowstring/directives";
 
 
 @Component(
@@ -26,7 +26,7 @@ import { GridContainerDirective }             from "@standard/directives";
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--grid-container",
+    selector:        "bowstring--grid-container",
     styleUrl:        "GridContainerComponent.sass",
     templateUrl:     "GridContainerComponent.html",
 

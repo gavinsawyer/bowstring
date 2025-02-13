@@ -1,4 +1,4 @@
-import { type StripeCustomerDocument } from "@standard/interfaces";
+import { type StripeCustomerDocument } from "@bowstring/interfaces";
 import type Stripe                     from "stripe";
 
 

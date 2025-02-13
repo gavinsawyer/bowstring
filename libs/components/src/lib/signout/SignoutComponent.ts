@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal } from "@angular/core";
 import { ReactiveFormsModule }                                                 from "@angular/forms";
-import { AuthenticationService }                                               from "@standard/services";
+import { AuthenticationService }                                               from "@bowstring/services";
 import { HeaderComponent, LabelComponent, SymbolComponent }                    from "../content";
 import { DividerComponent, SectionComponent }                                  from "../layout and organization";
 import { ButtonComponent }                                                     from "../menus and actions";
@@ -19,7 +19,7 @@ import { type SheetComponent }                                                 f
       SectionComponent,
       SymbolComponent,
     ],
-    selector:        "standard--signout",
+    selector:        "bowstring--signout",
     styleUrl:        "SignoutComponent.sass",
     templateUrl:     "SignoutComponent.html",
 

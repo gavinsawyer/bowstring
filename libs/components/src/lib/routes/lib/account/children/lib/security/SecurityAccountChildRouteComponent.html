@@ -1,181 +1,181 @@
-<standard--header>
+<bowstring--header>
   <h3 i18n="@@libs--Components--Routes--Account-Security--Header">Security</h3>
-</standard--header>
-<standard--flexbox-container>
-  <standard--box
+</bowstring--header>
+<bowstring--flexbox-container>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n="@@libs--Components--Routes--Account-Security--Passkey--Header">Passkey</h4>
-      <h5>@if (accountService.accountDocument$()?.security?.passkey) {<span i18n="@@libs--Components--Routes--Account-Security--Passkey--Subheader_1"><standard--symbol
+      <h5>@if (accountService.accountDocument$()?.security?.passkey) {<span i18n="@@libs--Components--Routes--Account-Security--Passkey--Subheader_1"><bowstring--symbol
         inline
-        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A passkey is saved to your account.</span>} @else {<span i18n="@@libs--Components--Routes--Account-Security--Passkey--Subheader_2"><standard--symbol
+        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A passkey is saved to your account.</span>} @else {<span i18n="@@libs--Components--Routes--Account-Security--Passkey--Subheader_2"><bowstring--symbol
         inline
         input="ShieldLefthalfFilledSlash" />&nbsp;No passkey saved.</span>}</h5>
-    </standard--header>
-    <standard--form (output)="passkeyFormGroupSubmit();">
-      <standard--text-field-input
+    </bowstring--header>
+    <bowstring--form (output)="passkeyFormGroupSubmit();">
+      <bowstring--text-field-input
         autocomplete="email"
         [formControl]="passkeyFormGroup.controls.email"
         level="2"
         placeholder="Email"
         type="email" />
-      <standard--divider />
-      <standard--button
+      <bowstring--divider />
+      <bowstring--button
         appearance="raised"
         [disabled]="passkeyFormGroup.invalid || accountService.accountDocument$()?.security?.passkey || undefined"
         level="2"
         material="inverse"
         type="submit">
-        <standard--symbol input="PersonBadgeKeyFill" />
-        <standard--label
+        <bowstring--symbol input="PersonBadgeKeyFill" />
+        <bowstring--label
           i18n-input
           input="Save passkey" />
-      </standard--button>
-      <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
+      </bowstring--button>
+      <bowstring--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<bowstring--symbol
         inline
-        input="PersonBadgeKeyFill" />&nbsp;<standard--label
+        input="PersonBadgeKeyFill" />&nbsp;<bowstring--label
         i18n-input
         inline
-        input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
-      @if (accountService.accountDocument$()?.security?.passkey && accountService.accountDocument$()?.security?.password || undefined) {<standard--caption><standard--link
+        input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</bowstring--caption>
+      @if (accountService.accountDocument$()?.security?.passkey && accountService.accountDocument$()?.security?.password || undefined) {<bowstring--caption><bowstring--link
         inline
         (output)="unlinkPasskeySheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
+        <bowstring--symbol input="TrashFill" />
+        <bowstring--label
           i18n-input
           input="Remove passkey" />
-      </standard--link></standard--caption>}
-    </standard--form>
-  </standard--box>
-  <standard--box
+      </bowstring--link></bowstring--caption>}
+    </bowstring--form>
+  </bowstring--box>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n="@@libs--Components--Routes--Account-Security--Password--Header">Password</h4>
-      <h5>@if (accountService.accountDocument$()?.security?.password) {<span i18n="@@libs--Components--Routes--Account-Security--Password--Subheader_1"><standard--symbol
+      <h5>@if (accountService.accountDocument$()?.security?.password) {<span i18n="@@libs--Components--Routes--Account-Security--Password--Subheader_1"><bowstring--symbol
         inline
-        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A password is saved to your account.</span>} @else {<span i18n="@@libs--Components--Routes--Account-Security--Password--Subheader_2"><standard--symbol
+        input="ShieldLefthalfFilledBadgeCheckmark" />&nbsp;A password is saved to your account.</span>} @else {<span i18n="@@libs--Components--Routes--Account-Security--Password--Subheader_2"><bowstring--symbol
         inline
         input="ShieldLefthalfFilledSlash" />&nbsp;No password saved.</span>}</h5>
-    </standard--header>
-    <standard--form (output)="passwordFormGroupSubmit();">
-      <standard--text-field-input
+    </bowstring--header>
+    <bowstring--form (output)="passwordFormGroupSubmit();">
+      <bowstring--text-field-input
         autocomplete="email"
         [formControl]="passwordFormGroup.controls.email"
         level="2"
         placeholder="Email"
         type="email" />
-      @if (accountService.accountDocument$()?.security?.password) {<standard--text-field-input
+      @if (accountService.accountDocument$()?.security?.password) {<bowstring--text-field-input
         autocomplete="current-password"
         [formControl]="passwordFormGroup.controls.passwordCurrent"
         i18n-placeholder
         level="2"
         placeholder="Current password"
         type="password" />}
-      @if (accountService.accountDocument$()?.security?.password) {<standard--text-field-input
+      @if (accountService.accountDocument$()?.security?.password) {<bowstring--text-field-input
         autocomplete="new-password"
         [formControl]="passwordFormGroup.controls.passwordNew"
         i18n-placeholder
         level="2"
         placeholder="New password"
-        type="password" />} @else {<standard--text-field-input
+        type="password" />} @else {<bowstring--text-field-input
         autocomplete="new-password"
         [formControl]="passwordFormGroup.controls.passwordNew"
         i18n-placeholder
         level="2"
         placeholder="Password"
         type="password" />}
-      <standard--divider />
-      <standard--button
+      <bowstring--divider />
+      <bowstring--button
         appearance="raised"
         [disabled]="passwordFormGroup.invalid"
         level="2"
         material="inverse"
         type="submit">
-        <standard--symbol input="EllipsisRectangleFill" />
-        @if (accountService.accountDocument$()?.security?.password) {<standard--label
+        <bowstring--symbol input="EllipsisRectangleFill" />
+        @if (accountService.accountDocument$()?.security?.password) {<bowstring--label
           i18n-input
-          input="Update password" />} @else {<standard--label
+          input="Update password" />} @else {<bowstring--label
           i18n-input
           input="Save password" />}
-      </standard--button>
-      @if (accountService.accountDocument$()?.security?.password && accountService.accountDocument$()?.security?.passkey || undefined) {<standard--caption><standard--link
+      </bowstring--button>
+      @if (accountService.accountDocument$()?.security?.password && accountService.accountDocument$()?.security?.passkey || undefined) {<bowstring--caption><bowstring--link
         inline
         (output)="unlinkPasswordSheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
+        <bowstring--symbol input="TrashFill" />
+        <bowstring--label
           i18n-input
           input="Remove password" />
-      </standard--link></standard--caption>}
-    </standard--form>
-  </standard--box>
-</standard--flexbox-container>
+      </bowstring--link></bowstring--caption>}
+    </bowstring--form>
+  </bowstring--box>
+</bowstring--flexbox-container>
 
-<standard--sheet #unlinkPasskeySheetComponent>
-  @defer {<standard--heading-group>
-    <standard--header>
+<bowstring--sheet #unlinkPasskeySheetComponent>
+  @defer {<bowstring--heading-group>
+    <bowstring--header>
       <h6 i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Header">Remove passkey?</h6>
-    </standard--header>
+    </bowstring--header>
     <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Paragraph_1">You will still be able to sign in using the password saved to your account.</p>
     <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPasskey--Paragraph_2">The passkey will continue to appear as an option in your browser until it is also deleted from your devices.</p>
-  </standard--heading-group>
-    <standard--divider />
-    <standard--section
+  </bowstring--heading-group>
+    <bowstring--divider />
+    <bowstring--section
       flexDirection="row"
       flexWrap="wrap-reverse">
-      <standard--button
+      <bowstring--button
         appearance="raised"
         flexGrow="1"
         level="2"
         (output)="unlinkPasskeySheetComponent.openModel$.set(false);">
-        <standard--symbol input="ArrowBackward" />
-        <standard--label
+        <bowstring--symbol input="ArrowBackward" />
+        <bowstring--label
           i18n-input
           input="Cancel" />
-      </standard--button>
-      <standard--button
+      </bowstring--button>
+      <bowstring--button
         appearance="raised"
         flexGrow="999"
         level="2"
         material="warning"
         (output)="authenticationService.unlinkPasskey(); unlinkPasskeySheetComponent.openModel$.set(false);">
-        <standard--label
+        <bowstring--label
           i18n-input
           input="Yes, remove" />
-      </standard--button>
-    </standard--section>}
-</standard--sheet>
-<standard--sheet #unlinkPasswordSheetComponent>
-  @defer {<standard--heading-group>
-    <standard--header>
+      </bowstring--button>
+    </bowstring--section>}
+</bowstring--sheet>
+<bowstring--sheet #unlinkPasswordSheetComponent>
+  @defer {<bowstring--heading-group>
+    <bowstring--header>
       <h6 i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPassword--Header">Remove password?</h6>
-    </standard--header>
+    </bowstring--header>
     <p i18n="@@libs--Components--Routes--Account-Security--Sheets--UnlinkPassword--Paragraph">You will still be able to sign in using the passkey saved to your account.</p>
-  </standard--heading-group>
-  <standard--divider />
-  <standard--section
+  </bowstring--heading-group>
+  <bowstring--divider />
+  <bowstring--section
     flexDirection="row"
     flexWrap="wrap-reverse">
-    <standard--button
+    <bowstring--button
       appearance="raised"
       flexGrow="1"
       level="2"
       (output)="unlinkPasswordSheetComponent.openModel$.set(false);">
-      <standard--symbol input="ArrowBackward" />
-      <standard--label
+      <bowstring--symbol input="ArrowBackward" />
+      <bowstring--label
         i18n-input
         input="Cancel" />
-    </standard--button>
-    <standard--button
+    </bowstring--button>
+    <bowstring--button
       appearance="raised"
       flexGrow="999"
       level="2"
       material="warning"
       (output)="authenticationService.unlinkPassword(); unlinkPasswordSheetComponent.openModel$.set(false);">
-      <standard--label
+      <bowstring--label
         i18n-input
         input="Yes, remove" />
-    </standard--button>
-  </standard--section>}
-</standard--sheet>
+    </bowstring--button>
+  </bowstring--section>}
+</bowstring--sheet>

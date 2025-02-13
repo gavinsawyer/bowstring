@@ -1,9 +1,9 @@
 import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                from "@angular/common";
 import { booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, PLATFORM_ID, signal, type Signal, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                             from "@angular/core/rxjs-interop";
-import { FlexboxContainerDirective }                                                                                                                                                          from "@standard/directives";
-import { SEGMENTED_CONTROL_VALUE_ACCESSOR }                                                                                                                                                   from "@standard/injection-tokens";
-import { SegmentedControlValueAccessor }                                                                                                                                                      from "@standard/interfaces";
+import { FlexboxContainerDirective }                                                                                                                                                          from "@bowstring/directives";
+import { SEGMENTED_CONTROL_VALUE_ACCESSOR }                                                                                                                                                   from "@bowstring/injection-tokens";
+import { SegmentedControlValueAccessor }                                                                                                                                                      from "@bowstring/interfaces";
 import { Observable, type Observer, switchMap, type TeardownLogic }                                                                                                                           from "rxjs";
 
 
@@ -28,7 +28,7 @@ import { Observable, type Observer, switchMap, type TeardownLogic }             
         ],
       },
     ],
-    selector:        "standard--segmented-control-option",
+    selector:        "bowstring--segmented-control-option",
     styleUrl:        "SegmentedControlOptionComponent.sass",
     templateUrl:     "SegmentedControlOptionComponent.html",
     imports:         [

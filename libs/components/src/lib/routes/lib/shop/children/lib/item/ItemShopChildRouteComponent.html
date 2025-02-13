@@ -1,104 +1,104 @@
-<standard--flexbox-container
+<bowstring--flexbox-container
   flexGrow="1"
   gapColumn="0"
   gapRow="0">
-  <standard--aside />
-  <standard--article
+  <bowstring--aside />
+  <bowstring--article
     flexGrow="1"
     flexShrink="0">
-    <standard--flexbox-container flexDirection="row">
-      <standard--image
+    <bowstring--flexbox-container flexDirection="row">
+      <bowstring--image
         appearance="transparent"
         flexGrow="1"
         height="726"
         src="/assets/photos/aesop2.png"
         width="581" />
-    </standard--flexbox-container>
-  </standard--article>
-</standard--flexbox-container>
-<standard--flexbox-container>
-  <standard--article
+    </bowstring--flexbox-container>
+  </bowstring--article>
+</bowstring--flexbox-container>
+<bowstring--flexbox-container>
+  <bowstring--article
     flexGrow="1"
     flexShrink="0">
-    <standard--masonry-container columns="2">
-      <standard--image
+    <bowstring--masonry-container columns="2">
+      <bowstring--image
         height="1800"
         src="https://www.aesop.com/u1nb1km7t5q7/4UisdOgOeTz1xFoYnRjdgw/e70ab98fd44a4d0e20ed527e88f86600/Moroccan-Neroli-Post-Shave-Lotion-1440x1800.jpg"
-        *standardMasonryChild
+        *bowstringMasonryChild
         width="1440" />
-      <standard--image
+      <bowstring--image
         height="1500"
         src="https://www.aesop.com/u1nb1km7t5q7/2XpD3DUMlGcfbDzGJrsD6k/95e5e6d4f83d2fe05098e5b0791c5e50/Aesop-Skin-Blue-Chamomile-Facial-Hydrating-Masque-Hybris-Secondary-Texture-50-50-Desktop-1440x1500px.jpg"
-        *standardMasonryChild
+        *bowstringMasonryChild
         width="1440" />
-    </standard--masonry-container>
-  </standard--article>
-</standard--flexbox-container>
+    </bowstring--masonry-container>
+  </bowstring--article>
+</bowstring--flexbox-container>
 
 <ng-template #inspectorTemplate>
-  <standard--heading-group>
-    <standard--header>
+  <bowstring--heading-group>
+    <bowstring--header>
       <h4>Blue Chamomile Facial Hydrating Masque</h4>
-      <h5><standard--link inline>
-        <standard--label input="skin" />
-      </standard--link>&nbsp;&bull;&nbsp;<standard--link inline>
-        <standard--label input="treat & masque" />
-      </standard--link></h5>
-    </standard--header>
-    <p><b><standard--label
+      <h5><bowstring--link inline>
+        <bowstring--label input="skin" />
+      </bowstring--link>&nbsp;&bull;&nbsp;<bowstring--link inline>
+        <bowstring--label input="treat & masque" />
+      </bowstring--link></h5>
+    </bowstring--header>
+    <p><b><bowstring--label
       i18n-input
       inline
-      input="Size" /></b>&nbsp;&lpar;<standard--link inline>
-      <standard--label
+      input="Size" /></b>&nbsp;&lpar;<bowstring--link inline>
+      <bowstring--label
         i18n-input
         input="See guide" />
-    </standard--link>&rpar;<br /><standard--label
+    </bowstring--link>&rpar;<br /><bowstring--label
       inline
       [input]="(2 | number:'1.1-3') + 'oz'" /></p>
-    <p><standard--symbol
+    <p><bowstring--symbol
       inline
-      [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<standard--label
+      [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<bowstring--label
       inline
       [input]="(60 * currencyService.exchangeRate$() | currency:currencyService.userCurrency$() === 'BTC' ? undefined : currencyService.userCurrency$():'':currencyService.userCurrency$() === 'BTC' ? '1.0-8' : undefined) || ''" /></p>
-  </standard--heading-group>
-  <standard--button
+  </bowstring--heading-group>
+  <bowstring--button
     appearance="raised"
     level="2"
     material="primary">
-    <standard--symbol input="BagFillBadgePlus" />
-    <standard--label
+    <bowstring--symbol input="BagFillBadgePlus" />
+    <bowstring--label
       i18n-input
       input="Add to bag" />
-  </standard--button>
-  <standard--button>
-    <standard--symbol input="BoltFill" />
-    <standard--label
+  </bowstring--button>
+  <bowstring--button>
+    <bowstring--symbol input="BoltFill" />
+    <bowstring--label
       i18n-input
       input="Buy instantly" />
-  </standard--button>
-  <standard--divider />
-  <standard--section>
-    <standard--heading-group>
+  </bowstring--button>
+  <bowstring--divider />
+  <bowstring--section>
+    <bowstring--heading-group>
       <p><b>Suited to</b><br />Dry or dehydrated skin, frequent travellers</p>
       <p><b>Skin feel</b><br />Hydrated, cool and refreshed with a dewy, transparent finish</p>
       <p><b>Key ingredients</b><br />Niacinamide &lpar;Vitamin B₃&rpar;, Sodium Carrageenan, Bisabolol</p>
-    </standard--heading-group>
-  </standard--section>
-  <standard--flexbox-container
+    </bowstring--heading-group>
+  </bowstring--section>
+  <bowstring--flexbox-container
     alignContent="center"
     flexDirection="row"
     flexWrap="wrap">
-    <standard--link>
-      <standard--symbol
+    <bowstring--link>
+      <bowstring--symbol
         fixedWidth
         input="BookmarkSlashFill" />
-      <standard--label input="Remove from collection" />
-    </standard--link>
-    <standard--link>
-      <standard--symbol
+      <bowstring--label input="Remove from collection" />
+    </bowstring--link>
+    <bowstring--link>
+      <bowstring--symbol
         fixedWidth
         input="SquareAndArrowUpFill" />
-      <standard--label input="Share" />
-    </standard--link>
-  </standard--flexbox-container>
+      <bowstring--label input="Share" />
+    </bowstring--link>
+  </bowstring--flexbox-container>
 </ng-template>

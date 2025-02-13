@@ -5,45 +5,45 @@
 \:host
   display: contents
 
-  --standard--root--font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue
-  --standard--root--gap-column: var(--standard--root--padding-sides)
-  --standard--root--gap-row: var(--standard--root--padding-bottom)
+  --bowstring--root--font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue
+  --bowstring--root--gap-column: var(--bowstring--root--padding-sides)
+  --bowstring--root--gap-row: var(--bowstring--root--padding-bottom)
 
-  --standard--root--padding-bottom: calc(1rem * pow(var(--phi), -1))
-  --standard--root--padding-sides: calc(1rem * pow(var(--phi), 0))
+  --bowstring--root--padding-bottom: calc(1rem * pow(var(--phi), -1))
+  --bowstring--root--padding-sides: calc(1rem * pow(var(--phi), 0))
 
   @media (min-width: 24rem)
-    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 0))
-    --standard--root--padding-sides: calc(1rem * pow(var(--phi), 1))
+    --bowstring--root--padding-bottom: calc(1rem * pow(var(--phi), 0))
+    --bowstring--root--padding-sides: calc(1rem * pow(var(--phi), 1))
 
   @media (min-width: 48rem)
-    --standard--root--padding-bottom: calc(1rem * pow(var(--phi), 1))
-    --standard--root--padding-sides: calc(1rem * pow(var(--phi), 2))
+    --bowstring--root--padding-bottom: calc(1rem * pow(var(--phi), 1))
+    --bowstring--root--padding-sides: calc(1rem * pow(var(--phi), 2))
 
-  --standard--root--padding-top: calc(var(--standard--root--padding-bottom) * pow(var(--phi), 2))
-  --standard--root--safe-area-inset-bottom: env(safe-area-inset-bottom)
-  --standard--root--safe-area-inset-left: env(safe-area-inset-left)
-  --standard--root--safe-area-inset-top: env(safe-area-inset-top)
-  --standard--root--safe-area-inset-right: env(safe-area-inset-right)
+  --bowstring--root--padding-top: calc(var(--bowstring--root--padding-bottom) * pow(var(--phi), 2))
+  --bowstring--root--safe-area-inset-bottom: env(safe-area-inset-bottom)
+  --bowstring--root--safe-area-inset-left: env(safe-area-inset-left)
+  --bowstring--root--safe-area-inset-top: env(safe-area-inset-top)
+  --bowstring--root--safe-area-inset-right: env(safe-area-inset-right)
 
   @include CanvasDirective.host(0%)
   @include FlexboxContainerDirective.host
 
-  --standard--container-directive--padding-bottom: var(--standard--root--padding-bottom) !important
-  --standard--container-directive--padding-sides: var(--standard--root--padding-sides) !important
-  --standard--container-directive--padding-top: var(--standard--root--padding-top) !important
-  --standard--flexbox-child-directive--flex-grow: 1 !important
-  --standard--flexbox-container-directive--gap-column: var(--standard--root--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--root--gap-row) !important
+  --bowstring--container-directive--padding-bottom: var(--bowstring--root--padding-bottom) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--root--padding-sides) !important
+  --bowstring--container-directive--padding-top: var(--bowstring--root--padding-top) !important
+  --bowstring--flexbox-child-directive--flex-grow: 1 !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--root--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--root--gap-row) !important
 
   > .harness > .between
     flex-direction: column
-    font-family: var(--standard--root--font-family), sans-serif
+    font-family: var(--bowstring--root--font-family), sans-serif
     font-optical-sizing: auto
     font-style: normal
     letter-spacing: -0.03444185375em
     line-height: 1.1458980338
-    padding: calc(max(var(--standard--root--safe-area-inset-top), var(--standard--container-directive--padding-top))) calc(max(var(--standard--root--safe-area-inset-right), var(--standard--container-directive--padding-sides))) calc(max(var(--standard--root--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom))) calc(max(var(--standard--root--safe-area-inset-left), var(--standard--container-directive--padding-sides))) !important
+    padding: calc(max(var(--bowstring--root--safe-area-inset-top), var(--bowstring--container-directive--padding-top))) calc(max(var(--bowstring--root--safe-area-inset-right), var(--bowstring--container-directive--padding-sides))) calc(max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--container-directive--padding-bottom))) calc(max(var(--bowstring--root--safe-area-inset-left), var(--bowstring--container-directive--padding-sides))) !important
 
     &::ng-deep > *
       @include CanvasDirective.children

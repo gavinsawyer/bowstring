@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                 from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, type Signal, viewChild } from "@angular/core";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }               from "@standard/directives";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }               from "@bowstring/directives";
 
 
 @Component(
@@ -42,7 +42,7 @@ import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRound
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--box",
+    selector:        "bowstring--box",
     styleUrl:        "BoxComponent.sass",
     templateUrl:     "BoxComponent.html",
 

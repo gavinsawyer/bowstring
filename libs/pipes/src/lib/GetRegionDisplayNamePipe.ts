@@ -3,7 +3,7 @@ import { inject, LOCALE_ID, Pipe, PipeTransform } from "@angular/core";
 
 @Pipe(
   {
-    name: "standardGetRegionDisplayName",
+    name: "bowstringGetRegionDisplayName",
 
     standalone: true,
   },

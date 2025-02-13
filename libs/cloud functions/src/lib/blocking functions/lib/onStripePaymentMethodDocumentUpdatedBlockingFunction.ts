@@ -1,5 +1,5 @@
-import { type StripePaymentMethodDocument }                                   from "@standard/interfaces";
-import { getStripePaymentMethodUpdateParams }                                 from "@standard/stripe-interop";
+import { type StripePaymentMethodDocument }                                   from "@bowstring/interfaces";
+import { getStripePaymentMethodUpdateParams }                                 from "@bowstring/stripe-interop";
 import { type Change, type CloudFunction }                                    from "firebase-functions";
 import { type FirestoreEvent, onDocumentUpdated, type QueryDocumentSnapshot } from "firebase-functions/firestore";
 import { HttpsError }                                                         from "firebase-functions/https";

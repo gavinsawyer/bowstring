@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component }                                   from "@angular/core";
 import { ReactiveFormsModule }                                                  from "@angular/forms";
-import { MasonryChildDirective }                                                from "@standard/directives";
+import { MasonryChildDirective }                                                from "@bowstring/directives";
 import { FlexboxContainerComponent, ImageComponent, MasonryContainerComponent } from "../../../../../../../";
 import { ShopChildRouteComponent }                                              from "../../../child/ShopChildRouteComponent";
 

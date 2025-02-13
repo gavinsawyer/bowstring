@@ -1,8 +1,8 @@
 import { NgTemplateOutlet }                                                                                                    from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, contentChildren, forwardRef, inject, signal, type Signal } from "@angular/core";
 import { NG_VALUE_ACCESSOR }                                                                                                   from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, WellRoundedDirective }     from "@standard/directives";
-import { InsertZwnjsPipe, MaskPipe }                                                                                           from "@standard/pipes";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, WellRoundedDirective }     from "@bowstring/directives";
+import { InsertZwnjsPipe, MaskPipe }                                                                                           from "@bowstring/pipes";
 import { v7 as uuidV7 }                                                                                                        from "uuid";
 import { InputComponent }                                                                                                      from "../../../input/InputComponent";
 import { ComboboxInputOptionComponent }                                                                                        from "../combobox option/ComboboxInputOptionComponent";
@@ -60,7 +60,7 @@ import providers                                                                
       },
       ...providers,
     ],
-    selector:        "standard--combobox-input",
+    selector:        "bowstring--combobox-input",
     styleUrl:        "ComboboxInputComponent.sass",
     templateUrl:     "ComboboxInputComponent.html",
 
@@ -94,7 +94,7 @@ export class ComboboxInputComponent
   protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
   protected readonly wellRoundedDirective: WellRoundedDirective             = inject<WellRoundedDirective>(WellRoundedDirective);
 
-  public readonly optionsId$: Signal<`standard--input-directive--options-${ string }`> = signal<`standard--input-directive--options-${ string }`>(`standard--input-directive--options-${ uuidV7() }`);
+  public readonly optionsId$: Signal<`bowstring--input-directive--options-${ string }`> = signal<`bowstring--input-directive--options-${ string }`>(`bowstring--input-directive--options-${ uuidV7() }`);
 
   protected onBlur(): void {
     if (this.optionValues$().includes(this.value))

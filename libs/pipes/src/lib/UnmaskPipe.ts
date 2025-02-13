@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe(
   {
-    name: "standardUnmask",
+    name: "bowstringUnmask",
 
     standalone: true,
   },

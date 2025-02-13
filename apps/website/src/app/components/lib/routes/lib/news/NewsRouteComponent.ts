@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, type WritableSignal }                                                                                                                           from "@angular/core";
-import { ArticleComponent, AsideComponent, BoxComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent, SectionComponent } from "@standard/components";
-import { ScrollStackItemDirective }                                                                                                                                                                  from "@standard/directives";
+import { ArticleComponent, AsideComponent, BoxComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, RouteComponent, ScrollStackComponent, SectionComponent } from "@bowstring/components";
+import { ScrollStackItemDirective }                                                                                                                                                                  from "@bowstring/directives";
 
 
 @Component(

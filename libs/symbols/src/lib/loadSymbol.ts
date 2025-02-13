@@ -1,5 +1,5 @@
-import { type Symbol }     from "@standard/interfaces";
-import { type SymbolName } from "@standard/types";
+import { type Symbol }     from "@bowstring/interfaces";
+import { type SymbolName } from "@bowstring/types";
 
 
 function loadSymbol(symbolName: SymbolName): Promise<Symbol> {

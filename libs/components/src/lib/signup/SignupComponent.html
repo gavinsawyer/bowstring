@@ -1,84 +1,84 @@
-<standard--header>
+<bowstring--header>
   <h6 i18n="@@libs--Components--Signup--Header">Create your account.</h6>
-</standard--header>
-@if (authenticationService.hasWebAuthn$()) {<standard--form (output)="signupWithPasskeyFormSubmit(sheetComponentInput$().openModel$);">
-  <standard--text-field-input
+</bowstring--header>
+@if (authenticationService.hasWebAuthn$()) {<bowstring--form (output)="signupWithPasskeyFormSubmit(sheetComponentInput$().openModel$);">
+  <bowstring--text-field-input
     autocomplete="email"
     [formControl]="signupWithPasskeyFormGroup.controls.email"
     i18n-placeholder
     level="2"
     placeholder="Email"
     type="email" />
-  <standard--button
+  <bowstring--button
     appearance="raised"
     [disabled]="signupWithPasskeyFormGroup.invalid"
     level="2"
     material="inverse"
     type="submit">
-    <standard--symbol input="PersonBadgeKeyFill" />
-    <standard--label
+    <bowstring--symbol input="PersonBadgeKeyFill" />
+    <bowstring--label
       i18n-input
       input="Save passkey" />
-  </standard--button>
-  <standard--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<standard--symbol
+  </bowstring--button>
+  <bowstring--caption i18n>Click <span style="white-space: nowrap;">&ldquo;<bowstring--symbol
     inline
-    input="PersonBadgeKeyFill" />&nbsp;<standard--label
+    input="PersonBadgeKeyFill" />&nbsp;<bowstring--label
     i18n-input
     inline
-    input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</standard--caption>
-</standard--form>
-  <standard--divider />}
-<standard--form (output)="signupWithPasswordFormSubmit(sheetComponentInput$().openModel$);">
-  <standard--section>
-    <standard--text-field-input
+    input="Save passkey" />&rdquo;</span> and present either biometric verification or an external security key in the next step.</bowstring--caption>
+</bowstring--form>
+  <bowstring--divider />}
+<bowstring--form (output)="signupWithPasswordFormSubmit(sheetComponentInput$().openModel$);">
+  <bowstring--section>
+    <bowstring--text-field-input
       autocomplete="email"
       [formControl]="signupWithPasswordFormGroup.controls.email"
       i18n-placeholder
       level="2"
       placeholder="Email"
       type="email" />
-    <standard--text-field-input
+    <bowstring--text-field-input
       autocomplete="new-password"
       [formControl]="signupWithPasswordFormGroup.controls.password"
       i18n-placeholder
       level="2"
       placeholder="Password"
       type="password" />
-    <standard--text-field-input
+    <bowstring--text-field-input
       autocomplete="new-password"
       [formControl]="signupWithPasswordFormGroup.controls.passwordConfirmation"
       i18n-placeholder
       level="2"
       placeholder="Confirm password"
       type="password" />
-  </standard--section>
-  <standard--flexbox-container
+  </bowstring--section>
+  <bowstring--flexbox-container
     alignItems="center"
     flexDirection="row"
     justifyContent="space-between">
-    <standard--list type="inline"><standard--link
+    <bowstring--list type="inline"><bowstring--link
       inline
       (output)="sheetComponentInput$().openModel$.set(false);"
-      *standardListItem
+      *bowstringListItem
       url="/privacy">
-      <standard--label
+      <bowstring--label
         i18n-input
         input="privacy policy" />
-    </standard--link><standard--link
+    </bowstring--link><bowstring--link
       inline
       (output)="sheetComponentInput$().openModel$.set(false);"
-      *standardListItem
+      *bowstringListItem
       url="/terms">
-      <standard--label
+      <bowstring--label
         i18n-input
         input="terms" />
-    </standard--link>
-    </standard--list>
-    <standard--button
+    </bowstring--link>
+    </bowstring--list>
+    <bowstring--button
       appearance="symbol"
       [disabled]="signupWithPasswordFormGroup.invalid"
       type="submit">
-      <standard--symbol input="ArrowForwardCircleFill" />
-    </standard--button>
-  </standard--flexbox-container>
-</standard--form>
+      <bowstring--symbol input="ArrowForwardCircleFill" />
+    </bowstring--button>
+  </bowstring--flexbox-container>
+</bowstring--form>

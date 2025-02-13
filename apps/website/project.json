@@ -18,7 +18,7 @@
     },
     "sourceLocale": "en-US"
   },
-  "prefix":      "standard-website",
+  "prefix":      "bowstring-website",
   "projectType": "application",
   "sourceRoot":  "apps/website/src",
   "targets":     {

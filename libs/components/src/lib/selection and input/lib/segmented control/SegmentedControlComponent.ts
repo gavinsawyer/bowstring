@@ -2,9 +2,9 @@ import { isPlatformBrowser, NgTemplateOutlet }                                  
 import { afterRender, ChangeDetectionStrategy, Component, contentChildren, ElementRef, forwardRef, inject, Injector, input, type InputSignal, model, type ModelSignal, PLATFORM_ID, Renderer2, signal, type Signal, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                               from "@angular/core/rxjs-interop";
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule }                                                                                                                                                                               from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective, WellRoundedDirective }                                                                                                                from "@standard/directives";
-import { SEGMENTED_CONTROL_VALUE_ACCESSOR }                                                                                                                                                                                     from "@standard/injection-tokens";
-import { type SegmentedControlValueAccessor }                                                                                                                                                                                   from "@standard/interfaces";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, PrimaryDirective, WellRoundedDirective }                                                                                                                from "@bowstring/directives";
+import { SEGMENTED_CONTROL_VALUE_ACCESSOR }                                                                                                                                                                                     from "@bowstring/injection-tokens";
+import { type SegmentedControlValueAccessor }                                                                                                                                                                                   from "@bowstring/interfaces";
 import { combineLatest, firstValueFrom, type Observable, startWith, switchMap }                                                                                                                                                 from "rxjs";
 import { v7 as uuidV7 }                                                                                                                                                                                                         from "uuid";
 import { SegmentedControlOptionComponent }                                                                                                                                                                                      from "../segmented control option/SegmentedControlOptionComponent";
@@ -14,9 +14,9 @@ import { SegmentedControlOptionComponent }                                      
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[style.--standard--segmented-control--selected-option-index]":  "getOptionIndex(value)",
-      "[style.--standard--segmented-control--selected-option-offset]": "getOptionOffset(value)",
-      "[style.--standard--segmented-control--selected-option-width]":  "getOptionWidth(value)",
+      "[style.--bowstring--segmented-control--selected-option-index]":  "getOptionIndex(value)",
+      "[style.--bowstring--segmented-control--selected-option-offset]": "getOptionOffset(value)",
+      "[style.--bowstring--segmented-control--selected-option-width]":  "getOptionWidth(value)",
     },
     hostDirectives:  [
       {
@@ -71,7 +71,7 @@ import { SegmentedControlOptionComponent }                                      
         ),
       },
     ],
-    selector:        "standard--segmented-control",
+    selector:        "bowstring--segmented-control",
     styleUrl:        "SegmentedControlComponent.sass",
     templateUrl:     "SegmentedControlComponent.html",
 
@@ -98,7 +98,7 @@ export class SegmentedControlComponent
   private readonly platformId: NonNullable<unknown>                             = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly renderer2: Renderer2                                         = inject<Renderer2>(Renderer2);
 
-  protected readonly inputName$: Signal<`standard--segmented-control--input-${ string }`> = signal<`standard--segmented-control--input-${ string }`>(`standard--segmented-control--input-${ uuidV7() }`);
+  protected readonly inputName$: Signal<`bowstring--segmented-control--input-${ string }`> = signal<`bowstring--segmented-control--input-${ string }`>(`bowstring--segmented-control--input-${ uuidV7() }`);
   protected readonly options$: Signal<readonly SegmentedControlOptionComponent[]>         = contentChildren<SegmentedControlOptionComponent>(
     SegmentedControlOptionComponent,
   );

@@ -2,7 +2,7 @@ import { isPlatformBrowser }                                                    
 import { inject, Injectable, PLATFORM_ID, signal, type Signal }                                             from "@angular/core";
 import { toSignal }                                                                                         from "@angular/core/rxjs-interop";
 import { collection, type CollectionReference, collectionSnapshots, Firestore, type QueryDocumentSnapshot } from "@angular/fire/firestore";
-import { type StripeProductDocument }                                                                       from "@standard/interfaces";
+import { type StripeProductDocument }                                                                       from "@bowstring/interfaces";
 import { map, startWith }                                                                                   from "rxjs";
 
 

@@ -1,6 +1,6 @@
 import { DatePipe }                                                                                                                                                                              from "@angular/common";
 import { ChangeDetectionStrategy, Component }                                                                                                                                                    from "@angular/core";
-import { ListItemDirective }                                                                                                                                                                     from "@standard/directives";
+import { ListItemDirective }                                                                                                                                                                     from "@bowstring/directives";
 import { ArticleComponent, CapsuleComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, LabelComponent, LinkComponent, ListComponent, RouteComponent, SectionComponent } from "../../../../";
 
 

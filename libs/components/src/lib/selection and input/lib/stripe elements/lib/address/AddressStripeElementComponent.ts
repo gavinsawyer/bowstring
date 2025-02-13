@@ -4,8 +4,8 @@ import { toSignal }                                                             
 import { Auth }                                                                                                                         from "@angular/fire/auth";
 import { deleteField, doc, type DocumentReference, Firestore, updateDoc }                                                               from "@angular/fire/firestore";
 import { FormControl, FormGroup }                                                                                                       from "@angular/forms";
-import { ContainerDirective }                                                                                                           from "@standard/directives";
-import { type StripeCustomerDocument }                                                                                                  from "@standard/interfaces";
+import { ContainerDirective }                                                                                                           from "@bowstring/directives";
+import { type StripeCustomerDocument }                                                                                                  from "@bowstring/interfaces";
 import { type Stripe, type StripeAddressElementChangeEvent, type StripeAddressElementOptions, type StripeElement, type StripeElements } from "@stripe/stripe-js";
 import { isEqual }                                                                                                                      from "lodash";
 import { startWith }                                                                                                                    from "rxjs";
@@ -44,7 +44,7 @@ import { StripeElementComponent }                                               
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--address-stripe-element",
+    selector:        "bowstring--address-stripe-element",
     styleUrl:        "AddressStripeElementComponent.sass",
     templateUrl:     "AddressStripeElementComponent.html",
 

@@ -14,9 +14,9 @@
     display: flex
 
     > img
-      aspect-ratio: var(--standard--image--aspect-ratio)
+      aspect-ratio: var(--bowstring--image--aspect-ratio)
       height: auto
-      max-width: calc(100% - 2 * var(--standard--container-directive--margin-sides-input, 0px) - 2 * var(--standard--container-directive--padding-sides-input, 0px))
+      max-width: calc(100% - 2 * var(--bowstring--container-directive--margin-sides-input, 0px) - 2 * var(--bowstring--container-directive--padding-sides-input, 0px))
       width: 100%
 
   &:not(.appearance-transparent)
@@ -24,7 +24,7 @@
     @include ElevatedDirective.host
     @include WellRoundedDirective.host
 
-    --standard--container-directive--aspect-ratio: var(--standard--image--aspect-ratio) !important
+    --bowstring--container-directive--aspect-ratio: var(--bowstring--image--aspect-ratio) !important
 
   &.appearance-circular > .harness
     &:before,
@@ -35,9 +35,9 @@
       clip-path: circle() !important
 
   &.appearance-transparent
-    --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-    --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-    --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+    --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+    --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+    --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
 
     > svg
       display: none

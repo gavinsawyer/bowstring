@@ -1,4 +1,4 @@
-import { type StripeSetupIntentDocument } from "@standard/interfaces";
+import { type StripeSetupIntentDocument } from "@bowstring/interfaces";
 import type Stripe                        from "stripe";
 
 

@@ -1,9 +1,9 @@
 @mixin host
   @media (min-width: 48rem)
-    > standard--flexbox-container
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--flex-wrap: wrap !important
+    > bowstring--flexbox-container
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--flex-wrap: wrap !important
 
-      &::ng-deep > .harness > .between > standard--article
-        --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 5)) !important
-        --standard--flexbox-child-directive--flex-grow: pow(var(--phi), -1) !important
+      &::ng-deep > .harness > .between > bowstring--article
+        --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 5)) !important
+        --bowstring--flexbox-child-directive--flex-grow: pow(var(--phi), -1) !important

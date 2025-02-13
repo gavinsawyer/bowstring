@@ -3,7 +3,7 @@ import { Directive } from "@angular/core";
 
 @Directive(
   {
-    selector: "[standardToggleSymbol]",
+    selector: "[bowstringToggleSymbol]",
 
     standalone: true,
   },

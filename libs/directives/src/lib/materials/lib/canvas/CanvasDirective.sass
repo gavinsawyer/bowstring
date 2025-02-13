@@ -31,10 +31,10 @@ $foreground-inverse: functions.get-color-reference($namespace, "foreground-inver
 
 
 @mixin color-scheme($theme, $shade)
-  --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
-  --standard--#{ $namespace }-directive--colors--background-inverse: #{ get-color($theme, "background-inverse", $shade) }
-  --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
-  --standard--#{ $namespace }-directive--colors--foreground-inverse: #{ get-color($theme, "foreground-inverse", $shade) }
+  --bowstring--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
+  --bowstring--#{ $namespace }-directive--colors--background-inverse: #{ get-color($theme, "background-inverse", $shade) }
+  --bowstring--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground", $shade) }
+  --bowstring--#{ $namespace }-directive--colors--foreground-inverse: #{ get-color($theme, "foreground-inverse", $shade) }
 
 @mixin children
   @include mixins.reset-colors($namespace, ("background", "background-inverse", "foreground", "foreground-inverse"))

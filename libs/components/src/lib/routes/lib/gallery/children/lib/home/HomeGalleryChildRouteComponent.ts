@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { ReactiveFormsModule }                        from "@angular/forms";
-import { MasonryChildDirective }                      from "@standard/directives";
-import { AccountService }                             from "@standard/services";
+import { MasonryChildDirective }                      from "@bowstring/directives";
+import { AccountService }                             from "@bowstring/services";
 import { ImageComponent, MasonryContainerComponent }  from "../../../../../../../";
 import { GalleryChildRouteComponent }                 from "../../../child/GalleryChildRouteComponent";
 

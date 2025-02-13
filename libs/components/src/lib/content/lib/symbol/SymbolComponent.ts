@@ -1,10 +1,10 @@
 import { NgTemplateOutlet }                                                                                                          from "@angular/common";
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignal, type InputSignalWithTransform, type Signal } from "@angular/core";
 import { toObservable, toSignal }                                                                                                    from "@angular/core/rxjs-interop";
-import { ContainerDirective, InlinableDirective }                                                                                    from "@standard/directives";
-import { type Symbol }                                                                                                               from "@standard/interfaces";
-import loadSymbol                                                                                                                    from "@standard/symbols";
-import { type SymbolName }                                                                                                           from "@standard/types";
+import { ContainerDirective, InlinableDirective }                                                                                    from "@bowstring/directives";
+import { type Symbol }                                                                                                               from "@bowstring/interfaces";
+import loadSymbol                                                                                                                    from "@bowstring/symbols";
+import { type SymbolName }                                                                                                           from "@bowstring/types";
 import { type Observable, switchMap }                                                                                                from "rxjs";
 import { fromPromise }                                                                                                               from "rxjs/internal/observable/innerFrom";
 
@@ -49,7 +49,7 @@ import { fromPromise }                                                          
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--symbol",
+    selector:        "bowstring--symbol",
     styleUrl:        "SymbolComponent.sass",
     templateUrl:     "SymbolComponent.html",
 

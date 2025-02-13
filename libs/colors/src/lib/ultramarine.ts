@@ -1,4 +1,4 @@
-import { type Color } from "@standard/interfaces";
+import { type Color } from "@bowstring/interfaces";
 
 
 // noinspection JSUnusedGlobalSymbols

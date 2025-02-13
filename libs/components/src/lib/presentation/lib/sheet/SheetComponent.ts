@@ -1,9 +1,9 @@
 import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                    from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, effect, type EffectCleanupRegisterFn, type ElementRef, inject, model, type ModelSignal, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }                                                                                                                               from "@standard/directives";
-import { type Symbol }                                                                                                                                                                                                      from "@standard/interfaces";
-import loadSymbol                                                                                                                                                                                                           from "@standard/symbols";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }                                                                                                                               from "@bowstring/directives";
+import { type Symbol }                                                                                                                                                                                                      from "@bowstring/interfaces";
+import loadSymbol                                                                                                                                                                                                           from "@bowstring/symbols";
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                                                     from "body-scroll-lock";
 import { delayWhen, fromEvent, map, type Observable, timer }                                                                                                                                                                from "rxjs";
 import { fromPromise }                                                                                                                                                                                                      from "rxjs/internal/observable/innerFrom";
@@ -52,7 +52,7 @@ import { fromPromise }                                                          
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--sheet",
+    selector:        "bowstring--sheet",
     styleUrl:        "SheetComponent.sass",
     templateUrl:     "SheetComponent.html",
 

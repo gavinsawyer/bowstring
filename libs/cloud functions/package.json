@@ -1,5 +1,5 @@
 {
-  "name":         "@standard/cloud-functions",
+  "name":         "@bowstring/cloud-functions",
   "license":      "MIT",
   "author":       {
     "name":  "Gavin Sawyer",
@@ -8,7 +8,7 @@
   },
   "repository":   {
     "type":      "git",
-    "url":       "git+https://github.com/gavinsawyer/standard.git",
+    "url":       "git+https://github.com/gavinsawyer/bowstring.git",
     "directory": "libs/cloud functions"
   },
   "private":      true,

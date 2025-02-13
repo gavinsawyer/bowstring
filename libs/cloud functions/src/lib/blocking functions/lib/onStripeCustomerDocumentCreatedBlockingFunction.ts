@@ -1,4 +1,4 @@
-import { type StripeCustomerDocument }                                        from "@standard/interfaces";
+import { type StripeCustomerDocument }                                        from "@bowstring/interfaces";
 import { type CloudFunction }                                                 from "firebase-functions";
 import { type FirestoreEvent, onDocumentCreated, type QueryDocumentSnapshot } from "firebase-functions/firestore";
 import { HttpsError }                                                         from "firebase-functions/https";

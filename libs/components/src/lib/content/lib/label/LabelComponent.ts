@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                            from "@angular/common";
 import { ChangeDetectionStrategy, Component, input, type InputSignal } from "@angular/core";
-import { ContainerDirective, InlinableDirective }                      from "@standard/directives";
+import { ContainerDirective, InlinableDirective }                      from "@bowstring/directives";
 
 
 @Component(
@@ -37,7 +37,7 @@ import { ContainerDirective, InlinableDirective }                      from "@st
         ],
       },
     ],
-    selector:        "standard--label",
+    selector:        "bowstring--label",
     styleUrl:        "LabelComponent.sass",
     templateUrl:     "LabelComponent.html",
     imports:         [

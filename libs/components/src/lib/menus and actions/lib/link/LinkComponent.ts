@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                                    from "@angular/common";
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                        from "@angular/router";
-import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, PrimaryDirective, SecondaryDirective, WarningDirective }                                              from "@standard/directives";
+import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, PrimaryDirective, SecondaryDirective, WarningDirective }                                              from "@bowstring/directives";
 
 
 @Component(
@@ -50,7 +50,7 @@ import { CanvasDirective, FlexboxContainerDirective, InlinableDirective, Primary
       RouterLink,
       RouterLinkActive,
     ],
-    selector:        "standard--link",
+    selector:        "bowstring--link",
     styleUrl:        "LinkComponent.sass",
     templateUrl:     "LinkComponent.html",
 

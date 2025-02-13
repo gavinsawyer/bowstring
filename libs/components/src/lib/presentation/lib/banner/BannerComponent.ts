@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                           from "@angular/common";
 import { ChangeDetectionStrategy, Component }         from "@angular/core";
-import { CanvasDirective, FlexboxContainerDirective } from "@standard/directives";
+import { CanvasDirective, FlexboxContainerDirective } from "@bowstring/directives";
 
 
 @Component(
@@ -26,7 +26,7 @@ import { CanvasDirective, FlexboxContainerDirective } from "@standard/directives
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--banner",
+    selector:        "bowstring--banner",
     styleUrl:        "BannerComponent.sass",
     templateUrl:     "BannerComponent.html",
 

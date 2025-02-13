@@ -1,5 +1,5 @@
-import { type StripeSetupIntentDocument }                                     from "@standard/interfaces";
-import { getStripeSetupIntentUpdateParams }                                   from "@standard/stripe-interop";
+import { type StripeSetupIntentDocument }                                     from "@bowstring/interfaces";
+import { getStripeSetupIntentUpdateParams }                                   from "@bowstring/stripe-interop";
 import { type Change, type CloudFunction }                                    from "firebase-functions";
 import { type FirestoreEvent, onDocumentUpdated, type QueryDocumentSnapshot } from "firebase-functions/firestore";
 import { HttpsError }                                                         from "firebase-functions/https";

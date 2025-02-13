@@ -1,70 +1,70 @@
-<standard--header>
+<bowstring--header>
   <h3 i18n="@@libs--Components--Routes--Account-Messages--Header">Messages</h3>
-</standard--header>
-<standard--flexbox-container>
-  <standard--form
+</bowstring--header>
+<bowstring--flexbox-container>
+  <bowstring--form
     flexBasis="0"
     flexGrow="1"
     (output)="accountDocumentMessagesFormSubmit();">
-    <standard--flexbox-container
+    <bowstring--flexbox-container
       alignItems="center"
       flexDirection="row">
-      <standard--toggle [formControl]="accountDocumentMessagesFormGroup.controls.newsletter" />
-      <standard--heading-group>
-        <standard--header>
+      <bowstring--toggle [formControl]="accountDocumentMessagesFormGroup.controls.newsletter" />
+      <bowstring--heading-group>
+        <bowstring--header>
           <h4 i18n>Newsletter</h4>
-        </standard--header>
+        </bowstring--header>
         <p>
           Receive the Bowstring Newsletter.
         </p>
-      </standard--heading-group>
-    </standard--flexbox-container>
-    <standard--flexbox-container
+      </bowstring--heading-group>
+    </bowstring--flexbox-container>
+    <bowstring--flexbox-container
       alignItems="center"
       flexDirection="row">
-      <standard--toggle [formControl]="accountDocumentMessagesFormGroup.controls.orderUpdates" />
-      <standard--heading-group>
-        <standard--header>
+      <bowstring--toggle [formControl]="accountDocumentMessagesFormGroup.controls.orderUpdates" />
+      <bowstring--heading-group>
+        <bowstring--header>
           <h4 i18n>Order updates</h4>
-        </standard--header>
+        </bowstring--header>
         <p>
           Receive updates on orders from Bowstring and our delivery partners.
         </p>
-      </standard--heading-group>
-    </standard--flexbox-container>
-    <standard--flexbox-container
+      </bowstring--heading-group>
+    </bowstring--flexbox-container>
+    <bowstring--flexbox-container
       alignItems="center"
       flexDirection="row">
-      <standard--toggle [formControl]="accountDocumentMessagesFormGroup.controls.promotions" />
-      <standard--heading-group>
-        <standard--header>
+      <bowstring--toggle [formControl]="accountDocumentMessagesFormGroup.controls.promotions" />
+      <bowstring--heading-group>
+        <bowstring--header>
           <h4 i18n>Promotions</h4>
-        </standard--header>
+        </bowstring--header>
         <p>
           Receive info about new promotions from Bowstring.
         </p>
-      </standard--heading-group>
-    </standard--flexbox-container>
-  </standard--form>
-  <standard--box
+      </bowstring--heading-group>
+    </bowstring--flexbox-container>
+  </bowstring--form>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n>Contact information</h4>
-    </standard--header>
-    <standard--form>
-      <standard--text-field-input
+    </bowstring--header>
+    <bowstring--form>
+      <bowstring--text-field-input
         autocomplete="email"
         [formControl]="accountDocumentFormGroup.controls.email"
         label="Email"
         level="2"
         placeholder="Email"
         type="email" />
-      <standard--divider />
-      <standard--flexbox-container
+      <bowstring--divider />
+      <bowstring--flexbox-container
         alignItems="flex-end"
         flexDirection="row">
-        <standard--combobox-input
+        <bowstring--combobox-input
           autocomplete="tel-country-code"
           explicitAutocomplete
           [formControl]="accountDocumentFormGroup.controls.phone.controls.countryCode"
@@ -74,9 +74,9 @@
           label="Country code"
           level="2"
           mask="+000">
-          @for (option of phoneCountryCodeOptions; track $index) {<standard--combobox-input-option [label]="option.label" [value]="option.value" />}
-        </standard--combobox-input>
-        <standard--text-field-input
+          @for (option of phoneCountryCodeOptions; track $index) {<bowstring--combobox-input-option [label]="option.label" [value]="option.value" />}
+        </bowstring--combobox-input>
+        <bowstring--text-field-input
           autocomplete="tel-national"
           [formControl]="accountDocumentFormGroup.controls.phone.controls.national"
           flexBasis="calc(1rem * pow(var(--phi), 5))"
@@ -86,7 +86,7 @@
           level="2"
           [mask]="accountDocumentFormGroup.value.phone?.countryCode === '1' ? '(000) 000-0000' : undefined"
           type="tel" />
-      </standard--flexbox-container>
-    </standard--form>
-  </standard--box>
-</standard--flexbox-container>
+      </bowstring--flexbox-container>
+    </bowstring--form>
+  </bowstring--box>
+</bowstring--flexbox-container>

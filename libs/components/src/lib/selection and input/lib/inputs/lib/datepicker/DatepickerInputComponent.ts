@@ -1,8 +1,8 @@
 import { NgTemplateOutlet }                                                                                                from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, forwardRef, inject }                                             from "@angular/core";
 import { NG_VALUE_ACCESSOR }                                                                                               from "@angular/forms";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, WellRoundedDirective } from "@standard/directives";
-import { InsertZwnjsPipe }                                                                                                 from "@standard/pipes";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, WellRoundedDirective } from "@bowstring/directives";
+import { InsertZwnjsPipe }                                                                                                 from "@bowstring/pipes";
 import { InputComponent }                                                                                                  from "../../../input/InputComponent";
 import providers                                                                                                           from "../providers";
 
@@ -57,7 +57,7 @@ import providers                                                                
       },
       ...providers,
     ],
-    selector:        "standard--datepicker-input",
+    selector:        "bowstring--datepicker-input",
     styleUrl:        "DatepickerInputComponent.sass",
     templateUrl:     "DatepickerInputComponent.html",
 

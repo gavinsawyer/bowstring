@@ -10,8 +10,8 @@
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
-  --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+  --bowstring--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --bowstring--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
 
   > .harness > .between
     &::ng-deep > *
@@ -27,12 +27,12 @@
       @include FlexboxContainerDirective.host
       @include WellRoundedDirective.host
 
-      --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
-      --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
-      --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) !important
-      --standard--flexbox-container-directive--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) !important
+      --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+      --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+      --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--gap-column: calc(var(--bowstring--container-directive--padding-sides) * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) !important
+      --bowstring--flexbox-container-directive--gap-row: calc(var(--bowstring--container-directive--padding-bottom) * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) !important
 
       > .harness > .between
         &::ng-deep > *
@@ -52,22 +52,22 @@
           @include ElevatedDirective.host
           @include WellRoundedDirective.host
 
-          --standard--container-directive--position: absolute !important
-          --standard--container-directive--position-left: calc(1px * var(--standard--segmented-control--selected-option-offset) + var(--standard--segmented-control--selected-option-index) * (1rem * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) + 1.5px) !important
-          --standard--container-directive--position-top: 1.5px !important
-          --standard--elevated-directive--level: 4 !important
+          --bowstring--container-directive--position: absolute !important
+          --bowstring--container-directive--position-left: calc(1px * var(--bowstring--segmented-control--selected-option-offset) + var(--bowstring--segmented-control--selected-option-index) * (1rem * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) + 1.5px) !important
+          --bowstring--container-directive--position-top: 1.5px !important
+          --bowstring--elevated-directive--level: 4 !important
 
           > .harness
             border-radius: 9px
             height: calc(100% - 3px)
             transition: left 75ms ease-in-out, width 75ms ease-in-out
-            width: calc(1px * var(--standard--segmented-control--selected-option-width) + 2rem * pow(var(--phi), 0) - 3px)
+            width: calc(1px * var(--bowstring--segmented-control--selected-option-width) + 2rem * pow(var(--phi), 0) - 3px)
 
             > .between
-              background-color: var(--standard--canvas-directive--colors--background)
+              background-color: var(--bowstring--canvas-directive--colors--background)
 
               @media (prefers-color-scheme: dark)
-                background-color: var(--standard--canvas-directive--colors--background-inverse)
+                background-color: var(--bowstring--canvas-directive--colors--background-inverse)
 
               &::ng-deep > *
                 @include CanvasDirective.children

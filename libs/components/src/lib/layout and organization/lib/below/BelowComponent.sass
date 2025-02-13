@@ -4,15 +4,15 @@
 \:host
   display: contents
 
-  --standard--below--font-size-exponent: -2
-  --standard--below--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
-  --standard--below--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+  --bowstring--below--font-size-exponent: -2
+  --bowstring--below--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--below--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-child-directive--flex-grow: 1 !important
-  --standard--flexbox-container-directive--gap-column: var(--standard--below--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--below--gap-row) !important
+  --bowstring--flexbox-child-directive--flex-grow: 1 !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--below--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--below--gap-row) !important
 
   > .harness > .between::ng-deep > *
     @include FlexboxContainerDirective.children

@@ -1,18 +1,18 @@
 import { Directive, input, type InputSignal }                                                                                                                                        from "@angular/core";
-import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString } from "@standard/types";
+import { type BaselineAlignment, type DistributedAlignment, type FlexDirection, type FlexPositionalAlignment, type FlexWrap, type Inherit, type NormalAlignment, type ScalarString } from "@bowstring/types";
 import { ContainerDirective }                                                                                                                                                        from "../container/ContainerDirective";
 
 
 @Directive(
   {
     host:           {
-      "[style.--standard--flexbox-container-directive--align-content-input]":   "alignContentInput$()",
-      "[style.--standard--flexbox-container-directive--align-items-input]":     "alignItemsInput$()",
-      "[style.--standard--flexbox-container-directive--flex-direction-input]":  "flexDirectionInput$()",
-      "[style.--standard--flexbox-container-directive--flex-wrap-input]":       "flexWrapInput$()",
-      "[style.--standard--flexbox-container-directive--gap-column-input]":      "gapColumnInput$()",
-      "[style.--standard--flexbox-container-directive--gap-row-input]":         "gapRowInput$()",
-      "[style.--standard--flexbox-container-directive--justify-content-input]": "justifyContentInput$()",
+      "[style.--bowstring--flexbox-container-directive--align-content-input]":   "alignContentInput$()",
+      "[style.--bowstring--flexbox-container-directive--align-items-input]":     "alignItemsInput$()",
+      "[style.--bowstring--flexbox-container-directive--flex-direction-input]":  "flexDirectionInput$()",
+      "[style.--bowstring--flexbox-container-directive--flex-wrap-input]":       "flexWrapInput$()",
+      "[style.--bowstring--flexbox-container-directive--gap-column-input]":      "gapColumnInput$()",
+      "[style.--bowstring--flexbox-container-directive--gap-row-input]":         "gapRowInput$()",
+      "[style.--bowstring--flexbox-container-directive--justify-content-input]": "justifyContentInput$()",
     },
     hostDirectives: [
       {

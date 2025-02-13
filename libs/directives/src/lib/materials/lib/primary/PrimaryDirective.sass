@@ -26,8 +26,8 @@ $brand-primary-foreground-light: functions.get-value-reference($namespace, "bran
 
 
 @mixin color-scheme($theme)
-  --standard--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background") }
-  --standard--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground") }
+  --bowstring--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background") }
+  --bowstring--#{ $namespace }-directive--colors--foreground: #{ get-color($theme, "foreground") }
 
 @mixin children
   @include mixins.reset-colors($namespace, ("background", "foreground"))

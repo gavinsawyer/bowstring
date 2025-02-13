@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                                               from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, contentChildren, type ElementRef, inject, type Signal, TemplateRef, viewChild } from "@angular/core";
-import { MasonryChildDirective, MasonryContainerDirective }                                                                               from "@standard/directives";
+import { MasonryChildDirective, MasonryContainerDirective }                                                                               from "@bowstring/directives";
 
 
 @Component(
@@ -19,7 +19,7 @@ import { MasonryChildDirective, MasonryContainerDirective }                     
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--masonry-container",
+    selector:        "bowstring--masonry-container",
     styleUrl:        "MasonryContainerComponent.sass",
     templateUrl:     "MasonryContainerComponent.html",
 

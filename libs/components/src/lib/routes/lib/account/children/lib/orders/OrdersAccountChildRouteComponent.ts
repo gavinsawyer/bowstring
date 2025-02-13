@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component }                         from "@angular/core";
-import { MasonryChildDirective }                                      from "@standard/directives";
+import { MasonryChildDirective }                                      from "@bowstring/directives";
 import { HeaderComponent, ImageComponent, MasonryContainerComponent } from "../../../../../../../";
 import { AccountChildRouteComponent }                                 from "../../../child/AccountChildRouteComponent";
 

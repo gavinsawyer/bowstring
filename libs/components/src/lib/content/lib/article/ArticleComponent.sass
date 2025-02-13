@@ -4,20 +4,20 @@
 \:host
   display: contents
 
-  --standard--article--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
-  --standard--article--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+  --bowstring--article--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--article--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-child-directive--flex-basis: 100% !important
-  --standard--flexbox-container-directive--gap-column: var(--standard--article--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--article--gap-row) !important
+  --bowstring--flexbox-child-directive--flex-basis: 100% !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--article--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--article--gap-row) !important
 
   > .harness > .between::ng-deep > *
     @include FlexboxContainerDirective.children
 
 
 @each $host-context-namespace in ("main", "above", "below", "sheet", "box")
-  \:host-context(standard--#{ $host-context-namespace })
-    --standard--article--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
-    --standard--article--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--article--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--article--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

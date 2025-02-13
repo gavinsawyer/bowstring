@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                                          from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
-import { ContainerDirective, ElevatedDirective, PrimaryDirective, SecondaryDirective, WellRoundedDirective }                         from "@standard/directives";
+import { ContainerDirective, ElevatedDirective, PrimaryDirective, SecondaryDirective, WellRoundedDirective }                         from "@bowstring/directives";
 
 
 @Component(
@@ -59,7 +59,7 @@ import { ContainerDirective, ElevatedDirective, PrimaryDirective, SecondaryDirec
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--capsule",
+    selector:        "bowstring--capsule",
     styleUrl:        "CapsuleComponent.sass",
     templateUrl:     "CapsuleComponent.html",
 

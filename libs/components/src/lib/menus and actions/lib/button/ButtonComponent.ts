@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                                                                                                                                                          from "@angular/common";
 import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, output, type OutputEmitterRef, type Signal, viewChild } from "@angular/core";
 import { RouterLink, RouterLinkActive }                                                                                                                                                                              from "@angular/router";
-import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, SecondaryDirective, WarningDirective, WellRoundedDirective } from "@standard/directives";
+import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, InverseDirective, PrimaryDirective, SecondaryDirective, WarningDirective, WellRoundedDirective } from "@bowstring/directives";
 
 
 @Component(
@@ -73,7 +73,7 @@ import { CanvasDirective, ElevatedDirective, FlexboxContainerDirective, GlassDir
       RouterLink,
       RouterLinkActive,
     ],
-    selector:        "standard--button",
+    selector:        "bowstring--button",
     styleUrl:        "ButtonComponent.sass",
     templateUrl:     "ButtonComponent.html",
 

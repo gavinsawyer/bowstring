@@ -4,7 +4,7 @@ import { Directive, input, type InputSignalWithTransform, numberAttribute } from
 @Directive(
   {
     host: {
-      "[style.--standard--typography-directive--font-size-exponent-input]": "fontSizeExponentInput$()",
+      "[style.--bowstring--typography-directive--font-size-exponent-input]": "fontSizeExponentInput$()",
     },
 
     standalone: true,

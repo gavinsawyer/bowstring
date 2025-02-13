@@ -4,18 +4,18 @@
 \:host
   display: contents
 
-  --standard--aside--font-size-exponent: -3
-  --standard--aside--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
-  --standard--aside--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+  --bowstring--aside--font-size-exponent: -3
+  --bowstring--aside--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--aside--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-container-directive--gap-column: var(--standard--aside--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--aside--gap-row) !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--aside--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--aside--gap-row) !important
 
   @media (min-width: 48rem)
-    --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
-    --standard--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
+    --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
+    --bowstring--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
 
   > .harness
     z-index: 2
@@ -25,6 +25,6 @@
 
 
 @each $host-context-namespace in ("main", "above", "below", "sheet", "box")
-  \:host-context(standard--#{ $host-context-namespace })
-    --standard--aside--gap-column: calc(var(--standard--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
-    --standard--aside--gap-row: calc(var(--standard--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--aside--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--aside--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

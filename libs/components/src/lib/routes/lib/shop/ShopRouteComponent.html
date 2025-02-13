@@ -1,51 +1,51 @@
 <ng-template #aboveTemplate>
-  <standard--section
+  <bowstring--section
     alignItems="center"
     flexDirection="row"
     flexShrink="0">
-    <standard--header
+    <bowstring--header
       alignItems="last baseline"
       flexDirection="row"
       fontSizeExponent="-2"
       justifyContent="space-between">
-      <h2>@if (shopRoutes | standardFindRouteByPath:''; as route) {<standard--link
+      <h2>@if (shopRoutes | bowstringFindRouteByPath:''; as route) {<bowstring--link
         exact
         inline
         [url]="'./' + route.path">
-        <standard--label [input]="route.data?.['title']" />
-      </standard--link>}</h2>
-    </standard--header>
-  </standard--section>
-  <standard--flexbox-container
+        <bowstring--label [input]="route.data?.['title']" />
+      </bowstring--link>}</h2>
+    </bowstring--header>
+  </bowstring--section>
+  <bowstring--flexbox-container
     flexBasis="100%"
     flexGrow="1"
     gapColumn="0"
     gapRow="0">
-    <standard--flexbox-container id="above">
-      <standard--flexbox-container flexGrow="1">
-        <standard--section
+    <bowstring--flexbox-container id="above">
+      <bowstring--flexbox-container flexGrow="1">
+        <bowstring--section
           flexGrow="1"
           flexShrink="0">
           <router-outlet />
-        </standard--section>
-        @if (inspectorTemplateRef$(); as inspectorTemplateRef) {<standard--inspector>
+        </bowstring--section>
+        @if (inspectorTemplateRef$(); as inspectorTemplateRef) {<bowstring--inspector>
           <ng-container *ngTemplateOutlet="inspectorTemplateRef" />
-        </standard--inspector>}
-      </standard--flexbox-container>
-    </standard--flexbox-container>
-  </standard--flexbox-container>
-  <standard--footer #footerComponent
+        </bowstring--inspector>}
+      </bowstring--flexbox-container>
+    </bowstring--flexbox-container>
+  </bowstring--flexbox-container>
+  <bowstring--footer #footerComponent
     flexDirection="row"
     justifyContent="space-between"
     pinned>
-    <standard--heading-group>
-      <standard--header fontSizeExponent="-1">
+    <bowstring--heading-group>
+      <bowstring--header fontSizeExponent="-1">
         <h6 i18n="libs--Components--Routes--Shop--Footer--Header">Shopping bag</h6>
-      </standard--header>
+      </bowstring--header>
       <p>Your bag is empty.</p>
-    </standard--heading-group>
+    </bowstring--heading-group>
     <ng-container *ngTemplateOutlet="footerComponent.pinnedControlTemplateRef$()" />
-  </standard--footer>
+  </bowstring--footer>
 </ng-template>
 <ng-template #bannerTemplate>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet dignissimos molestias nisi quae quasi quis sed, voluptatum!

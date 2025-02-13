@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators }             from "@angular/forms";
-import { AuthenticationService }                                               from "@standard/services";
+import { AuthenticationService }                                               from "@bowstring/services";
 import { CaptionComponent, HeaderComponent, LabelComponent, SymbolComponent }  from "../content";
 import { DividerComponent, FlexboxContainerComponent, SectionComponent }       from "../layout and organization";
 import { ButtonComponent }                                                     from "../menus and actions";
@@ -24,7 +24,7 @@ import { FormComponent, TextFieldInputComponent }                              f
       SymbolComponent,
       TextFieldInputComponent,
     ],
-    selector:        "standard--signin",
+    selector:        "bowstring--signin",
     styleUrl:        "SigninComponent.sass",
     templateUrl:     "SigninComponent.html",
 

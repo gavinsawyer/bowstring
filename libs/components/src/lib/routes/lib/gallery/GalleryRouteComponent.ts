@@ -2,7 +2,7 @@ import { NgTemplateOutlet }                                                     
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, Injector, type Signal, type TemplateRef, viewChild }                  from "@angular/core";
 import { toObservable, toSignal }                                                                                                          from "@angular/core/rxjs-interop";
 import { RouterOutlet, type Routes }                                                                                                       from "@angular/router";
-import { FindRouteByPathPipe }                                                                                                             from "@standard/pipes";
+import { FindRouteByPathPipe }                                                                                                             from "@bowstring/pipes";
 import { map, type Observable, of, startWith, switchMap }                                                                                  from "rxjs";
 import { FlexboxContainerComponent, HeaderComponent, InspectorComponent, LabelComponent, LinkComponent, RouteComponent, SectionComponent } from "../../../../";
 import { type GalleryChildRouteComponent }                                                                                                 from "./child/GalleryChildRouteComponent";

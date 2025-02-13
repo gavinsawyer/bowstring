@@ -1,16 +1,16 @@
 import { Directive, inject, signal, type Signal } from "@angular/core";
-import { BRAND }                                  from "@standard/injection-tokens";
-import { type Color }                             from "@standard/interfaces";
-import { type Brand }                             from "@standard/types";
+import { BRAND }                                  from "@bowstring/injection-tokens";
+import { type Color }                             from "@bowstring/interfaces";
+import { type Brand }                             from "@bowstring/types";
 
 
 @Directive(
   {
     host: {
-      "[style.--standard--warning-directive--brand-warning-background-dark]":  "brandWarningBackgroundDark$()",
-      "[style.--standard--warning-directive--brand-warning-background-light]": "brandWarningBackgroundLight$()",
-      "[style.--standard--warning-directive--brand-warning-foreground-dark]":  "brandWarningForegroundDark$()",
-      "[style.--standard--warning-directive--brand-warning-foreground-light]": "brandWarningForegroundLight$()",
+      "[style.--bowstring--warning-directive--brand-warning-background-dark]":  "brandWarningBackgroundDark$()",
+      "[style.--bowstring--warning-directive--brand-warning-background-light]": "brandWarningBackgroundLight$()",
+      "[style.--bowstring--warning-directive--brand-warning-foreground-dark]":  "brandWarningForegroundDark$()",
+      "[style.--bowstring--warning-directive--brand-warning-foreground-light]": "brandWarningForegroundLight$()",
     },
 
     standalone: true,

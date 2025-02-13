@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                   from "@angular/common";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { FlexboxContainerDirective }          from "@standard/directives";
+import { FlexboxContainerDirective }          from "@bowstring/directives";
 
 
 @Component(
@@ -23,7 +23,7 @@ import { FlexboxContainerDirective }          from "@standard/directives";
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--main",
+    selector:        "bowstring--main",
     styleUrl:        "MainComponent.sass",
     templateUrl:     "MainComponent.html",
 

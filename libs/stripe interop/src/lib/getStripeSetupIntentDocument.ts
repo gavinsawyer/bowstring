@@ -1,4 +1,4 @@
-import { type StripeSetupIntentDocument } from "@standard/interfaces";
+import { type StripeSetupIntentDocument } from "@bowstring/interfaces";
 import { Timestamp, type WithFieldValue } from "firebase-admin/firestore";
 import type Stripe                        from "stripe";
 import toDocumentPartial                  from "./toDocumentPartial";

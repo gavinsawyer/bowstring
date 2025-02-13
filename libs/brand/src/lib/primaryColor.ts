@@ -1,5 +1,5 @@
-import { ultramarine } from "@standard/colors";
-import { type Color }  from "@standard/interfaces";
+import { ultramarine } from "@bowstring/colors";
+import { type Color }  from "@bowstring/interfaces";
 
 
 export const primaryColor: Color = ultramarine;

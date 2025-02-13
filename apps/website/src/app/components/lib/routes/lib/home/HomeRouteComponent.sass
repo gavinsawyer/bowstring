@@ -1,20 +1,20 @@
 \:host
   display: contents
 
-standard--flexbox-container#below::ng-deep > .harness > .between
+bowstring--flexbox-container#below::ng-deep > .harness > .between
   &,
-  > standard--flexbox-container > .harness > .between > standard--aside > .harness > .between
-    > standard--box > .harness > .between > standard--heading-group > .harness > .between
+  > bowstring--flexbox-container > .harness > .between > bowstring--aside > .harness > .between
+    > bowstring--box > .harness > .between > bowstring--heading-group > .harness > .between
       max-width: 24rem
 
 @media (min-width: 48rem)
-  standard--flexbox-container#below::ng-deep > .harness > .between
-    > standard--box > .harness > .between > standard--heading-group > .harness > .between
+  bowstring--flexbox-container#below::ng-deep > .harness > .between
+    > bowstring--box > .harness > .between > bowstring--heading-group > .harness > .between
       text-align: center
 
-    > standard--flexbox-container
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--flex-wrap: wrap !important
+    > bowstring--flexbox-container
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--flex-wrap: wrap !important
 
-      > .harness > .between > standard--section
-        --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
+      > .harness > .between > bowstring--section
+        --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important

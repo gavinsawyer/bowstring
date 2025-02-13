@@ -1,85 +1,85 @@
-<standard--section
+<bowstring--section
   alignItems="center"
   flexDirection="row"
   flexShrink="0"
   justifyContent="space-between">
-  <standard--header
+  <bowstring--header
     alignItems="last baseline"
     flexDirection="row"
     fontSizeExponent="-2"
     justifyContent="space-between">
-    <h2>@if (accountRoutes | standardFindRouteByPath:''; as route) {<standard--link
+    <h2>@if (accountRoutes | bowstringFindRouteByPath:''; as route) {<bowstring--link
       exact
       inline
       [url]="'./' + route.path">
-      <standard--label [input]="route.data?.['title']" />
-    </standard--link>}</h2>
-  </standard--header>
-  @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<standard--button
+      <bowstring--label [input]="route.data?.['title']" />
+    </bowstring--link>}</h2>
+  </bowstring--header>
+  @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<bowstring--button
     appearance="raised"
     material="glass"
-    (output)="signoutSheetComponent.openModel$.set(true);"><standard--label
+    (output)="signoutSheetComponent.openModel$.set(true);"><bowstring--label
     i18n-input
-    input="Sign out" /></standard--button>}
-</standard--section>
-<standard--flexbox-container flexGrow="1">
-  <standard--aside>
-    <standard--box
+    input="Sign out" /></bowstring--button>}
+</bowstring--section>
+<bowstring--flexbox-container flexGrow="1">
+  <bowstring--aside>
+    <bowstring--box
       position="sticky"
-      positionTop="var(--standard--root--padding-bottom)">
-      <standard--section
+      positionTop="var(--bowstring--root--padding-bottom)">
+      <bowstring--section
         alignItems="center"
         flexDirection="row"
         flexWrap="wrap">
-        @if (accountService.accountDocument$(); as accountDocument) {<standard--image
+        @if (accountService.accountDocument$(); as accountDocument) {<bowstring--image
           appearance="circular"
           flexBasis="33px"
           height="33"
           level="2"
           src="https://placehold.co/102x102"
           width="33" />
-        <standard--heading-group>
-          <standard--header fontSizeExponent="-2">
+        <bowstring--heading-group>
+          <bowstring--header fontSizeExponent="-2">
             <h5>{{ accountDocument.profile?.name }}</h5>
             <h6>{{ accountDocument.email }}</h6>
-          </standard--header>
-        </standard--heading-group>} @else {You're not signed in.}
-      </standard--section>
-      <standard--divider />
-      <standard--section>
-        @if (accountService.accountDocument$()) {@for (route of accountRoutes.slice(1); track $index) {<standard--link
+          </bowstring--header>
+        </bowstring--heading-group>} @else {You're not signed in.}
+      </bowstring--section>
+      <bowstring--divider />
+      <bowstring--section>
+        @if (accountService.accountDocument$()) {@for (route of accountRoutes.slice(1); track $index) {<bowstring--link
           [url]="'./' + route.path">
-          <standard--label [input]="route.data?.['title']" />
-        </standard--link>}} @else {<standard--link
+          <bowstring--label [input]="route.data?.['title']" />
+        </bowstring--link>}} @else {<bowstring--link
           [disabled]="signinSheetComponent.openModelWithTransform$()"
           (output)="signinSheetComponent.openModel$.set(true);">
-          <standard--label
+          <bowstring--label
             i18n-input
             input="Sign in" />
-        </standard--link>
-        <standard--link
+        </bowstring--link>
+        <bowstring--link
           [disabled]="signupSheetComponent.openModelWithTransform$()"
           (output)="signupSheetComponent.openModel$.set(true);">
-          <standard--label
+          <bowstring--label
             i18n-input
             input="Create your account" />
-        </standard--link>}
-      </standard--section>
-    </standard--box>
-  </standard--aside>
-  <standard--section
+        </bowstring--link>}
+      </bowstring--section>
+    </bowstring--box>
+  </bowstring--aside>
+  <bowstring--section
     flexGrow="1"
     flexShrink="0">
     @if (accountService.accountDocument$()) {<router-outlet />}
-  </standard--section>
-</standard--flexbox-container>
+  </bowstring--section>
+</bowstring--flexbox-container>
 
-<standard--sheet #signinSheetComponent>
-  @defer {<standard--signin [sheetComponent]="signinSheetComponent" />}
-</standard--sheet>
-<standard--sheet #signoutSheetComponent>
-  @defer {<standard--signout [sheetComponent]="signoutSheetComponent" />}
-</standard--sheet>
-<standard--sheet #signupSheetComponent>
-  @defer {<standard--signup [sheetComponent]="signupSheetComponent" />}
-</standard--sheet>
+<bowstring--sheet #signinSheetComponent>
+  @defer {<bowstring--signin [sheetComponent]="signinSheetComponent" />}
+</bowstring--sheet>
+<bowstring--sheet #signoutSheetComponent>
+  @defer {<bowstring--signout [sheetComponent]="signoutSheetComponent" />}
+</bowstring--sheet>
+<bowstring--sheet #signupSheetComponent>
+  @defer {<bowstring--signup [sheetComponent]="signupSheetComponent" />}
+</bowstring--sheet>

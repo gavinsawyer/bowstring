@@ -27,46 +27,46 @@
     "noPropertyAccessFromIndexSignature": true,
     "outDir":                             "dist/out-tsc",
     "paths":                              {
-      "@standard/brand":            [
+      "@bowstring/brand":            [
         "libs/brand/src/index.ts"
       ],
-      "@standard/cloud-functions":  [
+      "@bowstring/cloud-functions":  [
         "libs/cloud functions/src/index.ts"
       ],
-      "@standard/colors":           [
+      "@bowstring/colors":           [
         "libs/colors/src/index.ts"
       ],
-      "@standard/components":       [
+      "@bowstring/components":       [
         "libs/components/src/index.ts"
       ],
-      "@standard/config":           [
+      "@bowstring/config":           [
         "libs/config/src/index.ts"
       ],
-      "@standard/currencies":       [
+      "@bowstring/currencies":       [
         "libs/currencies/src/index.ts"
       ],
-      "@standard/directives":       [
+      "@bowstring/directives":       [
         "libs/directives/src/index.ts"
       ],
-      "@standard/injection-tokens": [
+      "@bowstring/injection-tokens": [
         "libs/injection tokens/src/index.ts"
       ],
-      "@standard/interfaces":       [
+      "@bowstring/interfaces":       [
         "libs/interfaces/src/index.ts"
       ],
-      "@standard/pipes":            [
+      "@bowstring/pipes":            [
         "libs/pipes/src/index.ts"
       ],
-      "@standard/services":         [
+      "@bowstring/services":         [
         "libs/services/src/index.ts"
       ],
-      "@standard/stripe-interop":   [
+      "@bowstring/stripe-interop":   [
         "libs/stripe interop/src/index.ts"
       ],
-      "@standard/symbols":          [
+      "@bowstring/symbols":          [
         "libs/symbols/src/index.ts"
       ],
-      "@standard/types":            [
+      "@bowstring/types":            [
         "libs/types/src/index.ts"
       ]
     },

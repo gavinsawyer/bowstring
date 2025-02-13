@@ -1,10 +1,10 @@
 import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                               from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, Injector, model, type ModelSignal, PLATFORM_ID, runInInjectionContext, type Signal, signal, type TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                      from "@angular/core/rxjs-interop";
-import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }                                                                                                                          from "@standard/directives";
-import { type Dimensions, type Symbol }                                                                                                                                                                                from "@standard/interfaces";
-import { ViewportService }                                                                                                                                                                                             from "@standard/services";
-import loadSymbol                                                                                                                                                                                                      from "@standard/symbols";
+import { ElevatedDirective, FlexboxContainerDirective, GlassDirective, WellRoundedDirective }                                                                                                                          from "@bowstring/directives";
+import { type Dimensions, type Symbol }                                                                                                                                                                                from "@bowstring/interfaces";
+import { ViewportService }                                                                                                                                                                                             from "@bowstring/services";
+import loadSymbol                                                                                                                                                                                                      from "@bowstring/symbols";
 import { combineLatestWith, delayWhen, filter, map, Observable, type Observer, switchMap, type TeardownLogic, timer }                                                                                                  from "rxjs";
 import { fromPromise }                                                                                                                                                                                                 from "rxjs/internal/observable/innerFrom";
 
@@ -17,9 +17,9 @@ import { fromPromise }                                                          
       "[class.pinned]":                                    "pinnedModelWithTransform$()",
       "[class.raisedOrLoweringWhenPinnedOrUnpinning]":     "raisedOrLoweringWhenPinnedOrUnpinning$()",
       "[class.raisedWhenPinnedOrUnpinning]":               "raisedWhenPinnedOrUnpinning$()",
-      "[style.--standard--footer--height]":                "height$()",
-      "[style.--standard--footer--raising-scale]":         "raisingScale$()",
-      "[style.--standard--footer--unpinning-translation]": "unpinningTranslation$()",
+      "[style.--bowstring--footer--height]":                "height$()",
+      "[style.--bowstring--footer--raising-scale]":         "raisingScale$()",
+      "[style.--bowstring--footer--unpinning-translation]": "unpinningTranslation$()",
     },
     hostDirectives:  [
       {
@@ -57,7 +57,7 @@ import { fromPromise }                                                          
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--footer",
+    selector:        "bowstring--footer",
     styleUrl:        "FooterComponent.sass",
     templateUrl:     "FooterComponent.html",
 
@@ -172,7 +172,7 @@ export class FooterComponent {
                 Math.max(
                   backdropHtmlDivElement.getBoundingClientRect().bottom - (viewportHeight || 0) + Math.max(
                     0,
-                    parseInt(backdropHtmlDivElement.computedStyleMap().get("margin-bottom")?.toString() || "0") + parseInt(backdropHtmlDivElement.computedStyleMap().get("--standard--root--safe-area-inset-bottom")?.toString() || "0"),
+                    parseInt(backdropHtmlDivElement.computedStyleMap().get("margin-bottom")?.toString() || "0") + parseInt(backdropHtmlDivElement.computedStyleMap().get("--bowstring--root--safe-area-inset-bottom")?.toString() || "0"),
                   ),
                   0,
                 ),

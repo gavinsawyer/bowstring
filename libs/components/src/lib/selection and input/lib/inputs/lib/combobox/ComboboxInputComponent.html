@@ -6,7 +6,7 @@
   @if (labelInput$()) {<!--suppress XmlInvalidId -->
   <label
     [attr.for]="inputName$()"
-    [innerHTML]="explicitAutocompleteInput$() ? (labelInput$() | standardInsertZwnjs) : labelInput$()"></label>}
+    [innerHTML]="explicitAutocompleteInput$() ? (labelInput$() | bowstringInsertZwnjs) : labelInput$()"></label>}
   <div>
     <div class="harness" #htmlDivElement
       (click)="$event.stopPropagation();"
@@ -54,7 +54,7 @@
           (input)="onInput();"
           (keydown)="$event.key === 'Escape' || $event.stopPropagation();">
         <datalist [attr.id]="optionsId$()">
-          @for (option of options$(); track $index) {<option [attr.value]="option.valueInput$() | standardMask:maskInput$()">{{ option.labelInput$() }}</option>}
+          @for (option of options$(); track $index) {<option [attr.value]="option.valueInput$() | bowstringMask:maskInput$()">{{ option.labelInput$() }}</option>}
           <option value=""></option>
         </datalist>
       </label>

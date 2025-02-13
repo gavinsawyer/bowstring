@@ -3,7 +3,7 @@ import { inject, Injectable, PLATFORM_ID, signal, type Signal }                 
 import { toSignal }                                                                                                       from "@angular/core/rxjs-interop";
 import { Auth, onIdTokenChanged, type User }                                                                              from "@angular/fire/auth";
 import { collection, type CollectionReference, collectionSnapshots, Firestore, query, type QueryDocumentSnapshot, where } from "@angular/fire/firestore";
-import { type StripePaymentMethodDocument }                                                                               from "@standard/interfaces";
+import { type StripePaymentMethodDocument }                                                                               from "@bowstring/interfaces";
 import { map, Observable, type Observer, of, startWith, switchMap, type TeardownLogic }                                   from "rxjs";
 
 

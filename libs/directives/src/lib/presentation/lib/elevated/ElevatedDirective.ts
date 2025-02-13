@@ -4,8 +4,8 @@ import { Directive, input, type InputSignalWithTransform, numberAttribute } from
 @Directive(
   {
     host: {
-      "[style.--standard--elevated-directive--level-input]":            "levelInput$()",
-      "[style.--standard--elevated-directive--material-opacity-input]": "materialOpacityInput$()",
+      "[style.--bowstring--elevated-directive--level-input]":            "levelInput$()",
+      "[style.--bowstring--elevated-directive--material-opacity-input]": "materialOpacityInput$()",
     },
 
     standalone: true,

@@ -4,7 +4,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input, type Input
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector:        "standard--combobox-input-option",
+    selector:        "bowstring--combobox-input-option",
     templateUrl:     "ComboboxInputOptionComponent.html",
 
     standalone: true,

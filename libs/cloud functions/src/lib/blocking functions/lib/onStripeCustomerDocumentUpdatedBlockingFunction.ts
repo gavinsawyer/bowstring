@@ -1,5 +1,5 @@
-import { type StripeCustomerDocument }                                        from "@standard/interfaces";
-import { getStripeCustomerUpdateParams }                                      from "@standard/stripe-interop";
+import { type StripeCustomerDocument }                                        from "@bowstring/interfaces";
+import { getStripeCustomerUpdateParams }                                      from "@bowstring/stripe-interop";
 import { type Change, type CloudFunction }                                    from "firebase-functions";
 import { type FirestoreEvent, onDocumentUpdated, type QueryDocumentSnapshot } from "firebase-functions/firestore";
 import { HttpsError }                                                         from "firebase-functions/https";

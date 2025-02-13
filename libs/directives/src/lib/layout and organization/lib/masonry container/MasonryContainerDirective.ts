@@ -1,7 +1,7 @@
 import { isPlatformBrowser }                                                                                                                                                                                    from "@angular/common";
 import { afterRender, computed, Directive, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, OnDestroy, PLATFORM_ID, signal, type Signal, type WritableSignal } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                               from "@angular/core/rxjs-interop";
-import { type Inherit, type ScalarString }                                                                                                                                                                      from "@standard/types";
+import { type Inherit, type ScalarString }                                                                                                                                                                      from "@bowstring/types";
 import type Masonry                                                                                                                                                                                             from "masonry-layout";
 import { filter, Observable, type Observer, switchMap, type TeardownLogic }                                                                                                                                     from "rxjs";
 import { ContainerDirective }                                                                                                                                                                                   from "../container/ContainerDirective";
@@ -10,10 +10,10 @@ import { ContainerDirective }                                                   
 @Directive(
   {
     host:           {
-      "[style.--standard--masonry-container-directive--column-width]":     "columnWidth$()",
-      "[style.--standard--masonry-container-directive--columns-input]":    "columnsInput$()",
-      "[style.--standard--masonry-container-directive--gap-column-input]": "gapColumnInput$()",
-      "[style.--standard--masonry-container-directive--gap-row-input]":    "gapRowInput$()",
+      "[style.--bowstring--masonry-container-directive--column-width]":     "columnWidth$()",
+      "[style.--bowstring--masonry-container-directive--columns-input]":    "columnsInput$()",
+      "[style.--bowstring--masonry-container-directive--gap-column-input]": "gapColumnInput$()",
+      "[style.--bowstring--masonry-container-directive--gap-row-input]":    "gapRowInput$()",
     },
     hostDirectives: [
       {
@@ -68,7 +68,7 @@ export class MasonryContainerDirective
           columnWidth:        columnSizerHtmlDivElement,
           gutter:             gutterSizerHtmlDivElement,
           initLayout:         false,
-          itemSelector:       ".standardMasonryChild",
+          itemSelector:       ".bowstringMasonryChild",
           percentPosition:    true,
           transitionDuration: 0,
         },

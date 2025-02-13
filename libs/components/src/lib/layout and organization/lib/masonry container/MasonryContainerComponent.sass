@@ -4,28 +4,28 @@
 \:host
   display: contents
 
-  --standard--masonry-container--column-width: var(--standard--masonry-container-directive--column-width)
-  --standard--masonry-container--gap-column: 0
-  --standard--masonry-container--gap-row: 0
+  --bowstring--masonry-container--column-width: var(--bowstring--masonry-container-directive--column-width)
+  --bowstring--masonry-container--gap-column: 0
+  --bowstring--masonry-container--gap-row: 0
 
   @include MasonryContainerDirective.host
 
-  --standard--masonry-container-directive--gap-column: var(--standard--masonry-container--gap-column) !important
-  --standard--masonry-container-directive--gap-row: var(--standard--masonry-container--gap-row) !important
+  --bowstring--masonry-container-directive--gap-column: var(--bowstring--masonry-container--gap-column) !important
+  --bowstring--masonry-container-directive--gap-row: var(--bowstring--masonry-container--gap-row) !important
 
   > .harness > .between
     &::ng-deep > *
       @include MasonryContainerDirective.children
 
     > div:first-child
-      width: var(--standard--masonry-container--gap-column)
+      width: var(--bowstring--masonry-container--gap-column)
 
-    > div.standardMasonryChild
-      margin-bottom: var(--standard--masonry-container--gap-row)
-      width: calc(1px * var(--standard--masonry-container--column-width))
+    > div.bowstringMasonryChild
+      margin-bottom: var(--bowstring--masonry-container--gap-row)
+      width: calc(1px * var(--bowstring--masonry-container--column-width))
 
 
 @each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
-  \:host-context(standard--#{ $host-context-namespace })
-    --standard--masonry-container--gap-column: var(--standard--#{ $host-context-namespace }--gap-column)
-    --standard--masonry-container--gap-row: var(--standard--#{ $host-context-namespace }--gap-row)
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--masonry-container--gap-column: var(--bowstring--#{ $host-context-namespace }--gap-column)
+    --bowstring--masonry-container--gap-row: var(--bowstring--#{ $host-context-namespace }--gap-row)

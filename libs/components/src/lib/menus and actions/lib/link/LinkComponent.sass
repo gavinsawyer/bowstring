@@ -9,15 +9,15 @@
 \:host
   display: contents
 
-  --standard--link--gap-column: calc(1rem * pow(var(--phi), -2))
-  --standard--link--gap-row: calc(1rem * pow(var(--phi), -3))
+  --bowstring--link--gap-column: calc(1rem * pow(var(--phi), -2))
+  --bowstring--link--gap-row: calc(1rem * pow(var(--phi), -3))
 
   @include FlexboxContainerDirective.host
   @include InlinableDirective.host
 
-  --standard--flexbox-container-directive--gap-column: var(--standard--link--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--link--gap-row) !important
-  --standard--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--link--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--link--gap-row) !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
 
   > .harness
     background: none
@@ -43,19 +43,19 @@
     @include PrimaryDirective.host
 
     > .harness > .between
-      color: var(--standard--primary-directive--colors--background) !important
+      color: var(--bowstring--primary-directive--colors--background) !important
 
   &.material-secondary
     @include SecondaryDirective.host
 
     > .harness > .between
-      color: var(--standard--secondary-directive--colors--background) !important
+      color: var(--bowstring--secondary-directive--colors--background) !important
 
   &.material-warning
     @include WarningDirective.host
 
     > .harness > .between
-      color: var(--standard--warning-directive--colors--background) !important
+      color: var(--bowstring--warning-directive--colors--background) !important
 
   &:not(.disabled)
     > .harness
@@ -72,10 +72,10 @@
     pointer-events: none
 
 
-\:host-context(standard--nav, standard--footer > .harness > .between > standard--header) > .harness
+\:host-context(bowstring--nav, bowstring--footer > .harness > .between > bowstring--header) > .harness
   color: currentColor
 
-\:host-context(standard-website--root > .harness > .between > standard--main > .harness > .between > standard--flexbox-container > .harness > .between > standard--header) > .harness
+\:host-context(bowstring-website--root > .harness > .between > bowstring--main > .harness > .between > bowstring--flexbox-container > .harness > .between > bowstring--header) > .harness
   opacity: 1 !important
 
   > .between

@@ -99,7 +99,7 @@ module.exports = [
       "@angular-eslint/component-selector": [
         "error",
         {
-          prefix: "standard-website-",
+          prefix: "bowstring-website-",
           style:  "kebab-case",
           type:   "element",
         },
@@ -114,7 +114,7 @@ module.exports = [
       "@angular-eslint/directive-selector": [
         "error",
         {
-          prefix: "standardWebsite",
+          prefix: "bowstringWebsite",
           style:  "camelCase",
           type:   "attribute",
         },
@@ -130,7 +130,7 @@ module.exports = [
         "error",
         {
           prefixes: [
-            "standardWebsite",
+            "bowstringWebsite",
           ],
         },
       ],
@@ -145,7 +145,7 @@ module.exports = [
       "@angular-eslint/component-selector": [
         "error",
         {
-          prefix: "standard-",
+          prefix: "bowstring-",
           style:  "kebab-case",
           type:   "element",
         },
@@ -160,7 +160,7 @@ module.exports = [
       "@angular-eslint/directive-selector": [
         "error",
         {
-          prefix: "standard",
+          prefix: "bowstring",
           style:  "camelCase",
           type:   "attribute",
         },
@@ -176,7 +176,7 @@ module.exports = [
         "error",
         {
           prefixes: [
-            "standard",
+            "bowstring",
           ],
         },
       ],

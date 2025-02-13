@@ -1,8 +1,8 @@
 import { NgTemplateOutlet }                                                                                                                    from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, computed, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
 import { GoogleMap }                                                                                                                           from "@angular/google-maps";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDirective }                                                        from "@standard/directives";
-import { GoogleMapsApiLoaderService }                                                                                                          from "@standard/services";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDirective }                                                        from "@bowstring/directives";
+import { GoogleMapsApiLoaderService }                                                                                                          from "@bowstring/services";
 
 
 @Component(
@@ -53,7 +53,7 @@ import { GoogleMapsApiLoaderService }                                           
       GoogleMap,
       NgTemplateOutlet,
     ],
-    selector:        "standard--map",
+    selector:        "bowstring--map",
     styleUrl:        "MapComponent.sass",
     templateUrl:     "MapComponent.html",
 

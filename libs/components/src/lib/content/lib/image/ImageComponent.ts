@@ -1,7 +1,7 @@
 import { NgOptimizedImage, NgTemplateOutlet }                                                                                                                                        from "@angular/common";
 import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
 import { RouterLink }                                                                                                                                                                from "@angular/router";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, WellRoundedDirective }                                                                  from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, WellRoundedDirective }                                                                  from "@bowstring/directives";
 
 
 @Component(
@@ -11,7 +11,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
       "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
       "[class.appearance-transparent]":          "appearanceInput$() === 'transparent'",
       "[class.hasUrlInput]":                     "urlInput$()",
-      "[style.--standard--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
+      "[style.--bowstring--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
     },
     hostDirectives:  [
       {
@@ -62,7 +62,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformi
       NgTemplateOutlet,
       RouterLink,
     ],
-    selector:        "standard--image",
+    selector:        "bowstring--image",
     styleUrl:        "ImageComponent.sass",
     templateUrl:     "ImageComponent.html",
 

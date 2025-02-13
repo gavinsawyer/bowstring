@@ -1,67 +1,67 @@
-<standard--header>
+<bowstring--header>
   <h3 i18n="@@libs--Components--Routes--Account-PersonalInformation--Header">Personal information</h3>
-</standard--header>
-<standard--flexbox-container>
-  <standard--box
+</bowstring--header>
+<bowstring--flexbox-container>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n>Name</h4>
-    </standard--header>
-    <standard--form (output)="nameFormSubmit();">
-      <standard--text-field-input
+    </bowstring--header>
+    <bowstring--form (output)="nameFormSubmit();">
+      <bowstring--text-field-input
         [formControl]="nameFormGroup.controls.name"
         level="2"
         placeholder="Gavin Sawyer" />
-      <standard--divider />
-      <standard--flexbox-container
+      <bowstring--divider />
+      <bowstring--flexbox-container
         alignItems="center"
         flexDirection="row"
         justifyContent="flex-end">
-        @if (accountService.accountDocument$()?.profile?.name; as name) {<standard--button
+        @if (accountService.accountDocument$()?.profile?.name; as name) {<bowstring--button
           appearance="symbol"
           [disabled]="!nameEdited$()"
           (output)="nameFormGroup.reset({ name: name });">
-          <standard--symbol input="ArrowCounterclockwiseCircleFill" />
-        </standard--button>}
-        <standard--button
+          <bowstring--symbol input="ArrowCounterclockwiseCircleFill" />
+        </bowstring--button>}
+        <bowstring--button
           appearance="symbol"
           [disabled]="nameFormGroup.invalid || !nameEdited$()"
           type="submit">
-          <standard--symbol input="CheckmarkCircleFill" />
-        </standard--button>
-      </standard--flexbox-container>
-    </standard--form>
-  </standard--box>
-  <standard--box
+          <bowstring--symbol input="CheckmarkCircleFill" />
+        </bowstring--button>
+      </bowstring--flexbox-container>
+    </bowstring--form>
+  </bowstring--box>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n>Birthday</h4>
-    </standard--header>
-    <standard--form (output)="birthdayFormSubmit();">
-      <standard--datepicker-input
+    </bowstring--header>
+    <bowstring--form (output)="birthdayFormSubmit();">
+      <bowstring--datepicker-input
         [formControl]="birthdayFormGroup.controls.birthday"
         level="2"
         placeholder="21 May 2001" />
-      <standard--divider />
-      <standard--flexbox-container
+      <bowstring--divider />
+      <bowstring--flexbox-container
         alignItems="center"
         flexDirection="row"
         justifyContent="flex-end">
-        @if (accountService.accountDocument$()?.profile?.birthday; as birthday) {<standard--button
+        @if (accountService.accountDocument$()?.profile?.birthday; as birthday) {<bowstring--button
           appearance="symbol"
           [disabled]="!birthdayEdited$()"
           (output)="birthdayFormGroup.reset({ birthday: birthday });">
-          <standard--symbol input="ArrowCounterclockwiseCircleFill" />
-        </standard--button>}
-        <standard--button
+          <bowstring--symbol input="ArrowCounterclockwiseCircleFill" />
+        </bowstring--button>}
+        <bowstring--button
           appearance="symbol"
           [disabled]="birthdayFormGroup.invalid || !birthdayEdited$()"
           type="submit">
-          <standard--symbol input="CheckmarkCircleFill" />
-        </standard--button>
-      </standard--flexbox-container>
-    </standard--form>
-  </standard--box>
-</standard--flexbox-container>
+          <bowstring--symbol input="CheckmarkCircleFill" />
+        </bowstring--button>
+      </bowstring--flexbox-container>
+    </bowstring--form>
+  </bowstring--box>
+</bowstring--flexbox-container>

@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                                                                                                                            from "@angular/common";
 import { afterRender, booleanAttribute, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDirective }                                                                                                                from "@standard/directives";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDirective }                                                                                                                from "@bowstring/directives";
 
 
 @Component(
@@ -47,7 +47,7 @@ import { CanvasDirective, ContainerDirective, ElevatedDirective, WellRoundedDire
         ],
       },
     ],
-    selector:        "standard--video",
+    selector:        "bowstring--video",
     styleUrl:        "VideoComponent.sass",
     templateUrl:     "VideoComponent.html",
     imports:         [

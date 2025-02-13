@@ -1,4 +1,4 @@
-import { type Environment } from "@standard/interfaces";
+import { type Environment } from "@bowstring/interfaces";
 
 
 export const environment: Environment = {

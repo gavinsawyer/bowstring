@@ -4,19 +4,19 @@
 \:host
   display: contents
 
-  --standard--grid-container--gap-column: 0
-  --standard--grid-container--gap-row: 0
+  --bowstring--grid-container--gap-column: 0
+  --bowstring--grid-container--gap-row: 0
 
   @include GridContainerDirective.host
 
-  --standard--grid-container-directive--gap-column: var(--standard--grid-container--gap-column) !important
-  --standard--grid-container-directive--gap-row: var(--standard--grid-container--gap-row) !important
+  --bowstring--grid-container-directive--gap-column: var(--bowstring--grid-container--gap-column) !important
+  --bowstring--grid-container-directive--gap-row: var(--bowstring--grid-container--gap-row) !important
 
   > .harness > .between::ng-deep > *
     @include GridContainerDirective.children
 
 
 @each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
-  \:host-context(standard--#{ $host-context-namespace })
-    --standard--grid-container--gap-column: var(--standard--#{ $host-context-namespace }--gap-column)
-    --standard--grid-container--gap-row: var(--standard--#{ $host-context-namespace }--gap-row)
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--grid-container--gap-column: var(--bowstring--#{ $host-context-namespace }--gap-column)
+    --bowstring--grid-container--gap-row: var(--bowstring--#{ $host-context-namespace }--gap-row)

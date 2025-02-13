@@ -3,6 +3,6 @@
 </div>
 
 <ng-template #contentTemplate>
-  @if (itemTemplateRefs$()[0]; as itemTemplateRef) {<!--suppress CssUnknownProperty --><div [style.--standard--scroll-stack--item--index]="1"><div><ng-container *ngTemplateOutlet="itemTemplateRef" /></div></div>}
-  @defer {@for (itemTemplateRef of itemTemplateRefs$().slice(1); track $index) {<!--suppress CssUnknownProperty --><div [style.--standard--scroll-stack--item--index]="$index + 2"><div><ng-container *ngTemplateOutlet="itemTemplateRef" /></div></div>}}
+  @if (itemTemplateRefs$()[0]; as itemTemplateRef) {<!--suppress CssUnknownProperty --><div [style.--bowstring--scroll-stack--item--index]="1"><div><ng-container *ngTemplateOutlet="itemTemplateRef" /></div></div>}
+  @defer {@for (itemTemplateRef of itemTemplateRefs$().slice(1); track $index) {<!--suppress CssUnknownProperty --><div [style.--bowstring--scroll-stack--item--index]="$index + 2"><div><ng-container *ngTemplateOutlet="itemTemplateRef" /></div></div>}}
 </ng-template>

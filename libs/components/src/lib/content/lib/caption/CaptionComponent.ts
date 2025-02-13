@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                   from "@angular/common";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { ContainerDirective }                 from "@standard/directives";
+import { ContainerDirective }                 from "@bowstring/directives";
 
 
 @Component(
@@ -34,7 +34,7 @@ import { ContainerDirective }                 from "@standard/directives";
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--caption",
+    selector:        "bowstring--caption",
     styleUrl:        "CaptionComponent.sass",
     templateUrl:     "CaptionComponent.html",
 

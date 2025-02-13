@@ -5,215 +5,215 @@
   <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
 </div>
 
-<standard--sheet #currencySheetComponent>
-  @defer {<standard--heading-group>
-    <standard--header>
+<bowstring--sheet #currencySheetComponent>
+  @defer {<bowstring--heading-group>
+    <bowstring--header>
       <h6 i18n="@@apps--Website--Components--Root--Sheets--Currency--Header">Select your currency.</h6>
-    </standard--header>
+    </bowstring--header>
     <p i18n="@@apps--Website--Components--Root--Sheets--Currency--Paragraph">View prices with a live exchange rate from {{ brand.currency }}&nbsp;&lpar;{{ currencies[brand.currency].name }}&rpar;.</p>
-  </standard--heading-group>
-  <standard--divider />
-  <standard--section>
-    @for (currency of currencyKeys; track $index) {<standard--button
+  </bowstring--heading-group>
+  <bowstring--divider />
+  <bowstring--section>
+    @for (currency of currencyKeys; track $index) {<bowstring--button
       [disabled]="currency === currencyService.userCurrency$()"
       level="2"
       (output)="currencyService.userCurrency$.set(currency); currencySheetComponent.openModel$.set(false);">
-      <standard--symbol [input]="currencies[currency].symbolName" />
-      <standard--label [input]="currency + ' (' + currencies[currency].name + ')'" />
-    </standard--button>}
-  </standard--section>}
-</standard--sheet>
-<standard--sheet #localeSheetComponent>
-  @defer {<standard--header>
+      <bowstring--symbol [input]="currencies[currency].symbolName" />
+      <bowstring--label [input]="currency + ' (' + currencies[currency].name + ')'" />
+    </bowstring--button>}
+  </bowstring--section>}
+</bowstring--sheet>
+<bowstring--sheet #localeSheetComponent>
+  @defer {<bowstring--header>
     <h6 i18n="@@apps--Website--Components--Root--Sheets--Locale--Header">Select your locale.</h6>
-  </standard--header>
-  <standard--divider />
-  <standard--section>
-    @for (locale of localeIds; track $index) {<standard--button
+  </bowstring--header>
+  <bowstring--divider />
+  <bowstring--section>
+    @for (locale of localeIds; track $index) {<bowstring--button
       [disabled]="locale === localeId"
       level="2"
       (output)="locale === localeId || changeLocale(locale);">
-      <standard--symbol input="Globe" />
-      <standard--label [input]="localeDisplayNames.of(locale) || locale" />
-    </standard--button>}
-  </standard--section>}
-</standard--sheet>
-<standard--sheet #signinSheetComponent>
-  @defer {<standard--signin [sheetComponent]="signinSheetComponent" />}
-</standard--sheet>
-<standard--sheet #signoutSheetComponent>
-  @defer {<standard--signout [sheetComponent]="signoutSheetComponent" />}
-</standard--sheet>
-<standard--sheet #signupSheetComponent>
-  @defer {<standard--signup [sheetComponent]="signupSheetComponent" />}
-</standard--sheet>
+      <bowstring--symbol input="Globe" />
+      <bowstring--label [input]="localeDisplayNames.of(locale) || locale" />
+    </bowstring--button>}
+  </bowstring--section>}
+</bowstring--sheet>
+<bowstring--sheet #signinSheetComponent>
+  @defer {<bowstring--signin [sheetComponent]="signinSheetComponent" />}
+</bowstring--sheet>
+<bowstring--sheet #signoutSheetComponent>
+  @defer {<bowstring--signout [sheetComponent]="signoutSheetComponent" />}
+</bowstring--sheet>
+<bowstring--sheet #signupSheetComponent>
+  @defer {<bowstring--signup [sheetComponent]="signupSheetComponent" />}
+</bowstring--sheet>
 
 <ng-template #contentTemplate>
-  <standard--main>
-    @if (bannerTemplateRef$(); as bannerTemplateRef) {<standard--banner>
+  <bowstring--main>
+    @if (bannerTemplateRef$(); as bannerTemplateRef) {<bowstring--banner>
       <ng-container *ngTemplateOutlet="bannerTemplateRef" />
-    </standard--banner>}
-    <standard--flexbox-container
+    </bowstring--banner>}
+    <bowstring--flexbox-container
       alignItems="last baseline"
       flexDirection="row"
       flexWrap="wrap"
-      gapColumn="calc(var(--standard--root--gap-column) * pow(var(--phi), -1))"
-      gapRow="calc(var(--standard--root--gap-row) * pow(var(--phi), -1))"
+      gapColumn="calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))"
+      gapRow="calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))"
       justifyContent="space-between">
-      <standard--header fontSizeExponent="-3">
-        <h1 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
-          <standard--link
+      <bowstring--header fontSizeExponent="-3">
+        <h1 style="font-family: Anybody, var(--bowstring--root--font-family), sans-serif; font-weight: 900; font-variation-settings: 'wdth' 112.5;">
+          <bowstring--link
             exact
             url="/">
-            <standard--label [input]="brand.title" />
-          </standard--link>
+            <bowstring--label [input]="brand.title" />
+          </bowstring--link>
         </h1>
-      </standard--header>
-      <standard--nav>
-        @if (standardRoutes | standardFindRouteByPath:'gallery'; as route) {<standard--link [url]="'/' + route.path">
-          <standard--label [input]="route.data?.['title']" />
-        </standard--link>}
-        @if (standardRoutes | standardFindRouteByPath:'shop'; as route) {<standard--link [url]="'/' + route.path">
-          <standard--label [input]="route.data?.['title']" />
-        </standard--link>}
-        @for (route of appRoutes.slice(1); track $index) {<standard--link [url]="'/' + route.path">
-          <standard--label [input]="route.data?.['title']" />
-        </standard--link>}
-        @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link [url]="'/' + route.path">
-          <standard--label [input]="route.data?.['title']" />
-        </standard--link>}
-      </standard--nav>
-    </standard--flexbox-container>
+      </bowstring--header>
+      <bowstring--nav>
+        @if (bowstringRoutes | bowstringFindRouteByPath:'gallery'; as route) {<bowstring--link [url]="'/' + route.path">
+          <bowstring--label [input]="route.data?.['title']" />
+        </bowstring--link>}
+        @if (bowstringRoutes | bowstringFindRouteByPath:'shop'; as route) {<bowstring--link [url]="'/' + route.path">
+          <bowstring--label [input]="route.data?.['title']" />
+        </bowstring--link>}
+        @for (route of appRoutes.slice(1); track $index) {<bowstring--link [url]="'/' + route.path">
+          <bowstring--label [input]="route.data?.['title']" />
+        </bowstring--link>}
+        @if (bowstringRoutes | bowstringFindRouteByPath:'account'; as route) {<bowstring--link [url]="'/' + route.path">
+          <bowstring--label [input]="route.data?.['title']" />
+        </bowstring--link>}
+      </bowstring--nav>
+    </bowstring--flexbox-container>
     <router-outlet />
-    @if (aboveTemplateRef$(); as aboveTemplateRef) {<standard--above>
+    @if (aboveTemplateRef$(); as aboveTemplateRef) {<bowstring--above>
       <ng-container *ngTemplateOutlet="aboveTemplateRef" />
-    </standard--above>}
-  </standard--main>
-  @defer {@if (belowTemplateRef$(); as belowTemplateRef) {<standard--below>
+    </bowstring--above>}
+  </bowstring--main>
+  @defer {@if (belowTemplateRef$(); as belowTemplateRef) {<bowstring--below>
     <ng-container *ngTemplateOutlet="belowTemplateRef" />
-  </standard--below>}}
-  <standard--footer>
-    <standard--header>
-      <h6 style="font-family: Anybody, var(--standard--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
-        <standard--link
+  </bowstring--below>}}
+  <bowstring--footer>
+    <bowstring--header>
+      <h6 style="font-family: Anybody, var(--bowstring--root--font-family), sans-serif; font-weight: 800; font-variation-settings: 'wdth' 112.5;">
+        <bowstring--link
           exact
           url="/">
-          <standard--label [input]="brand.title" />
-        </standard--link>
+          <bowstring--label [input]="brand.title" />
+        </bowstring--link>
       </h6>
-    </standard--header>
-    <standard--section
+    </bowstring--header>
+    <bowstring--section
       flexDirection="row"
       flexWrap="wrap"
       justifyContent="space-between">
-      <standard--flexbox-container flexDirection="row">
-        <standard--flexbox-container alignItems="flex-start">
-          @if (standardRoutes | standardFindRouteByPath:'gallery'; as route) {<standard--link [url]="'/' + route.path">
-            <standard--label [input]="route.data?.['title']" />
-          </standard--link>}
-          @if (standardRoutes | standardFindRouteByPath:'shop'; as route) {<standard--link [url]="'/' + route.path">
-            <standard--label [input]="route.data?.['title']" />
-          </standard--link>}
-          @for (route of appRoutes.slice(1); track $index) {<standard--link [url]="'/' + route.path">
-            <standard--label [input]="route.data?.['title']" />
-          </standard--link>}
-        </standard--flexbox-container>
-        @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<standard--flexbox-container alignItems="flex-start">
-          <standard--link
+      <bowstring--flexbox-container flexDirection="row">
+        <bowstring--flexbox-container alignItems="flex-start">
+          @if (bowstringRoutes | bowstringFindRouteByPath:'gallery'; as route) {<bowstring--link [url]="'/' + route.path">
+            <bowstring--label [input]="route.data?.['title']" />
+          </bowstring--link>}
+          @if (bowstringRoutes | bowstringFindRouteByPath:'shop'; as route) {<bowstring--link [url]="'/' + route.path">
+            <bowstring--label [input]="route.data?.['title']" />
+          </bowstring--link>}
+          @for (route of appRoutes.slice(1); track $index) {<bowstring--link [url]="'/' + route.path">
+            <bowstring--label [input]="route.data?.['title']" />
+          </bowstring--link>}
+        </bowstring--flexbox-container>
+        @if (!authenticationService.user$() || authenticationService.user$()?.isAnonymous) {<bowstring--flexbox-container alignItems="flex-start">
+          <bowstring--link
             [disabled]="signinSheetComponent.openModelWithTransform$()"
             (output)="signinSheetComponent.openModel$.set(true);">
-            <standard--label
+            <bowstring--label
               i18n-input
               input="Sign in" />
-          </standard--link>
-          <standard--link
+          </bowstring--link>
+          <bowstring--link
             [disabled]="signupSheetComponent.openModelWithTransform$()"
             (output)="signupSheetComponent.openModel$.set(true);">
-            <standard--label
+            <bowstring--label
               i18n-input
               input="Create your account" />
-          </standard--link>
-        </standard--flexbox-container>} @else {<standard--flexbox-container alignItems="flex-start">
-          @if (standardRoutes | standardFindRouteByPath:'account'; as route) {<standard--link [url]="'/' + route.path">
-            <standard--label [input]="route.data?.['title']" />
-          </standard--link>}
-          <standard--link (output)="signoutSheetComponent.openModel$.set(true);">
-            <standard--label
+          </bowstring--link>
+        </bowstring--flexbox-container>} @else {<bowstring--flexbox-container alignItems="flex-start">
+          @if (bowstringRoutes | bowstringFindRouteByPath:'account'; as route) {<bowstring--link [url]="'/' + route.path">
+            <bowstring--label [input]="route.data?.['title']" />
+          </bowstring--link>}
+          <bowstring--link (output)="signoutSheetComponent.openModel$.set(true);">
+            <bowstring--label
               i18n-input
               input="Sign out" />
-          </standard--link>
-        </standard--flexbox-container>}
-        <standard--flexbox-container alignItems="flex-start">
-          @if (standardRoutes | standardFindRouteByPath:'privacy'; as route) {<standard--link [url]="'/' + route.path">
-            <standard--label [input]="route.data?.['title']" />
-          </standard--link>}
-          @if (standardRoutes | standardFindRouteByPath:'terms'; as route) {<standard--link [url]="'/' + route.path">
-            <standard--label [input]="route.data?.['title']" />
-          </standard--link>}
-        </standard--flexbox-container>
-      </standard--flexbox-container>
-      <standard--flexbox-container flexDirection="row">
-        <standard--flexbox-container alignItems="flex-start">
-          <standard--link>
-            <standard--symbol input="ArrowUpForwardAppFill" />
-            <standard--label input="Instagram" />
-          </standard--link>
-        </standard--flexbox-container>
-      </standard--flexbox-container>
-    </standard--section>
-    <standard--divider />
-    <standard--section
+          </bowstring--link>
+        </bowstring--flexbox-container>}
+        <bowstring--flexbox-container alignItems="flex-start">
+          @if (bowstringRoutes | bowstringFindRouteByPath:'privacy'; as route) {<bowstring--link [url]="'/' + route.path">
+            <bowstring--label [input]="route.data?.['title']" />
+          </bowstring--link>}
+          @if (bowstringRoutes | bowstringFindRouteByPath:'terms'; as route) {<bowstring--link [url]="'/' + route.path">
+            <bowstring--label [input]="route.data?.['title']" />
+          </bowstring--link>}
+        </bowstring--flexbox-container>
+      </bowstring--flexbox-container>
+      <bowstring--flexbox-container flexDirection="row">
+        <bowstring--flexbox-container alignItems="flex-start">
+          <bowstring--link>
+            <bowstring--symbol input="ArrowUpForwardAppFill" />
+            <bowstring--label input="Instagram" />
+          </bowstring--link>
+        </bowstring--flexbox-container>
+      </bowstring--flexbox-container>
+    </bowstring--section>
+    <bowstring--divider />
+    <bowstring--section
       flexDirection="row"
       flexWrap="wrap"
       [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
-      <standard--link
+      <bowstring--link
         disabled>
-        @if (connectivityService.connected$()) {<standard--symbol input="Network" />
-        <standard--label
+        @if (connectivityService.connected$()) {<bowstring--symbol input="Network" />
+        <bowstring--label
           i18n-input
-          input="Connected" />} @else {<standard--symbol input="NetworkSlash" />
-        <standard--label
+          input="Connected" />} @else {<bowstring--symbol input="NetworkSlash" />
+        <bowstring--label
           i18n-input
           input="Disconnected" />}
-      </standard--link>
-    </standard--section>
-    <standard--section
+      </bowstring--link>
+    </bowstring--section>
+    <bowstring--section
       flexDirection="row"
       flexWrap="wrap"
       justifyContent="center">
-      <standard--flexbox-container
+      <bowstring--flexbox-container
         flexDirection="row"
         flexGrow="1"
         flexWrap="wrap"
         [justifyContent]="responsivityService.pastMediumBreakpoint$() ? 'flex-start' : 'center'">
-        <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2025&nbsp;}<standard--link
+        <span style="white-space: nowrap;">@if (responsivityService.pastMediumBreakpoint$()) {Copyright&nbsp;}&copy;&nbsp;@if (responsivityService.pastMediumBreakpoint$()) {2025&nbsp;}<bowstring--link
           inline
           [url]="brand.copyrightHolderUrl">
-          <standard--label [input]="brand.copyrightHolder" />
-        </standard--link></span>
-        <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<standard--link
+          <bowstring--label [input]="brand.copyrightHolder" />
+        </bowstring--link></span>
+        <span style="white-space: nowrap;">{{ packageVersion }}&dash;mini&nbsp;&lpar;<bowstring--link
           inline
-          [url]="'https://github.com/gavinsawyer/standard/commit/' + gitInfoPartial.hash">
-          <standard--label [input]="gitInfoPartial.hash || ''" />
-        </standard--link>&rpar;</span>
-      </standard--flexbox-container>
-      <standard--flexbox-container
+          [url]="'https://github.com/gavinsawyer/bowstring/commit/' + gitInfoPartial.hash">
+          <bowstring--label [input]="gitInfoPartial.hash || ''" />
+        </bowstring--link>&rpar;</span>
+      </bowstring--flexbox-container>
+      <bowstring--flexbox-container
         [flexBasis]="responsivityService.pastMediumBreakpoint$() ? 'auto' : '100%'"
         flexDirection="row"
         justifyContent="center">
-        <standard--link
+        <bowstring--link
           [disabled]="localeSheetComponent.openModelWithTransform$()"
           (output)="localeSheetComponent.openModel$.set(true);">
-          <standard--symbol input="Globe" />
-          <standard--label [input]="localeDisplayNames.of(localeId) || localeId" />
-        </standard--link>
-        @if (standardRoutes | standardFindRouteByPath:'shop') {<standard--link
+          <bowstring--symbol input="Globe" />
+          <bowstring--label [input]="localeDisplayNames.of(localeId) || localeId" />
+        </bowstring--link>
+        @if (bowstringRoutes | bowstringFindRouteByPath:'shop') {<bowstring--link
           [disabled]="currencySheetComponent.openModelWithTransform$()"
           (output)="currencySheetComponent.openModel$.set(true);">
-          <standard--symbol [input]="currencies[currencyService.userCurrency$()].symbolName" />
-          <standard--label [input]="currencyService.userCurrency$()"/>
-        </standard--link>}
-      </standard--flexbox-container>
-    </standard--section>
-  </standard--footer>
+          <bowstring--symbol [input]="currencies[currencyService.userCurrency$()].symbolName" />
+          <bowstring--label [input]="currencyService.userCurrency$()"/>
+        </bowstring--link>}
+      </bowstring--flexbox-container>
+    </bowstring--section>
+  </bowstring--footer>
 </ng-template>

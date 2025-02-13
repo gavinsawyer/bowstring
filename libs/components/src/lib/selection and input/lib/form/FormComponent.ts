@@ -1,7 +1,7 @@
 import { NgTemplateOutlet }                                                  from "@angular/common";
 import { ChangeDetectionStrategy, Component, output, type OutputEmitterRef } from "@angular/core";
 import { FormsModule }                                                       from "@angular/forms";
-import { FlexboxContainerDirective }                                         from "@standard/directives";
+import { FlexboxContainerDirective }                                         from "@bowstring/directives";
 
 
 @Component(
@@ -25,7 +25,7 @@ import { FlexboxContainerDirective }                                         fro
       FormsModule,
       NgTemplateOutlet,
     ],
-    selector:        "standard--form",
+    selector:        "bowstring--form",
     styleUrl:        "FormComponent.sass",
     templateUrl:     "FormComponent.html",
 

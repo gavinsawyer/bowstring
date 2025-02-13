@@ -1,5 +1,5 @@
 import { Directive, input, type InputSignal, type InputSignalWithTransform, numberAttribute }                                                                                                                                                   from "@angular/core";
-import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@standard/types";
+import { type BaselineAlignment, type DistributedAlignment, type FlexPositionalAlignment, type Inherit, type NormalAlignment, type Overflow, type Position, type ScalarString, type ScrollSnapAlign, type ScrollSnapStop, type ScrollSnapType } from "@bowstring/types";
 import { FlexboxChildDirective }                                                                                                                                                                                                                from "../flexbox child/FlexboxChildDirective";
 import { GridChildDirective }                                                                                                                                                                                                                   from "../grid child/GridChildDirective";
 
@@ -7,24 +7,24 @@ import { GridChildDirective }                                                   
 @Directive(
   {
     host:           {
-      "[style.--standard--container-directive--align-self-input]":        "alignSelfInput$()",
-      "[style.--standard--container-directive--aspect-ratio-input]":      "aspectRatioInput$()",
-      "[style.--standard--container-directive--margin-bottom-input]":     "marginBottomInput$()",
-      "[style.--standard--container-directive--margin-sides-input]":      "marginSidesInput$()",
-      "[style.--standard--container-directive--margin-top-input]":        "marginTopInput$()",
-      "[style.--standard--container-directive--overflow-x-input]":        "overflowXInput$()",
-      "[style.--standard--container-directive--overflow-y-input]":        "overflowYInput$()",
-      "[style.--standard--container-directive--padding-bottom-input]":    "paddingBottomInput$()",
-      "[style.--standard--container-directive--padding-sides-input]":     "paddingSidesInput$()",
-      "[style.--standard--container-directive--padding-top-input]":       "paddingTopInput$()",
-      "[style.--standard--container-directive--position-bottom-input]":   "positionBottomInput$()",
-      "[style.--standard--container-directive--position-input]":          "positionInput$()",
-      "[style.--standard--container-directive--position-left-input]":     "positionLeftInput$()",
-      "[style.--standard--container-directive--position-right-input]":    "positionRightInput$()",
-      "[style.--standard--container-directive--position-top-input]":      "positionTopInput$()",
-      "[style.--standard--container-directive--scroll-snap-align-input]": "scrollSnapAlignInput$()",
-      "[style.--standard--container-directive--scroll-snap-stop-input]":  "scrollSnapStopInput$()",
-      "[style.--standard--container-directive--scroll-snap-type-input]":  "scrollSnapTypeInput$()",
+      "[style.--bowstring--container-directive--align-self-input]":        "alignSelfInput$()",
+      "[style.--bowstring--container-directive--aspect-ratio-input]":      "aspectRatioInput$()",
+      "[style.--bowstring--container-directive--margin-bottom-input]":     "marginBottomInput$()",
+      "[style.--bowstring--container-directive--margin-sides-input]":      "marginSidesInput$()",
+      "[style.--bowstring--container-directive--margin-top-input]":        "marginTopInput$()",
+      "[style.--bowstring--container-directive--overflow-x-input]":        "overflowXInput$()",
+      "[style.--bowstring--container-directive--overflow-y-input]":        "overflowYInput$()",
+      "[style.--bowstring--container-directive--padding-bottom-input]":    "paddingBottomInput$()",
+      "[style.--bowstring--container-directive--padding-sides-input]":     "paddingSidesInput$()",
+      "[style.--bowstring--container-directive--padding-top-input]":       "paddingTopInput$()",
+      "[style.--bowstring--container-directive--position-bottom-input]":   "positionBottomInput$()",
+      "[style.--bowstring--container-directive--position-input]":          "positionInput$()",
+      "[style.--bowstring--container-directive--position-left-input]":     "positionLeftInput$()",
+      "[style.--bowstring--container-directive--position-right-input]":    "positionRightInput$()",
+      "[style.--bowstring--container-directive--position-top-input]":      "positionTopInput$()",
+      "[style.--bowstring--container-directive--scroll-snap-align-input]": "scrollSnapAlignInput$()",
+      "[style.--bowstring--container-directive--scroll-snap-stop-input]":  "scrollSnapStopInput$()",
+      "[style.--bowstring--container-directive--scroll-snap-type-input]":  "scrollSnapTypeInput$()",
     },
     hostDirectives: [
       {

@@ -8,21 +8,21 @@
 \:host
   display: contents
 
-  --standard--sheet--font-size-exponent: 0
-  --standard--sheet--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), 1))
-  --standard--sheet--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), 1))
+  --bowstring--sheet--font-size-exponent: 0
+  --bowstring--sheet--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), 1))
+  --bowstring--sheet--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), 1))
 
   @include FlexboxContainerDirective.host
 
-  --standard--container-directive--padding-bottom: calc(var(--standard--root--gap-row) * pow(var(--phi), 1)) !important
-  --standard--container-directive--padding-sides: calc(var(--standard--root--gap-column) * pow(var(--phi), 1)) !important
-  --standard--container-directive--padding-top: calc(var(--standard--root--gap-row) * pow(var(--phi), 1)) !important
-  --standard--container-directive--position: fixed !important
-  --standard--container-directive--position-left: 0 !important
-  --standard--container-directive--position-top: 0 !important
-  --standard--flexbox-container-directive--align-items: center !important
-  --standard--flexbox-container-directive--flex-direction: row !important
-  --standard--flexbox-container-directive--justify-content: center !important
+  --bowstring--container-directive--padding-bottom: calc(var(--bowstring--root--gap-row) * pow(var(--phi), 1)) !important
+  --bowstring--container-directive--padding-sides: calc(var(--bowstring--root--gap-column) * pow(var(--phi), 1)) !important
+  --bowstring--container-directive--padding-top: calc(var(--bowstring--root--gap-row) * pow(var(--phi), 1)) !important
+  --bowstring--container-directive--position: fixed !important
+  --bowstring--container-directive--position-left: 0 !important
+  --bowstring--container-directive--position-top: 0 !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
 
   > .harness
     background: none
@@ -83,46 +83,46 @@
           @include keyframes--show-backdrop
 
     > .between
-      font-family: var(--standard--root--font-family), sans-serif
+      font-family: var(--bowstring--root--font-family), sans-serif
       font-optical-sizing: auto
       font-style: normal
       letter-spacing: -0.03444185375em
       line-height: 1.1458980338
-      padding: calc(max(var(--standard--root--safe-area-inset-top), var(--standard--container-directive--padding-top-input, var(--standard--container-directive--padding-top, 0)))) calc(max(var(--standard--root--safe-area-inset-right), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) calc(max(var(--standard--root--safe-area-inset-bottom), var(--standard--container-directive--padding-bottom-input, var(--standard--container-directive--padding-bottom, 0)))) calc(max(var(--standard--root--safe-area-inset-left), var(--standard--container-directive--padding-sides-input, var(--standard--container-directive--padding-sides, 0)))) !important
+      padding: calc(max(var(--bowstring--root--safe-area-inset-top), var(--bowstring--container-directive--padding-top-input, var(--bowstring--container-directive--padding-top, 0)))) calc(max(var(--bowstring--root--safe-area-inset-right), var(--bowstring--container-directive--padding-sides-input, var(--bowstring--container-directive--padding-sides, 0)))) calc(max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--container-directive--padding-bottom-input, var(--bowstring--container-directive--padding-bottom, 0)))) calc(max(var(--bowstring--root--safe-area-inset-left), var(--bowstring--container-directive--padding-sides-input, var(--bowstring--container-directive--padding-sides, 0)))) !important
 
       > div
         display: contents
 
         @include FlexboxContainerDirective.children
 
-        --standard--sheet--gap-column: var(--standard--sheet--padding-sides)
-        --standard--sheet--gap-row: var(--standard--sheet--padding-bottom)
-        --standard--sheet--material-opacity: 0.625
-        --standard--sheet--padding-bottom: calc(1rem * pow(var(--phi), -1))
-        --standard--sheet--padding-sides: calc(1rem * pow(var(--phi), 0))
-        --standard--sheet--padding-top: calc(1rem * pow(var(--phi), -1))
+        --bowstring--sheet--gap-column: var(--bowstring--sheet--padding-sides)
+        --bowstring--sheet--gap-row: var(--bowstring--sheet--padding-bottom)
+        --bowstring--sheet--material-opacity: 0.625
+        --bowstring--sheet--padding-bottom: calc(1rem * pow(var(--phi), -1))
+        --bowstring--sheet--padding-sides: calc(1rem * pow(var(--phi), 0))
+        --bowstring--sheet--padding-top: calc(1rem * pow(var(--phi), -1))
 
         @media (min-width: 48rem)
-          --standard--sheet--padding-bottom: calc(1rem * pow(var(--phi), 0))
-          --standard--sheet--padding-sides: calc(1rem * pow(var(--phi), 1))
-          --standard--sheet--padding-top: calc(1rem * pow(var(--phi), 0))
+          --bowstring--sheet--padding-bottom: calc(1rem * pow(var(--phi), 0))
+          --bowstring--sheet--padding-sides: calc(1rem * pow(var(--phi), 1))
+          --bowstring--sheet--padding-top: calc(1rem * pow(var(--phi), 0))
 
         @include ElevatedDirective.host
         @include FlexboxContainerDirective.host
         @include GlassDirective.host(12%)
         @include WellRoundedDirective.host
 
-        --standard--container-directive--padding-bottom: var(--standard--sheet--padding-bottom) !important
-        --standard--container-directive--padding-sides: var(--standard--sheet--padding-sides) !important
-        --standard--container-directive--padding-top: var(--standard--sheet--padding-top) !important
-        --standard--elevated-directive--material-opacity: var(--standard--sheet--material-opacity) !important
-        --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
-        --standard--flexbox-container-directive--gap-column: var(--standard--sheet--gap-column) !important
-        --standard--flexbox-container-directive--gap-row: var(--standard--sheet--gap-row) !important
-        --standard--glass-directive--material-opacity: var(--standard--sheet--material-opacity) !important
+        --bowstring--container-directive--padding-bottom: var(--bowstring--sheet--padding-bottom) !important
+        --bowstring--container-directive--padding-sides: var(--bowstring--sheet--padding-sides) !important
+        --bowstring--container-directive--padding-top: var(--bowstring--sheet--padding-top) !important
+        --bowstring--elevated-directive--material-opacity: var(--bowstring--sheet--material-opacity) !important
+        --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
+        --bowstring--flexbox-container-directive--gap-column: var(--bowstring--sheet--gap-column) !important
+        --bowstring--flexbox-container-directive--gap-row: var(--bowstring--sheet--gap-row) !important
+        --bowstring--glass-directive--material-opacity: var(--bowstring--sheet--material-opacity) !important
 
         > .harness > .between::ng-deep > *
-          --standard--sheet--material-opacity: initial
+          --bowstring--sheet--material-opacity: initial
 
           @include ElevatedDirective.children
           @include FlexboxContainerDirective.children
@@ -130,7 +130,7 @@
           @include WellRoundedDirective.children
 
         @media (min-width: 48rem)
-          --standard--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6.5)) !important
+          --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6.5)) !important
 
   &.openOrClosing
     > .harness
@@ -155,9 +155,9 @@
     @include CanvasDirective.host(18%)
     @include FlexboxContainerDirective.host
 
-    --standard--flexbox-container-directive--align-items: center !important
-    --standard--flexbox-container-directive--flex-direction: row !important
-    --standard--flexbox-container-directive--justify-content: center !important
+    --bowstring--flexbox-container-directive--align-items: center !important
+    --bowstring--flexbox-container-directive--flex-direction: row !important
+    --bowstring--flexbox-container-directive--justify-content: center !important
 
     > .harness
       cursor: grab

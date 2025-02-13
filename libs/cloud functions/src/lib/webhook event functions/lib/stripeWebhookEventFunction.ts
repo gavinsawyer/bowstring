@@ -1,5 +1,5 @@
-import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripePriceDocument, type StripeProductDocument, type StripeSetupIntentDocument } from "@standard/interfaces";
-import { getStripeCustomerDocument, getStripePaymentMethodDocument, getStripePriceDocument, getStripeProductDocument, getStripeSetupIntentDocument }           from "@standard/stripe-interop";
+import { type StripeCustomerDocument, type StripePaymentMethodDocument, type StripePriceDocument, type StripeProductDocument, type StripeSetupIntentDocument } from "@bowstring/interfaces";
+import { getStripeCustomerDocument, getStripePaymentMethodDocument, getStripePriceDocument, getStripeProductDocument, getStripeSetupIntentDocument }           from "@bowstring/stripe-interop";
 import { getApp }                                                                                                                                              from "firebase-admin/app";
 import { type CollectionReference, type DocumentReference, type Firestore, getFirestore, type QuerySnapshot }                                                  from "firebase-admin/firestore";
 import { type HttpsFunction, onRequest, type Request }                                                                                                         from "firebase-functions/https";

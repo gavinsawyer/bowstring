@@ -1,28 +1,28 @@
-<standard--flexbox-container>
-  <standard--article
+<bowstring--flexbox-container>
+  <bowstring--article
     flexBasis="100%"
     flexGrow="1">
-    <standard--scroll-stack [minimumAspectRatio]="3/4">
-      @for (imageSource of imageSources$(); track $index) {<standard--image
+    <bowstring--scroll-stack [minimumAspectRatio]="3/4">
+      @for (imageSource of imageSources$(); track $index) {<bowstring--image
         height="400"
-        *standardScrollStackItem
+        *bowstringScrollStackItem
         [src]="imageSource"
         width="300" />}
-    </standard--scroll-stack>
-  </standard--article>
-</standard--flexbox-container>
+    </bowstring--scroll-stack>
+  </bowstring--article>
+</bowstring--flexbox-container>
 
 <ng-template #inspectorTemplate>
-  <standard--heading-group>
-    <standard--header>
+  <bowstring--heading-group>
+    <bowstring--header>
       <h4 i18n="@@libs--Components--Routes--Gallery-Item--Inspector--Header">Item</h4>
       <h5>{{ itemId$() }}</h5>
-    </standard--header>
-  </standard--heading-group>
-  <standard--divider />
-  <standard--section>
-    <standard--heading-group>
+    </bowstring--header>
+  </bowstring--heading-group>
+  <bowstring--divider />
+  <bowstring--section>
+    <bowstring--heading-group>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur atque culpa eligendi incidunt inventore, iure iusto laboriosam laudantium libero, maiores necessitatibus nemo sed voluptas.</p>
-    </standard--heading-group>
-  </standard--section>
+    </bowstring--heading-group>
+  </bowstring--section>
 </ng-template>

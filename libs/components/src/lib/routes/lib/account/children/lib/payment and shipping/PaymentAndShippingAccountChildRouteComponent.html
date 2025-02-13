@@ -1,291 +1,291 @@
-<standard--header>
+<bowstring--header>
   <h3 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Header">Payment and shipping</h3>
-</standard--header>
-<standard--flexbox-container>
-  <standard--box
+</bowstring--header>
+<bowstring--flexbox-container>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Header">Shipping address</h4>
-      <h5>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--label
+      <h5>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Subheader_1"
         inline
-        input="An address is saved to your account." />} @else {<standard--label
+        input="An address is saved to your account." />} @else {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Subheader_2"
         inline
         input="Add an address for future orders." />}</h5>
-    </standard--header>
-    @if (stripeCustomersService.stripeCustomerDocument$()?.shipping; as shipping) {@if (shipping.address; as address) {@if (shipping.name) {<standard--section>
-      <standard--label [input]="shipping.name" />
-    </standard--section>}
-    @if (address.line1) {<standard--section>
-      <standard--label [input]="address.line1" />
-      @if (address.line2) {<standard--label [input]="address.line2" />}
-    </standard--section>}
-    @if (address.city) {<standard--section>
-      <standard--flexbox-container
+    </bowstring--header>
+    @if (stripeCustomersService.stripeCustomerDocument$()?.shipping; as shipping) {@if (shipping.address; as address) {@if (shipping.name) {<bowstring--section>
+      <bowstring--label [input]="shipping.name" />
+    </bowstring--section>}
+    @if (address.line1) {<bowstring--section>
+      <bowstring--label [input]="address.line1" />
+      @if (address.line2) {<bowstring--label [input]="address.line2" />}
+    </bowstring--section>}
+    @if (address.city) {<bowstring--section>
+      <bowstring--flexbox-container
         alignItems="flex-end"
         flexDirection="row">
-        <standard--label [input]="address.city" />
-        @if (address.state) {<standard--label [input]="address.state" />}
-        @if (address.postalCode) {<standard--label [input]="address.postalCode" />}
-      </standard--flexbox-container>
-      @if (address.country) {<standard--label [input]="address.country | standardGetRegionDisplayName" />}
-    </standard--section>}
-    @if (shipping.phone) {<standard--section>
-      <standard--label [input]="shipping.phone" />
-    </standard--section>}}}
-    <standard--divider />
-    <standard--section>
-      <standard--button
+        <bowstring--label [input]="address.city" />
+        @if (address.state) {<bowstring--label [input]="address.state" />}
+        @if (address.postalCode) {<bowstring--label [input]="address.postalCode" />}
+      </bowstring--flexbox-container>
+      @if (address.country) {<bowstring--label [input]="address.country | bowstringGetRegionDisplayName" />}
+    </bowstring--section>}
+    @if (shipping.phone) {<bowstring--section>
+      <bowstring--label [input]="shipping.phone" />
+    </bowstring--section>}}}
+    <bowstring--divider />
+    <bowstring--section>
+      <bowstring--button
         appearance="raised"
         level="2"
         material="inverse"
         (output)="addressStripeElementSheetComponent.openModel$.set(true);">
-        @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--symbol input="Pencil" />
-        <standard--label
+        @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--symbol input="Pencil" />
+        <bowstring--label
           i18n-input
-          input="Edit" />} @else {<standard--symbol input="Plus" />
-        <standard--label
+          input="Edit" />} @else {<bowstring--symbol input="Plus" />
+        <bowstring--label
           i18n-input
           input="Add" />}
-      </standard--button>
-      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--caption><standard--link
+      </bowstring--button>
+      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--caption><bowstring--link
         inline
         (output)="removeAddressSheetComponent.openModel$.set(true);">
-        <standard--symbol input="TrashFill" />
-        <standard--label
+        <bowstring--symbol input="TrashFill" />
+        <bowstring--label
           i18n-input
           input="Remove address" />
-      </standard--link></standard--caption>}
-    </standard--section>
-  </standard--box>
-  <standard--box
+      </bowstring--link></bowstring--caption>}
+    </bowstring--section>
+  </bowstring--box>
+  <bowstring--box
     flexBasis="0"
     flexGrow="1">
-    <standard--header>
+    <bowstring--header>
       <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Header">Payment methods</h4>
-      <h5>@if (stripePaymentMethodsService.stripePaymentMethodDocuments$()?.length; as length) {@if (length === 1) {<standard--label
+      <h5>@if (stripePaymentMethodsService.stripePaymentMethodDocuments$()?.length; as length) {@if (length === 1) {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_1"
         inline
-        input="A card is saved to your account." />} @else {<standard--label
+        input="A card is saved to your account." />} @else {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_2"
         inline
-        input="More than one card is saved to your account." />}} @else {<standard--label
+        input="More than one card is saved to your account." />}} @else {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_3"
         inline
         input="Add a payment method for future orders." />}</h5>
-    </standard--header>
-    @for (stripePaymentMethodDocument of stripePaymentMethodsService.stripePaymentMethodDocuments$(); track $index) {<standard--section>
-      @if (stripePaymentMethodDocument.created && !stripePaymentMethodDocument.asyncDeleted) {@if (stripePaymentMethodDocument.card) {<standard--label
+    </bowstring--header>
+    @for (stripePaymentMethodDocument of stripePaymentMethodsService.stripePaymentMethodDocuments$(); track $index) {<bowstring--section>
+      @if (stripePaymentMethodDocument.created && !stripePaymentMethodDocument.asyncDeleted) {@if (stripePaymentMethodDocument.card) {<bowstring--label
         inline
-        [input]="stripePaymentMethodDocument.card.displayBrand + ' ending in ' + stripePaymentMethodDocument.card.last4" />}} @else {<span><standard--label
+        [input]="stripePaymentMethodDocument.card.displayBrand + ' ending in ' + stripePaymentMethodDocument.card.last4" />}} @else {<span><bowstring--label
         i18n-input
         inline
-        input="working" /><standard--label
+        input="working" /><bowstring--label
           inline
           [input]="ellipsesService.ellipses$()" /></span>}
-      <standard--caption><standard--list type="inline"><standard--link
+      <bowstring--caption><bowstring--list type="inline"><bowstring--link
         [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted"
         inline
         (output)="removePaymentMethodSheetComponent.openModel$.set(true);"
-        *standardListItem>
-        <standard--symbol input="TrashFill" />
-        <standard--label
+        *bowstringListItem>
+        <bowstring--symbol input="TrashFill" />
+        <bowstring--label
           i18n-input
           input="Remove card" />
-      </standard--link><standard--link
+      </bowstring--link><bowstring--link
         [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted || stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod"
         inline
         (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(true);"
-        *standardListItem>
-        <standard--symbol input="BoltFill" />
-        @if (stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod) {<standard--label
+        *bowstringListItem>
+        <bowstring--symbol input="BoltFill" />
+        @if (stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod) {<bowstring--label
           i18n-input
-          input="Default" />} @else {<standard--label
+          input="Default" />} @else {<bowstring--label
           i18n-input
           input="Make default" />}
-      </standard--link></standard--list></standard--caption>
+      </bowstring--link></bowstring--list></bowstring--caption>
 
-      <standard--sheet #makePaymentMethodDefaultSheetComponent>
-        @defer {<standard--heading-group>
-          <standard--header>
+      <bowstring--sheet #makePaymentMethodDefaultSheetComponent>
+        @defer {<bowstring--heading-group>
+          <bowstring--header>
             <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--MakePaymentMethodDefault--Header">Make card default?</h6>
-          </standard--header>
-        </standard--heading-group>
-          <standard--divider />
-          <standard--section
+          </bowstring--header>
+        </bowstring--heading-group>
+          <bowstring--divider />
+          <bowstring--section
             flexDirection="row"
             flexWrap="wrap-reverse">
-            <standard--button
+            <bowstring--button
               appearance="raised"
               flexGrow="1"
               level="2"
               (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(false);">
-              <standard--symbol input="ArrowBackward" />
-              <standard--label
+              <bowstring--symbol input="ArrowBackward" />
+              <bowstring--label
                 i18n-input
                 input="Cancel" />
-            </standard--button>
-            <standard--button
+            </bowstring--button>
+            <bowstring--button
               appearance="raised"
               flexGrow="999"
               level="2"
               material="inverse"
               (output)="stripePaymentMethodDocument.id && makePaymentMethodDefault(stripePaymentMethodDocument.id); makePaymentMethodDefaultSheetComponent.openModel$.set(false);">
-              <standard--label
+              <bowstring--label
                 i18n-input
                 input="Yes, make default" />
-            </standard--button>
-          </standard--section>}
-      </standard--sheet>
-      <standard--sheet #removePaymentMethodSheetComponent>
-        @defer {<standard--heading-group>
-          <standard--header>
+            </bowstring--button>
+          </bowstring--section>}
+      </bowstring--sheet>
+      <bowstring--sheet #removePaymentMethodSheetComponent>
+        @defer {<bowstring--heading-group>
+          <bowstring--header>
             <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--RemovePaymentMethod--Header">Remove card?</h6>
-          </standard--header>
-        </standard--heading-group>
-          <standard--divider />
-          <standard--section
+          </bowstring--header>
+        </bowstring--heading-group>
+          <bowstring--divider />
+          <bowstring--section
             flexDirection="row"
             flexWrap="wrap-reverse">
-            <standard--button
+            <bowstring--button
               appearance="raised"
               flexGrow="1"
               level="2"
               (output)="removePaymentMethodSheetComponent.openModel$.set(false);">
-              <standard--symbol input="ArrowBackward" />
-              <standard--label
+              <bowstring--symbol input="ArrowBackward" />
+              <bowstring--label
                 i18n-input
                 input="Cancel" />
-            </standard--button>
-            <standard--button
+            </bowstring--button>
+            <bowstring--button
               appearance="raised"
               flexGrow="999"
               level="2"
               material="warning"
               (output)="stripePaymentMethodDocument.id && removeStripePaymentMethod(stripePaymentMethodDocument.id); removePaymentMethodSheetComponent.openModel$.set(false);">
-              <standard--label
+              <bowstring--label
                 i18n-input
                 input="Yes, remove" />
-            </standard--button>
-          </standard--section>}
-      </standard--sheet>
-    </standard--section>}
-    <standard--divider />
-    <standard--section>
-      <standard--button
+            </bowstring--button>
+          </bowstring--section>}
+      </bowstring--sheet>
+    </bowstring--section>}
+    <bowstring--divider />
+    <bowstring--section>
+      <bowstring--button
         appearance="raised"
         level="2"
         material="inverse"
         (output)="paymentStripeElementSheetComponent.openModel$.set(true);">
-        <standard--symbol input="Plus" />
-        <standard--label
+        <bowstring--symbol input="Plus" />
+        <bowstring--label
           i18n-input
           input="Add" />
-      </standard--button>
-    </standard--section>
-  </standard--box>
-</standard--flexbox-container>
+      </bowstring--button>
+    </bowstring--section>
+  </bowstring--box>
+</bowstring--flexbox-container>
 
-<standard--sheet #addressStripeElementSheetComponent>
-  @defer {<standard--header>
-    <h6>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--label
+<bowstring--sheet #addressStripeElementSheetComponent>
+  @defer {<bowstring--header>
+    <h6>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--label
       i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--AddressStripeElement--Header_1"
       inline
-      input="Edit your shipping address." />} @else {<standard--label
+      input="Edit your shipping address." />} @else {<bowstring--label
       i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--AddressStripeElement--Header_2"
       inline
       input="Add your shipping address." />}</h6>
-  </standard--header>
-  <standard--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
-    <standard--address-stripe-element #addressStripeElementComponent />
-    <standard--divider />
-    <standard--flexbox-container
+  </bowstring--header>
+  <bowstring--form (output)="addressStripeElementComponent.submit(addressStripeElementSheetComponent.openModel$);">
+    <bowstring--address-stripe-element #addressStripeElementComponent />
+    <bowstring--divider />
+    <bowstring--flexbox-container
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<standard--button
+      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--button
         appearance="symbol"
         [disabled]="!addressStripeElementComponent.edited$()"
         (output)="addressStripeElementComponent.reset();">
-        <standard--symbol input="ArrowCounterclockwiseCircleFill" />
-      </standard--button>}
-      <standard--button
+        <bowstring--symbol input="ArrowCounterclockwiseCircleFill" />
+      </bowstring--button>}
+      <bowstring--button
         appearance="symbol"
         [disabled]="!addressStripeElementComponent.complete$() || !addressStripeElementComponent.edited$()"
         type="submit">
-        <standard--symbol input="CheckmarkCircleFill" />
-      </standard--button>
-    </standard--flexbox-container>
-  </standard--form>}
-</standard--sheet>
-<standard--sheet #paymentStripeElementSheetComponent>
-  @defer {<standard--header>
+        <bowstring--symbol input="CheckmarkCircleFill" />
+      </bowstring--button>
+    </bowstring--flexbox-container>
+  </bowstring--form>}
+</bowstring--sheet>
+<bowstring--sheet #paymentStripeElementSheetComponent>
+  @defer {<bowstring--header>
     <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--PaymentStripeElement--Header">Add a payment method.</h6>
-  </standard--header>
-  <standard--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
-    <standard--segmented-control
+  </bowstring--header>
+  <bowstring--form (output)="paymentStripeElementComponent.submit(paymentStripeElementSheetComponent.openModel$);">
+    <bowstring--segmented-control
       i18n-label
       label="Payment method"
       level="2">
-      <standard--segmented-control-option
+      <bowstring--segmented-control-option
         i18n
-        value="card">Card</standard--segmented-control-option>
-      <standard--segmented-control-option
+        value="card">Card</bowstring--segmented-control-option>
+      <bowstring--segmented-control-option
         disabled
         i18n
-        value="cash">Cash</standard--segmented-control-option>
-      <standard--segmented-control-option
+        value="cash">Cash</bowstring--segmented-control-option>
+      <bowstring--segmented-control-option
         disabled
         i18n
-        value="crypto">Crypto</standard--segmented-control-option>
-    </standard--segmented-control>
-    <standard--divider />
-    <standard--payment-stripe-element #paymentStripeElementComponent />
-    <standard--divider />
-    <standard--flexbox-container
+        value="crypto">Crypto</bowstring--segmented-control-option>
+    </bowstring--segmented-control>
+    <bowstring--divider />
+    <bowstring--payment-stripe-element #paymentStripeElementComponent />
+    <bowstring--divider />
+    <bowstring--flexbox-container
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      <standard--button
+      <bowstring--button
         appearance="symbol"
         [disabled]="!paymentStripeElementComponent.complete$()"
         type="submit">
-        <standard--symbol input="CheckmarkCircleFill" />
-      </standard--button>
-    </standard--flexbox-container>
-  </standard--form>}
-</standard--sheet>
-<standard--sheet #removeAddressSheetComponent>
-  @defer {<standard--heading-group>
-    <standard--header>
+        <bowstring--symbol input="CheckmarkCircleFill" />
+      </bowstring--button>
+    </bowstring--flexbox-container>
+  </bowstring--form>}
+</bowstring--sheet>
+<bowstring--sheet #removeAddressSheetComponent>
+  @defer {<bowstring--heading-group>
+    <bowstring--header>
       <h6 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--RemoveAddress--Header">Remove address?</h6>
-    </standard--header>
-  </standard--heading-group>
-  <standard--divider />
-  <standard--section
+    </bowstring--header>
+  </bowstring--heading-group>
+  <bowstring--divider />
+  <bowstring--section
     flexDirection="row"
     flexWrap="wrap-reverse">
-    <standard--button
+    <bowstring--button
       appearance="raised"
       flexGrow="1"
       level="2"
       (output)="removeAddressSheetComponent.openModel$.set(false);">
-      <standard--symbol input="ArrowBackward" />
-      <standard--label
+      <bowstring--symbol input="ArrowBackward" />
+      <bowstring--label
         i18n-input
         input="Cancel" />
-    </standard--button>
-    <standard--button
+    </bowstring--button>
+    <bowstring--button
       appearance="raised"
       flexGrow="999"
       level="2"
       material="warning"
       (output)="removeAddress(); removeAddressSheetComponent.openModel$.set(false);">
-      <standard--label
+      <bowstring--label
         i18n-input
         input="Yes, remove" />
-    </standard--button>
-  </standard--section>}
-</standard--sheet>
+    </bowstring--button>
+  </bowstring--section>}
+</bowstring--sheet>

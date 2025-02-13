@@ -4,14 +4,14 @@
 \:host
   display: contents
 
-  --standard--list--font-size-exponent: -3
-  --standard--list--gap-column: calc(var(--standard--root--gap-column) * pow(var(--phi), -1))
-  --standard--list--gap-row: calc(var(--standard--root--gap-row) * pow(var(--phi), -1))
+  --bowstring--list--font-size-exponent: -3
+  --bowstring--list--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--list--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-container-directive--gap-column: var(--standard--list--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--list--gap-row) !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--list--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--list--gap-row) !important
 
   > .harness > .between
     &::ng-deep > *

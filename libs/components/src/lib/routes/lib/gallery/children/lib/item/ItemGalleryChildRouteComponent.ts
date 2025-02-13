@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, type InputSignal, signal, type WritableSignal }                                                                      from "@angular/core";
 import { ReactiveFormsModule }                                                                                                                                           from "@angular/forms";
-import { ScrollStackItemDirective }                                                                                                                                      from "@standard/directives";
+import { ScrollStackItemDirective }                                                                                                                                      from "@bowstring/directives";
 import { ArticleComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, ScrollStackComponent, SectionComponent } from "../../../../../../../";
 import { GalleryChildRouteComponent }                                                                                                                                    from "../../../child/GalleryChildRouteComponent";
 

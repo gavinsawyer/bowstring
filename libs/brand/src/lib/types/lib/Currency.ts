@@ -1,4 +1,4 @@
-import * as currencies from "@standard/currencies";
+import * as currencies from "@bowstring/currencies";
 
 
 export type Currency = Exclude<keyof typeof currencies, "BTC">;

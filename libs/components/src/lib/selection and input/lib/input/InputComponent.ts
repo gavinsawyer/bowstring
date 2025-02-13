@@ -1,9 +1,9 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, type ElementRef, forwardRef, inject, Injector, input, type InputSignal, type InputSignalWithTransform, model, type ModelSignal, Renderer2, signal, type Signal, viewChild } from "@angular/core";
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                                                                                                                  from "@angular/core/rxjs-interop";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                                                     from "@angular/forms";
-import { type Symbol }                                                                                                                                                                                                                                 from "@standard/interfaces";
-import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                        from "@standard/pipes";
-import loadSymbol                                                                                                                                                                                                                                      from "@standard/symbols";
+import { type Symbol }                                                                                                                                                                                                                                 from "@bowstring/interfaces";
+import { MaskPipe, UnmaskPipe }                                                                                                                                                                                                                        from "@bowstring/pipes";
+import loadSymbol                                                                                                                                                                                                                                      from "@bowstring/symbols";
 import { combineLatestWith, firstValueFrom }                                                                                                                                                                                                           from "rxjs";
 import { fromPromise }                                                                                                                                                                                                                                 from "rxjs/internal/observable/innerFrom";
 import { v7 as uuidV7 }                                                                                                                                                                                                                                from "uuid";
@@ -58,7 +58,7 @@ export class InputComponent
   private readonly unmaskPipe: UnmaskPipe                                     = inject<UnmaskPipe>(UnmaskPipe);
 
   protected readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>             = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
-  protected readonly inputName$: Signal<`standard--input-directive--input-${ string }`> = signal<`standard--input-directive--input-${ string }`>(`standard--input-directive--input-${ uuidV7() }`);
+  protected readonly inputName$: Signal<`bowstring--input-directive--input-${ string }`> = signal<`bowstring--input-directive--input-${ string }`>(`bowstring--input-directive--input-${ uuidV7() }`);
   protected readonly xmarkCircleFillSymbol$: Signal<Symbol | undefined>                 = toSignal<Symbol>(
     fromPromise<Symbol>(
       loadSymbol("XmarkCircleFill"),

@@ -4,7 +4,7 @@ import { Directive, input, type InputSignalWithTransform, numberAttribute } from
 @Directive(
   {
     host: {
-      "[style.--standard--glass-directive--material-opacity-input]": "materialOpacityInput$()",
+      "[style.--bowstring--glass-directive--material-opacity-input]": "materialOpacityInput$()",
     },
 
     standalone: true,

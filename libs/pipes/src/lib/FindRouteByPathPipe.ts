@@ -4,7 +4,7 @@ import { type Route, type Routes } from "@angular/router";
 
 @Pipe(
   {
-    name: "standardFindRouteByPath",
+    name: "bowstringFindRouteByPath",
 
     standalone: true,
   },

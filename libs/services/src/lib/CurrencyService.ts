@@ -1,8 +1,8 @@
 import { isPlatformBrowser }                                                         from "@angular/common";
 import { inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal } from "@angular/core";
 import { toObservable, toSignal }                                                    from "@angular/core/rxjs-interop";
-import { BRAND }                                                                     from "@standard/injection-tokens";
-import { type Brand, type Currencies }                                               from "@standard/types";
+import { BRAND }                                                                     from "@bowstring/injection-tokens";
+import { type Brand, type Currencies }                                               from "@bowstring/types";
 import { combineLatestWith, map, type Observable, of, startWith, switchMap }         from "rxjs";
 import { webSocket, type WebSocketSubject }                                          from "rxjs/webSocket";
 

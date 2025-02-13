@@ -1,8 +1,8 @@
 import { isPlatformBrowser, NgTemplateOutlet }                                                                                                                                                                                            from "@angular/common";
 import { ChangeDetectionStrategy, Component, contentChildren, type ElementRef, inject, Injector, input, type InputSignalWithTransform, numberAttribute, PLATFORM_ID, runInInjectionContext, signal, type Signal, TemplateRef, viewChild } from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                                         from "@angular/core/rxjs-interop";
-import { ContainerDirective, ScrollStackItemDirective }                                                                                                                                                                                   from "@standard/directives";
-import { ViewportService }                                                                                                                                                                                                                from "@standard/services";
+import { ContainerDirective, ScrollStackItemDirective }                                                                                                                                                                                   from "@bowstring/directives";
+import { ViewportService }                                                                                                                                                                                                                from "@bowstring/services";
 import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith, switchMap, type TeardownLogic }                                                                                                                         from "rxjs";
 
 
@@ -10,10 +10,10 @@ import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[style.--standard--scroll-stack--minimum-aspect-ratio-input]": "minimumAspectRatioInput$()",
-      "[style.--standard--scroll-stack--scroll-left]":                "scrollLeft$()",
-      "[style.--standard--scroll-stack--viewport-vertical-offset]":   "viewportVerticalOffset$()",
-      "[style.--standard--scroll-stack--width]":                      "width$()",
+      "[style.--bowstring--scroll-stack--minimum-aspect-ratio-input]": "minimumAspectRatioInput$()",
+      "[style.--bowstring--scroll-stack--scroll-left]":                "scrollLeft$()",
+      "[style.--bowstring--scroll-stack--viewport-vertical-offset]":   "viewportVerticalOffset$()",
+      "[style.--bowstring--scroll-stack--width]":                      "width$()",
     },
     hostDirectives:  [
       {
@@ -43,7 +43,7 @@ import { combineLatestWith, fromEvent, map, Observable, type Observer, startWith
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--scroll-stack",
+    selector:        "bowstring--scroll-stack",
     styleUrl:        "ScrollStackComponent.sass",
     templateUrl:     "ScrollStackComponent.html",
 

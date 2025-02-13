@@ -1,6 +1,6 @@
 import { NgTemplateOutlet }                                                                           from "@angular/common";
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, type InputSignalWithTransform } from "@angular/core";
-import { FlexboxContainerDirective }                                                                  from "@standard/directives";
+import { FlexboxContainerDirective }                                                                  from "@bowstring/directives";
 
 
 @Component(
@@ -27,7 +27,7 @@ import { FlexboxContainerDirective }                                            
     imports:         [
       NgTemplateOutlet,
     ],
-    selector:        "standard--heading-group",
+    selector:        "bowstring--heading-group",
     styleUrl:        "HeadingGroupComponent.sass",
     templateUrl:     "HeadingGroupComponent.html",
 

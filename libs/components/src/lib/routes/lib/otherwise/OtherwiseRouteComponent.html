@@ -1,8 +1,8 @@
-<standard--heading-group styleFirstParagraph>
-  <standard--header>
-    <h2>@if (standardRoutes | standardFindRouteByPath:'**'; as route) {{{ route.data?.["title"] }}}</h2>
-  </standard--header>
-  <p i18n="@@libs--Components--Routes--Otherwise--Paragraph">Make sure the URL &lpar;&ldquo;<standard--label
+<bowstring--heading-group styleFirstParagraph>
+  <bowstring--header>
+    <h2>@if (bowstringRoutes | bowstringFindRouteByPath:'**'; as route) {{{ route.data?.["title"] }}}</h2>
+  </bowstring--header>
+  <p i18n="@@libs--Components--Routes--Otherwise--Paragraph">Make sure the URL &lpar;&ldquo;<bowstring--label
     inline
     [input]="pathService.path$()" />&rdquo;&rpar; is correct.</p>
-</standard--heading-group>
+</bowstring--heading-group>

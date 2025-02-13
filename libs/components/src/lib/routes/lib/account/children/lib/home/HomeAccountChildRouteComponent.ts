@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { ReactiveFormsModule }                        from "@angular/forms";
-import { AccountService }                             from "@standard/services";
+import { AccountService }                             from "@bowstring/services";
 import { AccountChildRouteComponent }                 from "../../../child/AccountChildRouteComponent";
 
 

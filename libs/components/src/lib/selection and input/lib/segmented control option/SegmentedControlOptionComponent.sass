@@ -6,17 +6,17 @@
 \:host
   display: contents
 
-  --standard--segmented-control--gap-column: calc(1rem * pow(var(--phi), -2))
-  --standard--segmented-control--gap-row: calc(1rem * pow(var(--phi), -3))
+  --bowstring--segmented-control--gap-column: calc(1rem * pow(var(--phi), -2))
+  --bowstring--segmented-control--gap-row: calc(1rem * pow(var(--phi), -3))
 
   @include FlexboxContainerDirective.host
 
-  --standard--flexbox-child-directive--flex-basis: 100% !important
-  --standard--flexbox-container-directive--align-items: center !important
-  --standard--flexbox-container-directive--flex-direction: row !important
-  --standard--flexbox-container-directive--gap-column: var(--standard--segmented-control--gap-column) !important
-  --standard--flexbox-container-directive--gap-row: var(--standard--segmented-control--gap-row) !important
-  --standard--flexbox-container-directive--justify-content: center !important
+  --bowstring--flexbox-child-directive--flex-basis: 100% !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--segmented-control--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--segmented-control--gap-row) !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
 
   > .harness
     background: none
@@ -43,8 +43,8 @@
 
         @include FlexboxContainerDirective.host
 
-        --standard--flexbox-container-directive--align-items: center !important
-        --standard--flexbox-container-directive--justify-content: center !important
+        --bowstring--flexbox-container-directive--align-items: center !important
+        --bowstring--flexbox-container-directive--justify-content: center !important
 
         > .harness > .between > svg
           display: grid
@@ -58,7 +58,7 @@
 
         @include ContainerDirective.host
 
-        --standard--container-directive--align-self: baseline !important
+        --bowstring--container-directive--align-self: baseline !important
 
   &.disabled > .harness
     pointer-events: none
@@ -68,4 +68,4 @@
 
   @media (prefers-color-scheme: dark)
     &.selected
-      color: var(--standard--canvas-directive--colors--foreground-inverse)
+      color: var(--bowstring--canvas-directive--colors--foreground-inverse)

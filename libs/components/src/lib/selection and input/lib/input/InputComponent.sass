@@ -10,8 +10,8 @@
   @include FlexboxContainerDirective.host
   @include HoverTransformingDirective.host('.harness > .between > div')
 
-  --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
-  --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+  --bowstring--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --bowstring--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
 
   > .harness > .between
     &::ng-deep > *
@@ -27,13 +27,13 @@
       @include FlexboxContainerDirective.host
       @include WellRoundedDirective.host
 
-      --standard--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
-      --standard--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
-      --standard--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
-      --standard--flexbox-container-directive--align-items: center !important
-      --standard--flexbox-container-directive--flex-direction: row !important
-      --standard--flexbox-container-directive--gap-column: calc(var(--standard--container-directive--padding-sides) * pow(var(--phi), -1)) !important
-      --standard--flexbox-container-directive--gap-row: calc(var(--standard--container-directive--padding-bottom) * pow(var(--phi), -1)) !important
+      --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+      --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+      --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+      --bowstring--flexbox-container-directive--align-items: center !important
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--gap-column: calc(var(--bowstring--container-directive--padding-sides) * pow(var(--phi), -1)) !important
+      --bowstring--flexbox-container-directive--gap-row: calc(var(--bowstring--container-directive--padding-bottom) * pow(var(--phi), -1)) !important
 
       > .harness
         cursor: default
@@ -53,11 +53,11 @@
             @include CanvasDirective.host(18%)
             @include FlexboxContainerDirective.host
 
-            --standard--flexbox-container-directive--align-items: center !important
-            --standard--flexbox-container-directive--flex-direction: row !important
-            --standard--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
-            --standard--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
-            --standard--flexbox-container-directive--justify-content: center !important
+            --bowstring--flexbox-container-directive--align-items: center !important
+            --bowstring--flexbox-container-directive--flex-direction: row !important
+            --bowstring--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+            --bowstring--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+            --bowstring--flexbox-container-directive--justify-content: center !important
 
             > .harness
               background: none
@@ -93,7 +93,7 @@
 
             background: none
             border: 0
-            box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background) inset
+            box-shadow: 0 0 999px var(--bowstring--canvas-directive--colors--background) inset
             caret-color: currentColor
             color: black
             flex: 1 1 0
@@ -112,7 +112,7 @@
               -webkit-text-fill-color: hsl(0, 0%, 50%)
 
             @media (prefers-color-scheme: dark)
-              box-shadow: 0 0 999px var(--standard--canvas-directive--colors--background-inverse) inset
+              box-shadow: 0 0 999px var(--bowstring--canvas-directive--colors--background-inverse) inset
               filter: invert(1) hue-rotate(180deg)
               transform: translateZ(0)
 
