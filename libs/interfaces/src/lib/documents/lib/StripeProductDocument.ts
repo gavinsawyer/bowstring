@@ -4,6 +4,7 @@ import { type Timestamp }                   from "firebase/firestore";
 
 export interface StripeProductDocument {
   "active"?: boolean;
+  "asyncDeleted"?: Timestamp | AdminTimestamp;
   "attributes"?: string[];
   "created"?: AdminTimestamp | Timestamp;
   "defaultPrice"?: string;
@@ -12,7 +13,7 @@ export interface StripeProductDocument {
   "images"?: string[];
   "livemode"?: boolean;
   "marketingFeatures"?: {
-    "name": string;
+    "name"?: string;
   }[];
   "name"?: string;
   "packageDimensions"?: {

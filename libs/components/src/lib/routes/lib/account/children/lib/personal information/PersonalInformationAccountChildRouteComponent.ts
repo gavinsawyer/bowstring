@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                                      from "@angular/core";
 import { toSignal }                                                                                                                                                                       from "@angular/core/rxjs-interop";
 import { Auth }                                                                                                                                                                           from "@angular/fire/auth";
-import { doc, type DocumentReference, Firestore, updateDoc }                                                                                                                              from "@angular/fire/firestore";
+import { deleteField, doc, type DocumentReference, Firestore, updateDoc }                                                                                                                 from "@angular/fire/firestore";
 import { FormControl, FormGroup, ReactiveFormsModule }                                                                                                                                    from "@angular/forms";
 import { type AccountDocument }                                                                                                                                                           from "@standard/interfaces";
 import { AccountService }                                                                                                                                                                 from "@standard/services";
@@ -122,7 +122,7 @@ export class PersonalInformationAccountChildRouteComponent
           `/accounts/${ this.auth.currentUser.uid }`,
         ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          "profile.birthday": this.birthdayFormGroup.value.birthday || undefined,
+          "profile.birthday": this.birthdayFormGroup.value.birthday || deleteField(),
         },
       ).catch<never>(
         (error: unknown): never => {
@@ -140,7 +140,7 @@ export class PersonalInformationAccountChildRouteComponent
           `/accounts/${ this.auth.currentUser.uid }`,
         ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          "profile.name": this.nameFormGroup.value.name || undefined,
+          "profile.name": this.nameFormGroup.value.name || deleteField(),
         },
       ).catch<never>(
         (error: unknown): never => {

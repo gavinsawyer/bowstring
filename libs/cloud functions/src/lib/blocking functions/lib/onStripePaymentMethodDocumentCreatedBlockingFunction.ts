@@ -22,6 +22,22 @@ export const onStripePaymentMethodDocumentCreatedBlockingFunction: CloudFunction
         "The stripe payment method document is missing.",
       );
 
+    const stripeCustomerId: string | undefined = stripePaymentMethodDocument.customer;
+
+    if (!stripeCustomerId)
+      throw new HttpsError(
+        "failed-precondition",
+        "A value for `customer` is missing from the stripe payment method document.",
+      );
+
+    const stripePaymentMethodId: string | undefined = stripePaymentMethodDocument.id;
+
+    if (!stripePaymentMethodId)
+      throw new HttpsError(
+        "failed-precondition",
+        "A value for `id` is missing from the stripe payment method document.",
+      );
+
     if (!process.env["STRIPE_API_KEY"])
       throw new HttpsError(
         "failed-precondition",
@@ -29,9 +45,9 @@ export const onStripePaymentMethodDocumentCreatedBlockingFunction: CloudFunction
       );
 
     return new Stripe(process.env["STRIPE_API_KEY"]).paymentMethods.attach(
-      stripePaymentMethodDocument.id,
+      stripePaymentMethodId,
       {
-        customer: stripePaymentMethodDocument.customer,
+        customer: stripeCustomerId,
       },
       {
         idempotencyKey: firestoreEventId,

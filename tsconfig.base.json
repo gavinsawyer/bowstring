@@ -60,6 +60,9 @@
       "@standard/services":         [
         "libs/services/src/index.ts"
       ],
+      "@standard/stripe-interop":   [
+        "libs/stripe interop/src/index.ts"
+      ],
       "@standard/symbols":          [
         "libs/symbols/src/index.ts"
       ],

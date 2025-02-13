@@ -8,7 +8,7 @@
   },
   "repository":   {
     "type":      "git",
-    "url":       "git+https://github.com/gavinsawyer/standard-angular.git",
+    "url":       "git+https://github.com/gavinsawyer/standard.git",
     "directory": "libs/cloud functions"
   },
   "private":      true,

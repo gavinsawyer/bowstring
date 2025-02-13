@@ -95,8 +95,8 @@ export interface StripePaymentMethodDocument {
     };
   };
   "created"?: Timestamp | AdminTimestamp;
-  "customer": string;
-  "id": string;
+  "customer"?: string;
+  "id"?: string;
   "livemode"?: boolean;
   "type"?: string;
   "userId": string;

@@ -4,12 +4,14 @@ import { type Timestamp }                   from "firebase/firestore";
 
 export interface StripePriceDocument {
   "active"?: boolean;
+  "asyncDelyeted"?: Timestamp | AdminTimestamp;
   "billingScheme"?: "per_unit" | "tiered";
   "created"?: AdminTimestamp | Timestamp;
   "currency"?: string;
   "currencyOptions"?: {
     [key in "eur" | "gbp" | "usd"]?: {
       "customUnitAmount"?: {
+        "enabled": boolean;
         "maximum"?: number;
         "minimum"?: number;
         "preset"?: number;

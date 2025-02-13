@@ -86,6 +86,7 @@
           inline
           [input]="ellipsesService.ellipses$()" /></span>}
       <standard--caption><standard--list type="inline"><standard--link
+        [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted"
         inline
         (output)="removePaymentMethodSheetComponent.openModel$.set(true);"
         *standardListItem>
@@ -94,7 +95,7 @@
           i18n-input
           input="Remove card" />
       </standard--link><standard--link
-        [disabled]="stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod"
+        [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted || stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod"
         inline
         (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(true);"
         *standardListItem>
@@ -131,7 +132,7 @@
               flexGrow="999"
               level="2"
               material="inverse"
-              (output)="makePaymentMethodDefault(stripePaymentMethodDocument.id); makePaymentMethodDefaultSheetComponent.openModel$.set(false);">
+              (output)="stripePaymentMethodDocument.id && makePaymentMethodDefault(stripePaymentMethodDocument.id); makePaymentMethodDefaultSheetComponent.openModel$.set(false);">
               <standard--label
                 i18n-input
                 input="Yes, make default" />
@@ -163,7 +164,7 @@
               flexGrow="999"
               level="2"
               material="warning"
-              (output)="removeStripePaymentMethod(stripePaymentMethodDocument.id); removePaymentMethodSheetComponent.openModel$.set(false);">
+              (output)="stripePaymentMethodDocument.id && removeStripePaymentMethod(stripePaymentMethodDocument.id); removePaymentMethodSheetComponent.openModel$.set(false);">
               <standard--label
                 i18n-input
                 input="Yes, remove" />
