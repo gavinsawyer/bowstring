@@ -1,8 +1,8 @@
-import { Currency } from "./types";
+import { type CurrencyAndSymbolName } from "./types";
 
 
 // noinspection JSUnusedGlobalSymbols
-export const EUR: Currency = {
+export const EUR: CurrencyAndSymbolName = {
   name:       "Euro",
   symbolName: "Eurosign",
 };

@@ -2,12 +2,12 @@
   <h3 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Header">Payment and shipping</h3>
 </bowstring--header>
 <bowstring--flexbox-container>
-  <bowstring--box
+  @if (stripeCustomersService.stripeCustomerDocument$(); as stripeCustomerDocument) {<bowstring--box
     flexBasis="0"
     flexGrow="1">
     <bowstring--header>
       <h4 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Header">Shipping address</h4>
-      <h5>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--label
+      <h5>@if (stripeCustomerDocument?.shipping?.address) {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Address--Subheader_1"
         inline
         input="An address is saved to your account." />} @else {<bowstring--label
@@ -15,7 +15,7 @@
         inline
         input="Add an address for future orders." />}</h5>
     </bowstring--header>
-    @if (stripeCustomersService.stripeCustomerDocument$()?.shipping; as shipping) {@if (shipping.address; as address) {@if (shipping.name) {<bowstring--section>
+    @if (stripeCustomerDocument?.shipping; as shipping) {@if (shipping.address; as address) {@if (shipping.name) {<bowstring--section>
       <bowstring--label [input]="shipping.name" />
     </bowstring--section>}
     @if (address.line1) {<bowstring--section>
@@ -42,7 +42,7 @@
         level="2"
         material="inverse"
         (output)="addressStripeElementSheetComponent.openModel$.set(true);">
-        @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--symbol input="Pencil" />
+        @if (stripeCustomerDocument?.shipping?.address) {<bowstring--symbol input="Pencil" />
         <bowstring--label
           i18n-input
           input="Edit" />} @else {<bowstring--symbol input="Plus" />
@@ -50,7 +50,7 @@
           i18n-input
           input="Add" />}
       </bowstring--button>
-      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--caption><bowstring--link
+      @if (stripeCustomerDocument?.shipping?.address) {<bowstring--caption><bowstring--link
         inline
         (output)="removeAddressSheetComponent.openModel$.set(true);">
         <bowstring--symbol input="TrashFill" />
@@ -95,12 +95,12 @@
           i18n-input
           input="Remove card" />
       </bowstring--link><bowstring--link
-        [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted || stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod"
+        [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted || stripePaymentMethodDocument.id === stripeCustomerDocument?.invoiceSettings?.defaultPaymentMethod"
         inline
         (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(true);"
         *bowstringListItem>
         <bowstring--symbol input="BoltFill" />
-        @if (stripePaymentMethodDocument.id === stripeCustomersService.stripeCustomerDocument$()?.invoiceSettings?.defaultPaymentMethod) {<bowstring--label
+        @if (stripePaymentMethodDocument.id === stripeCustomerDocument?.invoiceSettings?.defaultPaymentMethod) {<bowstring--label
           i18n-input
           input="Default" />} @else {<bowstring--label
           i18n-input
@@ -185,7 +185,7 @@
           input="Add" />
       </bowstring--button>
     </bowstring--section>
-  </bowstring--box>
+  </bowstring--box>}
 </bowstring--flexbox-container>
 
 <bowstring--sheet #addressStripeElementSheetComponent>

@@ -6,8 +6,8 @@ import { title as brandTitle }                             from "@bowstring/bran
 import { routes }                                          from "../../../../";
 
 
-const parentRoute: Route | undefined  = routes.find<Route>(
-  (route: Route): route is Route => route.path === "account",
+const parentRoute: Route | undefined  = routes.find<Route & { path: "account" }>(
+  (route: Route): route is Route & { path: "account" } => route.path === "account",
 );
 const description: string | undefined = parentRoute?.data?.["description"];
 const title: string | undefined       = parentRoute?.data?.["title"];

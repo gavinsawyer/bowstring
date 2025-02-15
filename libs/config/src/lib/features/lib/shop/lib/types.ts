@@ -1,4 +1,4 @@
-import { type ShopFeatureType } from "../../../../types";
+import { type ShopFeatureType } from "@bowstring/types";
 
 
 export const types: ShopFeatureType[] = [

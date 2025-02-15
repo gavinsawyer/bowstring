@@ -1,6 +1,6 @@
 import coinbaseCommerceNode                                                 from "coinbase-commerce-node";
 import { type HttpsFunction, onRequest, type Request }                      from "firebase-functions/https";
-import { CoinbaseCommerce_API_Key, CoinbaseCommerce_Webhook_Shared_Secret } from "../../secrets";
+import { CoinbaseCommerce_API_Key, CoinbaseCommerce_Webhook_Shared_Secret } from "../../secret params";
 
 
 // noinspection JSUnusedGlobalSymbols

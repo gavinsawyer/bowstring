@@ -1,8 +1,6 @@
 export type * from "./lib/Auto";
 export type * from "./lib/BaselineAlignment";
-export type * from "./lib/Brand";
-export type * from "./lib/Config";
-export type * from "./lib/Currencies";
+export type * from "./lib/Currency";
 export type * from "./lib/DistributedAlignment";
 export type * from "./lib/FlexDirection";
 export type * from "./lib/FlexPositionalAlignment";
@@ -22,5 +20,6 @@ export type * from "./lib/ScalarString";
 export type * from "./lib/ScrollSnapAlign";
 export type * from "./lib/ScrollSnapStop";
 export type * from "./lib/ScrollSnapType";
+export type * from "./lib/ShopFeatureType";
 export type * from "./lib/SymbolName";
 export type * from "./lib/VariableString";

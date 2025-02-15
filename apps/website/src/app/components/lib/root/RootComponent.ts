@@ -3,12 +3,13 @@ import { ChangeDetectionStrategy, Component, inject, Injector, LOCALE_ID, PLATFO
 import { toObservable, toSignal }                                                                                                 from "@angular/core/rxjs-interop";
 import { AppCheck, type AppCheckTokenResult, getLimitedUseToken }                                                                 from "@angular/fire/app-check";
 import { RouterOutlet, type Routes }                                                                                              from "@angular/router";
+import type * as brandLib                                                                                                         from "@bowstring/brand";
 import { type RouteComponent }                                                                                                    from "@bowstring/components";
+import type * as currenciesLib                                                                                                    from "@bowstring/currencies";
 import { CanvasDirective, FlexboxContainerDirective }                                                                             from "@bowstring/directives";
-import { APP_ROUTES, BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION, BOWSTRING_ROUTES }                         from "@bowstring/injection-tokens";
+import { APP_ROUTES, BOWSTRING_ROUTES, BRAND, CURRENCIES, ENVIRONMENT, GIT_INFO_PARTIAL, PACKAGE_VERSION }                        from "@bowstring/injection-tokens";
 import { type Environment }                                                                                                       from "@bowstring/interfaces";
-import { AuthenticationService, ConnectivityService, CurrencyService, ResponsivityService }                                       from "@bowstring/services";
-import { type Brand, type Currencies }                                                                                            from "@bowstring/types";
+import { AuthenticationService, ConnectivityService, ExchangeService, ResponsivityService }                                       from "@bowstring/services";
 import { type GitInfo }                                                                                                           from "git-describe";
 import { map, type Observable, startWith, switchMap }                                                                             from "rxjs";
 import { LOCALE_IDS }                                                                                                             from "../../../injection tokens";
@@ -124,11 +125,11 @@ export class RootComponent {
       requireSync: true,
     },
   );
-  protected readonly brand: Brand                                          = inject<Brand>(BRAND);
+  protected readonly brand: typeof brandLib                                = inject<typeof brandLib>(BRAND);
   protected readonly connectivityService: ConnectivityService              = inject<ConnectivityService>(ConnectivityService);
-  protected readonly currencies: Currencies                                = inject<Currencies>(CURRENCIES);
-  protected readonly currencyKeys: (keyof typeof this.currencies)[]        = Object.keys(this.currencies) as (keyof typeof this.currencies)[];
-  protected readonly currencyService: CurrencyService                      = inject<CurrencyService>(CurrencyService);
+  protected readonly currencies: typeof currenciesLib                      = inject<typeof currenciesLib>(CURRENCIES);
+  protected readonly currencyKeys: (keyof typeof currenciesLib)[]          = Object.keys(this.currencies) as (keyof typeof currenciesLib)[];
+  protected readonly exchangeService: ExchangeService                      = inject<ExchangeService>(ExchangeService);
   protected readonly gitInfoPartial: Partial<GitInfo>                      = inject<Partial<GitInfo>>(GIT_INFO_PARTIAL);
   protected readonly localeId: LocaleId                                    = inject<LocaleId>(LOCALE_ID);
   protected readonly localeIds: LocaleId[]                                 = inject<LocaleId[]>(LOCALE_IDS);
@@ -142,7 +143,7 @@ export class RootComponent {
   );
   protected readonly packageVersion: string                                = inject<string>(PACKAGE_VERSION);
   protected readonly responsivityService: ResponsivityService              = inject<ResponsivityService>(ResponsivityService);
-  protected readonly bowstringRoutes: Routes                                = inject<Routes>(BOWSTRING_ROUTES);
+  protected readonly bowstringRoutes: Routes                               = inject<Routes>(BOWSTRING_ROUTES);
 
   protected async changeLocale(localeId: LocaleId): Promise<void> {
     if (isPlatformBrowser(this.platformId))

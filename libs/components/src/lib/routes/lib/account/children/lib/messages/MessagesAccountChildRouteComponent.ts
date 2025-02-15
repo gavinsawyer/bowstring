@@ -106,18 +106,17 @@ export class MessagesAccountChildRouteComponent
     );
   }
 
-
   protected readonly accountDocumentEdited$: Signal<boolean>                                                                                                                                      = computed<boolean>(
     (): boolean => {
       const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
-      return !isEqual(
+      return !!accountDocument && !isEqual(
         this.accountDocumentFormValue$(),
         {
-          "email": accountDocument?.email || "",
+          "email": accountDocument.email || "",
           "phone": {
-            "countryCode": accountDocument?.phone?.countryCode || "",
-            "national":    accountDocument?.phone?.national || "",
+            "countryCode": accountDocument.phone?.countryCode || "",
+            "national":    accountDocument.phone?.national || "",
           },
         },
       );
@@ -193,12 +192,12 @@ export class MessagesAccountChildRouteComponent
     (): boolean => {
       const messages: AccountDocument["messages"] = this.accountService.accountDocument$()?.messages;
 
-      return !isEqual(
+      return !!messages && !isEqual(
         this.accountDocumentMessagesFormValue$(),
         {
-          "newsletter":   messages?.newsletter || null,
-          "orderUpdates": messages?.orderUpdates || null,
-          "promotions":   messages?.promotions || null,
+          "newsletter":   typeof messages?.newsletter === "boolean" ? messages.newsletter : null,
+          "orderUpdates": typeof messages?.orderUpdates === "boolean" ? messages.orderUpdates : null,
+          "promotions":   typeof messages?.promotions === "boolean" ? messages.promotions : null,
         },
       );
     },

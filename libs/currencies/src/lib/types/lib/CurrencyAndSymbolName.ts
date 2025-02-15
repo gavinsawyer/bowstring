@@ -1,4 +1,4 @@
-type CurrencySymbolMap = {
+type CurrencyAndSymbolNames = {
   "Aruban florin": "Florinsign";
   "Australian dollar": "Australiandollarsign";
   "Azerbaijani manat": "Manatsign";
@@ -35,9 +35,9 @@ type CurrencySymbolMap = {
   "Vietnamese đồng": "Dongsign";
 };
 
-export type Currency = {
-  [key in keyof CurrencySymbolMap]: {
+export type CurrencyAndSymbolName = {
+  [key in keyof CurrencyAndSymbolNames]: {
     "name": key;
-    "symbolName": CurrencySymbolMap[key];
+    "symbolName": CurrencyAndSymbolNames[key];
   };
-}[keyof CurrencySymbolMap];
+}[keyof CurrencyAndSymbolNames];

@@ -15,9 +15,9 @@
   <bowstring--divider />
   <bowstring--section>
     @for (currency of currencyKeys; track $index) {<bowstring--button
-      [disabled]="currency === currencyService.userCurrency$()"
+      [disabled]="currency === exchangeService.userCurrency$()"
       level="2"
-      (output)="currencyService.userCurrency$.set(currency); currencySheetComponent.openModel$.set(false);">
+      (output)="exchangeService.userCurrency$.set(currency); currencySheetComponent.openModel$.set(false);">
       <bowstring--symbol [input]="currencies[currency].symbolName" />
       <bowstring--label [input]="currency + ' (' + currencies[currency].name + ')'" />
     </bowstring--button>}
@@ -210,8 +210,8 @@
         @if (bowstringRoutes | bowstringFindRouteByPath:'shop') {<bowstring--link
           [disabled]="currencySheetComponent.openModelWithTransform$()"
           (output)="currencySheetComponent.openModel$.set(true);">
-          <bowstring--symbol [input]="currencies[currencyService.userCurrency$()].symbolName" />
-          <bowstring--label [input]="currencyService.userCurrency$()"/>
+          <bowstring--symbol [input]="currencies[exchangeService.userCurrency$()].symbolName" />
+          <bowstring--label [input]="exchangeService.userCurrency$()" />
         </bowstring--link>}
       </bowstring--flexbox-container>
     </bowstring--section>

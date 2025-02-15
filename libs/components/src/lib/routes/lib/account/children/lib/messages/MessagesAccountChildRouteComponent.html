@@ -2,7 +2,7 @@
   <h3 i18n="@@libs--Components--Routes--Account-Messages--Header">Messages</h3>
 </bowstring--header>
 <bowstring--flexbox-container>
-  <bowstring--form
+  @if (accountService.accountDocument$()) {<bowstring--form
     flexBasis="0"
     flexGrow="1"
     (output)="accountDocumentMessagesFormSubmit();">
@@ -88,5 +88,5 @@
           type="tel" />
       </bowstring--flexbox-container>
     </bowstring--form>
-  </bowstring--box>
+  </bowstring--box>}
 </bowstring--flexbox-container>

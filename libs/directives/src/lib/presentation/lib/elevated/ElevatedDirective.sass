@@ -25,12 +25,12 @@ $material-opacity: functions.get-input-reference($namespace, "material-opacity",
 
   #{ $child-selector } > .harness:before
     content: ""
-    left: 1px
-    height: calc(100% - 2px)
+    left: 2px
+    height: calc(100% - 4px)
     opacity: calc(pow($material-opacity, 2))
     position: absolute
-    top: 1px
-    width: calc(100% - 2px)
+    top: 2px
+    width: calc(100% - 4px)
     transition: box-shadow 200ms var(--bounce)
     z-index: 0
 

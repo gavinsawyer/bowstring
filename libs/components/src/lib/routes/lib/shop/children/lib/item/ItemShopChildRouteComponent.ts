@@ -1,10 +1,10 @@
 import { CurrencyPipe, DecimalPipe }                                                                                                                                                                                                                           from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal }                                                                                                                                                                                 from "@angular/core";
 import { ReactiveFormsModule }                                                                                                                                                                                                                                 from "@angular/forms";
+import type * as currenciesLib                                                                                                                                                                                                                                 from "@bowstring/currencies";
 import { MasonryChildDirective }                                                                                                                                                                                                                               from "@bowstring/directives";
 import { CURRENCIES }                                                                                                                                                                                                                                          from "@bowstring/injection-tokens";
-import { CurrencyService }                                                                                                                                                                                                                                     from "@bowstring/services";
-import { type Currencies }                                                                                                                                                                                                                                     from "@bowstring/types";
+import { ExchangeService }                                                                                                                                                                                                                                     from "@bowstring/services";
 import { ArticleComponent, AsideComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, LabelComponent, LinkComponent, MasonryContainerComponent, SectionComponent, SymbolComponent } from "../../../../../../../";
 import { ShopChildRouteComponent }                                                                                                                                                                                                                             from "../../../child/ShopChildRouteComponent";
 
@@ -40,8 +40,8 @@ import { ShopChildRouteComponent }                                              
 export class ItemShopChildRouteComponent
   extends ShopChildRouteComponent {
 
-  protected readonly currencies: Currencies           = inject<Currencies>(CURRENCIES);
-  protected readonly currencyService: CurrencyService = inject<CurrencyService>(CurrencyService);
+  protected readonly currencies: typeof currenciesLib = inject<typeof currenciesLib>(CURRENCIES);
+  protected readonly exchangeService: ExchangeService = inject<ExchangeService>(ExchangeService);
   protected readonly itemId$: InputSignal<string>     = input.required<string>(
     {
       alias: "itemId",

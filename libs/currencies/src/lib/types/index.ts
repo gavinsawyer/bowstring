@@ -1,1 +1,1 @@
-export type * from "./lib/Currency";
+export type * from "./lib/CurrencyAndSymbolName";

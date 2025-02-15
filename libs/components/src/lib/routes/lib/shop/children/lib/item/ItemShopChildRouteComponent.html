@@ -57,9 +57,9 @@
       [input]="(2 | number:'1.1-3') + 'oz'" /></p>
     <p><bowstring--symbol
       inline
-      [input]="currencies[currencyService.userCurrency$()].symbolName" />&nbsp;<bowstring--label
+      [input]="currencies[exchangeService.userCurrency$()].symbolName" />&nbsp;<bowstring--label
       inline
-      [input]="(60 * currencyService.exchangeRate$() | currency:currencyService.userCurrency$() === 'BTC' ? undefined : currencyService.userCurrency$():'':currencyService.userCurrency$() === 'BTC' ? '1.0-8' : undefined) || ''" /></p>
+      [input]="(60 * exchangeService.rate$() | currency:exchangeService.userCurrency$() === 'BTC' ? undefined : exchangeService.userCurrency$():'':exchangeService.userCurrency$() === 'BTC' ? '1.0-8' : undefined) || ''" /></p>
   </bowstring--heading-group>
   <bowstring--button
     appearance="raised"

@@ -19,28 +19,32 @@ $level: functions.get-input-reference($namespace, "level", 1)
   @include mixins.reset-inputs($namespace, ("level"))
   @include mixins.reset-values($namespace, ("brand-roundness", "clip-path-source"))
 
-@mixin host
+@mixin host($child-selector: '&')
   @include color-scheme("light")
 
   @media (prefers-color-scheme: dark)
     @include color-scheme("dark")
 
-  > .harness
+  #{ $child-selector } > .harness
     &:before
       border-radius: calc($brand-roundness * 0.875rem * pow(var(--phi), 1) / $level)
 
-    > .between
-      border-radius: calc($brand-roundness * 0.875rem / $level)
+    > .between,
+    &:after
       clip-path: $clip-path-source
-      overflow: hidden
 
     &:after
-      border-radius: calc($brand-roundness * 0.875rem / $level)
-      clip-path: $clip-path-source
+      overflow: hidden
 
-  > svg
+  #{ $child-selector } > svg
     height: 1px
     left: 0
     position: absolute
     top: 0
     width: 1px
+
+  &.uninitialized
+    #{ $child-selector } > .harness
+      > .between,
+      &:after
+        border-radius: calc($brand-roundness * 0.875rem / $level)

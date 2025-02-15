@@ -6,8 +6,8 @@ import { title as brandTitle }                                                  
 import { routes }                                                                                from "../../../../";
 
 
-const parentRoute: Route | undefined  = routes.find<Route>(
-  (route: Route): route is Route => route.path === "shop",
+const parentRoute: Route | undefined  = routes.find<Route & { path: "shop" }>(
+  (route: Route): route is Route & { path: "shop" } => route.path === "shop",
 );
 const description: string | undefined = parentRoute?.data?.["description"];
 const title: string | undefined       = parentRoute?.data?.["title"];

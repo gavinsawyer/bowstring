@@ -2,7 +2,7 @@
   <h3 i18n="@@libs--Components--Routes--Account-PersonalInformation--Header">Personal information</h3>
 </bowstring--header>
 <bowstring--flexbox-container>
-  <bowstring--box
+  @if (accountService.accountDocument$(); as accountDocument) {<bowstring--box
     flexBasis="0"
     flexGrow="1">
     <bowstring--header>
@@ -18,7 +18,7 @@
         alignItems="center"
         flexDirection="row"
         justifyContent="flex-end">
-        @if (accountService.accountDocument$()?.profile?.name; as name) {<bowstring--button
+        @if (accountDocument?.profile?.name; as name) {<bowstring--button
           appearance="symbol"
           [disabled]="!nameEdited$()"
           (output)="nameFormGroup.reset({ name: name });">
@@ -49,7 +49,7 @@
         alignItems="center"
         flexDirection="row"
         justifyContent="flex-end">
-        @if (accountService.accountDocument$()?.profile?.birthday; as birthday) {<bowstring--button
+        @if (accountDocument?.profile?.birthday; as birthday) {<bowstring--button
           appearance="symbol"
           [disabled]="!birthdayEdited$()"
           (output)="birthdayFormGroup.reset({ birthday: birthday });">
@@ -63,5 +63,5 @@
         </bowstring--button>
       </bowstring--flexbox-container>
     </bowstring--form>
-  </bowstring--box>
+  </bowstring--box>}
 </bowstring--flexbox-container>

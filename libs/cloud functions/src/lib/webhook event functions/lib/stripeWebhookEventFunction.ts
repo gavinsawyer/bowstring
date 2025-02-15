@@ -4,7 +4,7 @@ import { getApp }                                                               
 import { type CollectionReference, type DocumentReference, type Firestore, getFirestore, type QuerySnapshot }                                                  from "firebase-admin/firestore";
 import { type HttpsFunction, onRequest, type Request }                                                                                                         from "firebase-functions/https";
 import Stripe                                                                                                                                                  from "stripe";
-import { Stripe_API_Key, Stripe_Webhook_Shared_Secret }                                                                                                        from "../../secrets";
+import { Stripe_API_Key, Stripe_Webhook_Shared_Secret }                                                                                                        from "../../secret params";
 
 
 // noinspection JSUnusedGlobalSymbols

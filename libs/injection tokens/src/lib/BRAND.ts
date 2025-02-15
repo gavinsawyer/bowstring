@@ -1,5 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import { type Brand }     from "@bowstring/types";
+import type * as brandLib from "@bowstring/brand";
 
 
-export const BRAND: InjectionToken<Brand> = new InjectionToken<Brand>("BRAND");
+export const BRAND: InjectionToken<typeof brandLib> = new InjectionToken<typeof brandLib>("BRAND");

@@ -31,7 +31,7 @@
         alignItems="center"
         flexDirection="row"
         flexWrap="wrap">
-        @if (accountService.accountDocument$(); as accountDocument) {<bowstring--image
+        @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<bowstring--image
           appearance="circular"
           flexBasis="33px"
           height="33"
@@ -40,14 +40,14 @@
           width="33" />
         <bowstring--heading-group>
           <bowstring--header fontSizeExponent="-2">
-            <h5>{{ accountDocument.profile?.name }}</h5>
-            <h6>{{ accountDocument.email }}</h6>
+            <h5>{{ accountService.accountDocument$()?.profile?.name }}</h5>
+            <h6>{{ accountService.accountDocument$()?.email }}</h6>
           </bowstring--header>
         </bowstring--heading-group>} @else {You're not signed in.}
       </bowstring--section>
       <bowstring--divider />
       <bowstring--section>
-        @if (accountService.accountDocument$()) {@for (route of accountRoutes.slice(1); track $index) {<bowstring--link
+        @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {@for (route of accountRoutes.slice(1); track $index) {<bowstring--link
           [url]="'./' + route.path">
           <bowstring--label [input]="route.data?.['title']" />
         </bowstring--link>}} @else {<bowstring--link
@@ -70,7 +70,7 @@
   <bowstring--section
     flexGrow="1"
     flexShrink="0">
-    @if (accountService.accountDocument$()) {<router-outlet />}
+    @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<router-outlet />}
   </bowstring--section>
 </bowstring--flexbox-container>
 

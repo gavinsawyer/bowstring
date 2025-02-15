@@ -12,6 +12,7 @@
   --bowstring--inspector--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
 
   @include FlexboxContainerDirective.host
+  @include WellRoundedDirective.host("> .harness > .between > div")
 
   --bowstring--flexbox-container-directive--gap-column: var(--bowstring--inspector--gap-column) !important
   --bowstring--flexbox-container-directive--gap-row: var(--bowstring--inspector--gap-row) !important
@@ -37,7 +38,6 @@
         @include ElevatedDirective.host
         @include FlexboxContainerDirective.host
         @include GlassDirective.host(9%)
-        @include WellRoundedDirective.host
 
         --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
         --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important

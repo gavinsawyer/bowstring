@@ -1,5 +1,5 @@
-import { InjectionToken }  from "@angular/core";
-import { type Currencies } from "@bowstring/types";
+import { InjectionToken }      from "@angular/core";
+import type * as currenciesLib from "@bowstring/currencies";
 
 
-export const CURRENCIES: InjectionToken<Currencies> = new InjectionToken<Currencies>("CURRENCIES");
+export const CURRENCIES: InjectionToken<typeof currenciesLib> = new InjectionToken<typeof currenciesLib>("CURRENCIES");

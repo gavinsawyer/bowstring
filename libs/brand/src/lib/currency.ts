@@ -1,4 +1,4 @@
-import { type Currency } from "./types";
+import { type Currency } from "@bowstring/types";
 
 
 export const currency: Currency = "USD";

@@ -2,12 +2,12 @@ import { type StripeProductDocument } from "@bowstring/interfaces";
 import type Stripe                    from "stripe";
 
 
-function getStripeProductUpdateParamsMarketingFeatures(marketingFeatures: Exclude<StripeProductDocument["marketingFeatures"], undefined>): Stripe.ProductUpdateParams.MarketingFeature[] | undefined {
-  const stripeProductUpdateParamsMarketingFeatures: Stripe.ProductUpdateParams.MarketingFeature[] = marketingFeatures?.filter<Stripe.ProductUpdateParams.MarketingFeature>(
-    (marketingFeature: Stripe.Product.MarketingFeature): marketingFeature is { name: string } => "name" in marketingFeature,
+function getStripeProductUpdateParamsMarketingFeatures(marketingFeatures: Exclude<StripeProductDocument["marketingFeatures"], undefined>): Stripe.ProductUpdateParams.MarketingFeature[] | "" {
+  const stripeProductUpdateParamsMarketingFeatures: Stripe.ProductUpdateParams.MarketingFeature[] = marketingFeatures?.filter<Stripe.Product.MarketingFeature & { name: string }>(
+    (marketingFeature: Stripe.Product.MarketingFeature): marketingFeature is Stripe.Product.MarketingFeature & { name: string } => "name" in marketingFeature,
   );
 
-  return stripeProductUpdateParamsMarketingFeatures.length ? stripeProductUpdateParamsMarketingFeatures : undefined;
+  return stripeProductUpdateParamsMarketingFeatures.length ? stripeProductUpdateParamsMarketingFeatures : "";
 }
 function getStripeProductUpdateParams(
   {
