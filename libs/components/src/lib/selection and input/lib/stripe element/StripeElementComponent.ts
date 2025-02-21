@@ -159,7 +159,7 @@ export class StripeElementComponent {
 
             stripeElement = stripeElements && this.getStripeElement?.(
               {
-                stripeCustomerDocument: this.stripeCustomersService.stripeCustomerDocument$(),
+                stripeCustomerDocument: this.stripeCustomersService.stripeCustomerDocuments$()?.[0],
                 stripeElements:         stripeElements,
               },
             );

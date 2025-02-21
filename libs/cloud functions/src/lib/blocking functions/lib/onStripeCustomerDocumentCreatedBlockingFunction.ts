@@ -1,4 +1,4 @@
-import { type StripeCustomerDocument }                                        from "@bowstring/interfaces";
+import { StripeCustomerDocument }                                             from "@bowstring/interfaces";
 import { type CloudFunction }                                                 from "firebase-functions";
 import { type FirestoreEvent, onDocumentCreated, type QueryDocumentSnapshot } from "firebase-functions/firestore";
 import { HttpsError }                                                         from "firebase-functions/https";
@@ -15,12 +15,12 @@ export const onStripeCustomerDocumentCreatedBlockingFunction: CloudFunction<Fire
       params: { documentId },
     }: FirestoreEvent<QueryDocumentSnapshot | undefined, { documentId: string }>,
   ): Promise<object> => {
-    const stripeCustomerDocument: StripeCustomerDocument | undefined = queryDocumentSnapshot && (queryDocumentSnapshot.data() as StripeCustomerDocument);
+    const userId: string | undefined = queryDocumentSnapshot && (queryDocumentSnapshot.data() as StripeCustomerDocument).userId;
 
-    if (!stripeCustomerDocument)
+    if (!userId)
       throw new HttpsError(
-        "invalid-argument",
-        "The stripe customer document is missing.",
+        "failed-precondition",
+        "A value for `userId` is missing from the stripe customer document.",
       );
 
     if (!process.env["STRIPE_API_KEY"])
@@ -33,6 +33,7 @@ export const onStripeCustomerDocumentCreatedBlockingFunction: CloudFunction<Fire
       {
         metadata: {
           documentId,
+          userId,
         },
       },
       {

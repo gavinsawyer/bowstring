@@ -33,7 +33,15 @@ export const onStripeCustomerDocumentUpdatedBlockingFunction: CloudFunction<Fire
         "A value for `STRIPE_API_KEY` is missing from the environment.",
       );
 
-    return new Stripe(process.env["STRIPE_API_KEY"]).customers.update(
+    const stripe: Stripe = new Stripe(process.env["STRIPE_API_KEY"]);
+
+    return stripeCustomerDocument.asyncDeleted ? stripe.customers.del(
+      stripeCustomerId,
+      undefined,
+      {
+        idempotencyKey: firestoreEventId,
+      },
+    ) : stripe.customers.update(
       stripeCustomerId,
       getStripeCustomerUpdateParams(stripeCustomerDocument),
       {

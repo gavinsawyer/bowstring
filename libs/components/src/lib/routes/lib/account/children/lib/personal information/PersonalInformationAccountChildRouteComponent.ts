@@ -45,12 +45,12 @@ export class PersonalInformationAccountChildRouteComponent
         if (profile) {
           this.birthdayFormGroup.reset(
             {
-              birthday: profile.birthday || undefined,
+              birthday: profile.birthday,
             },
           );
           this.nameFormGroup.reset(
             {
-              name: profile.name || undefined,
+              name: profile.name,
             },
           );
         }

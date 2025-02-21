@@ -4,9 +4,13 @@ import type Stripe                        from "stripe";
 import toDocumentPartial                  from "./toDocumentPartial";
 
 
-function getStripeCustomerDocument(stripeCustomer: Stripe.Customer): StripeCustomerDocument;
 function getStripeCustomerDocument(
   stripeCustomer: Stripe.Customer,
+  additionalFields: { userId: string },
+): StripeCustomerDocument;
+function getStripeCustomerDocument(
+  stripeCustomer: Stripe.Customer,
+  additionalFields: { userId: string },
   withFieldValue?: boolean,
 ): WithFieldValue<StripeCustomerDocument>;
 function getStripeCustomerDocument(
@@ -29,6 +33,9 @@ function getStripeCustomerDocument(
     tax_exempt: taxExempt,
     test_clock: testClock,
   }: Stripe.Customer,
+  {
+    userId,
+  }: { userId: string },
   withFieldValue?: boolean,
 ): StripeCustomerDocument | WithFieldValue<StripeCustomerDocument> {
   return {
@@ -162,6 +169,9 @@ function getStripeCustomerDocument(
       { testClock },
       withFieldValue,
     ),
+    ...{
+      userId,
+    },
   };
 }
 

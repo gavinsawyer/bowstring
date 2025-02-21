@@ -1,16 +1,16 @@
-import { NgTemplateOutlet }                                                                                                             from "@angular/common";
-import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                    from "@angular/core";
-import { toSignal }                                                                                                                     from "@angular/core/rxjs-interop";
-import { Auth }                                                                                                                         from "@angular/fire/auth";
-import { deleteField, doc, type DocumentReference, Firestore, updateDoc }                                                               from "@angular/fire/firestore";
-import { FormControl, FormGroup }                                                                                                       from "@angular/forms";
-import { ContainerDirective }                                                                                                           from "@bowstring/directives";
-import { type StripeCustomerDocument }                                                                                                  from "@bowstring/interfaces";
-import { type Stripe, type StripeAddressElementChangeEvent, type StripeAddressElementOptions, type StripeElement, type StripeElements } from "@stripe/stripe-js";
-import { isEqual }                                                                                                                      from "lodash";
-import { startWith }                                                                                                                    from "rxjs";
-import { type SheetComponent }                                                                                                          from "../../../../../presentation";
-import { StripeElementComponent }                                                                                                       from "../../../stripe element/StripeElementComponent";
+import { NgTemplateOutlet }                                                                                                                                                 from "@angular/common";
+import { ChangeDetectionStrategy, Component, computed, effect, inject, type Signal }                                                                                        from "@angular/core";
+import { toSignal }                                                                                                                                                         from "@angular/core/rxjs-interop";
+import { Auth }                                                                                                                                                             from "@angular/fire/auth";
+import { collection, type CollectionReference, deleteField, Firestore, getDocs, query, type QueryDocumentSnapshot, type QuerySnapshot, where, writeBatch, type WriteBatch } from "@angular/fire/firestore";
+import { FormControl, FormGroup }                                                                                                                                           from "@angular/forms";
+import { ContainerDirective }                                                                                                                                               from "@bowstring/directives";
+import { type StripeCustomerDocument }                                                                                                                                      from "@bowstring/interfaces";
+import { type Stripe, type StripeAddressElementChangeEvent, type StripeAddressElementOptions, type StripeElement, type StripeElements }                                     from "@stripe/stripe-js";
+import { isEqual }                                                                                                                                                          from "lodash";
+import { startWith }                                                                                                                                                        from "rxjs";
+import { type SheetComponent }                                                                                                                                              from "../../../../../presentation";
+import { StripeElementComponent }                                                                                                                                           from "../../../stripe element/StripeElementComponent";
 
 
 @Component(
@@ -143,7 +143,7 @@ export class AddressStripeElementComponent
 
     effect(
       (): void => {
-        const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocument$();
+        const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocuments$()?.[0];
 
         if (stripeCustomerDocument)
           ((
@@ -222,7 +222,7 @@ export class AddressStripeElementComponent
 
   public readonly edited$: Signal<boolean> = computed<boolean>(
     (): boolean => {
-      const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocument$();
+      const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocuments$()?.[0];
 
       return !isEqual(
         this.value$(),
@@ -251,48 +251,71 @@ export class AddressStripeElementComponent
       (): void => {
         this.submitStripeElement?.().then<void>(
           (): void => {
-            const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocument$();
+            const userId: string | undefined                    = this.auth.currentUser?.uid;
+            const stripeCustomerDocumentsWriteBatch: WriteBatch = writeBatch(this.firestore);
 
-            if (stripeCustomerDocument && this.auth.currentUser)
-              updateDoc<StripeCustomerDocument, StripeCustomerDocument>(
-                doc(
-                  this.firestore,
-                  `/stripeCustomers/${ this.auth.currentUser.uid }`,
-                ) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>,
-                {
-                  shipping: this.formGroup.value.shipping && this.formGroup.value.shipping.address && this.formGroup.value.shipping.name ? ((
-                    {
-                      phone,
-                    }: typeof this.formGroup.value.shipping,
-                    address: typeof this.formGroup.value.shipping.address,
-                    name: string,
-                  ): Exclude<StripeCustomerDocument["shipping"], undefined> => ({
-                    address: ((
+            if (userId)
+              getDocs<StripeCustomerDocument, StripeCustomerDocument>(
+                query<StripeCustomerDocument, StripeCustomerDocument>(
+                  collection(
+                    this.firestore,
+                    "stripeCustomers",
+                  ) as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>,
+                  where(
+                    "userId",
+                    "==",
+                    userId,
+                  ),
+                ),
+              ).then<void, never>(
+                (stripeCustomerDocumentsQuerySnapshot: QuerySnapshot<StripeCustomerDocument, StripeCustomerDocument>): void => {
+                  stripeCustomerDocumentsQuerySnapshot.forEach(
+                    ({ ref: stripeCustomerDocumentReference }: QueryDocumentSnapshot<StripeCustomerDocument, StripeCustomerDocument>): void => stripeCustomerDocumentsWriteBatch.update<StripeCustomerDocument, StripeCustomerDocument>(
+                      stripeCustomerDocumentReference,
                       {
-                        city,
-                        country,
-                        line1,
-                        line2,
-                        postalCode,
-                        state,
-                      }: typeof address,
-                    ): Exclude<Exclude<StripeCustomerDocument["shipping"], undefined>["address"], undefined> => ({
-                      ...(city ? { city } : {}),
-                      ...(country ? { country } : {}),
-                      ...(line1 ? { line1 } : {}),
-                      ...(line2 ? { line2 } : {}),
-                      ...(postalCode ? { postalCode } : {}),
-                      ...(state ? { state } : {}),
-                    }))(address),
-                    name,
-                    ...(phone ? { phone } : {}),
-                  }))(
-                    this.formGroup.value.shipping,
-                    this.formGroup.value.shipping.address,
-                    this.formGroup.value.shipping.name,
-                  ) : deleteField(),
+                        shipping: this.formGroup.value.shipping && this.formGroup.value.shipping.address && this.formGroup.value.shipping.name ? ((
+                          {
+                            phone,
+                          }: typeof this.formGroup.value.shipping,
+                          address: typeof this.formGroup.value.shipping.address,
+                          name: string,
+                        ): Exclude<StripeCustomerDocument["shipping"], undefined> => ({
+                          address: ((
+                            {
+                              city,
+                              country,
+                              line1,
+                              line2,
+                              postalCode,
+                              state,
+                            }: typeof address,
+                          ): Exclude<Exclude<StripeCustomerDocument["shipping"], undefined>["address"], undefined> => ({
+                            ...(city ? { city } : {}),
+                            ...(country ? { country } : {}),
+                            ...(line1 ? { line1 } : {}),
+                            ...(line2 ? { line2 } : {}),
+                            ...(postalCode ? { postalCode } : {}),
+                            ...(state ? { state } : {}),
+                          }))(address),
+                          name,
+                          ...(phone ? { phone } : {}),
+                        }))(
+                          this.formGroup.value.shipping,
+                          this.formGroup.value.shipping.address,
+                          this.formGroup.value.shipping.name,
+                        ) : deleteField(),
+                      },
+                    ) && void (0),
+                  );
+
+                  stripeCustomerDocumentsWriteBatch.commit().catch<never>(
+                    (error: unknown): never => {
+                      console.error("Something went wrong.");
+
+                      throw error;
+                    },
+                  );
                 },
-              ).catch<never>(
                 (error: unknown): never => {
                   console.error("Something went wrong.");
 

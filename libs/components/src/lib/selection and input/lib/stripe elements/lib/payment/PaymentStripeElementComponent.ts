@@ -171,8 +171,8 @@ export class PaymentStripeElementComponent
               } catch {
                 console.error("Something went wrong.");
 
-                const removeSetupIntentMethodWriteBatch: WriteBatch = writeBatch(this.firestore);
-                const userId: string | undefined                    = this.auth.currentUser?.uid;
+                const stripeSetupIntentDocumentsWriteBatch: WriteBatch = writeBatch(this.firestore);
+                const userId: string | undefined                       = this.auth.currentUser?.uid;
 
                 if (userId)
                   getDocs<StripeSetupIntentDocument, StripeSetupIntentDocument>(
@@ -195,7 +195,7 @@ export class PaymentStripeElementComponent
                   ).then<void, never>(
                     (stripeSetupIntentDocumentsQuerySnapshot: QuerySnapshot<StripeSetupIntentDocument, StripeSetupIntentDocument>): void => {
                       stripeSetupIntentDocumentsQuerySnapshot.forEach(
-                        ({ ref: stripeSetupIntentDocumentReference }: QueryDocumentSnapshot<StripeSetupIntentDocument, StripeSetupIntentDocument>): void => removeSetupIntentMethodWriteBatch.update<StripeSetupIntentDocument, StripeSetupIntentDocument>(
+                        ({ ref: stripeSetupIntentDocumentReference }: QueryDocumentSnapshot<StripeSetupIntentDocument, StripeSetupIntentDocument>): void => stripeSetupIntentDocumentsWriteBatch.update<StripeSetupIntentDocument, StripeSetupIntentDocument>(
                           stripeSetupIntentDocumentReference,
                           {
                             asyncDeleted: serverTimestamp(),
@@ -203,7 +203,7 @@ export class PaymentStripeElementComponent
                         ) && void (0),
                       );
 
-                      removeSetupIntentMethodWriteBatch.commit().catch<never>(
+                      stripeSetupIntentDocumentsWriteBatch.commit().catch<never>(
                         (error: unknown): never => {
                           console.error("Something went wrong.");
 
@@ -294,10 +294,10 @@ export class PaymentStripeElementComponent
                 },
               ).then<void, never>(
                 ({ setupIntent }: SetupIntentResult): void => {
-                  const paymentMethodId: string | undefined  = typeof setupIntent?.payment_method === "string" ? setupIntent.payment_method : setupIntent?.payment_method?.id;
-                  const stripeCustomerId: string | undefined = this.stripeCustomersService.stripeCustomerDocument$()?.id || undefined;
+                  const stripeCustomerId: string | undefined      = this.stripeCustomersService.stripeCustomerDocuments$()?.[0]?.id;
+                  const stripePaymentMethodId: string | undefined = typeof setupIntent?.payment_method === "string" ? setupIntent.payment_method : setupIntent?.payment_method?.id;
 
-                  if (paymentMethodId && stripeCustomerId)
+                  if (stripePaymentMethodId && stripeCustomerId)
                     addDoc<StripePaymentMethodDocument, StripePaymentMethodDocument>(
                       collection(
                         this.firestore,
@@ -305,7 +305,7 @@ export class PaymentStripeElementComponent
                       ) as CollectionReference<StripePaymentMethodDocument, StripePaymentMethodDocument>,
                       {
                         customer: stripeCustomerId,
-                        id:       paymentMethodId,
+                        id:       stripePaymentMethodId,
                         userId,
                       },
                     ).catch<never>(

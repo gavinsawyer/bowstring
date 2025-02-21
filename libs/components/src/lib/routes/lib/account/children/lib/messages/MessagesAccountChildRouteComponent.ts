@@ -190,14 +190,14 @@ export class MessagesAccountChildRouteComponent
   );
   protected readonly accountDocumentMessagesEdited$: Signal<boolean>                                                                                                                              = computed<boolean>(
     (): boolean => {
-      const messages: AccountDocument["messages"] = this.accountService.accountDocument$()?.messages;
+      const accountDocument: AccountDocument | undefined = this.accountService.accountDocument$();
 
-      return !!messages && !isEqual(
+      return !!accountDocument && !isEqual(
         this.accountDocumentMessagesFormValue$(),
         {
-          "newsletter":   typeof messages?.newsletter === "boolean" ? messages.newsletter : null,
-          "orderUpdates": typeof messages?.orderUpdates === "boolean" ? messages.orderUpdates : null,
-          "promotions":   typeof messages?.promotions === "boolean" ? messages.promotions : null,
+          "newsletter":   typeof accountDocument.messages?.newsletter === "boolean" ? accountDocument.messages.newsletter : null,
+          "orderUpdates": typeof accountDocument.messages?.orderUpdates === "boolean" ? accountDocument.messages.orderUpdates : null,
+          "promotions":   typeof accountDocument.messages?.promotions === "boolean" ? accountDocument.messages.promotions : null,
         },
       );
     },
@@ -270,7 +270,7 @@ export class MessagesAccountChildRouteComponent
           `/accounts/${ this.auth.currentUser.uid }`,
         ) as DocumentReference<AccountDocument, AccountDocument>,
         {
-          messages: this.accountDocumentMessagesFormGroup.value && typeof this.accountDocumentMessagesFormGroup.value.newsletter === "boolean" || typeof this.accountDocumentMessagesFormGroup.value.orderUpdates === "boolean" || typeof this.accountDocumentMessagesFormGroup.value.promotions === "boolean" ? ((
+          messages: this.accountDocumentMessagesFormGroup.value && (typeof this.accountDocumentMessagesFormGroup.value.newsletter === "boolean" || typeof this.accountDocumentMessagesFormGroup.value.orderUpdates === "boolean" || typeof this.accountDocumentMessagesFormGroup.value.promotions === "boolean") ? ((
             {
               newsletter,
               orderUpdates,

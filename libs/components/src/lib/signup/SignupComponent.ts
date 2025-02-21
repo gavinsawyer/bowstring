@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal }                                  from "@angular/core";
 import { UserCredential }                                                                                       from "@angular/fire/auth";
-import { doc, type DocumentReference, Firestore, setDoc }                                                       from "@angular/fire/firestore";
+import { addDoc, collection, type CollectionReference, doc, type DocumentReference, Firestore, setDoc }         from "@angular/fire/firestore";
 import { type AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators } from "@angular/forms";
 import { type AccountDocument, type StripeCustomerDocument }                                                    from "@bowstring/interfaces";
 import { AuthenticationService }                                                                                from "@bowstring/services";
@@ -101,48 +101,6 @@ export class SignupComponent {
     },
   );
 
-  private async setUserDocuments(
-    userId: string,
-    email: string,
-    security: Exclude<AccountDocument["security"], undefined>,
-  ): Promise<void> {
-    return setDoc<AccountDocument, AccountDocument>(
-      doc(
-        this.firestore,
-        `/accounts/${ userId }`,
-      ) as DocumentReference<AccountDocument, AccountDocument>,
-      {
-        email,
-        security,
-      },
-      {
-        merge: true,
-      },
-    ).then<void, never>(
-      (): Promise<void> => setDoc<StripeCustomerDocument, StripeCustomerDocument>(
-        doc(
-          this.firestore,
-          `/stripeCustomers/${ userId }`,
-        ) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>,
-        {},
-        {
-          merge: true,
-        },
-      ).catch<never>(
-        (error: unknown): never => {
-          console.error("Something went wrong.");
-
-          throw error;
-        },
-      ),
-      (error: unknown): never => {
-        console.error("Something went wrong.");
-
-        throw error;
-      },
-    );
-  }
-
   protected async signupWithPasswordFormSubmit(openModel$: SheetComponent["openModel$"]): Promise<void> {
     const email: string | undefined    = this.signupWithPasswordFormGroup.value.email;
     const password: string | undefined = this.signupWithPasswordFormGroup.value.password;
@@ -152,21 +110,44 @@ export class SignupComponent {
         email,
         password,
       ).then<void, never>(
-        ({ user }: UserCredential): Promise<void> => this.setUserDocuments(
-          user.uid,
-          email,
+        ({ user: { uid: userId } }: UserCredential): Promise<void> => setDoc<AccountDocument, AccountDocument>(
+          doc(
+            this.firestore,
+            `/accounts/${ userId }`,
+          ) as DocumentReference<AccountDocument, AccountDocument>,
           {
-            password: true,
+            email,
+            security: {
+              password: true,
+            },
+          },
+          {
+            merge: true,
           },
         ).then<void, never>(
-          (): void => {
-            openModel$.set(false);
+          (): Promise<void> => addDoc<StripeCustomerDocument, StripeCustomerDocument>(
+            collection(
+              this.firestore,
+              "stripeCustomers",
+            ) as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>,
+            {
+              userId,
+            },
+          ).then<void, never>(
+            (): void => {
+              openModel$.set(false);
 
-            setTimeout(
-              (): void => this.signupWithPasswordFormGroup.reset(),
-              180,
-            );
-          },
+              setTimeout(
+                (): void => this.signupWithPasswordFormGroup.reset(),
+                180,
+              );
+            },
+            (error: unknown): never => {
+              console.error("Something went wrong.");
+
+              throw error;
+            },
+          ),
           (error: unknown): never => {
             console.error("Something went wrong.");
 
@@ -185,21 +166,44 @@ export class SignupComponent {
 
     if (email)
       return this.authenticationService.createUserWithPasskey(email).then<void, never>(
-        ({ user }: UserCredential): Promise<void> => this.setUserDocuments(
-          user.uid,
-          email,
+        ({ user: { uid: userId } }: UserCredential): Promise<void> => setDoc<AccountDocument, AccountDocument>(
+          doc(
+            this.firestore,
+            `/accounts/${ userId }`,
+          ) as DocumentReference<AccountDocument, AccountDocument>,
           {
-            passkey: true,
+            email,
+            security: {
+              passkey: true,
+            },
+          },
+          {
+            merge: true,
           },
         ).then<void, never>(
-          (): void => {
-            openModel$.set(false);
+          (): Promise<void> => addDoc<StripeCustomerDocument, StripeCustomerDocument>(
+            collection(
+              this.firestore,
+              "stripeCustomers",
+            ) as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>,
+            {
+              userId,
+            },
+          ).then<void, never>(
+            (): void => {
+              openModel$.set(false);
 
-            setTimeout(
-              (): void => this.signupWithPasskeyFormGroup.reset(),
-              180,
-            );
-          },
+              setTimeout(
+                (): void => this.signupWithPasskeyFormGroup.reset(),
+                180,
+              );
+            },
+            (error: unknown): never => {
+              console.error("Something went wrong.");
+
+              throw error;
+            },
+          ),
           (error: unknown): never => {
             console.error("Something went wrong.");
 

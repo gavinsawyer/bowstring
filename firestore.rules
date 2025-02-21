@@ -8,9 +8,9 @@ service cloud.firestore {
       allow update:       if (request.auth.uid == documentId);
     }
     match /stripeCustomers/{documentId} {
-      allow create:       if (request.auth.uid == documentId);
-      allow delete, read: if (request.auth.uid == documentId);
-      allow update:       if (request.auth.uid == documentId);
+      allow create:       if (request.auth.uid == request.resource.data.userId);
+      allow delete, read: if (request.auth.uid == resource.data.userId);
+      allow update:       if (request.auth.uid == resource.data.userId);
     }
     match /stripePaymentMethods/{documentId} {
       allow create:       if (request.auth.uid == request.resource.data.userId);

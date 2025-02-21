@@ -2,7 +2,7 @@ import { isPlatformBrowser }                                                    
 import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                                                                                        from "@angular/core";
 import { toSignal }                                                                                                                                                                                                                      from "@angular/core/rxjs-interop";
 import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, reauthenticateWithCredential, signInAnonymously, signInWithEmailAndPassword, unlink, updatePassword, type User, UserCredential } from "@angular/fire/auth";
-import { doc, type DocumentData, type DocumentReference, Firestore, setDoc }                                                                                                                                                             from "@angular/fire/firestore";
+import { doc, type DocumentReference, Firestore, setDoc }                                                                                                                                                                                from "@angular/fire/firestore";
 import { Functions }                                                                                                                                                                                                                     from "@angular/fire/functions";
 import { type AccountDocument }                                                                                                                                                                                                          from "@bowstring/interfaces";
 import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, unlinkPasskey, verifyUserWithPasskey }                                                                                                   from "@firebase-web-authn/browser";
@@ -110,7 +110,7 @@ export class AuthenticationService {
         password,
       ),
     ).then<void, never>(
-      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+      (): Promise<void> => setDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
@@ -140,7 +140,7 @@ export class AuthenticationService {
       this.functions,
       email,
     ).then<void, never>(
-      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+      (): Promise<void> => setDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
@@ -171,7 +171,7 @@ export class AuthenticationService {
       `${ email } (Backup)`,
       "second",
     ).then<void, never>(
-      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+      (): Promise<void> => setDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
@@ -241,7 +241,7 @@ export class AuthenticationService {
       this.auth,
       this.functions,
     ).then<void, never>(
-      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+      (): Promise<void> => setDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
@@ -270,7 +270,7 @@ export class AuthenticationService {
       this.functions,
       "second",
     ).then<void, never>(
-      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+      (): Promise<void> => setDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,
@@ -298,7 +298,7 @@ export class AuthenticationService {
       user,
       "password",
     ).then<void, never>(
-      (): Promise<void> => setDoc<AccountDocument, DocumentData>(
+      (): Promise<void> => setDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ user.uid }`,

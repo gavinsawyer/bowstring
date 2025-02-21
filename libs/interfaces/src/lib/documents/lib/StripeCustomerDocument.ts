@@ -11,8 +11,9 @@ export interface StripeCustomerDocument {
     "postalCode"?: string;
     "state"?: string;
   };
+  "asyncDeleted"?: AdminTimestamp | Timestamp;
   "balance"?: number;
-  "created"?: Timestamp | AdminTimestamp;
+  "created"?: AdminTimestamp | Timestamp;
   "defaultSource"?: string;
   "description"?: string;
   "email"?: string;
@@ -49,4 +50,5 @@ export interface StripeCustomerDocument {
   };
   "taxExempt"?: "exempt" | "none" | "reverse";
   "testClock"?: string;
+  "userId": string;
 }

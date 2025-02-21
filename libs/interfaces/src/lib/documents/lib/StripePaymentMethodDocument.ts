@@ -4,7 +4,7 @@ import { type Timestamp }                   from "firebase/firestore";
 
 export interface StripePaymentMethodDocument {
   "allowRedisplay"?: "always" | "limited" | "unspecified";
-  "asyncDeleted"?: Timestamp | AdminTimestamp;
+  "asyncDeleted"?: AdminTimestamp | Timestamp;
   "billingDetails"?: {
     "address"?: {
       "city"?: string;
@@ -39,7 +39,7 @@ export interface StripePaymentMethodDocument {
           "amountAuthorized"?: number;
           "brand"?: "amex" | "diners" | "discover" | "eftpos_au" | "jcb" | "link" | "mastercard" | "unionpay" | "unknown" | "visa";
           "brandProduct"?: string;
-          "captureBefore"?: Timestamp | AdminTimestamp;
+          "captureBefore"?: AdminTimestamp | Timestamp;
           "cardholderName"?: string;
           "country"?: string;
           "description"?: string;
@@ -55,7 +55,7 @@ export interface StripePaymentMethodDocument {
           "network"?: "amex" | "cartes_bancaires" | "diners" | "discover" | "eftpos_au" | "girocard" | "interac" | "jcb" | "link" | "mastercard" | "unionpay" | "unknown" | "visa";
           "networkTransactionId"?: string;
           "offline"?: {
-            "storedAt"?: Timestamp | AdminTimestamp;
+            "storedAt"?: AdminTimestamp | Timestamp;
             "type": "deferred";
           };
           "overcaptureSupported": boolean;
@@ -94,7 +94,7 @@ export interface StripePaymentMethodDocument {
       "type": string;
     };
   };
-  "created"?: Timestamp | AdminTimestamp;
+  "created"?: AdminTimestamp | Timestamp;
   "customer"?: string;
   "id"?: string;
   "livemode"?: boolean;

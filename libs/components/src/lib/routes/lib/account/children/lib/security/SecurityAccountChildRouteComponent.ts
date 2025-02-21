@@ -49,12 +49,12 @@ export class SecurityAccountChildRouteComponent
         if (accountDocument) {
           this.passkeyFormGroup.reset(
             {
-              email: accountDocument.email || undefined,
+              email: accountDocument.email,
             },
           );
           this.passwordFormGroup.reset(
             {
-              email: accountDocument.email || undefined,
+              email: accountDocument.email,
             },
           );
         }

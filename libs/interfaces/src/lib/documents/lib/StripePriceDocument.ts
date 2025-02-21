@@ -4,7 +4,7 @@ import { type Timestamp }                   from "firebase/firestore";
 
 export interface StripePriceDocument {
   "active"?: boolean;
-  "asyncDelyeted"?: Timestamp | AdminTimestamp;
+  "asyncDeleted"?: AdminTimestamp | Timestamp;
   "billingScheme"?: "per_unit" | "tiered";
   "created"?: AdminTimestamp | Timestamp;
   "currency"?: string;

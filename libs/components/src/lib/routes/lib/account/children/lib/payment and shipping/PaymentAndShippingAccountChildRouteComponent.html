@@ -2,7 +2,7 @@
   <h3 i18n="@@libs--Components--Routes--Account-PaymentAndShipping--Header">Payment and shipping</h3>
 </bowstring--header>
 <bowstring--flexbox-container>
-  @if (stripeCustomersService.stripeCustomerDocument$(); as stripeCustomerDocument) {<bowstring--box
+  @if (stripeCustomersService.stripeCustomerDocuments$()?.[0]; as stripeCustomerDocument) {<bowstring--box
     flexBasis="0"
     flexGrow="1">
     <bowstring--header>
@@ -71,7 +71,7 @@
         input="A card is saved to your account." />} @else {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_2"
         inline
-        input="More than one card is saved to your account." />}} @else {<bowstring--label
+        input="Multiple cards are saved to your account." />}} @else {<bowstring--label
         i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--PaymentMethods--Subheader_3"
         inline
         input="Add a payment method for future orders." />}</h5>
@@ -190,7 +190,7 @@
 
 <bowstring--sheet #addressStripeElementSheetComponent>
   @defer {<bowstring--header>
-    <h6>@if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--label
+    <h6>@if (stripeCustomersService.stripeCustomerDocuments$()?.[0]?.shipping?.address) {<bowstring--label
       i18n-input="@@libs--Components--Routes--Account-PaymentAndShipping--Sheets--AddressStripeElement--Header_1"
       inline
       input="Edit your shipping address." />} @else {<bowstring--label
@@ -205,7 +205,7 @@
       alignItems="center"
       flexDirection="row"
       justifyContent="flex-end">
-      @if (stripeCustomersService.stripeCustomerDocument$()?.shipping?.address) {<bowstring--button
+      @if (stripeCustomersService.stripeCustomerDocuments$()?.[0]?.shipping?.address) {<bowstring--button
         appearance="symbol"
         [disabled]="!addressStripeElementComponent.edited$()"
         (output)="addressStripeElementComponent.reset();">

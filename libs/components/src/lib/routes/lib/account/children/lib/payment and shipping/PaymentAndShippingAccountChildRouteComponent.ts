@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject }                                                                                                                                                                                                                                                                                                                                     from "@angular/core";
 import { Auth }                                                                                                                                                                                                                                                                                                                                                                           from "@angular/fire/auth";
-import { collection, type CollectionReference, deleteField, doc, type DocumentReference, Firestore, getDocs, query, type QueryDocumentSnapshot, type QuerySnapshot, serverTimestamp, updateDoc, where, writeBatch, type WriteBatch }                                                                                                                                                      from "@angular/fire/firestore";
+import { collection, type CollectionReference, deleteField, Firestore, getDocs, query, type QueryDocumentSnapshot, type QuerySnapshot, serverTimestamp, where, writeBatch, type WriteBatch }                                                                                                                                                                                              from "@angular/fire/firestore";
 import { ListItemDirective }                                                                                                                                                                                                                                                                                                                                                              from "@bowstring/directives";
 import { type StripeCustomerDocument, type StripePaymentMethodDocument }                                                                                                                                                                                                                                                                                                                  from "@bowstring/interfaces";
 import { GetRegionDisplayNamePipe }                                                                                                                                                                                                                                                                                                                                                       from "@bowstring/pipes";
@@ -52,18 +52,41 @@ export class PaymentAndShippingAccountChildRouteComponent
   protected readonly stripePaymentMethodsService: StripePaymentMethodsService = inject<StripePaymentMethodsService>(StripePaymentMethodsService);
 
   protected makePaymentMethodDefault(id: string): void {
-    const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocument$();
+    const stripeCustomerDocumentsWriteBatch: WriteBatch = writeBatch(this.firestore);
+    const userId: string | undefined                    = this.auth.currentUser?.uid;
 
-    if (stripeCustomerDocument && this.auth.currentUser)
-      updateDoc<StripeCustomerDocument, StripeCustomerDocument>(
-        doc(
-          this.firestore,
-          `/stripeCustomers/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>,
-        {
-          "invoiceSettings.defaultPaymentMethod": id,
+    if (userId)
+      getDocs<StripeCustomerDocument, StripeCustomerDocument>(
+        query<StripeCustomerDocument, StripeCustomerDocument>(
+          collection(
+            this.firestore,
+            "stripeCustomers",
+          ) as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>,
+          where(
+            "userId",
+            "==",
+            userId,
+          ),
+        ),
+      ).then<void, never>(
+        (stripeCustomerDocumentsQuerySnapshot: QuerySnapshot<StripeCustomerDocument, StripeCustomerDocument>): void => {
+          stripeCustomerDocumentsQuerySnapshot.forEach(
+            ({ ref: stripeCustomerDocumentReference }: QueryDocumentSnapshot<StripeCustomerDocument, StripeCustomerDocument>): void => stripeCustomerDocumentsWriteBatch.update<StripeCustomerDocument, StripeCustomerDocument>(
+              stripeCustomerDocumentReference,
+              {
+                "invoiceSettings.defaultPaymentMethod": id,
+              },
+            ) && void (0),
+          );
+
+          stripeCustomerDocumentsWriteBatch.commit().catch<never>(
+            (error: unknown): never => {
+              console.error("Something went wrong.");
+
+              throw error;
+            },
+          );
         },
-      ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");
 
@@ -72,18 +95,41 @@ export class PaymentAndShippingAccountChildRouteComponent
       );
   }
   protected removeAddress(): void {
-    const stripeCustomerDocument: StripeCustomerDocument | undefined = this.stripeCustomersService.stripeCustomerDocument$();
+    const stripeCustomerDocumentsWriteBatch: WriteBatch = writeBatch(this.firestore);
+    const userId: string | undefined                    = this.auth.currentUser?.uid;
 
-    if (stripeCustomerDocument && this.auth.currentUser)
-      updateDoc<StripeCustomerDocument, StripeCustomerDocument>(
-        doc(
-          this.firestore,
-          `/stripeCustomers/${ this.auth.currentUser.uid }`,
-        ) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>,
-        {
-          shipping: deleteField(),
+    if (userId)
+      getDocs<StripeCustomerDocument, StripeCustomerDocument>(
+        query<StripeCustomerDocument, StripeCustomerDocument>(
+          collection(
+            this.firestore,
+            "stripeCustomers",
+          ) as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>,
+          where(
+            "userId",
+            "==",
+            userId,
+          ),
+        ),
+      ).then<void, never>(
+        (stripeCustomerDocumentsQuerySnapshot: QuerySnapshot<StripeCustomerDocument, StripeCustomerDocument>): void => {
+          stripeCustomerDocumentsQuerySnapshot.forEach(
+            ({ ref: stripeCustomerDocumentReference }: QueryDocumentSnapshot<StripeCustomerDocument, StripeCustomerDocument>): void => stripeCustomerDocumentsWriteBatch.update<StripeCustomerDocument, StripeCustomerDocument>(
+              stripeCustomerDocumentReference,
+              {
+                shipping: deleteField(),
+              },
+            ) && void (0),
+          );
+
+          stripeCustomerDocumentsWriteBatch.commit().catch<never>(
+            (error: unknown): never => {
+              console.error("Something went wrong.");
+
+              throw error;
+            },
+          );
         },
-      ).catch<never>(
         (error: unknown): never => {
           console.error("Something went wrong.");
 
@@ -92,9 +138,8 @@ export class PaymentAndShippingAccountChildRouteComponent
       );
   }
   protected removeStripePaymentMethod(id: string): void {
-    const removeStripePaymentMethodWriteBatch: WriteBatch = writeBatch(this.firestore);
-
-    const userId: string | undefined = this.auth.currentUser?.uid;
+    const stripePaymentMethodDocumentsWriteBatch: WriteBatch = writeBatch(this.firestore);
+    const userId: string | undefined                         = this.auth.currentUser?.uid;
 
     if (userId)
       getDocs<StripePaymentMethodDocument, StripePaymentMethodDocument>(
@@ -117,7 +162,7 @@ export class PaymentAndShippingAccountChildRouteComponent
       ).then<void, never>(
         (stripePaymentMethodDocumentsQuerySnapshot: QuerySnapshot<StripePaymentMethodDocument, StripePaymentMethodDocument>): void => {
           stripePaymentMethodDocumentsQuerySnapshot.forEach(
-            ({ ref: stripePaymentMethodDocumentReference }: QueryDocumentSnapshot<StripePaymentMethodDocument, StripePaymentMethodDocument>): void => removeStripePaymentMethodWriteBatch.update<StripePaymentMethodDocument, StripePaymentMethodDocument>(
+            ({ ref: stripePaymentMethodDocumentReference }: QueryDocumentSnapshot<StripePaymentMethodDocument, StripePaymentMethodDocument>): void => stripePaymentMethodDocumentsWriteBatch.update<StripePaymentMethodDocument, StripePaymentMethodDocument>(
               stripePaymentMethodDocumentReference,
               {
                 asyncDeleted: serverTimestamp(),
@@ -125,7 +170,7 @@ export class PaymentAndShippingAccountChildRouteComponent
             ) && void (0),
           );
 
-          removeStripePaymentMethodWriteBatch.commit().catch<never>(
+          stripePaymentMethodDocumentsWriteBatch.commit().catch<never>(
             (error: unknown): never => {
               console.error("Something went wrong.");
 

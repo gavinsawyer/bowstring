@@ -213,13 +213,23 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
           case "customer.created": {
             const collectionReference: CollectionReference<StripeCustomerDocument, StripeCustomerDocument> = firestore.collection("stripeCustomers") as CollectionReference<StripeCustomerDocument, StripeCustomerDocument>;
 
-            if (!event.data.object.metadata["documentId"]) {
-              return collectionReference.add(getStripeCustomerDocument(event.data.object)).then<void, never>(
-                (stripeCustomerDocumentReference: DocumentReference<StripeCustomerDocument, StripeProductDocument>): Promise<void> => stripe.customers.update(
+            if (!event.data.object.metadata["userId"])
+              return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
+
+            if (!event.data.object.metadata["documentId"])
+              return collectionReference.add(
+                getStripeCustomerDocument(
+                  event.data.object,
+                  {
+                    userId: event.data.object.metadata["userId"],
+                  },
+                ),
+              ).then<void, never>(
+                ({ id: documentId }: DocumentReference<StripeCustomerDocument, StripeCustomerDocument>): Promise<void> => stripe.customers.update(
                   event.data.object.id,
                   {
                     metadata: {
-                      documentId: stripeCustomerDocumentReference.id,
+                      documentId,
                     },
                   },
                 ).then<void, never>(
@@ -236,11 +246,13 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
                   throw error;
                 },
               );
-            }
 
             return collectionReference.doc(event.data.object.metadata["documentId"]).set(
               getStripeCustomerDocument(
                 event.data.object,
+                {
+                  userId: event.data.object.metadata["userId"],
+                },
                 true,
               ),
               {
@@ -373,9 +385,15 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
+            if (!event.data.object.metadata["userId"])
+              return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
+
             return (firestore.collection("stripeCustomers").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeCustomerDocument, StripeCustomerDocument>).update(
               getStripeCustomerDocument(
                 event.data.object,
+                {
+                  userId: event.data.object.metadata["userId"],
+                },
                 true,
               ),
             ).then<void, never>(
@@ -684,14 +702,13 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
                       {
                         userId: event.data.object.metadata["userId"],
                       },
-                      true,
                     ),
                   ).then<void, never>(
-                    (stripeCustomerDocumentReference: DocumentReference<StripeCustomerDocument, StripeProductDocument>): Promise<void> => stripe.customers.update(
+                    ({ id: documentId }: DocumentReference<StripePaymentMethodDocument, StripePaymentMethodDocument>): Promise<void> => stripe.customers.update(
                       event.data.object.id,
                       {
                         metadata: {
-                          documentId: stripeCustomerDocumentReference.id,
+                          documentId,
                         },
                       },
                     ).then<void, never>(
@@ -900,7 +917,7 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
           case "price.created": {
             const collectionReference: CollectionReference<StripePriceDocument, StripePriceDocument> = firestore.collection("stripePrices") as CollectionReference<StripePriceDocument, StripePriceDocument>;
 
-            if (!event.data.object.metadata["documentId"]) {
+            if (!event.data.object.metadata["documentId"])
               return collectionReference.add(getStripePriceDocument(event.data.object)).then<void, never>(
                 (stripePriceDocumentReference: DocumentReference<StripePriceDocument, StripePriceDocument>): Promise<void> => stripe.prices.update(
                   event.data.object.id,
@@ -923,7 +940,6 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
                   throw error;
                 },
               );
-            }
 
             return collectionReference.doc(event.data.object.metadata["documentId"]).set(
               getStripePriceDocument(
@@ -974,7 +990,7 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
           case "product.created": {
             const collectionReference: CollectionReference<StripeProductDocument, StripeProductDocument> = firestore.collection("stripeProducts") as CollectionReference<StripeProductDocument, StripeProductDocument>;
 
-            if (!event.data.object.metadata["documentId"]) {
+            if (!event.data.object.metadata["documentId"])
               return collectionReference.add(getStripeProductDocument(event.data.object)).then<void, never>(
                 (stripeProductDocumentReference: DocumentReference<StripeProductDocument, StripeProductDocument>): Promise<void> => stripe.products.update(
                   event.data.object.id,
@@ -997,7 +1013,6 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
                   throw error;
                 },
               );
-            }
 
             return collectionReference.doc(event.data.object.metadata["documentId"]).set(
               getStripeProductDocument(
@@ -1143,21 +1158,20 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             if (!event.data.object.metadata["userId"])
               return response.status(400).send("A value for `userId` is missing from the object's metadata.").end() && void (0);
 
-            if (!event.data.object.metadata["documentId"]) {
+            if (!event.data.object.metadata["documentId"])
               return collectionReference.add(
                 getStripeSetupIntentDocument(
                   event.data.object,
                   {
                     userId: event.data.object.metadata["userId"],
                   },
-                  true,
                 ),
               ).then<void, never>(
-                (stripeCustomerDocumentReference: DocumentReference<StripeCustomerDocument, StripeProductDocument>): Promise<void> => stripe.customers.update(
+                ({ id: documentId }: DocumentReference<StripeSetupIntentDocument, StripeSetupIntentDocument>): Promise<void> => stripe.setupIntents.update(
                   event.data.object.id,
                   {
                     metadata: {
-                      documentId: stripeCustomerDocumentReference.id,
+                      documentId,
                     },
                   },
                 ).then<void, never>(
@@ -1174,9 +1188,8 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
                   throw error;
                 },
               );
-            }
 
-            return firestore.collection("stripeSetupIntents").doc(event.data.object.metadata["documentId"]).set(
+            return collectionReference.doc(event.data.object.metadata["documentId"]).set(
               getStripeSetupIntentDocument(
                 event.data.object,
                 {
