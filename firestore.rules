@@ -7,6 +7,14 @@ service cloud.firestore {
       allow delete, read: if (request.auth.uid == documentId);
       allow update:       if (request.auth.uid == documentId);
     }
+    match /bags/{documentId} {
+      allow create:       if (request.auth.uid == request.resource.data.userId);
+      allow delete, read: if (request.auth.uid == resource.data.userId);
+      allow update:       if (request.auth.uid == resource.data.userId);
+    }
+    match /productCategories/{documentId} {
+      allow read: if true;
+    }
     match /stripeCustomers/{documentId} {
       allow create:       if (request.auth.uid == request.resource.data.userId);
       allow delete, read: if (request.auth.uid == resource.data.userId);
@@ -16,6 +24,12 @@ service cloud.firestore {
       allow create:       if (request.auth.uid == request.resource.data.userId);
       allow delete, read: if (request.auth.uid == resource.data.userId);
       allow update:       if (request.auth.uid == resource.data.userId);
+    }
+    match /stripePrices/{documentId} {
+      allow read: if true;
+    }
+    match /stripeProducts/{documentId} {
+      allow read: if true;
     }
     match /stripeSetupIntents/{documentId} {
       allow create:       if (request.auth.uid == request.resource.data.userId);

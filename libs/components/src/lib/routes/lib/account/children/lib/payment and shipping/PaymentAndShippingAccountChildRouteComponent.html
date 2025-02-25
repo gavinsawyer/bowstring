@@ -86,19 +86,19 @@
           inline
           [input]="ellipsesService.ellipses$()" /></span>}
       <bowstring--caption><bowstring--list type="inline"><bowstring--link
+        *bowstringListItem
         [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted"
         inline
-        (output)="removePaymentMethodSheetComponent.openModel$.set(true);"
-        *bowstringListItem>
+        (output)="removePaymentMethodSheetComponent.openModel$.set(true);">
         <bowstring--symbol input="TrashFill" />
         <bowstring--label
           i18n-input
           input="Remove card" />
       </bowstring--link><bowstring--link
+        *bowstringListItem
         [disabled]="!stripePaymentMethodDocument.created || !!stripePaymentMethodDocument.asyncDeleted || stripePaymentMethodDocument.id === stripeCustomerDocument?.invoiceSettings?.defaultPaymentMethod"
         inline
-        (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(true);"
-        *bowstringListItem>
+        (output)="makePaymentMethodDefaultSheetComponent.openModel$.set(true);">
         <bowstring--symbol input="BoltFill" />
         @if (stripePaymentMethodDocument.id === stripeCustomerDocument?.invoiceSettings?.defaultPaymentMethod) {<bowstring--label
           i18n-input

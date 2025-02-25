@@ -109,25 +109,19 @@ export class SecurityAccountChildRouteComponent
     },
   );
 
-  protected passkeyFormGroupSubmit(): void {
+  protected async passkeyFormSubmit(): Promise<void> {
     if (this.passkeyFormGroup.controls.email.value)
-      this.authenticationService.linkWithPasskey().catch<never>(
-        (error: unknown): never => {
-          console.error("Something went wrong.");
-
-          throw error;
-        },
-      );
+      return this.authenticationService.linkWithPasskey();
   }
-  protected passwordFormGroupSubmit(): void {
+  protected async passwordFormSubmit(): Promise<void> {
     if (this.auth.currentUser && this.passwordFormGroup.controls.email.value && this.passwordFormGroup.value.passwordNew) {
       if (this.passwordFormGroup.value.passwordCurrent)
-        this.authenticationService.updateEmailAndPasswordCredential(
+        return this.authenticationService.updateEmailAndPasswordCredential(
           this.passwordFormGroup.value.passwordCurrent,
           this.passwordFormGroup.value.passwordNew,
         );
       else
-        this.authenticationService.linkWithEmailAndPasswordCredential(
+        return this.authenticationService.linkWithEmailAndPasswordCredential(
           this.passwordFormGroup.controls.email.value,
           this.passwordFormGroup.value.passwordNew,
         );

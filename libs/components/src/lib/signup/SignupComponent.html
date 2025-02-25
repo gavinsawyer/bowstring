@@ -57,17 +57,17 @@
     flexDirection="row"
     justifyContent="space-between">
     <bowstring--list type="inline"><bowstring--link
+      *bowstringListItem
       inline
       (output)="sheetComponentInput$().openModel$.set(false);"
-      *bowstringListItem
       url="/privacy">
       <bowstring--label
         i18n-input
         input="privacy policy" />
     </bowstring--link><bowstring--link
+      *bowstringListItem
       inline
       (output)="sheetComponentInput$().openModel$.set(false);"
-      *bowstringListItem
       url="/terms">
       <bowstring--label
         i18n-input

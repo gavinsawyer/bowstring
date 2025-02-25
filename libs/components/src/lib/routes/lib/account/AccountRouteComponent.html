@@ -34,10 +34,8 @@
         @if (authenticationService.user$() && !authenticationService.user$()?.isAnonymous) {<bowstring--image
           appearance="circular"
           flexBasis="33px"
-          height="33"
-          level="2"
-          src="https://placehold.co/102x102"
-          width="33" />
+          input="https://placehold.co/102x102"
+          level="2" />
         <bowstring--heading-group>
           <bowstring--header fontSizeExponent="-2">
             <h5>{{ accountService.accountDocument$()?.profile?.name }}</h5>

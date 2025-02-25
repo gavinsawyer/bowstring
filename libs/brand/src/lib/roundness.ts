@@ -1,1 +1,1 @@
-export const roundness: number = 2 as const;
+export const roundness: number = 1 as const;

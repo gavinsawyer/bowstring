@@ -43,9 +43,7 @@ export class ExchangeService {
 
   public readonly userCurrency$: WritableSignal<keyof typeof currenciesLib> = signal<keyof typeof currenciesLib>(this.brand.currency);
   public readonly rate$: Signal<number>                                     = isPlatformBrowser(this.platformId) ? toSignal<number>(
-    toObservable<keyof typeof currenciesLib>(
-      this.userCurrency$,
-    ).pipe<number, number>(
+    toObservable<keyof typeof currenciesLib>(this.userCurrency$).pipe<number, number>(
       switchMap<keyof typeof currenciesLib, Observable<number>>(
         (userCurrency: keyof typeof currenciesLib): Observable<number> => {
           const brandCurrency: Currency = this.brand.currency;

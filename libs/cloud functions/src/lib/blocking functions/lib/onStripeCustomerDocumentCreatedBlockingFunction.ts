@@ -8,7 +8,7 @@ import Stripe                                                                 fr
 // noinspection JSUnusedGlobalSymbols
 export const onStripeCustomerDocumentCreatedBlockingFunction: CloudFunction<FirestoreEvent<QueryDocumentSnapshot | undefined, { documentId: string }>> = onDocumentCreated<"stripeCustomers/{documentId}">(
   "stripeCustomers/{documentId}",
-  async (
+  (
     {
       data:   queryDocumentSnapshot,
       id:     firestoreEventId,

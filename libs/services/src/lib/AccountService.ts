@@ -20,12 +20,15 @@ export class AccountService {
 
   public readonly accountDocument$: Signal<AccountDocument | undefined> = isPlatformBrowser(this.platformId) ? toSignal<AccountDocument | undefined>(
     new Observable<User | null>(
-      (userObserver: Observer<User | null>): TeardownLogic => onIdTokenChanged(
-        this.auth,
-        (user: User | null): void => userObserver.next(user),
-      ),
-    ).pipe<User | null, AccountDocument | undefined, AccountDocument | undefined>(
-      startWith<User | null, [ User | null ]>(this.auth.currentUser),
+      (userObserver: Observer<User | null>): TeardownLogic => {
+        userObserver.next(this.auth.currentUser);
+
+        onIdTokenChanged(
+          this.auth,
+          (user: User | null): void => userObserver.next(user),
+        );
+      },
+    ).pipe<AccountDocument | undefined, AccountDocument | undefined>(
       switchMap<User | null, Observable<AccountDocument | undefined>>(
         (user: User | null): Observable<AccountDocument | undefined> => user && !user.isAnonymous ? docSnapshots<AccountDocument>(
           doc(

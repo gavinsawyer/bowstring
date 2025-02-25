@@ -27,7 +27,7 @@ $level: functions.get-input-reference($namespace, "level", 1)
 
   #{ $child-selector } > .harness
     &:before
-      border-radius: calc($brand-roundness * 0.875rem * pow(var(--phi), 1) / $level)
+      border-radius: calc($brand-roundness * 1.75rem * pow(var(--phi), 1) / $level)
 
     > .between,
     &:after
@@ -47,4 +47,4 @@ $level: functions.get-input-reference($namespace, "level", 1)
     #{ $child-selector } > .harness
       > .between,
       &:after
-        border-radius: calc($brand-roundness * 0.875rem / $level)
+        border-radius: calc($brand-roundness * 1.75rem / $level)

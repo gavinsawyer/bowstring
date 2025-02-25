@@ -22,11 +22,11 @@ export interface StripeProductDocument {
     "weight": number;
     "width": number;
   };
+  "path": string;
   "shippable"?: boolean;
   "statementDescriptor"?: string;
   "taxCode"?: string;
   "type"?: "good" | "service";
   "unitLabel"?: string;
   "updated"?: AdminTimestamp | Timestamp;
-  "url"?: string;
 }

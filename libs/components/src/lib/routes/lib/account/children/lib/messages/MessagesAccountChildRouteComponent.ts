@@ -236,9 +236,9 @@ export class MessagesAccountChildRouteComponent
     },
   );
 
-  protected accountDocumentFormSubmit(): void {
+  protected async accountDocumentFormSubmit(): Promise<void> {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, AccountDocument>(
+      return updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
@@ -262,9 +262,9 @@ export class MessagesAccountChildRouteComponent
         },
       );
   }
-  protected accountDocumentMessagesFormSubmit(): void {
+  protected async accountDocumentMessagesFormSubmit(): Promise<void> {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, AccountDocument>(
+      return updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,

@@ -4,9 +4,13 @@ import type Stripe                        from "stripe";
 import toDocumentPartial                  from "./toDocumentPartial";
 
 
-function getStripeProductDocument(stripeProduct: Stripe.Product): StripeProductDocument;
 function getStripeProductDocument(
   stripeProduct: Stripe.Product,
+  additionalFields: { path: string },
+): StripeProductDocument;
+function getStripeProductDocument(
+  stripeProduct: Stripe.Product,
+  additionalFields: { path: string },
   withFieldValue?: boolean,
 ): WithFieldValue<StripeProductDocument>;
 function getStripeProductDocument(
@@ -27,8 +31,10 @@ function getStripeProductDocument(
     type,
     unit_label: unitLabel,
     updated,
-    url,
   }: Stripe.Product,
+  {
+    path,
+  }: { path: string },
   withFieldValue?: boolean,
 ): StripeProductDocument | WithFieldValue<StripeProductDocument> {
   return {
@@ -80,10 +86,9 @@ function getStripeProductDocument(
       },
       withFieldValue,
     ),
-    ...toDocumentPartial(
-      { url },
-      withFieldValue,
-    ),
+    ...{
+      path,
+    },
   };
 }
 

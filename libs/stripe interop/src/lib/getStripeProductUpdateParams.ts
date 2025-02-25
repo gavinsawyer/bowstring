@@ -22,7 +22,6 @@ function getStripeProductUpdateParams(
     statementDescriptor: statement_descriptor,
     taxCode:             tax_code,
     unitLabel:           unit_label,
-    url,
   }: StripeProductDocument,
 ): Stripe.ProductUpdateParams {
   return {
@@ -49,7 +48,6 @@ function getStripeProductUpdateParams(
     ...(statement_descriptor ? { statement_descriptor } : {}),
     tax_code:   tax_code || "",
     unit_label: unit_label || "",
-    url:        url || "",
   };
 }
 

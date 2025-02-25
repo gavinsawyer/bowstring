@@ -13,7 +13,7 @@ import { Meta }                                                                 
 export class GalleryChildRouteComponent
   implements OnInit {
 
-  private readonly meta: Meta = inject<Meta>(Meta);
+  protected readonly meta: Meta = inject<Meta>(Meta);
 
   public readonly descriptionInput$: InputSignal<string>                        = input.required<string>(
     {

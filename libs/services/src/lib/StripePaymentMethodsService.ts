@@ -20,12 +20,15 @@ export class StripePaymentMethodsService {
 
   public readonly stripePaymentMethodDocuments$: Signal<StripePaymentMethodDocument[] | undefined> = isPlatformBrowser(this.platformId) ? toSignal<StripePaymentMethodDocument[] | undefined>(
     new Observable<User | null>(
-      (userObserver: Observer<User | null>): TeardownLogic => onIdTokenChanged(
-        this.auth,
-        (user: User | null): void => userObserver.next(user),
-      ),
-    ).pipe<User | null, StripePaymentMethodDocument[] | undefined, StripePaymentMethodDocument[] | undefined>(
-      startWith<User | null, [ User | null ]>(this.auth.currentUser),
+      (userObserver: Observer<User | null>): TeardownLogic => {
+        userObserver.next(this.auth.currentUser);
+
+        onIdTokenChanged(
+          this.auth,
+          (user: User | null): void => userObserver.next(user),
+        );
+      },
+    ).pipe<StripePaymentMethodDocument[] | undefined, StripePaymentMethodDocument[] | undefined>(
       switchMap<User | null, Observable<StripePaymentMethodDocument[]>>(
         (user: User | null): Observable<StripePaymentMethodDocument[]> => user && !user.isAnonymous ? collectionSnapshots<StripePaymentMethodDocument>(
           query<StripePaymentMethodDocument, StripePaymentMethodDocument>(

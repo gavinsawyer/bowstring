@@ -129,14 +129,14 @@ export class PaymentStripeElementComponent
     );
 
     effect(
-      (): void => {
+      async (): Promise<void> => {
         const stripeSetupIntentDocuments: StripeSetupIntentDocument[] | undefined = this.stripeSetupIntentsService.stripeSetupIntentDocuments$();
 
         if (stripeSetupIntentDocuments && stripeSetupIntentDocuments?.length === 0) {
           const userId: string | undefined = this.auth.currentUser?.uid;
 
           if (userId)
-            addDoc<StripeSetupIntentDocument, StripeSetupIntentDocument>(
+            return addDoc<StripeSetupIntentDocument, StripeSetupIntentDocument>(
               collection(
                 this.firestore,
                 "stripeSetupIntents",
@@ -144,7 +144,8 @@ export class PaymentStripeElementComponent
               {
                 userId,
               },
-            ).catch<never>(
+            ).then<void, never>(
+              (): void => void (0),
               (error: unknown): never => {
                 console.error("Something went wrong.");
 
@@ -293,12 +294,12 @@ export class PaymentStripeElementComponent
                   redirect: "if_required",
                 },
               ).then<void, never>(
-                ({ setupIntent }: SetupIntentResult): void => {
+                async ({ setupIntent }: SetupIntentResult): Promise<void> => {
                   const stripeCustomerId: string | undefined      = this.stripeCustomersService.stripeCustomerDocuments$()?.[0]?.id;
                   const stripePaymentMethodId: string | undefined = typeof setupIntent?.payment_method === "string" ? setupIntent.payment_method : setupIntent?.payment_method?.id;
 
                   if (stripePaymentMethodId && stripeCustomerId)
-                    addDoc<StripePaymentMethodDocument, StripePaymentMethodDocument>(
+                    return addDoc<StripePaymentMethodDocument, StripePaymentMethodDocument>(
                       collection(
                         this.firestore,
                         "stripePaymentMethods",
@@ -308,7 +309,8 @@ export class PaymentStripeElementComponent
                         id:       stripePaymentMethodId,
                         userId,
                       },
-                    ).catch<never>(
+                    ).then<void, never>(
+                      (): void => void (0),
                       (error: unknown): never => {
                         console.error("Something went wrong.");
 

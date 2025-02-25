@@ -24,8 +24,8 @@ export class StripePricesService {
       ) as CollectionReference<StripePriceDocument, StripePriceDocument>,
     ).pipe<StripePriceDocument[], StripePriceDocument[] | undefined>(
       map<QueryDocumentSnapshot<StripePriceDocument>[], StripePriceDocument[]>(
-        (StripePriceDocumentSnapshots: QueryDocumentSnapshot<StripePriceDocument>[]): StripePriceDocument[] => StripePriceDocumentSnapshots.length ? StripePriceDocumentSnapshots.map<StripePriceDocument>(
-          (StripePriceDocumentSnapshot: QueryDocumentSnapshot<StripePriceDocument>): StripePriceDocument => StripePriceDocumentSnapshot.data(),
+        (stripePriceDocumentSnapshots: QueryDocumentSnapshot<StripePriceDocument>[]): StripePriceDocument[] => stripePriceDocumentSnapshots.length ? stripePriceDocumentSnapshots.map<StripePriceDocument>(
+          (stripePriceDocumentSnapshot: QueryDocumentSnapshot<StripePriceDocument>): StripePriceDocument => stripePriceDocumentSnapshot.data(),
         ) : [],
       ),
       startWith<StripePriceDocument[] | undefined, [ undefined ]>(undefined),

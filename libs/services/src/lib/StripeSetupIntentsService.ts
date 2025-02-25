@@ -20,12 +20,15 @@ export class StripeSetupIntentsService {
 
   public readonly stripeSetupIntentDocuments$: Signal<StripeSetupIntentDocument[] | undefined> = isPlatformBrowser(this.platformId) ? toSignal<StripeSetupIntentDocument[] | undefined>(
     new Observable<User | null>(
-      (userObserver: Observer<User | null>): TeardownLogic => onIdTokenChanged(
-        this.auth,
-        (user: User | null): void => userObserver.next(user),
-      ),
-    ).pipe<User | null, StripeSetupIntentDocument[] | undefined, StripeSetupIntentDocument[] | undefined>(
-      startWith<User | null, [ User | null ]>(this.auth.currentUser),
+      (userObserver: Observer<User | null>): TeardownLogic => {
+        userObserver.next(this.auth.currentUser);
+
+        onIdTokenChanged(
+          this.auth,
+          (user: User | null): void => userObserver.next(user),
+        );
+      },
+    ).pipe<StripeSetupIntentDocument[] | undefined, StripeSetupIntentDocument[] | undefined>(
       switchMap<User | null, Observable<StripeSetupIntentDocument[]>>(
         (user: User | null): Observable<StripeSetupIntentDocument[]> => user && !user.isAnonymous ? collectionSnapshots<StripeSetupIntentDocument>(
           query<StripeSetupIntentDocument, StripeSetupIntentDocument>(

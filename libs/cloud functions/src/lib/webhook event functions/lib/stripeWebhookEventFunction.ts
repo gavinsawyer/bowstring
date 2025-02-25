@@ -990,8 +990,18 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
           case "product.created": {
             const collectionReference: CollectionReference<StripeProductDocument, StripeProductDocument> = firestore.collection("stripeProducts") as CollectionReference<StripeProductDocument, StripeProductDocument>;
 
+            if (!event.data.object.metadata["path"])
+              return response.status(400).send("A value for `path` is missing from the object's metadata.").end() && void (0);
+
             if (!event.data.object.metadata["documentId"])
-              return collectionReference.add(getStripeProductDocument(event.data.object)).then<void, never>(
+              return collectionReference.add(
+                getStripeProductDocument(
+                  event.data.object,
+                  {
+                    path: event.data.object.metadata["path"],
+                  },
+                ),
+              ).then<void, never>(
                 (stripeProductDocumentReference: DocumentReference<StripeProductDocument, StripeProductDocument>): Promise<void> => stripe.products.update(
                   event.data.object.id,
                   {
@@ -1017,6 +1027,9 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             return collectionReference.doc(event.data.object.metadata["documentId"]).set(
               getStripeProductDocument(
                 event.data.object,
+                {
+                  path: event.data.object.metadata["path"],
+                },
                 true,
               ),
               {
@@ -1047,9 +1060,15 @@ export const stripeWebhookEventFunction: HttpsFunction = onRequest(
             if (!event.data.object.metadata["documentId"])
               return response.status(400).send("A value for `documentId` is missing from the object's metadata.").end() && void (0);
 
+            if (!event.data.object.metadata["path"])
+              return response.status(400).send("A value for `path` is missing from the object's metadata.").end() && void (0);
+
             return (firestore.collection("stripeProducts").doc(event.data.object.metadata["documentId"]) as DocumentReference<StripeProductDocument, StripeProductDocument>).update(
               getStripeProductDocument(
                 event.data.object,
+                {
+                  path: event.data.object.metadata["path"],
+                },
                 true,
               ),
             ).then<void, never>(

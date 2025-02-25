@@ -4,10 +4,8 @@
     flexGrow="1">
     <bowstring--scroll-stack [minimumAspectRatio]="3/4">
       @for (imageSource of imageSources$(); track $index) {<bowstring--image
-        height="400"
         *bowstringScrollStackItem
-        [src]="imageSource"
-        width="300" />}
+        [input]="imageSource" />}
     </bowstring--scroll-stack>
   </bowstring--article>
 </bowstring--flexbox-container>

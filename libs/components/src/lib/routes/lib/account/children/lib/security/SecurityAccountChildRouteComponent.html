@@ -13,7 +13,7 @@
         inline
         input="ShieldLefthalfFilledSlash" />&nbsp;No passkey saved.</span>}</h5>
     </bowstring--header>
-    <bowstring--form (output)="passkeyFormGroupSubmit();">
+    <bowstring--form (output)="passkeyFormSubmit();">
       <bowstring--text-field-input
         autocomplete="email"
         [formControl]="passkeyFormGroup.controls.email"
@@ -59,7 +59,7 @@
         inline
         input="ShieldLefthalfFilledSlash" />&nbsp;No password saved.</span>}</h5>
     </bowstring--header>
-    <bowstring--form (output)="passwordFormGroupSubmit();">
+    <bowstring--form (output)="passwordFormSubmit();">
       <bowstring--text-field-input
         autocomplete="email"
         [formControl]="passwordFormGroup.controls.email"

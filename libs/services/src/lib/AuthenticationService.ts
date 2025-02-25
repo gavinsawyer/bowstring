@@ -1,14 +1,14 @@
-import { isPlatformBrowser }                                                                                                                                                                                                             from "@angular/common";
-import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                                                                                        from "@angular/core";
-import { toSignal }                                                                                                                                                                                                                      from "@angular/core/rxjs-interop";
-import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, reauthenticateWithCredential, signInAnonymously, signInWithEmailAndPassword, unlink, updatePassword, type User, UserCredential } from "@angular/fire/auth";
-import { doc, type DocumentReference, Firestore, setDoc }                                                                                                                                                                                from "@angular/fire/firestore";
-import { Functions }                                                                                                                                                                                                                     from "@angular/fire/functions";
-import { type AccountDocument }                                                                                                                                                                                                          from "@bowstring/interfaces";
-import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, unlinkPasskey, verifyUserWithPasskey }                                                                                                   from "@firebase-web-authn/browser";
-import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                                                                                                    from "rxjs";
-import { fromPromise }                                                                                                                                                                                                                   from "rxjs/internal/observable/innerFrom";
-import { AccountService }                                                                                                                                                                                                                from "./AccountService";
+import { isPlatformBrowser }                                                                                                                                                                                                                  from "@angular/common";
+import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                                                                                                             from "@angular/core";
+import { toSignal }                                                                                                                                                                                                                           from "@angular/core/rxjs-interop";
+import { Auth, createUserWithEmailAndPassword, EmailAuthProvider, linkWithCredential, onIdTokenChanged, reauthenticateWithCredential, signInAnonymously, signInWithEmailAndPassword, unlink, updatePassword, type User, type UserCredential } from "@angular/fire/auth";
+import { doc, type DocumentReference, Firestore, setDoc }                                                                                                                                                                                     from "@angular/fire/firestore";
+import { Functions }                                                                                                                                                                                                                          from "@angular/fire/functions";
+import { type AccountDocument }                                                                                                                                                                                                               from "@bowstring/interfaces";
+import { createUserWithPasskey, type FirebaseWebAuthnError, linkWithPasskey, signInWithPasskey, unlinkPasskey, verifyUserWithPasskey }                                                                                                        from "@firebase-web-authn/browser";
+import { filter, Observable, type Observer, tap, type TeardownLogic }                                                                                                                                                                         from "rxjs";
+import { fromPromise }                                                                                                                                                                                                                        from "rxjs/internal/observable/innerFrom";
+import { AccountService }                                                                                                                                                                                                                     from "./AccountService";
 
 
 @Injectable(
@@ -123,6 +123,12 @@ export class AuthenticationService {
         {
           merge: true,
         },
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
       ),
       (error: unknown): never => {
         console.error("Something went wrong.");
@@ -152,6 +158,12 @@ export class AuthenticationService {
         },
         {
           merge: true,
+        },
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
         },
       ),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
@@ -183,6 +195,12 @@ export class AuthenticationService {
         },
         {
           merge: true,
+        },
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
         },
       ),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
@@ -254,6 +272,12 @@ export class AuthenticationService {
         {
           merge: true,
         },
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
       ),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You do not have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
@@ -283,6 +307,12 @@ export class AuthenticationService {
         {
           merge: true,
         },
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
+        },
       ),
       (firebaseWebAuthnError: FirebaseWebAuthnError): never => {
         console.error(firebaseWebAuthnError.code === "firebaseWebAuthn/no-op" ? "You do not have a passkey." : firebaseWebAuthnError.message || "Something went wrong.");
@@ -310,6 +340,12 @@ export class AuthenticationService {
         },
         {
           merge: true,
+        },
+      ).catch<never>(
+        (error: unknown): never => {
+          console.error("Something went wrong.");
+
+          throw error;
         },
       ),
       (error: unknown): never => {

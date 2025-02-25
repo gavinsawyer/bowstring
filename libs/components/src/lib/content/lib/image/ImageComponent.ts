@@ -1,17 +1,21 @@
-import { NgOptimizedImage, NgTemplateOutlet }                                                                                                                                        from "@angular/common";
-import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type InputSignalWithTransform, numberAttribute, type Signal, viewChild } from "@angular/core";
-import { RouterLink }                                                                                                                                                                from "@angular/router";
-import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, WellRoundedDirective }                                                                  from "@bowstring/directives";
+import { NgOptimizedImage, NgTemplateOutlet }                                                                                        from "@angular/common";
+import { afterRender, ChangeDetectionStrategy, Component, type ElementRef, inject, input, type InputSignal, type Signal, viewChild } from "@angular/core";
+import { toObservable, toSignal }                                                                                                    from "@angular/core/rxjs-interop";
+import { RouterLink }                                                                                                                from "@angular/router";
+import { CanvasDirective, ContainerDirective, ElevatedDirective, HoverTransformingDirective, WellRoundedDirective }                  from "@bowstring/directives";
+import { type Dimensions }                                                                                                           from "@bowstring/interfaces";
+import { type Observable, startWith, switchMap }                                                                                     from "rxjs";
+import { fromPromise }                                                                                                               from "rxjs/internal/observable/innerFrom";
 
 
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.appearance-circular]":             "appearanceInput$() === 'circular'",
-      "[class.appearance-transparent]":          "appearanceInput$() === 'transparent'",
-      "[class.hasUrlInput]":                     "urlInput$()",
-      "[style.--bowstring--image--aspect-ratio]": "widthInput$() + '/' + heightInput$()",
+      "[class.appearance-circular]":              "appearanceInput$() === 'circular'",
+      "[class.appearance-transparent]":           "appearanceInput$() === 'transparent'",
+      "[class.hasUrlInput]":                      "urlInput$()",
+      "[style.--bowstring--image--aspect-ratio]": "imageDimensions$()?.width + '/' + imageDimensions$()?.height",
     },
     hostDirectives:  [
       {
@@ -80,44 +84,61 @@ export class ImageComponent {
     );
   }
 
-  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>> = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly htmlDivElementRef$: Signal<ElementRef<HTMLDivElement>>     = viewChild.required<ElementRef<HTMLDivElement>>("htmlDivElement");
+  private readonly htmlImageElementRef$: Signal<ElementRef<HTMLImageElement>> = viewChild.required<ElementRef<HTMLImageElement>>("htmlImageElement");
 
   protected readonly hoverTransformingDirective: HoverTransformingDirective = inject<HoverTransformingDirective>(HoverTransformingDirective);
-  protected readonly wellRoundedDirective: WellRoundedDirective             = inject<WellRoundedDirective>(WellRoundedDirective);
 
-  public readonly altInput$: InputSignal<string | undefined>                             = input<string | undefined>(
+  public readonly input$: InputSignal<string | URL> = input.required<string | URL>(
+    {
+      alias: "input",
+    },
+  );
+
+  protected readonly imageDimensions$: Signal<Dimensions | undefined> = toSignal<Dimensions | undefined>(
+    toObservable<ElementRef<HTMLImageElement>>(this.htmlImageElementRef$).pipe<Dimensions, Dimensions | undefined>(
+      switchMap<ElementRef<HTMLImageElement>, Observable<Dimensions>>(
+        ({ nativeElement: htmlImageElement }: ElementRef<HTMLImageElement>): Observable<Dimensions> => fromPromise<Dimensions>(
+          new Promise(
+            (
+              resolve: (imageDimensions: Dimensions) => void,
+              reject: () => void,
+            ): void => {
+              htmlImageElement.onerror = reject;
+              htmlImageElement.onload  = (): void => resolve(
+                {
+                  height: htmlImageElement.height,
+                  width:  htmlImageElement.width,
+                },
+              );
+            },
+          ),
+        ),
+      ),
+      startWith<Dimensions, [ Dimensions | undefined ]>(undefined),
+    ),
+    {
+      requireSync: true,
+    },
+  );
+  protected readonly wellRoundedDirective: WellRoundedDirective       = inject<WellRoundedDirective>(WellRoundedDirective);
+
+  public readonly altInput$: InputSignal<string | undefined>                            = input<string | undefined>(
     undefined,
     {
       alias: "alt",
     },
   );
-  public readonly appearanceInput$: InputSignal<"circular" | "transparent" | undefined>  = input<"circular" | "transparent" | undefined>(
+  public readonly appearanceInput$: InputSignal<"circular" | "transparent" | undefined> = input<"circular" | "transparent" | undefined>(
     undefined,
     {
       alias: "appearance",
     },
   );
-  public readonly heightInput$: InputSignalWithTransform<number, number | `${ number }`> = input.required<number, number | `${ number }`>(
-    {
-      alias:     "height",
-      transform: numberAttribute,
-    },
-  );
-  public readonly srcInput$: InputSignal<string | URL>                                   = input.required<string | URL>(
-    {
-      alias: "src",
-    },
-  );
-  public readonly urlInput$: InputSignal<string | undefined>                             = input<string | undefined>(
+  public readonly urlInput$: InputSignal<string | undefined>                            = input<string | undefined>(
     undefined,
     {
       alias: "url",
-    },
-  );
-  public readonly widthInput$: InputSignalWithTransform<number, number | `${ number }`>  = input.required<number, number | `${ number }`>(
-    {
-      alias:     "width",
-      transform: numberAttribute,
     },
   );
 

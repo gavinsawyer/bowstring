@@ -18,10 +18,10 @@
 </svg>
 
 <ng-template #contentTemplate>
-  <img
+  <img #htmlImageElement
     [attr.alt]="altInput$()"
-    [height]="heightInput$()"
-    [ngSrc]="srcInput$()"
+    [height]="imageDimensions$()?.height"
+    [ngSrc]="input$()"
     [routerLink]="urlInput$()"
-    [width]="widthInput$()" />
+    [width]="imageDimensions$()?.width" />
 </ng-template>

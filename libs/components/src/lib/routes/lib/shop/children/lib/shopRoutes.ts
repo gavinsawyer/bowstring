@@ -1,9 +1,12 @@
 /// <reference types="@angular/localize" />
 
-import { type Type }                                                                             from "@angular/core";
-import { type ActivatedRouteSnapshot, Route, type Routes, type UrlMatchResult, type UrlSegment } from "@angular/router";
-import { title as brandTitle }                                                                   from "@bowstring/brand";
-import { routes }                                                                                from "../../../../";
+import { isPlatformBrowser }                                                                                           from "@angular/common";
+import { inject, PLATFORM_ID, type Type }                                                                              from "@angular/core";
+import { collection, type CollectionReference, Firestore, getDocs, query, type QuerySnapshot, where }                  from "@angular/fire/firestore";
+import { type ActivatedRouteSnapshot, RedirectCommand, type Route, type Routes, UrlSegment, UrlSegmentGroup, UrlTree } from "@angular/router";
+import { title as brandTitle }                                                                                         from "@bowstring/brand";
+import { type StripeProductDocument }                                                                                  from "@bowstring/interfaces";
+import { routes }                                                                                                      from "../../../../";
 
 
 const parentRoute: Route | undefined  = routes.find<Route & { path: "shop" }>(
@@ -33,38 +36,68 @@ const shopRoutes: Routes = [
   },
   {
     data:          {
-      description: $localize`:@@libs--Components--Routes--Shop-Category--Meta--Description:...`,
-      title:       $localize`:@@libs--Components--Routes--Shop-Category--Meta--Title:Category`,
+      description: $localize`:@@libs--Components--Routes--Shop-Staging--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Shop-Staging--Meta--Title:Staging`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./category/CategoryShopChildRouteComponent").then<Type<unknown>>(
-      ({ CategoryShopChildRouteComponent }: typeof import("./category/CategoryShopChildRouteComponent")): Type<unknown> => CategoryShopChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./staging/StagingShopChildRouteComponent").then<Type<unknown>>(
+      ({ StagingShopChildRouteComponent }: typeof import("./staging/StagingShopChildRouteComponent")): Type<unknown> => StagingShopChildRouteComponent,
     ),
-    matcher:       (urlSegments: UrlSegment[]): UrlMatchResult | null => ((path: string): boolean => path === "category")(urlSegments[urlSegments.length - 1].path) && urlSegments.slice(
-      0,
-      - 1,
-    ).every(
-      ({ path }: UrlSegment): boolean => path === "category",
-    ) ? {
-      consumed: urlSegments,
-    } : null,
+    path:          "staging",
     title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
   {
+    canMatch:      [
+      async (
+        _route: Route,
+        urlSegments: UrlSegment[],
+      ): Promise<boolean | RedirectCommand> => isPlatformBrowser(inject<NonNullable<unknown>>(PLATFORM_ID)) ? getDocs<StripeProductDocument, StripeProductDocument>(
+        query<StripeProductDocument, StripeProductDocument>(
+          collection(
+            inject<Firestore>(Firestore),
+            "stripeProducts",
+          ) as CollectionReference<StripeProductDocument, StripeProductDocument>,
+          where(
+            "path",
+            "==",
+            urlSegments[urlSegments.length - 1].path,
+          ),
+        ),
+      ).then<boolean, never>(
+        (stripeProductDocumentsQuerySnapshot: QuerySnapshot<StripeProductDocument, StripeProductDocument>): boolean => !stripeProductDocumentsQuerySnapshot.empty,
+        (error: unknown): never => {
+          console.error(error);
+
+          throw error;
+        },
+      ) : new RedirectCommand(
+        new UrlTree(
+          new UrlSegmentGroup(
+            [
+              new UrlSegment(
+                "shop",
+                {},
+              ),
+              new UrlSegment(
+                "staging",
+                {},
+              ),
+            ],
+            {},
+          ),
+        ),
+        {
+          skipLocationChange: true,
+        },
+      ),
+    ],
     data:          {
-      description: $localize`:@@libs--Components--Routes--Shop-Item--Meta--Description:...`,
-      title:       $localize`:@@libs--Components--Routes--Shop-Item--Meta--Title:Item`,
+      description: $localize`:@@libs--Components--Routes--Shop-Staging--Meta--Description:...`,
+      title:       $localize`:@@libs--Components--Routes--Shop-Staging--Meta--Title:Staging`,
     },
-    loadComponent: (): Promise<Type<unknown>> => import("./item/ItemShopChildRouteComponent").then<Type<unknown>>(
-      ({ ItemShopChildRouteComponent }: typeof import("./item/ItemShopChildRouteComponent")): Type<unknown> => ItemShopChildRouteComponent,
+    loadComponent: (): Promise<Type<unknown>> => import("./product/ProductShopChildRouteComponent").then<Type<unknown>>(
+      ({ ProductShopChildRouteComponent }: typeof import("./product/ProductShopChildRouteComponent")): Type<unknown> => ProductShopChildRouteComponent,
     ),
-    matcher:       (urlSegments: UrlSegment[]): UrlMatchResult | null => ((path: string): boolean => path === "item")(urlSegments[urlSegments.length - 1].path) && urlSegments.slice(
-      0,
-      - 1,
-    ).every(
-      ({ path }: UrlSegment): boolean => path === "category",
-    ) ? {
-      consumed: urlSegments,
-    } : null,
+    path:          ":productPath",
     title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ brandTitle } ${ title }`,
   },
 ];

@@ -56,7 +56,7 @@ export {
 };
 
 
-declare const __non_webpack_require__: NodeRequire;
+declare const __non_webpack_require__: NodeJS.Require;
 
 if (((moduleFilename: string): boolean => moduleFilename === __filename || moduleFilename.includes("iisnode"))(((mainModule?: NodeJS.Module): string => mainModule?.filename || "")(__non_webpack_require__.main)))
   express().use(

@@ -13,7 +13,7 @@ import { Meta }                                                                 
 export class RouteComponent
   implements OnInit {
 
-  private readonly meta: Meta = inject<Meta>(Meta);
+  protected readonly meta: Meta = inject<Meta>(Meta);
 
   public readonly aboveTemplateRef$: Signal<TemplateRef<never> | undefined>  = viewChild<TemplateRef<never>>("aboveTemplate");
   public readonly bannerTemplateRef$: Signal<TemplateRef<never> | undefined> = viewChild<TemplateRef<never>>("bannerTemplate");

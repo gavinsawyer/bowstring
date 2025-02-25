@@ -17,19 +17,19 @@ export class PathService {
   private readonly platformId: NonNullable<unknown> = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly router: Router                   = inject<Router>(Router);
 
-  public readonly path$: Signal<string> = isPlatformBrowser(this.platformId) ? toSignal<string>(
-    this.router.events.pipe<NavigationEnd, string, string>(
+  public readonly path$: Signal<`/${ string }`> = isPlatformBrowser(this.platformId) ? toSignal<`/${ string }`>(
+    this.router.events.pipe<NavigationEnd, `/${ string }`, `/${ string }`>(
       filter<RouterEvent | NavigationStart | NavigationEnd | NavigationCancel | NavigationError | RoutesRecognized | GuardsCheckStart | GuardsCheckEnd | RouteConfigLoadStart | RouteConfigLoadEnd | ChildActivationStart | ChildActivationEnd | ActivationStart | ActivationEnd | Scroll | ResolveStart | ResolveEnd, NavigationEnd>(
         (routerEvent: RouterEvent | NavigationStart | NavigationEnd | NavigationCancel | NavigationError | RoutesRecognized | GuardsCheckStart | GuardsCheckEnd | RouteConfigLoadStart | RouteConfigLoadEnd | ChildActivationStart | ChildActivationEnd | ActivationStart | ActivationEnd | Scroll | ResolveStart | ResolveEnd): routerEvent is NavigationEnd => routerEvent instanceof NavigationEnd,
       ),
-      map<NavigationEnd, string>(
-        ({ url }: NavigationEnd): string => `/${ this.localeId }${ url.split("?")[0] }`,
+      map<NavigationEnd, `/${ string }`>(
+        ({ url }: NavigationEnd): `/${ string }` => `/${ this.localeId }${ url.split("?")[0] }`,
       ),
-      startWith<string, [ string ]>(`/${ this.localeId }${ this.location.path() }`),
+      startWith<`/${ string }`, [ `/${ string }` ]>(`/${ this.localeId }${ this.location.path() }`),
     ),
     {
       requireSync: true,
     },
-  ) : signal<`/${ string }${ string }`>(`/${ this.localeId }${ this.location.path() }`);
+  ) : signal<`/${ string }`>(`/${ this.localeId + this.location.path() }`);
 
 }

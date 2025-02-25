@@ -114,9 +114,9 @@ export class PersonalInformationAccountChildRouteComponent
     },
   );
 
-  protected birthdayFormSubmit(): void {
+  protected async birthdayFormSubmit(): Promise<void> {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, AccountDocument>(
+      return updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
@@ -132,9 +132,9 @@ export class PersonalInformationAccountChildRouteComponent
         },
       );
   }
-  protected nameFormSubmit(): void {
+  protected async nameFormSubmit(): Promise<void> {
     if (this.auth.currentUser)
-      updateDoc<AccountDocument, AccountDocument>(
+      return updateDoc<AccountDocument, AccountDocument>(
         doc(
           this.firestore,
           `/accounts/${ this.auth.currentUser.uid }`,
