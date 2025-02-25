@@ -133,14 +133,21 @@ export class RootComponent {
   protected readonly gitInfoPartial: Partial<GitInfo>                      = inject<Partial<GitInfo>>(GIT_INFO_PARTIAL);
   protected readonly localeId: LocaleId                                    = inject<LocaleId>(LOCALE_ID);
   protected readonly localeIds: LocaleId[]                                 = inject<LocaleId[]>(LOCALE_IDS);
-  protected readonly localeDisplayNames: Intl.DisplayNames                 = new Intl.DisplayNames(
-    [
-      this.localeId as string,
-    ],
-    {
-      type: "language",
-    },
-  );
+  protected readonly localeDisplayNames: { [key in LocaleId]: string }     = Object.fromEntries<string>(
+    this.localeIds.map<[ LocaleId, string ]>(
+      (localeId: LocaleId): [ LocaleId, string ] => [
+        localeId,
+        new Intl.DisplayNames(
+          [
+            localeId,
+          ],
+          {
+            type: "language",
+          },
+        ).of(localeId) || localeId as string,
+      ],
+    ),
+  ) as { [key in LocaleId]: string };
   protected readonly packageVersion: string                                = inject<string>(PACKAGE_VERSION);
   protected readonly responsivityService: ResponsivityService              = inject<ResponsivityService>(ResponsivityService);
   protected readonly bowstringRoutes: Routes                               = inject<Routes>(BOWSTRING_ROUTES);

@@ -29,12 +29,12 @@
   </bowstring--header>
   <bowstring--divider />
   <bowstring--section>
-    @for (locale of localeIds; track $index) {<bowstring--button
-      [disabled]="locale === localeId"
+    @for (_localeId of localeIds; track $index) {<bowstring--button
+      [disabled]="localeIds[$index] === localeId"
       level="2"
-      (output)="locale === localeId || changeLocale(locale);">
+      (output)="localeIds[$index] === localeId || changeLocale(localeIds[$index]);">
       <bowstring--symbol input="Globe" />
-      <bowstring--label [input]="localeDisplayNames.of(locale) || locale" />
+      <bowstring--label [input]="localeDisplayNames[localeIds[$index]]" />
     </bowstring--button>}
   </bowstring--section>}
 </bowstring--sheet>
@@ -205,7 +205,7 @@
           [disabled]="localeSheetComponent.openModelWithTransform$()"
           (output)="localeSheetComponent.openModel$.set(true);">
           <bowstring--symbol input="Globe" />
-          <bowstring--label [input]="localeDisplayNames.of(localeId) || localeId" />
+          <bowstring--label [input]="localeDisplayNames[localeId]" />
         </bowstring--link>
         @if (bowstringRoutes | bowstringFindRouteByPath:'shop') {<bowstring--link
           [disabled]="currencySheetComponent.openModelWithTransform$()"

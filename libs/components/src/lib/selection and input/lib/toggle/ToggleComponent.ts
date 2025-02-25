@@ -63,7 +63,7 @@ export class ToggleComponent
   private readonly injector: Injector                                         = inject<Injector>(Injector);
   private readonly renderer2: Renderer2                                       = inject<Renderer2>(Renderer2);
 
-  protected readonly inputName$: Signal<`bowstring--toggle--input-${ string }`>                  = signal<`bowstring--toggle--input-${ string }`>(`bowstring--toggle--input-${ uuidV7() }`);
+  protected readonly inputName$: Signal<`bowstring--toggle--input-${ string }`>                 = signal<`bowstring--toggle--input-${ string }`>(`bowstring--toggle--input-${ uuidV7() }`);
   protected readonly symbolTemplateRef$: Signal<TemplateRef<ToggleSymbolDirective> | undefined> = contentChild<ToggleSymbolDirective, TemplateRef<ToggleSymbolDirective>>(
     ToggleSymbolDirective,
     {

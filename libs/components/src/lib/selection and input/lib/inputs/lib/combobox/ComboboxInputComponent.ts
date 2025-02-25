@@ -81,9 +81,7 @@ export class ComboboxInputComponent
     );
   }
 
-  protected readonly options$: Signal<readonly ComboboxInputOptionComponent[]> = contentChildren<ComboboxInputOptionComponent>(
-    ComboboxInputOptionComponent,
-  );
+  protected readonly options$: Signal<readonly ComboboxInputOptionComponent[]> = contentChildren<ComboboxInputOptionComponent>(ComboboxInputOptionComponent);
 
   private readonly optionValues$: Signal<string[]> = computed<string[]>(
     (): string[] => this.options$().map<string>(

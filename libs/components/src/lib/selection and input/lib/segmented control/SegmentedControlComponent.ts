@@ -99,13 +99,9 @@ export class SegmentedControlComponent
   private readonly renderer2: Renderer2                                         = inject<Renderer2>(Renderer2);
 
   protected readonly inputName$: Signal<`bowstring--segmented-control--input-${ string }`> = signal<`bowstring--segmented-control--input-${ string }`>(`bowstring--segmented-control--input-${ uuidV7() }`);
-  protected readonly options$: Signal<readonly SegmentedControlOptionComponent[]>         = contentChildren<SegmentedControlOptionComponent>(
-    SegmentedControlOptionComponent,
-  );
-  protected readonly optionWidths$: Signal<(number | undefined)[] | undefined>            = isPlatformBrowser(this.platformId) ? toSignal<(number | undefined)[] | undefined>(
-    toObservable<readonly SegmentedControlOptionComponent[]>(
-      this.options$,
-    ).pipe<(number | undefined)[], (number | undefined)[] | undefined>(
+  protected readonly options$: Signal<readonly SegmentedControlOptionComponent[]>          = contentChildren<SegmentedControlOptionComponent>(SegmentedControlOptionComponent);
+  protected readonly optionWidths$: Signal<(number | undefined)[] | undefined>             = isPlatformBrowser(this.platformId) ? toSignal<(number | undefined)[] | undefined>(
+    toObservable<readonly SegmentedControlOptionComponent[]>(this.options$).pipe<(number | undefined)[], (number | undefined)[] | undefined>(
       switchMap<readonly SegmentedControlOptionComponent[], Observable<(number | undefined)[]>>(
         (optionDirectives: readonly SegmentedControlOptionComponent[]): Observable<(number | undefined)[]> => combineLatest<(number | undefined)[]>(
           optionDirectives.map<Observable<number | undefined>>(
@@ -124,7 +120,7 @@ export class SegmentedControlComponent
       requireSync: true,
     },
   ) : signal<undefined>(undefined);
-  protected readonly wellRoundedDirective: WellRoundedDirective                           = inject<WellRoundedDirective>(WellRoundedDirective);
+  protected readonly wellRoundedDirective: WellRoundedDirective                            = inject<WellRoundedDirective>(WellRoundedDirective);
 
   public readonly disabledModel$: ModelSignal<boolean | undefined> = model<boolean | undefined>(
     undefined,
@@ -151,13 +147,15 @@ export class SegmentedControlComponent
       index >= 0 ? index : 0,
     ).reduce(
       (
-        previousValue?: number,
+        accumulator?: number,
         currentValue?: number,
-      ): number => (previousValue || 0) + (currentValue || 0),
+      ): number => (accumulator || 0) + (currentValue || 0),
       0,
     );
   }
   protected getOptionWidth(value: string | null): number | undefined {
+    console.log("!!!");
+
     const index: number = this.options$().findIndex(
       ({ valueInput$ }: SegmentedControlOptionComponent): boolean => valueInput$() === value,
     );
